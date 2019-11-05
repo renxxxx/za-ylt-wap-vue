@@ -1,0 +1,335 @@
+<template>
+  <div class="landing">
+		<div class="nav">
+			<div class="topNav">
+				<img src="../../static/新登陆-10.25/切图/name@2x.png" alt="">
+			</div>
+			<div class="typeNav" type="line" border="false">
+				<van-tabs  background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF'>
+				<van-tab title="医院端">
+					<form @submit.prevent="submit('100')" class="content">
+						<div class="inputBox">
+							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
+							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号">
+						</div>
+						<div class="inputBox">
+							<img  class="passwordImg" src="../../static/新登陆-10.25/切图/mima@2x.png" alt="">
+							<input type="text"  v-model="account.password" name='password' placeholder="请输入密码">
+						</div>
+						<div class="checkBox">
+							<input type="checkbox"
+							    class="input_check" 
+							    :checked="checked"
+							    @change="change"/>
+							<p>&nbsp;&nbsp;我已经阅读并同意<a href="">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
+						</div>
+						<input class="submitClass" type="submit" value="登陆"></input>
+						<div class="passwordReset">
+							<router-link  to="/retrievePassword">
+								<div  @click="forgetFn(100)">
+									忘记密码
+									<img src="../../static/iOS切图/reset@2.png" alt="">
+								</div>	
+							</router-link>
+						</div>
+					</form>	
+					
+				</van-tab>
+				<van-tab title="门诊端" type="line" border="false">
+					<form @submit.prevent="submit('200')" class="content">
+						<div class="inputBox">
+							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
+							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号">
+							
+						</div>
+						<div class="inputBox">
+							<img  class="passwordImg" src="../../static/新登陆-10.25/切图/mima@2x.png" alt="">
+							<input type="text"  v-model="account.password" name='password' placeholder="请输入密码">
+						</div>
+						<div class="checkBox">
+							<input type="checkbox"
+							    class="input_check" 
+							    :checked="checked"
+							    @change="change"/>
+							<p>&nbsp;&nbsp;我已经阅读并同意<a href="">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
+						</div>
+						<input class="submitClass" type="submit" value="登陆"></input>
+						<div class="passwordReset">
+							<router-link  to="/retrievePassword">
+								<div @click="forgetFn(200)">
+									忘记密码
+									<img src="../../static/iOS切图/reset@2.png" alt="">
+								</div>
+							</router-link>
+						</div>
+					</form>	
+				</van-tab>
+				<van-tab title="运营端" type="line" border="false">
+					<form @submit.prevent="submit('300')" class="content">
+						<div class="inputBox">
+							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
+							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号">
+						</div>
+						<div class="inputBox">
+							<img  class="passwordImg" src="../../static/新登陆-10.25/切图/mima@2x.png" alt="">
+							<input type="text"  v-model="account.password" name='password' placeholder="请输入密码">
+						</div>
+						<div class="checkBox">
+							<input type="checkbox"
+							    class="input_check" 
+							    :checked="checked"
+							    @change="change"/>
+							<p>&nbsp;&nbsp;我已经阅读并同意<a href="">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
+						</div>
+						<input class="submitClass" type="submit" value="登陆"></input>
+						<div class="passwordReset">
+							<router-link  to="/retrievePassword">
+								<div @click="forgetFn(300)">
+									忘记密码
+									<img src="../../static/iOS切图/reset@2.png" alt="">
+								</div>
+							</router-link>
+						</div>
+					</form>	
+				</van-tab>
+				</van-tabs>
+			</div>
+		</div>
+		
+  </div>
+</template>
+
+<script>
+import {mapActions,mapGetters} from 'vuex'
+import router from '../router'
+export default {
+  name: 'landingPage',
+  data () {
+    return {
+      
+    }
+  },
+  watch:{
+    '$route.path': function (newVal, oldVal) {
+      if (newVal === '/retrievePassword') {
+       console.log('欢迎进入登录页面');
+      }
+      // if (newVal === '/register') {
+      //  console.log('欢迎进入注册页面');
+      // }
+     }
+  },
+  computed:{
+  	...mapGetters(['account','checked','roterShow'])
+  },
+  methods:{
+	 //传递页面状态值
+  	forgetFn(e){
+  		this.account.isLogin = e
+  		// console.log(this.account.isLogin)
+  	},
+	...mapActions(['submit','change'])
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.landing{
+	width: 100%;
+	height: 100%;
+}
+.nav{
+	width: 100%;
+	height: 2.07rem;
+	background: #2B77EF;position: relative;
+}
+.topNav{
+	width: 50%;margin: auto;
+}
+.topNav img{
+	margin-top:40%; 
+	height: 100%;width: 100%;z-index: 999;
+}
+.typeNav{
+	margin-top: 12%;
+	padding: 0 .5rem;
+}
+>>>.van-tabs__line {
+    position: absolute;
+    bottom: 28%;
+    left: 0;
+    z-index: 1;
+    height: .03rem;
+    width: .6rem!important;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+}
+>>>.van-tabs__nav--line {
+    box-sizing: content-box;
+    height: 100%;
+    padding-bottom: 5.5%!important;
+}
+>>>[class*=van-hairline]::after {
+    position: absolute;
+    box-sizing: border-box;
+    content: ' ';
+    pointer-events: none;
+    top: -50%;
+    right: -50%;
+    bottom: -50%;
+    left: -50%;
+    border: none!important;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+}
+.content{
+	width: 100%;
+	margin: .2rem 0 0 -.5rem;
+}
+.submitClass{
+	background-color: #2B77EF;
+	width: 3.1rem;height: .45rem;
+	border-radius: .23rem;
+	margin-top: .8rem;
+	margin-left: .32rem;
+	color: #FFFFFF;
+}
+.inputBox{
+	position: relative;
+}
+
+.passwordImg{
+	position: absolute;
+	height: .16rem;
+	width: .18rem;
+	top:.35rem;
+	left:.57rem;
+}
+.telephoneImg{
+	width: .13rem;
+	height: .2rem;
+	top:.35rem;
+	left:.57rem;
+	position: absolute;
+}
+.inputBox input{
+	width: 2.54rem;
+	height: .45rem;
+	border-radius:.25rem;
+	border: 1px solid #E5E5E5;
+	margin: 0 .38rem;
+	padding-left: .56rem;	
+	background: #F5F5F5;
+}
+.inputBox input:last-child{
+	margin-top: .2rem;
+}
+.inputBox input::-webkit-input-placeholder {
+                /* Chrome/Opera/Safari */
+                font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
+            }
+            ::-moz-placeholder {
+                /* Firefox 19+ */
+                font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
+            }
+            :-ms-input-placeholder {
+                /* IE 10+ */
+                font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
+            }
+            :-moz-placeholder {
+                /* Firefox 18- */
+               font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
+            }
+>>>.van-hairline--top-bottom{
+	display: block;
+   width: 100%!important;
+   padding-bottom:.07rem;
+}
+.checkBox input[type=checkbox] {
+  width: .17rem;
+  height: .17rem;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 0;
+  outline: 0 !important;
+  color: #d8d8d8;
+  position: relative;
+  margin: 0!important;
+} 
+.checkBox input[type=checkbox]:before{
+  content: "";
+  display:inline-block;
+  width: .17rem;
+  height: .17rem;
+  background-image: url('../../static/iOS切图/Not-checkbox@2x.png');
+  box-sizing:border-box;  
+  border-radius: 3px;
+  position: absolute;
+}
+
+.checkBox input[type=checkbox]:disabled:before{
+  content: "";
+  display:inline-block;
+  width: .17rem;
+  height: .17rem;
+  background-color: #333;
+  box-sizing:border-box;  
+  border-radius: 3px;
+  position: absolute;
+}
+.checkBox input[type=checkbox]:checked:before{
+  content: "";
+  display:inline-block;
+  width: .17rem;
+  height: .17rem;
+  border: 1px dotted #D2A47E;
+  /* background-image: url('../../static/iOS切图/checkbox@2x.png'); */
+  background-image: url(../../static/iOS切图/checkbox@2x.png);
+  background-size: .17rem .17rem;
+  box-sizing:border-box;  
+  border-radius: 3px;
+  position: absolute;
+}
+.checkBox input[type=checkbox]:checked:after{
+  content: "";
+  display:inline-block;
+  width: .17rem;
+  height:.17rem;
+  border-left: 0rem dotted #fff;
+  border-top: 0rem dotted #fff;
+  box-sizing:border-box; 
+  position: absolute;
+  transform: rotate(-135deg) translate(-70%, 25%);
+}
+.checkBox{
+	margin-top: .2rem;
+	margin-left: .33rem;
+	margin-right: .09;
+	height: .17rem;
+}
+.checkBox p{
+	margin-top: -.05rem;
+	display: inline-block;
+	height: .17rem;line-height: .17rem;
+}
+.checkBox p a{
+	color: #5ab5fc;
+}
+.passwordReset{
+	margin-top: .13rem;
+	margin-left: .33rem;
+	height: .17rem;
+}
+.passwordRese{
+	height: .21rem;
+}
+.passwordReset a{
+	margin-right: .05rem;
+	color: #2B77EF;
+}
+.passwordReset img{
+	width: .15rem;
+	height: .15rem;
+}
+</style>
