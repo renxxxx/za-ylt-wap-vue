@@ -3,20 +3,28 @@
 	<router-view/>
 	<div class="mainButton" v-show="roterShow">
 		<router-link to="/index">
-		  	<!-- <img src="../static/iOS切图/shouye@2x.png" alt=""> -->
-		  	<span>首页</span>
-		</router-link>
-		<router-link to="/index">
-			<!-- <img src="../static/门诊端/iOS切图/Hospital@2x.png" alt=""> -->
-		  	<span>医院</span>
-		</router-link>
-		<router-link to="/index">
-			<!-- <img src="../static/切图-基因/jiyin-gray@2x.png" alt=""> -->
-			<span>基因</span>
+			<div id="_index" @click="colorFn('_index')">
+				<img :src=colorImg[0] alt="">
+				<span>首页</span>
+			</div>
 		</router-link>
 		<router-link to="/user">
-			<!-- <img src="../static/iOS切图/wode@2x.png" alt=""> -->
-			<span>我的</span>
+			<div id="_hospital" @click="colorFn('_hospital')">
+				<img :src=colorImg[1] alt="">
+				<span>医院</span>
+			</div>
+		</router-link>
+		<router-link to="/index">
+			<div id="_gene" @click="colorFn('_gene')">
+				<img :src=colorImg[2] alt="">
+				<span>基因</span>
+			</div>
+		</router-link>
+		<router-link to="/user">
+			<div id="_my" @click="colorFn('_my')">
+				<img :src=colorImg[3] alt="">
+				<span>我的</span>
+			</div>
 		</router-link>
 	</div>
   </div>
@@ -27,13 +35,68 @@ import {mapActions,mapGetters} from 'vuex'
 export default {
   name: 'App',
   data(){
-  	return{}
+  	return{
+		//主导航栏图片
+		colorImg:['../static/iOS切图/shouye@2x.png',
+				'../static/门诊端/iOS切图/Hospital@2x.png',
+				'../static/切图-基因/jiyin-gray@2x.png',
+				'../static/iOS切图/wode@2x.png']
+	}
   },
   computed:{
   	...mapGetters(['roterShow'])
   },
   methods:{
-	  
+	//主导航栏颜色切换
+	colorFn(_id){
+		switch(_id){
+			case '_index':
+			this.colorImg[0] = '../static/iOS切图/shouye-blue@2x.png';
+			this.colorImg[1] = '../static/门诊端/iOS切图/Hospital@2x.png';
+			this.colorImg[2] = '../static/切图-基因/jiyin-gray@2x.png';
+			this.colorImg[3] = '../static/iOS切图/wode@2x.png';
+			document.getElementById('_index').style.color = "#2B77EF"
+			document.getElementById('_hospital').style.color = "#999999"
+			document.getElementById('_gene').style.color = "#999999"
+			document.getElementById('_my').style.color = "#999999"
+			break;
+			case '_hospital':
+			this.colorImg[0] = '../static/iOS切图/shouye@2x.png';
+			this.colorImg[2] = '../static/切图-基因/jiyin-gray@2x.png';
+			this.colorImg[3] = '../static/iOS切图/wode@2x.png';
+			this.colorImg[1] = '../static/门诊端/iOS切图/Hospital-blue@2x.png';
+			document.getElementById('_index').style.color = "#999999"
+			document.getElementById('_hospital').style.color = "#2B77EF"
+			document.getElementById('_gene').style.color = "#999999"
+			document.getElementById('_my').style.color = "#999999"
+			break;
+			 
+			case '_gene':
+			this.colorImg[0] = '../static/iOS切图/shouye@2x.png';
+			this.colorImg[1] = '../static/门诊端/iOS切图/Hospital@2x.png';
+			this.colorImg[3] = '../static/iOS切图/wode@2x.png';
+			this.colorImg[2] = '../static/切图-基因/jiyin-blue@2x.png';
+			document.getElementById('_index').style.color = "#999999"
+			document.getElementById('_hospital').style.color = "#999999"
+			document.getElementById('_gene').style.color = "#2B77EF"
+			document.getElementById('_my').style.color = "#999999"
+			break;
+			  
+			case '_my':
+			this.colorImg[0] = '../static/iOS切图/shouye@2x.png';
+			this.colorImg[1] = '../static/门诊端/iOS切图/Hospital@2x.png';
+			this.colorImg[2] = '../static/切图-基因/jiyin-gray@2x.png';
+			this.colorImg[3] = '../static/iOS切图/wode-blue@2x.png';
+			
+			document.getElementById('_index').style.color = "#999999"
+			document.getElementById('_hospital').style.color = "#999999"
+			document.getElementById('_gene').style.color = "#999999"
+			document.getElementById('_my').style.color = "#2B77EF"
+			break;
+		}
+		// document.getElementById(_id).style.color = 'red'
+		  console.log(document.getElementById(_id).color)
+	}
   },
 }
 </script>
@@ -62,7 +125,14 @@ body{
 	margin-top: .07rem;height: .21rem;
 	text-align: center;color: #999999;
 }
-.mainButton a:nth-child(1){
+#_index,#_hospital,#_gene,#_my{
+	height: .51rem;width: 100%;
+}
+.mainButton img{
+	width: .2rem;height: .21rem;display: block;
+	margin: 0 auto;margin-bottom: 0.019rem;
+}
+/* .mainButton a:nth-child(1){
 	background:url('../static/iOS切图/shouye@2x.png') no-repeat center ;
 	background-size:.2rem .21rem;
 }
@@ -80,22 +150,21 @@ body{
 }
 
 .mainButton a:nth-child(1):visited{
-	color:red
+	background:url('../static/iOS切图/wode@2x.png') no-repeat center;
+	background-size:.2rem .21rem;
+	color:#2B77EF;
 }
 
 .mainButton a span{
 	display: block;
 	margin-top: .22rem;
 	
-}
+} */
 
 
 
-/* 
-.mainButton img{
-	width: .2rem;height: .21rem;display: block;
-	margin: 0 auto;margin-bottom: 0.019rem;
-}
- */
+
+
+
 
 </style>

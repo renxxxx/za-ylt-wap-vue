@@ -5,6 +5,7 @@ import hospital from '@/components/hospital_hospital.vue'
 import user from '@/components/hospital_user.vue'
 import landingPage from '@/components/landingPage.vue'
 import retrievePassword from '@/components/retrievePassword.vue'
+import index_search from '@/components/index/index_search.vue'
 
 import store from '../store'
 Vue.use(Router)
@@ -20,6 +21,14 @@ const router = new Router({
     	meta: {auth:true},
 		alias:'/index'
     },
+	{
+		// 门诊主页
+		path: '/index_search',
+		name: 'index_search',
+		component: index_search,
+		meta: {auth:true},
+		alias:'/index_search'
+	},
 	{
 		//医院主页
 		path: '/hospital',

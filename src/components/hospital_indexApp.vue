@@ -4,8 +4,10 @@
 			<!-- 搜索及其筛选 -->
 			<div class="topNav">
 				<div class="indexSearch">
-					<img src="../../static/iOS切图/sousuo@2x.png" alt="">
-					<input type="text" placeholder="搜索病源">
+					<router-link to="/index_search">
+						<img src="../../static/iOS切图/sousuo@2x.png" alt="">
+						<input type="text" placeholder="搜索病源">
+					</router-link>
 				</div>
 				<div class="indexScreening" @click="showPopup">
 					<span>筛选</span>
@@ -90,7 +92,7 @@
 						<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
 							<div class="list">
 								<ul :model="message" class="list-content">
-								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
+									<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
 									    <li v-for="(_notDiagnosis, index) in  message.notDiagnosis" :key="index">
 									    	<span>{{_notDiagnosis.realname}}</span>
 											<div class="AlreadyRight">
@@ -308,7 +310,7 @@ export default {
   },
 }
 </script>
-AlreadyRight 
+
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 body{
@@ -465,6 +467,7 @@ body{
     background-color: rgba(0,0,0,.7);
     z-index: 2002!important;
 }
+
 >>>.van-notify--danger {
 	margin-top: .94rem!important;
     /* background-color: #ee0a24; */
@@ -478,6 +481,7 @@ body{
     -webkit-text-size-adjust: 100%;
     width: 100%;
     bottom: 0;
+	border-top: 1px solid #F5F5F5;
 }
 >>>.calendar_content[data-v-0946a5a1] {
     position: absolute;
