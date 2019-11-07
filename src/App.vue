@@ -3,19 +3,19 @@
 	<router-view/>
 	<div class="mainButton" v-show="roterShow">
 		<router-link to="/index">
-		  	<img src="../static/iOS切图/shouye@2x.png" alt="">
+		  	<!-- <img src="../static/iOS切图/shouye@2x.png" alt=""> -->
 		  	<span>首页</span>
 		</router-link>
 		<router-link to="/index">
-			<img src="../static/门诊端/iOS切图/Hospital@2x.png" alt="">
+			<!-- <img src="../static/门诊端/iOS切图/Hospital@2x.png" alt=""> -->
 		  	<span>医院</span>
 		</router-link>
 		<router-link to="/index">
-			<img src="../static/切图-基因/jiyin-gray@2x.png" alt="">
+			<!-- <img src="../static/切图-基因/jiyin-gray@2x.png" alt=""> -->
 			<span>基因</span>
 		</router-link>
-		<router-link to="/index">
-			<img src="../static/iOS切图/wode@2x.png" alt="">
+		<router-link to="/user">
+			<!-- <img src="../static/iOS切图/wode@2x.png" alt=""> -->
 			<span>我的</span>
 		</router-link>
 	</div>
@@ -40,7 +40,7 @@ export default {
 
 <style>
 body{
-	background-color:#FFFFFF;
+	/* background-color:#FFFFFF; */
 	height: 100%;
 	width: 100%;
 }
@@ -59,12 +59,43 @@ body{
 }
 .mainButton a {
 	display: inline-block;width: 24.3%;text-align: center;
-	margin-top: .08rem;
+	margin-top: .07rem;height: .21rem;
+	text-align: center;color: #999999;
 }
+.mainButton a:nth-child(1){
+	background:url('../static/iOS切图/shouye@2x.png') no-repeat center ;
+	background-size:.2rem .21rem;
+}
+.mainButton a:nth-child(2){
+	background:url('../static/门诊端/iOS切图/Hospital@2x.png') no-repeat center ;
+	background-size:.2rem .21rem;
+}
+.mainButton a:nth-child(3){
+	background:url('../static/切图-基因/jiyin-gray@2x.png') no-repeat center ;
+	background-size:.2rem .21rem;
+}
+.mainButton a:nth-child(4){
+	background:url('../static/iOS切图/wode@2x.png') no-repeat center ;
+	background-size:.2rem .21rem;
+}
+
+.mainButton a:nth-child(1):visited{
+	color:red
+}
+
+.mainButton a span{
+	display: block;
+	margin-top: .22rem;
+	
+}
+
+
+
+/* 
 .mainButton img{
 	width: .2rem;height: .21rem;display: block;
 	margin: 0 auto;margin-bottom: 0.019rem;
 }
-
+ */
 
 </style>

@@ -31,7 +31,7 @@ const router = new Router({
 		//用户主页
 		path: '/user',
 		name: 'user',
-		// meta: {auth:true},
+		meta: {auth:true},
 		component: user,
 	},
 	{
@@ -84,17 +84,11 @@ router.beforeEach((to,from,next) => {
 		store.state.shop.roterShow = false;
 		// console.log(store.state.shop.roterShow)
 	}
-	if(to.path == "/index"){
+	if(to.path == "/user" || to.path == "/index"){
 		store.state.shop.roterShow = true;
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"
 	}else{
-		document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"
-	}
-	if(to.path == "/user"){
-		store.state.shop.roterShow = true;
-		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"
-	}else{
-		document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"
+		// document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"
 	}
 })
 export default router

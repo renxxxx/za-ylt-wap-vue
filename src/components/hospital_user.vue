@@ -6,7 +6,8 @@
 			</div>
 			<div class="user_message">
 				<div class="top_left">
-					<img src="../../static/门诊端/iOS切图/logo@2x.png" alt="">
+					<img :src=coverImg alt="">
+					<span>已认证</span>
 				</div>
 				<div class="top_center">
 					<h3>门诊名称</h3>
@@ -21,7 +22,7 @@
 		
 		<div class="user_center">
 			<ul>
-				<li>
+				<li @click="exitFn">
 					<span>退出登陆</span>
 					<img src="../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
 				</li>
@@ -31,21 +32,57 @@
 </template>
 
 <script>
+import axios from 'axios'
+import {mapActions,mapGetters} from 'vuex'
+import qs from 'qs';
 export default {
   name: 'user',
   data () {
     return {
-     
+		coverImg: '../../static/门诊端/iOS切图/logo@2x.png',
     }
+  },
+  computed:{
+	...mapGetters(['account']),
+	
   },
   created () {
 		
   },
   mounted () {
-		
+	this.userFn()
   },
   methods: {
-  
+	userFn(){
+		// console.log("hahha")
+		console.log(this.account);
+		//用户头像值
+		let cover = this.account.data.data.cover;
+		// 是否认证值
+		let license = this.account.data.data.license
+		if(cover == '' || cover == undefined || cover == null){
+			console.log("cover为空")
+		}else{
+			this.coverImg = cover
+		}
+		
+		if(license == '' || license == undefined || license == null){
+			console.log("license为空")
+		}else{
+				
+		}
+		
+		// console.log(this.account.data.data.cover)
+		// console.log(this.account.data.data.license)
+	 },
+	//退出方法
+	exitFn(){
+		this.account.isLogin = 0;
+		this.account.name = '';
+		this.account.password = '';
+		console.log(this.account.isLogin);
+		window.location.href = '/#/landingPage';
+	}
   },
 }
 </script>
@@ -84,9 +121,19 @@ export default {
 	margin:.23rem .29rem .15rem .28rem;
 }
 .top_left img{
-
 	width: .75rem;
 	height: .75rem;
+	position: relative;
+}
+.top_left span{
+	position: absolute;
+	left: .61rem;
+	top: 1.15rem;
+	font-size: .03rem;
+	color: #FFFFFF;
+	background:url('../../static/iOS切图/Gradualchange@2x.png');
+	background-size:100% 100%;
+	padding: .02rem .1rem;
 }
 .top_center{
 	position: relative;
@@ -135,5 +182,14 @@ export default {
 	height: .52rem;
 	line-height: .52rem;
 	padding: 0rem .18rem;
+	position: relative;
+	border-bottom: 1px solid #EEEEEE;
+}
+.user_center ul li img{
+	position: absolute;
+	height: .13rem;
+	width: .08rem;
+	right: .18rem;
+	top: .19rem;
 }
 </style>

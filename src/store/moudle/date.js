@@ -265,7 +265,6 @@ const mutations={
 			// console.log(state.dateStata);
 			
 			break;
-			
 			case 1:
 			document.getElementById(state.labelDocument[0]).style.backgroundColor = "#EEEEEE";
 			document.getElementById(state.labelDocument[1]).style.backgroundColor = "#EEEEEE";
