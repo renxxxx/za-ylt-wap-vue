@@ -24,10 +24,7 @@ import { Image, Row, Col,Search,Tabbar, TabbarItem,Tab,Tabs,Checkbox, CheckboxGr
 Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab).use(Tabs).use(Checkbox)
 	.use(CheckboxGroup).use(Dialog).use(Popup).use(RadioGroup).use(Radio).use(Cell).use(CellGroup).use(PullRefresh)
 	.use(Area).use(Overlay).use(vueHashCalendar).use(DatetimePicker).use(VueScroller).use(Notify).use(CountDown).use(List);
-//定义全局 时间过滤器
-Vue.filter('comverTime',function(data,format){
-  return Moment(data).format(format);
-});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

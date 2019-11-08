@@ -49,39 +49,12 @@ export default {
 		
   },
   mounted () {
-		
+	this.getdata();
   },
   methods: {
-  	onRefresh(){
-  		this.$axios.post('/c2/patient/items',qs.stringify({
-			kw : this.keywords,
-		}))
-		.then(_d => {
-			console.log(_d.data.data.items)
-			
-			for(var i in _d.data.data.items){
-				if(_d.data.data.items[i].status == 1){
-					_d.data.data.items[i].span = '未就诊'
-					_d.data.data.items[i].imgUrl = '../../../static/门诊端/iOS切图/weijiuzhen@2x.png'
-				}else{
-					_d.data.data.items[i].span = '已就诊'
-					_d.data.data.items[i].imgUrl = '../../static/门诊端/iOS切图/yijiuzhen@2x.png'
-				}
-			console.log(this.user)
-				// console.log(_d.data.data.items[i].status)
-			}
-					
-		})
-		.catch((err)=>{
-			console.log(err);
-			Dialog({ message: '加载失败!'});
-		})
-		this.isLoading = false;
-  	},
-  	inputNow(_keywordsCode){
-  		// console.log(_keywords);
-  		// console.log(this.keywords);
-  		this.$axios.post('/c2/patient/items',qs.stringify({
+	//获取数据
+	getdata(){
+		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.keywords,
 		}))
 		.then(_d => {
@@ -103,35 +76,20 @@ export default {
 			console.log(err);
 			Dialog({ message: '加载失败!'});
 		})
+	},
+	//刷新数据方法
+  	onRefresh(){
+  		this.getdata();
+		this.isLoading = false;
+  	},
+	//键盘输入值时触发
+  	inputNow(_keywordsCode){
+  		// console.log(_keywords);
+  		// console.log(this.keywords);
+		let postTime = setTimeout(this.getdata(), 100000);
+		clearTimeout(postTime);
   		if(_keywordsCode.keyCode == 13){
-            this.msg='';
-            this.$axios.post('/c2/patient/items',qs.stringify({
-				kw : this.keywords,
-			}))
-			.then(_d => {
-				// console.log(_d.data.data.items)
-				// this.user = _d.data.data.items
-				// console.log(this.user)
-				for(var i in _d.data.data.items){
-					if(_d.data.data.items[i].status == 1){
-						this.user.push(_d.data.data.items[i]) ;
-						console.log(this.user)
-						_d.data.data.items[i].span = '未就诊'
-						_d.data.data.items[i].imgUrl = '../../../static/门诊端/iOS切图/weijiuzhen@2x.png'
-					}else{
-						this.user.push(_d.data.data.items[i]) 
-						_d.data.data.items[i].span = '已就诊'
-						_d.data.data.items[i].imgUrl = '../../static/门诊端/iOS切图/yijiuzhen@2x.png'
-					}
-					// console.log(_d.data.data.items[i].status)
-			
-				}
-					
-			})
-			.catch((err)=>{
-				console.log(err);
-				Dialog({ message: '加载失败!'});
-			})
+           this.getdata();
         }
   	},
 	goBackFn(){
@@ -143,10 +101,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+._search{
+	position: relative;
+}
 .top_search{
 	height: .5rem;width: 100%;
 	background-color: #FFFFFF;
-	position:relative;
+	position:fixed;
+	margin-top: -.62rem;
 	z-index: 999;
 }
 .search_return{
@@ -192,7 +154,10 @@ export default {
 	margin-top:.12rem;
 	background-color:#FFFFFF;
 	position:relative;
-	/*padding:.14rem .15rem;*/
+	/* padding:.14rem .15rem; */
+}
+.search_content li:first-child{
+	margin-top: .62rem;
 }
 .search_content li p{
 	position:absolute;

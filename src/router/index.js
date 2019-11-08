@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import index from '@/components/hospital_indexApp.vue'
 import hospital from '@/components/hospital_hospital.vue'
+import gene from '@/components/hospital_gene.vue'
 import user from '@/components/hospital_user.vue'
 import landingPage from '@/components/landingPage.vue'
 import retrievePassword from '@/components/retrievePassword.vue'
@@ -33,8 +34,15 @@ const router = new Router({
 		//医院主页
 		path: '/hospital',
 		name: 'hospital',
-		// meta: {auth:true},
+		meta: {auth:true},
 		component: hospital,
+	},
+	{
+		//医院主页
+		path: '/gene',
+		name: 'gene',
+		meta: {auth:true},
+		component: gene,
 	},
 	{
 		//用户主页
@@ -93,11 +101,11 @@ router.beforeEach((to,from,next) => {
 		store.state.shop.roterShow = false;
 		// console.log(store.state.shop.roterShow)
 	}
-	if(to.path == "/user" || to.path == "/index"){
+	if(to.path == "/user" || to.path == "/index" || to.path == '/index_search' || to.path == '/gene'){
 		store.state.shop.roterShow = true;
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"
 	}else{
-		// document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"
+		document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"
 	}
 })
 export default router

@@ -6,7 +6,7 @@ const state={
 	//主导航显示控制
 	roterShow:false,
 	//账号协议checked
-	checked: false,
+	checked: true,
 	//账号
 	account:{
 		name:'',
@@ -28,10 +28,10 @@ const state={
 	Time:{
 		look:'',
 		noLook:'',
-		confirmStart : 0,
-		confirmOver : 0,
-		pushStart : 0,
-		pushOver : 0
+		confirmStart : '',
+		confirmOver : '',
+		pushStart : '',
+		pushOver : ''
 	},
 	// lable的dom节点
 	labelDocument:['labelDocument','labelDocument2','labelDocument3','labelDocument4','labelDocument5','labelDocument6'],
@@ -222,19 +222,19 @@ const mutations={
 		state.time = state.time[3]+'/'+state.time[1]+'/'+state.time[2]+'';
 		switch (state.dateStata){
 			case 2:
-			state.Time.confirmStart = 0;
+			state.Time.confirmStart = '';
 			state.Time.confirmStart = state.time; 
 			break;
 			case 3: 
-			state.Time.confirmOver = 0;
+			state.Time.confirmOver = '';
 			state.Time.confirmOver = state.time; 		
 			break;
 			case 4: 
-			state.Time.pushStart = 0;
+			state.Time.pushStart = '';
 			state.Time.pushStart = state.time;		
 			break;
 			case 5: 
-			state.Time.pushOver = 0;
+			state.Time.pushOver = '';
 			state.Time.pushOver = state.time;
 			break;
 		}
@@ -334,30 +334,31 @@ const mutations={
 				break;
 				
 				case 'confirmStart':
-				if(state.Time.confirmStart == 0){
+				if(state.Time.confirmStart == ''){
 					Dialog({ message: '请确认您的开始就诊时间' });
 				};
 				break;
 				
 				case 'confirmOver':
-				if(state.Time.confirmOver == 0){
+				if(state.Time.confirmOver == ''){
 					Dialog({ message: '请确认结束您的就诊时间' });
 				};
 				break;
 				
 				case 'pushStart':
-				if(state.Time.pushStart == 0){
+				if(state.Time.pushStart == ''){
 					Dialog({ message: '请选择开始门诊推送时间' });
 				};
 				break;
 				
 				case 'pushOver':
-				if(state.Time.pushOver == 0){
+				if(state.Time.pushOver == ''){
 					Dialog({ message: '请选择结束门诊推送时间' });
 				};
 				break;
 			}
 		}
+		
 		console.log(state.Time);
 		state.show = false;
 		Dialog({ message: '已提交' });

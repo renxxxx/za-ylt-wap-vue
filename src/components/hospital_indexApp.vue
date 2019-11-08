@@ -45,7 +45,7 @@
 					</div>
 				</van-popup>
 			</div>
-			<van-popup :show="showTime" @click="closeFn" v-model="showTime" position="bottom" :style="{ height: '30%',width:'100%'}">
+			<van-popup @click="closeFn" v-model="showTime" position="bottom" :style="{ height: '20%',width:'100%'}">
 				<van-datetime-picker
 				  type="date"
 				  @confirm="confirm"
@@ -88,35 +88,39 @@
 							<input class="submitClass" type="submit" value="提交"></input>
 						</form>
 					</van-tab>
-					<van-tab title="未就诊" class="Already" @click="testClick()">
+					<van-tab :title=noTitle class="Already" @click="testClick()">
 						<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
 							<div class="list">
-								<ul :model="message" class="list-content">
+								<ul :model="message" class="index_content">
 									<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
-									    <li v-for="(_notDiagnosis, index) in  message.notDiagnosis" :key="index">
-									    	<span>{{_notDiagnosis.realname}}</span>
-											<div class="AlreadyRight">
-												<img src="../../static/门诊端/iOS切图/weijiuzhen@2x.png" alt="">
-												<span>未就诊</span>
-											</div>
-											<p>推送时间：<span>{{moment(_notDiagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span></p>
+									    <li v-for="(_notDiagnosis,inx) in message.notDiagnosis" :key="inx">
+									    	<div class="content_left">
+									    		<span>{{_notDiagnosis.realname}}</span>
+									    	</div>
+									    	<div class="content_right">
+									    		<img src='../../static/门诊端/iOS切图/weijiuzhen@2x.png'>
+									    		<span class="AlreadySpanColor">已就诊</span>
+									    	</div>
+									    	<p>{{moment(_notDiagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
 									    </li>
 									</van-list>
 								</ul>
 							</div>
 						</van-pull-refresh>
 				  </van-tab>
-				  <van-tab title="已就诊" class="Already" >
+				  <van-tab :title=yesTitle class="Already" >
 						<van-pull-refresh v-model="isLoading" @refresh="onRefresh2">
-							<ul :model="message">
+							<ul class="index_content" :model="message">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoadss">
 									<li v-for="(_diagnosis,inx) in message.diagnosis" :key="inx">
-										<span>{{_diagnosis.realname}}</span>
-										<div class="AlreadyRight no">
-											<img src="../../static/门诊端/iOS切图/yijiuzhen@2x.png" alt="">
-											<span class="AlreadySpanColor">已就诊</span>
+										<div class="content_left">
+											<span>{{_diagnosis.realname}}</span>
 										</div>
-										<p>推送时间：<span>{{moment(_diagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span></p>
+										<div class="content_right">
+											<img src='../../static/门诊端/iOS切图/yijiuzhen@2x.png'>
+											<span>已就诊</span>
+										</div>
+										<p>{{moment(_diagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
 									</li>
 								</van-list>
 							</ul>
@@ -137,12 +141,8 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-		//单选框的选择默认项
-		radio:'1',
-	   //下拉刷新
-		count: 0,
-		isLoading: false,
-		
+		noTitle:'未就诊',
+		yesTitle:'已就诊',
 		//获取动态数据
 		message:{
 			//未就诊
@@ -150,11 +150,7 @@ export default {
 			//未就诊
 			diagnosis:[],
 		},
-		//日期参数
-		minDate:'',
-		defaultDatetime: new Date(),
-		markDate: ['2019/06/30', '2019/10/05', '2019/10/19', '2019/10/09', '2019/10/16', '2019/10/12'],
-		currentDate:'',
+		//页数
 		page : 1,
 		page2 : 1,
 		 // 数据全部加载完成
@@ -167,9 +163,61 @@ export default {
   }, 
   mounted(){
 	// //未就诊请求
-	// this.getdata(1,1,this.message.notDiagnosis);
-	// //已就诊
-	// this.getdata(4,1,this.message.diagnosis);
+	this.$axios.post('/c2/patient/items',qs.stringify({
+		status : 1 ,
+		pn : this.page,
+		ps : 10
+	}))
+	.then(_d => {
+		if(_d.data.data.items.length != 0){
+			setTimeout(() => {
+				for (let nums in _d.data.data.items) {
+				    this.message.notDiagnosis.push(_d.data.data.items[nums]);
+				 }
+			}, 300);
+			this.noTitle = '未就诊' + _d.data.data.sum.totalCount
+		}else{
+			this.$notify({
+				message: '数据已全部加载',
+				duration: 1000,
+				background:'#79abf9',
+			})
+			this.loading = false;
+			this.finished = true;
+		}
+	})
+	.catch((err)=>{
+		console.log(err);
+		Dialog({ message: '加载失败!'});
+	})
+	//已就诊
+	this.$axios.post('/c2/patient/items',qs.stringify({
+		status : 4 ,
+		pn : this.page,
+		ps : 10
+	}))
+	.then(_d => {
+		if(_d.data.data.items.length != 0){
+			setTimeout(() => {
+				for (let nums in _d.data.data.items) {
+				     this.message.diagnosis.push(_d.data.data.items[nums]);
+				}
+			}, 300);
+			this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
+		}else{
+			this.$notify({
+				message: '数据已全部加载',
+				duration: 1000,
+				background:'#79abf9',
+			})
+			this.loading = false;
+			this.finished = true;
+		}
+	})
+	.catch((err)=>{
+		console.log(err);
+		Dialog({ message: '加载失败!'});
+	})
   },
   computed:{
 	// window.addEventListener('popstate', this.roterShow = false);
@@ -181,7 +229,16 @@ export default {
 	    },
 	    set: function (newValue) {
 			this.$store.state.shop.show = newValue;
-	    }
+	    },
+	},
+	showTime: {
+	    get: function() {
+			// console.log(this.$store)
+	        return this.$store.state.shop.showTime
+	    },
+	    set: function (newValue) {
+			this.$store.state.shop.showTime = newValue;
+	    },
 	},
   },
   //注册组件
@@ -212,12 +269,12 @@ export default {
 			kw	:	"",
 			clinicId : this.account.data.data.clinic.clinicId,
 			name : "",
-			pushTimeStart : undefined,
-			pushTimeEnd : undefined,
+			pushTimeStart : this.Time.confirmStart,
+			pushTimeEnd : this.Time.confirmOver,
 			hospitalId : this.account.data.data.hospital.hospitalId,
 			status : data ,
-			hospitalConfirmTimeStart : undefined,
-			hospitalConfirmTimeEnd : undefined,
+			hospitalConfirmTimeStart : this.Time.pushStart,
+			hospitalConfirmTimeEnd : this.Time.pushOver,
 			orders : 'asc',
 			pn : this.page,
 			ps : 10
@@ -237,6 +294,7 @@ export default {
 				    // 加载状态结束
 				    this.loading = false;
 				}, 300);
+				this.noTitle = '已就诊' + _d.data.data.sum.totalCount
 			}else{
 				this.$notify({
 					message: '数据已全部加载',
@@ -260,12 +318,12 @@ export default {
 			kw	:	"",
 			clinicId : this.account.data.data.clinic.clinicId,
 			name : "",
-			pushTimeStart : undefined,
-			pushTimeEnd : undefined,
+			pushTimeStart : this.Time.confirmStart,
+			pushTimeEnd : this.Time.confirmOver,
 			hospitalId : this.account.data.data.hospital.hospitalId,
 			status : data ,
-			hospitalConfirmTimeStart : undefined,
-			hospitalConfirmTimeEnd : undefined,
+			hospitalConfirmTimeStart :  this.Time.pushStart,
+			hospitalConfirmTimeEnd : this.Time.pushOver,
 			orders : 'asc',
 			pn : this.page2,
 			ps : 10
@@ -285,6 +343,7 @@ export default {
 				    // 加载状态结束
 				    this.loading = false;
 				}, 300);
+				this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
 			}else{
 				this.$notify({
 					message: '已加载',
@@ -553,45 +612,48 @@ body{
 	margin-top: .2rem;
 	height: .78rem;
 }
-.Already{
-	padding: .12rem .12rem .12rem;
-	width: 100%;height: 5.4rem;
-	overflow:scroller;
-}
-.Already ul{
-	width:100%;margin: .12rem;
-}
-.Already ul li{
-	width: 85.6%;border-radius: .03rem;
-	background: #FFFFFF;
-	padding: .145rem .15rem .14rem .15rem;
-	margin-bottom: .12rem;
-}
-.Already ul li span{
-	font-family: '苹方-简 中黑体';
-	font-weight: 900;
-}
-.AlreadyRight{
-	float: right;
-}
 .AlreadySpanColor{
-	color: #4DD865!important;
+	color: #2B77EF!important;
 }
-.AlreadyRight img{
-	height: .11rem;
-	width: .11rem;
+
+.index_content{
+	margin: 0 .12rem;
 }
-.AlreadyRight span{
-	margin-left: .05rem;
-	color: #2B77EF;
-	font-weight: none;
+.index_content li {
+	height:1.01rem;
+	margin-top:.12rem;
+	background-color:#FFFFFF;
+	position:relative;
+	/*padding:.14rem .15rem;*/
 }
-.Already ul li:last-child{
-	margin-bottom:.49rem;
+.index_content li p{
+	position:absolute;
+	bottom:0;
+	height:.5rem;
+	width:93%;
+	line-height:.5rem;
+	margin-left:.14rem;
+	border-top:1px solid #E5E5E5;
 }
-.Already ul li p{
-	color: #768892;
-	font-weight: none;
+.content_left{
+	float:left;
+	height:.5rem;
+	margin-top:.14rem;
+	margin-left:.15rem;
+}
+.content_right{
+	float:right;
+	height:.5rem;
+	margin-right:.14rem;
+	margin-top:.15rem
+}
+.content_right img{
+	width:.11rem;
+	height:.11rem;
+	margin-right:.04rem;
+}
+.content_right span{
+	color: #4DD865;
 }
 .date_ctrl {
     vertical-align: middle;

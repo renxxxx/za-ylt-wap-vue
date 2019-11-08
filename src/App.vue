@@ -8,13 +8,13 @@
 				<span>首页</span>
 			</div>
 		</router-link>
-		<router-link to="/user">
+		<router-link to="/hospital">
 			<div id="_hospital" @click="colorFn('_hospital')">
 				<img :src=colorImg[1] alt="">
 				<span>医院</span>
 			</div>
 		</router-link>
-		<router-link to="/index">
+		<router-link to="/gene">
 			<div id="_gene" @click="colorFn('_gene')">
 				<img :src=colorImg[2] alt="">
 				<span>基因</span>
@@ -37,7 +37,7 @@ export default {
   data(){
   	return{
 		//主导航栏图片
-		colorImg:['../static/iOS切图/shouye@2x.png',
+		colorImg:['../static/iOS切图/shouye-blue@2x.png',
 				'../static/门诊端/iOS切图/Hospital@2x.png',
 				'../static/切图-基因/jiyin-gray@2x.png',
 				'../static/iOS切图/wode@2x.png']
@@ -95,7 +95,7 @@ export default {
 			break;
 		}
 		// document.getElementById(_id).style.color = 'red'
-		  console.log(document.getElementById(_id).color)
+		  // console.log(document.getElementById(_id).color)
 	}
   },
 }
@@ -121,9 +121,12 @@ body{
 	background:rgba(255,255,255,1);
 }
 .mainButton a {
-	display: inline-block;width: 24.3%;text-align: center;
+	float: left;width: 24.3%;text-align: center;
 	margin-top: .07rem;height: .21rem;
 	text-align: center;color: #999999;
+}
+.mainButton a:first-child{
+	color:#2B77EF;
 }
 #_index,#_hospital,#_gene,#_my{
 	height: .51rem;width: 100%;

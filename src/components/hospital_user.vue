@@ -55,19 +55,19 @@ export default {
   methods: {
 	userFn(){
 		// console.log("hahha")
-		console.log(this.account);
+		// console.log(this.account);
 		//用户头像值
 		let cover = this.account.data.data.cover;
 		// 是否认证值
 		let license = this.account.data.data.license
 		if(cover == '' || cover == undefined || cover == null){
-			console.log("cover为空")
+			// console.log("cover为空")
 		}else{
 			this.coverImg = cover
 		}
 		
 		if(license == '' || license == undefined || license == null){
-			console.log("license为空")
+			// console.log("license为空")
 		}else{
 				
 		}
