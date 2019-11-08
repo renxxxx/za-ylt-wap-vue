@@ -99,7 +99,7 @@
 												<img src="../../static/门诊端/iOS切图/weijiuzhen@2x.png" alt="">
 												<span>未就诊</span>
 											</div>
-											<p>推送时间：<span>{{_notDiagnosis.pushTime}}</span></p>
+											<p>推送时间：<span>{{moment(_notDiagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span></p>
 									    </li>
 									</van-list>
 								</ul>
@@ -116,7 +116,7 @@
 											<img src="../../static/门诊端/iOS切图/yijiuzhen@2x.png" alt="">
 											<span class="AlreadySpanColor">已就诊</span>
 										</div>
-										<p>推送时间：<span>{{_diagnosis.pushTime}}</span></p>
+										<p>推送时间：<span>{{moment(_diagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span></p>
 									</li>
 								</van-list>
 							</ul>
@@ -467,7 +467,11 @@ body{
     background-color: rgba(0,0,0,.7);
     z-index: 2002!important;
 }
-
+>>>[data-v-111b5a74] .van-hairline--top-bottom {
+    display: block;
+    width: 100%!important;
+    z-index: 99!important;
+}
 >>>.van-notify--danger {
 	margin-top: .94rem!important;
     /* background-color: #ee0a24; */
@@ -644,10 +648,7 @@ body{
     -webkit-transform: scale(.5);
     transform: scale(.5);
 }
->>>.van-hairline--top-bottom{
-	display: block;
-   width: 100%!important;
-}
+
 >>>van-tabs{
 	height: 100%;
 }

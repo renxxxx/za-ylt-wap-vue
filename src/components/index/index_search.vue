@@ -8,18 +8,38 @@
 			</div>
 			<div class="search_input">
 				<img src="../../../static/iOS切图/sousuo@2x.png" alt="">
-				<input type="text" placeholder="搜索病源">
+				<input type="text" placeholder="搜索病源" v-model="keywords" @keyup="inputNow" >
 			</div>
 		</div>
+		<van-pull-refresh v-model="isLoading" @refresh="onRefresh" style=" overflow: none!important;">
+			<ul class="search_content" v-model="user">
+				<li v-for="(_user,inx) in user" :key="inx">
+					<div class="content_left">
+						<span>{{_user.realname}}</span>
+					</div>
+					<div class="content_right">
+						<img :src='_user.imgUrl'>
+						<span>{{_user.span}}</span>
+					</div>
+					<p>{{moment(_user.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
+				</li>
+			</ul>
+		</van-pull-refresh>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import {mapActions,mapGetters} from 'vuex'
+import qs from 'qs';
+import { Dialog } from 'vant'
 export default {
   name: 'index_search',
   data () {
     return {
-     
+     	keywords : '',
+     	user:[],
+     	isLoading: false,
     }
   },
   computed:{
@@ -32,6 +52,88 @@ export default {
 		
   },
   methods: {
+  	onRefresh(){
+  		this.$axios.post('/c2/patient/items',qs.stringify({
+			kw : this.keywords,
+		}))
+		.then(_d => {
+			console.log(_d.data.data.items)
+			
+			for(var i in _d.data.data.items){
+				if(_d.data.data.items[i].status == 1){
+					_d.data.data.items[i].span = '未就诊'
+					_d.data.data.items[i].imgUrl = '../../../static/门诊端/iOS切图/weijiuzhen@2x.png'
+				}else{
+					_d.data.data.items[i].span = '已就诊'
+					_d.data.data.items[i].imgUrl = '../../static/门诊端/iOS切图/yijiuzhen@2x.png'
+				}
+			console.log(this.user)
+				// console.log(_d.data.data.items[i].status)
+			}
+					
+		})
+		.catch((err)=>{
+			console.log(err);
+			Dialog({ message: '加载失败!'});
+		})
+		this.isLoading = false;
+  	},
+  	inputNow(_keywordsCode){
+  		// console.log(_keywords);
+  		// console.log(this.keywords);
+  		this.$axios.post('/c2/patient/items',qs.stringify({
+			kw : this.keywords,
+		}))
+		.then(_d => {
+			// console.log(_d.data.data.items)
+			this.user = _d.data.data.items
+			for(var i in _d.data.data.items){
+				if(_d.data.data.items[i].status == 1){
+					_d.data.data.items[i].span = '未就诊'
+					_d.data.data.items[i].imgUrl = '../../../static/门诊端/iOS切图/weijiuzhen@2x.png'
+				}else{
+					_d.data.data.items[i].span = '已就诊'
+					_d.data.data.items[i].imgUrl = '../../static/门诊端/iOS切图/yijiuzhen@2x.png'
+				}
+				// console.log(_d.data.data.items[i].status)
+			}
+					
+		})
+		.catch((err)=>{
+			console.log(err);
+			Dialog({ message: '加载失败!'});
+		})
+  		if(_keywordsCode.keyCode == 13){
+            this.msg='';
+            this.$axios.post('/c2/patient/items',qs.stringify({
+				kw : this.keywords,
+			}))
+			.then(_d => {
+				// console.log(_d.data.data.items)
+				// this.user = _d.data.data.items
+				// console.log(this.user)
+				for(var i in _d.data.data.items){
+					if(_d.data.data.items[i].status == 1){
+						this.user.push(_d.data.data.items[i]) ;
+						console.log(this.user)
+						_d.data.data.items[i].span = '未就诊'
+						_d.data.data.items[i].imgUrl = '../../../static/门诊端/iOS切图/weijiuzhen@2x.png'
+					}else{
+						this.user.push(_d.data.data.items[i]) 
+						_d.data.data.items[i].span = '已就诊'
+						_d.data.data.items[i].imgUrl = '../../static/门诊端/iOS切图/yijiuzhen@2x.png'
+					}
+					// console.log(_d.data.data.items[i].status)
+			
+				}
+					
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
+        }
+  	},
 	goBackFn(){
 		this.$router.back(-1)
 	},
@@ -44,15 +146,24 @@ export default {
 .top_search{
 	height: .5rem;width: 100%;
 	background-color: #FFFFFF;
+	position:relative;
+	z-index: 999;
 }
-.search_return img{
+.search_return{
+	height: .5rem;width: .5rem;
+	float: left;
+}
+.search_return a{
+	height: .5rem;width: 100%;
+}
+.search_return a img{
 	width: .09rem;
 	height: .16rem;
 	margin: .17rem .18rem;
-	float: left;
+	
 }
 .search_input{
-	float: left;width: 82%;
+	float: left;width: 75%;
 }
 .search_input input{
 	background-color: #F5F5F5;
@@ -72,5 +183,46 @@ export default {
 	position: absolute;
 	top: .18rem;
 	left: .6rem;
+}
+.search_content{
+	margin: 0 .12rem;
+}
+.search_content li {
+	height:1.01rem;
+	margin-top:.12rem;
+	background-color:#FFFFFF;
+	position:relative;
+	/*padding:.14rem .15rem;*/
+}
+.search_content li p{
+	position:absolute;
+	bottom:0;
+	height:.5rem;
+	width:93%;
+	line-height:.5rem;
+	margin-left:.14rem;
+	border-top:1px solid #E5E5E5;
+}
+.content_left{
+	float:left;
+	height:.5rem;
+	margin-top:.14rem;
+	margin-left:.15rem;
+}
+.content_right{
+	float:right;
+	height:.5rem;
+	margin-right:.14rem;
+	margin-top:.15rem
+}
+.content_right img{
+	width:.11rem;
+	height:.11rem;
+	margin-right:.04rem;
+}
+>>>[data-v-6bfd94e2] .van-pull-refresh{
+    overflow: visible!important;
+    -webkit-user-select: none;
+    user-select: none;
 }
 </style>

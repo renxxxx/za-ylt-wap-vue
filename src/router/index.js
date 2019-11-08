@@ -89,7 +89,7 @@ router.beforeEach((to,from,next) => {
 	}else{
 		next();
 	}
-	if(to.path == "/landingPage"){
+	if(to.path == "/landingPage" || to.path == '/index_search'){
 		store.state.shop.roterShow = false;
 		// console.log(store.state.shop.roterShow)
 	}
