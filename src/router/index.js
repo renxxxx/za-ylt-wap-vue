@@ -6,8 +6,9 @@ import gene from '@/components/hospital_gene.vue'
 import user from '@/components/hospital_user.vue'
 import landingPage from '@/components/landingPage.vue'
 import retrievePassword from '@/components/retrievePassword.vue'
+//功能副插件
 import index_search from '@/components/index/index_search.vue'
-
+import details from '@/components/childPage/detailsPage.vue'
 import store from '../store'
 Vue.use(Router)
 
@@ -23,12 +24,18 @@ const router = new Router({
 		alias:'/index'
     },
 	{
-		// 门诊主页
+		// 门诊主页的搜索
 		path: '/index_search',
 		name: 'index_search',
 		component: index_search,
 		meta: {auth:true},
-		alias:'/index_search'
+	},
+	{
+		// 门诊主页的病人详情页
+		path: '/details',
+		name: 'details',
+		component: details,
+		// meta: {auth:true},
 	},
 	{
 		//医院主页
@@ -41,7 +48,7 @@ const router = new Router({
 		//医院主页
 		path: '/gene',
 		name: 'gene',
-		meta: {auth:true},
+		// meta: {auth:true},
 		component: gene,
 	},
 	{
@@ -97,10 +104,17 @@ router.beforeEach((to,from,next) => {
 	}else{
 		next();
 	}
-	if(to.path == "/landingPage" || to.path == '/index_search'){
+	if(to.path == '/index_search' || to.path == '/details'){
+		
 		store.state.shop.roterShow = false;
-		// console.log(store.state.shop.roterShow)
+		document.getElementById("mainButton").style.display = 'none';
+		// console.log(document.getElementById("mainButton"))
+	}else if(to.path == "/landingPage"){
+		store.state.shop.roterShow = false;
+	}else{
+		document.getElementById("mainButton").style.display = 'inline';
 	}
+	
 	if(to.path == "/user" || to.path == "/index" || to.path == '/index_search' || to.path == '/gene'){
 		store.state.shop.roterShow = true;
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"

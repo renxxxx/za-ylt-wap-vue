@@ -6,7 +6,7 @@
 				<div class="indexSearch">
 					<router-link to="/index_search">
 						<img src="../../static/iOS切图/sousuo@2x.png" alt="">
-						<input type="text" placeholder="搜索病源">
+						<input type="text" placeholder="搜索病源" autofocus="autofocus">
 					</router-link>
 				</div>
 				<div class="indexScreening" @click="showPopup">
@@ -93,16 +93,18 @@
 							<div class="list">
 								<ul :model="message" class="index_content">
 									<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
-									    <li v-for="(_notDiagnosis,inx) in message.notDiagnosis" :key="inx">
-									    	<div class="content_left">
-									    		<span>{{_notDiagnosis.realname}}</span>
-									    	</div>
-									    	<div class="content_right">
-									    		<img src='../../static/门诊端/iOS切图/weijiuzhen@2x.png'>
-									    		<span class="AlreadySpanColor">已就诊</span>
-									    	</div>
-									    	<p>{{moment(_notDiagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
-									    </li>
+										<router-link to="/details" >
+											<li v-for="(_notDiagnosis,inx) in message.notDiagnosis" :key="inx" @click="detailsValueFn(_notDiagnosis)">
+												<div class="content_left">
+													<span>{{_notDiagnosis.realname}}</span>
+												</div>
+												<div class="content_right">
+													<img src='../../static/门诊端/iOS切图/weijiuzhen@2x.png'>
+													<span class="AlreadySpanColor">未就诊</span>
+												</div>
+												<p>{{moment(_notDiagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
+											</li>
+										</router-link>
 									</van-list>
 								</ul>
 							</div>
@@ -112,16 +114,18 @@
 						<van-pull-refresh v-model="isLoading" @refresh="onRefresh2">
 							<ul class="index_content" :model="message">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoadss">
-									<li v-for="(_diagnosis,inx) in message.diagnosis" :key="inx">
-										<div class="content_left">
-											<span>{{_diagnosis.realname}}</span>
-										</div>
-										<div class="content_right">
-											<img src='../../static/门诊端/iOS切图/yijiuzhen@2x.png'>
-											<span>已就诊</span>
-										</div>
-										<p>{{moment(_diagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
-									</li>
+									<router-link to="/details" >
+										<li v-for="(_diagnosis,inx) in message.diagnosis" :key="inx" @click="detailsValueFn(_diagnosis)">
+											<div class="content_left">
+												<span>{{_diagnosis.realname}}</span>
+											</div>
+											<div class="content_right">
+												<img src='../../static/门诊端/iOS切图/yijiuzhen@2x.png'>
+												<span>已就诊</span>
+											</div>
+											<p>{{moment(_diagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
+										</li>
+									</router-link>
 								</van-list>
 							</ul>
 						</van-pull-refresh>
@@ -160,7 +164,7 @@ export default {
 		//显示下拉加载
 		isLoading: false
     }
-  }, 
+  },
   mounted(){
 	// //未就诊请求
 	this.$axios.post('/c2/patient/items',qs.stringify({
@@ -221,7 +225,7 @@ export default {
   },
   computed:{
 	// window.addEventListener('popstate', this.roterShow = false);
-	...mapGetters(['roterShow','Time','labelDocument','showTime','show','account']),
+	...mapGetters(['roterShow','Time','labelDocument','showTime','show','account','detail']),
 	show: {
 	    get: function() {
 			// console.log(this.$store)
@@ -244,6 +248,11 @@ export default {
   //注册组件
   components:{},
   methods:{
+	detailsValueFn(_diagnosis){
+		// console.log(_diagnosis)
+		this.detail.patientId = _diagnosis.itemId;
+		// console.log(this.detail)
+	},
 	//上拉加载数据
 	onLoad(){
 	  this.getdata(1,this.message.notDiagnosis,1);

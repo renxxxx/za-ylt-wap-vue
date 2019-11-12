@@ -22,6 +22,23 @@ const state={
 		},
 		data:{},
 	},
+	// 详情页数据
+	detail:{
+		patientId : undefined,		//病人id
+		realname : undefined,		//病人姓名
+		clinicId : undefined,		//门诊id
+		clinicName : undefined,		//门诊名称
+		hospitalConfirmTime : undefined	,//医院确诊时间
+		hospitalId	: undefined,	//医院id
+		hospitalName : undefined,	//医院名称
+		idcardNo : undefined,		//身份证号
+		invoices : [],		//发票
+		patientId :undefined,		//患者id
+		pushTime : undefined,		//推送时间
+		remark : undefined,			//备注
+		tel : undefined,			//电话号码
+		sickness : undefined		//病例
+	},
 	//筛选的弹窗显示值
 	show: false,	
 	//筛选数据
@@ -46,6 +63,8 @@ const getters={
 	roterShow : state => state.roterShow,
 	//账号协议checked
 	checked: state => state.checked,
+	// 详情页数据
+	detail: state => state.detail,
 	//账号登陆
 	account : state => state.account,
 	//筛选的弹窗显示值
@@ -358,10 +377,15 @@ const mutations={
 				break;
 			}
 		}
-		
+		if(state.Time.look != '' || state.Time.noLook != ''&&
+			state.Time.Look != ''  || state.Time.noLook != ''&&
+			state.Time.confirmStart != '' && state.Time.confirmOver != ''&&
+			state.Time.pushStart != '' && state.Time.pushOver == ''){
+			window.location.href='/#/index_search';
+		}
 		console.log(state.Time);
 		state.show = false;
-		Dialog({ message: '已提交' });
+		// Dialog({ message: '已提交' });
 		
 	},
 	// 筛选重置

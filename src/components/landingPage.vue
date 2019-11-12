@@ -10,7 +10,7 @@
 					<form @submit.prevent="submit('100')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
-							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号">
+							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" autofocus="autofocus">
 						</div>
 						<div class="inputBox">
 							<img  class="passwordImg" src="../../static/新登陆-10.25/切图/mima@2x.png" alt="">
@@ -39,7 +39,7 @@
 					<form @submit.prevent="submit('200')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
-							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号">
+							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" v-focus="true">
 							
 						</div>
 						<div class="inputBox">
@@ -68,7 +68,7 @@
 					<form @submit.prevent="submit('300')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
-							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号">
+							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" v-focus="true">
 						</div>
 						<div class="inputBox">
 							<img  class="passwordImg" src="../../static/新登陆-10.25/切图/mima@2x.png" alt="">
@@ -108,6 +108,17 @@ export default {
     return {
       
     }
+  },
+  directives: {
+    focus: {
+		inserted: function (el, {value}) {
+		// console.log(el,{value})
+            if (value) {
+				// console.log('ss')
+                el.focus();
+            }
+        }
+    }
   },
   watch:{
     '$route.path': function (newVal, oldVal) {
