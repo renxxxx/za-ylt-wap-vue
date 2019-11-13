@@ -25,20 +25,20 @@
 			</div>
 		</router-link> -->
 		
-		<van-tabbar v-model="active">
+		<van-tabbar v-model="active" route>
 			<van-tabbar-item to="/outpatient_index">
 			    <span>首页</span>
 			    <img
 					slot="icon"
 					slot-scope="props"
-					:src="props.active ? index.inactive : index.active " to="/outpatient_index"
+					:src="props.active ? index.inactive : index.active "
 			    />
 			</van-tabbar-item>
 			<van-tabbar-item to="/outpatient_hospital"> 
 			    <img
 					slot="icon"
 					slot-scope="props"
-					:src="props.active ? hospital.inactive : hospital.active" to="/outpatient_hospital"
+					:src="props.active ? hospital.inactive : hospital.active"
 			    >
 			    <span>医院</span>
 			</van-tabbar-item>
@@ -47,7 +47,7 @@
 			    <img
 					slot="icon"
 					slot-scope="props"
-					:src="props.active ? gene.inactive : gene.active" to="/outpatient_gene"
+					:src="props.active ? gene.inactive : gene.active"
 			    >
 			</van-tabbar-item>
 			<van-tabbar-item to="/outpatient_user">
@@ -55,7 +55,7 @@
 			    <img
 					slot="icon"
 					slot-scope="props"
-					:src="props.active ? my.inactive : my.active" to="/outpatient_user"
+					:src="props.active ? my.inactive : my.active"
 			    >
 			</van-tabbar-item>
 		</van-tabbar>
