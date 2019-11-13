@@ -3,16 +3,16 @@
 		<div class="top_search">
 			<div class="search_return">
 				<a @click="goBackFn">
-					<img src="../../../static/iOS切图/shape@2x.png" alt="">
+					<img src="../../../../static/iOS切图/shape@2x.png" alt="">
 				</a>
 			</div>
 			<div class="search_input">
-				<img src="../../../static/iOS切图/sousuo@2x.png" alt="">
+				<img src="../../../../static/iOS切图/sousuo@2x.png" alt="">
 				<input type="text" placeholder="搜索病源" v-model="keywords" @keyup="inputNow">
 			</div>
 			<div class="screening" @click="showPopup">
 				<span>筛选</span>
-				<img src="../../../static/iOS切图/screening.png" alt="">
+				<img src="../../../../static/iOS切图/screening.png" alt="">
 			</div>
 			<van-popup v-model="show" position="right" :style="{ height: '100%',width:'78.7%'}">
 				<div id="indexLabel" v-model="Time">
@@ -55,7 +55,7 @@
 		</div>
 		<van-pull-refresh v-model="isLoading" @refresh="onRefresh" style=" overflow: none!important;">
 			<ul class="search_content" v-model="user">
-				<router-link to="/details" >
+				<router-link to="/outpatient_details" >
 					<li v-for="(_user,inx) in user" :key="inx" @click="detailsValueFn(_user)">
 						<div class="content_left">
 							<span>{{_user.realname}}</span>
@@ -131,10 +131,10 @@ export default {
 			for(var i in _d.data.data.items){
 				if(_d.data.data.items[i].status == 1){
 					_d.data.data.items[i].span = '未就诊'
-					_d.data.data.items[i].imgUrl = '../../../static/门诊端/iOS切图/weijiuzhen@2x.png'
+					_d.data.data.items[i].imgUrl = '../../../../static/门诊端/iOS切图/weijiuzhen@2x.png'
 				}else{
 					_d.data.data.items[i].span = '已就诊'
-					_d.data.data.items[i].imgUrl = '../../static/门诊端/iOS切图/yijiuzhen@2x.png'
+					_d.data.data.items[i].imgUrl = '../../../../static/门诊端/iOS切图/yijiuzhen@2x.png'
 				}
 				// console.log(_d.data.data.items[i].status)
 			}

@@ -4,14 +4,14 @@
 			<!-- 搜索及其筛选 -->
 			<div class="topNav">
 				<div class="indexSearch">
-					<router-link to="/index_search">
-						<img src="../../static/iOS切图/sousuo@2x.png" alt="">
+					<router-link to="/outpatient_search">
+						<img src="../../../static/iOS切图/sousuo@2x.png" alt="">
 						<input type="text" placeholder="搜索病源" autofocus="autofocus">
 					</router-link>
 				</div>
 				<div class="indexScreening" @click="showPopup">
 					<span>筛选</span>
-					<img src="../../static/iOS切图/screen@2x.png" alt="加载中" >
+					<img src="../../../static/iOS切图/screen@2x.png" alt="加载中" >
 				</div>
 				<van-popup v-model="show" position="right" :style="{ height: '100%',width:'78.7%'}">
 					<div id="indexLabel" v-model="Time">
@@ -58,7 +58,7 @@
 					<van-tab title="新增病源">
 						<form @submit.prevent="hospitalSubmit" class="newAdd">
 							<div class="newAddTitle">
-								<img src="../../static/iOS切图/bitian@2x.png" alt="">
+								<img src="../../../static/iOS切图/bitian@2x.png" alt="">
 								<h3>必填项</h3>
 								<ul class="Fill">
 									<li>
@@ -76,7 +76,7 @@
 								</ul>
 							</div>
 							<div class="newAddTitle bottom">
-								<img src="../../static/iOS切图/bitian@2x.png" alt="">
+								<img src="../../../static/iOS切图/bitian@2x.png" alt="">
 								<h3>选填项</h3>
 								<ul class="Fill">
 									<li>
@@ -93,13 +93,13 @@
 							<div class="list">
 								<ul :model="message" class="index_content">
 									<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
-										<router-link to="/details" >
+										<router-link to="/outpatient_details" >
 											<li v-for="(_notDiagnosis,inx) in message.notDiagnosis" :key="inx" @click="detailsValueFn(_notDiagnosis)">
 												<div class="content_left">
 													<span>{{_notDiagnosis.realname}}</span>
 												</div>
 												<div class="content_right">
-													<img src='../../static/门诊端/iOS切图/weijiuzhen@2x.png'>
+													<img src='../../../static/门诊端/iOS切图/weijiuzhen@2x.png'>
 													<span class="AlreadySpanColor">未就诊</span>
 												</div>
 												<p>{{moment(_notDiagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
@@ -114,13 +114,13 @@
 						<van-pull-refresh v-model="isLoading" @refresh="onRefresh2">
 							<ul class="index_content" :model="message">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoadss">
-									<router-link to="/details" >
+									<router-link to="/outpatient_details" >
 										<li v-for="(_diagnosis,inx) in message.diagnosis" :key="inx" @click="detailsValueFn(_diagnosis)">
 											<div class="content_left">
 												<span>{{_diagnosis.realname}}</span>
 											</div>
 											<div class="content_right">
-												<img src='../../static/门诊端/iOS切图/yijiuzhen@2x.png'>
+												<img src='../../../static/门诊端/iOS切图/yijiuzhen@2x.png'>
 												<span>已就诊</span>
 											</div>
 											<p>{{moment(_diagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
@@ -133,6 +133,7 @@
 				</van-tabs>
 			</div>
 		</div>
+		<routerNav v-bind:name='name'></routerNav>
   </div>
 </template>
 
@@ -141,10 +142,12 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import routerNav from './childPage/router.vue'
 export default {
-  name: 'HelloWorld',
+  name: 'index',
   data () {
     return {
+		name: 'index',
 		noTitle:'未就诊',
 		yesTitle:'已就诊',
 		//获取动态数据
@@ -246,7 +249,9 @@ export default {
 	},
   },
   //注册组件
-  components:{},
+  components:{
+	  routerNav
+  },
   methods:{
 	detailsValueFn(_diagnosis){
 		// console.log(_diagnosis)
@@ -396,7 +401,7 @@ body{
 	line-height:.335rem;
 	width: 100%;
 	padding-top: 0.14rem;
-	background:url('../../static/门诊端/iOS切图/BJ-blue.png');
+	background:url('../../../static/门诊端/iOS切图/BJ-blue.png');
 	background-size:100% 100%;
 	position: relative;
 }
@@ -519,7 +524,14 @@ body{
 	height: 100%;
 	margin-top: -.65rem;
 }
-.van-tabs--line .van-tabs__wrap {
+>>>.van-tabs__nav--line {
+    box-sizing: content-box;
+    height: 100%;
+    padding-bottom: 15px;
+    z-index: 99;
+}
+>>>.van-tabs--line .van-tabs__wrap {
+	width: 100%;
     height: 44px;
 }
 .newAdd{
@@ -580,6 +592,12 @@ body{
 	height: .4rem;
 	display:block;margin:0 auto;
 	margin-top: .5rem;
+	
+	background: linear-gradient(#56AFF8, #2B77EF);
+	border: none;
+	border-radius: .2rem;
+	color: #FFFFFF;
+	font-size: 	.14rem;
 }
 .newAddTitle{
 	width: 80%;
@@ -687,7 +705,10 @@ body{
 	background: #F5F5F5!important;
 	height: 100%;
 }
-
+>>>.van-tab{
+	height: .5rem;
+	line-height: .5rem;;
+}
 >>>.van-picker__confirm {
     padding: 0 16px;
     color: #1989fa;
@@ -698,7 +719,7 @@ body{
 }
 >>>.van-tabs__line{
     position: absolute;
-    bottom: .18rem;
+    bottom: .16rem;
     left: 0;
     z-index: 1;
     height: .03rem;

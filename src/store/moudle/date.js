@@ -150,7 +150,7 @@ const mutations={
 							console.log(err)
 							Dialog({ message: '加载失败!' });
 						})
-					if(_isLogin == 200){
+					if(_isLogin == 200 || _isLogin == 100){
 						window.location.href=_url;	
 					}else{
 						Dialog({ message: '正在开发中，敬请期待' });
@@ -183,14 +183,14 @@ const mutations={
 		if(state.checked == true){
 			switch (landingState){
 				case '100':
-				mutations.submintGetData('/hospital/login','/hospital/login-refresh',100,'#/index')
+				mutations.submintGetData('/hospital/login','/hospital/login-refresh',100,'#/hospital_index')
 					break;
 				case '200':
 				// console.log('200')
-				mutations.submintGetData('/clinic/login','/clinic/login-refresh',200,'#/index')
+				mutations.submintGetData('/clinic/login','/clinic/login-refresh',200,'#/outpatient_index')
 					break;
 				case '300':
-				mutations.submintGetData('/manager/login','/manager/login-refresh',300,'#/index')
+				mutations.submintGetData('/manager/login','/manager/login-refresh',300,'#/outpatient_index')
 					break;
 				default:
 					break;

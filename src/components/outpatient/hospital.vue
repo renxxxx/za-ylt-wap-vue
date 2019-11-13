@@ -3,29 +3,29 @@
 		<div class="topNav">
 			<div class="hospital_search">
 				<input type="text" placeholder="输入文章关键字">
-				<img src="../../static/iOS切图/sousuo@2x.png" alt="">
+				<img src="../../../static/iOS切图/sousuo@2x.png" alt="">
 			</div>
 			<div class="hospital_information">
-				<img src="../../static/iOS切图/xiaoxi@2x.png" alt="">
+				<img src="../../../static/iOS切图/xiaoxi@2x.png" alt="">
 			</div>
 		</div>
 		<div class="shared">
 			<h3>共享医联体</h3>
 			<ul>
 				<li>
-					<img src="../../static/iOS切图/yiyuanxingxiang@2x.png" alt="">
+					<img src="../../../static/iOS切图/yiyuanxingxiang@2x.png" alt="">
 					<span>医院形象</span>
 				</li>
 				<li>
-					<img src="../../static/iOS切图/youzhianli@2x.png" alt="">
+					<img src="../../../static/iOS切图/youzhianli@2x.png" alt="">
 					<span>优质案例</span>
 				</li>
 				<li>
-					<img src="../../static/iOS切图/zhuanjia@2x.png" alt="">
+					<img src="../../../static/iOS切图/zhuanjia@2x.png" alt="">
 					<span>专家介绍</span>
 				</li>
 				<li>
-					<img src="../../static/iOS切图/huodongfabu@2x.png" alt="">
+					<img src="../../../static/iOS切图/huodongfabu@2x.png" alt="">
 					<span>最新活动</span>
 				</li>
 			</ul>
@@ -38,12 +38,12 @@
 					<div class="article_left">
 						<p>身体有这些症状，说明你可能感染了幽门螺旋杆菌</p>
 						<div class="article_leftTime">
-							<img src="../../static/iOS切图/time@2x.png" alt="">
+							<img src="../../../static/iOS切图/time@2x.png" alt="">
 							<span>2019-02-19 12:39</span>
 						</div>
 					</div>
 					<div class="article_right">
-						<img src="../../static/iOS切图/Group@2x.png" alt="">
+						<img src="../../../static/iOS切图/Group@2x.png" alt="">
 					</div>
 				</li>
 				
@@ -51,12 +51,12 @@
 					<div class="article_left">
 						<p>身体有这些症状，说明你可能感染了幽门螺旋杆菌</p>
 						<div class="article_leftTime">
-							<img src="../../static/iOS切图/time@2x.png" alt="">
+							<img src="../../../static/iOS切图/time@2x.png" alt="">
 							<span>2019-02-19 12:39</span>
 						</div>
 					</div>
 					<div class="article_right">
-						<img src="../../static/iOS切图/Group@2x.png" alt="">
+						<img src="../../../static/iOS切图/Group@2x.png" alt="">
 					</div>
 				</li>
 				
@@ -64,30 +64,34 @@
 					<div class="article_left">
 						<p>身体有这些症状，说明你可能感染了幽门螺旋杆菌</p>
 						<div class="article_leftTime">
-							<img src="../../static/iOS切图/time@2x.png" alt="">
+							<img src="../../../static/iOS切图/time@2x.png" alt="">
 							<span>2019-02-19 12:39</span>
 						</div>
 					</div>
 					<div class="article_right">
-						<img src="../../static/iOS切图/Group@2x.png" alt="">
+						<img src="../../../static/iOS切图/Group@2x.png" alt="">
 					</div>
 				</li>
 			</ul>
 		</div>
-		
+		<routerNav v-bind:name='name'></routerNav>
 	</div>
 </template>
 
 <script>
+import routerNav from './childPage/router.vue'
 export default {
   name: 'hospital',
   data () {
     return {
-     
+		name: 'hospital',
     }
   },
   computed:{
 	  
+  },
+  components:{
+	 routerNav
   },
   created () {
 		

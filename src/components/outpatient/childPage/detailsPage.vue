@@ -3,7 +3,7 @@
 		<div class="topNav">
 			<div class="nav_left">
 				<a @click="goBackFn">
-					<img src="../../../static/iOS切图/back-white@2x.png" alt="">
+					<img src="../../../../static/iOS切图/back-white@2x.png" alt="">
 				</a>
 			</div>
 			<div class="nav_center">
@@ -31,25 +31,25 @@
 				</li>
 				<li>
 					<span>所属门诊</span>
-					<input type="text"id='readId4'  v-model="detail.clinicName" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" v-model="detail.clinicName" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 			</ul>
 			<ul>
 				<li>
 					<span>门诊推送时间</span>
-					<input type="text" id='readId5' v-model="moment(detail.pushTime).format('HH:mm:ss YYYY-MM-DD')" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" v-model="moment(detail.pushTime).format('HH:mm:ss YYYY-MM-DD')" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>确认就诊时间</span>
-					<input type="text" id='readId6' v-model="moment(detail.hospitalConfirmTime).format('HH:mm:ss YYYY-MM-DD')" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" v-model="moment(detail.hospitalConfirmTime).format('HH:mm:ss YYYY-MM-DD')" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>病种</span>
-					<input type="text" id='readId7' v-model="detail.sickness" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" id='readId4' v-model="detail.sickness" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>备注</span>
-					<input type="text" id='readId8' v-model="detail.remark" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" id='readId5' v-model="detail.remark" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 			</ul>
 		</div>
@@ -80,7 +80,7 @@ export default {
 		postImgList:[],
 		modify:{
 			value:'编辑',
-			img:'../../../static/iOS切图/editor.png',
+			img:'../../../../static/iOS切图/editor.png',
 			data:true,					//保存状态
 			readonly : 'readonly',		//读取状态
 			num: 0,						//点击次数
@@ -140,15 +140,15 @@ export default {
 		if(this.modify.num % 2 != 0){
 			console.log(this.modify.num)
 			this.modify.value = '保存';
-			this.modify.img = '../../../static/iOS切图/save@2x.png';
+			this.modify.img = '../../../../static/iOS切图/save@2x.png';
 			this.modify.data = false;
-			for(let i =1; i<9; i++){
+			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
 				// console.log(_id)
 				document.getElementById(_id).removeAttribute("readonly");
 			}
 		}else{
-			this.$axios.post('/zaylt/c2/patient/itemalter',{
+			this.$axios.post('/c2/patient/itemalter',{
 				patientId : this.detail.patientId,
 				remark : this.detail.remark,
 				sickness : this.detail.sickness,
@@ -160,7 +160,14 @@ export default {
 			}).catch(err =>{
 				console.log(err)
 			})
-			window.location.href='/#/index';
+			for(let i =1; i<6; i++){
+				let _id = 'readId' + i;
+				// console.log(_id)
+				document.getElementById(_id).setAttribute("readonly");
+			}
+			this.modify.value = '编辑';
+			this.modify.img = '../../../../static/iOS切图/editor.png';
+			// window.location.href='/#/outpatient_index';
 		}
 	},
 	 // 上传图片触发方法

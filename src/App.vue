@@ -1,33 +1,33 @@
 <template>
-  <div id="app">
+	<div id="app">
 	<router-view/>
-	<div id="mainButton" v-show="roterShow">
-		<router-link to="/index">
-			<div id="_index" @click="colorFn('_index')">
-				<img :src=colorImg[0] alt="">
-				<span>首页</span>
-			</div>
-		</router-link>
-		<router-link to="/hospital">
-			<div id="_hospital" @click="colorFn('_hospital')">
-				<img :src=colorImg[1] alt="">
-				<span>医院</span>
-			</div>
-		</router-link>
-		<router-link to="/gene">
-			<div id="_gene" @click="colorFn('_gene')">
-				<img :src=colorImg[2] alt="">
-				<span>基因</span>
-			</div>
-		</router-link>
-		<router-link to="/user">
-			<div id="_my" @click="colorFn('_my')">
-				<img :src=colorImg[3] alt="">
-				<span>我的</span>
-			</div>
-		</router-link>
+		<!-- <div id="mainButton" v-show="roterShow">
+			<router-link to="/outpatient_index">
+				<div id="_index" @click="colorFn('_index')">
+					<img :src=colorImg[0] alt="">
+					<span>首页</span>
+				</div>
+			</router-link>
+			<router-link to="/outpatient_hospital">
+				<div id="_hospital" @click="colorFn('_hospital')">
+					<img :src=colorImg[1] alt="">
+					<span>医院</span>
+				</div>
+			</router-link>
+			<router-link to="/outpatient_gene">
+				<div id="_gene" @click="colorFn('_gene')">
+					<img :src=colorImg[2] alt="">
+					<span>基因</span>
+				</div>
+			</router-link>
+			<router-link to="/outpatient_user">
+				<div id="_my" @click="colorFn('_my')">
+					<img :src=colorImg[3] alt="">
+					<span>我的</span>
+				</div>
+			</router-link>
+		</div> -->
 	</div>
-  </div>
 </template>
 
 <script>
