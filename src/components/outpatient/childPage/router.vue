@@ -1,5 +1,5 @@
 <template>
-	<div id="mainButton" v-show="roterShow">
+	<div id="mainButton">
 		<!-- <router-link to="/outpatient_index">
 			<div id="_index" @click="colorFn('index')">
 				<img :src=colorImg[0] alt="">
@@ -95,7 +95,6 @@ export default {
   },
   props:['name'],
   computed:{
-  	...mapGetters(['roterShow']),
   },
   methods:{
 	//主导航栏颜色切换

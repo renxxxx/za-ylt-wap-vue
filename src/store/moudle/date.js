@@ -3,8 +3,6 @@ import axios from 'axios'
 import qs from 'qs';
 import { Dialog } from 'vant'
 const state={
-	//主导航显示控制
-	roterShow:false,
 	//账号协议checked
 	checked: true,
 	//账号
@@ -59,8 +57,6 @@ const state={
 	showData: '',
 }
 const getters={
-	//主导航显示控制
-	roterShow : state => state.roterShow,
 	//账号协议checked
 	checked: state => state.checked,
 	// 详情页数据
@@ -155,7 +151,6 @@ const mutations={
 					}else{
 						Dialog({ message: '正在开发中，敬请期待' });
 					}
-					state.roterShow=true;
 				}else{
 					Dialog({ message:  res.data.codeMsg});
 				}
@@ -381,7 +376,7 @@ const mutations={
 			state.Time.Look != ''  || state.Time.noLook != ''&&
 			state.Time.confirmStart != '' && state.Time.confirmOver != ''&&
 			state.Time.pushStart != '' && state.Time.pushOver == ''){
-			window.location.href='/#/index_search';
+			window.location.href='/#/outpatient_search';
 		}
 		console.log(state.Time);
 		state.show = false;

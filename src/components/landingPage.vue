@@ -131,7 +131,7 @@ export default {
      }
   },
   computed:{
-  	...mapGetters(['account','checked','roterShow'])
+  	...mapGetters(['account','checked'])
   },
   methods:{
 	 //传递页面状态值

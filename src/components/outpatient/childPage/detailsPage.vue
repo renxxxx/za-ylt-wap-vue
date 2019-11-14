@@ -19,44 +19,44 @@
 			<ul>
 				<li>
 					<span>病源姓名</span>
-					<input type="text" id='readId1' v-model="detail.realname" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" id='readId1' v-model="detail.realname" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>联系方式</span>
-					<input type="text" id='readId2' v-model="detail.tel" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" id='readId2' v-model="detail.tel" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>证件号码</span>
-					<input type="text" id='readId3' v-model="detail.idcardNo" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" id='readId3' v-model="detail.idcardNo" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>所属门诊</span>
-					<input type="text" v-model="detail.clinicName" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" v-model="detail.clinicName" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 			</ul>
 			<ul>
 				<li>
 					<span>门诊推送时间</span>
-					<input type="text" v-model="moment(detail.pushTime).format('HH:mm:ss YYYY-MM-DD')" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" :value="detail.pushTime" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>确认就诊时间</span>
-					<input type="text" v-model="moment(detail.hospitalConfirmTime).format('HH:mm:ss YYYY-MM-DD')" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" v-model="detail.hospitalConfirmTime"  style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>病种</span>
-					<input type="text" id='readId4' v-model="detail.sickness" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" id='readId4' v-model="detail.sickness" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>备注</span>
-					<input type="text" id='readId5' v-model="detail.remark" placeholder="请填写" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" id='readId5' v-model="detail.remark" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
 				</li>
 			</ul>
 		</div>
 		<div class="_photo">
 			<h3>发票照片</h3>
-			<div class="imageUpload">
-				<van-uploader :before-read="beforeRead" :before-delete="berforedelete" preview-size='.9rem'  v-model="fileList" :disabled="modify.data" multiple />
+			<div class="imageUpload" v-if="modify.data">
+				<van-uploader :before-read="beforeRead" :before-delete="berforedelete" preview-size='.9rem'  v-model="fileList" :disabled="false" multiple />
 				
 			</div>
 		</div>
@@ -68,6 +68,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+// import moment from 'moment'
 export default {
   name: 'gene',
   data () {
@@ -81,10 +82,10 @@ export default {
 		modify:{
 			value:'编辑',
 			img:'../../../../static/iOS切图/editor.png',
-			data:true,					//保存状态
+			data:false,					//保存状态
 			readonly : 'readonly',		//读取状态
 			num: 0,						//点击次数
-		}
+		},
     }
   },
   computed:{
@@ -107,23 +108,57 @@ export default {
 	this.$axios.post('/c2/patient/item',qs.stringify({
 		patientId : this.detail.patientId
 	})).then(res =>{
+		
 		this.detail = {
 			patientId : res.data.data.patientId,		//病人id
 			realname : res.data.data.realname,			//病人姓名
 			clinicId : res.data.data.clinicId,		//门诊id
 			clinicName : res.data.data.clinicName,		//门诊名称
-			hospitalConfirmTime : res.data.data.hospitalConfirmTime,//医院确诊时间
+			// hospitalConfirmTime : res.data.data.hospitalConfirmTime,//医院确诊时间
 			hospitalId	: res.data.data.hospitalId,	//医院id
 			hospitalName : res.data.data.hospitalName,	//医院名称
 			idcardNo : res.data.data.idcardNo,		//身份证号
 			invoices : res.data.data.invoices,		//发票
 			patientId :res.data.data.patientId,		//患者id
-			pushTime : res.data.data.pushTime,		//推送时间
+			// pushTime : res.data.data.pushTime,		//推送时间
 			remark : res.data.data.remark,			//备注
 			tel : res.data.data.tel,			//电话号码
 			sickness: res.data.data.sickness	//病例
-		},	
-		this.detail = res.data.data
+		};
+		// 如果信息中有发票图片,就显示
+		if(res.data.data.invoices != ''|| res.data.data.invoices != undefined || res.data.data.invoices != null){
+			res.data.data.invoices = res.data.data.invoices.split(",")
+			// console.log(res.data.data.invoices)
+			for (let i in res.data.data.invoices){
+				this.fileList.push({'url' : res.data.data.invoices[i]})
+				// console.log(this.fileList)
+			}
+			this.modify.data = true;
+			this.modify.value = '保存';
+			this.modify.img = '../../../../static/iOS切图/save@2x.png';
+		}else{
+			this.fileList = [];
+		}
+		//判断时间是否为空
+		// console.log(this.detail.pushTime)
+		if(res.data.data.hospitalConfirmTime == '' || res.data.data.hospitalConfirmTime == undefined || res.data.data.hospitalConfirmTime == null){
+			// console.log(this.detail.hospitalConfirmTime)
+			this.detail.hospitalConfirmTime = ''
+		}else{
+			var moment = require('moment');
+			this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('HH:mm:ss YYYY-MM-DD');
+			console.log(this.detail.hospitalConfirmTime)
+		}
+		if(res.data.data.pushTime == '' || res.data.data.pushTime == undefined || res.data.data.pushTime == null){
+			// console.log(this.detail.hospitalConfirmTime)
+			this.detail.pushTime = ''
+		}else{
+			var moment = require('moment');
+			this.detail.pushTime = moment(res.data.data.pushTime).format('HH:mm:ss YYYY-MM-DD');
+			// console.log(this.detail.pushTime)
+		}
+		
+		// this.detail = res.data.data
 		// console.log(this.detail);
 	}).catch(err =>{
 		console.log(err)
@@ -138,55 +173,72 @@ export default {
 	modifyFn(){
 		this.modify.num++;
 		if(this.modify.num % 2 != 0){
-			console.log(this.modify.num)
+			// console.log(this.modify.num)
 			this.modify.value = '保存';
 			this.modify.img = '../../../../static/iOS切图/save@2x.png';
-			this.modify.data = false;
+			this.modify.data = true;
 			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
 				// console.log(_id)
 				document.getElementById(_id).removeAttribute("readonly");
 			}
 		}else{
-			this.$axios.post('/c2/patient/itemalter',{
+			let _imgAddress = [];
+			for(let i in this.imageUpload){
+				_imgAddress[i] = this.imageUpload[i].url
+			}
+			_imgAddress =  _imgAddress.join(",");
+			// console.log(_imgAddress)
+			
+			this.$axios.post('/c2/patient/itemalter',qs.stringify({
+				realname : this.detail.realname,
 				patientId : this.detail.patientId,
 				remark : this.detail.remark,
 				sickness : this.detail.sickness,
-				invoices : this.detail.invoices,
+				invoices : _imgAddress,
 				idcardNo : this.detail.idcardNo,
 				tel : this.detail.tel
-			}).then(res =>{
+			})).then(res =>{
 				// console.log(this.imageUpload)
 			}).catch(err =>{
 				console.log(err)
 			})
+			
+			// this.postImg(this.li)
+			
 			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
 				// console.log(_id)
-				document.getElementById(_id).setAttribute("readonly");
+				document.getElementById(_id).setAttribute("readonly","readonly");
 			}
+			this.modify.data = false;
 			this.modify.value = '编辑';
 			this.modify.img = '../../../../static/iOS切图/editor.png';
 			// window.location.href='/#/outpatient_index';
 		}
 	},
-	 // 上传图片触发方法
-	beforeRead(file) {
-		// console.log(file.type)
-		if (file.type == 'image/jpeg' && this.modify.data == false) {
+	postImg(file){
+		console.log(file)
+		if(file.type.indexOf('image') > -1){
 			let formData = new FormData();
 			formData.append('file', file)
 			this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
 			}}).then(res =>{
-				this.imageUpload.push({name:file.name,url:'https://test.zaylt.njshangka.com/'+res.data.data.url})
+				this.imageUpload.push({name:file.name,url:res.data.data.url})
 				console.log(this.imageUpload)
 			}).catch(err =>{
 				console.log(err)
 			})
 		 }else{
-			console.log('请上传 jpg 格式图片')
+			Dialog({ message: '请选择图片' });
 			return false;
 		}
+	},
+	 // 上传图片触发方法
+	beforeRead(file) {
+		// let _file = file;
+		// console.log(this.fileList)
+		this.postImg(file);
 		return true;
 	},
 	// 删除图片触发方法

@@ -227,8 +227,7 @@ export default {
 	})
   },
   computed:{
-	// window.addEventListener('popstate', this.roterShow = false);
-	...mapGetters(['roterShow','Time','labelDocument','showTime','show','account','detail']),
+	...mapGetters(['Time','labelDocument','showTime','show','account','detail']),
 	show: {
 	    get: function() {
 			// console.log(this.$store)

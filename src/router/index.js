@@ -12,7 +12,9 @@ import outpatient_search from '@/components/outpatient/index/index_search.vue'
 import outpatient_details from '@/components/outpatient/childPage/detailsPage.vue'
 //医院端页面及其组件
 import hospital_index from '@/components/hospital/index.vue'
-
+import hospital_clinic from '@/components/hospital/clinic.vue'
+import hospital_gene from '@/components/hospital/gene.vue'
+import hospital_user from '@/components/hospital/user.vue'
 //功能副插件
 
 import store from '../store'
@@ -21,15 +23,39 @@ Vue.use(Router)
 const router = new Router({
   routes: [
 	{
-		// 医院主页
+		// 医院端主页
 		path: '/hospital_index',
 		name: 'hospital_index',
 		component: hospital_index,
 		// meta: {auth:true},
 		
 	},
+	{
+		// 医院端门诊主页
+		path: '/hospital_clinic',
+		name: 'hospital_clinic',
+		component: hospital_clinic,
+		// meta: {auth:true},
+		
+	},
+	{
+		// 医院端基因主页
+		path: '/hospital_gene',
+		name: 'hospital_gene',
+		component: hospital_gene,
+		// meta: {auth:true},
+		
+	},
+	{
+		// 医院端基因主页
+		path: '/hospital_user',
+		name: 'hospital_user',
+		component: hospital_user,
+		// meta: {auth:true},
+		
+	},
     {
-		// 门诊主页
+		// 门诊端主页
     	path: '/outpatient_index',
     	name: 'outpatient_index',
     	component: outpatient_index,
@@ -48,7 +74,7 @@ const router = new Router({
 		path: '/outpatient_details',
 		name: 'outpatient_details',
 		component: outpatient_details,
-		// meta: {auth:true},
+		meta: {auth:true},
 	},
 	{
 		//门诊端的医院主页
@@ -61,7 +87,7 @@ const router = new Router({
 		//门诊端的基因主页
 		path: '/outpatient_gene',
 		name: 'outpatient_gene',
-		// meta: {auth:true},
+		meta: {auth:true},
 		component: outpatient_gene,
 	},
 	{
@@ -82,7 +108,7 @@ const router = new Router({
 		//找回密码页面
 		path: '/retrievePassword',
 		name: 'retrievePassword',
-		meta: {auth:false},
+		meta: {auth:true},
 		component: retrievePassword,
 	},
   ],
@@ -118,20 +144,9 @@ router.beforeEach((to,from,next) => {
 	}else{
 		next();
 	}
-	if(to.path == '/outpatient_search' || to.path == '/outpatient_details'){
-		
-		store.state.shop.roterShow = false;
-		document.getElementById("mainButton").style.display = 'none';
-		// console.log(document.getElementById("mainButton"))
-	}else if(to.path == "/landingPage"){
-		store.state.shop.roterShow = false;
-	}else{
-		store.state.shop.roterShow = true;
-		document.getElementById("mainButton").style.display = 'inline';
-	}
-	
-	if(to.path == "/outpatient_user" || to.path == "/outpatient_index" || to.path == '/outpatient_search' || to.path == '/outpatient_gene'){
-		store.state.shop.roterShow = true;
+	//识别路径初始化下body的背景色
+	if(to.path == "/outpatient_user" || to.path == "/outpatient_index" || to.path == '/outpatient_search' || to.path == '/outpatient_gene'||
+		to.path == "/outpatient_details" || to.path == '/hospital_clinic' || to.path == '/hospital_gene' || to.path == '/hospital_user'){
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"
 	}else{
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"

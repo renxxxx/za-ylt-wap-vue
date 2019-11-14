@@ -9,7 +9,7 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 import axios from 'axios'
 import store from './store'
-import moment from 'moment';
+import moment from 'moment'
 // 在入口文件中（main.js），导入组件库
 import vueHashCalendar from 'vue-hash-calendar'
 // 引入组件CSS样式
@@ -18,7 +18,9 @@ import VueScroller from 'vue-scroller'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
-Vue.prototype.moment = moment
+Vue.prototype.moment = moment;
+moment.locale('zh-cn');
+moment.locale('zh-cn');
 import { Image, Row, Col,Search,Tabbar, TabbarItem,Tab,Tabs,Checkbox, CheckboxGroup,Dialog,Popup,RadioGroup, Radio,Cell, CellGroup,
 		PullRefresh,Area,Overlay,DatetimePicker,Notify,CountDown,List,Uploader,DropdownMenu, DropdownItem,
 		 Swipe, SwipeItem,Lazyload } from 'vant';
