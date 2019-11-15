@@ -68,7 +68,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
-// import moment from 'moment'
+import moment from 'moment'
 export default {
   name: 'gene',
   data () {
@@ -145,7 +145,6 @@ export default {
 			// console.log(this.detail.hospitalConfirmTime)
 			this.detail.hospitalConfirmTime = ''
 		}else{
-			var moment = require('moment');
 			this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('HH:mm:ss YYYY-MM-DD');
 			console.log(this.detail.hospitalConfirmTime)
 		}
@@ -153,7 +152,6 @@ export default {
 			// console.log(this.detail.hospitalConfirmTime)
 			this.detail.pushTime = ''
 		}else{
-			var moment = require('moment');
 			this.detail.pushTime = moment(res.data.data.pushTime).format('HH:mm:ss YYYY-MM-DD');
 			// console.log(this.detail.pushTime)
 		}

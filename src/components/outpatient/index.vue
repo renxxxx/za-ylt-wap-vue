@@ -363,6 +363,7 @@ export default {
 					duration: 1000,
 					background:'#79abf9',
 				})
+				this.loading = false;
 				this.finished = true;
 			}
 		})

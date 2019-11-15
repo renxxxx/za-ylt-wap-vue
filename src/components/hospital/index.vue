@@ -5,7 +5,8 @@
 				<span>- 医院端 -</span>
 			</div>
 			<div class="slider" >
-				<van-swipe :autoplay="3000">
+				<!-- :autoplay="3000" -->
+				<van-swipe >
 				  <van-swipe-item v-for="(image, index) in images" :key="index">
 				    <img v-lazy="image" class="silder_img"/>
 				  </van-swipe-item>
@@ -55,45 +56,21 @@
 				<img src="../../../static/iOS切图/Combined Shape@2x.png" alt="">
 				<h3>运营精选</h3>
 			</div>
-			<ul>
-				<li>
-					<div class="article_left">
-						<p>身体有这些症状，说明你可能感染了幽门螺旋杆菌</p>
-						<div class="article_leftTime">
-							<img src="../../../static/iOS切图/time@2x.png" alt="">
-							<span>2019-02-19 12:39</span>
+			<ul :model="article">
+				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
+					<li v-for="(items,inx) in article" :key="inx">
+						<div class="article_left">
+							<p>{{items.content}}</p>
+							<div class="article_leftTime">
+								<img src="../../../static/iOS切图/time@2x.png" alt="">
+								<!-- <span>{{moment(items.time).format('YYYY-MM-DD HH:mm:ss')}}</span> -->
+							</div>
 						</div>
-					</div>
-					<div class="article_right">
-						<img src="../../../static/iOS切图/Group@2x.png" alt="">
-					</div>
-				</li>
-				
-				<li>
-					<div class="article_left">
-						<p>身体有这些症状，说明你可能感染了幽门螺旋杆菌</p>
-						<div class="article_leftTime">
-							<img src="../../../static/iOS切图/time@2x.png" alt="">
-							<span>2019-02-19 12:39</span>
+						<div class="article_right">
+							<img :src=items.img alt="">
 						</div>
-					</div>
-					<div class="article_right">
-						<img src="../../../static/iOS切图/Group@2x.png" alt="">
-					</div>
-				</li>
-				
-				<li>
-					<div class="article_left">
-						<p>身体有这些症状，说明你可能感染了幽门螺旋杆菌</p>
-						<div class="article_leftTime">
-							<img src="../../../static/iOS切图/time@2x.png" alt="">
-							<span>2019-02-19 12:39</span>
-						</div>
-					</div>
-					<div class="article_right">
-						<img src="../../../static/iOS切图/Group@2x.png" alt="">
-					</div>
-				</li>
+					</li>
+				</van-list>
 			</ul>
 		</div>
 		<bottomNav></bottomNav>
@@ -101,35 +78,126 @@
 </template>
 
 <script>
+import axios from 'axios'
+import {mapActions,mapGetters} from 'vuex'
+import qs from 'qs';
+import { Dialog } from 'vant'
 import bottomNav from './childPage/bottomNav.vue'
+// import moment from 'moment'
 export default {
 	name: 'gene',
 	data () {
 		return {
-			images: [
-			        '../../../static/iOS切图/banner@2x.png',
-			        '../../../static/iOS切图/denglu1.png',
-					'../../../static/iOS切图/denglu2.png',
-					'../../../static/iOS切图/denglu3.png',
-					'../../../static/iOS切图/denglu1.png',
-					'../../../static/iOS切图/denglu2.png',
-			      ]
+			images: [],
+			article:[],
+			loading: false,
+			finished: false,
+			page:2
 		}
 	},
 	components:{
 		  bottomNav
 	},
 	computed:{
-	  
+		...mapGetters(['account']),
 	},
 	created () {
 		
 	},
 	mounted () {
-		
+		//轮播图图片路径请求
+		this.$axios.post('/hospitaler/currentHospitalMaincarouselList')
+			.then(res =>{
+				for(let i in res.data.data.items){
+					// console.log(res.data.data.items[i])
+					this.images.push(res.data.data.items[i].cover)
+					
+				}
+				
+				// console.log(this.images)
+				// this.images.push()
+				// console.log(res)
+			}).catch((err)=>{
+				console.log(err)
+				Dialog({ message: '加载失败!' });
+			})	
+		// 运营精选文章内容请求
+		this.$axios.post('/c2/article/items')
+			.then(res =>{
+				for(let i in res.data.data.items){
+					// console.log(res.data.data.items[i])
+					this.article.push({
+						content:res.data.data.items[i].title,
+						img: res.data.data.items[i].cover,
+						time:res.data.data.items[i].alterTime
+					}) 
+					
+				}
+				
+				console.log(res)
+			}).catch((err)=>{
+				console.log(err)
+				Dialog({ message: '加载失败!' });
+			})	
 	},
 	methods: {
-
+		getdata(_data){
+			if(_data == 0){
+				this.page = 1;
+			}
+			this.$axios.post('/c2/article/items',qs.stringify({
+				kw : '',
+				hospitalId : this.account.data.data.hospital.hospitalId,
+				orders :'asc',
+				pn : this.page,
+				ps : 10
+			}))
+			.then(res => {
+					console.log(res)
+				// if(res.data.data.items.length != 0){
+					// for(let i in res.data.data.items){
+					// console.log(res.data.data.items[i])
+					// if(!res.data.data.items[i]){
+					// 	this.$notify({
+					// 		message: '数据已全部加载',
+					// 		duration: 1000,
+					// 		background:'#79abf9',
+					// 	})
+					// 	// this.loading = false;
+					// 	// this.finished = true;
+					// }else{
+					// 	this.article.push({
+					// 		content:res.data.data.items[i].title,
+					// 		img: res.data.data.items[i].cover,
+					// 		time:res.data.data.items[i].alterTime
+					// 	}) 
+					// }
+				// }
+					// if(_data == 1){
+					// 	this.page++
+					// }else{
+					// 	this.isLoading = false;
+					// }
+				// 加载状态结束
+				// this.loading = false;
+				// }else{
+					// this.$notify({
+						// message: '数据已全部加载',
+						// duration: 1000,
+						// background:'#79abf9',
+					// })
+					// this.loading = false;
+					// this.finished = true;
+				// }
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
+		},
+		onLoad(){
+			this.getdata(1)
+		}
 	},
 }
 </script>

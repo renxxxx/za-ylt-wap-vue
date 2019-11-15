@@ -17,6 +17,15 @@
 		<div class="geneList">
 			<ul>
 				<li>
+					<div class="statisticalLeft">
+						<span>分配检测盒</span>
+					</div>
+					<div class="statisticalRight">
+						<span>剩余 20个</span>
+						<img src="../../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
+					</div>
+				</li>
+				<li>
 					<div class="title">
 						<div class="titleLeft">	
 							<img src="../../../static/iOS切图/small-logo@2x.png" alt="">
@@ -68,11 +77,20 @@
 				</li>
 			</ul>
 		</div>
+		
+		
+		
+		
+		
+		
 		<bottomNav v-bind:name='name'></bottomNav>
 	</div>
 </template>
 
 <script>
+import axios from 'axios'
+import {mapActions,mapGetters} from 'vuex'
+import qs from 'qs';
 import bottomNav from './childPage/bottomNav.vue'
 export default {
 	name: 'gene',
@@ -167,6 +185,31 @@ export default {
 	margin-top: .12rem;
 	background-color: #FFFFFF;
 	border-radius: .03rem;
+}
+.geneList ul li:first-child{
+	height: .49rem;
+	line-height: .49rem;
+}
+.statisticalLeft{
+	float: left;
+}
+.statisticalLeft span{
+	float: left;
+	margin-left: .15rem;
+	color: #2B77EF;
+	font-size: .13rem;
+}
+.statisticalRight{
+	float: right;
+}
+.statisticalRight span{
+	color: #666666;
+}
+.statisticalRight img{
+	width: .07rem;
+	height: .11rem;
+	margin-left: .05rem;
+	margin-right: .15rem;
 }
 .title{
 	display: block;
