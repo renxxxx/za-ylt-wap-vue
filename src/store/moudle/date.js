@@ -15,10 +15,9 @@ const state={
 			tel: undefined,
 			remark:"",				//备注
 			idcardNo:undefined, 	//身份证号
-			// clinicId				//门诊id
-			// hospitalId  			//医院id
 		},
-		hospitalId: 0,
+		clinicId: '',			//门诊id
+		hospitalId: '',
 		data:{},
 	},
 	// 详情页数据
@@ -44,11 +43,13 @@ const state={
 	Time:{
 		look:'',
 		noLook:'',
-		confirmStart : '',
-		confirmOver : '',
-		pushStart : '',
-		pushOver : ''
+		confirmStart : '开始时间',
+		confirmOver : '结束时间',
+		pushStart : '开始时间',
+		pushOver : '结束时间',
+		postState : undefined,
 	},
+	search_userList:[],		//搜索页面的list列表
 	// lable的dom节点
 	labelDocument:['labelDocument','labelDocument2','labelDocument3','labelDocument4','labelDocument5','labelDocument6'],
 	//label的button值
@@ -72,7 +73,8 @@ const getters={
 	labelDocument :state =>state.labelDocument,
 	//显示半遮罩及其日期选择
 	showTime : state => state.showTime,
-	
+	//搜索页面的list列表
+	search_userList : state => state.search_userList,
 }
 const actions={
 	//复选框的选择
@@ -139,22 +141,23 @@ const mutations={
 					 axios.post(_postRefresh)
 						.then( res =>{
 							// console.log(Res);
-							state.account.data = {};
+							state.account.clinicId= res.data.data.clinic.clinicId;
 							state.account.hospitalId= res.data.data.hospital.hospitalId;
 							console.log(state.account.hospitalId)
+							state.account.data = {};
 							state.account.data = res.data;
 							// console.log(state.account)
 							// console.log(res)
+							if(_isLogin == 200 || _isLogin == 100){
+								window.location.href=_url;	
+							}else{
+								Dialog({ message: '正在开发中，敬请期待' });
+							}
 						})
 						.catch((err)=>{
 							console.log(err)
 							Dialog({ message: '加载失败!' });
 						})
-					if(_isLogin == 200 || _isLogin == 100){
-						window.location.href=_url;	
-					}else{
-						Dialog({ message: '正在开发中，敬请期待' });
-					}
 				}else{
 					Dialog({ message:  res.data.codeMsg});
 				}
@@ -280,6 +283,7 @@ const mutations={
 			state.Time.noLook = "";
 			state.Time.look = '未就诊';
 			state.dateStata=_vlaue;
+			state.Time.postState = 1;
 			// console.log(state.dateStata);
 			
 			break;
@@ -292,6 +296,7 @@ const mutations={
 			state.Time.noLook = "";
 			state.Time.noLook = '已就诊';
 			state.dateStata=_vlaue;
+			state.Time.postState = 4;
 			// console.log(state.dateStata);
 			break;
 			
@@ -337,54 +342,35 @@ const mutations={
 	},
 	// 筛选确定
 	screeningSubmitFn(state){
-		for(let _a in state.Time){
-			switch(_a){
-				case 'look':
-				if(state.Time.look == '' && state.Time.noLook == ''){
-					Dialog({ message: '请选择您的就诊状态' });
-				};
-				break;
-				
-				case 'noLook':
-				if(state.Time.Look == '' && state.Time.noLook == ''){
-					Dialog({ message: '请选择您的就诊状态' });
-				};
-				break;
-				
-				case 'confirmStart':
-				if(state.Time.confirmStart == ''){
-					Dialog({ message: '请确认您的开始就诊时间' });
-				};
-				break;
-				
-				case 'confirmOver':
-				if(state.Time.confirmOver == ''){
-					Dialog({ message: '请确认结束您的就诊时间' });
-				};
-				break;
-				
-				case 'pushStart':
-				if(state.Time.pushStart == ''){
-					Dialog({ message: '请选择开始门诊推送时间' });
-				};
-				break;
-				
-				case 'pushOver':
-				if(state.Time.pushOver == ''){
-					Dialog({ message: '请选择结束门诊推送时间' });
-				};
-				break;
+		axios.post('/c2/patient/items',qs.stringify({
+			clinicId : state.account.clinicId,
+			// pushTimeStart : this.Time.pushStart,
+			// pushTimeEnd : this.Time.pushOver,
+			status : state.Time.postState,
+			// hospitalConfirmTimeStart : this.Time.confirmStart,
+			// hospitalConfirmTimeEnd : this.Time.confirmOver,
+		}))
+		.then(_d => {
+			// console.log(_d.data.data.items)
+			state.search_userList = _d.data.data.items
+			for(var i in _d.data.data.items){
+				if(_d.data.data.items[i].status == 1){
+					_d.data.data.items[i].span = '未就诊'
+					_d.data.data.items[i].imgUrl = '../../../../static/门诊端/iOS切图/weijiuzhen@2x.png'
+				}else{
+					_d.data.data.items[i].span = '已就诊'
+					_d.data.data.items[i].imgUrl = '../../../../static/门诊端/iOS切图/yijiuzhen@2x.png'
+				}
+				// console.log(_d.data.data.items[i].status)
 			}
-		}
-		if(state.Time.look != '' || state.Time.noLook != ''&&
-			state.Time.Look != ''  || state.Time.noLook != ''&&
-			state.Time.confirmStart != '' && state.Time.confirmOver != ''&&
-			state.Time.pushStart != '' && state.Time.pushOver == ''){
-			window.location.href='/#/outpatient_search';
-		}
-		console.log(state.Time);
+					
+		})
+		.catch((err)=>{
+			console.log(err);
+			Dialog({ message: '加载失败!'});
+		})
+		window.location.href='/#/outpatient_search';
 		state.show = false;
-		// Dialog({ message: '已提交' });
 		
 	},
 	// 筛选重置

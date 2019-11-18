@@ -77,12 +77,6 @@
 				</li>
 			</ul>
 		</div>
-		
-		
-		
-		
-		
-		
 		<bottomNav v-bind:name='name'></bottomNav>
 	</div>
 </template>

@@ -55,9 +55,10 @@
 		</div>
 		<div class="_photo">
 			<h3>发票照片</h3>
-			<div class="imageUpload" v-if="modify.data">
-				<van-uploader :before-read="beforeRead" :before-delete="berforedelete" preview-size='.9rem'  v-model="fileList" :disabled="false" multiple />
-				
+			<div class="imageUpload" v-if="modify.data" id='readImg'>
+				<van-uploader :deletable = 'false' :disabled = "false"
+				@before-read="beforeRead"  @before-delete="berforedelete" preview-size='.9rem' 
+				v-model="fileList"/>
 			</div>
 		</div>
 	</div>
@@ -108,7 +109,6 @@ export default {
 	this.$axios.post('/c2/patient/item',qs.stringify({
 		patientId : this.detail.patientId
 	})).then(res =>{
-		
 		this.detail = {
 			patientId : res.data.data.patientId,		//病人id
 			realname : res.data.data.realname,			//病人姓名
@@ -155,7 +155,6 @@ export default {
 			this.detail.pushTime = moment(res.data.data.pushTime).format('HH:mm:ss YYYY-MM-DD');
 			// console.log(this.detail.pushTime)
 		}
-		
 		// this.detail = res.data.data
 		// console.log(this.detail);
 	}).catch(err =>{
@@ -170,11 +169,12 @@ export default {
 	//修改方法
 	modifyFn(){
 		this.modify.num++;
+		// console.log(document.getElementsByClassName('van-uploader__preview-delete'));
 		if(this.modify.num % 2 != 0){
-			// console.log(this.modify.num)
+			console.log(this.modify.num)
 			this.modify.value = '保存';
 			this.modify.img = '../../../../static/iOS切图/save@2x.png';
-			this.modify.data = true;
+			// this.modify.data = true;
 			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
 				// console.log(_id)
@@ -202,14 +202,12 @@ export default {
 				console.log(err)
 			})
 			
-			// this.postImg(this.li)
-			
 			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
 				// console.log(_id)
 				document.getElementById(_id).setAttribute("readonly","readonly");
 			}
-			this.modify.data = false;
+			// this.modify.data = false;
 			this.modify.value = '编辑';
 			this.modify.img = '../../../../static/iOS切图/editor.png';
 			// window.location.href='/#/outpatient_index';

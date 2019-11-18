@@ -54,9 +54,9 @@
 			</van-popup>
 		</div>
 		<van-pull-refresh v-model="isLoading" @refresh="onRefresh" style=" overflow: none!important;">
-			<ul class="search_content" v-model="user">
+			<ul class="search_content" v-model="search_userList">
 				<router-link to="/outpatient_details" >
-					<li v-for="(_user,inx) in user" :key="inx" @click="detailsValueFn(_user)">
+					<li v-for="(_user,inx) in search_userList" :key="inx" @click="detailsValueFn(_user)">
 						<div class="content_left">
 							<span>{{_user.realname}}</span>
 						</div>
@@ -82,14 +82,14 @@ export default {
   data () {
     return {
      	keywords : '',
-     	user:[],
+     	
      	isLoading: false,
 		
 		timer :undefined
     }
   },
   computed:{
-	...mapGetters(['Time','labelDocument','show','showTime','detail']),
+	...mapGetters(['Time','labelDocument','show','showTime','detail','account','search_userList']),
 	show: {
 	      get: function() {
 	  		// console.log(this.$store)
@@ -108,6 +108,15 @@ export default {
 			this.$store.state.shop.showTime = newValue;
 	    },
 	},
+	search_userList: {
+	    get: function() {
+			// console.log(this.$store)
+	        return this.$store.state.shop.search_userList
+	    },
+	    set: function (newValue) {
+			this.$store.state.shop.search_userList = newValue;
+	    },
+	},
   },
   created () {
 		
@@ -122,12 +131,19 @@ export default {
 	},
 	//获取数据
 	getdata(){
+		console.log(this.Time)
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.keywords,
+			clinicId : this.account.clinicId,
+			// pushTimeStart : this.Time.pushStart,
+			// pushTimeEnd : this.Time.pushOver,
+			status : this.Time.postState,
+			// hospitalConfirmTimeStart : this.Time.confirmStart,
+			// hospitalConfirmTimeEnd : this.Time.confirmOver,
 		}))
 		.then(_d => {
 			// console.log(_d.data.data.items)
-			this.user = _d.data.data.items
+			this.search_userList = _d.data.data.items
 			for(var i in _d.data.data.items){
 				if(_d.data.data.items[i].status == 1){
 					_d.data.data.items[i].span = '未就诊'

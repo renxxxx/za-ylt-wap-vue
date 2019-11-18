@@ -1,30 +1,5 @@
 <template>
 	<div id="mainButton">
-		<!-- <router-link to="/outpatient_index">
-			<div id="_index" @click="colorFn('index')">
-				<img :src=colorImg[0] alt="">
-				<span>首页</span>
-			</div>
-		</router-link>
-		<router-link to="/outpatient_hospital">
-			<div id="_hospital" @click="colorFn('hospital')">
-				<img :src=colorImg[1] alt="">
-				<span>医院</span>
-			</div>
-		</router-link>
-		<router-link to="/outpatient_gene">
-			<div id="_gene" @click="colorFn('gene')">
-				<img :src=colorImg[2] alt="">
-				<span>基因</span>
-			</div>
-		</router-link>
-		<router-link to="/outpatient_user">
-			<div id="_my" @click="colorFn('user')">
-				<img :src=colorImg[3] alt="">
-				<span>我的</span>
-			</div>
-		</router-link> -->
-		
 		<van-tabbar v-model="active" route>
 			<van-tabbar-item to="/outpatient_index">
 			    <span>首页</span>
@@ -97,86 +72,7 @@ export default {
   computed:{
   },
   methods:{
-	//主导航栏颜色切换
-	// colorFn(data){
-		
-	// 	// this.dataValue = this.name
-	// 	// console.log(data)
-	// 	switch(data){
-	// 		case 'index':
-	// 		console.log(document.getElementById('_index'));
-	// 		this.colorImg = ['../static/iOS切图/shouye@2x.png',
-	// 				'../static/门诊端/iOS切图/Hospital@2x.png',
-	// 				'../static/切图-基因/jiyin-gray@2x.png',
-	// 				'../static/iOS切图/wode@2x.png'],
-			
-	// 		// this.colorImg[0].push('../static/iOS切图/shouye-blue@2x.png') ;
-	// 		// this.colorImg[1].push('../static/门诊端/iOS切图/Hospital@2x.png');
-	// 		// this.colorImg[2].push('../static/切图-基因/jiyin-gray@2x.png') ;
-	// 		// this.colorImg[3].push('../static/iOS切图/wode@2x.png') ;
-	// 		console.log(document.getElementById('_index'))
-	// 		document.getElementById('_index').style.color = "#2B77EF"
-	// 		document.getElementById('_hospital').style.color = "#999999"
-	// 		document.getElementById('_gene').style.color = "#999999"
-	// 		document.getElementById('_my').style.color = "#999999"
-	// 		break;
-	// 		case 'hospital':
-	// 		this.colorImg = ['../static/iOS切图/shouye@2x.png',
-	// 				'../static/门诊端/iOS切图/Hospital@2x-blue.png',
-	// 				'../static/切图-基因/jiyin-gray@2x.png',
-	// 				'../static/iOS切图/wode@2x.png'],
-	// 		this.colorImg.splice(1,1,'../static/门诊端/iOS切图/Hospital-blue@2x.png')
-	// 		// this.colorImg[0] = '../static/iOS切图/shouye@2x.png';
-	// 		// this.colorImg[2] = '../static/切图-基因/jiyin-gray@2x.png';
-	// 		// this.colorImg[3] = '../static/iOS切图/wode@2x.png';
-	// 		// this.colorImg[1] = '../static/门诊端/iOS切图/Hospital-blue@2x.png';
-	// 		console.log(document.getElementById('_hospital'))
-	// 		document.getElementById('_hospital').style.color = "#2B77EF"
-	// 		document.getElementById('_index').style.color = "#999999"
-	// 		document.getElementById('_gene').style.color = "#999999"
-	// 		document.getElementById('_my').style.color = "#999999"
-	// 		break;
-			 
-	// 		case 'gene':
-	// 		this.colorImg = ['../static/iOS切图/shouye@2x.png',
-	// 				'../static/门诊端/iOS切图/Hospital@2x.png',
-	// 				'../static/切图-基因/jiyin-blue@2x.png',
-	// 				'../static/iOS切图/wode@2x.png'],
-	// 		this.colorImg.splice(2,1,'../static/切图-基因/jiyin-blue@2x.png')
-	// 		console.log(document.getElementById('_gene'))
-	// 		// this.colorImg[0] = '../static/iOS切图/shouye@2x.png';
-	// 		// this.colorImg[1] = '../static/门诊端/iOS切图/Hospital@2x.png';
-	// 		// this.colorImg[3] = '../static/iOS切图/wode@2x.png';
-	// 		// this.colorImg[2] = '../static/切图-基因/jiyin-blue@2x.png';
-	// 		console.log(this.colorImg)
-	// 		document.getElementById('_index').style.color = "#999999"
-	// 		document.getElementById('_hospital').style.color = "#999999"
-	// 		document.getElementById('_gene').style.color = "#2B77EF"
-	// 		document.getElementById('_my').style.color = "#999999"
-	// 		break;
-			  
-	// 		case 'user':
-	// 		this.colorImg = ['../static/iOS切图/shouye@2x.png',
-	// 				'../static/门诊端/iOS切图/Hospital@2x.png',
-	// 				'../static/切图-基因/jiyin-gray@2x.png',
-	// 				'../static/iOS切图/wode-blue@2x.png'],
-	// 		this.colorImg.splice(3,1,'../static/iOS切图/wode-blue@2x.png')
-	// 		console.log(document.getElementById('_my'))
-	// 		// this.colorImg[0] = '../static/iOS切图/shouye@2x.png';
-	// 		// this.colorImg[1] = '../static/门诊端/iOS切图/Hospital@2x.png';
-	// 		// this.colorImg[2] = '../static/切图-基因/jiyin-gray@2x.png';
-	// 		// this.colorImg[3] = '../static/iOS切图/wode-blue@2x.png';
-	// 		console.log(this.colorImg)
-	// 		document.getElementById('_index').style.color = "#999999"
-	// 		document.getElementById('_hospital').style.color = "#999999"
-	// 		document.getElementById('_gene').style.color = "#999999"
-	// 		document.getElementById('_my').style.color = "#2B77EF"
-	// 		break;
-	// 	}
-	// 	console.log(this.colorImg)
-	// 	// document.getElementById(_id).style.color = 'red'
-	// 	  // console.log(document.getElementById(_id).color)
-	// }
+	  
   },
 }
 </script>

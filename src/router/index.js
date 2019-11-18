@@ -21,97 +21,98 @@ import store from '../store'
 Vue.use(Router)
 
 const router = new Router({
-  routes: [
-	{
-		// 医院端主页
-		path: '/hospital_index',
-		name: 'hospital_index',
-		component: hospital_index,
-		// meta: {auth:true},
-		
-	},
-	{
-		// 医院端门诊主页
-		path: '/hospital_clinic',
-		name: 'hospital_clinic',
-		component: hospital_clinic,
-		// meta: {auth:true},
-		
-	},
-	{
-		// 医院端基因主页
-		path: '/hospital_gene',
-		name: 'hospital_gene',
-		component: hospital_gene,
-		// meta: {auth:true},
-		
-	},
-	{
-		// 医院端基因主页
-		path: '/hospital_user',
-		name: 'hospital_user',
-		component: hospital_user,
-		// meta: {auth:true},
-		
-	},
-    {
-		// 门诊端主页
-    	path: '/outpatient_index',
-    	name: 'outpatient_index',
-    	component: outpatient_index,
-    	meta: {auth:true},
-		
-    },
-	{
-		// 门诊端的主页搜索
-		path: '/outpatient_search',
-		name: 'outpatient_search',
-		component: outpatient_search,
-		meta: {auth:true},
-	},
-	{
-		// 门诊端的主页病人详情页
-		path: '/outpatient_details',
-		name: 'outpatient_details',
-		component: outpatient_details,
-		meta: {auth:true},
-	},
-	{
-		//门诊端的医院主页
-		path: '/outpatient_hospital',
-		name: 'outpatient_hospital',
-		meta: {auth:true},
-		component: outpatient_hospital,
-	},
-	{
-		//门诊端的基因主页
-		path: '/outpatient_gene',
-		name: 'outpatient_gene',
-		meta: {auth:true},
-		component: outpatient_gene,
-	},
-	{
-		//用户主页
-		path: '/outpatient_user',
-		name: 'outpatient_user',
-		meta: {auth:true},
-		component: outpatient_user,
-	},
-	{
-		// 登陆主页
-		path: '/',
-		name: 'landingPage',
-		component: landingPage,
-		alias:'/landingPage'
-	},
-	{
-		//找回密码页面
-		path: '/retrievePassword',
-		name: 'retrievePassword',
-		meta: {auth:true},
-		component: retrievePassword,
-	},
-  ],
+	// mode: 'history',
+	routes: [
+		{
+			// 医院端主页
+			path: '/hospital_index',
+			name: 'hospital_index',
+			component: hospital_index,
+			// meta: {auth:true},
+			
+		},
+		{
+			// 医院端门诊主页
+			path: '/hospital_clinic',
+			name: 'hospital_clinic',
+			component: hospital_clinic,
+			// meta: {auth:true},
+			
+		},
+		{
+			// 医院端基因主页
+			path: '/hospital_gene',
+			name: 'hospital_gene',
+			component: hospital_gene,
+			// meta: {auth:true},
+			
+		},
+		{
+			// 医院端基因主页
+			path: '/hospital_user',
+			name: 'hospital_user',
+			component: hospital_user,
+			// meta: {auth:true},
+			
+		},
+		{
+			// 门诊端主页
+			path: '/outpatient_index',
+			name: 'outpatient_index',
+			component: outpatient_index,
+			meta: {auth:true},
+			
+		},
+		{
+			// 门诊端的主页搜索
+			path: '/outpatient_search',
+			name: 'outpatient_search',
+			component: outpatient_search,
+			meta: {auth:true},
+		},
+		{
+			// 门诊端的主页病人详情页
+			path: '/outpatient_details',
+			name: 'outpatient_details',
+			component: outpatient_details,
+			meta: {auth:true},
+		},
+		{
+			//门诊端的医院主页
+			path: '/outpatient_hospital',
+			name: 'outpatient_hospital',
+			meta: {auth:true},
+			component: outpatient_hospital,
+		},
+		{
+			//门诊端的基因主页
+			path: '/outpatient_gene',
+			name: 'outpatient_gene',
+			meta: {auth:true},
+			component: outpatient_gene,
+		},
+		{
+			//用户主页
+			path: '/outpatient_user',
+			name: 'outpatient_user',
+			meta: {auth:true},
+			component: outpatient_user,
+		},
+		{
+			// 登陆主页
+			path: '/',
+			name: 'landingPage',
+			component: landingPage,
+			alias:'/landingPage'
+		},
+		{
+			//找回密码页面
+			path: '/retrievePassword',
+			name: 'retrievePassword',
+			meta: {auth:true},
+			component: retrievePassword,
+		},
+	],
 })
 
 router.beforeEach((to,from,next) => {

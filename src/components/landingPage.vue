@@ -21,7 +21,7 @@
 							    class="input_check" 
 							    :checked="checked"
 							    @change="change"/>
-							<p>&nbsp;&nbsp;我已经阅读并同意<a href="">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
+							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
 						</div>
 						<input class="submitClass" type="submit" value="登陆"></input>
 						<div class="passwordReset">
@@ -51,7 +51,7 @@
 							    class="input_check" 
 							    :checked="checked"
 							    @change="change"/>
-							<p>&nbsp;&nbsp;我已经阅读并同意<a href="">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
+							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
 						</div>
 						<input class="submitClass" type="submit" value="登陆"></input>
 						<div class="passwordReset">
@@ -79,7 +79,7 @@
 							    class="input_check" 
 							    :checked="checked"
 							    @change="change"/>
-							<p>&nbsp;&nbsp;我已经阅读并同意<a href="">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
+							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
 						</div>
 						<input class="submitClass" type="submit" value="登陆"></input>
 						<div class="passwordReset">

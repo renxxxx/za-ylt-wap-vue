@@ -105,7 +105,8 @@ export default {
 		
 	},
 	mounted () {
-		console.log(this.account.hospitalId)
+		// console.log(this.account);
+		// console.log(this.account.hospitalId)
 		//轮播图图片路径请求
 		this.$axios.post('/hospitaler/currentHospitalMaincarouselList')
 			.then(res =>{
@@ -150,11 +151,11 @@ export default {
 						})
 					}
 				}
-					if(_data == 1){
-						this.page++
-					}else{
-						this.isLoading = false;
-					}
+				if(_data == 1){
+					this.page++
+				}else{
+					this.isLoading = false;
+				}
 				this.loading = false;
 				}else{
 					this.$notify({
@@ -172,7 +173,10 @@ export default {
 			})
 		},
 		onLoad(){
-			console.log(this.account.hospitalId)
+			debugger
+			// console.log('account')
+			// console.log(JSON.stringify(this.account))
+			// console.log(this.account.hospitalId)
 			this.getdata(1)
 			
 		}

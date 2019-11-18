@@ -21,7 +21,7 @@
 							<button @click="labelLabelFn([1,$event])" :id="labelDocument[1]">已就诊</button>
 						</div>
 						<div class="labelLabel" >
-							<strong>确认就诊时间</strong>
+							<strong>就诊时间</strong>
 							<button class="rightLine" @click="labelLabelFn([2,$event])" :id="labelDocument[2]">
 								{{Time.confirmStart}}
 							</button>
@@ -30,7 +30,7 @@
 							</button>
 						</div>
 						<div class="labelLabel">
-							<strong>门诊推送时间</strong>
+							<strong>推送时间</strong>
 							<button class="rightLine"  @click="labelLabelFn([4,$event])"  :id="labelDocument[4]">
 								{{Time.pushStart}}
 							</button>
@@ -600,7 +600,7 @@ body{
 	font-size: 	.14rem;
 }
 .newAddTitle{
-	width: 80%;
+	width: 91.4%;
 	margin-top: 2.9%;
 	margin: 0 auto;
 	padding-top: .2rem;
