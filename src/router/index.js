@@ -146,8 +146,8 @@ router.beforeEach((to,from,next) => {
 	}
 	//识别路径初始化下body的背景色
 	if(to.path == "/outpatient_user" || to.path == "/outpatient_index" || to.path == '/outpatient_search'
-	 ||to.path == "/outpatient_details" || to.path == '/hospital_clinic' || to.path == '/hospital_gene' 
-	 || to.path == '/hospital_user'){
+	 || to.path == '/outpatient_gene' ||to.path == "/outpatient_details" || to.path == '/hospital_clinic' 
+	 || to.path == '/hospital_gene' || to.path == '/hospital_user'){
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"
 	}else{
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"

@@ -18,6 +18,7 @@ const state={
 			// clinicId				//门诊id
 			// hospitalId  			//医院id
 		},
+		hospitalId: 0,
 		data:{},
 	},
 	// 详情页数据
@@ -134,10 +135,13 @@ const mutations={
 			.then( res =>{
 				if(res.data.codeMsg == ""){
 					state.account.isLogin = _isLogin;
+					
 					 axios.post(_postRefresh)
 						.then( res =>{
 							// console.log(Res);
 							state.account.data = {};
+							state.account.hospitalId= res.data.data.hospital.hospitalId;
+							console.log(state.account.hospitalId)
 							state.account.data = res.data;
 							// console.log(state.account)
 							// console.log(res)

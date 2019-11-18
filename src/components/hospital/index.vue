@@ -57,7 +57,7 @@
 				<h3>运营精选</h3>
 			</div>
 			<ul :model="article">
-				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
+				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @check="onLoad">
 					<li v-for="(items,inx) in article" :key="inx">
 						<div class="article_left">
 							<p>{{items.content}}</p>
@@ -92,7 +92,7 @@ export default {
 			article:[],
 			loading: false,
 			finished: false,
-			page:2
+			page:1
 		}
 	},
 	components:{
@@ -105,6 +105,7 @@ export default {
 		
 	},
 	mounted () {
+		console.log(this.account.hospitalId)
 		//轮播图图片路径请求
 		this.$axios.post('/hospitaler/currentHospitalMaincarouselList')
 			.then(res =>{
@@ -120,75 +121,50 @@ export default {
 			}).catch((err)=>{
 				console.log(err)
 				Dialog({ message: '加载失败!' });
-			})	
-		// 运营精选文章内容请求
-		this.$axios.post('/c2/article/items')
-			.then(res =>{
-				for(let i in res.data.data.items){
-					// console.log(res.data.data.items[i])
-					this.article.push({
-						content:res.data.data.items[i].title,
-						img: res.data.data.items[i].cover,
-						time:res.data.data.items[i].alterTime
-					}) 
-					
-				}
-				
-				console.log(res)
-			}).catch((err)=>{
-				console.log(err)
-				Dialog({ message: '加载失败!' });
-			})	
+			})
+		//文章请求
+		this.onLoad()
 	},
 	methods: {
 		getdata(_data){
-			if(_data == 0){
-				this.page = 1;
-			}
 			this.$axios.post('/c2/article/items',qs.stringify({
-				kw : '',
-				hospitalId : this.account.data.data.hospital.hospitalId,
-				orders :'asc',
+				hospitalId : this.account.hospitalId,
 				pn : this.page,
 				ps : 10
 			}))
 			.then(res => {
-					console.log(res)
-				// if(res.data.data.items.length != 0){
-					// for(let i in res.data.data.items){
-					// console.log(res.data.data.items[i])
-					// if(!res.data.data.items[i]){
-					// 	this.$notify({
-					// 		message: '数据已全部加载',
-					// 		duration: 1000,
-					// 		background:'#79abf9',
-					// 	})
-					// 	// this.loading = false;
-					// 	// this.finished = true;
-					// }else{
-					// 	this.article.push({
-					// 		content:res.data.data.items[i].title,
-					// 		img: res.data.data.items[i].cover,
-					// 		time:res.data.data.items[i].alterTime
-					// 	}) 
-					// }
-				// }
-					// if(_data == 1){
-					// 	this.page++
-					// }else{
-					// 	this.isLoading = false;
-					// }
-				// 加载状态结束
-				// this.loading = false;
-				// }else{
-					// this.$notify({
-						// message: '数据已全部加载',
-						// duration: 1000,
-						// background:'#79abf9',
-					// })
-					// this.loading = false;
-					// this.finished = true;
-				// }
+				if(res.data.data.items.length != 0){
+					for(let i in res.data.data.items){
+					console.log(res.data.data.items[i])
+					if(res.data.data.items[i]){
+						this.article.push({
+							content:res.data.data.items[i].title,
+							img: res.data.data.items[i].cover,
+							time:res.data.data.items[i].alterTime
+						}) 
+					}else{
+						this.$notify({
+							message: '数据已全部加载',
+							duration: 1000,
+							background:'#79abf9',
+						})
+					}
+				}
+					if(_data == 1){
+						this.page++
+					}else{
+						this.isLoading = false;
+					}
+				this.loading = false;
+				}else{
+					this.$notify({
+						message: '数据已全部加载',
+						duration: 1000,
+						background:'#79abf9',
+					})
+					this.loading = false;
+					this.finished = true;
+				}
 			})
 			.catch((err)=>{
 				console.log(err);
@@ -196,7 +172,9 @@ export default {
 			})
 		},
 		onLoad(){
+			console.log(this.account.hospitalId)
 			this.getdata(1)
+			
 		}
 	},
 }
