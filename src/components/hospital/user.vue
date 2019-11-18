@@ -2,7 +2,7 @@
 	<div class="user">
 		<div class="user_top">
 			<div class="user_set">
-				<img src="../../static/iOS切图/set up@2x.png" alt="">
+				<img src="../../../static/iOS切图/set up@2x.png" alt="">
 			</div>
 			<div class="user_message">
 				<div class="top_left">
@@ -15,7 +15,7 @@
 				</div>
 				<div class="top_right">
 					<span>营业执照</span>
-					<img src="../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
+					<img src="../../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
 				</div>
 			</div>
 		</div>
@@ -23,11 +23,32 @@
 		<div class="user_center">
 			<ul>
 				<li @click="exitFn">
-					<span>退出登陆</span>
-					<img src="../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
+					<span>任务管理</span>
+					<img src="../../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
+				</li>
+				<li>
+					<span>兑换管理</span>
+					<img src="../../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
+				</li>
+				<li>
+					<span>集采订单</span>
+					<img src="../../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
+				</li>
+				<li>
+					<span>集采积分</span>
+					<img src="../../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
+				</li>
+				<li>
+					<span>HIS日志</span>
+					<img src="../../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
+				</li>
+				<li>
+					<span>推广人员管理</span>
+					<img src="../../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
 				</li>
 			</ul>
 		</div>
+		<bottomNav v-bind:name='name'></bottomNav>
 	</div>
 </template>
 
@@ -35,55 +56,59 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import bottomNav from './childPage/bottomNav.vue'
 export default {
-  name: 'user',
-  data () {
-    return {
-		coverImg: '../../static/门诊端/iOS切图/logo@2x.png',
-    }
+	name: 'user',
+	data () {
+		return {
+			name: 'user',
+			coverImg: '../../../static/门诊端/iOS切图/logo@2x.png',
+		}
   },
-  computed:{
-	...mapGetters(['account']),
+	computed:{
+	  
+	},
+	components:{
+		bottomNav
+	},
+	created () {
+		
+	},
+	mounted () {
 	
-  },
-  created () {
-		
-  },
-  mounted () {
-	this.userFn()
-  },
-  methods: {
-	userFn(){
-		// console.log("hahha")
-		console.log(this.account);
-		//用户头像值
-		let cover = this.account.data.data.cover;
-		// 是否认证值
-		let license = this.account.data.data.license
-		if(cover == '' || cover == undefined || cover == null){
-			console.log("cover为空")
-		}else{
-			this.coverImg = cover
+	},
+	methods: {
+		userFn(){
+			// console.log("hahha")
+			// console.log(this.account);
+			//用户头像值
+			// let cover = this.account.data.data.cover;
+			// // 是否认证值
+			// let license = this.account.data.data.license
+			// if(cover == '' || cover == undefined || cover == null){
+			// 	// console.log("cover为空")
+			// }else{
+			// 	this.coverImg = cover
+			// }
+			
+			// if(license == '' || license == undefined || license == null){
+			// 	// console.log("license为空")
+			// }else{
+					
+			// }
+			
+			// console.log(this.account.data.data.cover)
+			// console.log(this.account.data.data.license)
+		 },
+		//退出方法
+		exitFn(){
+			// this.account.isLogin = 0;
+			// this.account.name = '';
+			// this.account.password = '';
+			// console.log(this.account.isLogin);
+			// window.location.href = '/#/landingPage';
 		}
-		
-		if(license == '' || license == undefined || license == null){
-			console.log("license为空")
-		}else{
-				
-		}
-		
-		// console.log(this.account.data.data.cover)
-		// console.log(this.account.data.data.license)
-	 },
-	//退出方法
-	exitFn(){
-		this.account.isLogin = 0;
-		this.account.name = '';
-		this.account.password = '';
-		console.log(this.account.isLogin);
-		window.location.href = '/#/landingPage';
-	}
-  },
+	},
 }
 </script>
 
@@ -131,7 +156,7 @@ export default {
 	top: 1.15rem;
 	font-size: .03rem;
 	color: #FFFFFF;
-	background:url('../../static/iOS切图/Gradualchange@2x.png');
+	background:url('../../../static/iOS切图/Gradualchange@2x.png');
 	background-size:100% 100%;
 	padding: .02rem .1rem;
 }

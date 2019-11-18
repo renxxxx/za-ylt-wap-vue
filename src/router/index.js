@@ -1,59 +1,114 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import index from '@/components/hospital_indexApp.vue'
-import hospital from '@/components/hospital_hospital.vue'
-import user from '@/components/hospital_user.vue'
+//登陆页面及其忘记密码
 import landingPage from '@/components/landingPage.vue'
 import retrievePassword from '@/components/retrievePassword.vue'
-import index_search from '@/components/index/index_search.vue'
+//门诊端页面及其组件
+import outpatient_index from '@/components/outpatient/index.vue'
+import outpatient_hospital from '@/components/outpatient/hospital.vue'
+import outpatient_gene from '@/components/outpatient/gene.vue'
+import outpatient_user from '@/components/outpatient/user.vue'
+import outpatient_search from '@/components/outpatient/index/index_search.vue'
+import outpatient_details from '@/components/outpatient/childPage/detailsPage.vue'
+//医院端页面及其组件
+import hospital_index from '@/components/hospital/index.vue'
+import hospital_clinic from '@/components/hospital/clinic.vue'
+import hospital_gene from '@/components/hospital/gene.vue'
+import hospital_user from '@/components/hospital/user.vue'
+//功能副插件
 
 import store from '../store'
 Vue.use(Router)
 
 const router = new Router({
   routes: [
-    // 动态路径参数 以冒号开头
-    {
-		// 门诊主页
-    	path: '/',
-    	name: 'index',
-    	component: index,
-    	meta: {auth:true},
-		alias:'/index'
-    },
 	{
-		// 门诊主页
-		path: '/index_search',
-		name: 'index_search',
-		component: index_search,
-		meta: {auth:true},
-		alias:'/index_search'
+		// 医院端主页
+		path: '/hospital_index',
+		name: 'hospital_index',
+		component: hospital_index,
+		// meta: {auth:true},
+		
 	},
 	{
-		//医院主页
-		path: '/hospital',
-		name: 'hospital',
+		// 医院端门诊主页
+		path: '/hospital_clinic',
+		name: 'hospital_clinic',
+		component: hospital_clinic,
 		// meta: {auth:true},
-		component: hospital,
+		
+	},
+	{
+		// 医院端基因主页
+		path: '/hospital_gene',
+		name: 'hospital_gene',
+		component: hospital_gene,
+		// meta: {auth:true},
+		
+	},
+	{
+		// 医院端基因主页
+		path: '/hospital_user',
+		name: 'hospital_user',
+		component: hospital_user,
+		// meta: {auth:true},
+		
+	},
+    {
+		// 门诊端主页
+    	path: '/outpatient_index',
+    	name: 'outpatient_index',
+    	component: outpatient_index,
+    	meta: {auth:true},
+		
+    },
+	{
+		// 门诊端的主页搜索
+		path: '/outpatient_search',
+		name: 'outpatient_search',
+		component: outpatient_search,
+		meta: {auth:true},
+	},
+	{
+		// 门诊端的主页病人详情页
+		path: '/outpatient_details',
+		name: 'outpatient_details',
+		component: outpatient_details,
+		meta: {auth:true},
+	},
+	{
+		//门诊端的医院主页
+		path: '/outpatient_hospital',
+		name: 'outpatient_hospital',
+		meta: {auth:true},
+		component: outpatient_hospital,
+	},
+	{
+		//门诊端的基因主页
+		path: '/outpatient_gene',
+		name: 'outpatient_gene',
+		meta: {auth:true},
+		component: outpatient_gene,
 	},
 	{
 		//用户主页
-		path: '/user',
-		name: 'user',
+		path: '/outpatient_user',
+		name: 'outpatient_user',
 		meta: {auth:true},
-		component: user,
+		component: outpatient_user,
 	},
 	{
 		// 登陆主页
-		path: '/landingPage',
+		path: '/',
 		name: 'landingPage',
 		component: landingPage,
+		alias:'/landingPage'
 	},
 	{
 		//找回密码页面
 		path: '/retrievePassword',
 		name: 'retrievePassword',
-		meta: {auth:false},
+		meta: {auth:true},
 		component: retrievePassword,
 	},
   ],
@@ -89,15 +144,13 @@ router.beforeEach((to,from,next) => {
 	}else{
 		next();
 	}
-	if(to.path == "/landingPage"){
-		store.state.shop.roterShow = false;
-		// console.log(store.state.shop.roterShow)
-	}
-	if(to.path == "/user" || to.path == "/index"){
-		store.state.shop.roterShow = true;
+	//识别路径初始化下body的背景色
+	if(to.path == "/outpatient_user" || to.path == "/outpatient_index" || to.path == '/outpatient_search'
+	 || to.path == '/outpatient_gene' ||to.path == "/outpatient_details" || to.path == '/hospital_clinic' 
+	 || to.path == '/hospital_gene' || to.path == '/hospital_user'){
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"
 	}else{
-		// document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"
+		document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"
 	}
 })
 export default router

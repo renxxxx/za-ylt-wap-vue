@@ -4,14 +4,14 @@
 			<!-- 搜索及其筛选 -->
 			<div class="topNav">
 				<div class="indexSearch">
-					<router-link to="/index_search">
-						<img src="../../static/iOS切图/sousuo@2x.png" alt="">
-						<input type="text" placeholder="搜索病源">
+					<router-link to="/outpatient_search">
+						<img src="../../../static/iOS切图/sousuo@2x.png" alt="">
+						<input type="text" placeholder="搜索病源" autofocus="autofocus">
 					</router-link>
 				</div>
 				<div class="indexScreening" @click="showPopup">
 					<span>筛选</span>
-					<img src="../../static/iOS切图/screen@2x.png" alt="加载中" >
+					<img src="../../../static/iOS切图/screen@2x.png" alt="加载中" >
 				</div>
 				<van-popup v-model="show" position="right" :style="{ height: '100%',width:'78.7%'}">
 					<div id="indexLabel" v-model="Time">
@@ -45,7 +45,7 @@
 					</div>
 				</van-popup>
 			</div>
-			<van-popup :show="showTime" @click="closeFn" v-model="showTime" position="bottom" :style="{ height: '30%',width:'100%'}">
+			<van-popup @click="closeFn" v-model="showTime" position="bottom" :style="{ height: '20%',width:'100%'}">
 				<van-datetime-picker
 				  type="date"
 				  @confirm="confirm"
@@ -58,7 +58,7 @@
 					<van-tab title="新增病源">
 						<form @submit.prevent="hospitalSubmit" class="newAdd">
 							<div class="newAddTitle">
-								<img src="../../static/iOS切图/bitian@2x.png" alt="">
+								<img src="../../../static/iOS切图/bitian@2x.png" alt="">
 								<h3>必填项</h3>
 								<ul class="Fill">
 									<li>
@@ -76,7 +76,7 @@
 								</ul>
 							</div>
 							<div class="newAddTitle bottom">
-								<img src="../../static/iOS切图/bitian@2x.png" alt="">
+								<img src="../../../static/iOS切图/bitian@2x.png" alt="">
 								<h3>选填项</h3>
 								<ul class="Fill">
 									<li>
@@ -88,36 +88,44 @@
 							<input class="submitClass" type="submit" value="提交"></input>
 						</form>
 					</van-tab>
-					<van-tab title="未就诊" class="Already" @click="testClick()">
+					<van-tab :title=noTitle class="Already" @click="testClick()">
 						<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
 							<div class="list">
-								<ul :model="message" class="list-content">
+								<ul :model="message" class="index_content">
 									<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
-									    <li v-for="(_notDiagnosis, index) in  message.notDiagnosis" :key="index">
-									    	<span>{{_notDiagnosis.realname}}</span>
-											<div class="AlreadyRight">
-												<img src="../../static/门诊端/iOS切图/weijiuzhen@2x.png" alt="">
-												<span>未就诊</span>
-											</div>
-											<p>推送时间：<span>{{_notDiagnosis.pushTime}}</span></p>
-									    </li>
+										<router-link to="/outpatient_details" >
+											<li v-for="(_notDiagnosis,inx) in message.notDiagnosis" :key="inx" @click="detailsValueFn(_notDiagnosis)">
+												<div class="content_left">
+													<span>{{_notDiagnosis.realname}}</span>
+												</div>
+												<div class="content_right">
+													<img src='../../../static/门诊端/iOS切图/weijiuzhen@2x.png'>
+													<span class="AlreadySpanColor">未就诊</span>
+												</div>
+												<p>{{moment(_notDiagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
+											</li>
+										</router-link>
 									</van-list>
 								</ul>
 							</div>
 						</van-pull-refresh>
 				  </van-tab>
-				  <van-tab title="已就诊" class="Already" >
+				  <van-tab :title=yesTitle class="Already" >
 						<van-pull-refresh v-model="isLoading" @refresh="onRefresh2">
-							<ul :model="message">
+							<ul class="index_content" :model="message">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoadss">
-									<li v-for="(_diagnosis,inx) in message.diagnosis" :key="inx">
-										<span>{{_diagnosis.realname}}</span>
-										<div class="AlreadyRight no">
-											<img src="../../static/门诊端/iOS切图/yijiuzhen@2x.png" alt="">
-											<span class="AlreadySpanColor">已就诊</span>
-										</div>
-										<p>推送时间：<span>{{_diagnosis.pushTime}}</span></p>
-									</li>
+									<router-link to="/outpatient_details" >
+										<li v-for="(_diagnosis,inx) in message.diagnosis" :key="inx" @click="detailsValueFn(_diagnosis)">
+											<div class="content_left">
+												<span>{{_diagnosis.realname}}</span>
+											</div>
+											<div class="content_right">
+												<img src='../../../static/门诊端/iOS切图/yijiuzhen@2x.png'>
+												<span>已就诊</span>
+											</div>
+											<p>{{moment(_diagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
+										</li>
+									</router-link>
 								</van-list>
 							</ul>
 						</van-pull-refresh>
@@ -125,6 +133,7 @@
 				</van-tabs>
 			</div>
 		</div>
+		<routerNav v-bind:name='name'></routerNav>
   </div>
 </template>
 
@@ -133,16 +142,14 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import routerNav from './childPage/router.vue'
 export default {
-  name: 'HelloWorld',
+  name: 'index',
   data () {
     return {
-		//单选框的选择默认项
-		radio:'1',
-	   //下拉刷新
-		count: 0,
-		isLoading: false,
-		
+		name: 'index',
+		noTitle:'未就诊',
+		yesTitle:'已就诊',
 		//获取动态数据
 		message:{
 			//未就诊
@@ -150,11 +157,7 @@ export default {
 			//未就诊
 			diagnosis:[],
 		},
-		//日期参数
-		minDate:'',
-		defaultDatetime: new Date(),
-		markDate: ['2019/06/30', '2019/10/05', '2019/10/19', '2019/10/09', '2019/10/16', '2019/10/12'],
-		currentDate:'',
+		//页数
 		page : 1,
 		page2 : 1,
 		 // 数据全部加载完成
@@ -164,16 +167,67 @@ export default {
 		//显示下拉加载
 		isLoading: false
     }
-  }, 
+  },
   mounted(){
 	// //未就诊请求
-	// this.getdata(1,1,this.message.notDiagnosis);
-	// //已就诊
-	// this.getdata(4,1,this.message.diagnosis);
+	this.$axios.post('/c2/patient/items',qs.stringify({
+		status : 1 ,
+		pn : this.page,
+		ps : 10
+	}))
+	.then(_d => {
+		if(_d.data.data.items.length != 0){
+			setTimeout(() => {
+				for (let nums in _d.data.data.items) {
+				    this.message.notDiagnosis.push(_d.data.data.items[nums]);
+				 }
+			}, 300);
+			this.noTitle = '未就诊' + _d.data.data.sum.totalCount
+		}else{
+			this.$notify({
+				message: '数据已全部加载',
+				duration: 1000,
+				background:'#79abf9',
+			})
+			this.loading = false;
+			this.finished = true;
+		}
+	})
+	.catch((err)=>{
+		console.log(err);
+		Dialog({ message: '加载失败!'});
+	})
+	//已就诊
+	this.$axios.post('/c2/patient/items',qs.stringify({
+		status : 4 ,
+		pn : this.page,
+		ps : 10
+	}))
+	.then(_d => {
+		if(_d.data.data.items.length != 0){
+			setTimeout(() => {
+				for (let nums in _d.data.data.items) {
+				     this.message.diagnosis.push(_d.data.data.items[nums]);
+				}
+			}, 300);
+			this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
+		}else{
+			this.$notify({
+				message: '数据已全部加载',
+				duration: 1000,
+				background:'#79abf9',
+			})
+			this.loading = false;
+			this.finished = true;
+		}
+	})
+	.catch((err)=>{
+		console.log(err);
+		Dialog({ message: '加载失败!'});
+	})
   },
   computed:{
-	// window.addEventListener('popstate', this.roterShow = false);
-	...mapGetters(['roterShow','Time','labelDocument','showTime','show','account']),
+	...mapGetters(['Time','labelDocument','showTime','show','account','detail']),
 	show: {
 	    get: function() {
 			// console.log(this.$store)
@@ -181,12 +235,28 @@ export default {
 	    },
 	    set: function (newValue) {
 			this.$store.state.shop.show = newValue;
-	    }
+	    },
+	},
+	showTime: {
+	    get: function() {
+			// console.log(this.$store)
+	        return this.$store.state.shop.showTime
+	    },
+	    set: function (newValue) {
+			this.$store.state.shop.showTime = newValue;
+	    },
 	},
   },
   //注册组件
-  components:{},
+  components:{
+	  routerNav
+  },
   methods:{
+	detailsValueFn(_diagnosis){
+		// console.log(_diagnosis)
+		this.detail.patientId = _diagnosis.itemId;
+		// console.log(this.detail)
+	},
 	//上拉加载数据
 	onLoad(){
 	  this.getdata(1,this.message.notDiagnosis,1);
@@ -212,12 +282,12 @@ export default {
 			kw	:	"",
 			clinicId : this.account.data.data.clinic.clinicId,
 			name : "",
-			pushTimeStart : undefined,
-			pushTimeEnd : undefined,
+			pushTimeStart : this.Time.confirmStart,
+			pushTimeEnd : this.Time.confirmOver,
 			hospitalId : this.account.data.data.hospital.hospitalId,
 			status : data ,
-			hospitalConfirmTimeStart : undefined,
-			hospitalConfirmTimeEnd : undefined,
+			hospitalConfirmTimeStart : this.Time.pushStart,
+			hospitalConfirmTimeEnd : this.Time.pushOver,
 			orders : 'asc',
 			pn : this.page,
 			ps : 10
@@ -237,6 +307,7 @@ export default {
 				    // 加载状态结束
 				    this.loading = false;
 				}, 300);
+				this.noTitle = '已就诊' + _d.data.data.sum.totalCount
 			}else{
 				this.$notify({
 					message: '数据已全部加载',
@@ -260,12 +331,12 @@ export default {
 			kw	:	"",
 			clinicId : this.account.data.data.clinic.clinicId,
 			name : "",
-			pushTimeStart : undefined,
-			pushTimeEnd : undefined,
+			pushTimeStart : this.Time.confirmStart,
+			pushTimeEnd : this.Time.confirmOver,
 			hospitalId : this.account.data.data.hospital.hospitalId,
 			status : data ,
-			hospitalConfirmTimeStart : undefined,
-			hospitalConfirmTimeEnd : undefined,
+			hospitalConfirmTimeStart :  this.Time.pushStart,
+			hospitalConfirmTimeEnd : this.Time.pushOver,
 			orders : 'asc',
 			pn : this.page2,
 			ps : 10
@@ -285,12 +356,14 @@ export default {
 				    // 加载状态结束
 				    this.loading = false;
 				}, 300);
+				this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
 			}else{
 				this.$notify({
 					message: '已加载',
 					duration: 1000,
 					background:'#79abf9',
 				})
+				this.loading = false;
 				this.finished = true;
 			}
 		})
@@ -328,7 +401,7 @@ body{
 	line-height:.335rem;
 	width: 100%;
 	padding-top: 0.14rem;
-	background:url('../../static/门诊端/iOS切图/BJ-blue.png');
+	background:url('../../../static/门诊端/iOS切图/BJ-blue.png');
 	background-size:100% 100%;
 	position: relative;
 }
@@ -451,7 +524,14 @@ body{
 	height: 100%;
 	margin-top: -.65rem;
 }
-.van-tabs--line .van-tabs__wrap {
+>>>.van-tabs__nav--line {
+    box-sizing: content-box;
+    height: 100%;
+    padding-bottom: 15px;
+    z-index: 99;
+}
+>>>.van-tabs--line .van-tabs__wrap {
+	width: 100%;
     height: 44px;
 }
 .newAdd{
@@ -467,7 +547,11 @@ body{
     background-color: rgba(0,0,0,.7);
     z-index: 2002!important;
 }
-
+>>>[data-v-111b5a74] .van-hairline--top-bottom {
+    display: block;
+    width: 100%!important;
+    z-index: 99!important;
+}
 >>>.van-notify--danger {
 	margin-top: .94rem!important;
     /* background-color: #ee0a24; */
@@ -508,6 +592,12 @@ body{
 	height: .4rem;
 	display:block;margin:0 auto;
 	margin-top: .5rem;
+	
+	background: linear-gradient(#56AFF8, #2B77EF);
+	border: none;
+	border-radius: .2rem;
+	color: #FFFFFF;
+	font-size: 	.14rem;
 }
 .newAddTitle{
 	width: 80%;
@@ -549,45 +639,48 @@ body{
 	margin-top: .2rem;
 	height: .78rem;
 }
-.Already{
-	padding: .12rem .12rem .12rem;
-	width: 100%;height: 5.4rem;
-	overflow:scroller;
-}
-.Already ul{
-	width:100%;margin: .12rem;
-}
-.Already ul li{
-	width: 85.6%;border-radius: .03rem;
-	background: #FFFFFF;
-	padding: .145rem .15rem .14rem .15rem;
-	margin-bottom: .12rem;
-}
-.Already ul li span{
-	font-family: '苹方-简 中黑体';
-	font-weight: 900;
-}
-.AlreadyRight{
-	float: right;
-}
 .AlreadySpanColor{
-	color: #4DD865!important;
+	color: #2B77EF!important;
 }
-.AlreadyRight img{
-	height: .11rem;
-	width: .11rem;
+
+.index_content{
+	margin: 0 .12rem;
 }
-.AlreadyRight span{
-	margin-left: .05rem;
-	color: #2B77EF;
-	font-weight: none;
+.index_content li {
+	height:1.01rem;
+	margin-top:.12rem;
+	background-color:#FFFFFF;
+	position:relative;
+	/*padding:.14rem .15rem;*/
 }
-.Already ul li:last-child{
-	margin-bottom:.49rem;
+.index_content li p{
+	position:absolute;
+	bottom:0;
+	height:.5rem;
+	width:93%;
+	line-height:.5rem;
+	margin-left:.14rem;
+	border-top:1px solid #E5E5E5;
 }
-.Already ul li p{
-	color: #768892;
-	font-weight: none;
+.content_left{
+	float:left;
+	height:.5rem;
+	margin-top:.14rem;
+	margin-left:.15rem;
+}
+.content_right{
+	float:right;
+	height:.5rem;
+	margin-right:.14rem;
+	margin-top:.15rem
+}
+.content_right img{
+	width:.11rem;
+	height:.11rem;
+	margin-right:.04rem;
+}
+.content_right span{
+	color: #4DD865;
 }
 .date_ctrl {
     vertical-align: middle;
@@ -612,7 +705,10 @@ body{
 	background: #F5F5F5!important;
 	height: 100%;
 }
-
+>>>.van-tab{
+	height: .5rem;
+	line-height: .5rem;;
+}
 >>>.van-picker__confirm {
     padding: 0 16px;
     color: #1989fa;
@@ -623,7 +719,7 @@ body{
 }
 >>>.van-tabs__line{
     position: absolute;
-    bottom: .18rem;
+    bottom: .16rem;
     left: 0;
     z-index: 1;
     height: .03rem;
@@ -644,10 +740,7 @@ body{
     -webkit-transform: scale(.5);
     transform: scale(.5);
 }
->>>.van-hairline--top-bottom{
-	display: block;
-   width: 100%!important;
-}
+
 >>>van-tabs{
 	height: 100%;
 }

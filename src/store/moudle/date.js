@@ -3,10 +3,8 @@ import axios from 'axios'
 import qs from 'qs';
 import { Dialog } from 'vant'
 const state={
-	//主导航显示控制
-	roterShow:false,
 	//账号协议checked
-	checked: false,
+	checked: true,
 	//账号
 	account:{
 		name:'',
@@ -20,7 +18,25 @@ const state={
 			// clinicId				//门诊id
 			// hospitalId  			//医院id
 		},
+		hospitalId: 0,
 		data:{},
+	},
+	// 详情页数据
+	detail:{
+		patientId : undefined,		//病人id
+		realname : undefined,		//病人姓名
+		clinicId : undefined,		//门诊id
+		clinicName : undefined,		//门诊名称
+		hospitalConfirmTime : undefined	,//医院确诊时间
+		hospitalId	: undefined,	//医院id
+		hospitalName : undefined,	//医院名称
+		idcardNo : undefined,		//身份证号
+		invoices : [],		//发票
+		patientId :undefined,		//患者id
+		pushTime : undefined,		//推送时间
+		remark : undefined,			//备注
+		tel : undefined,			//电话号码
+		sickness : undefined		//病例
 	},
 	//筛选的弹窗显示值
 	show: false,	
@@ -28,10 +44,10 @@ const state={
 	Time:{
 		look:'',
 		noLook:'',
-		confirmStart : 0,
-		confirmOver : 0,
-		pushStart : 0,
-		pushOver : 0
+		confirmStart : '',
+		confirmOver : '',
+		pushStart : '',
+		pushOver : ''
 	},
 	// lable的dom节点
 	labelDocument:['labelDocument','labelDocument2','labelDocument3','labelDocument4','labelDocument5','labelDocument6'],
@@ -42,10 +58,10 @@ const state={
 	showData: '',
 }
 const getters={
-	//主导航显示控制
-	roterShow : state => state.roterShow,
 	//账号协议checked
 	checked: state => state.checked,
+	// 详情页数据
+	detail: state => state.detail,
 	//账号登陆
 	account : state => state.account,
 	//筛选的弹窗显示值
@@ -119,10 +135,13 @@ const mutations={
 			.then( res =>{
 				if(res.data.codeMsg == ""){
 					state.account.isLogin = _isLogin;
+					
 					 axios.post(_postRefresh)
 						.then( res =>{
 							// console.log(Res);
 							state.account.data = {};
+							state.account.hospitalId= res.data.data.hospital.hospitalId;
+							console.log(state.account.hospitalId)
 							state.account.data = res.data;
 							// console.log(state.account)
 							// console.log(res)
@@ -131,12 +150,11 @@ const mutations={
 							console.log(err)
 							Dialog({ message: '加载失败!' });
 						})
-					if(_isLogin == 200){
+					if(_isLogin == 200 || _isLogin == 100){
 						window.location.href=_url;	
 					}else{
 						Dialog({ message: '正在开发中，敬请期待' });
 					}
-					state.roterShow=true;
 				}else{
 					Dialog({ message:  res.data.codeMsg});
 				}
@@ -164,14 +182,14 @@ const mutations={
 		if(state.checked == true){
 			switch (landingState){
 				case '100':
-				mutations.submintGetData('/hospital/login','/hospital/login-refresh',100,'#/index')
+				mutations.submintGetData('/hospital/login','/hospital/login-refresh',100,'#/hospital_index')
 					break;
 				case '200':
 				// console.log('200')
-				mutations.submintGetData('/clinic/login','/clinic/login-refresh',200,'#/index')
+				mutations.submintGetData('/clinic/login','/clinic/login-refresh',200,'#/outpatient_index')
 					break;
 				case '300':
-				mutations.submintGetData('/manager/login','/manager/login-refresh',300,'#/index')
+				mutations.submintGetData('/manager/login','/manager/login-refresh',300,'#/outpatient_index')
 					break;
 				default:
 					break;
@@ -222,19 +240,19 @@ const mutations={
 		state.time = state.time[3]+'/'+state.time[1]+'/'+state.time[2]+'';
 		switch (state.dateStata){
 			case 2:
-			state.Time.confirmStart = 0;
+			state.Time.confirmStart = '';
 			state.Time.confirmStart = state.time; 
 			break;
 			case 3: 
-			state.Time.confirmOver = 0;
+			state.Time.confirmOver = '';
 			state.Time.confirmOver = state.time; 		
 			break;
 			case 4: 
-			state.Time.pushStart = 0;
+			state.Time.pushStart = '';
 			state.Time.pushStart = state.time;		
 			break;
 			case 5: 
-			state.Time.pushOver = 0;
+			state.Time.pushOver = '';
 			state.Time.pushOver = state.time;
 			break;
 		}
@@ -334,33 +352,39 @@ const mutations={
 				break;
 				
 				case 'confirmStart':
-				if(state.Time.confirmStart == 0){
+				if(state.Time.confirmStart == ''){
 					Dialog({ message: '请确认您的开始就诊时间' });
 				};
 				break;
 				
 				case 'confirmOver':
-				if(state.Time.confirmOver == 0){
+				if(state.Time.confirmOver == ''){
 					Dialog({ message: '请确认结束您的就诊时间' });
 				};
 				break;
 				
 				case 'pushStart':
-				if(state.Time.pushStart == 0){
+				if(state.Time.pushStart == ''){
 					Dialog({ message: '请选择开始门诊推送时间' });
 				};
 				break;
 				
 				case 'pushOver':
-				if(state.Time.pushOver == 0){
+				if(state.Time.pushOver == ''){
 					Dialog({ message: '请选择结束门诊推送时间' });
 				};
 				break;
 			}
 		}
+		if(state.Time.look != '' || state.Time.noLook != ''&&
+			state.Time.Look != ''  || state.Time.noLook != ''&&
+			state.Time.confirmStart != '' && state.Time.confirmOver != ''&&
+			state.Time.pushStart != '' && state.Time.pushOver == ''){
+			window.location.href='/#/outpatient_search';
+		}
 		console.log(state.Time);
 		state.show = false;
-		Dialog({ message: '已提交' });
+		// Dialog({ message: '已提交' });
 		
 	},
 	// 筛选重置

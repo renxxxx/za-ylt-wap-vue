@@ -10,11 +10,11 @@
 					<form @submit.prevent="submit('100')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
-							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号">
+							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" autofocus="autofocus">
 						</div>
 						<div class="inputBox">
 							<img  class="passwordImg" src="../../static/新登陆-10.25/切图/mima@2x.png" alt="">
-							<input type="text"  v-model="account.password" name='password' placeholder="请输入密码">
+							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码">
 						</div>
 						<div class="checkBox">
 							<input type="checkbox"
@@ -39,12 +39,12 @@
 					<form @submit.prevent="submit('200')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
-							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号">
+							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" v-focus="true">
 							
 						</div>
 						<div class="inputBox">
 							<img  class="passwordImg" src="../../static/新登陆-10.25/切图/mima@2x.png" alt="">
-							<input type="text"  v-model="account.password" name='password' placeholder="请输入密码">
+							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码">
 						</div>
 						<div class="checkBox">
 							<input type="checkbox"
@@ -68,11 +68,11 @@
 					<form @submit.prevent="submit('300')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
-							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号">
+							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" v-focus="true">
 						</div>
 						<div class="inputBox">
 							<img  class="passwordImg" src="../../static/新登陆-10.25/切图/mima@2x.png" alt="">
-							<input type="text"  v-model="account.password" name='password' placeholder="请输入密码">
+							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码">
 						</div>
 						<div class="checkBox">
 							<input type="checkbox"
@@ -85,7 +85,7 @@
 						<div class="passwordReset">
 							<router-link  to="/retrievePassword">
 								<div @click="forgetFn(300)">
-									忘记密码
+									修改密码
 									<img src="../../static/iOS切图/reset@2.png" alt="">
 								</div>
 							</router-link>
@@ -109,6 +109,17 @@ export default {
       
     }
   },
+  directives: {
+    focus: {
+		inserted: function (el, {value}) {
+		// console.log(el,{value})
+            if (value) {
+				// console.log('ss')
+                el.focus();
+            }
+        }
+    }
+  },
   watch:{
     '$route.path': function (newVal, oldVal) {
       if (newVal === '/retrievePassword') {
@@ -120,7 +131,7 @@ export default {
      }
   },
   computed:{
-  	...mapGetters(['account','checked','roterShow'])
+  	...mapGetters(['account','checked'])
   },
   methods:{
 	 //传递页面状态值
@@ -152,8 +163,10 @@ export default {
 	height: 100%;width: 100%;z-index: 999;
 }
 .typeNav{
-	margin-top: 12%;
-	padding: 0 .5rem;
+	padding: 0 7.5%;
+	position: absolute;
+	top: 1.5rem;
+	width: 85%;
 }
 >>>.van-tabs__line {
     position: absolute;
@@ -185,18 +198,19 @@ export default {
 }
 .content{
 	width: 100%;
-	margin: .2rem 0 0 -.5rem;
+	margin-top: .47rem;
 }
 .submitClass{
 	background-color: #2B77EF;
-	width: 3.1rem;height: .45rem;
+	width: 100%;height: .45rem;
 	border-radius: .23rem;
 	margin-top: .8rem;
-	margin-left: .32rem;
 	color: #FFFFFF;
 }
 .inputBox{
 	position: relative;
+	width: 100%;
+	margin: 0 auto;
 }
 
 .passwordImg{
@@ -204,22 +218,21 @@ export default {
 	height: .16rem;
 	width: .18rem;
 	top:.35rem;
-	left:.57rem;
+	left: 7%;
 }
 .telephoneImg{
 	width: .13rem;
 	height: .2rem;
 	top:.35rem;
-	left:.57rem;
+	left: 7%;
 	position: absolute;
 }
 .inputBox input{
-	width: 2.54rem;
+	width: 85%;
 	height: .45rem;
-	border-radius:.25rem;
+	border-radius: .25rem;
 	border: 1px solid #E5E5E5;
-	margin: 0 .38rem;
-	padding-left: .56rem;	
+	padding-left: 15%;
 	background: #F5F5F5;
 }
 .inputBox input:last-child{
@@ -304,9 +317,14 @@ export default {
 }
 .checkBox{
 	margin-top: .2rem;
-	margin-left: .33rem;
-	margin-right: .09;
-	height: .17rem;
+	margin-right: .09rem;
+	height: .3rem;
+	line-height: .3rem;
+	position: relative;
+}
+.checkBox input{
+	position: absolute;
+	top: .04rem;
 }
 .checkBox p{
 	margin-top: -.05rem;
@@ -318,7 +336,6 @@ export default {
 }
 .passwordReset{
 	margin-top: .13rem;
-	margin-left: .33rem;
 	height: .17rem;
 }
 .passwordRese{

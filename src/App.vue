@@ -1,33 +1,33 @@
 <template>
-  <div id="app">
+	<div id="app">
 	<router-view/>
-	<div class="mainButton" v-show="roterShow">
-		<router-link to="/index">
-			<div id="_index" @click="colorFn('_index')">
-				<img :src=colorImg[0] alt="">
-				<span>首页</span>
-			</div>
-		</router-link>
-		<router-link to="/user">
-			<div id="_hospital" @click="colorFn('_hospital')">
-				<img :src=colorImg[1] alt="">
-				<span>医院</span>
-			</div>
-		</router-link>
-		<router-link to="/index">
-			<div id="_gene" @click="colorFn('_gene')">
-				<img :src=colorImg[2] alt="">
-				<span>基因</span>
-			</div>
-		</router-link>
-		<router-link to="/user">
-			<div id="_my" @click="colorFn('_my')">
-				<img :src=colorImg[3] alt="">
-				<span>我的</span>
-			</div>
-		</router-link>
+		<!-- <div id="mainButton" v-show="roterShow">
+			<router-link to="/outpatient_index">
+				<div id="_index" @click="colorFn('_index')">
+					<img :src=colorImg[0] alt="">
+					<span>首页</span>
+				</div>
+			</router-link>
+			<router-link to="/outpatient_hospital">
+				<div id="_hospital" @click="colorFn('_hospital')">
+					<img :src=colorImg[1] alt="">
+					<span>医院</span>
+				</div>
+			</router-link>
+			<router-link to="/outpatient_gene">
+				<div id="_gene" @click="colorFn('_gene')">
+					<img :src=colorImg[2] alt="">
+					<span>基因</span>
+				</div>
+			</router-link>
+			<router-link to="/outpatient_user">
+				<div id="_my" @click="colorFn('_my')">
+					<img :src=colorImg[3] alt="">
+					<span>我的</span>
+				</div>
+			</router-link>
+		</div> -->
 	</div>
-  </div>
 </template>
 
 <script>
@@ -37,7 +37,7 @@ export default {
   data(){
   	return{
 		//主导航栏图片
-		colorImg:['../static/iOS切图/shouye@2x.png',
+		colorImg:['../static/iOS切图/shouye-blue@2x.png',
 				'../static/门诊端/iOS切图/Hospital@2x.png',
 				'../static/切图-基因/jiyin-gray@2x.png',
 				'../static/iOS切图/wode@2x.png']
@@ -95,7 +95,7 @@ export default {
 			break;
 		}
 		// document.getElementById(_id).style.color = 'red'
-		  console.log(document.getElementById(_id).color)
+		  // console.log(document.getElementById(_id).color)
 	}
   },
 }
@@ -114,21 +114,24 @@ body{
   color: #2c3e50;
   /* background-color: #F5F5F5; */
 }
-.mainButton{
+#mainButton{
 	background-color: #FFFFFF;
 	position: fixed;bottom: 0;height: .49rem;width: 100%;
 	box-shadow:0px 2px 4px 0px rgba(0,0,0,0.5);
 	background:rgba(255,255,255,1);
 }
-.mainButton a {
-	display: inline-block;width: 24.3%;text-align: center;
+#mainButton a {
+	float: left;width: 24.3%;text-align: center;
 	margin-top: .07rem;height: .21rem;
 	text-align: center;color: #999999;
+}
+#mainButton a:first-child{
+	color:#2B77EF;
 }
 #_index,#_hospital,#_gene,#_my{
 	height: .51rem;width: 100%;
 }
-.mainButton img{
+#mainButton img{
 	width: .2rem;height: .21rem;display: block;
 	margin: 0 auto;margin-bottom: 0.019rem;
 }
