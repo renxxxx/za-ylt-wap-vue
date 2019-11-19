@@ -39,21 +39,8 @@
 			</div>
 		</div>
 		
-		<div class="content">
-			<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-				<ul>
-					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
-						<li v-for="(items,inx) in content" :key="inx">
-							<div class="contentLi">
-								<h4>{{items.hospital}}</h4>
-								<span>{{items.name}}</span>
-								<input type="text" v-model="items.pushCount" readonly="readonly">
-							</div>
-						</li>
-					</van-list>
-				</ul>
-			</van-pull-refresh>
-		</div>
+		<clinic_content></clinic_content>
+		
 		<bottomNav v-bind:name='name'></bottomNav>
 	</div>
 </template>
@@ -64,85 +51,29 @@ import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 import bottomNav from './childPage/bottomNav.vue'
+import clinic_content from './childPage/clinic_content.vue'
 export default {
 	name: 'hospital',
 	data () {
 		return {
-			isLoading: true,
-			loading: false,
-			finished: false,
 			name: 'hospital',
-			content: [],
-			page:1
 		}
   },
 	computed:{
 	  
 	},
 	components:{
-		bottomNav
+		clinic_content,bottomNav
 	},
 	created () {
 		
 	},
 	mounted () {
-		this.getdata(0)
+		// this.getdata(0)
 	},
 	methods: {
-		onRefresh() {
-			this.getdata(0)
-		},
-		getdata(_data){
-			if(_data == 0){
-				this.page = 1;
-			}
-			this.$axios.post('/c2/clinic/items',qs.stringify({
-				pn : this.page,
-				ps : 10
-			}))
-			.then(res => {
-				if(res.data.data.items.length != 0){
-					// console.log(this.page)
-					for(let i in res.data.data.items){
-					// console.log(res.data.data.items[i])
-					if(!res.data.data.items[i]){
-						this.$notify({
-							message: '数据已全部加载',
-							duration: 1000,
-							background:'#79abf9',
-						})
-						// this.loading = false;
-						// this.finished = true;
-					}else{
-						this.content.push(res.data.data.items[i])
-					}
-				}
-				if(_data == 1){
-					this.page++
-				}else{
-					this.isLoading = false;
-				}
-				// 加载状态结束
-				this.loading = false;
-				}else{
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
-					this.loading = false;
-					this.finished = true;
-				}
-			})
-			.catch((err)=>{
-				console.log(err);
-				Dialog({ message: '加载失败!'});
-			})
-		},
-		onLoad(){
-			this.getdata(1)
-		}
-	},
+		
+	}
 }
 </script>
 
@@ -245,61 +176,5 @@ export default {
 	margin-left: .05rem;
 	margin-top: -.03rem;
 }
-.content{
-	width: 100%;
-	height: 100%;
-	/* margin-top: .1rem; */
-}
-.content ul{
-	width: 94.6%;
-	margin: 0 auto;
-	/* text-align: center; */
-}
-.content ul li{
-	width: 48.6%;
-	height: 1.1rem;
-	display: inline-block;
-	margin-top: .1rem;
-	background-color: #FFFFFF;
-	text-align: center;
-}
-/* .content ul li:first-child {
-    margin-top: 2.1rem;
-} */
->>>.van-pull-refresh {
-    overflow: visible;
-    -webkit-user-select: none;
-    user-select: none;
-    margin-top: 2.1rem;
-}
-.content ul li:nth-child(2n){
-	margin-left:1.71% ;
-}
-.content ul li:last-child{
-	margin-bottom: .49rem;
-}
-.contentLi{
-	height: .82rem;
-	/* margin-top: .19rem; */
-	margin: .14rem auto;
-}
-.contentLi h4{
-	font-size: .14rem;
-	font-weight: bold;
-	display: block;
-	margin-top: .19rem;
-}
-.contentLi span{
-	display: block;
-	margin-top: .05rem;
-	margin-bottom: .09rem;
-	color: #999999;
-}
-.contentLi input{
-	width: .9rem;
-	height: .24rem;
-	text-align: center;
-	border: 1px solid #FF951B;
-	border-radius: .5rem;
-}
+
 </style>

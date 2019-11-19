@@ -136,7 +136,8 @@ export default {
 			}
 			console.log(document.getElementById('van-uploader__upload'))
 			this.modify.data = true;
-		
+			this.modify.value = '编辑';
+			this.modify.img = '../../../../static/iOS切图/editor.png';
 		}else{
 			this.modify.data = false;
 			this.fileList = [];
@@ -171,7 +172,7 @@ export default {
 	//修改方法
 	modifyFn(){
 		this.modify.num++;
-		// console.log(document.getElementsByClassName('van-uploader__preview-delete'));
+		// console.log(document.getElementsByClassName('van-uploader__preview-delete'));		
 		if(this.modify.num % 2 != 0){
 			console.log(this.modify.num)
 			this.modify.value = '保存';
@@ -182,8 +183,15 @@ export default {
 				// console.log(_id)
 				document.getElementById(_id).removeAttribute("readonly");
 			}
+			document.getElementsByClassName('van-uploader__upload')[0].style.display = 'flex'
+			let classDomList = document.getElementsByClassName('van-uploader__preview-delete')
+			for(let _d in classDomList){
+				// console.log(classDomList[_d])
+				classDomList[_d].style.display = "";
+				// classDomList[_d].remove;
+			}
 		}else{
-			
+			debugger;
 			let _imgAddress = [];
 			for(let i in this.imageUpload){
 				_imgAddress[i] = this.imageUpload[i].url
@@ -208,24 +216,24 @@ export default {
 				// console.log(_id)
 				document.getElementById(_id).setAttribute("readonly","readonly");
 			}
+			// console.log()
 			// console.log(this.fileList)
 			if(this.fileList.length > 0){
 				this.modify.value = '编辑';
 				this.modify.img = '../../../../static/iOS切图/editor.png';
+				console.log(document.getElementsByClassName('van-uploader__upload')[0])
+				document.getElementsByClassName('van-uploader__upload')[0].style.display = 'none'
 				// console.log(document.getElementsByClassName('van-uploader__preview-delete'))
 				let classDomList = document.getElementsByClassName('van-uploader__preview-delete')
 				for(let _d in classDomList){
-					
-					console.log(classDomList[_d])
+					// console.log(classDomList[_d])
 					classDomList[_d].style.display = "none";
 					// classDomList[_d].remove;
 				}
 			}else{
-				
 				this.modify.data = false;
 				this.modify.value = '保存';
 				this.modify.img = '../../../../static/iOS切图/save@2x.png';
-				
 			}
 		}
 	},
@@ -416,5 +424,13 @@ export default {
     background-color: #D8D8D8!important;
     border: 1px dashed #e5e5e5;
     border-radius: 4px;
+}
+>>>.van-uploader__preview{
+    position: relative;
+    margin: 0rem .05rem .05rem 0rem!important;
+}
+>>>.van-uploader__preview:nth-child(4n){
+    position: relative;
+    margin: 0rem 0rem .05rem 0rem!important;
 }
 </style>

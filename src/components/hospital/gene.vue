@@ -13,7 +13,6 @@
 				</van-dropdown-menu>
 			</div>
 		</div>
-		
 		<div class="geneList">
 			<ul>
 				<li>

@@ -158,8 +158,8 @@ export default {
 			diagnosis:[],
 		},
 		//页数
-		page : 1,
-		page2 : 1,
+		page : 2,
+		page2 : 2,
 		 // 数据全部加载完成
 		loading: false,
 		// 加载状态结束
@@ -172,7 +172,7 @@ export default {
 	// //未就诊请求
 	this.$axios.post('/c2/patient/items',qs.stringify({
 		status : 1 ,
-		pn : this.page,
+		pn : 1,
 		ps : 10
 	}))
 	.then(_d => {
@@ -200,7 +200,7 @@ export default {
 	//已就诊
 	this.$axios.post('/c2/patient/items',qs.stringify({
 		status : 4 ,
-		pn : this.page,
+		pn : 1,
 		ps : 10
 	}))
 	.then(_d => {
@@ -278,7 +278,6 @@ export default {
 	//下拉加载获取数据
 	getdata(data,_value,shuaxin){
 		if(shuaxin ==0 ){
-			this.page = 1;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw	:	"",
 				clinicId : this.account.data.data.clinic.clinicId,
@@ -295,15 +294,12 @@ export default {
 					for (let nums in _d.data.data.items) {
 					    _value.push(_d.data.data.items[nums]);
 					}
-					if(shuaxin == 0){
-						this.isLoading = false;
-					}else{
-						this.page++	
-					}
+					this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;
 					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
 				}else{
+					
 					this.$notify({
 						message: '数据已全部加载',
 						duration: 1000,
@@ -330,19 +326,12 @@ export default {
 			}))
 			.then(_d => {
 				if(_d.data.data.items.length != 0){
-					setTimeout(() => {
-						// console.log(this.page)
-					    for (let nums in _d.data.data.items) {
-					        _value.push(_d.data.data.items[nums]);
-					    }
-						if(shuaxin == 0){
-							this.isLoading = false;
-						}else{
-							this.page++	
-						}
-					    // 加载状态结束
-					    this.loading = false;
-					}, 300);
+					// console.log(this.page)
+					for (let nums in _d.data.data.items) {
+					    _value.push(_d.data.data.items[nums]);
+					}
+					this.loading = false;
+					this.page++	
 					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
 				}else{
 					this.$notify({
@@ -363,7 +352,6 @@ export default {
 	},
 	getdata2(data,_value,shuaxin){
 		if(shuaxin ==0 ){
-			this.page = 1;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw	:	"",
 				clinicId : this.account.data.data.clinic.clinicId,
@@ -376,15 +364,10 @@ export default {
 			}))
 			.then(_d => {
 				if(_d.data.data.items.length != 0){
-					// console.log(this.page)
 					for (let nums in _d.data.data.items) {
 					    _value.push(_d.data.data.items[nums]);
 					}
-					if(shuaxin == 0){
-						this.isLoading = false;
-					}else{
-						this.page2++	
-					}
+					this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;
 					this.noTitle = '已就诊' + _d.data.data.sum.totalCount
@@ -394,6 +377,7 @@ export default {
 						duration: 1000,
 						background:'#79abf9',
 					})
+					this.page2++
 					this.loading = false;
 					this.finished = true;
 				}
@@ -415,19 +399,11 @@ export default {
 			}))
 			.then(_d => {
 				if(_d.data.data.items.length != 0){
-					setTimeout(() => {
-						// console.log(this.page)
-					    for (let nums in _d.data.data.items) {
-					        _value.push(_d.data.data.items[nums]);
-					    }
-						if(shuaxin == 0){
-							this.isLoading = false;
-						}else{
-							this.page2++	
-						}
-					    // 加载状态结束
-					    this.loading = false;
-					}, 300);
+					for (let nums in _d.data.data.items) {
+					    _value.push(_d.data.data.items[nums]);
+					}
+					this.loading = false;
+					this.page2++
 					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
 				}else{
 					this.$notify({

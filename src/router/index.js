@@ -15,6 +15,7 @@ import hospital_index from '@/components/hospital/index.vue'
 import hospital_clinic from '@/components/hospital/clinic.vue'
 import hospital_gene from '@/components/hospital/gene.vue'
 import hospital_user from '@/components/hospital/user.vue'
+import hospital_searchClinic from '@/components/hospital/childPage/search_clinic.vue'
 //功能副插件
 
 import store from '../store'
@@ -52,6 +53,14 @@ const router = new Router({
 			path: '/hospital_user',
 			name: 'hospital_user',
 			component: hospital_user,
+			// meta: {auth:true},
+			
+		},
+		{
+			// 医院端门诊搜索页面
+			path: '/hospital_searchClinic',
+			name: 'hospital_searchClinic',
+			component: hospital_searchClinic,
 			// meta: {auth:true},
 			
 		},

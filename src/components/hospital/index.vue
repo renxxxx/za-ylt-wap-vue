@@ -17,36 +17,54 @@
 		<div class="typeList">
 			<ul>
 				<li>
-					<img src="../../../static/iOS切图/qudaomenzhen@2x.png" alt="">
-					<span>渠道门诊</span>
+					<router-link to='hospital_searchClinic'>
+						<img src="../../../static/iOS切图/qudaomenzhen@2x.png" alt="">
+						<span>渠道门诊</span>
+					</router-link>
 				</li>
 				<li>
-					<img src="../../../static/iOS切图/bingyuanguanli@2x.png" alt="">
-					<span>病源管理</span>
+					<router-link to='hospital_searchClinic'>
+						<img src="../../../static/iOS切图/bingyuanguanli@2x.png" alt="">
+						<span>病源管理</span>
+					</router-link>
 				</li>
 				<li>
-					<img src="../../../static/iOS切图/qixiejicai@2x.png" alt="">
-					<span>器械集采</span>
+					<router-link to='hospital_searchClinic'>
+						<img src="../../../static/iOS切图/qixiejicai@2x.png" alt="">
+						<span>器械集采</span>
+					</router-link>
+					
 				</li>
 				<li>
-					<img src="../../../static/iOS切图/yunyingzhongxin@2x.png" alt="">
-					<span>运营中心</span>
+					<router-link to='hospital_searchClinic'>
+						<img src="../../../static/iOS切图/yunyingzhongxin@2x.png" alt="">
+						<span>运营中心</span>
+					</router-link>
 				</li>
 				<li>
-					<img src="../../../static/iOS切图/jiyinjiance@2x.png" alt="">
-					<span>基因检测</span>
+					<router-link to='hospital_searchClinic'>
+						<img src="../../../static/iOS切图/jiyinjiance@2x.png" alt="">
+						<span>基因检测</span>
+					</router-link>
+					
 				</li>
 				<li>
-					<img src="../../../static/iOS切图/yiliaoziyuan@2x.png" alt="">
-					<span>医疗资源</span>
+					<router-link to='hospital_searchClinic'>
+						<img src="../../../static/iOS切图/yiliaoziyuan@2x.png" alt="">
+						<span>医疗资源</span>
+					</router-link>
 				</li>
 				<li>
-					<img src="../../../static/iOS切图/yiyuanhuodong@2x.png" alt="">
-					<span>医院活动</span>
+					<router-link to='hospital_searchClinic'>
+						<img src="../../../static/iOS切图/yiyuanhuodong@2x.png" alt="">
+						<span>医院活动</span>
+					</router-link>
 				</li>
 				<li>
-					<img src="../../../static/iOS切图/qita@2x.png" alt="">
-					<span>其他项目</span>
+					<router-link to='hospital_searchClinic'>
+						<img src="../../../static/iOS切图/qita@2x.png" alt="">
+						<span>其他项目</span>
+					</router-link>
 				</li>
 			</ul>
 		</div>
@@ -242,12 +260,12 @@ export default {
 	width: 100%;
 	height: 1.7rem;
 	margin-top: .12rem;
-	margin-bottom: .25rem;
+	margin-bottom: .15rem;
 	
 }
 .typeList ul{
 	width: 3.11rem;
-	height: 1.85rem;
+	height: 1.75rem;
 	margin: 0rem auto;
 	text-align: center;
 }
@@ -257,14 +275,14 @@ export default {
 .typeList ul li:nth-child(5),li:nth-child(6),li:nth-child(7),li:nth-child(8){
 	margin-top:.25rem;
 }
-.typeList ul li img{
+.typeList ul li a img{
 	width: .3rem;
 	margin: 0rem auto;
 	display: block;
 }
 .typeList ul li span{
 	display:block;
-	margin-top: -.1rem;
+	margin-top: -.15rem;
 }
 .article{
 	width: 91.5%;
