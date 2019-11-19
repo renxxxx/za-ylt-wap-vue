@@ -131,7 +131,7 @@ export default {
 	},
 	//获取数据
 	getdata(){
-		console.log(this.Time)
+		// console.log(this.Time)
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.keywords,
 			clinicId : this.account.clinicId,

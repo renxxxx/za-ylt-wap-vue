@@ -267,110 +267,183 @@ export default {
 	},
 	//下拉刷新数据
 	onRefresh(){
+		this.message.notDiagnosis = []
 		this.getdata(1,this.message.notDiagnosis,0);
 	},
 	//下拉刷新数据
 	onRefresh2(){
+		this.message.diagnosis = []
 		this.getdata2(4,this.message.diagnosis,0);
 	},
 	//下拉加载获取数据
 	getdata(data,_value,shuaxin){
 		if(shuaxin ==0 ){
 			this.page = 1;
-		}
-		this.$axios.post('/c2/patient/items',qs.stringify({
-			kw	:	"",
-			clinicId : this.account.data.data.clinic.clinicId,
-			name : "",
-			pushTimeStart : this.Time.confirmStart,
-			pushTimeEnd : this.Time.confirmOver,
-			hospitalId : this.account.data.data.hospital.hospitalId,
-			status : data ,
-			hospitalConfirmTimeStart : this.Time.pushStart,
-			hospitalConfirmTimeEnd : this.Time.pushOver,
-			orders : 'asc',
-			pn : this.page,
-			ps : 10
-		}))
-		.then(_d => {
-			if(_d.data.data.items.length != 0){
-				setTimeout(() => {
+			this.$axios.post('/c2/patient/items',qs.stringify({
+				kw	:	"",
+				clinicId : this.account.data.data.clinic.clinicId,
+				name : "",
+				hospitalId : this.account.data.data.hospital.hospitalId,
+				status : data ,
+				orders : 'asc',
+				pn : 1,
+				ps : 10
+			}))
+			.then(_d => {
+				if(_d.data.data.items.length != 0){
 					// console.log(this.page)
-				    for (let nums in _d.data.data.items) {
-				        _value.push(_d.data.data.items[nums]);
-				    }
+					for (let nums in _d.data.data.items) {
+					    _value.push(_d.data.data.items[nums]);
+					}
 					if(shuaxin == 0){
 						this.isLoading = false;
 					}else{
 						this.page++	
 					}
-				    // 加载状态结束
-				    this.loading = false;
-				}, 300);
-				this.noTitle = '已就诊' + _d.data.data.sum.totalCount
-			}else{
-				this.$notify({
-					message: '数据已全部加载',
-					duration: 1000,
-					background:'#79abf9',
-				})
-				this.loading = false;
-				this.finished = true;
-			}
-		})
-		.catch((err)=>{
-			console.log(err);
-			Dialog({ message: '加载失败!'});
-		})
+					// 加载状态结束
+					this.loading = false;
+					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
+				}else{
+					this.$notify({
+						message: '数据已全部加载',
+						duration: 1000,
+						background:'#79abf9',
+					})
+					this.loading = false;
+					this.finished = true;
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
+		}else{
+			this.$axios.post('/c2/patient/items',qs.stringify({
+				kw	:	"",
+				clinicId : this.account.data.data.clinic.clinicId,
+				name : "",
+				hospitalId : this.account.data.data.hospital.hospitalId,
+				status : data ,
+				orders : 'asc',
+				pn : this.page,
+				ps : 10
+			}))
+			.then(_d => {
+				if(_d.data.data.items.length != 0){
+					setTimeout(() => {
+						// console.log(this.page)
+					    for (let nums in _d.data.data.items) {
+					        _value.push(_d.data.data.items[nums]);
+					    }
+						if(shuaxin == 0){
+							this.isLoading = false;
+						}else{
+							this.page++	
+						}
+					    // 加载状态结束
+					    this.loading = false;
+					}, 300);
+					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
+				}else{
+					this.$notify({
+						message: '数据已全部加载',
+						duration: 1000,
+						background:'#79abf9',
+					})
+					this.loading = false;
+					this.finished = true;
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
+		}
+		
 	},
 	getdata2(data,_value,shuaxin){
 		if(shuaxin ==0 ){
 			this.page = 1;
-		}
-		this.$axios.post('/c2/patient/items',qs.stringify({
-			kw	:	"",
-			clinicId : this.account.data.data.clinic.clinicId,
-			name : "",
-			pushTimeStart : this.Time.confirmStart,
-			pushTimeEnd : this.Time.confirmOver,
-			hospitalId : this.account.data.data.hospital.hospitalId,
-			status : data ,
-			hospitalConfirmTimeStart :  this.Time.pushStart,
-			hospitalConfirmTimeEnd : this.Time.pushOver,
-			orders : 'asc',
-			pn : this.page2,
-			ps : 10
-		}))
-		.then(_d => {
-			if(_d.data.data.items.length != 0){
-				setTimeout(() => {
+			this.$axios.post('/c2/patient/items',qs.stringify({
+				kw	:	"",
+				clinicId : this.account.data.data.clinic.clinicId,
+				name : "",
+				hospitalId : this.account.data.data.hospital.hospitalId,
+				status : data ,
+				orders : 'asc',
+				pn : 1,
+				ps : 10
+			}))
+			.then(_d => {
+				if(_d.data.data.items.length != 0){
 					// console.log(this.page)
-				    for (let nums in _d.data.data.items) {
-				        _value.push(_d.data.data.items[nums]);
-				    }
+					for (let nums in _d.data.data.items) {
+					    _value.push(_d.data.data.items[nums]);
+					}
 					if(shuaxin == 0){
 						this.isLoading = false;
 					}else{
 						this.page2++	
 					}
-				    // 加载状态结束
-				    this.loading = false;
-				}, 300);
-				this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
-			}else{
-				this.$notify({
-					message: '已加载',
-					duration: 1000,
-					background:'#79abf9',
-				})
-				this.loading = false;
-				this.finished = true;
-			}
-		})
-		.catch((err)=>{
-			console.log(err);
-			Dialog({ message: '加载失败!'});
-		})
+					// 加载状态结束
+					this.loading = false;
+					this.noTitle = '已就诊' + _d.data.data.sum.totalCount
+				}else{
+					this.$notify({
+						message: '数据已全部加载',
+						duration: 1000,
+						background:'#79abf9',
+					})
+					this.loading = false;
+					this.finished = true;
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
+		}else{
+			this.$axios.post('/c2/patient/items',qs.stringify({
+				kw	:	"",
+				clinicId : this.account.data.data.clinic.clinicId,
+				name : "",
+				hospitalId : this.account.data.data.hospital.hospitalId,
+				status : data ,
+				orders : 'asc',
+				pn : this.page2,
+				ps : 10
+			}))
+			.then(_d => {
+				if(_d.data.data.items.length != 0){
+					setTimeout(() => {
+						// console.log(this.page)
+					    for (let nums in _d.data.data.items) {
+					        _value.push(_d.data.data.items[nums]);
+					    }
+						if(shuaxin == 0){
+							this.isLoading = false;
+						}else{
+							this.page2++	
+						}
+					    // 加载状态结束
+					    this.loading = false;
+					}, 300);
+					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
+				}else{
+					this.$notify({
+						message: '数据已全部加载',
+						duration: 1000,
+						background:'#79abf9',
+					})
+					this.loading = false;
+					this.finished = true;
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
+		}
 	},
 	//显示筛选弹窗
 	showPopup() {

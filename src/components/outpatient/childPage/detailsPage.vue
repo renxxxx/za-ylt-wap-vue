@@ -56,9 +56,9 @@
 		<div class="_photo">
 			<h3>发票照片</h3>
 			<div class="imageUpload" v-if="modify.data" id='readImg'>
-				<van-uploader :deletable = 'false' :disabled = "false"
+				<van-uploader :deletable = "false"
 				@before-read="beforeRead"  @before-delete="berforedelete" preview-size='.9rem' 
-				v-model="fileList"/>
+				v-model="fileList" multiple="true"/>
 			</div>
 		</div>
 	</div>
@@ -126,17 +126,19 @@ export default {
 			sickness: res.data.data.sickness	//病例
 		};
 		// 如果信息中有发票图片,就显示
-		if(res.data.data.invoices != ''|| res.data.data.invoices != undefined || res.data.data.invoices != null){
+		// let code = res.data.data.invoices
+		// console.log(code != null)
+		if(res.data.data.invoices != null || undefined || ''){
 			res.data.data.invoices = res.data.data.invoices.split(",")
-			// console.log(res.data.data.invoices)
 			for (let i in res.data.data.invoices){
 				this.fileList.push({'url' : res.data.data.invoices[i]})
-				// console.log(this.fileList)
+				console.log(this.fileList)
 			}
+			console.log(document.getElementById('van-uploader__upload'))
 			this.modify.data = true;
-			this.modify.value = '保存';
-			this.modify.img = '../../../../static/iOS切图/save@2x.png';
+		
 		}else{
+			this.modify.data = false;
 			this.fileList = [];
 		}
 		//判断时间是否为空
@@ -146,7 +148,7 @@ export default {
 			this.detail.hospitalConfirmTime = ''
 		}else{
 			this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('HH:mm:ss YYYY-MM-DD');
-			console.log(this.detail.hospitalConfirmTime)
+			// console.log(this.detail.hospitalConfirmTime)
 		}
 		if(res.data.data.pushTime == '' || res.data.data.pushTime == undefined || res.data.data.pushTime == null){
 			// console.log(this.detail.hospitalConfirmTime)
@@ -174,20 +176,20 @@ export default {
 			console.log(this.modify.num)
 			this.modify.value = '保存';
 			this.modify.img = '../../../../static/iOS切图/save@2x.png';
-			// this.modify.data = true;
+			this.modify.data = true;
 			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
 				// console.log(_id)
 				document.getElementById(_id).removeAttribute("readonly");
 			}
 		}else{
+			
 			let _imgAddress = [];
 			for(let i in this.imageUpload){
 				_imgAddress[i] = this.imageUpload[i].url
 			}
 			_imgAddress =  _imgAddress.join(",");
 			// console.log(_imgAddress)
-			
 			this.$axios.post('/c2/patient/itemalter',qs.stringify({
 				realname : this.detail.realname,
 				patientId : this.detail.patientId,
@@ -201,16 +203,30 @@ export default {
 			}).catch(err =>{
 				console.log(err)
 			})
-			
 			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
 				// console.log(_id)
 				document.getElementById(_id).setAttribute("readonly","readonly");
 			}
-			// this.modify.data = false;
-			this.modify.value = '编辑';
-			this.modify.img = '../../../../static/iOS切图/editor.png';
-			// window.location.href='/#/outpatient_index';
+			// console.log(this.fileList)
+			if(this.fileList.length > 0){
+				this.modify.value = '编辑';
+				this.modify.img = '../../../../static/iOS切图/editor.png';
+				// console.log(document.getElementsByClassName('van-uploader__preview-delete'))
+				let classDomList = document.getElementsByClassName('van-uploader__preview-delete')
+				for(let _d in classDomList){
+					
+					console.log(classDomList[_d])
+					classDomList[_d].style.display = "none";
+					// classDomList[_d].remove;
+				}
+			}else{
+				
+				this.modify.data = false;
+				this.modify.value = '保存';
+				this.modify.img = '../../../../static/iOS切图/save@2x.png';
+				
+			}
 		}
 	},
 	postImg(file){
