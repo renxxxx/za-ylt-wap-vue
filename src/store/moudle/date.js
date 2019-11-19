@@ -141,17 +141,35 @@ const mutations={
 					 axios.post(_postRefresh)
 						.then( res =>{
 							// console.log(Res);
-							state.account.clinicId= res.data.data.clinic.clinicId;
-							state.account.hospitalId= res.data.data.hospital.hospitalId;
-							console.log(state.account.hospitalId)
-							state.account.data = {};
-							state.account.data = res.data;
 							// console.log(state.account)
 							// console.log(res)
-							if(_isLogin == 200 || _isLogin == 100){
-								window.location.href=_url;	
-							}else{
+							switch(_isLogin){
+								case 100:
+								window.location.href=_url;
+								state.account.hospitalId= res.data.data.hospital.hospitalId;
+								console.log(state.account.hospitalId)
+								state.account.data = {};
+								state.account.data = res.data;
+								break;
+								
+								case 200:
+								window.location.href=_url;
+								state.account.clinicId= res.data.data.clinic.clinicId;
+								state.account.hospitalId= res.data.data.hospital.hospitalId;
+								console.log(state.account.hospitalId)
+								state.account.data = {};
+								state.account.data = res.data;
+								break;
+								
+								case 300:
+								window.location.href=_url;
 								Dialog({ message: '正在开发中，敬请期待' });
+								state.account.clinicId= res.data.data.clinic.clinicId;
+								state.account.hospitalId= res.data.data.hospital.hospitalId;
+								console.log(state.account.hospitalId)
+								state.account.data = {};
+								state.account.data = res.data;
+								break;
 							}
 						})
 						.catch((err)=>{
@@ -177,9 +195,7 @@ const mutations={
 	
 	//登陆页面的表单验证
 	submitFn(state,landingState){
-			// console.log(this.account.name+this.account.password)
-			// Dialog({ message: '准备跳转主页面' });
-		
+		// console.log(this.account.name+this.account.password)
 		state.account.isLogin = landingState;
 		// console.log(landingState)
 		if(state.checked == true){
