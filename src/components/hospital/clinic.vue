@@ -72,8 +72,105 @@ export default {
 		// this.getdata(0)
 	},
 	methods: {
+<<<<<<< HEAD
 		
 	}
+=======
+		onRefresh() {
+			this.content = []
+			this.getdata(0)
+		},
+		getdata(_data){
+			if(_data == 0){
+				this.isLoading = false;
+				this.$axios.post('/c2/clinic/items',qs.stringify({
+					pn : 1,
+					ps : 10
+				}))
+				.then(res => {
+					if(res.data.data.items.length != 0){
+						// console.log(this.page)
+						for(let i in res.data.data.items){
+						// console.log(res.data.data.items[i])
+						if(!res.data.data.items[i]){
+							this.$notify({
+								message: '数据已全部加载',
+								duration: 1000,
+								background:'#79abf9',
+							})
+							// this.loading = false;
+							// this.finished = true;
+						}else{
+							this.content.push(res.data.data.items[i])
+						}
+					}
+					this.isLoading = false;
+					// 加载状态结束
+					this.loading = false;
+					}else{
+						this.$notify({
+							message: '数据已全部加载',
+							duration: 1000,
+							background:'#79abf9',
+						})
+						this.loading = false;
+						this.finished = true;
+					}
+				})
+				.catch((err)=>{
+					console.log(err);
+					Dialog({ message: '加载失败!'});
+				})
+			}else if(_data = 1){
+				console.log(this.page)
+				this.page++
+				this.$axios.post('/c2/clinic/items',qs.stringify({
+					pn : this.page,
+					ps : 10
+				}))
+				.then(res => {
+					
+					if(res.data.data.items.length != 0){
+						// console.log(this.page)
+						for(let i in res.data.data.items){
+						// console.log(res.data.data.items[i])
+						if(!res.data.data.items[i]){
+							this.$notify({
+								message: '数据已全部加载',
+								duration: 1000,
+								background:'#79abf9',
+							})
+							// this.loading = false;
+							// this.finished = true;
+						}else{
+							this.content.push(res.data.data.items[i])
+						}
+					}
+					
+					// 加载状态结束
+					this.loading = false;
+					}else{
+						this.$notify({
+							message: '数据已全部加载',
+							duration: 1000,
+							background:'#79abf9',
+						})
+						this.loading = false;
+						this.finished = true;
+					}
+				})
+				.catch((err)=>{
+					console.log(err);
+					Dialog({ message: '加载失败!'});
+				})
+			}
+			
+		},
+		onLoad(){
+			this.getdata(1)
+		}
+	},
+>>>>>>> 128b23c152f0f6f5a03002353d65dca096b5b3bc
 }
 </script>
 
