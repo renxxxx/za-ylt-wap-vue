@@ -1,0 +1,237 @@
+<template>
+	<div class="addClinic">
+		<div class="navWarp" @click="goBackFn">
+			<div class="leftNav" >
+				<img src="static/iOS切图/back-white@2x.png" alt="">
+			</div>
+			<div class="centerNav">
+				<span>新增门诊</span>
+			</div>
+			<div class="rightNav">
+				<span>保存</span>
+				<img src="static/iOS切图/save@2x.png" alt="">
+			</div>
+		</div>
+		<div class="content">
+			<form @submit.prevent="hospitalSubmit" class="newAdd">
+				<div class="newAddTitle">
+					<img src="static/iOS切图/bitian@2x.png" alt="">
+					<h3>必填项</h3>
+					<ul class="Fill">
+						<li>
+							<span>门诊名称</span>
+							<input type="text"  placeholder="请填写" >
+						</li>
+						<li>
+							<span>推广人</span>
+							<van-dropdown-menu>
+							  <van-dropdown-item v-model="value1" :options="option1" active-color='#2B77EF'/>
+							</van-dropdown-menu>
+						</li>
+						<li>
+							<span>分配账号</span>
+							<input type="text"  placeholder="请填写" >
+						</li>
+						<li>
+							<span>分配密码</span>
+							<input type="password"  maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+						</li>
+						<li>
+							<span>负责人</span>
+							<input type="text"  maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+						</li>
+						<li>
+							<span>联系方式</span>
+							<input type="text"  maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+						</li>
+						<li>
+							<span>门诊地址</span>
+							<input type="text"  placeholder="请填写" >
+						</li>
+					</ul>
+				</div>
+				<div class="newAddTitle bottom">
+					<img src="static/iOS切图/xuantian@2x.png" alt="">
+					<h3>选填项</h3>
+					<ul class="Fill">
+						<li>
+							<span>备注</span>
+							<input type="text"  placeholder="请填写" >
+						</li>
+						<li>
+							<span>营业执照</span>
+							<input type="text"  placeholder="请填写" >
+						</li>
+					</ul>
+				</div>
+			</form>
+		</div>
+	</div>
+</template>
+
+<script>
+import axios from 'axios'
+import {mapActions,mapGetters} from 'vuex'
+import qs from 'qs';
+import clinic_content from '../childPage/clinic_content.vue'
+export default {
+	name: 'search',
+	data () {
+		return {
+			keywords : '',
+			content : [],
+			 value1: 0,
+			option1: [
+			        { text: '全部商品', value: 0 },
+			        { text: '新款商品', value: 1 },
+			        { text: '活动商品', value: 2 }
+			      ],
+		}
+	},
+	computed:{
+	  
+	},
+	components:{
+		clinic_content
+	},
+	created () {
+		
+	},
+	mounted () {
+	
+	},
+	methods: {
+		goBackFn(){
+			this.$router.back(-1)
+		},
+	}
+}
+</script>
+
+<style scoped>
+.addClinic{
+	width: 100%;
+}
+.navWarp{
+	width: 100%;
+	height: .48rem;
+	line-height: .48rem;
+	background-color: #2B77EF;
+	color: #FFFFFF;
+}
+.leftNav{
+	float: left;
+	width: 17.6%;
+	height: .48rem;
+	line-height: .48rem;
+}
+.leftNav img{
+	width: .09rem;
+	height: .15rem;
+	margin-left: .16rem;
+}
+.centerNav{
+	float: left;
+	width: 64.8%;
+	height: .48rem;
+	line-height: .48rem;
+	text-align: center;
+}
+.centerNav span{
+	font-size: .16rem;
+	font-weight: 600;
+}
+.rightNav{
+	float: left;
+	width: 17.6%;
+	height: .48rem;
+	line-height: .48rem;
+}
+.rightNav img{
+	width: .14rem;
+	height: .15rem;
+	margin: 0rem .16rem 0rem .05rem;
+}
+.newAddTitle{
+	width: 91.4%;
+	margin-top: .2rem;
+	margin: 0 auto;
+	padding-top: .2rem;
+}
+.newAddTitle img{
+	width: .165rem;
+	height: .185rem;
+}
+.newAddTitle h3{
+	margin-left: .05rem;
+	width: .45rem;
+	height: .21rem;
+	display: inline;
+}
+.Fill {
+	width:90%;
+}
+.Fill li{
+	border: 1px solid #D8D8D8;
+	border-radius: .02rem;
+	padding: .12rem .15rem;
+	margin-top:.12rem;
+	width: 100%;
+}
+.Fill li span{
+	height: .21rem;width: .6rem;
+}
+.Fill li input{
+	border: none;
+	float:right;
+	text-align: right;
+	color: #2B77EF;
+}
+
+.bottom img{
+	width: .15rem;
+	height: .18rem;
+}
+.AlreadySpanColor{
+	color: #2B77EF!important;
+}
+>>>.van-ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+	color: #2B77EF;
+}
+>>>.van-dropdown-menu {
+	float: right;
+    height: .22rem;
+    background-color: #fff;
+    -webkit-user-select: none;
+    user-select: none;
+	color: #757575;
+}
+>>>.van-dropdown-menu__title {
+    position: relative;
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 0rem;
+    color: #323233;
+    font-size: .09rem;
+    line-height: 18px;
+}
+>>>.van-dropdown-menu__title::after {
+    position: absolute;
+    top: 50%;
+    right: -4px;
+    margin-top: -5px;
+    border: 3px solid;
+    border-color: transparent transparent currentColor currentColor;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    opacity: .8;
+    content: none;
+}
+>>>.van-dropdown-item--down {
+    bottom: 0;
+    top: 207.141px;
+}
+</style>

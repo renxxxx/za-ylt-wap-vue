@@ -5,7 +5,8 @@
 				<img src="../../static/新登陆-10.25/切图/name@2x.png" alt="">
 			</div>
 			<div class="typeNav" type="line" border="false">
-				<van-tabs  background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF'>
+				<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)' 
+				title-active-color='rgba(255, 255, 255, .8)' @click="titleScroll">
 				<van-tab title="医院端">
 					<form @submit.prevent="submit('100')" class="content">
 						<div class="inputBox">
@@ -120,15 +121,9 @@ export default {
         }
     }
   },
-  watch:{
-    '$route.path': function (newVal, oldVal) {
-      if (newVal === '/retrievePassword') {
-       console.log('欢迎进入登录页面');
-      }
-      // if (newVal === '/register') {
-      //  console.log('欢迎进入注册页面');
-      // }
-     }
+  mounted () {
+	console.log(document.getElementsByClassName('van-ellipsis')[0])
+  	document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.2rem';
   },
   computed:{
   	...mapGetters(['account','checked'])
@@ -139,6 +134,27 @@ export default {
   		this.account.isLogin = e
   		// console.log(this.account.isLogin)
   	},
+	titleScroll(e){
+		console.log(e)
+		switch(e){
+			case 0:
+			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.2rem';
+			document.getElementsByClassName('van-ellipsis')[1].style.fontSize = '.14rem';
+			document.getElementsByClassName('van-ellipsis')[2].style.fontSize = '.14rem';
+			break;
+			
+			case 1:
+			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.14rem';
+			document.getElementsByClassName('van-ellipsis')[1].style.fontSize = '.2rem';
+			document.getElementsByClassName('van-ellipsis')[2].style.fontSize = '.14rem';
+			break;
+			case 2:
+			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.14rem';
+			document.getElementsByClassName('van-ellipsis')[1].style.fontSize = '.14rem';
+			document.getElementsByClassName('van-ellipsis')[2].style.fontSize = '.2rem';
+			break;
+		}
+	},
 	...mapActions(['submit','change'])
   }
 }
@@ -165,7 +181,7 @@ export default {
 .typeNav{
 	padding: 0 7.5%;
 	position: absolute;
-	top: 1.5rem;
+	top: 1.63rem;
 	width: 85%;
 }
 >>>.van-tabs__line {
@@ -178,6 +194,7 @@ export default {
     background-color: #FFFFFF;
     border-radius: 3px;
 }
+
 >>>.van-tabs__nav--line {
     box-sizing: content-box;
     height: 100%;
@@ -348,5 +365,8 @@ export default {
 .passwordReset img{
 	width: .15rem;
 	height: .15rem;
+}
+>>>.van-tab:first-child span{
+	font-size: .2rem;
 }
 </style>

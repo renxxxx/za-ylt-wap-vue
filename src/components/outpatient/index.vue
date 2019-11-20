@@ -109,7 +109,7 @@
 								</ul>
 							</div>
 						</van-pull-refresh>
-				  </van-tab>
+					</van-tab>
 				  <van-tab :title=yesTitle class="Already" >
 						<van-pull-refresh v-model="isLoading" @refresh="onRefresh2">
 							<ul class="index_content" :model="message">

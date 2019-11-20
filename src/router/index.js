@@ -15,8 +15,11 @@ import hospital_index from '@/components/hospital/index.vue'
 import hospital_clinic from '@/components/hospital/clinic.vue'
 import hospital_gene from '@/components/hospital/gene.vue'
 import hospital_user from '@/components/hospital/user.vue'
-import hospital_searchClinic from '@/components/hospital/childPage/search_clinic.vue'
-//功能副插件
+//医院端功能副插件
+import hospital_indexSearch from '@/components/hospital/childPage/indexSearch.vue'
+import hospital_clinicSearch from '@/components/hospital/childPage/clinic_search.vue'
+import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
+
 
 import store from '../store'
 Vue.use(Router)
@@ -57,10 +60,26 @@ const router = new Router({
 			
 		},
 		{
+			// 医院端门诊主页搜索页面
+			path: '/hospital_indexSearch',
+			name: 'hospital_indexSearch',
+			component: hospital_indexSearch,
+			// meta: {auth:true},
+			
+		},
+		{
 			// 医院端门诊搜索页面
-			path: '/hospital_searchClinic',
-			name: 'hospital_searchClinic',
-			component: hospital_searchClinic,
+			path: '/hospital_clinicSearch',
+			name: 'hospital_clinicSearch',
+			component: hospital_clinicSearch,
+			// meta: {auth:true},
+			
+		},
+		{
+			// 医院端门诊搜索页面
+			path: '/hospital_addCLinic',
+			name: 'hospital_addCLinic',
+			component: hospital_addCLinic,
 			// meta: {auth:true},
 			
 		},

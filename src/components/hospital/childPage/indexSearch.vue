@@ -15,8 +15,10 @@
 					<h3>合作门诊</h3>
 				</div>
 				<div class="titleRight">
-					<span>新增</span>
-					<img src="static/iOS切图/xinzeng@2x.png" alt="">
+					<router-link to="hospital_addCLinic">
+						<span>新增</span>
+						<img src="static/iOS切图/xinzeng@2x.png" alt="">
+					</router-link>
 				</div>
 			</div>
 		</div>

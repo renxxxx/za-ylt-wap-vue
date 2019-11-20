@@ -3,8 +3,10 @@
 		<div class="navWarp">
 			<div class="topNav">
 				<div class="hospital_search">
-					<input type="text" placeholder="输入门诊名">
-					<img src="static/iOS切图/sousuo@2x.png" alt="">
+					<router-link to="hospital_clinicSearch">
+						<input type="text" placeholder="输入门诊名">
+						<img src="static/iOS切图/sousuo@2x.png" alt="">
+					</router-link>
 				</div>
 				<div class="hospital_information">
 					<img src="static/iOS切图/xiaoxi@2x.png" alt="">
@@ -33,8 +35,10 @@
 			<div class="statisticalTitle">
 				<h3>合作门诊（376）</h3>
 				<div class="statisticalAdd">
-					<span>新增</span>
-					<img src="static/iOS切图/xinzeng@2x.png" alt="">
+					<router-link to="hospital_addCLinic">
+						<span>新增</span>
+						<img src="static/iOS切图/xinzeng@2x.png" alt="">
+					</router-link>
 				</div>
 			</div>
 		</div>

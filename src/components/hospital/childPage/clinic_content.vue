@@ -6,7 +6,7 @@
 					<li v-for="(items,inx) in content" :key="inx">
 						<div class="contentLi">
 							<h4>{{items.hospital}}</h4>
-							<span>{{items.name}}</span>
+							<span>推广人: {{items.name}}</span>
 							<input type="text" v-model="items.pushCount" readonly="readonly">
 						</div>
 					</li>
