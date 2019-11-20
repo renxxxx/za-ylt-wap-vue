@@ -18,51 +18,51 @@
 			<ul>
 				<li>
 					<router-link to='hospital_searchClinic'>
-						<img src="../../../static/iOS切图/qudaomenzhen@2x.png" alt="">
+						<img src="static/iOS切图/qudaomenzhen@2x.png" alt="">
 						<span>渠道门诊</span>
 					</router-link>
 				</li>
 				<li>
 					<router-link to='hospital_searchClinic'>
-						<img src="../../../static/iOS切图/bingyuanguanli@2x.png" alt="">
+						<img src="static/iOS切图/bingyuanguanli@2x.png" alt="">
 						<span>病源管理</span>
 					</router-link>
 				</li>
 				<li>
 					<router-link to='hospital_searchClinic'>
-						<img src="../../../static/iOS切图/qixiejicai@2x.png" alt="">
+						<img src="static/iOS切图/qixiejicai@2x.png" alt="">
 						<span>器械集采</span>
 					</router-link>
 					
 				</li>
 				<li>
 					<router-link to='hospital_searchClinic'>
-						<img src="../../../static/iOS切图/yunyingzhongxin@2x.png" alt="">
+						<img src="static/iOS切图/yunyingzhongxin@2x.png" alt="">
 						<span>运营中心</span>
 					</router-link>
 				</li>
 				<li>
 					<router-link to='hospital_searchClinic'>
-						<img src="../../../static/iOS切图/jiyinjiance@2x.png" alt="">
+						<img src="static/iOS切图/jiyinjiance@2x.png" alt="">
 						<span>基因检测</span>
 					</router-link>
 					
 				</li>
 				<li>
 					<router-link to='hospital_searchClinic'>
-						<img src="../../../static/iOS切图/yiliaoziyuan@2x.png" alt="">
+						<img src="static/iOS切图/yiliaoziyuan@2x.png" alt="">
 						<span>医疗资源</span>
 					</router-link>
 				</li>
 				<li>
 					<router-link to='hospital_searchClinic'>
-						<img src="../../../static/iOS切图/yiyuanhuodong@2x.png" alt="">
+						<img src="static/iOS切图/yiyuanhuodong@2x.png" alt="">
 						<span>医院活动</span>
 					</router-link>
 				</li>
 				<li>
 					<router-link to='hospital_searchClinic'>
-						<img src="../../../static/iOS切图/qita@2x.png" alt="">
+						<img src="static/iOS切图/qita@2x.png" alt="">
 						<span>其他项目</span>
 					</router-link>
 				</li>
@@ -71,7 +71,7 @@
 		
 		<div class="article">
 			<div class="articleTitle">
-				<img src="../../../static/iOS切图/Combined Shape@2x.png" alt="">
+				<img src="static/iOS切图/Combined Shape@2x.png" alt="">
 				<h3>运营精选</h3>
 			</div>
 			<ul :model="article">
@@ -80,7 +80,7 @@
 						<div class="article_left">
 							<p>{{items.content}}</p>
 							<div class="article_leftTime">
-								<img src="../../../static/iOS切图/time@2x.png" alt="">
+								<img src="static/iOS切图/time@2x.png" alt="">
 								<!-- <span>{{moment(items.time).format('YYYY-MM-DD HH:mm:ss')}}</span> -->
 							</div>
 						</div>

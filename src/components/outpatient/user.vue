@@ -2,7 +2,7 @@
 	<div class="user">
 		<div class="user_top">
 			<div class="user_set">
-				<img src="../../../static/iOS切图/set up@2x.png" alt="">
+				<img src="static/iOS切图/set up@2x.png" alt="">
 			</div>
 			<div class="user_message">
 				<div class="top_left">
@@ -15,7 +15,7 @@
 				</div>
 				<div class="top_right">
 					<span>营业执照</span>
-					<img src="../../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
+					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
 				</div>
 			</div>
 		</div>
@@ -24,7 +24,7 @@
 			<ul>
 				<li @click="exitFn">
 					<span>退出登陆</span>
-					<img src="../../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
+					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
 				</li>
 			</ul>
 		</div>
@@ -42,7 +42,7 @@ export default {
   data () {
     return {
 		name: 'user',
-		coverImg: '../../../static/门诊端/iOS切图/logo@2x.png',
+		coverImg: 'static/门诊端/iOS切图/logo@2x.png',
     }
   },
   computed:{

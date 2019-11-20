@@ -45,20 +45,20 @@ export default {
   	return{
 		active: 0,
 		index:{
-		    active: '../../../../static/iOS切图/shouye@2x.png',
-		    inactive: '../../../../static/iOS切图/shouye-blue@2x.png'
+		    active: 'static/iOS切图/shouye@2x.png',
+		    inactive: 'static/iOS切图/shouye-blue@2x.png'
 		},
 		hospital:{
-		    active: '../../../../static/iOS切图/menzhen@2x.png',
-		    inactive: '../../../../static/iOS切图/menzhen-blue@2x.png	'
+		    active: 'static/iOS切图/menzhen@2x.png',
+		    inactive: 'static/iOS切图/menzhen-blue@2x.png	'
 		},
 		gene:{
-		    active: '../../../../static/切图-基因/jiyin-gray@2x.png',
-		    inactive: '../../../../static/切图-基因/jiyin-blue@2x.png'
+		    active: 'static/切图-基因/jiyin-gray@2x.png',
+		    inactive: 'static/切图-基因/jiyin-blue@2x.png'
 		},
 		my:{
-		    active: '../../../../static/iOS切图/wode@2x.png',
-		    inactive: '../../../../static/iOS切图/wode-blue@2x.png'
+		    active: 'static/iOS切图/wode@2x.png',
+		    inactive: 'static/iOS切图/wode-blue@2x.png'
 		},
 	}
   },

@@ -3,7 +3,7 @@
 		<div class="topNav">
 			<div class="nav_left">
 				<a @click="goBackFn">
-					<img src="../../../../static/iOS切图/back-white@2x.png" alt="">
+					<img src="static/iOS切图/back-white@2x.png" alt="">
 				</a>
 			</div>
 			<div class="nav_center">
@@ -19,37 +19,37 @@
 			<ul>
 				<li>
 					<span>病源姓名</span>
-					<input type="text" id='readId1' v-model="detail.realname" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" id='readId1' v-model="detail.realname" placeholder="请输入" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>联系方式</span>
-					<input type="text" id='readId2' v-model="detail.tel" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" id='readId2' v-model="detail.tel" placeholder="请输入" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>证件号码</span>
-					<input type="text" id='readId3' v-model="detail.idcardNo" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" id='readId3' v-model="detail.idcardNo" placeholder="请输入" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>所属门诊</span>
-					<input type="text" v-model="detail.clinicName" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" v-model="detail.clinicName" placeholder="请输入"  :readonly="modify.readonly">
 				</li>
 			</ul>
 			<ul>
 				<li>
 					<span>门诊推送时间</span>
-					<input type="text" :value="detail.pushTime" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" :value="detail.pushTime" placeholder="请输入" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>确认就诊时间</span>
-					<input type="text" v-model="detail.hospitalConfirmTime"  style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" v-model="detail.hospitalConfirmTime" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>病种</span>
-					<input type="text" id='readId4' v-model="detail.sickness" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" id='readId4' v-model="detail.sickness" :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>备注</span>
-					<input type="text" id='readId5' v-model="detail.remark" placeholder="请输入" style="direction: rtl;" :readonly="modify.readonly">
+					<input type="text" id='readId5' v-model="detail.remark" placeholder="请输入" :readonly="modify.readonly">
 				</li>
 			</ul>
 		</div>
@@ -82,7 +82,7 @@ export default {
 		postImgList:[],
 		modify:{
 			value:'编辑',
-			img:'../../../../static/iOS切图/editor.png',
+			img:'static/iOS切图/editor.png',
 			data:false,					//保存状态
 			readonly : 'readonly',		//读取状态
 			num: 0,						//点击次数
@@ -137,7 +137,7 @@ export default {
 			console.log(document.getElementById('van-uploader__upload'))
 			this.modify.data = true;
 			this.modify.value = '编辑';
-			this.modify.img = '../../../../static/iOS切图/editor.png';
+			this.modify.img = 'static/iOS切图/editor.png';
 		}else{
 			this.modify.data = false;
 			this.fileList = [];
@@ -176,7 +176,7 @@ export default {
 		if(this.modify.num % 2 != 0){
 			console.log(this.modify.num)
 			this.modify.value = '保存';
-			this.modify.img = '../../../../static/iOS切图/save@2x.png';
+			this.modify.img = 'static/iOS切图/save@2x.png';
 			this.modify.data = true;
 			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
@@ -220,7 +220,7 @@ export default {
 			// console.log(this.fileList)
 			if(this.fileList.length > 0){
 				this.modify.value = '编辑';
-				this.modify.img = '../../../../static/iOS切图/editor.png';
+				this.modify.img = 'static/iOS切图/editor.png';
 				console.log(document.getElementsByClassName('van-uploader__upload')[0])
 				document.getElementsByClassName('van-uploader__upload')[0].style.display = 'none'
 				// console.log(document.getElementsByClassName('van-uploader__preview-delete'))
@@ -232,8 +232,8 @@ export default {
 				}
 			}else{
 				this.modify.data = false;
-				this.modify.value = '保存';
-				this.modify.img = '../../../../static/iOS切图/save@2x.png';
+				this.modify.value = '编辑';
+				this.modify.img = 'static/iOS切图/editor.png';
 			}
 		}
 	},
@@ -374,6 +374,7 @@ export default {
 	border: none;
 	font-size: .13rem;
 	height: .43rem;
+	text-align: right;
 	background-color: #FFFFFFF!important;
 }
 ._photo{

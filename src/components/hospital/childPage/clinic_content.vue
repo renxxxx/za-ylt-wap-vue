@@ -1,6 +1,5 @@
 <template>
 	<div class="content">
-		ssssss
 		<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
@@ -29,10 +28,11 @@ export default {
 			isLoading: true,
 			loading: false,
 			finished: false,
-			content: [],
+			content : [],
 			page:1
 		}
-  },
+	},
+	// props:['content'],
 	computed:{
 	  
 	},
@@ -43,10 +43,11 @@ export default {
 		
 	},
 	mounted () {
-		this.getdata(0)
+		this.getdata(0);
 		
 	},
 	methods: {
+		
 		onRefresh() {
 			this.page = 1;
 			this.content = [];
@@ -95,7 +96,7 @@ export default {
 					Dialog({ message: '加载失败!'});
 				})
 			}else{
-				console.log(this.page)
+				// console.log(this.page)
 				this.page++
 				this.$axios.post('/c2/clinic/items',qs.stringify({
 					pn : this.page,
@@ -150,7 +151,7 @@ export default {
 .content{
 	width: 100%;
 	height: 100%;
-	/* margin-top: .1rem; */
+	margin-top: .1rem;
 }
 .content ul{
 	width: 94.6%;
@@ -179,6 +180,9 @@ export default {
 }
 .content ul li:nth-child(2n){
 	margin-left:1.71% ;
+}
+.content ul li:first-child{
+	margin-top: .2rem;
 }
 .content ul li:last-child{
 	margin-bottom: .49rem;

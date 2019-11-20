@@ -4,28 +4,28 @@
 			<div class="topNav">
 				<div class="hospital_search">
 					<input type="text" placeholder="输入门诊名">
-					<img src="../../../static/iOS切图/sousuo@2x.png" alt="">
+					<img src="static/iOS切图/sousuo@2x.png" alt="">
 				</div>
 				<div class="hospital_information">
-					<img src="../../../static/iOS切图/xiaoxi@2x.png" alt="">
+					<img src="static/iOS切图/xiaoxi@2x.png" alt="">
 				</div>
 			</div>
 			<div class="shared">
 				<ul>
 					<li>
-						<img src="../../../static/iOS切图/yiyuanxingxiang@2x.png" alt="">
+						<img src="static/iOS切图/yiyuanxingxiang@2x.png" alt="">
 						<span>医院形象</span>
 					</li>
 					<li>
-						<img src="../../../static/iOS切图/youzhianli@2x.png" alt="">
+						<img src="static/iOS切图/youzhianli@2x.png" alt="">
 						<span>优质案例</span>
 					</li>
 					<li>
-						<img src="../../../static/iOS切图/zhuanjia@2x.png" alt="">
+						<img src="static/iOS切图/zhuanjia@2x.png" alt="">
 						<span>专家介绍</span>
 					</li>
 					<li>
-						<img src="../../../static/iOS切图/huodongfabu@2x.png" alt="">
+						<img src="static/iOS切图/huodongfabu@2x.png" alt="">
 						<span>最新活动</span>
 					</li>
 				</ul>
@@ -34,7 +34,7 @@
 				<h3>合作门诊（376）</h3>
 				<div class="statisticalAdd">
 					<span>新增</span>
-					<img src="../../../static/iOS切图/xinzeng@2x.png" alt="">
+					<img src="static/iOS切图/xinzeng@2x.png" alt="">
 				</div>
 			</div>
 		</div>
@@ -71,11 +71,7 @@ export default {
 	mounted () {
 		// this.getdata(0)
 	},
-	methods: {
-<<<<<<< HEAD
-		
-	}
-=======
+	methods: {	
 		onRefresh() {
 			this.content = []
 			this.getdata(0)
@@ -170,7 +166,6 @@ export default {
 			this.getdata(1)
 		}
 	},
->>>>>>> 128b23c152f0f6f5a03002353d65dca096b5b3bc
 }
 </script>
 

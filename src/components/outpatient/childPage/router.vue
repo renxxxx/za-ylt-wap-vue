@@ -45,20 +45,20 @@ export default {
   	return{
 		active: 0,
 		index:{
-		    active: '../static/iOS切图/shouye@2x.png',
-		    inactive: '../static/iOS切图/shouye-blue@2x.png'
+		    active: 'static/iOS切图/shouye@2x.png',
+		    inactive: 'static/iOS切图/shouye-blue@2x.png'
 		},
 		hospital:{
-		    active: '../static/门诊端/iOS切图/Hospital@2x.png',
-		    inactive: '../static/门诊端/iOS切图/Hospital-blue@2x.png'
+		    active: 'static/门诊端/iOS切图/Hospital@2x.png',
+		    inactive: 'static/门诊端/iOS切图/Hospital-blue@2x.png'
 		},
 		gene:{
-		    active: '../static/切图-基因/jiyin-gray@2x.png',
-		    inactive: '../static/切图-基因/jiyin-blue@2x.png'
+		    active: 'static/切图-基因/jiyin-gray@2x.png',
+		    inactive: 'static/切图-基因/jiyin-blue@2x.png'
 		},
 		my:{
-		    active: '../static/iOS切图/wode@2x.png',
-		    inactive: '../static/iOS切图/wode-blue@2x.png'
+		    active: 'static/iOS切图/wode@2x.png',
+		    inactive: 'static/iOS切图/wode-blue@2x.png'
 		},
 		//主导航栏图片
 		colorImg:['static/iOS切图/shouye-blue@2x.png',
@@ -111,32 +111,5 @@ body{
 	width: .2rem;height: .21rem;display: block;
 	margin: 0 auto;margin-bottom: 0.019rem;
 }
-/* .mainButton a:nth-child(1){
-	background:url('../static/iOS切图/shouye@2x.png') no-repeat center ;
-	background-size:.2rem .21rem;
-}
-.mainButton a:nth-child(2){
-	background:url('../static/门诊端/iOS切图/Hospital@2x.png') no-repeat center ;
-	background-size:.2rem .21rem;
-}
-.mainButton a:nth-child(3){
-	background:url('../static/切图-基因/jiyin-gray@2x.png') no-repeat center ;
-	background-size:.2rem .21rem;
-}
-.mainButton a:nth-child(4){
-	background:url('../static/iOS切图/wode@2x.png') no-repeat center ;
-	background-size:.2rem .21rem;
-}
 
-.mainButton a:nth-child(1):visited{
-	background:url('../static/iOS切图/wode@2x.png') no-repeat center;
-	background-size:.2rem .21rem;
-	color:#2B77EF;
-}
-
-.mainButton a span{
-	display: block;
-	margin-top: .22rem;
-	
-} */
 </style>

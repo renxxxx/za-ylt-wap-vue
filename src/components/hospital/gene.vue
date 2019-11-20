@@ -2,7 +2,7 @@
 	<div class="gene">
 		<div class="topNav">
 			<div class="nav_left">
-				<img src="../../../static/iOS切图/scanning@2x.png" alt="">
+				<img src="static/iOS切图/scanning@2x.png" alt="">
 			</div>
 			<div class="nav_center">
 				<h3>基因检测</h3>
@@ -21,17 +21,17 @@
 					</div>
 					<div class="statisticalRight">
 						<span>剩余 20个</span>
-						<img src="../../../static/iOS切图/Chevron Copy 2@2x.png" alt="">
+						<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
 					</div>
 				</li>
 				<li>
 					<div class="title">
 						<div class="titleLeft">	
-							<img src="../../../static/iOS切图/small-logo@2x.png" alt="">
+							<img src="static/iOS切图/small-logo@2x.png" alt="">
 							<span>江苏省人民医院</span>
 						</div>
 						<div class="titleRight"> 
-							<img src="../../../static/iOS切图/no@2x.png" alt="">
+							<img src="static/iOS切图/no@2x.png" alt="">
 							<span>未采样本</span>
 						</div>
 					</div>
@@ -43,11 +43,11 @@
 				<li>
 					<div class="title">
 						<div class="titleLeft">	
-							<img src="../../../static/iOS切图/small-logo@2x.png" alt="">
+							<img src="static/iOS切图/small-logo@2x.png" alt="">
 							<span>江苏省人民医院</span>
 						</div>
 						<div class="titleRight"> 
-							<img src="../../../static/iOS切图/yes@2x.png" alt="">
+							<img src="static/iOS切图/yes@2x.png" alt="">
 							<span class="overColor">已出报告</span>
 						</div>
 					</div>
@@ -60,11 +60,11 @@
 				<li>
 					<div class="title">
 						<div class="titleLeft">	
-							<img src="../../../static/iOS切图/small-logo@2x.png" alt="">
+							<img src="static/iOS切图/small-logo@2x.png" alt="">
 							<span>江苏省人民医院</span>
 						</div>
 						<div class="titleRight"> 
-							<img src="../../../static/iOS切图/wait@2x.png" alt="">
+							<img src="static/iOS切图/wait@2x.png" alt="">
 							<span class="nowColor">未出报告</span>
 						</div>
 					</div>
