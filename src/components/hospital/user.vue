@@ -56,7 +56,7 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import bottomNav from './childPage/bottomNav.vue'
+import bottomNav from './functionPage/bottomNav.vue'
 export default {
 	name: 'user',
 	data () {

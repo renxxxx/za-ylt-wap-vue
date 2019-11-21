@@ -32,7 +32,7 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import clinic_content from '../childPage/clinic_content.vue'
+import clinic_content from '../functionPage/clinic_content.vue'
 export default {
 	name: 'search',
 	data () {

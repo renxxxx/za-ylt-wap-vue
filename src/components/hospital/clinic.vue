@@ -54,8 +54,8 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
-import bottomNav from './childPage/bottomNav.vue'
-import clinic_content from './childPage/clinic_content.vue'
+import bottomNav from './functionPage/bottomNav.vue'
+import clinic_content from './functionPage/clinic_content.vue'
 export default {
 	name: 'hospital',
 	data () {

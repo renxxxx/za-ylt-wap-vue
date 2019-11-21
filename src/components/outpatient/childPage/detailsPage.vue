@@ -19,46 +19,45 @@
 			<ul>
 				<li>
 					<span>病源姓名</span>
-					<input type="text" id='readId1' v-model="detail.realname" placeholder="请输入" :readonly="modify.readonly">
+					<input type="text" id='readId1' v-model="detail.realname"  :placeholder="modify.readonly? '':'请输入' "  :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>联系方式</span>
-					<input type="text" id='readId2' v-model="detail.tel" placeholder="请输入" :readonly="modify.readonly">
+					<input type="text" id='readId2' v-model="detail.tel"  :placeholder="modify.readonly? '':'请输入' "  :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>证件号码</span>
-					<input type="text" id='readId3' v-model="detail.idcardNo" placeholder="请输入" :readonly="modify.readonly">
+					<input type="text" id='readId3' v-model="detail.idcardNo" :placeholder="modify.readonly? '':'请输入' " :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>所属门诊</span>
-					<input type="text" v-model="detail.clinicName" placeholder="请输入"  :readonly="modify.readonly">
+					<input type="text" v-model="detail.clinicName" :readonly="true">
 				</li>
 			</ul>
 			<ul>
 				<li>
 					<span>门诊推送时间</span>
-					<input type="text" :value="detail.pushTime" placeholder="请输入" :readonly="modify.readonly">
+					<input type="text" :value="detail.pushTime" placeholder="请输入" :readonly="true">
 				</li>
 				<li>
 					<span>确认就诊时间</span>
-					<input type="text" v-model="detail.hospitalConfirmTime" :readonly="modify.readonly">
+					<input type="text" v-model="detail.hospitalConfirmTime" :readonly="true">
 				</li>
 				<li>
 					<span>病种</span>
-					<input type="text" id='readId4' v-model="detail.sickness" :readonly="modify.readonly">
+					<input type="text" id='readId4' v-model="detail.sickness" :placeholder="modify.readonly? '':'请输入' "  :readonly="modify.readonly">
 				</li>
 				<li>
 					<span>备注</span>
-					<input type="text" id='readId5' v-model="detail.remark" placeholder="请输入" :readonly="modify.readonly">
+					<input type="text" id='readId5' v-model="detail.remark"  :placeholder="modify.readonly? '':'请输入' " :readonly="modify.readonly">
 				</li>
 			</ul>
 		</div>
 		<div class="_photo">
 			<h3>发票照片</h3>
 			<div class="imageUpload" v-if="modify.data" id='readImg'>
-				<van-uploader :deletable = "false"
-				@before-read="beforeRead"  @before-delete="berforedelete" preview-size='.9rem' 
-				v-model="fileList" multiple="true"/>
+				<van-uploader :before-read="beforeRead" :before-delete="berforedelete" preview-size='.9rem' 
+				v-model="fileList" multiple="true" />
 			</div>
 		</div>
 	</div>
@@ -84,7 +83,7 @@ export default {
 			value:'编辑',
 			img:'static/iOS切图/editor.png',
 			data:false,					//保存状态
-			readonly : 'readonly',		//读取状态
+			readonly : 'true',		//读取状态
 			num: 0,						//点击次数
 		},
     }
@@ -131,10 +130,12 @@ export default {
 		if(res.data.data.invoices != null || undefined || ''){
 			res.data.data.invoices = res.data.data.invoices.split(",")
 			for (let i in res.data.data.invoices){
-				this.fileList.push({'url' : res.data.data.invoices[i]})
-				console.log(this.fileList)
+				this.fileList.push({'url' : res.data.data.invoices[i]});
+				this.imageUpload.push({url:res.data.data.invoices[i]})
+				// console.log(res.data.data)
 			}
-			console.log(document.getElementById('van-uploader__upload'))
+			// console.log(document.getElementById('van-uploader__upload'))
+			
 			this.modify.data = true;
 			this.modify.value = '编辑';
 			this.modify.img = 'static/iOS切图/editor.png';
@@ -144,19 +145,16 @@ export default {
 		}
 		//判断时间是否为空
 		// console.log(this.detail.pushTime)
+		
 		if(res.data.data.hospitalConfirmTime == '' || res.data.data.hospitalConfirmTime == undefined || res.data.data.hospitalConfirmTime == null){
 			// console.log(this.detail.hospitalConfirmTime)
 			this.detail.hospitalConfirmTime = ''
 		}else{
 			this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('HH:mm:ss YYYY-MM-DD');
-			// console.log(this.detail.hospitalConfirmTime)
 		}
 		if(res.data.data.pushTime == '' || res.data.data.pushTime == undefined || res.data.data.pushTime == null){
-			// console.log(this.detail.hospitalConfirmTime)
-			this.detail.pushTime = ''
 		}else{
 			this.detail.pushTime = moment(res.data.data.pushTime).format('HH:mm:ss YYYY-MM-DD');
-			// console.log(this.detail.pushTime)
 		}
 		// this.detail = res.data.data
 		// console.log(this.detail);
@@ -172,26 +170,22 @@ export default {
 	//修改方法
 	modifyFn(){
 		this.modify.num++;
-		// console.log(document.getElementsByClassName('van-uploader__preview-delete'));		
 		if(this.modify.num % 2 != 0){
-			console.log(this.modify.num)
+			// console.log(this.modify.num)
 			this.modify.value = '保存';
 			this.modify.img = 'static/iOS切图/save@2x.png';
 			this.modify.data = true;
 			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
-				// console.log(_id)
-				document.getElementById(_id).removeAttribute("readonly");
+				this.modify.readonly = false;
 			}
 			document.getElementsByClassName('van-uploader__upload')[0].style.display = 'flex'
-			let classDomList = document.getElementsByClassName('van-uploader__preview-delete')
-			for(let _d in classDomList){
-				// console.log(classDomList[_d])
-				classDomList[_d].style.display = "";
-				// classDomList[_d].remove;
+			let classDomList = document.getElementsByClassName('van-uploader__preview-delete');
+			for(let _d=0; _d <classDomList.length;_d++){
+				classDomList[_d].style.display = "inline";
 			}
 		}else{
-			debugger;
+			
 			let _imgAddress = [];
 			for(let i in this.imageUpload){
 				_imgAddress[i] = this.imageUpload[i].url
@@ -214,21 +208,19 @@ export default {
 			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
 				// console.log(_id)
-				document.getElementById(_id).setAttribute("readonly","readonly");
+				this.modify.readonly = true;
 			}
 			// console.log()
 			// console.log(this.fileList)
 			if(this.fileList.length > 0){
 				this.modify.value = '编辑';
 				this.modify.img = 'static/iOS切图/editor.png';
-				console.log(document.getElementsByClassName('van-uploader__upload')[0])
 				document.getElementsByClassName('van-uploader__upload')[0].style.display = 'none'
-				// console.log(document.getElementsByClassName('van-uploader__preview-delete'))
-				let classDomList = document.getElementsByClassName('van-uploader__preview-delete')
-				for(let _d in classDomList){
+				let classDomList = document.getElementsByClassName('van-uploader__preview-delete');
+				// console.log(classDomList)
+				for(let _d=0; _d <classDomList.length;_d++){
 					// console.log(classDomList[_d])
 					classDomList[_d].style.display = "none";
-					// classDomList[_d].remove;
 				}
 			}else{
 				this.modify.data = false;
@@ -239,12 +231,12 @@ export default {
 	},
 	postImg(file){
 		console.log(file)
-		if(file.type.indexOf('image') > -1){
+		if(file.type == 'image/png'||'image/jpeg','image/gif'||'image/jpg'){
 			let formData = new FormData();
 			formData.append('file', file)
 			this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
 			}}).then(res =>{
-				this.imageUpload.push({name:file.name,url:res.data.data.url})
+				this.imageUpload.push({url:res.data.data.url})
 				console.log(this.imageUpload)
 			}).catch(err =>{
 				console.log(err)
@@ -257,14 +249,14 @@ export default {
 	 // 上传图片触发方法
 	beforeRead(file) {
 		// let _file = file;
-		// console.log(this.fileList)
+		// console.log('this.fileList')
 		this.postImg(file);
 		return true;
 	},
 	// 删除图片触发方法
 	berforedelete(_deteleValue){
 		// console.log(_deteleValue);
-		let deleteImg =  this.imageUpload.filter( n => n.name != _deteleValue.file.name);
+		let deleteImg =  this.imageUpload.filter( n => n.url != _deteleValue.url);
 		this.imageUpload = deleteImg;
 		// console.log(this.detail.invoices);
 		this.detail.invoices = [];
@@ -434,4 +426,5 @@ export default {
     position: relative;
     margin: 0rem 0rem .05rem 0rem!important;
 }
+
 </style>

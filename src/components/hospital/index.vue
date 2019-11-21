@@ -100,7 +100,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
-import bottomNav from './childPage/bottomNav.vue'
+import bottomNav from './functionPage/bottomNav.vue'
 // import moment from 'moment'
 export default {
 	name: 'gene',

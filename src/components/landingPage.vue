@@ -122,8 +122,8 @@ export default {
     }
   },
   mounted () {
-	console.log(document.getElementsByClassName('van-ellipsis')[0])
-  	document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.2rem';
+	// console.log(document.getElementsByClassName('van-ellipsis')[0])
+  	// document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.2rem';
   },
   computed:{
   	...mapGetters(['account','checked'])

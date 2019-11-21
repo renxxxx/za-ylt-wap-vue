@@ -1,13 +1,13 @@
 <template>
 	<div class="addClinic">
-		<div class="navWarp" @click="goBackFn">
-			<div class="leftNav" >
+		<div class="navWarp" >
+			<div class="leftNav" @click="goBackFn">
 				<img src="static/iOS切图/back-white@2x.png" alt="">
 			</div>
 			<div class="centerNav">
 				<span>新增门诊</span>
 			</div>
-			<div class="rightNav">
+			<div class="rightNav" @click="saveFn">
 				<span>保存</span>
 				<img src="static/iOS切图/save@2x.png" alt="">
 			</div>
@@ -20,33 +20,33 @@
 					<ul class="Fill">
 						<li>
 							<span>门诊名称</span>
-							<input type="text"  placeholder="请填写" >
+							<input type="text" v-model="addClinic.name"  placeholder="请填写" >
 						</li>
 						<li>
 							<span>推广人</span>
 							<van-dropdown-menu>
-							  <van-dropdown-item v-model="value1" :options="option1" active-color='#2B77EF'/>
+							  <van-dropdown-item v-model="value" :options="option" active-color='#2B77EF'/>
 							</van-dropdown-menu>
 						</li>
 						<li>
 							<span>分配账号</span>
-							<input type="text"  placeholder="请填写" >
+							<input type="text" maxlength="11" v-model="addClinic.phone"  placeholder="请填写" >
 						</li>
 						<li>
 							<span>分配密码</span>
-							<input type="password"  maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+							<input type="password" v-model="addClinic.pwd " placeholder="请填写">
 						</li>
 						<li>
 							<span>负责人</span>
-							<input type="text"  maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+							<input type="text"  v-model="addClinic.headmanName"  placeholder="请填写">
 						</li>
 						<li>
 							<span>联系方式</span>
-							<input type="text"  maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+							<input type="text"  maxlength="11" v-model="addClinic.contactTel" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
 						</li>
 						<li>
 							<span>门诊地址</span>
-							<input type="text"  placeholder="请填写" >
+							<input type="text" v-model="addClinic.address" placeholder="请填写" >
 						</li>
 					</ul>
 				</div>
@@ -54,13 +54,32 @@
 					<img src="static/iOS切图/xuantian@2x.png" alt="">
 					<h3>选填项</h3>
 					<ul class="Fill">
-						<li>
+						<li@click="showFn">
 							<span>备注</span>
-							<input type="text"  placeholder="请填写" >
+							<input type="text" v-model="addClinic.remark" placeholder="请填写" >
 						</li>
-						<li>
+						<li class="popup" v-model="imageUpload">
 							<span>营业执照</span>
-							<input type="text"  placeholder="请填写" >
+							<img  id="backimg"  alt="">
+							<van-action-sheet v-model="show"  :round="false" @click-overlay='closeFn'>
+								<div class="popupChoose">
+									<span>拍照</span>
+									<div class="uploadPictures">
+										 <input 
+										        type="file" 
+										        class="upload" 
+										        ref="inputer" 
+										        accept="image/png,image/jpeg,image/gif,image/jpg"
+										        multiple 
+												@change="addImg($event)"
+										   />
+										   <div class="add">
+										      <p>点击上传</p>
+										   </div>
+									</div>
+								</div>
+								<button @click="closeFn">取消</button>
+							</van-action-sheet>
 						</li>
 					</ul>
 				</div>
@@ -73,23 +92,33 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import clinic_content from '../childPage/clinic_content.vue'
+import { Dialog } from 'vant'
+import clinic_content from '../functionPage/clinic_content.vue'
 export default {
 	name: 'search',
 	data () {
 		return {
-			keywords : '',
-			content : [],
-			 value1: 0,
-			option1: [
-			        { text: '全部商品', value: 0 },
-			        { text: '新款商品', value: 1 },
-			        { text: '活动商品', value: 2 }
-			      ],
+			// 推广人下拉列表参数
+			value: '001',
+			option: [],
+			// 添加列表绑定数据
+			addClinic:{
+				name : '',
+				phone : '',
+				pwd : '',
+				headmanName : '',
+				contactTel : '',
+				address : '',
+				remark : '',
+				license : ''
+			},
+			// 上传图片弹窗显示
+			show: false,
+			imageUpload:[]
 		}
 	},
 	computed:{
-	  
+		...mapGetters(['account']),
 	},
 	components:{
 		clinic_content
@@ -98,12 +127,86 @@ export default {
 		
 	},
 	mounted () {
-	
+		// 加载dom节点后,获取推广人列表请求
+		this.$axios.post('hospitaler/clinic-promoter/list',qs.stringify({
+			pn : 1,
+			ps : 200,
+			hospitalId : this.account.hospitalId,
+		}))
+		.then(res => {
+			for(let i in res.data.data.items){
+				this.option.push({
+					'text' : res.data.data.items[i].name, 
+					'value' : res.data.data.items[i].no,
+				})
+			}
+			// console.log(res);
+		})
+		.catch((err)=>{
+			console.log(err);
+			Dialog({ message: '加载失败!'});
+		})
 	},
 	methods: {
+		// 返回键
 		goBackFn(){
 			this.$router.back(-1)
 		},
+		// 显示上传图片选择弹窗
+		showFn(){
+			this.show = true;
+		},
+		// 关闭上传图片选择弹窗
+		closeFn() {
+		      this.show = false;
+			  console.log(this.show)
+		},
+		addImg(_fileLIst){
+			var file = _fileLIst.target.files[0]
+			// console.log(e)
+			if(file.type.indexOf('image') > -1){
+				let formData = new FormData();
+				formData.append('file', file)
+				this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
+				}}).then(res =>{
+					// this.imageUpload.push({name:file.name,url:res.data.data.url})
+					
+					console.log(this.imageUpload)
+					this.show = false;
+				}).catch(err =>{
+					console.log(err)
+				})
+			 }else{
+				Dialog({ message: '请选择图片' });
+				return false;
+			}
+		
+		},
+		// 保存方法
+		saveFn(){
+			console.log(this.addClinic)
+			this.$axios.post('c2/clinic/itemadd',qs.stringify({
+				hospitalId : this.account.hospitalId,
+				name : this.addClinic.name,
+				phone : this.addClinic.phone,
+				pwd : this.addClinic.pwd,
+				headmanName : this.addClinic.headmanName,
+				contactTel : this.addClinic.contactTel,
+				address : this.addClinic.address,
+				remark : this.addClinic.remark,
+				// license : this.addClinic.license,
+			}))
+			.then(res => {
+				if(res.codeMsg != ''){
+					Dialog({ message: res.data.codeMsg});
+				}
+				console.log(res)
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
+		}
 	}
 }
 </script>
@@ -232,6 +335,58 @@ export default {
 }
 >>>.van-dropdown-item--down {
     bottom: 0;
-    top: 207.141px;
+    top: 202.141px!important;
 }
+.popup{
+	height: .45rem;
+	line-height: .45rem;
+}
+.popup button{
+	background: none;
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
+.popupChoose{
+	height: .9rem;
+	border-bottom: 6px solid #F5F5F5;
+	text-align: center;
+	font-size: .15rem;
+}
+.popupChoose span{
+	display: block;
+	width: 100%!important;
+	height: .44rem!important;
+	border-bottom: .5px solid #D8D8D8;
+}
+.uploadPictures{
+	position: relative;
+	width: 100%!important;
+	height: .44rem!important;
+}
+.uploadPictures:hover{
+   border-color:#3594F4;
+}
+.upload{
+	opacity: 0;
+	width: 100%!important;
+	height: .44rem!important;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+}
+.add{
+	display: block;
+	width: 100%!important;
+	height: .44rem!important;
+	line-height: .44rem!important;
+	/* margin-top:-.44rem
+	
+	; */
+ }
+
 </style>
