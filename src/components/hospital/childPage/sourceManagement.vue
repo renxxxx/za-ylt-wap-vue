@@ -3,8 +3,11 @@
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
 			<div class="topNav">
+				<div class="indexReturn">
+					<img src="static/iOS切图/back-white@2x.png" alt="">
+				</div>
 				<div class="indexSearch">
-					<router-link to="/outpatient_search">
+					<router-link to="">
 						<img src="static/iOS切图/sousuo@2x.png" alt="">
 						<input type="text" placeholder="搜索病源" autofocus="autofocus">
 					</router-link>
@@ -15,11 +18,6 @@
 				</div>
 				<van-popup v-model="show" position="right" :style="{ height: '100%',width:'78.7%'}">
 					<div id="indexLabel" v-model="Time">
-						<div class="labelLabel" >
-							<strong>状态</strong>
-							<button   @click="labelLabelFn([0,$event])" :id="labelDocument[0]">未就诊</button>
-							<button @click="labelLabelFn([1,$event])" :id="labelDocument[1]">已就诊</button>
-						</div>
 						<div class="labelLabel" >
 							<strong>就诊时间</strong>
 							<button class="rightLine" @click="labelLabelFn([2,$event])" :id="labelDocument[2]">
@@ -55,77 +53,78 @@
 			<!-- 就诊情况 -->
 			<div class="typeNav" :v-model="message">
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF'>
-					<van-tab title="新增病源">
-						<form @submit.prevent="hospitalSubmit" class="newAdd">
-							<div class="newAddTitle">
-								<img src="static/iOS切图/bitian@2x.png" alt="">
-								<h3>必填项</h3>
-								<ul class="Fill">
-									<li>
-										<span>病患姓名</span>
-										<input type="text" v-model="account.user.realname"  placeholder="请填写" >
+					<van-tab :title=allTitle>
+						<van-pull-refresh v-model="isLoading" @refresh="allRefresh">
+							<ul class="content">
+								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="allOnLoad">
+									<li v-for="(item,inx) in message.notDiagnosis" :key="inx">
+										<div class="contentTitle">
+											<img src="static/iOS切图/orange@2x.png" alt="">
+											<span>{{item.realname}}</span>
+										</div>
+										<div class="contnet_left">
+											<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
+											<span>所属门诊：{{item.clinicName}}</span>
+										</div>
+										<div class="content_right">
+											<button>确认就诊</button>
+										</div>
 									</li>
-									<li>
-										<span>联系电话</span>
-										<input type="text" v-model="account.user.tel" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+									<li v-for="(item,inx) in message.diagnosis" :key="inx+'11'">
+										<div class="contentTitle">
+											<img src="static/iOS切图/blue@2x.png" alt="">
+											<span>{{item.realname}}</span>
+										</div>
+										<div class="contnet_left">
+											<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
+											<span>所属门诊：{{item.clinicName}}</span>
+										</div>
+										<div class="content_right">
+											<button class="buttonColor">已就诊</button>
+										</div>
 									</li>
-									<li>
-										<span>身份证号</span>
-										<input type="text" v-model="account.user.idcardNo" maxlength="18"  οninput="value= value.replace(/[^\d|xX]/g,'')" placeholder="请填写">
-									</li>
-								</ul>
-							</div>
-							<div class="newAddTitle bottom">
-								<img src="static/iOS切图/bitian@2x.png" alt="">
-								<h3>选填项</h3>
-								<ul class="Fill">
-									<li>
-										<span>备注</span>
-										<input type="text" v-model="account.user.remark"  placeholder="请填写" >
-									</li>
-								</ul>
-							</div>
-							<input class="submitClass" type="submit" value="提交"></input>
-						</form>
-					</van-tab>
-					<van-tab :title=noTitle class="Already" @click="testClick()">
-						<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-							<div class="list">
-								<ul :model="message" class="index_content">
-									<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
-										<router-link to="/outpatient_details" >
-											<li v-for="(_notDiagnosis,inx) in message.notDiagnosis" :key="inx" @click="detailsValueFn(_notDiagnosis)">
-												<div class="content_left">
-													<span>{{_notDiagnosis.realname}}</span>
-												</div>
-												<div class="content_right">
-													<img src='static/门诊端/iOS切图/weijiuzhen@2x.png'>
-													<span class="AlreadySpanColor">未就诊</span>
-												</div>
-												<p>{{moment(_notDiagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
-											</li>
-										</router-link>
-									</van-list>
-								</ul>
-							</div>
+								</van-list>
+							</ul>
 						</van-pull-refresh>
 					</van-tab>
-				  <van-tab :title=yesTitle class="Already" >
-						<van-pull-refresh v-model="isLoading" @refresh="onRefresh2">
-							<ul class="index_content" :model="message">
-								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoadss">
-									<router-link to="/outpatient_details" >
-										<li v-for="(_diagnosis,inx) in message.diagnosis" :key="inx" @click="detailsValueFn(_diagnosis)">
-											<div class="content_left">
-												<span>{{_diagnosis.realname}}</span>
-											</div>
-											<div class="content_right">
-												<img src='static/门诊端/iOS切图/yijiuzhen@2x.png'>
-												<span>已就诊</span>
-											</div>
-											<p>{{moment(_diagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
-										</li>
-									</router-link>
+					<van-tab :title=noTitle class="Already">
+						<van-pull-refresh v-model="isLoading" @refresh="noRefresh">
+							<ul class="content">
+								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="noOnLoad">
+									<li v-for="(item,inx) in message.notDiagnosis" :key="inx">
+										<div class="contentTitle">
+											<img src="static/iOS切图/orange@2x.png" alt="">
+											<span>{{item.realname}}</span>
+										</div>
+										<div class="contnet_left">
+											<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
+											<span>所属门诊：{{item.clinicName}}</span>
+										</div>
+										<div class="content_right">
+											<button>确认就诊</button>
+										</div>
+									</li>
+								</van-list>
+							</ul>
+						</van-pull-refresh>
+					</van-tab>
+					<van-tab :title=yesTitle class="Already" >
+						<van-pull-refresh v-model="isLoading" @refresh="yesRefresh">
+							<ul class="content">
+								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="yesOnLoad">
+									<li v-for="(item,inx) in message.diagnosis" :key="inx+'11'">
+										<div class="contentTitle">
+											<img src="static/iOS切图/blue@2x.png" alt="">
+											<span>{{item.realname}}</span>
+										</div>
+										<div class="contnet_left">
+											<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
+											<span>所属门诊：{{item.clinicName}}</span>
+										</div>
+										<div class="content_right">
+											<button class="buttonColor">已就诊</button>
+										</div>
+									</li>
 								</van-list>
 							</ul>
 						</van-pull-refresh>
@@ -133,21 +132,19 @@
 				</van-tabs>
 			</div>
 		</div>
-		<routerNav v-bind:name='name'></routerNav>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
-import routerNav from './childPage/router.vue'
 export default {
   name: 'index',
   data () {
     return {
 		name: 'index',
+		allTitle: '全部',
 		noTitle:'未就诊',
 		yesTitle:'已就诊',
 		//获取动态数据
@@ -160,74 +157,23 @@ export default {
 		//页数
 		page : 2,
 		page2 : 2,
+		allPage:2,
+		allPage2:2,
 		 // 数据全部加载完成
 		loading: false,
 		// 加载状态结束
 		finished: false,
 		//显示下拉加载
-		isLoading: false
+		isLoading: false,
+		sunNum:0,
     }
   },
   mounted(){
-	// //未就诊请求
-	this.$axios.post('/c2/patient/items',qs.stringify({
-		status : 1 ,
-		pn : 1,
-		ps : 10
-	}))
-	.then(_d => {
-		if(_d.data.data.items.length != 0){
-			setTimeout(() => {
-				for (let nums in _d.data.data.items) {
-				    this.message.notDiagnosis.push(_d.data.data.items[nums]);
-				 }
-			}, 300);
-			this.noTitle = '未就诊' + _d.data.data.sum.totalCount
-		}else{
-			this.$notify({
-				message: '数据已全部加载',
-				duration: 1000,
-				background:'#79abf9',
-			})
-			this.loading = false;
-			this.finished = true;
-		}
-	})
-	.catch((err)=>{
-		console.log(err);
-		Dialog({ message: '加载失败!'});
-	})
-	//已就诊
-	this.$axios.post('/c2/patient/items',qs.stringify({
-		status : 4 ,
-		pn : 1,
-		ps : 10
-	}))
-	.then(_d => {
-		if(_d.data.data.items.length != 0){
-			setTimeout(() => {
-				for (let nums in _d.data.data.items) {
-				     this.message.diagnosis.push(_d.data.data.items[nums]);
-				}
-			}, 300);
-			this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
-		}else{
-			this.$notify({
-				message: '数据已全部加载',
-				duration: 1000,
-				background:'#79abf9',
-			})
-			this.loading = false;
-			this.finished = true;
-		}
-	})
-	.catch((err)=>{
-		console.log(err);
-		Dialog({ message: '加载失败!'});
-	})
+	  this.getdata(1,1,5);
+	  this.getdata(4,1,5);
   },
   computed:{
-	...mapGetters(['Time','labelDocument','showTime','show','account','detail']),
+	...mapGetters(['Time','labelDocument','showTime','show','account']),
 	show: {
 	    get: function() {
 			// console.log(this.$store)
@@ -249,59 +195,77 @@ export default {
   },
   //注册组件
   components:{
-	  routerNav
+	  
   },
   methods:{
-	detailsValueFn(_diagnosis){
-		// console.log(_diagnosis)
-		this.detail.patientId = _diagnosis.itemId;
-		// console.log(this.detail)
+	getdata(_data,_pn,_ps){
+		this.$axios.post('/c2/patient/items',qs.stringify({
+			kw	:	"",
+			hospitalId : this.account.data.data.hospital.hospitalId,
+			status : _data,
+			pn : _pn,
+			ps : _ps,
+		}))
+		.then(_d => {
+			if(_d.data.data.items.length != 0){
+				if(_data == 1){
+					for (let nums in _d.data.data.items) {
+						this.message.notDiagnosis.push(_d.data.data.items[nums]);
+					}
+					this.sunNum += _d.data.data.sum.totalCount
+					console.log(this.sunNum)
+					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
+				}else{
+					for (let nums in _d.data.data.items) {
+						this.message.diagnosis.push(_d.data.data.items[nums]);
+					}
+					this.sunNum += _d.data.data.sum.totalCount
+					console.log(this.sunNum)
+					this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
+				}
+				this.isLoading = false;
+				// 加载状态结束
+				this.loading = false;
+				
+				// console.log(this.message)
+				this.allTitle = '全部' + this.sunNum
+			}else{
+				this.$notify({
+					message: '数据已全部加载',
+					duration: 1000,
+					background:'#79abf9',
+				})
+				this.loading = false;
+				this.finished = true;
+			}
+		})
+		.catch((err)=>{
+			console.log(err);
+			Dialog({ message: '加载失败!'});
+		})
 	},
-	//上拉加载数据
-	onLoad(){
-	  this.getdata(1,this.message.notDiagnosis,1);
-	},
-	//上拉加载数据
-	onLoadss(){
-	    this.getdata2(4,this.message.diagnosis,1);
-	},
-	//下拉刷新数据
-	onRefresh(){
-		this.page = 2;
-		this.message.notDiagnosis = []
-		this.getdata(1,this.message.notDiagnosis,0);
-	},
-	//下拉刷新数据
-	onRefresh2(){
-		this.page2 = 2;
-		this.message.diagnosis = []
-		this.getdata2(4,this.message.diagnosis,0);
-	},
-	//下拉加载获取数据
-	getdata(data,_value,shuaxin){
-		if(shuaxin ==0 ){
+	allNextdata(_data,_ps){
+		if(_data == 1){
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw	:	"",
-				clinicId : this.account.data.data.clinic.clinicId,
-				name : "",
 				hospitalId : this.account.data.data.hospital.hospitalId,
-				status : data ,
-				orders : 'asc',
-				pn : 1,
-				ps : 10
+				status : _data,
+				pn : this.allPage,
+				ps : _ps,
 			}))
 			.then(_d => {
+				this.allPage++;
 				if(_d.data.data.items.length != 0){
-					// console.log(this.page)
 					for (let nums in _d.data.data.items) {
-					    _value.push(_d.data.data.items[nums]);
+						this.message.notDiagnosis.push(_d.data.data.items[nums]);
 					}
+					this.noTitle = '未就诊' + _d.data.data.sum.totalCount;
+					
 					this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;
-					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
+					// console.log(this.message)
 				}else{
-					
 					this.$notify({
 						message: '数据已全部加载',
 						duration: 1000,
@@ -318,23 +282,92 @@ export default {
 		}else{
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw	:	"",
-				clinicId : this.account.data.data.clinic.clinicId,
-				name : "",
 				hospitalId : this.account.data.data.hospital.hospitalId,
-				status : data ,
-				orders : 'asc',
-				pn : this.page,
-				ps : 10
+				status : _data,
+				pn : this.allPage2,
+				ps : _ps,
 			}))
 			.then(_d => {
+				this.allPage2++;
 				if(_d.data.data.items.length != 0){
-					// console.log(this.page)
 					for (let nums in _d.data.data.items) {
-					    _value.push(_d.data.data.items[nums]);
+						this.message.diagnosis.push(_d.data.data.items[nums]);
 					}
+					this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
+					this.isLoading = false;
+					// 加载状态结束
 					this.loading = false;
-					this.page++	
-					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
+					// console.log(this.message)
+				}else{
+					this.$notify({
+						message: '数据已全部加载',
+						duration: 1000,
+						background:'#79abf9',
+					})
+					this.loading = false;
+					this.finished = true;
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
+		}
+	},
+	nextdata(_data,_ps){
+		if(_data == 1){
+			this.$axios.post('/c2/patient/items',qs.stringify({
+				kw	:	"",
+				hospitalId : this.account.data.data.hospital.hospitalId,
+				status : _data,
+				pn : this.page,
+				ps : _ps,
+			}))
+			.then(_d => {
+				this.page++;
+				if(_d.data.data.items.length != 0){
+					for (let nums in _d.data.data.items) {
+						this.message.notDiagnosis.push(_d.data.data.items[nums]);
+					}
+					this.noTitle = '未就诊' + _d.data.data.sum.totalCount;
+					
+					this.isLoading = false;
+					// 加载状态结束
+					this.loading = false;
+					// console.log(this.message)
+				}else{
+					this.$notify({
+						message: '数据已全部加载',
+						duration: 1000,
+						background:'#79abf9',
+					})
+					this.loading = false;
+					this.finished = true;
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
+		}else{
+			this.$axios.post('/c2/patient/items',qs.stringify({
+				kw	:	"",
+				hospitalId : this.account.data.data.hospital.hospitalId,
+				status : _data,
+				pn : this.page2,
+				ps : _ps,
+			}))
+			.then(_d => {
+				this.page2++;
+				if(_d.data.data.items.length != 0){
+					for (let nums in _d.data.data.items) {
+						this.message.diagnosis.push(_d.data.data.items[nums]);
+					}
+					this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
+					this.isLoading = false;
+					// 加载状态结束
+					this.loading = false;
+					// console.log(this.message)
 				}else{
 					this.$notify({
 						message: '数据已全部加载',
@@ -352,76 +385,46 @@ export default {
 		}
 		
 	},
-	getdata2(data,_value,shuaxin){
-		if(shuaxin ==0 ){
-			this.$axios.post('/c2/patient/items',qs.stringify({
-				kw	:	"",
-				clinicId : this.account.data.data.clinic.clinicId,
-				name : "",
-				hospitalId : this.account.data.data.hospital.hospitalId,
-				status : data ,
-				orders : 'asc',
-				pn : 1,
-				ps : 10
-			}))
-			.then(_d => {
-				if(_d.data.data.items.length != 0){
-					for (let nums in _d.data.data.items) {
-					    _value.push(_d.data.data.items[nums]);
-					}
-					this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
-					this.noTitle = '已就诊' + _d.data.data.sum.totalCount
-				}else{
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
-					this.page2++
-					this.loading = false;
-					this.finished = true;
-				}
-			})
-			.catch((err)=>{
-				console.log(err);
-				Dialog({ message: '加载失败!'});
-			})
-		}else{
-			this.$axios.post('/c2/patient/items',qs.stringify({
-				kw	:	"",
-				clinicId : this.account.data.data.clinic.clinicId,
-				name : "",
-				hospitalId : this.account.data.data.hospital.hospitalId,
-				status : data ,
-				orders : 'asc',
-				pn : this.page2,
-				ps : 10
-			}))
-			.then(_d => {
-				if(_d.data.data.items.length != 0){
-					for (let nums in _d.data.data.items) {
-					    _value.push(_d.data.data.items[nums]);
-					}
-					this.loading = false;
-					this.page2++
-					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
-				}else{
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
-					this.loading = false;
-					this.finished = true;
-				}
-			})
-			.catch((err)=>{
-				console.log(err);
-				Dialog({ message: '加载失败!'});
-			})
-		}
+	detailsValueFn(_diagnosis){
+		// console.log(_diagnosis)
+		this.detail.patientId = _diagnosis.itemId;
+		// console.log(this.detail)
+	},
+	//上拉加载数据
+	allOnLoad(){
+		this.allNextdata(1,5);
+		this.allNextdata(4,5);
+	},
+	//下拉刷新数据
+	allRefresh(){
+		this.sunNum=0;
+		this.allPage = 2;
+		this.allPage2 = 2;	
+		this.message.notDiagnosis = [];
+		this.message.diagnosis = [];
+		this.getdata(1,1,5);
+		this.getdata(4,1,5);
+		console.log(this.message)
+	},
+	noRefresh(){
+		this.sunNum=0;
+		this.page = 2;
+		this.message.notDiagnosis = [];
+		this.getdata(1,1,10);
+		console.log(this.message)
+	},
+	noOnLoad(){
+		this.nextdata(1,10);
+	},
+	yesRefresh(){
+		this.sunNum=0;
+		this.page2 = 2;
+		this.message.diagnosis = [];
+		this.getdata(4,1,10);
+		console.log(this.message)
+	},
+	yesOnLoad(){
+		this.nextdata(4,10);
 	},
 	//显示筛选弹窗
 	showPopup() {
@@ -434,12 +437,7 @@ export default {
   },
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-body{
-	/* background-color:#F5F5F5!important; */
-}
 .navWarp{
 	/* background-color: #FFFFFF; */
 	/* height: 1rem; */
@@ -452,21 +450,32 @@ body{
 	line-height:.335rem;
 	width: 100%;
 	padding-top: 0.14rem;
-	background:url('../../../static/门诊端/iOS切图/BJ-blue.png');
+	background:url('../../../../static/门诊端/iOS切图/BJ-blue.png');
 	background-size:100% 100%;
 	position: relative;
+}
+.indexReturn{
+	width: 10%;
+	float: left;
+	text-align: center;
+	display: inline-block;
+}
+.indexReturn img{
+	width: .09rem;
+	height: .15rem;
+	margin: auto;
 }
 .indexSearch{
 	height: .335rem;
 	display: inline-block;
 	/* width: 3.07rem; */
-	width: 82%;
+	width: 72%;
 	float: left;
 	position: relative;
 	z-index: 999;
 }
 .indexSearch img{
-	position: absolute;z-index: 9;left: .25rem;top: .09rem;
+	position: absolute;z-index: 9;left: .13rem;top: .09rem;
 	height: .15rem;width:.14rem;
 }
 .indexSearch input{
@@ -476,9 +485,9 @@ body{
 	/* padding:0 0 0 .39rem; */
 	/* margin-left: 0.16rem; */
 	padding: 0;
-	width: 78%;
+	width: 82.5%;
 	padding-left: 12%;
-	margin:0 5%;
+	/* margin:0 5%; */
 	background: #F5F5F5;
 }
 .indexSearch input::-webkit-input-placeholder {
@@ -554,9 +563,6 @@ body{
 	border: none;background: #EEEEEE;
 	text-align: center;position: relative;
 }
-.labelLabel:first-child button:last-child{
-	margin-left: .2rem;
-}
 .LabelResult{
 	position: fixed;bottom: .25rem;right: .2rem;
 }
@@ -575,6 +581,54 @@ body{
 	height: 100%;
 	margin-top: -.65rem;
 }
+.content{
+	width: 100%;
+}
+.content li{
+	height:.84rem;
+	width: 91.5%;
+	background-color: #FFFFFF;
+	margin: .12rem auto;
+	border-radius: .14rem;
+}
+.contentTitle{
+	padding: .09rem 0rem .07rem .1rem;
+}
+.contentTitle img{
+	width: .17rem;
+	height: .17rem;
+}
+.contentTitle span{
+	margin-left: .05rem;
+	font-weight: bold;
+}
+.contnet_left{
+	margin-left: .32rem;
+	float: left;
+}
+.contnet_left span{
+	display: block;
+}
+.contnet_left span:last-child{
+	margin-top: .04rem;
+}
+.content_right{
+	float: right;
+	margin-right: .15rem;
+	margin-top: -.03rem;
+}
+.content_right button{
+	width: .8rem;
+	height: .28rem;
+	color: #FFFFFF;
+	background-color: #2B77EF;
+	border: none;
+	border-radius: .14rem;
+}
+.buttonColor{
+	color: #333333!important;
+	background-color: #EEEEEE!important;
+}
 >>>.van-tabs__nav--line {
     box-sizing: content-box;
     height: 100%;
@@ -584,10 +638,6 @@ body{
 >>>.van-tabs--line .van-tabs__wrap {
 	width: 100%;
     height: 44px;
-}
-.newAdd{
-	width: 100%;
-	 height: 5.34rem; 
 }
 >>>.van-overlay {
     position: fixed;
@@ -638,117 +688,7 @@ body{
     transition: height .3s;
     -webkit-transition: height .3s;
 }
-.submitClass{
-	width:2.41rem;
-	height: .4rem;
-	display:block;margin:0 auto;
-	margin-top: .5rem;
-	
-	background: linear-gradient(#56AFF8, #2B77EF);
-	border: none;
-	border-radius: .2rem;
-	color: #FFFFFF;
-	font-size: 	.14rem;
-}
-.newAddTitle{
-	width: 91.4%;
-	margin-top: 2.9%;
-	margin: 0 auto;
-	padding-top: .2rem;
-}
-.newAddTitle img{
-	width: .165rem;
-	height: .185rem;
-}
-.newAddTitle h3{
-	margin-left: .05rem;
-	width: .45rem;
-	height: .21rem;
-	display: inline;
-}
-.Fill {
-	width:90%;
-	height: 1.59rem;
-}
-.Fill li{
-	border: 1px solid #D8D8D8;
-	border-radius: .02rem;
-	padding: .12rem .15rem;
-	margin-top:.12rem;
-	width: 100%;
-}
-.Fill li span{
-	height: .21rem;width: .6rem;
-	
-}
-.Fill li input{
-	border: none;
-	float:right;
-	text-align: right;
-	background-color: #F5F5F5;
-}
-.bottom{
-	margin-top: .2rem;
-	height: .78rem;
-}
-.AlreadySpanColor{
-	color: #2B77EF!important;
-}
 
-.index_content{
-	margin: 0 .12rem;
-}
-.index_content li {
-	height:1.01rem;
-	margin-top:.12rem;
-	background-color:#FFFFFF;
-	position:relative;
-	/*padding:.14rem .15rem;*/
-}
-.index_content li p{
-	position:absolute;
-	bottom:0;
-	height:.5rem;
-	width:93%;
-	line-height:.5rem;
-	margin-left:.14rem;
-	border-top:1px solid #E5E5E5;
-}
-.content_left{
-	float:left;
-	height:.5rem;
-	margin-top:.14rem;
-	margin-left:.15rem;
-}
-.content_right{
-	float:right;
-	height:.5rem;
-	margin-right:.14rem;
-	margin-top:.15rem
-}
-.content_right img{
-	width:.11rem;
-	height:.11rem;
-	margin-right:.04rem;
-}
-.content_right span{
-	color: #4DD865;
-}
-.date_ctrl {
-    vertical-align: middle;
-    background-color: #ffffff;
-    color: #000;
-    margin: 0;
-    height: auto;
-    width: 100%;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    z-index: 9901;
-    overflow: hidden;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-}
 >>>._v-container[data-v-ecaca2b0] {
     height: 80%!important;
     overflow: scroll;

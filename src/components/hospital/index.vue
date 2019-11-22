@@ -23,7 +23,7 @@
 					</router-link>
 				</li>
 				<li>
-					<router-link to='hospital_indexSearch'>
+					<router-link to='hospital_sourceManagement'>
 						<img src="static/iOS切图/bingyuanguanli@2x.png" alt="">
 						<span>病源管理</span>
 					</router-link>

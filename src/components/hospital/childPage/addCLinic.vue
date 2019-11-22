@@ -18,14 +18,14 @@
 					<img src="static/iOS切图/bitian@2x.png" alt="">
 					<h3>必填项</h3>
 					<ul class="Fill">
-						<li>
+						<li  >
 							<span>门诊名称</span>
 							<input type="text" v-model="addClinic.name"  placeholder="请填写" >
 						</li>
 						<li>
 							<span>推广人</span>
 							<van-dropdown-menu>
-							  <van-dropdown-item v-model="value" :options="option" active-color='#2B77EF'/>
+								<van-dropdown-item v-model="value" :options="option" active-color='#2B77EF'/>
 							</van-dropdown-menu>
 						</li>
 						<li>
@@ -54,33 +54,34 @@
 					<img src="static/iOS切图/xuantian@2x.png" alt="">
 					<h3>选填项</h3>
 					<ul class="Fill">
-						<li@click="showFn">
+						<li  >
 							<span>备注</span>
 							<input type="text" v-model="addClinic.remark" placeholder="请填写" >
 						</li>
-						<li class="popup" v-model="imageUpload">
+						<li class="popup" v-model="imageUpload" @click="showFn">
 							<span>营业执照</span>
-							<img  id="backimg"  alt="">
-							<van-action-sheet v-model="show"  :round="false" @click-overlay='closeFn'>
-								<div class="popupChoose">
-									<span>拍照</span>
-									<div class="uploadPictures">
-										 <input 
-										        type="file" 
-										        class="upload" 
-										        ref="inputer" 
-										        accept="image/png,image/jpeg,image/gif,image/jpg"
-										        multiple 
-												@change="addImg($event)"
-										   />
-										   <div class="add">
-										      <p>点击上传</p>
-										   </div>
-									</div>
-								</div>
-								<button @click="closeFn">取消</button>
-							</van-action-sheet>
+							<img class="rightImg" src="static/iOS切图/right@2x.png" alt="">
+							<img  id="backimg" :src='imageUpload'  alt="" >
 						</li>
+						<van-action-sheet v-model="show"  :round="false" >
+							<div class="popupChoose">
+								<span>拍照</span>
+								<div class="uploadPictures">
+									 <input 
+									        type="file" 
+									        class="upload" 
+									        ref="inputer" 
+									        accept="image/png,image/jpeg,image/gif,image/jpg"
+									        multiple 
+											@change="addImg($event)"
+									   />
+									   <div class="add">
+									      <p>点击上传</p>
+									   </div>
+								</div>
+							</div>
+							<button @click="closeFn" class="closeStyle">取消</button>
+						</van-action-sheet>
 					</ul>
 				</div>
 			</form>
@@ -114,7 +115,7 @@ export default {
 			},
 			// 上传图片弹窗显示
 			show: false,
-			imageUpload:[]
+			imageUpload:''
 		}
 	},
 	computed:{
@@ -170,7 +171,7 @@ export default {
 				this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
 				}}).then(res =>{
 					// this.imageUpload.push({name:file.name,url:res.data.data.url})
-					
+					this.imageUpload = res.data.data.url
 					console.log(this.imageUpload)
 					this.show = false;
 				}).catch(err =>{
@@ -197,7 +198,7 @@ export default {
 				// license : this.addClinic.license,
 			}))
 			.then(res => {
-				if(res.codeMsg != ''){
+				if(res.codeMsg != null || undefined || ''){
 					Dialog({ message: res.data.codeMsg});
 				}
 				console.log(res)
@@ -341,13 +342,19 @@ export default {
 	height: .45rem;
 	line-height: .45rem;
 }
-.popup button{
-	background: none;
-	width: 100%;
-	height: 100%;
-	border: none;
+.rightImg{
+	width: .06rem!important;
+	height: .11rem!important;
+	margin-top: .16rem;
+	margin-left: .05rem;
+	float: right;
 }
-
+#backimg{
+	width: .43rem;
+	height: 100%;
+	margin: auto;
+	float: right;
+}
 .popupChoose{
 	height: .9rem;
 	border-bottom: 6px solid #F5F5F5;
@@ -358,7 +365,16 @@ export default {
 	display: block;
 	width: 100%!important;
 	height: .44rem!important;
+	line-height: .44rem;
 	border-bottom: .5px solid #D8D8D8;
+}
+.closeStyle{
+	background: none;
+	width: 100%;
+	height: 100%;
+	border: none;
+	height: .44rem;
+	font-size: .15rem;
 }
 .uploadPictures{
 	position: relative;

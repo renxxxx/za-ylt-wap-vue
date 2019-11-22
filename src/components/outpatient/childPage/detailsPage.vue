@@ -55,9 +55,9 @@
 		</div>
 		<div class="_photo">
 			<h3>发票照片</h3>
-			<div class="imageUpload" v-if="modify.data" id='readImg'>
+			<div class="imageUpload" v-show="modify.data" id='readImg'>
 				<van-uploader :before-read="beforeRead" :before-delete="berforedelete" preview-size='.9rem' 
-				v-model="fileList" multiple="true" />
+				v-model="fileList" multiple="false" />
 			</div>
 		</div>
 	</div>
@@ -134,11 +134,14 @@ export default {
 				this.imageUpload.push({url:res.data.data.invoices[i]})
 				// console.log(res.data.data)
 			}
-			// console.log(document.getElementById('van-uploader__upload'))
-			
 			this.modify.data = true;
 			this.modify.value = '编辑';
 			this.modify.img = 'static/iOS切图/editor.png';
+			// document.getElementsByClassName('van-uploader__upload')[0].style.display = 'flex'
+			// let classDomList = document.getElementsByClassName('van-uploader__preview-delete');
+			// for(let _d=0; _d <classDomList.length;_d++){
+			// 	classDomList[_d].style.display = "inline";
+			// }
 		}else{
 			this.modify.data = false;
 			this.fileList = [];
@@ -258,7 +261,8 @@ export default {
 		// console.log(_deteleValue);
 		let deleteImg =  this.imageUpload.filter( n => n.url != _deteleValue.url);
 		this.imageUpload = deleteImg;
-		// console.log(this.detail.invoices);
+		console.log(document.getElementsByClassName('van-uploader__upload')[0]);
+		
 		this.detail.invoices = [];
 		for(var _imgUrl = 0; _imgUrl < this.imageUpload.length; _imgUrl++){
 			// console.log(this.imageUpload[_imgUrl].url)
@@ -425,6 +429,31 @@ export default {
 >>>.van-uploader__preview:nth-child(4n){
     position: relative;
     margin: 0rem 0rem .05rem 0rem!important;
+}
+
+>>>.van-uploader__upload {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 80px;
+    height: 80px;
+    margin: 0 0px 8px 0;
+    background-color: #D8D8D8!important;
+    border: 1px dashed #e5e5e5;
+    border-radius: 4px;
 }
 
 </style>

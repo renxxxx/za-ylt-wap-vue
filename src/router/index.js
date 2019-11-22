@@ -19,7 +19,7 @@ import hospital_user from '@/components/hospital/user.vue'
 import hospital_indexSearch from '@/components/hospital/childPage/indexSearch.vue'
 import hospital_clinicSearch from '@/components/hospital/childPage/clinic_search.vue'
 import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
-
+import hospital_sourceManagement from '@/components/hospital/childPage/sourceManagement.vue'
 
 import store from '../store'
 Vue.use(Router)
@@ -67,11 +67,20 @@ const router = new Router({
 			// meta: {auth:true},
 			
 		},
+		
 		{
 			// 医院端门诊搜索页面
 			path: '/hospital_clinicSearch',
 			name: 'hospital_clinicSearch',
 			component: hospital_clinicSearch,
+			// meta: {auth:true},
+			
+		},
+		{
+			// 医院端病源管理页面页
+			path: '/hospital_sourceManagement',
+			name: 'hospital_sourceManagement',
+			component: hospital_sourceManagement,
 			// meta: {auth:true},
 			
 		},
@@ -176,7 +185,7 @@ router.beforeEach((to,from,next) => {
 	//识别路径初始化下body的背景色
 	if(to.path == "/outpatient_user" || to.path == "/outpatient_index" || to.path == '/outpatient_search'
 	 || to.path == '/outpatient_gene' ||to.path == "/outpatient_details" || to.path == '/hospital_clinic' 
-	 || to.path == '/hospital_gene' || to.path == '/hospital_user'){
+	 || to.path == '/hospital_gene' || to.path == '/hospital_user' || to.path == '/hospital_sourceManagement'){
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"
 	}else{
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"

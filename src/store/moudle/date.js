@@ -385,9 +385,18 @@ const mutations={
 			console.log(err);
 			Dialog({ message: '加载失败!'});
 		})
-		window.location.href='/#/outpatient_search';
-		state.show = false;
-		
+		switch(state.account.isLogin){
+			case 100:
+			state.show = false;
+			break;
+			case 200:
+			state.show = false;
+			window.location.href='/#/outpatient_search';
+			break;
+			case 300:
+			state.show = false;
+			break;
+		}
 	},
 	// 筛选重置
 	screeningResultFn(state){
