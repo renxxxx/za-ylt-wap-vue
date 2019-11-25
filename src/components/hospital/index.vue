@@ -29,7 +29,7 @@
 					</router-link>
 				</li>
 				<li>
-					<router-link to='hospital_indexSearch'>
+					<router-link to='hospital_collect'>
 						<img src="static/iOS切图/qixiejicai@2x.png" alt="">
 						<span>器械集采</span>
 					</router-link>
@@ -191,7 +191,6 @@ export default {
 			})
 		},
 		onLoad(){
-			debugger
 			// console.log('account')
 			// console.log(JSON.stringify(this.account))
 			// console.log(this.account.hospitalId)

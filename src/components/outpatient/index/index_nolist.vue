@@ -4,7 +4,7 @@
 			<div class="list">
 				<ul :model="message" class="index_content">
 					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
-						<router-link to="/outpatient_details" >
+						<router-link to="/details" >
 							<li v-for="(_notDiagnosis,inx) in message.notDiagnosis" :key="inx" @click="detailsValueFn(_notDiagnosis)">
 								<div class="content_left">
 									<span>{{_notDiagnosis.realname}}</span>

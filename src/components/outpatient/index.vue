@@ -23,19 +23,19 @@
 						<div class="labelLabel" >
 							<strong>就诊时间</strong>
 							<button class="rightLine" @click="labelLabelFn([2,$event])" :id="labelDocument[2]">
-								{{Time.confirmStart}}
+								{{Time.confirmStart?  moment(Time.confirmStart).format('YYYY-MM-DD'):'开始时间'}}
 							</button>
 							<button  @click="labelLabelFn([3,$event])" :id="labelDocument[3]">
-								{{Time.confirmOver}}
+								{{Time.confirmOver? moment(Time.confirmOver).format('YYYY-MM-DD'):'结束时间'}}
 							</button>
 						</div>
 						<div class="labelLabel">
 							<strong>推送时间</strong>
 							<button class="rightLine"  @click="labelLabelFn([4,$event])"  :id="labelDocument[4]">
-								{{Time.pushStart}}
+								{{Time.pushStart? moment(Time.pushStart).format('YYYY-MM-DD'):'开始时间'}}
 							</button>
 							<button  @click="labelLabelFn([5,$event])"  :id="labelDocument[5]">
-								{{Time.pushOver}}
+								{{Time.pushOver? moment(Time.pushOver).format('YYYY-MM-DD'):'结束时间'}}
 							</button>
 						</div>
 						<div class="LabelResult">
@@ -93,7 +93,7 @@
 							<div class="list">
 								<ul :model="message" class="index_content">
 									<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
-										<router-link to="/outpatient_details" >
+										<router-link to="/details" >
 											<li v-for="(_notDiagnosis,inx) in message.notDiagnosis" :key="inx" @click="detailsValueFn(_notDiagnosis)">
 												<div class="content_left">
 													<span>{{_notDiagnosis.realname}}</span>
@@ -114,7 +114,7 @@
 						<van-pull-refresh v-model="isLoading" @refresh="onRefresh2">
 							<ul class="index_content" :model="message">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoadss">
-									<router-link to="/outpatient_details" >
+									<router-link to="/details" >
 										<li v-for="(_diagnosis,inx) in message.diagnosis" :key="inx" @click="detailsValueFn(_diagnosis)">
 											<div class="content_left">
 												<span>{{_diagnosis.realname}}</span>

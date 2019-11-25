@@ -2,6 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import moment from 'moment'
 const state={
 	//账号协议checked
 	checked: true,
@@ -20,6 +21,7 @@ const state={
 		hospitalId: '',
 		data:{},
 	},
+	header:{},
 	// 详情页数据
 	detail:{
 		patientId : undefined,		//病人id
@@ -43,10 +45,10 @@ const state={
 	Time:{
 		look:'',
 		noLook:'',
-		confirmStart : '开始时间',
-		confirmOver : '结束时间',
-		pushStart : '开始时间',
-		pushOver : '结束时间',
+		confirmStart : undefined,
+		confirmOver : undefined,
+		pushStart : undefined,
+		pushOver : undefined,
 		postState : undefined,
 	},
 	search_userList:[],		//搜索页面的list列表
@@ -225,38 +227,11 @@ const mutations={
 	},
 	// 确定选择的日期
 	confirmFn(state,_value){
-		// console.log(typeof _value)
 		state.time = '';
-		state.time = String(_value).slice(1,16).split(' ');
-		console.log(state.dateStata);
-		switch(state.time[1]){
-			case 'Jan':
-			state.time[1] = 2; break;
-			case 'Feb':
-			state.time[1] = 2; break;
-			case 'Mar':
-			state.time[1] = 3; break;
-			case 'Apr':
-			state.time[1] = 4; break;
-			case 'May':
-			state.time[1] = 5; break;
-			case 'Jun':
-			state.time[1] = 6; break;
-			case 'Jul':
-			state.time[1] = 7; break;
-			case 'Aug':
-			state.time[1] = 8; break;
-			case 'Sep':
-			state.time[1] = 9; break;
-			case 'Oct':
-			state.time[1] = 10; break;
-			case 'Nov':
-			state.time[1] = 11; break;
-			case 'Dec':
-			state.time[1] = 12; break;
-			
-		}
-		state.time = state.time[3]+'/'+state.time[1]+'/'+state.time[2]+'';
+		// state.time = _value
+		let time = moment(_value).format('YYYY-MM-DD HH:mm:ss')
+		state.time = new Date(time).getTime();
+		console.log(state.time)
 		switch (state.dateStata){
 			case 2:
 			state.Time.confirmStart = '';
@@ -357,29 +332,20 @@ const mutations={
 		return {_vlaue,_this};
 	},
 	// 筛选确定
-	screeningSubmitFn(state){
+	screeningSubmitFn(state){		
 		axios.post('/c2/patient/items',qs.stringify({
 			clinicId : state.account.clinicId,
-			// pushTimeStart : this.Time.pushStart,
-			// pushTimeEnd : this.Time.pushOver,
+			hospitalId :  state.account.hospitalId,
 			status : state.Time.postState,
-			// hospitalConfirmTimeStart : this.Time.confirmStart,
-			// hospitalConfirmTimeEnd : this.Time.confirmOver,
+			pushTimeStart : state.Time.pushStart,
+			pushTimeEnd : state.Time.pushOver,
+			hospitalConfirmTimeStart : state.Time.confirmStart,
+			hospitalConfirmTimeEnd : state.Time.confirmOver,
 		}))
 		.then(_d => {
 			// console.log(_d.data.data.items)
 			state.search_userList = _d.data.data.items
-			for(var i in _d.data.data.items){
-				if(_d.data.data.items[i].status == 1){
-					_d.data.data.items[i].span = '未就诊'
-					_d.data.data.items[i].imgUrl = '../../../../static/门诊端/iOS切图/weijiuzhen@2x.png'
-				}else{
-					_d.data.data.items[i].span = '已就诊'
-					_d.data.data.items[i].imgUrl = '../../../../static/门诊端/iOS切图/yijiuzhen@2x.png'
-				}
-				// console.log(_d.data.data.items[i].status)
-			}
-					
+			state.show = false;
 		})
 		.catch((err)=>{
 			console.log(err);
@@ -401,23 +367,23 @@ const mutations={
 	// 筛选重置
 	screeningResultFn(state){
 		// console.log("已重置");
-		// for(let _a in state.dateStata.length){
-		// 	console.log('ssss')
-		// 	// document.getElementById(state.labelDocument[_a]).style.backgroundColor = "#EEEEEE";
-		// }
-		document.getElementById(state.labelDocument[0]).style.backgroundColor = "#EEEEEE";
-		document.getElementById(state.labelDocument[1]).style.backgroundColor = "#EEEEEE";
-		document.getElementById(state.labelDocument[2]).style.backgroundColor = "#EEEEEE";
-		document.getElementById(state.labelDocument[3]).style.backgroundColor = "#EEEEEE";
-		document.getElementById(state.labelDocument[4]).style.backgroundColor = "#EEEEEE";
-		document.getElementById(state.labelDocument[5]).style.backgroundColor = "#EEEEEE";
-		
+		// console.log(state.labelDocument);
+		if(state.account.isLogin  == 100){
+			for(let _a=0 ;_a < 4; _a++){
+				console.log(_a)
+				document.getElementById(state.labelDocument[_a]).style.backgroundColor = "#EEEEEE";
+			}
+		}else{
+			for(let _a=0 ;_a < state.labelDocument.length; _a++){
+				// console.log(_a)
+				document.getElementById(state.labelDocument[_a]).style.backgroundColor = "#EEEEEE";
+			}
+		}
 		Vue.set(state.Time,'confirmStart',0);
 		Vue.set(state.Time,'confirmOver',0);
 		Vue.set(state.Time,'pushStart',0);
 		Vue.set(state.Time,'pushOver',0);
-
-		console.log(state.Time)
+		// console.log(typeof state.labelDocument)
 	},
 	
 	//hospital的个人信息提交

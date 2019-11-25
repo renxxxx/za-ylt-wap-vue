@@ -135,11 +135,11 @@ export default {
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.keywords,
 			clinicId : this.account.clinicId,
-			// pushTimeStart : this.Time.pushStart,
-			// pushTimeEnd : this.Time.pushOver,
 			status : this.Time.postState,
-			// hospitalConfirmTimeStart : this.Time.confirmStart,
-			// hospitalConfirmTimeEnd : this.Time.confirmOver,
+			pushTimeStart : this.Time.pushStart,
+			pushTimeEnd : this.Time.pushOver,
+			hospitalConfirmTimeStart : this.Time.confirmStart,
+			hospitalConfirmTimeEnd : this.Time.confirmOver,
 		}))
 		.then(_d => {
 			// console.log(_d.data.data.items)

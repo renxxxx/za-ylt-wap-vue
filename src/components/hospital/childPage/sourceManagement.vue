@@ -3,13 +3,13 @@
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
 			<div class="topNav">
-				<div class="indexReturn">
+				<div class="indexReturn" @click="goBackFn">
 					<img src="static/iOS切图/back-white@2x.png" alt="">
 				</div>
 				<div class="indexSearch">
 					<router-link to="">
 						<img src="static/iOS切图/sousuo@2x.png" alt="">
-						<input type="text" placeholder="搜索病源" autofocus="autofocus">
+						<input type="text" placeholder="搜索病源" autofocus="autofocus" v-model="keywords" @keyup="inputNow">
 					</router-link>
 				</div>
 				<div class="indexScreening" @click="showPopup">
@@ -20,20 +20,20 @@
 					<div id="indexLabel" v-model="Time">
 						<div class="labelLabel" >
 							<strong>就诊时间</strong>
-							<button class="rightLine" @click="labelLabelFn([2,$event])" :id="labelDocument[2]">
-								{{Time.confirmStart}}
+							<button class="rightLine" @click="labelLabelFn([2,$event])" :id="labelDocument[0]">
+								{{Time.confirmStart?  moment(Time.confirmStart).format('YYYY-MM-DD'):'开始时间'}}
 							</button>
-							<button  @click="labelLabelFn([3,$event])" :id="labelDocument[3]">
-								{{Time.confirmOver}}
+							<button  @click="labelLabelFn([3,$event])" :id="labelDocument[1]">
+								{{Time.confirmOver? moment(Time.confirmOver).format('YYYY-MM-DD'):'结束时间'}}
 							</button>
 						</div>
 						<div class="labelLabel">
 							<strong>推送时间</strong>
-							<button class="rightLine"  @click="labelLabelFn([4,$event])"  :id="labelDocument[4]">
-								{{Time.pushStart}}
+							<button class="rightLine"  @click="labelLabelFn([4,$event])"  :id="labelDocument[2]">
+								{{Time.pushStart? moment(Time.pushStart).format('YYYY-MM-DD'):'开始时间'}}
 							</button>
-							<button  @click="labelLabelFn([5,$event])"  :id="labelDocument[5]">
-								{{Time.pushOver}}
+							<button  @click="labelLabelFn([5,$event])"  :id="labelDocument[3]">
+								{{Time.pushOver? moment(Time.pushOver).format('YYYY-MM-DD'):'结束时间'}}
 							</button>
 						</div>
 						<div class="LabelResult">
@@ -57,32 +57,36 @@
 						<van-pull-refresh v-model="isLoading" @refresh="allRefresh">
 							<ul class="content">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="allOnLoad">
-									<li v-for="(item,inx) in message.notDiagnosis" :key="inx">
-										<div class="contentTitle">
-											<img src="static/iOS切图/orange@2x.png" alt="">
-											<span>{{item.realname}}</span>
-										</div>
-										<div class="contnet_left">
-											<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-											<span>所属门诊：{{item.clinicName}}</span>
-										</div>
-										<div class="content_right">
-											<button>确认就诊</button>
-										</div>
-									</li>
-									<li v-for="(item,inx) in message.diagnosis" :key="inx+'11'">
-										<div class="contentTitle">
-											<img src="static/iOS切图/blue@2x.png" alt="">
-											<span>{{item.realname}}</span>
-										</div>
-										<div class="contnet_left">
-											<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-											<span>所属门诊：{{item.clinicName}}</span>
-										</div>
-										<div class="content_right">
-											<button class="buttonColor">已就诊</button>
-										</div>
-									</li>
+									<router-link to="/details" >
+										<li v-for="(item,inx) in message.notDiagnosis" :key="inx" @click="detailsValueFn(item)">
+											<div class="contentTitle">
+												<img src="static/iOS切图/orange@2x.png" alt="">
+												<span>{{item.realname}}</span>
+											</div>
+											<div class="contnet_left">
+												<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
+												<span>所属门诊：{{item.clinicName}}</span>
+											</div>
+											<div class="content_right">
+												<button>确认就诊</button>
+											</div>
+										</li>
+									</router-link>
+									<router-link to="/details" >
+										<li v-for="(item,inx) in message.diagnosis" :key="inx+'11'" @click="detailsValueFn(item)">
+											<div class="contentTitle">
+												<img src="static/iOS切图/blue@2x.png" alt="">
+												<span>{{item.realname}}</span>
+											</div>
+											<div class="contnet_left">
+												<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
+												<span>所属门诊：{{item.clinicName}}</span>
+											</div>
+											<div class="content_right">
+												<button class="buttonColor">已就诊</button>
+											</div>
+										</li>
+									</router-link>
 								</van-list>
 							</ul>
 						</van-pull-refresh>
@@ -91,19 +95,21 @@
 						<van-pull-refresh v-model="isLoading" @refresh="noRefresh">
 							<ul class="content">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="noOnLoad">
-									<li v-for="(item,inx) in message.notDiagnosis" :key="inx">
-										<div class="contentTitle">
-											<img src="static/iOS切图/orange@2x.png" alt="">
-											<span>{{item.realname}}</span>
-										</div>
-										<div class="contnet_left">
-											<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-											<span>所属门诊：{{item.clinicName}}</span>
-										</div>
-										<div class="content_right">
-											<button>确认就诊</button>
-										</div>
-									</li>
+									<router-link to="/details" >
+										<li v-for="(item,inx) in message.notDiagnosis" :key="inx"  @click="detailsValueFn(item)">
+											<div class="contentTitle">
+												<img src="static/iOS切图/orange@2x.png" alt="">
+												<span>{{item.realname}}</span>
+											</div>
+											<div class="contnet_left">
+												<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
+												<span>所属门诊：{{item.clinicName}}</span>
+											</div>
+											<div class="content_right">
+												<button>确认就诊</button>
+											</div>
+										</li>
+									</router-link>
 								</van-list>
 							</ul>
 						</van-pull-refresh>
@@ -112,19 +118,21 @@
 						<van-pull-refresh v-model="isLoading" @refresh="yesRefresh">
 							<ul class="content">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="yesOnLoad">
-									<li v-for="(item,inx) in message.diagnosis" :key="inx+'11'">
-										<div class="contentTitle">
-											<img src="static/iOS切图/blue@2x.png" alt="">
-											<span>{{item.realname}}</span>
-										</div>
-										<div class="contnet_left">
-											<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-											<span>所属门诊：{{item.clinicName}}</span>
-										</div>
-										<div class="content_right">
-											<button class="buttonColor">已就诊</button>
-										</div>
-									</li>
+									<router-link to="/details" >
+										<li v-for="(item,inx) in message.diagnosis" :key="inx+'11'" @click="detailsValueFn(item)">
+											<div class="contentTitle">
+												<img src="static/iOS切图/blue@2x.png" alt="">
+												<span>{{item.realname}}</span>
+											</div>
+											<div class="contnet_left">
+												<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
+												<span>所属门诊：{{item.clinicName}}</span>
+											</div>
+											<div class="content_right">
+												<button class="buttonColor">已就诊</button>
+											</div>
+										</li>
+									</router-link>
 								</van-list>
 							</ul>
 						</van-pull-refresh>
@@ -144,9 +152,13 @@ export default {
   data () {
     return {
 		name: 'index',
-		allTitle: '全部',
+		keywords : '',			//搜索框的关键字value
+		//导航栏切换标题
+		allTitle: '全部',		
 		noTitle:'未就诊',
 		yesTitle:'已就诊',
+		// 数据总数量
+		sunNum:0,
 		//获取动态数据
 		message:{
 			//未就诊
@@ -155,17 +167,16 @@ export default {
 			diagnosis:[],
 		},
 		//页数
-		page : 2,
-		page2 : 2,
-		allPage:2,
-		allPage2:2,
+		page : 1,
+		page2 : 1,
+		// allPage:2,
+		// allPage2:2,
 		 // 数据全部加载完成
 		loading: false,
 		// 加载状态结束
 		finished: false,
 		//显示下拉加载
 		isLoading: false,
-		sunNum:0,
     }
   },
   mounted(){
@@ -173,7 +184,7 @@ export default {
 	  this.getdata(4,1,5);
   },
   computed:{
-	...mapGetters(['Time','labelDocument','showTime','show','account']),
+	...mapGetters(['Time','labelDocument','showTime','show','account','detail']),
 	show: {
 	    get: function() {
 			// console.log(this.$store)
@@ -198,29 +209,66 @@ export default {
 	  
   },
   methods:{
+	//回退方法
+	goBackFn(){
+			 this.$router.back(-1)
+	},
+	inputNow(_keywordsCode){
+		//清除计时器
+		if (this.timer) {
+		    clearTimeout(this.timer);
+		}
+		if (_keywordsCode) {
+		    this.timer = setTimeout(() => {
+				this.getdata();
+		    }, 200);
+		} else {
+		    // 输入框中的内容被删为空时触发，此时会清除之前展示的搜索结果
+		    this.getdata();
+		}
+	},
+	//获取数据
 	getdata(_data,_pn,_ps){
 		this.$axios.post('/c2/patient/items',qs.stringify({
-			kw	:	"",
+			kw	:	this.keywords,
 			hospitalId : this.account.data.data.hospital.hospitalId,
 			status : _data,
 			pn : _pn,
 			ps : _ps,
+			pushTimeStart : this.Time.pushStart,
+			pushTimeEnd : this.Time.pushOver,
+			hospitalConfirmTimeStart : this.Time.confirmStart,
+			hospitalConfirmTimeEnd : this.Time.confirmOver,
 		}))
 		.then(_d => {
 			if(_d.data.data.items.length != 0){
+				if(this.keywords != ''){
+					this.message.notDiagnosis = [];
+					this.message.diagnosis = [];
+					for (let nums in _d.data.data.items) {
+						console.log(_d.data.data.items[nums])
+						if(_d.data.data.items[nums].status == 1){
+							this.message.notDiagnosis.push(_d.data.data.items[nums]);
+						}else{
+							this.message.diagnosis.push(_d.data.data.items[nums]);
+						}
+						// this.message.notDiagnosis.push(_d.data.data.items[nums]);
+					}
+				}
+				
 				if(_data == 1){
 					for (let nums in _d.data.data.items) {
 						this.message.notDiagnosis.push(_d.data.data.items[nums]);
 					}
 					this.sunNum += _d.data.data.sum.totalCount
-					console.log(this.sunNum)
+					// console.log(this.sunNum)
 					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
 				}else{
 					for (let nums in _d.data.data.items) {
 						this.message.diagnosis.push(_d.data.data.items[nums]);
 					}
 					this.sunNum += _d.data.data.sum.totalCount
-					console.log(this.sunNum)
+					// console.log(this.sunNum)
 					this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
 				}
 				this.isLoading = false;
@@ -244,78 +292,10 @@ export default {
 			Dialog({ message: '加载失败!'});
 		})
 	},
-	allNextdata(_data,_ps){
-		if(_data == 1){
-			this.$axios.post('/c2/patient/items',qs.stringify({
-				kw	:	"",
-				hospitalId : this.account.data.data.hospital.hospitalId,
-				status : _data,
-				pn : this.allPage,
-				ps : _ps,
-			}))
-			.then(_d => {
-				this.allPage++;
-				if(_d.data.data.items.length != 0){
-					for (let nums in _d.data.data.items) {
-						this.message.notDiagnosis.push(_d.data.data.items[nums]);
-					}
-					this.noTitle = '未就诊' + _d.data.data.sum.totalCount;
-					
-					this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
-					// console.log(this.message)
-				}else{
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
-					this.loading = false;
-					this.finished = true;
-				}
-			})
-			.catch((err)=>{
-				console.log(err);
-				Dialog({ message: '加载失败!'});
-			})
-		}else{
-			this.$axios.post('/c2/patient/items',qs.stringify({
-				kw	:	"",
-				hospitalId : this.account.data.data.hospital.hospitalId,
-				status : _data,
-				pn : this.allPage2,
-				ps : _ps,
-			}))
-			.then(_d => {
-				this.allPage2++;
-				if(_d.data.data.items.length != 0){
-					for (let nums in _d.data.data.items) {
-						this.message.diagnosis.push(_d.data.data.items[nums]);
-					}
-					this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
-					this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
-					// console.log(this.message)
-				}else{
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
-					this.loading = false;
-					this.finished = true;
-				}
-			})
-			.catch((err)=>{
-				console.log(err);
-				Dialog({ message: '加载失败!'});
-			})
-		}
-	},
+	// 获取下一页
 	nextdata(_data,_ps){
 		if(_data == 1){
+			this.page++;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw	:	"",
 				hospitalId : this.account.data.data.hospital.hospitalId,
@@ -324,7 +304,6 @@ export default {
 				ps : _ps,
 			}))
 			.then(_d => {
-				this.page++;
 				if(_d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
 						this.message.notDiagnosis.push(_d.data.data.items[nums]);
@@ -350,6 +329,7 @@ export default {
 				Dialog({ message: '加载失败!'});
 			})
 		}else{
+			this.page2++;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw	:	"",
 				hospitalId : this.account.data.data.hospital.hospitalId,
@@ -358,7 +338,6 @@ export default {
 				ps : _ps,
 			}))
 			.then(_d => {
-				this.page2++;
 				if(_d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
 						this.message.diagnosis.push(_d.data.data.items[nums]);
@@ -385,27 +364,29 @@ export default {
 		}
 		
 	},
+	// 详情页
 	detailsValueFn(_diagnosis){
-		// console.log(_diagnosis)
+		console.log(_diagnosis.itemId)
 		this.detail.patientId = _diagnosis.itemId;
-		// console.log(this.detail)
+		console.log(this.detail.patientId)	
 	},
-	//上拉加载数据
+	//全部数据上拉加载数据
 	allOnLoad(){
-		this.allNextdata(1,5);
-		this.allNextdata(4,5);
+		this.nextdata(1,5);
+		this.nextdata(4,5);
 	},
-	//下拉刷新数据
+	//全部数据下拉刷新数据
 	allRefresh(){
 		this.sunNum=0;
-		this.allPage = 2;
-		this.allPage2 = 2;	
+		this.page = 2;
+		this.page2 = 2;	
 		this.message.notDiagnosis = [];
 		this.message.diagnosis = [];
 		this.getdata(1,1,5);
 		this.getdata(4,1,5);
 		console.log(this.message)
 	},
+	// 未就诊下拉刷新数据
 	noRefresh(){
 		this.sunNum=0;
 		this.page = 2;
@@ -413,9 +394,11 @@ export default {
 		this.getdata(1,1,10);
 		console.log(this.message)
 	},
+	//未就诊上拉加载数据
 	noOnLoad(){
 		this.nextdata(1,10);
 	},
+	// 已就诊下拉刷新数据
 	yesRefresh(){
 		this.sunNum=0;
 		this.page2 = 2;
@@ -423,6 +406,7 @@ export default {
 		this.getdata(4,1,10);
 		console.log(this.message)
 	},
+	//已就诊上拉加载数据
 	yesOnLoad(){
 		this.nextdata(4,10);
 	},

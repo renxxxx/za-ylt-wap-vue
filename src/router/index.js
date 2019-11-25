@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-//登陆页面及其忘记密码
+//登陆页面及其忘记密码和详情页
 import landingPage from '@/components/landingPage.vue'
 import retrievePassword from '@/components/retrievePassword.vue'
+import details from '@/components/detailsPage.vue'
 //门诊端页面及其组件
 import outpatient_index from '@/components/outpatient/index.vue'
 import outpatient_hospital from '@/components/outpatient/hospital.vue'
 import outpatient_gene from '@/components/outpatient/gene.vue'
 import outpatient_user from '@/components/outpatient/user.vue'
 import outpatient_search from '@/components/outpatient/index/index_search.vue'
-import outpatient_details from '@/components/outpatient/childPage/detailsPage.vue'
 //医院端页面及其组件
 import hospital_index from '@/components/hospital/index.vue'
 import hospital_clinic from '@/components/hospital/clinic.vue'
@@ -20,6 +20,7 @@ import hospital_indexSearch from '@/components/hospital/childPage/indexSearch.vu
 import hospital_clinicSearch from '@/components/hospital/childPage/clinic_search.vue'
 import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
 import hospital_sourceManagement from '@/components/hospital/childPage/sourceManagement.vue'
+import hospital_collect from '@/components/hospital/childPage/collect.vue'
 
 import store from '../store'
 Vue.use(Router)
@@ -32,7 +33,7 @@ const router = new Router({
 			path: '/hospital_index',
 			name: 'hospital_index',
 			component: hospital_index,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		{
@@ -40,7 +41,7 @@ const router = new Router({
 			path: '/hospital_clinic',
 			name: 'hospital_clinic',
 			component: hospital_clinic,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		{
@@ -48,7 +49,7 @@ const router = new Router({
 			path: '/hospital_gene',
 			name: 'hospital_gene',
 			component: hospital_gene,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		{
@@ -56,7 +57,7 @@ const router = new Router({
 			path: '/hospital_user',
 			name: 'hospital_user',
 			component: hospital_user,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		{
@@ -64,7 +65,7 @@ const router = new Router({
 			path: '/hospital_indexSearch',
 			name: 'hospital_indexSearch',
 			component: hospital_indexSearch,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		
@@ -73,7 +74,7 @@ const router = new Router({
 			path: '/hospital_clinicSearch',
 			name: 'hospital_clinicSearch',
 			component: hospital_clinicSearch,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		{
@@ -81,7 +82,7 @@ const router = new Router({
 			path: '/hospital_sourceManagement',
 			name: 'hospital_sourceManagement',
 			component: hospital_sourceManagement,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		{
@@ -89,9 +90,18 @@ const router = new Router({
 			path: '/hospital_addCLinic',
 			name: 'hospital_addCLinic',
 			component: hospital_addCLinic,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
+		{
+			// 医院端器械采集页面
+			path: '/hospital_collect',
+			name: 'hospital_collect',
+			component: hospital_collect,
+			meta: {auth:true},
+			
+		},
+		
 		{
 			// 门诊端主页
 			path: '/outpatient_index',
@@ -109,9 +119,9 @@ const router = new Router({
 		},
 		{
 			// 门诊端的主页病人详情页
-			path: '/outpatient_details',
-			name: 'outpatient_details',
-			component: outpatient_details,
+			path: '/details',
+			name: 'details',
+			component: details,
 			meta: {auth:true},
 		},
 		{
@@ -162,7 +172,7 @@ router.beforeEach((to,from,next) => {
 			switch(store.state.shop.account.isLogin){
 				case 100: 
 				// console.log('暂未开放中');
-				next({path : '/landingPage'});
+				next();
 				break;
 				
 				case 200: 
@@ -185,7 +195,8 @@ router.beforeEach((to,from,next) => {
 	//识别路径初始化下body的背景色
 	if(to.path == "/outpatient_user" || to.path == "/outpatient_index" || to.path == '/outpatient_search'
 	 || to.path == '/outpatient_gene' ||to.path == "/outpatient_details" || to.path == '/hospital_clinic' 
-	 || to.path == '/hospital_gene' || to.path == '/hospital_user' || to.path == '/hospital_sourceManagement'){
+	 || to.path == '/hospital_gene' || to.path == '/hospital_user' || to.path == '/hospital_sourceManagement'
+	  || to.path == '/hospital_detailsPage'){
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"
 	}else{
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"
