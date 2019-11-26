@@ -20,7 +20,7 @@
 					<ul class="Fill">
 						<li  >
 							<span>门诊名称</span>
-							<input type="text" v-model="addClinic.name"  placeholder="请填写" >
+							<input type="text" v-model="addClinic.name"  placeholder="请填写">
 						</li>
 						<li>
 							<span>推广人</span>
@@ -30,7 +30,7 @@
 						</li>
 						<li>
 							<span>分配账号</span>
-							<input type="text" maxlength="11" v-model="addClinic.phone"  placeholder="请填写" >
+							<input type="text" maxlength="11" v-model="addClinic.phone"  placeholder="请填写">
 						</li>
 						<li>
 							<span>分配密码</span>
@@ -46,7 +46,7 @@
 						</li>
 						<li>
 							<span>门诊地址</span>
-							<input type="text" v-model="addClinic.address" placeholder="请填写" >
+							<input type="text" v-model="addClinic.address" placeholder="请填写">
 						</li>
 					</ul>
 				</div>
@@ -56,7 +56,7 @@
 					<ul class="Fill">
 						<li  >
 							<span>备注</span>
-							<input type="text" v-model="addClinic.remark" placeholder="请填写" >
+							<input type="text" v-model="addClinic.remark" placeholder="请填写">
 						</li>
 						<li class="popup" v-model="imageUpload" @click="showFn">
 							<span>营业执照</span>
@@ -111,7 +111,8 @@ export default {
 				contactTel : '',
 				address : '',
 				remark : '',
-				license : ''
+				license : '',
+				readonly : '',
 			},
 			// 上传图片弹窗显示
 			show: false,
@@ -198,8 +199,12 @@ export default {
 				// license : this.addClinic.license,
 			}))
 			.then(res => {
-				if(res.codeMsg != null || undefined || ''){
+				console.log(typeof res.data.codeMsg)
+				
+				if(res.data.codeMsg == null || res.data.codeMsg == undefined || res.data.codeMsg == ''){
+				}else{
 					Dialog({ message: res.data.codeMsg});
+					
 				}
 				console.log(res)
 			})

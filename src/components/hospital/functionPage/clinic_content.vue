@@ -5,8 +5,8 @@
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
 					<li v-for="(items,inx) in content" :key="inx">
 						<div class="contentLi">
-							<h4>{{items.hospital}}</h4>
-							<span>推广人: {{items.name}}</span>
+							<h4>{{items.name}}</h4>
+							<span>推广人: {{items.clinicPromoterName}}</span>
 							<input type="text" v-model="items.pushCount" readonly="readonly">
 						</div>
 					</li>

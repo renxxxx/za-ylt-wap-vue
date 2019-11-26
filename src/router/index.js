@@ -21,7 +21,7 @@ import hospital_clinicSearch from '@/components/hospital/childPage/clinic_search
 import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
 import hospital_sourceManagement from '@/components/hospital/childPage/sourceManagement.vue'
 import hospital_collect from '@/components/hospital/childPage/collect.vue'
-
+import hospitalImage from '@/components/hospital/childPage/hospitalImage.vue'
 import store from '../store'
 Vue.use(Router)
 
@@ -98,7 +98,15 @@ const router = new Router({
 			path: '/hospital_collect',
 			name: 'hospital_collect',
 			component: hospital_collect,
-			meta: {auth:true},
+			// meta: {auth:true},
+			
+		},
+		{
+			// 医院端门诊主页的医院形象页面
+			path: '/hospitalImage',
+			name: 'hospitalImage',
+			component: hospitalImage,
+			// meta: {auth:true},
 			
 		},
 		

@@ -211,7 +211,7 @@ export default {
   methods:{
 	//回退方法
 	goBackFn(){
-			 this.$router.back(-1)
+		this.$router.back(-1)
 	},
 	inputNow(_keywordsCode){
 		//清除计时器
@@ -443,6 +443,7 @@ export default {
 	float: left;
 	text-align: center;
 	display: inline-block;
+	z-index: 999;
 }
 .indexReturn img{
 	width: .09rem;

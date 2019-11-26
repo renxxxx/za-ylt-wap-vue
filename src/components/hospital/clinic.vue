@@ -14,10 +14,13 @@
 			</div>
 			<div class="shared">
 				<ul>
-					<li>
-						<img src="static/iOS切图/yiyuanxingxiang@2x.png" alt="">
-						<span>医院形象</span>
-					</li>
+					<router-link to="/hospitalImage">
+						<li>
+							<img src="static/iOS切图/yiyuanxingxiang@2x.png" alt="">
+							<span>医院形象</span>
+						</li>
+					</router-link>
+					
 					<li>
 						<img src="static/iOS切图/youzhianli@2x.png" alt="">
 						<span>优质案例</span>
