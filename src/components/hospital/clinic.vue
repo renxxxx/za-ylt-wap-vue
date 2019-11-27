@@ -20,11 +20,12 @@
 							<span>医院形象</span>
 						</li>
 					</router-link>
-					
-					<li>
-						<img src="static/iOS切图/youzhianli@2x.png" alt="">
-						<span>优质案例</span>
-					</li>
+					<router-link to="/hospital_case">
+						<li>
+							<img src="static/iOS切图/youzhianli@2x.png" alt="">
+							<span>优质案例</span>
+						</li>
+					</router-link>
 					<li>
 						<img src="static/iOS切图/zhuanjia@2x.png" alt="">
 						<span>专家介绍</span>

@@ -1,10 +1,12 @@
 <template>
 	<div class="imageType">
 		<ul>
-			<li v-for="(item,inx) in type" :key='inx'>
-				<img :src="item.url" alt="">
-				<span>{{item.name}}</span>
-			</li>
+			<router-link to="/hospital_typeDetails">
+				<li v-for="(item,inx) in type" :key='inx' @click="itemPostFn(item)">
+					<img :src="item.url" alt="">
+					<span>{{item.name}}</span>
+				</li>
+			</router-link>
 		</ul>
 	</div>
 </template>
@@ -18,35 +20,39 @@ export default {
   name: 'hospital_About',
   data () {
     return {
-		type:[
-			{name:'内科',url:'/static/iOS切图/Internal medicine@2x.png'},
-			{name:'胃肠科',url:'/static/iOS切图/stomach@3x.png'},
-			{name:'口腔科',url:'/static/iOS切图/tooth@2x.png'},
-			{name:'儿科',url:'/static/iOS切图/erke.png'},
-			{name:'外科',url:'/static/iOS切图/waike.png'},
-			{name:'体检中心',url:'/static/iOS切图/tijianzhongxin.png'},
-			{name:'肝病科',url:'/static/iOS切图/ganbing.png'},
-			{name:'骨科',url:'/static/iOS切图/guke.png'},
-			{name:'肛肠科',url:'/static/iOS切图/ganchang.png'},
-			{name:'耳鼻喉科',url:'/static/iOS切图/erbihou.png'},
-			{name:'泌尿外科',url:'/static/iOS切图/miniaowaike.png'},
-			{name:'妇科',url:'/static/iOS切图/fuke.png'},
-		]
+		type:[]
     }
   },
   computed:{
-	 ...mapGetters([]),
-	
+	...mapGetters(['account']),
   },
   created () {
 		
   },
   mounted () {
-
+	this.$axios.post('/c2/office/items',qs.stringify({
+			hospitalId : this.account.hospitalId,
+	}))
+	.then(_d => {
+		for(let i in _d.data.data.items){
+			this.type.push({
+				name: _d.data.data.items[i].name,
+				url : _d.data.data.items[i].cover,
+				itemId : _d.data.data.items[i].itemId,
+			})
+		}
+	})
+	.catch((err)=>{
+		console.log(err);
+		Dialog({ message: err});
+	})
   },
   
   methods: {
-
+	itemPostFn(_id){
+		this.account.itemId = _id.itemId;
+		// console.log(this.account.itemId)
+	}
 
   },
 }

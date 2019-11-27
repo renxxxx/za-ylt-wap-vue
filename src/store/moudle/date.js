@@ -18,7 +18,8 @@ const state={
 			idcardNo:undefined, 	//身份证号
 		},
 		clinicId: '',			//门诊id
-		hospitalId: '',
+		hospitalId: '',			//医院Id
+		itemId : '',			//科室Id
 		data:{},
 	},
 	header:{},

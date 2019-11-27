@@ -22,6 +22,9 @@ import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
 import hospital_sourceManagement from '@/components/hospital/childPage/sourceManagement.vue'
 import hospital_collect from '@/components/hospital/childPage/collect.vue'
 import hospitalImage from '@/components/hospital/childPage/hospitalImage.vue'
+import hospital_typeDetails from '@/components/hospital/childPage/typeDetails.vue'
+import hospital_case from '@/components/hospital/childPage/case.vue'
+import hospital_caseDetails from '@/components/hospital/childPage/caseDetails.vue'
 import store from '../store'
 Vue.use(Router)
 
@@ -98,7 +101,7 @@ const router = new Router({
 			path: '/hospital_collect',
 			name: 'hospital_collect',
 			component: hospital_collect,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		{
@@ -106,10 +109,33 @@ const router = new Router({
 			path: '/hospitalImage',
 			name: 'hospitalImage',
 			component: hospitalImage,
+			meta: {auth:true},
+			
+		},
+		{
+			// 医院端门诊主页的医院形象页面中门诊科室详情页
+			path: '/hospital_typeDetails',
+			name: 'hospital_typeDetails',
+			component: hospital_typeDetails,
 			// meta: {auth:true},
 			
 		},
-		
+		{
+			// 医院端门诊主页的优质案例
+			path: '/hospital_case',
+			name: 'hospital_case',
+			component: hospital_case,
+			// meta: {auth:true},
+			
+		},
+		{
+			// 医院端门诊主页的优质案例详情页
+			path: '/hospital_caseDetails',
+			name: 'hospital_caseDetails',
+			component: hospital_caseDetails,
+			// meta: {auth:true},
+			
+		},
 		{
 			// 门诊端主页
 			path: '/outpatient_index',
@@ -204,7 +230,7 @@ router.beforeEach((to,from,next) => {
 	if(to.path == "/outpatient_user" || to.path == "/outpatient_index" || to.path == '/outpatient_search'
 	 || to.path == '/outpatient_gene' ||to.path == "/outpatient_details" || to.path == '/hospital_clinic' 
 	 || to.path == '/hospital_gene' || to.path == '/hospital_user' || to.path == '/hospital_sourceManagement'
-	  || to.path == '/hospital_detailsPage'){
+	  || to.path == '/hospital_detailsPage' || to.path == '/hospital_typeDetails'){
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"
 	}else{
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"

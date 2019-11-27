@@ -1,7 +1,7 @@
 <template>
 	<div class="images">
-		<div class="topNav" ref='img' @click="goBackFn">
-			<img src="/static/iOS切图/back-white@2x.png" alt="">
+		<div class="topNav" ref='img' >
+			<img src="/static/iOS切图/back-white@2x.png" alt="" @click="goBackFn">
 		</div>
 		<div class="content">
 			<div class="contentTitle">
@@ -60,7 +60,7 @@ export default {
 		};
 		let imgUrl = this.hospitalImage.cover
 		this.$refs.img.style.background='url('+imgUrl+')';
-		console.log(this.hospitalImage)
+		// console.log(this.hospitalImage)
 	})
 	.catch((err)=>{
 		console.log(err);
