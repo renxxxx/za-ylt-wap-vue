@@ -1,11 +1,20 @@
 <template>
-	<div class="caseDetails">
+	<div class="caseDetails" >
 		<div class="topNav">
-			<img src="static/iOS切图/shape@2x.png" alt="">
+			<img src="static/iOS切图/shape@2x.png" alt="" @click="goBackFn">
 			<img src="static/iOS切图/share@3x.png" alt="">
 		</div>
 		<div class="banner">
-			<img src="static/iOS切图/denglu2@3x.png" alt="">
+			<img :src="caseDetails.cover" alt="">
+		</div>
+		<div class="content" v-model='caseDetails'>
+			<h3>{{caseDetails.name}}</h3>
+			<div class="headPortrait">
+				<img src="static/iOS切图/logo@2x.png" alt="">
+				<span>{{caseDetails.hosptialName}}</span>
+				<span>{{moment(caseDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
+			</div>
+			<p>{{caseDetails.content}}</p>
 		</div>
 	</div>
 </template>
@@ -19,7 +28,14 @@ export default {
 	name: 'caseDetails',
 	data () {
 		return {
-			
+			caseDetails:{
+				addTime : '',
+				alterTime : '',
+				cover : '',
+				hosptialName : '',
+				name : '',
+				content:''
+			}
 		}
 	},
 	computed:{
@@ -32,16 +48,36 @@ export default {
 		
 	},
 	mounted(){
-		// this.$axios.post('c2/office/item',qs.stringify({
-		// 	itemId : this.account.itemId,
-		// }))
-		// .then(_d => {
-		// 	// console.log(_d.data.data)
-		// })
-		// .catch((err)=>{
-		// 	console.log(err);
-		// 	Dialog({ message: err});
-		// })
+		this.$axios.post('/c2/project/item',qs.stringify({
+			itemId : this.account.itemId,
+		}))
+		.then(_d => {
+			this.caseDetails = {
+				addTime : _d.data.data.addTime,
+				alterTime : _d.data.data.alterTime,
+				cover : _d.data.data.cover,
+				hosptialName : _d.data.data.hosptialName,
+				name : _d.data.data.name,
+				contentBtId : _d.data.data.contentBtId
+			}
+			console.log(this.caseDetails.contentBtId)
+			this.$axios.get('/other/bigtxt/'+this.caseDetails.contentBtId+'/'+this.caseDetails.contentBtId)
+			.then(_d => {
+				this.$set(this.caseDetails,'content',_d.data)
+				console.log(_d.data)
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: err});
+			})
+			
+			
+			console.log(_d.data.data)
+		})
+		.catch((err)=>{
+			console.log(err);
+			Dialog({ message: err});
+		})
 		
 	},
 	methods: {
@@ -81,5 +117,35 @@ export default {
 .banner img{
 	width: 100%;
 	height: 1.75rem;
+}
+.content{
+	width: 91.46%;
+	height: .33rem;
+	margin: 0 auto;
+	margin-top: .22rem;
+}
+.content h3{
+	color: #333333;
+	font-size: .16rem;
+	font-weight: bold;
+}
+.headPortrait{
+	margin-top: .12rem;
+	margin-bottom: .15rem;
+}
+.headPortrait img{
+	width: .33rem;
+	height: .33rem;
+	float: left;
+	margin-right: .1rem;
+}
+.headPortrait span{
+	display: block;
+	color: #333333;
+	font-weight: bold;
+}
+.headPortrait span:last-child{
+	color: #999999;
+	font-weight: normal;
 }
 </style>

@@ -26,14 +26,18 @@
 							<span>优质案例</span>
 						</li>
 					</router-link>
-					<li>
-						<img src="static/iOS切图/zhuanjia@2x.png" alt="">
-						<span>专家介绍</span>
-					</li>
-					<li>
-						<img src="static/iOS切图/huodongfabu@2x.png" alt="">
-						<span>最新活动</span>
-					</li>
+					<router-link to="/hospital_expertsIntroduction">
+						<li>
+							<img src="static/iOS切图/zhuanjia@2x.png" alt="">
+							<span>专家介绍</span>
+						</li>
+					</router-link>
+					<router-link to="/hospital_activityReleased">
+						<li>
+							<img src="static/iOS切图/huodongfabu@2x.png" alt="">
+							<span>最新活动</span>
+						</li>
+					</router-link>
 				</ul>
 			</div>
 			<div class="statisticalTitle">

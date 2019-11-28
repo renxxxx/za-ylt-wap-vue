@@ -38,10 +38,10 @@
 					<span>集采积分</span>
 					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
 				</li>
-				<li>
+		<!-- 		<li>
 					<span>HIS日志</span>
 					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
-				</li>
+				</li> -->
 				<li>
 					<span>推广人员管理</span>
 					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">

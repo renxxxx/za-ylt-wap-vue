@@ -25,6 +25,11 @@ import hospitalImage from '@/components/hospital/childPage/hospitalImage.vue'
 import hospital_typeDetails from '@/components/hospital/childPage/typeDetails.vue'
 import hospital_case from '@/components/hospital/childPage/case.vue'
 import hospital_caseDetails from '@/components/hospital/childPage/caseDetails.vue'
+import hospital_expertsIntroduction from '@/components/hospital/childPage/expertsIntroduction.vue'
+import hospital_activityReleased from '@/components/hospital/childPage/activityReleased.vue'
+import hospital_activityDetails from '@/components/hospital/childPage/activityDetails.vue'
+import hospital_addActivity from '@/components/hospital/childPage/addActivity.vue'
+
 import store from '../store'
 Vue.use(Router)
 
@@ -117,7 +122,7 @@ const router = new Router({
 			path: '/hospital_typeDetails',
 			name: 'hospital_typeDetails',
 			component: hospital_typeDetails,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		{
@@ -125,7 +130,7 @@ const router = new Router({
 			path: '/hospital_case',
 			name: 'hospital_case',
 			component: hospital_case,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		{
@@ -133,6 +138,38 @@ const router = new Router({
 			path: '/hospital_caseDetails',
 			name: 'hospital_caseDetails',
 			component: hospital_caseDetails,
+			meta: {auth:true},
+			
+		},
+		{
+			// 医院端门诊主页的专家介绍
+			path: '/hospital_expertsIntroduction',
+			name: 'hospital_expertsIntroduction',
+			component: hospital_expertsIntroduction,
+			meta: {auth:true},
+			
+		},
+		{
+			// 医院端门诊主页的活动发布
+			path: '/hospital_activityReleased',
+			name: 'hospital_activityReleased',
+			component: hospital_activityReleased,
+			// meta: {auth:true},
+			
+		},
+		{
+			// 医院端门诊主页的活动发布
+			path: '/hospital_activityDetails',
+			name: 'hospital_activityDetails',
+			component: hospital_activityDetails,
+			// meta: {auth:true},
+			
+		},
+		{
+			// 医院端门诊主页的活动发布
+			path: '/hospital_addActivity',
+			name: 'hospital_addActivity',
+			component: hospital_addActivity,
 			// meta: {auth:true},
 			
 		},
@@ -230,7 +267,8 @@ router.beforeEach((to,from,next) => {
 	if(to.path == "/outpatient_user" || to.path == "/outpatient_index" || to.path == '/outpatient_search'
 	 || to.path == '/outpatient_gene' ||to.path == "/outpatient_details" || to.path == '/hospital_clinic' 
 	 || to.path == '/hospital_gene' || to.path == '/hospital_user' || to.path == '/hospital_sourceManagement'
-	  || to.path == '/hospital_detailsPage' || to.path == '/hospital_typeDetails'){
+	 || to.path == '/hospital_detailsPage' || to.path == '/hospital_typeDetails' || to.path == '/hospital_expertsIntroduction'
+	 ||to.path == '/hospital_activityReleased'){
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"
 	}else{
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"

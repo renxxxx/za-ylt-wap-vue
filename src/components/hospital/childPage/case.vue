@@ -12,7 +12,7 @@
 							<p>{{items.content}}</p>
 							<div class="article_leftTime">
 								<img src="static/iOS切图/time@2x.png" alt="">
-								<span>{{moment(items.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
+								<span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
 							</div>
 						</div>
 						<div class="article_right">
@@ -29,7 +29,6 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import clinic_content from '../functionPage/clinic_content.vue'
 export default {
 	name: 'case',
 	data () {
@@ -97,8 +96,8 @@ export default {
 }
 .topNav{
 	width: 100%;
-	height: .33rem;
-	line-height: .33rem;
+	height: .47rem;
+	line-height: .47rem;
 	text-align: center;
 	position: relative;
 	background-color: #FFFFFF;
@@ -108,7 +107,7 @@ export default {
 	height: .15rem;
 	position: absolute;
 	left: .16rem;
-	top:.09rem;
+	top:.16rem;
 }
 .topNav h3{
 	font-size: .16rem;

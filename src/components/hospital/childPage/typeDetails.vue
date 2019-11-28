@@ -89,7 +89,7 @@ export default {
 		
 	},
 	mounted(){
-		this.$axios.post('c2/office/item',qs.stringify({
+		this.$axios.post('/c2/office/item',qs.stringify({
 			itemId : this.account.itemId,
 		}))
 		.then(_d => {
@@ -108,8 +108,8 @@ export default {
 			Dialog({ message: err});
 		})
 		this.$axios.post('/c2/doctor/items',qs.stringify({
+			officeId : this.account.itemId,
 			hospitalId : this.account.hospitalId,
-			itemId : this.account.itemId,
 		}))
 		.then(_d => {
 			for(let i in _d.data.data.items){
