@@ -34,7 +34,7 @@ export default {
 	},
 	// props:['content'],
 	computed:{
-	  
+		...mapGetters(['account']),
 	},
 	components:{
 		
@@ -57,6 +57,7 @@ export default {
 			if(_data == 0){
 				this.isLoading = false;
 				this.$axios.post('/c2/clinic/items',qs.stringify({
+					hospitalId : this.account.hospitalId,
 					pn : 1,
 					ps : 10
 				}))
@@ -99,6 +100,7 @@ export default {
 				// console.log(this.page)
 				this.page++
 				this.$axios.post('/c2/clinic/items',qs.stringify({
+					hospitalId : this.account.hospitalId,
 					pn : this.page,
 					ps : 10
 				}))

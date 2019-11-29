@@ -17,15 +17,27 @@
 				<span>新建活动</span>
 			</div>
 		</router-link>
-		<router-link to="/hospital_activityDetails">
-			<div class="activeList" v-for="(item,inx) in active" :key="inx" @click="itemPostFn(item)">
-				<img :src="item.cover" alt="">
-				<div class="activeTitle">
-					<h4>{{item.title}}</h4>
-					<span>{{moment(item.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
-				</div>
-			</div>
-		</router-link>
+		<van-swipe-cell v-for="(item,inx) in active" :key="inx" @click="itemPostFn(item)" right-width=65>
+			<van-cell :border="false" >
+				<router-link to="/hospital_activityDetails">
+					<div class="activeList">
+						<img :src="item.cover" alt="">
+						<div class="activeTitle">
+							<h4>{{item.title}}</h4>
+							<span>{{moment(item.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
+						</div>
+					</div>
+				</router-link>
+			</van-cell>
+			<template slot="right">
+				<button class="deleteStyle" @click="deleteActiviteFn(item)">
+					<img src="static/iOS切图/activiteDelete.png" alt="">
+				</button>
+			</template>
+		</van-swipe-cell>
+		
+			
+		
 	</div>
 </template>
 
@@ -51,32 +63,51 @@ export default {
 		
 	},
 	mounted () {
-		this.$axios.post('/c2/activity/items',qs.stringify({
-			hospitalId : this.account.hospitalId,
-			pn : 1,
-			ps : 10
-		}))
-		.then(res => {
-			if(res.data.data.items.length != 0){
-				for(let i in res.data.data.items){
-					this.active.push(res.data.data.items[i])
-					// console.log(res.data.data.items[i])
-				}
-			}
-		})
-		.catch((err)=>{
-			console.log(err);
-			Dialog({ message: '加载失败!'});
-		})
+		this.getdata()
 	},
 	methods: {
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)
 		},
-		itemPostFn(_id){
-			this.account.itemId = _id.itemId;
-			// console.log(this.account.itemId)
+		itemPostFn(_item){
+			this.account.itemId = '';
+			console.log(_item.itemId);
+			this.account.itemId = _item.itemId;
+			console.log(this.account.itemId);
+		},
+		deleteActiviteFn(_item){
+			this.$axios.post('/c2/activity/itemdel',qs.stringify({
+				itemId : _item.itemId,
+			}))
+			.then(res => {
+				this.getdata();
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
+		},
+		getdata(){
+			this.$axios.post('/c2/activity/items',qs.stringify({
+				hospitalId : this.account.hospitalId,
+				pn : 1,
+				ps : 10
+			}))
+			.then(res => {
+				this.active = []
+				// console.log(res.data.data.items.length)
+				if(res.data.data.items.length != 0){
+					for(let i in res.data.data.items){
+						this.active.push(res.data.data.items[i])
+						// console.log(res.data.data.items[i])
+					}
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
 		}
 	},
 }
@@ -142,8 +173,10 @@ export default {
 	width: 93.6%;
 	height: 1.8rem;
 	margin: .12rem auto;
+	margin-right: 0rem;
 	position: relative;
 	overflow: hidden;
+	box-sizing: border-box;
 }
 .activeList>img{
 	/* height: 100%; */
@@ -169,5 +202,24 @@ export default {
 	position: absolute;
 	bottom: .15rem;
 	left: .2rem;
+}
+>>>.van-cell {
+    position: relative;
+    width: 100%;
+    padding:0px;
+	font-size: .12rem;
+	line-height: 100%;
+	background-color: transparent;
+}
+.deleteStyle{
+	margin:.12rem 0rem;
+	height: 1.8rem;
+	width: .6rem;
+	border: none;
+	color: #FFFFFF;
+	background-color: #e91a1a;
+}
+.deleteStyle img{
+	width: .15rem;
 }
 </style>

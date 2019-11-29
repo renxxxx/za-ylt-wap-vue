@@ -60,6 +60,16 @@ const state={
 	//显示半遮罩及其日期选择
 	showTime : false,
 	showData: '',
+	//医院端活动发布的参数
+	activity : {
+		title : '',
+		address : '',
+		tel : '',
+		startTime : undefined,
+		endTime : undefined,
+		content : '',
+		cover : 'static/iOS切图/Group@2x.png'
+	},
 }
 const getters={
 	//账号协议checked
@@ -78,6 +88,8 @@ const getters={
 	showTime : state => state.showTime,
 	//搜索页面的list列表
 	search_userList : state => state.search_userList,
+	//医院端活动发布的参数
+	activity : state => state.activity,
 }
 const actions={
 	//复选框的选择
@@ -150,7 +162,7 @@ const mutations={
 								case 100:
 								window.location.href=_url;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
-								console.log(state.account.hospitalId)
+								// console.log(state.account.hospitalId)
 								state.account.data = {};
 								state.account.data = res.data;
 								break;
@@ -159,7 +171,7 @@ const mutations={
 								window.location.href=_url;
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
-								console.log(state.account.hospitalId)
+								// console.log(state.account.hospitalId)
 								state.account.data = {};
 								state.account.data = res.data;
 								break;
@@ -169,7 +181,7 @@ const mutations={
 								Dialog({ message: '正在开发中，敬请期待' });
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
-								console.log(state.account.hospitalId)
+								// console.log(state.account.hospitalId)
 								state.account.data = {};
 								state.account.data = res.data;
 								break;
@@ -233,6 +245,7 @@ const mutations={
 		let time = moment(_value).format('YYYY-MM-DD HH:mm:ss')
 		state.time = new Date(time).getTime();
 		console.log(state.time)
+		console.log(state.calendarTime)
 		switch (state.dateStata){
 			case 2:
 			state.Time.confirmStart = '';

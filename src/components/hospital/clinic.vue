@@ -16,25 +16,25 @@
 				<ul>
 					<router-link to="/hospitalImage">
 						<li>
-							<img src="static/iOS切图/yiyuanxingxiang@2x.png" alt="">
+							<img src="static/iOS切图/yiyuanxingxiang@2x.png" alt=""/>
 							<span>医院形象</span>
 						</li>
 					</router-link>
 					<router-link to="/hospital_case">
 						<li>
-							<img src="static/iOS切图/youzhianli@2x.png" alt="">
+							<img src="static/iOS切图/youzhianli@2x.png" alt=""/>
 							<span>优质案例</span>
 						</li>
 					</router-link>
 					<router-link to="/hospital_expertsIntroduction">
 						<li>
-							<img src="static/iOS切图/zhuanjia@2x.png" alt="">
+							<img src="static/iOS切图/zhuanjia@2x.png" alt=""/>
 							<span>专家介绍</span>
 						</li>
 					</router-link>
 					<router-link to="/hospital_activityReleased">
 						<li>
-							<img src="static/iOS切图/huodongfabu@2x.png" alt="">
+							<img src="static/iOS切图/huodongfabu@2x.png" alt=""/>
 							<span>最新活动</span>
 						</li>
 					</router-link>
@@ -51,7 +51,7 @@
 			</div>
 		</div>
 		
-		<clinic_content></clinic_content>
+		<clinicContent></clinicContent>
 		
 		<bottomNav v-bind:name='name'></bottomNav>
 	</div>
@@ -63,9 +63,9 @@ import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 import bottomNav from './functionPage/bottomNav.vue'
-import clinic_content from './functionPage/clinic_content.vue'
+import clinicContent from './functionPage/clinic_content.vue'
 export default {
-	name: 'hospital',
+	name: 'clinic',
 	data () {
 		return {
 			name: 'hospital',
@@ -75,7 +75,7 @@ export default {
 	  
 	},
 	components:{
-		clinic_content,bottomNav
+		clinicContent,bottomNav
 	},
 	created () {
 		

@@ -81,12 +81,12 @@ export default {
 			if(_d.data.data.startTime != '' && _d.data.data.endTime){
 				var moment = require('moment');
 				this.active.time = moment(_d.data.data.startTime).format('YYYY-MM-DD HH:mm') + ' - ' +moment(_d.data.data.endTime).format('YYYY-MM-DD HH:mm') 
-				console.log(this.active.time)
+				// console.log(this.active.time)
 			}
 			this.$axios.get('/other/bigtxt/'+_d.data.data.contentBtId+'/'+_d.data.data.contentBtId)
 			.then(_d => {
 				this.$set(this.active,'content',_d.data)
-				console.log(_d.data)
+				// console.log(_d.data)
 			})
 			.catch((err)=>{
 				console.log(err);

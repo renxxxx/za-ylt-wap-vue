@@ -2,15 +2,49 @@
 	<div class="addAcivity">
 		<div class="topNav">
 			<div class="left" @click="goBackFn">
-				<button>取消</button>
+				<span>取消</span>
 			</div>
 			<div class="centerTitle">
 				<h3>编辑活动</h3>
 			</div>
-			<div class="right">
-				<button>预览</button>
-			</div>
+			<router-link to="/hospital_previewActivities">
+				<div class="right">
+					<button>预览</button>
+				</div>
+			</router-link>
+			
 		</div> 
+		<div class="addImg">
+			<img :src="activity.cover" alt="">
+			<div class="addImgTitle">
+				<img src="static/iOS切图/replace@2x.png" alt="">
+				<span>选择背景</span> 
+			</div>
+			<input
+			    type="file" 
+			    class="upload" 
+			    ref="inputer" 
+			    accept="image/png,image/jpeg,image/gif,image/jpg"
+			    multiple 
+				@change="addImg($event)"
+			  />
+		</div>
+		<div class="addcontent" v-model="activity">
+			<input type="text" v-model='activity.title' placeholder="标题">
+			<input type="text" v-model='activity.brief' placeholder="副标题">
+			<input type="text" v-model='activity.tel' placeholder="联系电话">
+			<input type="text" placeholder="活动起始时间" v-model='activity.startTime' readonly="readonly" @click="showTimeFn('start')">
+			<input type="text" placeholder="活动终止时间" v-model='activity.endTime' readonly="readonly" @click="showTimeFn('end')">
+			<input type="text" v-model='activity.address' placeholder="活动地址">
+			<textarea placeholder="活动说明" v-model='activity.content'></textarea>
+		</div>
+		<van-popup @click="closeFn" v-model="showTime" position="bottom" :style="{ height: '40%',width:'100%'}">
+			<van-datetime-picker
+				type="datetime"
+				@confirm="confirm"
+				@cancel="cancel"
+			/>
+		</van-popup>
 	</div>
 </template>
 
@@ -22,10 +56,20 @@ export default {
 	name: 'addAcivity',
 	data () {
 		return {
+			data : '',
 		}
 	},
 	computed:{
-	  ...mapGetters(['account']),
+		...mapGetters(['account','showTime','activity']),
+		showTime: {
+		    get: function() {
+				// console.log(this.$store)
+		        return this.$store.state.shop.showTime
+		    },
+		    set: function (newValue) {
+				this.$store.state.shop.showTime = newValue;
+		    },
+		},
 	},
 	components:{
 		
@@ -41,7 +85,41 @@ export default {
 		goBackFn(){
 			this.$router.back(-1)
 		},
-		
+		// 添加上传的图片
+		addImg(_fileLIst){
+			var file = _fileLIst.target.files[0]
+			// console.log(e)
+			if(file.type.indexOf('image') > -1){
+				let formData = new FormData();
+				formData.append('file', file)
+				this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
+				}}).then(res =>{
+					// this.imageUpload.push({name:file.name,url:res.data.data.url})
+					this.activity.cover = res.data.data.url
+					// console.log(this.imageUpload)
+					this.show = false;
+				}).catch(err =>{
+					console.log(err)
+				})
+			 }else{
+				Dialog({ message: '请选择图片' });
+				return false;
+			}
+		},
+		showTimeFn(_data){
+			this.showTime = true
+			this.data = _data
+		},
+		confirm(_value){
+			var moment = require('moment');
+			let time = moment(_value).format('YYYY-MM-DD HH:mm:ss');
+			if(this.data == 'start'){
+				this.$set(this.activity,'startTime',time)
+			}else{
+				this.$set(this.activity,'endTime',time)
+			}
+		},
+		...mapActions(['cancel','closeFn'])
 	},
 }
 </script>
@@ -58,12 +136,21 @@ export default {
 	border-bottom: 1px solid #E5E5E5;
 }
 .left{
-	width: 10%;
+	width: 20%;
 	height: .47rem;
 	float:left;
+	
+}
+.left>span{
+	width: .32rem;
+	height: 100%;
+	color: #666666;
+	font-size: .14rem;
+	/* font-weight: bold; */
+	padding-left: .16rem;
 }
 .centerTitle{
-	width: 80%;
+	width: 60%;
 	text-align: center;
 	height: .47rem;
 	line-height: .47rem;
@@ -74,9 +161,78 @@ export default {
 	font-weight: bolder;
 }
 .right{
-	width: 10%;
+	width: 20%;
 	height: .47rem;
 	line-height: .47rem;
-	float:left;
+	float:right;
+}
+.right button{
+	width: .66rem;
+	height: .3rem;
+	line-height: .3rem;
+	border: none;
+	border-radius: .03rem;
+	background-color: #E5E5E5;
+	margin-right: .15rem;
+}
+.addImg{
+	width: 	100%;
+	height: 1.75rem;
+	overflow: hidden;
+	position: relative;
+	
+}
+.addImg>img{
+	width: 100%;
+}
+.addImgTitle{
+	width: .64rem;
+	height: .23rem;
+	line-height:.23rem;
+	text-align: center;
+	color: #FFFFFF;
+	position: absolute;
+	bottom : .1rem;
+	right : .16rem;
+	background-color: #000000;
+}
+.addImgTitle>img{
+	width: .08rem;
+	height: .05rem;
+	padding-left: .06rem;
+	display: inline-block;
+}
+.addImgTitle span{
+	float: right;
+	display:inline-block;
+	 font-size: 10px;
+	transform: scale(0.8)
+}
+.addImg>input{
+	opacity: 0;
+	width: 100%!important;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 99;
+}
+.addcontent{
+	width: 100%;
+}
+.addcontent input{
+	width: 83.46%;
+	height: .45rem;
+	margin: 0 4.27%;
+	margin-top: .12rem;
+	padding: 0 4%;
+}
+.addcontent textarea{
+	width: 83.46%;
+	height: 3.55rem;
+	margin: 0 4.27%;
+	padding : .12rem 4%;
+	margin-top: .12rem;
 }
 </style>

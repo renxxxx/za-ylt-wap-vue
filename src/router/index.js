@@ -10,25 +10,46 @@ import outpatient_hospital from '@/components/outpatient/hospital.vue'
 import outpatient_gene from '@/components/outpatient/gene.vue'
 import outpatient_user from '@/components/outpatient/user.vue'
 import outpatient_search from '@/components/outpatient/index/index_search.vue'
+
 //医院端页面及其组件
+// 医院端主页
 import hospital_index from '@/components/hospital/index.vue'
+// 医院端门诊主页
 import hospital_clinic from '@/components/hospital/clinic.vue'
+// 医院端基因主页
 import hospital_gene from '@/components/hospital/gene.vue'
+// 医院端用户主页
 import hospital_user from '@/components/hospital/user.vue'
+
 //医院端功能副插件
+// 医院端门诊主页搜索页面
 import hospital_indexSearch from '@/components/hospital/childPage/indexSearch.vue'
+// 医院端门诊搜索页面
 import hospital_clinicSearch from '@/components/hospital/childPage/clinic_search.vue'
+// 医院端门诊添加门诊页面
 import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
+// 医院端病源管理页面页
 import hospital_sourceManagement from '@/components/hospital/childPage/sourceManagement.vue'
+// 医院端器械采集页面
 import hospital_collect from '@/components/hospital/childPage/collect.vue'
+// 医院端门诊主页的医院形象页面
 import hospitalImage from '@/components/hospital/childPage/hospitalImage.vue'
+// 医院端门诊主页的医院形象页面中门诊科室详情页
 import hospital_typeDetails from '@/components/hospital/childPage/typeDetails.vue'
+// 医院端门诊主页的优质案例
 import hospital_case from '@/components/hospital/childPage/case.vue'
+// 医院端门诊主页的优质案例详情页
 import hospital_caseDetails from '@/components/hospital/childPage/caseDetails.vue'
+// 医院端门诊主页的专家介绍
 import hospital_expertsIntroduction from '@/components/hospital/childPage/expertsIntroduction.vue'
+// 医院端门诊主页的活动发布
 import hospital_activityReleased from '@/components/hospital/childPage/activityReleased.vue'
+// 医院端门诊主页的活动发布
 import hospital_activityDetails from '@/components/hospital/childPage/activityDetails.vue'
+// 医院端门诊主页的活动发布模块中的编辑活动页面
 import hospital_addActivity from '@/components/hospital/childPage/addActivity.vue'
+// 医院端门诊主页的活动发布模块中的编辑活动页的预览页面
+import hospital_previewActivities from '@/components/hospital/childPage/previewActivities.vue'
 
 import store from '../store'
 Vue.use(Router)
@@ -61,7 +82,7 @@ const router = new Router({
 			
 		},
 		{
-			// 医院端基因主页
+			// 医院端用户主页
 			path: '/hospital_user',
 			name: 'hospital_user',
 			component: hospital_user,
@@ -94,7 +115,7 @@ const router = new Router({
 			
 		},
 		{
-			// 医院端门诊搜索页面
+			// 医院端门诊添加门诊页面
 			path: '/hospital_addCLinic',
 			name: 'hospital_addCLinic',
 			component: hospital_addCLinic,
@@ -166,13 +187,23 @@ const router = new Router({
 			
 		},
 		{
-			// 医院端门诊主页的活动发布
+			// 医院端门诊主页的活动发布模块中的编辑活动页面
 			path: '/hospital_addActivity',
 			name: 'hospital_addActivity',
 			component: hospital_addActivity,
 			// meta: {auth:true},
 			
 		},
+		
+		{
+			// 医院端门诊主页的活动发布模块中的编辑活动页的预览页面
+			path: '/hospital_previewActivities',
+			name: 'hospital_previewActivities',
+			component: hospital_previewActivities,
+			// meta: {auth:true},
+			
+		},
+		
 		{
 			// 门诊端主页
 			path: '/outpatient_index',

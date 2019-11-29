@@ -60,11 +60,11 @@ export default {
 				name : _d.data.data.name,
 				contentBtId : _d.data.data.contentBtId
 			}
-			console.log(this.caseDetails.contentBtId)
+			// console.log(this.caseDetails.contentBtId)
 			this.$axios.get('/other/bigtxt/'+this.caseDetails.contentBtId+'/'+this.caseDetails.contentBtId)
 			.then(_d => {
 				this.$set(this.caseDetails,'content',_d.data)
-				console.log(_d.data)
+				// console.log(_d.data)
 			})
 			.catch((err)=>{
 				console.log(err);
@@ -72,7 +72,7 @@ export default {
 			})
 			
 			
-			console.log(_d.data.data)
+			// console.log(_d.data.data)
 		})
 		.catch((err)=>{
 			console.log(err);

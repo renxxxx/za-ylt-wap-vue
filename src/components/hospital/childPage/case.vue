@@ -84,7 +84,7 @@ export default {
 		},
 		itemPostFn(_id){
 			this.account.itemId = _id.itemId;
-			console.log(this.account.itemId)
+			// console.log(this.account.itemId)
 		}
 	},
 }
