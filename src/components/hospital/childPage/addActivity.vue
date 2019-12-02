@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>编辑活动</h3>
 			</div>
-			<router-link to="/hospital_previewActivities">
+			<router-link :to="{name : 'hospital_previewActivities'}">
 				<div class="right">
 					<button>预览</button>
 				</div>

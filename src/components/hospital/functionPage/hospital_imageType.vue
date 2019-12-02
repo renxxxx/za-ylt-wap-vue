@@ -1,7 +1,7 @@
 <template>
 	<div class="imageType">
 		<ul>
-			<router-link to="/hospital_typeDetails">
+			<router-link :to="{name : 'hospital_typeDetails'}">
 				<li v-for="(item,inx) in type" :key='inx' @click="itemPostFn(item)">
 					<img :src="item.url" alt="">
 					<span>{{item.name}}</span>

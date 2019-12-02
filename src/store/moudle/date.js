@@ -19,7 +19,7 @@ const state={
 		},
 		clinicId: '',			//门诊id
 		hospitalId: '',			//医院Id
-		itemId : '',			//科室Id
+		itemId : '',			//详情页Id
 		data:{},
 	},
 	header:{},
@@ -63,6 +63,7 @@ const state={
 	//医院端活动发布的参数
 	activity : {
 		title : '',
+		brief : '',
 		address : '',
 		tel : '',
 		startTime : undefined,
@@ -150,14 +151,12 @@ const mutations={
 				password : state.account.password
 			}))
 			.then( res =>{
-				if(res.data.codeMsg == ""){
+				// console.log(res.data.codeMsg)
+				if(res.data.codeMsg == null ||  res.data.codeMsg == "" || res.data.codeMsg == undefined){
 					state.account.isLogin = _isLogin;
 					
 					 axios.post(_postRefresh)
 						.then( res =>{
-							// console.log(Res);
-							// console.log(state.account)
-							// console.log(res)
 							switch(_isLogin){
 								case 100:
 								window.location.href=_url;

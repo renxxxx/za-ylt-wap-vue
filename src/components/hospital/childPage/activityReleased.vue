@@ -17,10 +17,10 @@
 				<span>新建活动</span>
 			</div>
 		</router-link>
-		<van-swipe-cell v-for="(item,inx) in active" :key="inx" @click="itemPostFn(item)" right-width=65>
+		<van-swipe-cell v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
 			<van-cell :border="false" >
-				<router-link to="/hospital_activityDetails">
-					<div class="activeList">
+				<router-link :to="{name : 'hospital_activityDetails'}">
+					<div class="activeList"  @click="itemPostFn(item)" >
 						<img :src="item.cover" alt="">
 						<div class="activeTitle">
 							<h4>{{item.title}}</h4>
@@ -71,10 +71,10 @@ export default {
 			this.$router.back(-1)
 		},
 		itemPostFn(_item){
-			this.account.itemId = '';
+			// this.account.itemId = '';
 			console.log(_item.itemId);
 			this.account.itemId = _item.itemId;
-			console.log(this.account.itemId);
+			// console.log(this.account.itemId);
 		},
 		deleteActiviteFn(_item){
 			this.$axios.post('/c2/activity/itemdel',qs.stringify({

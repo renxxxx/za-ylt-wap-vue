@@ -50,6 +50,8 @@ import hospital_activityDetails from '@/components/hospital/childPage/activityDe
 import hospital_addActivity from '@/components/hospital/childPage/addActivity.vue'
 // 医院端门诊主页的活动发布模块中的编辑活动页的预览页面
 import hospital_previewActivities from '@/components/hospital/childPage/previewActivities.vue'
+//医院端门诊的门诊详情页
+import hospital_clinicDetails from '@/components/hospital/childPage/clinicDetails.vue'
 
 import store from '../store'
 Vue.use(Router)
@@ -143,6 +145,14 @@ const router = new Router({
 			path: '/hospital_typeDetails',
 			name: 'hospital_typeDetails',
 			component: hospital_typeDetails,
+			// meta: {auth:true},
+			
+		},
+		{
+			//医院端门诊的门诊详情页
+			path: '/hospital_clinicDetails',
+			name: 'hospital_clinicDetails',
+			component: hospital_clinicDetails,
 			meta: {auth:true},
 			
 		},
@@ -179,7 +189,7 @@ const router = new Router({
 			
 		},
 		{
-			// 医院端门诊主页的活动发布
+			// 医院端门诊主页的活动发布详情页
 			path: '/hospital_activityDetails',
 			name: 'hospital_activityDetails',
 			component: hospital_activityDetails,

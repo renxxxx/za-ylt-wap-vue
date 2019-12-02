@@ -8,7 +8,7 @@
 				<h3 @click="switchFn('about')" ref='about' class="xiahuaxian">医院介绍</h3>
 				<h3 @click="switchFn('type')" ref='type'>特色科室</h3>
 			</div>
-			<component :is="componentName" v-bind:hospitalImage='hospitalImage'></component>
+			<component v-bind:is="componentName" v-bind:hospitalImage='hospitalImage'></component>
 		</div>
 	</div>
 </template>

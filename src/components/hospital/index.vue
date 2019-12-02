@@ -17,51 +17,51 @@
 		<div class="typeList">
 			<ul>
 				<li>
-					<router-link to='hospital_indexSearch'>
+					<router-link :to="{name : 'hospital_indexSearch'}">
 						<img src="static/iOS切图/qudaomenzhen@2x.png" alt="">
 						<span>渠道门诊</span>
 					</router-link>
 				</li>
 				<li>
-					<router-link to='hospital_sourceManagement'>
+					<router-link :to="{name : 'hospital_sourceManagement'}">
 						<img src="static/iOS切图/bingyuanguanli@2x.png" alt="">
 						<span>病源管理</span>
 					</router-link>
 				</li>
 				<li>
-					<router-link to='hospital_collect'>
+					<router-link :to="{name : 'hospital_collect'}">
 						<img src="static/iOS切图/qixiejicai@2x.png" alt="">
 						<span>器械集采</span>
 					</router-link>
 					
 				</li>
 				<li>
-					<router-link to='hospital_indexSearch'>
+					<router-link :to="{name : 'hospital_indexSearch'}">
 						<img src="static/iOS切图/yunyingzhongxin@2x.png" alt="">
 						<span>运营中心</span>
 					</router-link>
 				</li>
 				<li>
-					<router-link to='hospital_indexSearch'>
+					<router-link :to="{name : 'hospital_indexSearch'}">
 						<img src="static/iOS切图/jiyinjiance@2x.png" alt="">
 						<span>基因检测</span>
 					</router-link>
 					
 				</li>
 				<li>
-					<router-link to='hospital_indexSearch'>
+					<router-link :to="{name : 'hospital_indexSearch'}">
 						<img src="static/iOS切图/yiliaoziyuan@2x.png" alt="">
 						<span>医疗资源</span>
 					</router-link>
 				</li>
 				<li>
-					<router-link to='hospital_indexSearch'>
+					<router-link :to="{name : 'hospital_indexSearch'}">
 						<img src="static/iOS切图/yiyuanhuodong@2x.png" alt="">
 						<span>医院活动</span>
 					</router-link>
 				</li>
 				<li>
-					<router-link to='hospital_indexSearch'>
+					<router-link :to="{name : 'hospital_indexSearch'}">
 						<img src="static/iOS切图/qita@2x.png" alt="">
 						<span>其他项目</span>
 					</router-link>

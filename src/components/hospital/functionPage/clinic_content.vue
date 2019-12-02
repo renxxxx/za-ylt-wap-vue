@@ -3,13 +3,15 @@
 		<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
-					<li v-for="(items,inx) in content" :key="inx">
-						<div class="contentLi">
-							<h4>{{items.name}}</h4>
-							<span>推广人: {{items.clinicPromoterName}}</span>
-							<input type="text" v-model="items.pushCount" readonly="readonly">
-						</div>
-					</li>
+					<router-link :to="{name : 'hospital_clinicDetails'}">
+						<li v-for="(items,inx) in content" :key="inx" @click="detailsValueFn(items)">
+							<div class="contentLi">
+								<h4>{{items.name}}</h4>
+								<span>推广人: {{items.clinicPromoterName}}</span>
+								<input type="text" v-model="items.pushCount" readonly="readonly">
+							</div>
+						</li>
+					</router-link>
 				</van-list>
 			</ul>
 		</van-pull-refresh>
@@ -144,7 +146,12 @@ export default {
 		},
 		onLoad(){
 			this.getdata(1)
-		}
+		},
+		// 详情页
+		detailsValueFn(_items){
+			this.account.itemId = '';
+			this.account.itemId = _items.itemId;
+		},
 	},
 }
 </script>

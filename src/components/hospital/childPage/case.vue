@@ -6,7 +6,7 @@
 		</div>
 		<div class="article">
 			<ul>
-				<router-link to="/hospital_caseDetails">
+				<router-link :to="{name : 'hospital_caseDetails'}">
 					<li v-for="(items,inx) in article" :key="inx" @click="itemPostFn(items)">
 						<div class="article_left">
 							<p>{{items.content}}</p>

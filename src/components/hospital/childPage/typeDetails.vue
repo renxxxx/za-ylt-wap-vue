@@ -31,6 +31,7 @@
 			<h4 class="xia">科室简介</h4>
 			<div class="contentP">
 				<p>{{this.about.content}}</p>
+				<img :src="img" v-for='(img,inx) in about.image' :key='inx' alt="">
 			</div>
 		</div>
 		<div class="typeContent">
@@ -94,11 +95,12 @@ export default {
 		}))
 		.then(_d => {
 			this.about = _d.data.data;
+			this.about.image = _d.data.data.image.split(',');
+			console.log(this.about.image)
 			if(_d.data.data.shiYingZheng == null){
 				
 			}else{
 				this.about.shiYingZheng = _d.data.data.shiYingZheng.split(',')
-				
 			}
 			// console.log(_d.data.data)
 			// console.log(this.about.shiYingZheng)
@@ -223,6 +225,7 @@ export default {
 	font-weight: normal;
 }
 .typeContent{
+	width: 100%;
 	margin-top: .1rem;
 	padding: .15rem 0rem;
 	background-color: #FFFFFF;
@@ -232,6 +235,10 @@ export default {
 }
 .contentP p{
 	color: #666666;
+}
+.contentP img{
+	width: 100%;
+	margin-top: .1rem;
 }
 .typeContent ul{
 	width: 85.3%;

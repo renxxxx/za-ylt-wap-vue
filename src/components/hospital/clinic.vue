@@ -14,25 +14,25 @@
 			</div>
 			<div class="shared">
 				<ul>
-					<router-link to="/hospitalImage">
+					<router-link :to="{name : 'hospitalImage'}">
 						<li>
 							<img src="static/iOS切图/yiyuanxingxiang@2x.png" alt=""/>
 							<span>医院形象</span>
 						</li>
 					</router-link>
-					<router-link to="/hospital_case">
+					<router-link  :to="{name : 'hospital_case'}">
 						<li>
 							<img src="static/iOS切图/youzhianli@2x.png" alt=""/>
 							<span>优质案例</span>
 						</li>
 					</router-link>
-					<router-link to="/hospital_expertsIntroduction">
+					<router-link :to="{name : 'hospital_expertsIntroduction'}">
 						<li>
 							<img src="static/iOS切图/zhuanjia@2x.png" alt=""/>
 							<span>专家介绍</span>
 						</li>
 					</router-link>
-					<router-link to="/hospital_activityReleased">
+					<router-link :to="{name : 'hospital_activityReleased'}">
 						<li>
 							<img src="static/iOS切图/huodongfabu@2x.png" alt=""/>
 							<span>最新活动</span>

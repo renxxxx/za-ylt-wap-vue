@@ -7,10 +7,8 @@
 					<img src="static/iOS切图/back-white@2x.png" alt="">
 				</div>
 				<div class="indexSearch">
-					<router-link to="">
-						<img src="static/iOS切图/sousuo@2x.png" alt="">
-						<input type="text" placeholder="搜索病源" autofocus="autofocus" v-model="keywords" @keyup="inputNow">
-					</router-link>
+					<img src="static/iOS切图/sousuo@2x.png" alt="">
+					<input type="text" placeholder="搜索病源" autofocus="autofocus" v-model="keywords" @keyup="inputNow">
 				</div>
 				<div class="indexScreening" @click="showPopup">
 					<span>筛选</span>
@@ -57,7 +55,7 @@
 						<van-pull-refresh v-model="isLoading" @refresh="allRefresh">
 							<ul class="content">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="allOnLoad">
-									<router-link to="/details" >
+									<router-link :to="{name : 'details'}">
 										<li v-for="(item,inx) in message.notDiagnosis" :key="inx" @click="detailsValueFn(item)">
 											<div class="contentTitle">
 												<img src="static/iOS切图/orange@2x.png" alt="">
@@ -95,7 +93,7 @@
 						<van-pull-refresh v-model="isLoading" @refresh="noRefresh">
 							<ul class="content">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="noOnLoad">
-									<router-link to="/details" >
+									<router-link :to="{name : 'details'}">
 										<li v-for="(item,inx) in message.notDiagnosis" :key="inx"  @click="detailsValueFn(item)">
 											<div class="contentTitle">
 												<img src="static/iOS切图/orange@2x.png" alt="">
@@ -118,7 +116,7 @@
 						<van-pull-refresh v-model="isLoading" @refresh="yesRefresh">
 							<ul class="content">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="yesOnLoad">
-									<router-link to="/details" >
+									<router-link :to="{name : 'details'}" >
 										<li v-for="(item,inx) in message.diagnosis" :key="inx+'11'" @click="detailsValueFn(item)">
 											<div class="contentTitle">
 												<img src="static/iOS切图/blue@2x.png" alt="">
