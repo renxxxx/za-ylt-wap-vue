@@ -134,7 +134,7 @@ export default {
 	float:left;
 	width: 5.3%;
 	margin-left: .16rem;
-	margin-top: .19rem;
+	margin-top: .17rem;
 }
 .clinic_information img{
 	width: .09rem;

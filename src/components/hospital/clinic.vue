@@ -8,9 +8,11 @@
 						<img src="static/iOS切图/sousuo@2x.png" alt="">
 					</router-link>
 				</div>
-				<div class="hospital_information">
-					<img src="static/iOS切图/xiaoxi@2x.png" alt="">
-				</div>
+				<router-link :to="{name : 'hospital_clinicMessage'}">
+					<div class="hospital_information">
+						<img src="static/iOS切图/xiaoxi@2x.png" alt="">
+					</div>
+				</router-link>
 			</div>
 			<div class="shared">
 				<ul>
@@ -40,8 +42,8 @@
 					</router-link>
 				</ul>
 			</div>
-			<div class="statisticalTitle">
-				<h3>合作门诊（376）</h3>
+			<div class="statisticalTitle" v-model="clinic">
+				<h3>合作门诊 {{clinic.num}}</h3>
 				<div class="statisticalAdd">
 					<router-link to="hospital_addCLinic">
 						<span>新增</span>
@@ -51,7 +53,7 @@
 			</div>
 		</div>
 		
-		<clinicContent></clinicContent>
+		<clinicContent :clinic = 'clinic'></clinicContent>
 		
 		<bottomNav v-bind:name='name'></bottomNav>
 	</div>
@@ -69,6 +71,9 @@ export default {
 	data () {
 		return {
 			name: 'hospital',
+			clinic : {
+				num : 0
+			},
 		}
   },
 	computed:{
@@ -81,7 +86,7 @@ export default {
 		
 	},
 	mounted () {
-		// this.getdata(0)
+		// this.getdata(0);
 	},
 	methods: {	
 		onRefresh() {

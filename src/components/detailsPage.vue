@@ -89,31 +89,30 @@ export default {
     }
   },
   computed:{
-	 ...mapGetters(['detail']),
-	 detail: {
-	    get: function() {
-			// console.log(this.$store)
-	        return this.$store.state.shop.detail
-	    },
-	    set: function (newValue) {
-			this.$store.state.shop.detail = newValue;
-	    },
-	},
+		...mapGetters(['account','detail']),
+		detail: {
+			get: function() {
+				// console.log(this.$store)
+				return this.$store.state.shop.detail
+			},
+			set: function (newValue) {
+				this.$store.state.shop.detail = newValue;
+			},
+		},
   },
   created () {
 		
   },
   mounted () {
-	// console.log(this.detail.patientId)
+	console.log(this.account.patientId)
 	this.$axios.post('/c2/patient/item',qs.stringify({
-		patientId : this.detail.patientId
+		patientId : this.$route.params.patientId,
 	})).then(res =>{
 		this.detail = {
-			patientId : res.data.data.patientId,		//病人id
 			realname : res.data.data.realname,			//病人姓名
 			clinicId : res.data.data.clinicId,		//门诊id
 			clinicName : res.data.data.clinicName,		//门诊名称
-			// hospitalConfirmTime : res.data.data.hospitalConfirmTime,//医院确诊时间
+			hospitalConfirmTime : res.data.data.hospitalConfirmTime,//医院确诊时间
 			hospitalId	: res.data.data.hospitalId,	//医院id
 			hospitalName : res.data.data.hospitalName,	//医院名称
 			idcardNo : res.data.data.idcardNo,		//身份证号

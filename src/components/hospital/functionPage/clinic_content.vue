@@ -34,7 +34,7 @@ export default {
 			page:1
 		}
 	},
-	// props:['content'],
+	props:['clinic'],
 	computed:{
 		...mapGetters(['account']),
 	},
@@ -64,6 +64,8 @@ export default {
 					ps : 10
 				}))
 				.then(res => {
+					this.clinic.num = res.data.data.sum.totalCount
+					console.log(this.clinic.num)
 					if(res.data.data.items.length != 0){
 						// console.log(this.page)
 						for(let i in res.data.data.items){

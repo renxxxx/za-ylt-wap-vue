@@ -19,7 +19,8 @@ const state={
 		},
 		clinicId: '',			//门诊id
 		hospitalId: '',			//医院Id
-		itemId : '',			//详情页Id
+		itemId : '',			//医院端门诊主页的图形统计及其列表Id
+		patientId : '',			//医院端门诊主页的门诊详情页id
 		data:{},
 	},
 	header:{},
@@ -161,7 +162,7 @@ const mutations={
 								case 100:
 								window.location.href=_url;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
-								// console.log(state.account.hospitalId)
+								console.log(state.account.hospitalId)
 								state.account.data = {};
 								state.account.data = res.data;
 								break;
@@ -170,7 +171,7 @@ const mutations={
 								window.location.href=_url;
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
-								// console.log(state.account.hospitalId)
+								console.log(state.account.hospitalId)
 								state.account.data = {};
 								state.account.data = res.data;
 								break;
@@ -180,7 +181,7 @@ const mutations={
 								Dialog({ message: '正在开发中，敬请期待' });
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
-								// console.log(state.account.hospitalId)
+								console.log(state.account.hospitalId)
 								state.account.data = {};
 								state.account.data = res.data;
 								break;

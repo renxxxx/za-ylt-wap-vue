@@ -8,7 +8,7 @@
 				</div>
 				<div class="indexSearch">
 					<img src="static/iOS切图/sousuo@2x.png" alt="">
-					<input type="text" placeholder="搜索病源" autofocus="autofocus" v-model="keywords" @keyup="inputNow">
+					<input type="text" placeholder="搜索病源" autofocus="autofocus" v-model="list.keywords" @keyup="inputNow">
 				</div>
 				<div class="indexScreening" @click="showPopup">
 					<span>筛选</span>
@@ -49,91 +49,19 @@
 				/>
 			</van-popup>
 			<!-- 就诊情况 -->
-			<div class="typeNav" :v-model="message">
+			<div class="typeNav">
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF'>
-					<van-tab :title=allTitle>
-						<van-pull-refresh v-model="isLoading" @refresh="allRefresh">
-							<ul class="content">
-								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="allOnLoad">
-									<router-link :to="{name : 'details'}">
-										<li v-for="(item,inx) in message.notDiagnosis" :key="inx" @click="detailsValueFn(item)">
-											<div class="contentTitle">
-												<img src="static/iOS切图/orange@2x.png" alt="">
-												<span>{{item.realname}}</span>
-											</div>
-											<div class="contnet_left">
-												<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-												<span>所属门诊：{{item.clinicName}}</span>
-											</div>
-											<div class="content_right">
-												<button>确认就诊</button>
-											</div>
-										</li>
-									</router-link>
-									<router-link to="/details" >
-										<li v-for="(item,inx) in message.diagnosis" :key="inx+'11'" @click="detailsValueFn(item)">
-											<div class="contentTitle">
-												<img src="static/iOS切图/blue@2x.png" alt="">
-												<span>{{item.realname}}</span>
-											</div>
-											<div class="contnet_left">
-												<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-												<span>所属门诊：{{item.clinicName}}</span>
-											</div>
-											<div class="content_right">
-												<button class="buttonColor">已就诊</button>
-											</div>
-										</li>
-									</router-link>
-								</van-list>
-							</ul>
-						</van-pull-refresh>
+					<!-- <van-tab :title='this.$refs.all.allTitle'> -->
+					<van-tab :title='list.allTitle'>
+						<clinicAll ref='all' :list = 'list'></clinicAll>
 					</van-tab>
-					<van-tab :title=noTitle class="Already">
-						<van-pull-refresh v-model="isLoading" @refresh="noRefresh">
-							<ul class="content">
-								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="noOnLoad">
-									<router-link :to="{name : 'details'}">
-										<li v-for="(item,inx) in message.notDiagnosis" :key="inx"  @click="detailsValueFn(item)">
-											<div class="contentTitle">
-												<img src="static/iOS切图/orange@2x.png" alt="">
-												<span>{{item.realname}}</span>
-											</div>
-											<div class="contnet_left">
-												<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-												<span>所属门诊：{{item.clinicName}}</span>
-											</div>
-											<div class="content_right">
-												<button>确认就诊</button>
-											</div>
-										</li>
-									</router-link>
-								</van-list>
-							</ul>
-						</van-pull-refresh>
+					<!-- <van-tab :title='this.$refs.no.noTitle'> -->
+					<van-tab :title='list.noTitle'>
+						<clinicNo ref='no' :list = 'list'></clinicNo>
 					</van-tab>
-					<van-tab :title=yesTitle class="Already" >
-						<van-pull-refresh v-model="isLoading" @refresh="yesRefresh">
-							<ul class="content">
-								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="yesOnLoad">
-									<router-link :to="{name : 'details'}" >
-										<li v-for="(item,inx) in message.diagnosis" :key="inx+'11'" @click="detailsValueFn(item)">
-											<div class="contentTitle">
-												<img src="static/iOS切图/blue@2x.png" alt="">
-												<span>{{item.realname}}</span>
-											</div>
-											<div class="contnet_left">
-												<span>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-												<span>所属门诊：{{item.clinicName}}</span>
-											</div>
-											<div class="content_right">
-												<button class="buttonColor">已就诊</button>
-											</div>
-										</li>
-									</router-link>
-								</van-list>
-							</ul>
-						</van-pull-refresh>
+					<!-- <van-tab :title='this.$refs.yes.yesTitle'> -->
+					<van-tab :title='list.yesTitle'>
+						<clinicYes ref='yes' :list = 'list'></clinicYes>
 					</van-tab>
 				</van-tabs>
 			</div>
@@ -145,41 +73,29 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import clinicAll from '../functionPage/clinicAll.vue'
+import clinicYes from '../functionPage/clinicYes.vue'
+import clinicNo from '../functionPage/clinicNo.vue'
 export default {
   name: 'index',
   data () {
     return {
 		name: 'index',
-		keywords : '',			//搜索框的关键字value
+		selectValue : [],
 		//导航栏切换标题
-		allTitle: '全部',		
-		noTitle:'未就诊',
-		yesTitle:'已就诊',
-		// 数据总数量
-		sunNum:0,
-		//获取动态数据
-		message:{
-			//未就诊
-			notDiagnosis:[],
-			//未就诊
-			diagnosis:[],
-		},
-		//页数
-		page : 1,
-		page2 : 1,
-		// allPage:2,
-		// allPage2:2,
-		 // 数据全部加载完成
-		loading: false,
-		// 加载状态结束
-		finished: false,
-		//显示下拉加载
-		isLoading: false,
+		list:{
+			keywords : '',			//搜索框的关键字value
+			allTitle: '全部',
+			noTitle:'未就诊',
+			yesTitle:'已就诊',
+			allNum : 0,
+			noNum : 0,
+			yesNum : 0,
+		}
     }
   },
   mounted(){
-	  this.getdata(1,1,5);
-	  this.getdata(4,1,5);
+	  
   },
   computed:{
 	...mapGetters(['Time','labelDocument','showTime','show','account','detail']),
@@ -204,7 +120,7 @@ export default {
   },
   //注册组件
   components:{
-	  
+	  clinicAll,clinicYes,clinicNo
   },
   methods:{
 	//回退方法
@@ -218,7 +134,7 @@ export default {
 		}
 		if (_keywordsCode) {
 		    this.timer = setTimeout(() => {
-				this.getdata();
+				this.$refs.all.getdata();
 		    }, 200);
 		} else {
 		    // 输入框中的内容被删为空时触发，此时会清除之前展示的搜索结果
@@ -226,187 +142,65 @@ export default {
 		}
 	},
 	//获取数据
-	getdata(_data,_pn,_ps){
+	getdata(){
 		this.$axios.post('/c2/patient/items',qs.stringify({
-			kw	:	this.keywords,
-			hospitalId : this.account.data.data.hospital.hospitalId,
-			status : _data,
-			pn : _pn,
-			ps : _ps,
+			kw : this.list.keywords,
+			hospitalId : this.account.hospitalId,
+			clinicId : this.account.itemId,
+			pn : 1,
+			ps : 10,
 			pushTimeStart : this.Time.pushStart,
 			pushTimeEnd : this.Time.pushOver,
 			hospitalConfirmTimeStart : this.Time.confirmStart,
 			hospitalConfirmTimeEnd : this.Time.confirmOver,
 		}))
 		.then(_d => {
-			if(_d.data.data.items.length != 0){
-				if(this.keywords != ''){
-					this.message.notDiagnosis = [];
-					this.message.diagnosis = [];
-					for (let nums in _d.data.data.items) {
-						console.log(_d.data.data.items[nums])
-						if(_d.data.data.items[nums].status == 1){
-							this.message.notDiagnosis.push(_d.data.data.items[nums]);
-						}else{
-							this.message.diagnosis.push(_d.data.data.items[nums]);
-						}
-						// this.message.notDiagnosis.push(_d.data.data.items[nums]);
+			this.selectValue =[];
+			this.page = 2;
+			console.log( _d.data.data.items.length)
+			if( _d.data.data.items.length != 0){
+				for (let nums in _d.data.data.items) {
+					// this.clinicDetails.push(_d.data.data.items[nums]);
+					console.log(_d.data.data.items[nums].status)
+					if(_d.data.data.items[nums].status == 1){
+						this.selectValue.push({
+							clinicName : _d.data.data.items[nums].clinicName,
+							itemId : _d.data.data.items[nums].itemId,
+							pushTime : _d.data.data.items[nums].pushTime,
+							realname : _d.data.data.items[nums].realname,
+							status : _d.data.data.items[nums].status,
+							img : "static/iOS切图/orange@2x.png",
+							button : "确认就诊"
+						});
+						this.allTitle = '已就诊' + _d.data.data.sum.totalCount
+					}else if(_d.data.data.items[nums].status == 4){
+						console.log(_d.data.data.items[nums].status )
+						this.selectValue.push({
+							clinicName : _d.data.data.items[nums].clinicName,
+							itemId : _d.data.data.items[nums].itemId,
+							pushTime : _d.data.data.items[nums].pushTime,
+							realname : _d.data.data.items[nums].realname,
+							status : _d.data.data.items[nums].status,
+							img : "static/iOS切图/blue@2x.png",
+							button : "已就诊",
+							buttonColor : "buttonColor"
+						});
 					}
+					console.log(this.selectValue)
 				}
 				
-				if(_data == 1){
-					for (let nums in _d.data.data.items) {
-						this.message.notDiagnosis.push(_d.data.data.items[nums]);
-					}
-					this.sunNum += _d.data.data.sum.totalCount
-					// console.log(this.sunNum)
-					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
-				}else{
-					for (let nums in _d.data.data.items) {
-						this.message.diagnosis.push(_d.data.data.items[nums]);
-					}
-					this.sunNum += _d.data.data.sum.totalCount
-					// console.log(this.sunNum)
-					this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
-				}
-				this.isLoading = false;
-				// 加载状态结束
-				this.loading = false;
-				
-				// console.log(this.message)
-				this.allTitle = '全部' + this.sunNum
-			}else{
-				this.$notify({
-					message: '数据已全部加载',
-					duration: 1000,
-					background:'#79abf9',
-				})
-				this.loading = false;
-				this.finished = true;
 			}
 		})
 		.catch((err)=>{
 			console.log(err);
-			Dialog({ message: '加载失败!'});
+			Dialog({ message: err});
 		})
-	},
-	// 获取下一页
-	nextdata(_data,_ps){
-		if(_data == 1){
-			this.page++;
-			this.$axios.post('/c2/patient/items',qs.stringify({
-				kw	:	"",
-				hospitalId : this.account.data.data.hospital.hospitalId,
-				status : _data,
-				pn : this.page,
-				ps : _ps,
-			}))
-			.then(_d => {
-				if(_d.data.data.items.length != 0){
-					for (let nums in _d.data.data.items) {
-						this.message.notDiagnosis.push(_d.data.data.items[nums]);
-					}
-					this.noTitle = '未就诊' + _d.data.data.sum.totalCount;
-					
-					this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
-					// console.log(this.message)
-				}else{
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
-					this.loading = false;
-					this.finished = true;
-				}
-			})
-			.catch((err)=>{
-				console.log(err);
-				Dialog({ message: '加载失败!'});
-			})
-		}else{
-			this.page2++;
-			this.$axios.post('/c2/patient/items',qs.stringify({
-				kw	:	"",
-				hospitalId : this.account.data.data.hospital.hospitalId,
-				status : _data,
-				pn : this.page2,
-				ps : _ps,
-			}))
-			.then(_d => {
-				if(_d.data.data.items.length != 0){
-					for (let nums in _d.data.data.items) {
-						this.message.diagnosis.push(_d.data.data.items[nums]);
-					}
-					this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
-					this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
-					// console.log(this.message)
-				}else{
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
-					this.loading = false;
-					this.finished = true;
-				}
-			})
-			.catch((err)=>{
-				console.log(err);
-				Dialog({ message: '加载失败!'});
-			})
-		}
-		
 	},
 	// 详情页
 	detailsValueFn(_diagnosis){
 		console.log(_diagnosis.itemId)
 		this.detail.patientId = _diagnosis.itemId;
 		console.log(this.detail.patientId)	
-	},
-	//全部数据上拉加载数据
-	allOnLoad(){
-		this.nextdata(1,5);
-		this.nextdata(4,5);
-	},
-	//全部数据下拉刷新数据
-	allRefresh(){
-		this.sunNum=0;
-		this.page = 2;
-		this.page2 = 2;	
-		this.message.notDiagnosis = [];
-		this.message.diagnosis = [];
-		this.getdata(1,1,5);
-		this.getdata(4,1,5);
-		console.log(this.message)
-	},
-	// 未就诊下拉刷新数据
-	noRefresh(){
-		this.sunNum=0;
-		this.page = 2;
-		this.message.notDiagnosis = [];
-		this.getdata(1,1,10);
-		console.log(this.message)
-	},
-	//未就诊上拉加载数据
-	noOnLoad(){
-		this.nextdata(1,10);
-	},
-	// 已就诊下拉刷新数据
-	yesRefresh(){
-		this.sunNum=0;
-		this.page2 = 2;
-		this.message.diagnosis = [];
-		this.getdata(4,1,10);
-		console.log(this.message)
-	},
-	//已就诊上拉加载数据
-	yesOnLoad(){
-		this.nextdata(4,10);
 	},
 	//显示筛选弹窗
 	showPopup() {

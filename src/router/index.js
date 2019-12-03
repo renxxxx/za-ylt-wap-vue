@@ -52,6 +52,8 @@ import hospital_addActivity from '@/components/hospital/childPage/addActivity.vu
 import hospital_previewActivities from '@/components/hospital/childPage/previewActivities.vue'
 //医院端门诊的门诊详情页
 import hospital_clinicDetails from '@/components/hospital/childPage/clinicDetails.vue'
+//医院端门诊主页的消息通知页面
+import hospital_clinicMessage from '@/components/hospital/childPage/clinicMessage.vue'
 
 import store from '../store'
 Vue.use(Router)
@@ -185,7 +187,7 @@ const router = new Router({
 			path: '/hospital_activityReleased',
 			name: 'hospital_activityReleased',
 			component: hospital_activityReleased,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		{
@@ -193,7 +195,7 @@ const router = new Router({
 			path: '/hospital_activityDetails',
 			name: 'hospital_activityDetails',
 			component: hospital_activityDetails,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		{
@@ -201,7 +203,7 @@ const router = new Router({
 			path: '/hospital_addActivity',
 			name: 'hospital_addActivity',
 			component: hospital_addActivity,
-			// meta: {auth:true},
+			meta: {auth:true},
 			
 		},
 		
@@ -210,10 +212,17 @@ const router = new Router({
 			path: '/hospital_previewActivities',
 			name: 'hospital_previewActivities',
 			component: hospital_previewActivities,
+			meta: {auth:true},
+			
+		},
+		{
+			//医院端门诊主页的消息通知页面
+			path: '/hospital_clinicMessage',
+			name: 'hospital_clinicMessage',
+			component: hospital_clinicMessage,
 			// meta: {auth:true},
 			
 		},
-		
 		{
 			// 门诊端主页
 			path: '/outpatient_index',
@@ -227,13 +236,6 @@ const router = new Router({
 			path: '/outpatient_search',
 			name: 'outpatient_search',
 			component: outpatient_search,
-			meta: {auth:true},
-		},
-		{
-			// 门诊端的主页病人详情页
-			path: '/details',
-			name: 'details',
-			component: details,
 			meta: {auth:true},
 		},
 		{
@@ -256,6 +258,13 @@ const router = new Router({
 			name: 'outpatient_user',
 			meta: {auth:true},
 			component: outpatient_user,
+		},
+		{
+			//详情页
+			path: '/details',
+			name: 'details',
+			component: details,
+			meta: {auth:true},
 		},
 		{
 			// 登陆主页
