@@ -64,9 +64,6 @@ export default {
 				kw : this.keywords,
 			}))
 			.then(_d => {
-				// console.log( _d.data.data.items)
-				// this.content = _d.data.data.items;
-				// console.log(this.$refs.content.content)
 				this.$refs.content.content = _d.data.data.items
 			})
 			.catch((err)=>{

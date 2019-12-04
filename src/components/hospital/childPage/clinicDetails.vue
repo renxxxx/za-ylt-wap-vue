@@ -15,7 +15,7 @@
 			<span>{{moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
 		</div>
 		<div class="statistics" v-model="list">
-			<van-circle v-model="currentRate" :rate="list.yesNum/list.allNum*100" :stroke-width="120" layer-color="#2B77EF" color = '#FF951B'
+			<van-circle v-model="currentRate" :rate="list.yesNum/list.allNum*100" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
 			  size="1.15rem" :text="list.allNum" />
 			<div class="statisticsText">
 				<div class="noText">

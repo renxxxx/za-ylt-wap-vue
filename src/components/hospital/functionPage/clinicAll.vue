@@ -41,7 +41,8 @@ export default {
 			isLoading: false,
 			// 请求页数
 			page : 2,
-
+			noNum: 0,
+			yesNum: 0,
 		}
 	},
 	computed:{
@@ -80,8 +81,7 @@ export default {
 					this.loading = false;
 					this.finished = true;
 				}else{
-					this.noNum = 0 ;
-					this.yesNum = 0;
+					
 					for (let nums in _d.data.data.items) {
 						if(_d.data.data.items[nums].status == 1){
 							this.clinicDetails.push({
@@ -93,7 +93,9 @@ export default {
 								img : "static/iOS切图/orange@2x.png",
 								button : "确认就诊"
 							});
-							this.list.noNum = _d.data.data.sum.totalCount
+							this.noNum++;
+							this.list.noNum = this.noNum;
+							console.log(this.list.noNum)
 						}else if(_d.data.data.items[nums].status == 4){
 							this.clinicDetails.push({
 								clinicName : _d.data.data.items[nums].clinicName,
@@ -105,9 +107,13 @@ export default {
 								button : "已就诊",
 								buttonColor : "buttonColor"
 							});
-							this.list.yesNum  = _d.data.data.sum.totalCount
+							this.yesNum++;
+							this.list.yesNum = this.yesNum;
+							console.log(this.yesNum)
 						}
 					}
+					
+					// this.list.yesNum  = _d.data.data.sum.yesNum;
 					this.list.allNum = this.list.noNum + this.list.yesNum;
 					this.list.allTitle = '全部' + this.list.allNum;
 					this.list.noTitle = '未就诊' + this.list.noNum;

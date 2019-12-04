@@ -45,7 +45,7 @@
 			<div class="statisticalTitle" v-model="clinic">
 				<h3>合作门诊 {{clinic.num}}</h3>
 				<div class="statisticalAdd">
-					<router-link to="hospital_addCLinic">
+					<router-link :to="{name : 'hospital_addCLinic'}">
 						<span>新增</span>
 						<img src="static/iOS切图/xinzeng@2x.png" alt="">
 					</router-link>

@@ -32,6 +32,7 @@ import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
 import hospital_sourceManagement from '@/components/hospital/childPage/sourceManagement.vue'
 // 医院端器械采集页面
 import hospital_collect from '@/components/hospital/childPage/collect.vue'
+
 // 医院端门诊主页的医院形象页面
 import hospitalImage from '@/components/hospital/childPage/hospitalImage.vue'
 // 医院端门诊主页的医院形象页面中门诊科室详情页
@@ -54,6 +55,13 @@ import hospital_previewActivities from '@/components/hospital/childPage/previewA
 import hospital_clinicDetails from '@/components/hospital/childPage/clinicDetails.vue'
 //医院端门诊主页的消息通知页面
 import hospital_clinicMessage from '@/components/hospital/childPage/clinicMessage.vue'
+
+//医院端用户主页的任务管理页面
+import hospital_taskManagement from '@/components/hospital/childPage/taskManagement.vue'
+//医院端用户主页的任务管理详情页页面
+import hospital_taskManagementDetails from '@/components/hospital/childPage/taskManagementDetails.vue'
+//医院端用户主页的兑换管理页面
+import hospital_exchangeManagement from '@/components/hospital/childPage/exchangeManagement.vue'
 
 import store from '../store'
 Vue.use(Router)
@@ -224,6 +232,30 @@ const router = new Router({
 			
 		},
 		{
+			//医院端用户主页的任务管理页面
+			path: '/hospital_taskManagement',
+			name: 'hospital_taskManagement',
+			component: hospital_taskManagement,
+			// meta: {auth:true},
+			
+		},
+		{
+			//医院端用户主页的任务管理详情页页面
+			path: '/hospital_taskManagementDetails',
+			name: 'hospital_taskManagementDetails',
+			component: hospital_taskManagementDetails,
+			// meta: {auth:true},
+			
+		},
+		{
+			//医院端用户主页的兑换管理页面
+			path: '/hospital_exchangeManagement',
+			name: 'hospital_exchangeManagement',
+			component: hospital_exchangeManagement,
+			// meta: {auth:true},
+			
+		},
+		{
 			// 门诊端主页
 			path: '/outpatient_index',
 			name: 'outpatient_index',
@@ -318,7 +350,7 @@ router.beforeEach((to,from,next) => {
 	 || to.path == '/outpatient_gene' ||to.path == "/outpatient_details" || to.path == '/hospital_clinic' 
 	 || to.path == '/hospital_gene' || to.path == '/hospital_user' || to.path == '/hospital_sourceManagement'
 	 || to.path == '/hospital_detailsPage' || to.path == '/hospital_typeDetails' || to.path == '/hospital_expertsIntroduction'
-	 ||to.path == '/hospital_activityReleased'){
+	 ||to.path == '/hospital_activityReleased' ||to.path == '/hospital_taskManagement' ||to.path == '/hospital_exchangeManagement'){
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"
 	}else{
 		document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"

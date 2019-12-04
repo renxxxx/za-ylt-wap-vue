@@ -222,4 +222,9 @@ export default {
 .deleteStyle img{
 	width: .15rem;
 }
+>>>.van-swipe-cell {
+    position: relative;
+    overflow: hidden;
+    width: 93.6%;
+}
 </style>

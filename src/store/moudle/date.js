@@ -72,6 +72,11 @@ const state={
 		content : '',
 		cover : 'static/iOS切图/Group@2x.png'
 	},
+	//医院端用户的任务管理参数
+	task:{
+		one:[],
+		no:[],
+	},
 }
 const getters={
 	//账号协议checked
@@ -92,6 +97,8 @@ const getters={
 	search_userList : state => state.search_userList,
 	//医院端活动发布的参数
 	activity : state => state.activity,
+	//医院端用户的任务管理参数
+	task : state => state.task,
 }
 const actions={
 	//复选框的选择

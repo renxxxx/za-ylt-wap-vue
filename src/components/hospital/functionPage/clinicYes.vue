@@ -96,7 +96,7 @@ export default {
 						// console.log(this.clinicDetails)
 					}
 					this.list.yesNum  = _d.data.data.sum.totalCount
-					console.log(_d.data.data.sum.totalCount)
+					// console.log(_d.data.data.sum.totalCount)
 					this.list.allNum = this.list.noNum + this.list.yesNum;
 					this.list.allTitle = '全部' + this.list.allNum;
 					this.list.noTitle = '未就诊' + this.list.noNum;

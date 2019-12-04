@@ -22,14 +22,18 @@
 		
 		<div class="user_center">
 			<ul>
-				<li @click="exitFn">
-					<span>任务管理</span>
-					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
-				</li>
-				<li>
-					<span>兑换管理</span>
-					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
-				</li>
+				<router-link :to="{name : 'hospital_taskManagement'}">
+					<li @click="exitFn">
+						<span>任务管理</span>
+						<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
+					</li>
+				</router-link>
+				<router-link :to="{name : 'hospital_exchangeManagement'}">
+					<li>
+						<span>兑换管理</span>
+						<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
+					</li>
+				</router-link>
 				<li>
 					<span>集采订单</span>
 					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
@@ -38,12 +42,12 @@
 					<span>集采积分</span>
 					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
 				</li>
-		<!-- 		<li>
-					<span>HIS日志</span>
-					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
-				</li> -->
 				<li>
 					<span>推广人员管理</span>
+					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
+				</li>
+				<li>
+					<span>退出登陆</span>
 					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
 				</li>
 			</ul>
