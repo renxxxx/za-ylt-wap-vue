@@ -71,7 +71,7 @@
 									</li>
 									<li>
 										<span>身份证号</span>
-										<input type="text" v-model="account.user.idcardNo" maxlength="18"  οninput="value= value.replace(/[^\d|xX]/g,'')" placeholder="请填写">
+										<input type="text" v-model="account.user.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')"placeholder="请填写">
 									</li>
 								</ul>
 							</div>

@@ -14,7 +14,7 @@
 			<ul>
 				<li v-for="(item,inx) in task.one" :key='inx'>
 					<input type="checkbox" class="input_check" :checked="item.checked" @change="change($event,item,inx)"/>
-					<router-link :to="{name : 'hospital_taskManagementDetails' ,params : {patientId : item.taskId}}">
+					<router-link :to="{name : 'hospital_taskManagementDetails' ,params : {item : item,show : false}}">
 						<span @click="change($event,item,inx)">{{item.name}}</span>
 					</router-link>
 				</li>
@@ -23,7 +23,7 @@
 			<ul>
 				<li v-for="(item,inx) in task.no" :key='inx'>
 					<input type="checkbox" class="input_check" :checked="item.checked" @change="change($event,item,inx)"/>
-					<router-link :to="{name : 'hospital_taskManagementDetails' ,params : {patientId : item.taskId}}">
+					<router-link :to="{name : 'hospital_taskManagementDetails' ,params : {item : item,show : true}}">
 						<span @click="change($event,item,inx)">{{item.name}}</span>
 					</router-link>
 				</li>
@@ -36,6 +36,7 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import { Dialog } from 'vant'
 export default {
 	name: 'search',
 	data () {
@@ -96,10 +97,10 @@ export default {
 				case true:
 				if(_item.oneTimeIs == 1){
 					this.task.one[inx].checked = _value.target.checked
-					window.location.href = '#/hospital_taskManagementDetails'
+					this.$router.push({ name : 'hospital_taskManagementDetails',params : {item : _item,show : false}});
 				}else{
-					this.task.no[inx].checked = _value.target.checked
-					window.location.href = '#/hospital_taskManagementDetails'
+					this.task.no[inx].checked = _value.target.checked;
+					this.$router.push({ name : 'hospital_taskManagementDetails',params : {item : _item,show : false}});
 				};
 				break;
 				case false:
@@ -109,11 +110,15 @@ export default {
 					this.task.no[inx].checked = _value.target.checked
 				};
 				break;
-				case undefined:
-					this.task.one[inx].checked = true
-				break;
+				
 			}
-			
+			if(_item.oneTimeIs == 1){
+				this.task.one[inx].checked = true
+				// this.$router.push({ name : 'hospital_taskManagementDetails',params : {item : _item,show : false}});
+			}else{
+				this.task.no[inx].checked = true;
+				// this.$router.push({ name : 'hospital_taskManagementDetails',params : {item : _item,show : false}});
+			};
 			
 		},
 	},

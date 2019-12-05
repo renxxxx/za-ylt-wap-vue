@@ -5,20 +5,35 @@
 				<img src="static/iOS切图/shape@2x.png" alt="">
 			</div>
 			<div class="centerTitle">
-				<h3>设置首次任务</h3>
+				<h3>{{taskSubmitValue.name}}</h3>
 			</div>
 			<div class="right"></div>
 		</div>
-		<ul>
+		<ul >
 			<li>
 				<span>名称</span>
 				<span>首次上传病源</span>
 			</li>
 			<li>
-				<span>名称</span>
-				<span>首次上传病源</span>
+				<span>简介</span>
+				<p>
+					<input type="text" value="首次上传病源" v-model="taskSubmitValue.intro">
+				</p>
+			</li>
+			<li>
+				<span>积分</span>
+				<p>
+					<input type="text" oninput="value=value.replace(/[^\d]/g,'')" placeholder="1" v-model="taskSubmitValue.exchangePoint"> 分
+				</p>
+			</li>
+			<li v-show="show" >
+				<span>上限</span>
+				<p>
+					<input type="text" oninput="value=value.replace(/[^\d]/g,'')" placeholder="10" v-model="taskSubmitValue.exchangePointUpperPerDay"> 分
+				</p>
 			</li>
 		</ul>
+		<button @click="submitFn">发布</button>
 	</div>
 </template>
 
@@ -26,11 +41,18 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import { Dialog } from 'vant'
 export default {
 	name: 'taskDetails',
 	data () {
 		return {
-			
+			show : false,
+			taskSubmitValue:{
+				name: '',
+				exchangePoint : '',
+				exchangePointUpperPerDay : '',
+				intro : "",
+			}
 		}
 	},
 	computed:{
@@ -43,20 +65,29 @@ export default {
 		
 	},
 	mounted () {
-		this.$axios.post('/c2/task/taskissue',qs.stringify({
-			patientId : this.$route.params.patientId,
-			hospitalId : this.account.hospitalId,
-		})).then(res =>{
-			
-		}).catch(err =>{
-			console.log(err)
-		})
+		this.show = this.$route.params.show;	
+		this.taskSubmitValue.name = this.$route.params.item.name;
 	},
 	methods: {
 		// 返回上一级
 		goBackFn(){
 			this.$router.back(-1)
 		},
+			
+		submitFn(){
+			this.$axios.post('/c2/task/taskissue',qs.stringify({
+				hospitalId : this.account.hospitalId,
+				taskId : this.$route.params.item.taskId,
+				exchangePoint : this.taskSubmitValue.exchangePoint,
+				exchangePointUpperPerDay : this.taskSubmitValue.exchangePointUpperPerDay,
+				intro : this.taskSubmitValue.intro,
+			})).then(res =>{
+				res.data.codeMsg? Dialog({message : res.data.codeMsg}): Dialog({message : '已添加'})
+				
+			}).catch(err =>{
+				console.log(err)
+			})
+		}
 	},
 }
 </script>
@@ -115,14 +146,39 @@ export default {
 	margin-left: .15rem;
 	color: #333333;
 }
-.taskDetails ul li:first-child span:last-child{
+.taskDetails>ul>li>span:last-child{
 	float: right;
 	margin-right: .15rem;
 	color: #666666;
 }
-.taskDetails ul li span:last-child{
+/* .taskDetails>ul>li>span:last-child{
 	float: right;
 	margin-right: .15rem;
 	color: #2B77EF;
+} */
+.taskDetails ul li p{
+	float: right;
+	margin-right: .15rem;
+	font-size: .14rem;
 }
+.taskDetails ul li p>input{
+	border: none;
+	height: .43rem;
+	text-align: right;
+	color: #2B77EF;
+}
+.taskDetails button{
+	width: 2.41rem;
+	height: .4rem;
+	display: block;
+	margin: 0 auto;
+	margin-top: .5rem;
+	background: -webkit-gradient(linear, left top, left bottom, from(#56AFF8), to(#2B77EF));
+	background: linear-gradient(#56AFF8, #2B77EF);
+	border: none;
+	border-radius: .2rem;
+	color: #FFFFFF;
+	font-size: .14rem;
+}
+
 </style>

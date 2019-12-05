@@ -142,7 +142,6 @@ export default {
 					ps : 10
 				}))
 				.then(res => {
-					
 					if(res.data.data.items.length != 0){
 						// console.log(this.page)
 						for(let i in res.data.data.items){

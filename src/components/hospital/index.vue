@@ -123,20 +123,13 @@ export default {
 		
 	},
 	mounted () {
-		// console.log(this.account);
-		// console.log(this.account.hospitalId)
 		//轮播图图片路径请求
 		this.$axios.post('/hospitaler/currentHospitalMaincarouselList')
 			.then(res =>{
 				for(let i in res.data.data.items){
 					// console.log(res.data.data.items[i])
 					this.images.push(res.data.data.items[i].cover)
-					
 				}
-				
-				// console.log(this.images)
-				// this.images.push()
-				// console.log(res)
 			}).catch((err)=>{
 				console.log(err)
 				Dialog({ message: '加载失败!' });

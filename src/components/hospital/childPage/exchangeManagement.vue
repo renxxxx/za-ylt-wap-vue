@@ -13,22 +13,29 @@
 		</div>
 		<div class="exchangeTitle">
 			<h3>已有商品</h3>
-			<div class="add">
-				<span>新增</span>
-				<img src="static/iOS切图/xinzeng@2x.png" alt="">
-			</div>
+			<router-link :to="{name : 'hospital_exchangeManagementAdd' ,params : {item : ''}}">
+				<div class="add">
+					<span>新增</span>
+					<img src="static/iOS切图/xinzeng@2x.png" alt="">
+				</div>
+			</router-link>
 		</div>
 		<ul class="exchangeLists">
-			<li>
-				<img src="static/iOS切图/bj-keshi.png" alt="">
-				<div class="listContent">
-					<h4>激光穿刺针</h4>
-					<p><span>50000</span>积分</p>
-					<span>数量</span>
-				</div>
-				<span>500</span>
+			<li v-for="(item,inx) in commodity" :key="inx">
+				<router-link :to="{name : 'hospital_exchangeManagementAdd' ,params : {item : item}}">
+					<div class="list">
+						<div class="listsImg">
+							<img :src="item.cover" alt="">
+						</div>
+						<div class="listContent">
+							<h4>{{item.name}}</h4>
+							<p><span>{{item.payExchangepoint}}</span>积分</p>
+							<span>数量</span>
+						</div>
+						<span>{{item.stock}}</span>
+					</div>
+				</router-link>
 			</li>
-			
 		</ul>
 	</div>
 </template>
@@ -37,15 +44,16 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import {Dialog} from 'vant'
 export default {
 	name: 'exchangeManagement',
 	data () {
 		return {
-			
+			commodity : [],
 		}
 	},
 	computed:{
-	  
+		...mapGetters(['account']),
 	},
 	components:{
 		
@@ -54,7 +62,26 @@ export default {
 		
 	},
 	mounted () {
-	
+		this.$axios.post('/c2/commodity/items',qs.stringify({
+			hospitalId : this.account.hospitalId,
+		})).then(res =>{
+			for(let i in res.data.data.items){
+				this.commodity.push({
+					addTime : res.data.data.items[i].addTime,
+					alterTime : res.data.data.items[i].alterTime,
+					cover : res.data.data.items[i].cover,
+					hospitalId : res.data.data.items[i].hospitalId,
+					hosptialName : res.data.data.items[i].hosptialName,
+					intro : res.data.data.items[i].intro,
+					name : res.data.data.items[i].name,
+					payExchangepoint : res.data.data.items[i].payExchangepoint,
+					stock : res.data.data.items[i].stock,
+				})
+			}
+			// console.log(this.commodity)
+		}).catch(err =>{
+			console.log(err)
+		})
 	},
 	methods: {
 		//回退方法
@@ -143,13 +170,23 @@ export default {
 	border-radius: .03rem;
 	position: relative;
 }
-.exchangeLists>li>img{
+.exchangeLists>li>a{
+	width: 100%;
+	height: .48rem;
+}
+.listsImg{
 	width: .66rem;
 	height: .66rem;
 	margin: .16rem 0rem;
 	margin-left: .16rem;
 	border: .02rem;
 	float: left;
+	text-align: center;
+	overflow: hidden;
+}
+.listsImg img{
+	/* width: 100%; */
+	height: 100%;
 }
 .listContent{
 	height: .68rem;
@@ -168,12 +205,16 @@ export default {
 .listContent>p>span{
 	color: #FF951B;
 }
-.listContent>span{
+.list{
+	height: .98rem;
+	width: 100%;
+}
+.list>span{
 	display: block;
 	font-size: .15rem;
 	margin-top: .03rem;
 }
-.exchangeLists>li>span{
+.list>span{
 	position: absolute;
 	right: .18rem;
 	bottom: .16rem;

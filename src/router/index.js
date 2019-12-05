@@ -62,6 +62,10 @@ import hospital_taskManagement from '@/components/hospital/childPage/taskManagem
 import hospital_taskManagementDetails from '@/components/hospital/childPage/taskManagementDetails.vue'
 //医院端用户主页的兑换管理页面
 import hospital_exchangeManagement from '@/components/hospital/childPage/exchangeManagement.vue'
+//医院端用户主页的兑换管理中的添加商品页面
+import hospital_exchangeManagementAdd from '@/components/hospital/childPage/exchangeManagementAdd.vue'
+//医院端用户主页的兑换管理中的添加商品后上传图片的页面
+import hospital_exchangeManagementImg from '@/components/hospital/childPage/exchangeManagementImg.vue'
 
 import store from '../store'
 Vue.use(Router)
@@ -83,7 +87,6 @@ const router = new Router({
 			name: 'hospital_clinic',
 			component: hospital_clinic,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端基因主页
@@ -107,16 +110,13 @@ const router = new Router({
 			name: 'hospital_indexSearch',
 			component: hospital_indexSearch,
 			meta: {auth:true},
-			
 		},
-		
 		{
 			// 医院端门诊搜索页面
 			path: '/hospital_clinicSearch',
 			name: 'hospital_clinicSearch',
 			component: hospital_clinicSearch,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端病源管理页面页
@@ -124,7 +124,6 @@ const router = new Router({
 			name: 'hospital_sourceManagement',
 			component: hospital_sourceManagement,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端门诊添加门诊页面
@@ -132,7 +131,6 @@ const router = new Router({
 			name: 'hospital_addCLinic',
 			component: hospital_addCLinic,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端器械采集页面
@@ -140,7 +138,6 @@ const router = new Router({
 			name: 'hospital_collect',
 			component: hospital_collect,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端门诊主页的医院形象页面
@@ -148,7 +145,6 @@ const router = new Router({
 			name: 'hospitalImage',
 			component: hospitalImage,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端门诊主页的医院形象页面中门诊科室详情页
@@ -156,7 +152,6 @@ const router = new Router({
 			name: 'hospital_typeDetails',
 			component: hospital_typeDetails,
 			// meta: {auth:true},
-			
 		},
 		{
 			//医院端门诊的门诊详情页
@@ -164,7 +159,6 @@ const router = new Router({
 			name: 'hospital_clinicDetails',
 			component: hospital_clinicDetails,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端门诊主页的优质案例
@@ -172,7 +166,6 @@ const router = new Router({
 			name: 'hospital_case',
 			component: hospital_case,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端门诊主页的优质案例详情页
@@ -180,7 +173,6 @@ const router = new Router({
 			name: 'hospital_caseDetails',
 			component: hospital_caseDetails,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端门诊主页的专家介绍
@@ -188,7 +180,6 @@ const router = new Router({
 			name: 'hospital_expertsIntroduction',
 			component: hospital_expertsIntroduction,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端门诊主页的活动发布
@@ -196,7 +187,6 @@ const router = new Router({
 			name: 'hospital_activityReleased',
 			component: hospital_activityReleased,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端门诊主页的活动发布详情页
@@ -204,7 +194,6 @@ const router = new Router({
 			name: 'hospital_activityDetails',
 			component: hospital_activityDetails,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端门诊主页的活动发布模块中的编辑活动页面
@@ -212,7 +201,6 @@ const router = new Router({
 			name: 'hospital_addActivity',
 			component: hospital_addActivity,
 			meta: {auth:true},
-			
 		},
 		
 		{
@@ -221,7 +209,6 @@ const router = new Router({
 			name: 'hospital_previewActivities',
 			component: hospital_previewActivities,
 			meta: {auth:true},
-			
 		},
 		{
 			//医院端门诊主页的消息通知页面
@@ -229,7 +216,6 @@ const router = new Router({
 			name: 'hospital_clinicMessage',
 			component: hospital_clinicMessage,
 			// meta: {auth:true},
-			
 		},
 		{
 			//医院端用户主页的任务管理页面
@@ -237,7 +223,6 @@ const router = new Router({
 			name: 'hospital_taskManagement',
 			component: hospital_taskManagement,
 			// meta: {auth:true},
-			
 		},
 		{
 			//医院端用户主页的任务管理详情页页面
@@ -245,7 +230,6 @@ const router = new Router({
 			name: 'hospital_taskManagementDetails',
 			component: hospital_taskManagementDetails,
 			// meta: {auth:true},
-			
 		},
 		{
 			//医院端用户主页的兑换管理页面
@@ -253,7 +237,20 @@ const router = new Router({
 			name: 'hospital_exchangeManagement',
 			component: hospital_exchangeManagement,
 			// meta: {auth:true},
-			
+		},
+		{
+			//医院端用户主页的兑换管理中的添加商品页面
+			path: '/hospital_exchangeManagementAdd',
+			name: 'hospital_exchangeManagementAdd',
+			component: hospital_exchangeManagementAdd,
+			// meta: {auth:true},
+		},
+		{
+			//医院端用户主页的兑换管理中的添加商品后上传图片的页面
+			path: '/hospital_exchangeManagementImg',
+			name: 'hospital_exchangeManagementImg',
+			component: hospital_exchangeManagementImg,
+			// meta: {auth:true},
 		},
 		{
 			// 门诊端主页
