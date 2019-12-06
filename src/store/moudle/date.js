@@ -77,6 +77,13 @@ const state={
 		one:[],
 		no:[],
 	},
+	//医院端兑换管理详情页参数
+	taskSubmitValue:{
+		name: '',
+		exchangePoint : '',
+		exchangePointUpperPerDay : '',
+		intro : "",
+	},
 	// 医院端兑换管理的新增和商品修改信息参数
 	exchangeAdd:{
 		name : '',
@@ -110,6 +117,8 @@ const getters={
 	task : state => state.task,
 	// 医院端兑换管理的新增和商品修改信息参数
 	exchangeAdd : state => state.task,
+	//医院端兑换管理详情页参数
+	taskSubmitValue : state => state.taskSubmitValue,
 }
 const actions={
 	//复选框的选择

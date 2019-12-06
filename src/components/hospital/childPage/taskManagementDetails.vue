@@ -47,16 +47,20 @@ export default {
 	data () {
 		return {
 			show : false,
-			taskSubmitValue:{
-				name: '',
-				exchangePoint : '',
-				exchangePointUpperPerDay : '',
-				intro : "",
-			}
+
 		}
 	},
 	computed:{
 		...mapGetters(['account']),
+		taskSubmitValue: {
+			get: function() {
+				// console.log(this.$store)
+				return this.$store.state.shop.taskSubmitValue
+			},
+			set: function (newValue) {
+				this.$store.state.shop.taskSubmitValue.newValue;
+			},
+		},
 	},
 	components:{
 		
@@ -66,7 +70,15 @@ export default {
 	},
 	mounted () {
 		this.show = this.$route.params.show;	
-		this.taskSubmitValue.name = this.$route.params.item.name;
+		this.taskSubmitValue = {
+			name : this.$route.params.item.name,
+			payExchangepoint : this.$route.params.item.payExchangepoint,
+			stock : this.$route.params.item.stock,
+			intro : this.$route.params.item.intro,
+			cover : this.$route.params.item.cover,
+			name : this.$route.params.item.name,
+		}
+		console.log(this.taskSubmitValue)
 	},
 	methods: {
 		// 返回上一级
