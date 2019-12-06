@@ -77,6 +77,15 @@ const state={
 		one:[],
 		no:[],
 	},
+	// 医院端兑换管理的新增和商品修改信息参数
+	exchangeAdd:{
+		name : '',
+		payExchangepoint : 0,
+		stock : 0,
+		intro : '',
+		cover : '',
+		show : true,
+	},
 }
 const getters={
 	//账号协议checked
@@ -99,6 +108,8 @@ const getters={
 	activity : state => state.activity,
 	//医院端用户的任务管理参数
 	task : state => state.task,
+	// 医院端兑换管理的新增和商品修改信息参数
+	exchangeAdd : state => state.task,
 }
 const actions={
 	//复选框的选择

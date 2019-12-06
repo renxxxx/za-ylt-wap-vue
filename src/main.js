@@ -20,14 +20,15 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.moment = moment;
 moment.locale('zh-cn');
+
 import { Image, Row, Col,Search,Tabbar, TabbarItem,Tab,Tabs,Checkbox, CheckboxGroup,Dialog,Popup,RadioGroup, Radio,Cell, CellGroup,
 		PullRefresh,Area,Overlay,DatetimePicker,Notify,CountDown,List,Uploader,DropdownMenu, DropdownItem,
-		 Swipe, SwipeItem,Lazyload,ActionSheet,Grid, GridItem ,SwipeCell,Circle } from 'vant';
+		 Swipe, SwipeItem,Lazyload,ActionSheet,Grid, GridItem ,SwipeCell,Circle,Toast } from 'vant';
 Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab).use(Tabs).use(Checkbox)
 	.use(CheckboxGroup).use(Dialog).use(Popup).use(RadioGroup).use(Radio).use(Cell).use(CellGroup).use(PullRefresh)
 	.use(Area).use(Overlay).use(vueHashCalendar).use(DatetimePicker).use(VueScroller).use(Notify).use(CountDown).use(List)
 	.use(Uploader).use(DropdownMenu).use(DropdownItem).use(Swipe).use(SwipeItem).use(Lazyload).use(ActionSheet).use(Grid)
-	.use(GridItem).use(SwipeCell).use(Circle);
+	.use(GridItem).use(SwipeCell).use(Circle).use(Toast);
 
 /* eslint-disable no-new */
 new Vue({

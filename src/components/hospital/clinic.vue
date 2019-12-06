@@ -189,6 +189,7 @@ export default {
 <style scoped>
 .hospital{
 	width: 100%;
+	background-color: #F5F5F5;
 }
 .navWarp{
 	width: 100%;

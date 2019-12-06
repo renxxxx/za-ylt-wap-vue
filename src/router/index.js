@@ -66,6 +66,8 @@ import hospital_exchangeManagement from '@/components/hospital/childPage/exchang
 import hospital_exchangeManagementAdd from '@/components/hospital/childPage/exchangeManagementAdd.vue'
 //医院端用户主页的兑换管理中的添加商品后上传图片的页面
 import hospital_exchangeManagementImg from '@/components/hospital/childPage/exchangeManagementImg.vue'
+//医院端用户主页的兑换管理中的门诊兑换清单
+import hospital_exchangeManagementList from '@/components/hospital/childPage/exchangeManagementList.vue'
 
 import store from '../store'
 Vue.use(Router)
@@ -246,6 +248,13 @@ const router = new Router({
 			// meta: {auth:true},
 		},
 		{
+			//医院端用户主页的兑换管理中的门诊兑换清单
+			path: '/hospital_exchangeManagementList',
+			name: 'hospital_exchangeManagementList',
+			component: hospital_exchangeManagementList,
+			// meta: {auth:true},
+		},
+		{
 			//医院端用户主页的兑换管理中的添加商品后上传图片的页面
 			path: '/hospital_exchangeManagementImg',
 			name: 'hospital_exchangeManagementImg',
@@ -342,15 +351,6 @@ router.beforeEach((to,from,next) => {
 	}else{
 		next();
 	}
-	//识别路径初始化下body的背景色
-	if(to.path == "/outpatient_user" || to.path == "/outpatient_index" || to.path == '/outpatient_search'
-	 || to.path == '/outpatient_gene' ||to.path == "/outpatient_details" || to.path == '/hospital_clinic' 
-	 || to.path == '/hospital_gene' || to.path == '/hospital_user' || to.path == '/hospital_sourceManagement'
-	 || to.path == '/hospital_detailsPage' || to.path == '/hospital_typeDetails' || to.path == '/hospital_expertsIntroduction'
-	 ||to.path == '/hospital_activityReleased' ||to.path == '/hospital_taskManagement' ||to.path == '/hospital_exchangeManagement'){
-		document.getElementsByTagName("body")[0].style.backgroundColor = "#F5F5F5"
-	}else{
-		document.getElementsByTagName("body")[0].style.backgroundColor = "#FFFFFF"
-	}
+	
 })
 export default router

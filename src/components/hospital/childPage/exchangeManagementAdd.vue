@@ -8,8 +8,8 @@
 				<h3>推送通知</h3>
 			</div>
 			<div class="right">
-				<button v-show="exchangeAdd.name? true:false">修改</button>
-				<button v-show="exchangeAdd.name? false:true" @click="nextFn">下一步</button>
+				<button v-show=" this.$route.params.item? true:false" @click="modifyFn">修改</button>
+				<button v-show=" this.$route.params.item? false:true" @click="nextFn">下一步</button>
 			</div>
 		</div>
 		<ul>
@@ -48,16 +48,20 @@ export default {
 	name: 'exchangeAdd',
 	data () {
 		return {
-			exchangeAdd:{
-				name : this.$route.params.item.name,
-				payExchangepoint : this.$route.params.item.payExchangepoint,
-				stock : this.$route.params.item.stock,
-				intro : this.$route.params.item.intro,
-			},
+			
 		}
 	},
 	computed:{
-	  
+		...mapGetters(['account']),
+		exchangeAdd: {
+		    get: function() {
+				// console.log(this.$store)
+		        return this.$store.state.shop.exchangeAdd
+		    },
+		    set: function (newValue) {
+				this.$store.state.shop.exchangeAdd = newValue;
+		    },
+		},
 	},
 	components:{
 		
@@ -66,15 +70,54 @@ export default {
 		
 	},
 	mounted () {
-		
+		this.$route.params.item? this.exchangeAdd = {
+			name : this.$route.params.item.name,
+			payExchangepoint : this.$route.params.item.payExchangepoint,
+			stock : this.$route.params.item.stock,
+			intro : this.$route.params.item.intro,
+			cover : this.$route.params.item.cover,
+			show : true,
+		}:''
 	},
 	methods: {
 		//回退方法
 		goBackFn(){
-			this.$router.back(-1)
+			this.$router.back(-1);
+			// this.$router.back({ name : 'hospital_exchangeManagement'});
 		},
 		nextFn(){
-			this.$router.push({ name : 'hospital_exchangeManagementImg',params : {exchangeAdd : this.exchangeAdd}});
+			if(this.exchangeAdd.name != ''){
+				if(this.exchangeAdd.payExchangepoint != ''){
+					if(this.exchangeAdd.stock != ''){
+						if(this.exchangeAdd.intro != ''){
+							this.$router.push({ name : 'hospital_exchangeManagementImg',params : {exchangeAdd : this.exchangeAdd}});
+						}else{
+							Toast.fail('请填写简介');
+						}
+					}else{
+						Toast.fail('请填写数量');
+					}
+				}else{
+					Toast.fail('请填写积分');
+				}
+			}else{
+				Toast.fail('请填写名称');
+			}
+		},
+		modifyFn(){
+			this.$axios.post('/c2/commodity/itemalter',qs.stringify({
+				hospitalId : this.account.hospitalId,
+				itemId : this.$route.params.item.itemId,
+				name : this.exchangeAdd.name,
+				cover : this.exchangeAdd.cover,
+				intro : this.exchangeAdd.intro,
+				stock: this.exchangeAdd.stock,
+				payExchangepoint : this.exchangeAdd.payExchangepoint,
+			})).then(res =>{
+				
+			}).catch(err =>{
+				console.log(err)
+			})
 		}
 	},
 }

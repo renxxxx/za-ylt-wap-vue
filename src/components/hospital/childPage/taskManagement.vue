@@ -128,6 +128,8 @@ export default {
 <style scoped>
 .task{
 	width: 100%;
+	height: 100%;
+	background-color: #F5F5F5;
 }
 .topNav{
 	width: 100%;

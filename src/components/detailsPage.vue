@@ -277,6 +277,11 @@ export default {
 </script>
 
 <style scoped>
+.detail{
+	width: 100%;
+	height: 100%;
+	background-color: #F5F5F5;
+}
 .topNav{
 	width: 100%;
 	height: .47rem;
@@ -323,7 +328,6 @@ export default {
 	margin-right: .16rem;
 }
 ._message{
-	height: 100%;
 	width: 100%;
 	margin-top: .1rem;
 }
@@ -376,7 +380,6 @@ export default {
 }
 ._photo{
 	width: 100%;
-	height: 100%;
 	margin-top:.1rem;
 }
 ._photo h3{

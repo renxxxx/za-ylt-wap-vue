@@ -120,6 +120,7 @@ export default {
 <style scoped>
 .user{
 	width: 100%;
+	background-color: #F5F5F5;
 }
 .user_top{
 	width: 100%;

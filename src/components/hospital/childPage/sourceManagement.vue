@@ -214,6 +214,10 @@ export default {
 }
 </script>
 <style scoped>
+.index{
+	width: 100%;
+	background-color: #F5F5F5;
+}
 .navWarp{
 	/* background-color: #FFFFFF; */
 	/* height: 1rem; */

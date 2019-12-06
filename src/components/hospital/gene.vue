@@ -122,6 +122,11 @@ export default {
 </script>
 
 <style scoped>
+.gene{
+	width: 100%;
+	height: 100%;
+	background-color: #F5F5F5;
+}
 .topNav{
 	width: 100%;
 	height: .47rem;

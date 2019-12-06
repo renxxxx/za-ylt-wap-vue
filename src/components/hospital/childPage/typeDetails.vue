@@ -150,6 +150,7 @@ export default {
 <style scoped>
 .typeDetails{
 	width: 100%;
+	background-color: #F5F5F5;
 }
 .topNav{
 	width: 100%;

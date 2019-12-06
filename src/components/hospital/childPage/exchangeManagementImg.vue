@@ -7,9 +7,19 @@
 			<div class="centerTitle">
 				<h3>推送通知</h3>
 			</div>
-			<div class="right">
-				<button>完成</button>
+			<div class="right" >
+				<button :class="imgUrl? 'buttonColorOver' : 'buttonColorNow'" @click="submitFn">完成</button>
 			</div>
+		</div>
+		
+		<div class="addImg" v-model="exchangeAdd">
+			<div class="addImgButton" v-show="this.$route.params.exchangeAdd.show">
+				<img src="static/iOS切图/append@2x.png" alt="">
+				<span>请添加照片</span>
+			</div>
+			<img v-bind:src="imgUrl" alt="">
+			<input type="file" class="upload" ref="inputer" accept="image/png,image/jpeg,image/gif,image/jpg"
+			    multiple @change="addImg($event)"/>
 		</div>
 	</div>
 </template>
@@ -18,15 +28,26 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import { Toast } from 'vant';
 export default {
 	name: 'exchangeAddImg',
 	data () {
 		return {
-			
+			commodity : [],
+			imgUrl : 0,
 		}
 	},
 	computed:{
-	  
+		...mapGetters(['account']),
+		exchangeAdd: {
+			get: function() {
+				// console.log(this.$store)
+				return this.$store.state.shop.exchangeAdd
+			},
+			set: function (newValue) {
+				this.$store.state.shop.exchangeAdd.newValue;
+			},
+		},
 	},
 	components:{
 		
@@ -35,14 +56,62 @@ export default {
 		
 	},
 	mounted () {
-	
+		this.imgUrl = this.exchangeAdd.cover
+		console.log(this.imgUrl)
 	},
 	methods: {
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)
+			// this.$router.push({ name : 'hospital_exchangeManagementAdd',params : {item : this.commodity}});
 			// exchangeManagementAdd
 		},
+		//添加图片
+		addImg(_fileLIst){
+			var file = _fileLIst.target.files[0]
+			// console.log(e)
+			if(file.type.indexOf('image') > -1){
+				let formData = new FormData();
+				formData.append('file', file)
+				this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
+				}}).then(res =>{
+					// this.imageUpload.push({name:file.name,url:res.data.data.url})
+					// this.$set(this.exchangeAdd,'cover',res.data.data.url);
+					this.imgUrl = res.data.data.url
+					this.exchangeAdd.cover = this.imgUrl;
+					this.exchangeAdd.show = false;
+					console.log(this.exchangeAdd)
+				}).catch(err =>{
+					console.log(err)
+				})
+			 }else{
+				Dialog({ message: '请选择图片' });
+				return false;
+			}
+		},
+		submitFn(){
+			console.log(this.imgUrl)
+			if(this.imgUrl != ''){
+				this.$axios.post('/c2/commodity/itemadd',qs.stringify({
+					hospitalId : this.account.hospitalId,
+					name : this.exchangeAdd.name,
+					cover : this.exchangeAdd.cover,
+					intro : this.exchangeAdd.intro,
+					stock: this.exchangeAdd.stock,
+					payExchangepoint : this.exchangeAdd.payExchangepoint,
+				})).then(res  =>{
+					res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn();
+				}).catch(err =>{
+					console.log(err)
+				})
+			}else{
+				Toast.fail('请先添加图片');
+			}
+		},
+		successFn(){
+			Toast.success('添加成功');
+			this.$router.push({ name : 'hospital_exchangeManagement'});
+		}
 	},
 }
 </script>
@@ -50,6 +119,7 @@ export default {
 <style scoped>
 .exchangeAddImg{
 	width: 100%;
+	height: 100%;
 }
 .topNav{
 	width: 100%;
@@ -86,15 +156,62 @@ export default {
 	height: .47rem;
 	line-height: .47rem;
 	float:right;
+	text-align: right;
 }
 .right button{
 	width: .56rem;
 	height: .3rem;
 	line-height: .3rem;
 	text-align: center;
-	color: #FFFFFF;
-	background-color: #2B77EF;
 	border: none;
 	border-radius: .03rem;
+	margin-right: .22rem;
+}
+.buttonColorNow{
+	color: #999999;
+	background-color: #E5E5E5;
+}
+.buttonColorOver{
+	color: #FFFFFF;
+	background-color: #2B77EF;
+}
+.addImg{
+	width: 3.25rem;
+	height:88%;
+	line-height: 88%;
+	margin: 0rem auto;
+	overflow: hidden;
+	text-align: center;
+	position: relative;
+}
+.addImg>img{
+	width: 100%;
+}
+.addImgButton{
+	display: block;
+	text-align: center;
+	padding-top: 50%;
+	line-height: 70%;
+	width: 100%;
+}
+.addImgButton img{
+	height: .3rem;
+	width: .3rem;
+}
+.addImgButton span{
+	display: block;
+	color: #666666;
+	margin-top: .12rem;
+}
+.upload{
+	opacity: 0;
+	width: 100%;
+	height:100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
 }
 </style>

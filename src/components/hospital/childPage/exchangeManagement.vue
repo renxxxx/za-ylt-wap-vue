@@ -5,11 +5,13 @@
 				<img src="static/iOS切图/shape@2x.png" alt="">
 			</div>
 			<div class="centerTitle">
-				<h3>推送通知</h3>
+				<h3>兑换管理</h3>
 			</div>
-			<div class="right">
-				<img src="static/iOS切图/liebiao@3x.png" alt="">
-			</div>
+			<router-link :to="{name : 'hospital_exchangeManagementList'}">
+				<div class="right">
+					<img src="static/iOS切图/liebiao@3x.png" alt="">
+				</div>
+			</router-link>
 		</div>
 		<div class="exchangeTitle">
 			<h3>已有商品</h3>
@@ -21,21 +23,28 @@
 			</router-link>
 		</div>
 		<ul class="exchangeLists">
-			<li v-for="(item,inx) in commodity" :key="inx">
-				<router-link :to="{name : 'hospital_exchangeManagementAdd' ,params : {item : item}}">
-					<div class="list">
-						<div class="listsImg">
-							<img :src="item.cover" alt="">
+			<van-swipe-cell v-for="(item,inx) in commodity" :key="inx"  :right-width= 65 >
+				<li>
+					<router-link :to="{name : 'hospital_exchangeManagementAdd' ,params : {item : item}}">
+						<div class="list">
+							<div class="listsImg">
+								<img :src="item.cover" alt="">
+							</div>
+							<div class="listContent">
+								<h4>{{item.name}}</h4>
+								<p><span>{{item.payExchangepoint}}</span>积分</p>
+								<span>数量</span>
+							</div>
+							<span>{{item.stock}}</span>
 						</div>
-						<div class="listContent">
-							<h4>{{item.name}}</h4>
-							<p><span>{{item.payExchangepoint}}</span>积分</p>
-							<span>数量</span>
-						</div>
-						<span>{{item.stock}}</span>
-					</div>
-				</router-link>
-			</li>
+					</router-link>
+				</li>
+				<template slot="right">
+					<button class="deleteStyle" @click="deleteActiviteFn(item)">
+						<img src="static/iOS切图/activiteDelete.png" alt="">
+					</button>
+				</template>
+			</van-swipe-cell>
 		</ul>
 	</div>
 </template>
@@ -62,32 +71,46 @@ export default {
 		
 	},
 	mounted () {
-		this.$axios.post('/c2/commodity/items',qs.stringify({
-			hospitalId : this.account.hospitalId,
-		})).then(res =>{
-			for(let i in res.data.data.items){
-				this.commodity.push({
-					addTime : res.data.data.items[i].addTime,
-					alterTime : res.data.data.items[i].alterTime,
-					cover : res.data.data.items[i].cover,
-					hospitalId : res.data.data.items[i].hospitalId,
-					hosptialName : res.data.data.items[i].hosptialName,
-					intro : res.data.data.items[i].intro,
-					name : res.data.data.items[i].name,
-					payExchangepoint : res.data.data.items[i].payExchangepoint,
-					stock : res.data.data.items[i].stock,
-				})
-			}
-			// console.log(this.commodity)
-		}).catch(err =>{
-			console.log(err)
-		})
+		this.getdata();
 	},
 	methods: {
 		//回退方法
 		goBackFn(){
 				 this.$router.back(-1)
 		},
+		deleteActiviteFn(_item){
+			this.$axios.post('/c2/commodity/itemdel',qs.stringify({
+				itemId : _item.itemId,
+			})).then(res =>{
+				this.getdata();
+			}).catch(err =>{
+				console.log(err)
+			})
+		},
+		getdata(){
+			this.$axios.post('/c2/commodity/items',qs.stringify({
+				hospitalId : this.account.hospitalId,
+			})).then(res =>{
+				this.commodity = []
+				for(let i in res.data.data.items){
+					this.commodity.push({
+						addTime : res.data.data.items[i].addTime,
+						alterTime : res.data.data.items[i].alterTime,
+						cover : res.data.data.items[i].cover,
+						hospitalId : res.data.data.items[i].hospitalId,
+						hosptialName : res.data.data.items[i].hosptialName,
+						intro : res.data.data.items[i].intro,
+						name : res.data.data.items[i].name,
+						payExchangepoint : res.data.data.items[i].payExchangepoint,
+						stock : res.data.data.items[i].stock,
+						itemId : res.data.data.items[i].itemId,
+					})
+				}
+				// console.log(this.commodity)
+			}).catch(err =>{
+				console.log(err)
+			})
+		}
 	},
 }
 </script>
@@ -95,6 +118,8 @@ export default {
 <style scoped>
 .exchange{
 	width: 100%;
+	height: 100%;
+	background-color: #F5F5F5;
 }
 .topNav{
 	width: 100%;
@@ -161,8 +186,8 @@ export default {
 .exchangeLists{
 	width: 100%;
 }
-.exchangeLists>li{
-	width: 91.46%;
+.exchangeLists li{
+	width: 100%;
 	height: .98rem;
 	background-color: #FFFFFF;
 	margin: 0rem auto;
@@ -170,7 +195,7 @@ export default {
 	border-radius: .03rem;
 	position: relative;
 }
-.exchangeLists>li>a{
+.exchangeLists li>a{
 	width: 100%;
 	height: .48rem;
 }
@@ -220,4 +245,22 @@ export default {
 	bottom: .16rem;
 	font-size: .14rem;
 }
+.deleteStyle{
+	/* margin:.12rem 0rem; */
+	height: .98rem;
+	width: .6rem;
+	border: none;
+	color: #FFFFFF;
+	background-color: #e91a1a;
+}
+.deleteStyle img{
+	width: .15rem;
+}
+>>>.van-swipe-cell {
+    position: relative;
+    overflow: hidden;
+	width: 91.46%;
+	margin: 0rem auto;
+}
+
 </style>

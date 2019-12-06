@@ -1,5 +1,5 @@
 <template>
-  <div class="_search">
+	<div class="_search">
 		<div class="top_search">
 			<div class="search_return">
 				<a @click="goBackFn">
@@ -199,6 +199,10 @@ export default {
 <style scoped>
 ._search{
 	position: relative;
+	width: 100%;
+	height: 100%;
+	padding-top: .52rem;
+	background-color: #F5F5F5;
 }
 .top_search{
 	height: .5rem;width: 100%;
@@ -266,9 +270,6 @@ export default {
 	background-color:#FFFFFF;
 	position:relative;
 	/* padding:.14rem .15rem; */
-}
-.search_content li:first-child{
-	margin-top: .62rem;
 }
 .search_content li p{
 	position:absolute;
