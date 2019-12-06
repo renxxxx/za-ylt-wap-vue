@@ -67,6 +67,10 @@ export default {
 							taskId : res.data.data.items[i].taskId,
 							oneTimeIs : res.data.data.items[i].oneTimeIs,
 							checked : false,
+							exchangePointUpperPerDay : res.data.data.items[i].exchangePointUpperPerDay,
+							exchangePoint : res.data.data.items[i].exchangePoint,
+							everyDayIs : res.data.data.items[i].everyDayIs,
+							intro : res.data.data.items[i].intro,
 						})
 					}else{
 						this.task.no.push({
@@ -74,6 +78,10 @@ export default {
 							taskId : res.data.data.items[i].taskId,
 							oneTimeIs : res.data.data.items[i].oneTimeIs,
 							checked : false,
+							exchangePointUpperPerDay : res.data.data.items[i].exchangePointUpperPerDay,
+							exchangePoint : res.data.data.items[i].exchangePoint,
+							everyDayIs : res.data.data.items[i].everyDayIs,
+							intro : res.data.data.items[i].intro,
 						})
 					}
 				}
