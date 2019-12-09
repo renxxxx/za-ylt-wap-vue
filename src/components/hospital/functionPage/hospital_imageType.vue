@@ -77,7 +77,7 @@ export default {
 	width: .29rem;
 	height: .33rem;
 	margin-bottom: .05rem;
-	    object-fit: cover;
+	object-fit: cover;
 }
 .content ul li span{
 	display: block;

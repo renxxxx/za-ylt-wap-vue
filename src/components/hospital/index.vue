@@ -35,21 +35,21 @@
 					</router-link>
 					
 				</li>
-				<li>
-					<router-link :to="{name : 'hospital_indexSearch'}">
+				<li @click="noLinkFn">
+					<router-link :to="{name : ''}">
 						<img src="static/iOS切图/yunyingzhongxin@2x.png" alt="">
 						<span>运营中心</span>
 					</router-link>
 				</li>
-				<li>
-					<router-link :to="{name : 'hospital_indexSearch'}">
+				<li @click="noLinkFn">
+					<router-link :to="{name : ''}">
 						<img src="static/iOS切图/jiyinjiance@2x.png" alt="">
 						<span>基因检测</span>
 					</router-link>
 					
 				</li>
-				<li>
-					<router-link :to="{name : 'hospital_indexSearch'}">
+				<li @click="noLinkFn">
+					<router-link :to="{name : ''}">
 						<img src="static/iOS切图/yiliaoziyuan@2x.png" alt="">
 						<span>医疗资源</span>
 					</router-link>
@@ -60,8 +60,8 @@
 						<span>医院活动</span>
 					</router-link>
 				</li>
-				<li>
-					<router-link :to="{name : 'hospital_indexSearch'}">
+				<li @click="noLinkFn">
+					<router-link :to="{name : ''}">
 						<img src="static/iOS切图/qita@2x.png" alt="">
 						<span>其他项目</span>
 					</router-link>
@@ -137,7 +137,7 @@ export default {
 				Dialog({ message: '加载失败!' });
 			})
 		//文章请求
-		this.onLoad()
+		this.getdata()
 	},
 	methods: {
 		getdata(_data){
@@ -165,11 +165,6 @@ export default {
 						})
 					}
 				}
-				if(_data == 1){
-					this.page++
-				}else{
-					this.isLoading = false;
-				}
 				this.loading = false;
 				}else{
 					this.$notify({
@@ -187,11 +182,11 @@ export default {
 			})
 		},
 		onLoad(){
-			// console.log('account')
-			// console.log(JSON.stringify(this.account))
-			// console.log(this.account.hospitalId)
-			this.getdata(1)
-			
+			this.getdata()
+		},
+		noLinkFn(){
+			this.$toast.setDefaultOptions({ duration: 1000 });
+			this.$toast.fail('暂未开通');
 		}
 	},
 }

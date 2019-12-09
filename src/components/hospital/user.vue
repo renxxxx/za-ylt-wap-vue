@@ -74,9 +74,7 @@ export default {
 			coverImg: '',
 			show: false,
 			index: 0,
-			images: [
-			   
-			]
+			images: []
 		}
   },
 	computed:{
