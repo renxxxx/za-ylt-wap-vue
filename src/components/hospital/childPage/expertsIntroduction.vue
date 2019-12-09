@@ -158,6 +158,7 @@ export default {
 	margin : .22rem .17rem 0rem .16rem;
 	float: left;
 	border-radius: 50%;
+	object-fit: cover;
 }
 .contentLists{
 	width: 60.8%;

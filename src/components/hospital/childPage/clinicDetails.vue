@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div class="detailsTime">
-			<span>{{moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
+			<span>{{moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 		</div>
 		<div class="statistics" v-model="list">
 			<van-circle v-model="currentRate" :rate="list.yesNum/list.allNum*100" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
@@ -72,6 +72,7 @@ export default {
 				noNum : 0,
 				yesNum : 0,
 				allNum : this.noNum + this.yesNum,
+				clinicId: '',
 			}
 		}
 	},
@@ -85,17 +86,9 @@ export default {
 		
 	},
 	mounted () {
-		this.$axios.post('/c2/clinic/item',qs.stringify({
-			itemId : this.account.itemId,
-		}))
-		.then(_d => {
-			this.clinicDetails = _d.data.data;
-			
-		})
-		.catch((err)=>{
-			console.log(err);
-			Dialog({ message: err});
-		})
+		console.log(this.$route.params.item)
+		this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = ''
+		
 	},
 	methods: {
 		//回退方法
@@ -109,8 +102,6 @@ export default {
 			switch(this.value){
 				case 0: 
 				this.componentName = 'clinicAll';
-
-				// console.log(this.componentName);
 				break;
 				case 1: 
 				this.componentName = 'clinicNo';
@@ -120,7 +111,20 @@ export default {
 				break;
 			}
 		},
-		
+		ItemIdFn(){
+			this.list.clinicId = this.$route.params.item.itemId;
+			this.$axios.post('/c2/clinic/item',qs.stringify({
+				itemId : this.list.clinicId,
+			}))
+			.then(_d => {
+				this.clinicDetails = _d.data.data;
+				
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: err});
+			})
+		}
 	},
 }
 </script>

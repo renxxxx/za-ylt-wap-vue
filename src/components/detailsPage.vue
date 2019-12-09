@@ -104,7 +104,7 @@ export default {
 		
   },
   mounted () {
-	console.log(this.account.patientId)
+	console.log(this.fileList)
 	this.$axios.post('/c2/patient/item',qs.stringify({
 		patientId : this.$route.params.patientId,
 	})).then(res =>{
@@ -126,6 +126,7 @@ export default {
 		// 如果信息中有发票图片,就显示
 		// let code = res.data.data.invoices
 		// console.log(code != null)
+		debugger;
 		if(res.data.data.invoices != null || undefined || ''){
 			res.data.data.invoices = res.data.data.invoices.split(",")
 			for (let i in res.data.data.invoices){
@@ -133,6 +134,7 @@ export default {
 				this.imageUpload.push({url:res.data.data.invoices[i]})
 				// console.log(res.data.data)
 			}
+			// console.log(this.fileList)
 			this.modify.data = true;
 			this.modify.value = '编辑';
 			this.modify.img = 'static/iOS切图/editor.png';
@@ -165,6 +167,7 @@ export default {
 	}).catch(err =>{
 		console.log(err)
 	})
+	// console.log(this.fileList)
   },
   methods: {
 	// 返回上一级

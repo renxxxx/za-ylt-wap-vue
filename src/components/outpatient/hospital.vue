@@ -12,22 +12,30 @@
 		<div class="shared">
 			<h3>共享医联体</h3>
 			<ul>
-				<li>
-					<img src="static/iOS切图/yiyuanxingxiang@2x.png" alt="">
-					<span>医院形象</span>
-				</li>
-				<li>
-					<img src="static/iOS切图/youzhianli@2x.png" alt="">
-					<span>优质案例</span>
-				</li>
-				<li>
-					<img src="static/iOS切图/zhuanjia@2x.png" alt="">
-					<span>专家介绍</span>
-				</li>
-				<li>
-					<img src="static/iOS切图/huodongfabu@2x.png" alt="">
-					<span>最新活动</span>
-				</li>
+				<router-link :to="{name : 'hospitalImage'}">
+					<li>
+						<img src="static/iOS切图/yiyuanxingxiang@2x.png" alt="">
+						<span>医院形象</span>
+					</li>
+				</router-link>
+				<router-link :to="{name : 'hospital_case'}">
+					<li>
+						<img src="static/iOS切图/youzhianli@2x.png" alt="">
+						<span>优质案例</span>
+					</li>
+				</router-link>
+				<router-link :to="{name : 'hospital_expertsIntroduction'}">
+					<li>
+						<img src="static/iOS切图/zhuanjia@2x.png" alt="">
+						<span>专家介绍</span>
+					</li>
+				</router-link>
+				<router-link :to="{name : 'hospital_activityReleased'}">
+					<li>
+						<img src="static/iOS切图/huodongfabu@2x.png" alt="">
+						<span>最新活动</span>
+					</li>
+				</router-link>
 			</ul>
 		</div>
 		

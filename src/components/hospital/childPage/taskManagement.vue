@@ -56,6 +56,8 @@ export default {
 	},
 	mounted () {
 		if(this.task.one.length == 0 || this.task.no.length == 0){
+			// this.task.no = [];
+			// this.task.one = []
 			this.$axios.post('/c2/task/tasks',qs.stringify({
 				hospitalId : this.account.hospitalId,
 			}))

@@ -360,7 +360,7 @@ export default {
 .typeNav{
 	width: 100%;
 	height: 100%;
-	margin-top: -.65rem;
+	margin-top: -.45rem;
 }
 .content{
 	width: 100%;

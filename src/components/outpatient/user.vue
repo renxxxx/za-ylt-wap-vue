@@ -1,25 +1,27 @@
 <template>
 	<div class="user">
 		<div class="user_top">
-			<div class="user_set">
+			<div class="user_set" v-show="false">
 				<img src="static/iOS切图/set up@2x.png" alt="">
 			</div>
 			<div class="user_message">
 				<div class="top_left">
-					<img :src=coverImg alt="">
+					<img :src="coverImg? coverImg:'static/门诊端/iOS切图/logo@2x.png'" alt="">
 					<span>已认证</span>
 				</div>
 				<div class="top_center">
-					<h3>门诊名称</h3>
-					<p>账号：18273392819</p>
+					<h3>{{this.account.data.data.clinic.name}}</h3>
+					<p>账号：{{this.account.data.data.phone}}</p>
 				</div>
-				<div class="top_right">
+				<div class="top_right" @click="showImgFn">
 					<span>营业执照</span>
 					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
 				</div>
 			</div>
 		</div>
-		
+		<van-image-preview v-model="show" :images="images" @change="onChange" >
+		  <!-- <template v-slot:index>第{{ index }}页</template> -->
+		</van-image-preview>
 		<div class="user_center">
 			<ul>
 				<li @click="exitFn">
@@ -42,7 +44,10 @@ export default {
   data () {
     return {
 		name: 'user',
-		coverImg: 'static/门诊端/iOS切图/logo@2x.png',
+		coverImg: '',
+		show: false,
+		index: 0,
+		images: []
     }
   },
   computed:{
@@ -56,9 +61,18 @@ export default {
 		
   },
   mounted () {
-	this.userFn()
+	this.userFn();
+	this.coverImg = this.account.data.data.clinic.cover;
+	this.images.push(this.account.data.data.clinic.license)
   },
   methods: {
+	onChange(index) {
+	    this.index = index;
+	},
+	showImgFn(){
+		this.show = true;
+		console.log(this.show)
+	},
 	userFn(){
 		// console.log("hahha")
 		// console.log(this.account);
@@ -88,6 +102,7 @@ export default {
 		this.account.password = '';
 		console.log(this.account.isLogin);
 		window.location.href = '/#/landingPage';
+		this.$axios.post('/hospital/logout')
 	}
   },
 }

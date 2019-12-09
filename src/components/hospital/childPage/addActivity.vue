@@ -112,7 +112,7 @@ export default {
 		},
 		confirm(_value){
 			var moment = require('moment');
-			let time = moment(_value).format('YYYY-MM-DD HH:mm:ss');
+			let time = moment(_value).format('YYYY-MM-DD HH:mm');
 			if(this.data == 'start'){
 				this.$set(this.activity,'startTime',time)
 			}else{

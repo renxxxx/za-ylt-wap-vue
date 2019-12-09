@@ -58,13 +58,13 @@ export default {
 	mounted () {
 		this.getdata();		
 	},
-	methods: {
+	methods:{
 		// 详情页
 		getdata(){
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
-				clinicId : this.account.itemId,
+				clinicId : this.list.clinicId,
 				pn : 1,
 				ps : 10
 			}))
@@ -95,7 +95,7 @@ export default {
 							});
 							this.noNum++;
 							this.list.noNum = this.noNum;
-							console.log(this.list.noNum)
+							// console.log(this.list.noNum)
 						}else if(_d.data.data.items[nums].status == 4){
 							this.clinicDetails.push({
 								clinicName : _d.data.data.items[nums].clinicName,
@@ -109,7 +109,7 @@ export default {
 							});
 							this.yesNum++;
 							this.list.yesNum = this.yesNum;
-							console.log(this.yesNum)
+							// console.log(this.yesNum)
 						}
 					}
 					
@@ -132,7 +132,7 @@ export default {
 		nextdata(){
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				clinicId : this.account.itemId,
+				clinicId : this.list.clinicId,
 				pn : this.page,
 				ps : 10,
 			}))

@@ -6,8 +6,8 @@
 		</div>
 		<div class="article">
 			<ul>
-				<router-link :to="{name : 'hospital_caseDetails'}">
-					<li v-for="(items,inx) in article" :key="inx" @click="itemPostFn(items)">
+				<li v-for="(items,inx) in article" :key="inx">
+					<router-link :to="{name : 'hospital_caseDetails' ,params : {item : items,data: 4}}">
 						<div class="article_left">
 							<p>{{items.content}}</p>
 							<div class="article_leftTime">
@@ -18,8 +18,8 @@
 						<div class="article_right">
 							<img :src=items.img alt="">
 						</div>
-					</li>
-				</router-link>
+					</router-link>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -82,10 +82,6 @@ export default {
 		goBackFn(){
 			this.$router.back(-1)
 		},
-		itemPostFn(_id){
-			this.account.itemId = _id.itemId;
-			// console.log(this.account.itemId)
-		}
 	},
 }
 </script>

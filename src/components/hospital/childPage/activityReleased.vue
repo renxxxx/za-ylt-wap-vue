@@ -11,7 +11,7 @@
 				
 			</div>
 		</div>
-		<router-link to="/hospital_addActivity">
+		<router-link to="/hospital_addActivity" v-show="account.isLogin== 100? true : false">
 			<div class="addActive">
 				<span>+</span>
 				<span>新建活动</span>
@@ -184,8 +184,9 @@ export default {
 	box-sizing: border-box;
 }
 .activeList>img{
-	/* height: 100%; */
+	height: 100%;
 	width: 100%;
+	object-fit: cover;
 }
 .activeTitle{
 	position: absolute;

@@ -14,7 +14,7 @@
 				<span>{{caseDetails.hosptialName}}</span>
 				<span>{{moment(caseDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 			</div>
-			<p>{{caseDetails.content}}</p>
+			<p v-html="caseDetails.content"></p>
 		</div>
 	</div>
 </template>
@@ -48,44 +48,51 @@ export default {
 		
 	},
 	mounted(){
-		this.$axios.post('/c2/project/item',qs.stringify({
-			itemId : this.account.itemId,
-		}))
-		.then(_d => {
-			this.caseDetails = {
-				addTime : _d.data.data.addTime,
-				alterTime : _d.data.data.alterTime,
-				cover : _d.data.data.cover,
-				hosptialName : _d.data.data.hosptialName,
-				name : _d.data.data.name,
-				contentBtId : _d.data.data.contentBtId
-			}
-			// console.log(this.caseDetails.contentBtId)
-			this.$axios.get('/other/bigtxt/'+this.caseDetails.contentBtId+'/'+this.caseDetails.contentBtId)
-			.then(_d => {
-				console.log(_d.data)
-				this.$set(this.caseDetails,'content',_d.data)
-			})
-			.catch((err)=>{
-				console.log(err);
-				Dialog({ message: err});
-			})
-			
-			
-			// console.log(_d.data.data)
-		})
-		.catch((err)=>{
-			console.log(err);
-			Dialog({ message: err});
-		})
-		
+		// console.log(this.$route.params.data)
+		let postUrl = '';
+		if(this.$route.params.data ==1){
+			let postUrl ='/c2/article/item';
+			this.getData(postUrl)
+		}else{
+			let postUrl ='/c2/project/item'
+			this.getData(postUrl)
+		}
+		// console.log(_d.data.data)
 	},
 	methods: {
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)
 		},
-		
+		getData(url){
+			this.$axios.post(url,qs.stringify({
+				itemId : this.$route.params.item.itemId,
+			}))
+			.then(_d => {
+				this.caseDetails = {
+					addTime : _d.data.data.addTime,
+					alterTime : _d.data.data.alterTime,
+					cover : _d.data.data.cover,
+					hosptialName : _d.data.data.hosptialName,
+					name : _d.data.data.name,
+					contentBtId : _d.data.data.contentBtId
+				}
+				// console.log(this.caseDetails.contentBtId)
+				this.$axios.get('/other/bigtxt/'+this.caseDetails.contentBtId+'/'+this.caseDetails.contentBtId)
+				.then(_d => {
+					// console.log(_d.data)
+					this.$set(this.caseDetails,'content',_d.data)
+				})
+				.catch((err)=>{
+					console.log(err);
+					Dialog({ message: err});
+				})
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: err});
+			})
+		}
 	},
 }
 </script>
@@ -117,6 +124,7 @@ export default {
 .banner img{
 	width: 100%;
 	height: 1.75rem;
+	object-fit: cover;
 }
 .content{
 	width: 91.46%;

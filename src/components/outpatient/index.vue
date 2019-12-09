@@ -171,6 +171,9 @@ export default {
   mounted(){
 	// //未就诊请求
 	this.$axios.post('/c2/patient/items',qs.stringify({
+		clinicId : this.account.data.data.clinic.clinicId,
+		name : "",
+		hospitalId : this.account.hospitalId,
 		status : 1 ,
 		pn : 1,
 		ps : 10
@@ -199,6 +202,9 @@ export default {
 	})
 	//已就诊
 	this.$axios.post('/c2/patient/items',qs.stringify({
+		clinicId : this.account.data.data.clinic.clinicId,
+		name : "",
+		hospitalId : this.account.hospitalId,
 		status : 4 ,
 		pn : 1,
 		ps : 10
@@ -279,12 +285,13 @@ export default {
 	},
 	//下拉加载获取数据
 	getdata(data,_value,shuaxin){
+		console.log(this.account.data.data)
 		if(shuaxin ==0 ){
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw	:	"",
 				clinicId : this.account.data.data.clinic.clinicId,
 				name : "",
-				hospitalId : this.account.data.data.hospital.hospitalId,
+				hospitalId : this.account.hospitalId,
 				status : data ,
 				orders : 'asc',
 				pn : 1,
@@ -320,7 +327,7 @@ export default {
 				kw	:	"",
 				clinicId : this.account.data.data.clinic.clinicId,
 				name : "",
-				hospitalId : this.account.data.data.hospital.hospitalId,
+				hospitalId : this.account.hospitalId,
 				status : data ,
 				orders : 'asc',
 				pn : this.page,
@@ -358,7 +365,7 @@ export default {
 				kw	:	"",
 				clinicId : this.account.data.data.clinic.clinicId,
 				name : "",
-				hospitalId : this.account.data.data.hospital.hospitalId,
+				hospitalId : this.account.hospitalId,
 				status : data ,
 				orders : 'asc',
 				pn : 1,
@@ -393,7 +400,7 @@ export default {
 				kw	:	"",
 				clinicId : this.account.data.data.clinic.clinicId,
 				name : "",
-				hospitalId : this.account.data.data.hospital.hospitalId,
+				hospitalId : this.account.hospitalId,
 				status : data ,
 				orders : 'asc',
 				pn : this.page2,

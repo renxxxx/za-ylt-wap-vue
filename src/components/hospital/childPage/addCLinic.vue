@@ -95,6 +95,7 @@ import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 import clinic_content from '../functionPage/clinic_content.vue'
+import { Toast } from 'vant'
 export default {
 	name: 'search',
 	data () {
@@ -200,18 +201,17 @@ export default {
 			}))
 			.then(res => {
 				console.log(typeof res.data.codeMsg)
-				
-				if(res.data.codeMsg == null || res.data.codeMsg == undefined || res.data.codeMsg == ''){
-				}else{
-					Dialog({ message: res.data.codeMsg});
-					
-				}
-				console.log(res)
+				res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn();
+
 			})
 			.catch((err)=>{
 				console.log(err);
 				Dialog({ message: '加载失败!'});
 			})
+		},
+		successFn(){
+			Toast.success('添加成功');
+			this.$router.back(-1)
 		}
 	}
 }
@@ -359,6 +359,7 @@ export default {
 	height: 100%;
 	margin: auto;
 	float: right;
+	object-fit: cover;
 }
 .popupChoose{
 	height: .9rem;

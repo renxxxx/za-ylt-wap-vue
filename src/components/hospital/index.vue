@@ -55,7 +55,7 @@
 					</router-link>
 				</li>
 				<li>
-					<router-link :to="{name : 'hospital_indexSearch'}">
+					<router-link :to="{name : 'hospital_activityReleased'}">
 						<img src="static/iOS切图/yiyuanhuodong@2x.png" alt="">
 						<span>医院活动</span>
 					</router-link>
@@ -77,16 +77,18 @@
 			<ul :model="article">
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @check="onLoad">
 					<li v-for="(items,inx) in article" :key="inx">
-						<div class="article_left">
-							<p>{{items.content}}</p>
-							<div class="article_leftTime">
-								<img src="static/iOS切图/time@2x.png" alt="">
-								<!-- <span>{{moment(items.time).format('YYYY-MM-DD HH:mm:ss')}}</span> -->
+						<router-link :to="{name : 'hospital_caseDetails' ,params : {item : items,data: 1}}">
+							<div class="article_left">
+								<p>{{items.content}}</p>
+								<div class="article_leftTime">
+									<img src="static/iOS切图/time@2x.png" alt="">
+									<span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
+								</div>
 							</div>
-						</div>
-						<div class="article_right">
-							<img :src=items.img alt="">
-						</div>
+							<div class="article_right">
+								<img :src=items.img alt="">
+							</div>
+						</router-link>
 					</li>
 				</van-list>
 			</ul>
@@ -152,7 +154,8 @@ export default {
 						this.article.push({
 							content:res.data.data.items[i].title,
 							img: res.data.data.items[i].cover,
-							time:res.data.data.items[i].alterTime
+							time:res.data.data.items[i].alterTime,
+							itemId: res.data.data.items[i].itemId,
 						}) 
 					}else{
 						this.$notify({
@@ -343,5 +346,6 @@ export default {
 .article_right img{
 	width: 1.08rem;
 	height: .85rem;
+	object-fit: cover;
 }
 </style>

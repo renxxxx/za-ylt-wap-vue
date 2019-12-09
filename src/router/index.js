@@ -68,6 +68,8 @@ import hospital_exchangeManagementAdd from '@/components/hospital/childPage/exch
 import hospital_exchangeManagementImg from '@/components/hospital/childPage/exchangeManagementImg.vue'
 //医院端用户主页的兑换管理中的门诊兑换清单
 import hospital_exchangeManagementList from '@/components/hospital/childPage/exchangeManagementList.vue'
+//医院端用户主页的兑换管理中的门诊兑换清单详情
+import hospital_exchangeDetails from '@/components/hospital/childPage/exchangeDetails.vue'
 
 import store from '../store'
 Vue.use(Router)
@@ -252,6 +254,13 @@ const router = new Router({
 			path: '/hospital_exchangeManagementList',
 			name: 'hospital_exchangeManagementList',
 			component: hospital_exchangeManagementList,
+			// meta: {auth:true},
+		},
+		{
+			//医院端用户主页的兑换管理中的门诊兑换清单详情
+			path: '/hospital_exchangeDetails',
+			name: 'hospital_exchangeDetails',
+			component: hospital_exchangeDetails,
 			// meta: {auth:true},
 		},
 		{

@@ -6,8 +6,8 @@
 			</div>
 			<div class="typeNav" type="line" border="false">
 				<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)' 
-				title-active-color='rgba(255, 255, 255, .8)' @click="titleScroll">
-				<van-tab title="医院端">
+				title-active-color='rgba(255, 255, 255)' @click="titleScroll"  v-model='data'>
+				<van-tab title="医院端" >
 					<form @submit.prevent="submit('100')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
@@ -36,7 +36,7 @@
 					</form>	
 					
 				</van-tab>
-				<van-tab title="门诊端" type="line" border="false">
+				<van-tab title="门诊端" type="line" border="false" >
 					<form @submit.prevent="submit('200')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
@@ -107,7 +107,7 @@ export default {
   name: 'landingPage',
   data () {
     return {
-      
+		data:1,
     }
   },
   directives: {
@@ -364,7 +364,7 @@ export default {
 	width: .15rem;
 	height: .15rem;
 }
->>>.van-tab:first-child span{
+>>>.van-tab:nth-child(2) span{
 	font-size: .2rem;
 }
 </style>

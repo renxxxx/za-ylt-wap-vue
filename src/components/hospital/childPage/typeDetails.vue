@@ -4,7 +4,7 @@
 			<img src="static/iOS切图/shape@2x.png" alt=""  @click="goBackFn">
 			<h3>{{this.about.name}}</h3>
 		</div>
-		<div class="typeTItle">
+		<div class="typeTItle" v-show="!this.doctor||this.doctor.length==0? false:true">
 			<h4 class="xia">科室医生</h4>
 			<ul ref='scrollId'>
 				<li v-for="(item,inx) in doctor" :key="inx" @click='doctorAboutFn(item)'>
@@ -27,14 +27,14 @@
 			</van-popup>
 			
 		</div>
-		<div class="typeContent">
+		<div class="typeContent" v-show="this.about.content? true:false">
 			<h4 class="xia">科室简介</h4>
 			<div class="contentP">
 				<p>{{this.about.content}}</p>
 				<img :src="img" v-for='(img,inx) in about.image' :key='inx' alt="">
 			</div>
 		</div>
-		<div class="typeContent">
+		<div class="typeContent" v-show="this.about.shiYingZheng? true:false">
 			<h4 class="xia">适应症状</h4>
 			<ul>
 				<li v-for='(item,inx) in this.about.shiYingZheng' :key='inx'>
@@ -42,19 +42,19 @@
 				</li>
 			</ul>
 		</div>
-		<div class="typeContent">
+		<div class="typeContent" v-show="this.about.zhenLiaoJiShu? true:false">
 			<h4 class="xia">诊疗技术</h4>
 			<div class="contentP">
 				<p>{{this.about.zhenLiaoJiShu}}</p>
 			</div>
 		</div>
-		<div class="typeContent">
+		<div class="typeContent" v-show="this.about.teSe? true:false">
 			<h4 class="xia">诊疗特色</h4>
 			<div class="contentP">
 				<p>{{this.about.teSe}}</p>
 			</div>
 		</div>
-		<div class="typeContent">
+		<div class="typeContent" v-show="this.about.youShi? true:false">
 			<h4 class="xia">科室优势</h4>
 			<div class="contentP">
 				<p>{{this.about.youShi}}</p>
@@ -216,6 +216,7 @@ export default {
 	height: .9rem;
 	border-radius: 50%;
 	margin-bottom: .12rem;
+	object-fit: cover;
 }
 .typeTItle ul li h5{
 	font-size: .14rem;

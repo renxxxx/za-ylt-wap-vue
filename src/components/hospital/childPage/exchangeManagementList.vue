@@ -9,23 +9,29 @@
 			</div>
 			<div class="right"></div>
 		</div>
-		<ul>
-			<li>
-				<ul>
-					<li>
-						<span>订单编号：939873423847</span>
+		<van-pull-refresh v-model="isLoading" @refresh="refresh" >
+			<ul>
+				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
+					<li v-for="(item,inx) in exchangeList" :key='inx' class='List'>
+						<router-link :to="{name : 'hospital_exchangeDetails' ,params : {item : item}}">
+							<ul>
+								<li>
+									<span>订单编号：{{item.orderId}}</span>
+								</li>
+								<li>
+									<h4>{{item.clinicName}}</h4>
+									<p>兑换时间：<span>{{moment(item.addTime).format('YYYY-MM-DD hh:mm')}}</span></p>
+									<p>兑换数量：<span>{{item.totalCount}}</span></p>
+								</li>
+								<li>
+									<p>使用积分：<span>{{item.totalExchangePoint}}</span></p>
+								</li>
+							</ul>
+						</router-link>
 					</li>
-					<li>
-						<h4>北京中日友好门诊</h4>
-						<p>兑换时间：<span>2019/02/19 10:29</span></p>
-						<p>兑换数量：<span>2</span></p>
-					</li>
-					<li>
-						<p>使用积分：<span>50000</span></p>
-					</li>
-				</ul>
-			</li>
-		</ul>
+				</van-list>
+			</ul>
+		</van-pull-refresh>
 	</div>
 </template>
 
@@ -33,15 +39,22 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import { Dialog } from 'vant'
 export default {
 	name: 'exchangeList',
 	data () {
 		return {
-			
+			exchangeList:[],
+			page : 2,
+			loading: false,
+			// 加载状态结束
+			finished: false,
+			//显示下拉加载
+			isLoading: false,
 		}
 	},
 	computed:{
-	  
+		...mapGetters(['account']),
 	},
 	components:{
 		
@@ -50,11 +63,84 @@ export default {
 		
 	},
 	mounted () {
-	
+		this.getdata()
 	},
 	methods: {
 		goBackFn(){
 			this.$router.back(-1)
+		},
+		successFn(_d){
+			for (let nums in _d.data.data.items) {
+				this.exchangeList.push( _d.data.data.items[nums] );
+			}
+			console.log(this.exchangeList)
+		},
+		getdata(){
+			this.$axios.post('/clientend2/hospitalend/exchangemanage/orders',qs.stringify({
+				hospitalId : this.account.hospitalId,
+				pn : 1,
+				ps : 10,
+			}))
+			.then(_d => {
+				this.finished = false;
+				this.isLoading = false;
+				this.loading = false;
+				this.exchangeList =[];
+				this.page = 2;
+				console.log( _d.data.data.items.length)
+				if( _d.data.data.items.length == 0){
+					this.isLoading = false;
+					// 加载状态结束
+					this.loading = false;
+					this.finished = true;
+				}else{
+					_d.data.codeMsg? Toast.success(_d.data.codeMsg) : this.successFn(_d);
+					// console.log(_d.data.data.sum.totalCount)
+					this.isLoading = false;
+					// 加载状态结束
+					this.loading = false;
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: err});
+			})
+		},
+		nextdata(){
+			this.$axios.post('/clientend2/hospitalend/exchangemanage/orders',qs.stringify({
+				hospitalId : this.account.hospitalId,
+				pn : this.page,
+				ps : 10,
+			}))
+			.then(_d => {
+				this.page++;
+				if(_d.data.data.items.length != 0){
+					for (let nums in _d.data.data.items) {
+						this.exchangeList.push( _d.data.data.items[nums] );
+					}
+					this.isLoading = false;
+					// 加载状态结束
+					this.loading = false;
+				}else{
+					this.$notify({
+						message: '数据已全部加载',
+						duration: 1000,
+						background:'#79abf9',
+					})
+					this.loading = false;
+					this.finished = true;
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
+		},
+		onLoad(){
+			this.nextdata()
+		},
+		refresh(){
+			this.getdata()
 		}
 	},
 }
@@ -63,14 +149,15 @@ export default {
 <style scoped>
 .exchangeList{
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
 	background-color: #F5F5F5;
 }
-.topNav{x
+.topNav{
 	width: 100%;
 	height: .47rem;
-	margin-bottom: .15rem;
 	background-color: #FFFFFF;
+	position: fixed;
+    z-index: 9;
 }	
 .leftImg{
 	width: 10%;
@@ -101,54 +188,60 @@ export default {
 	line-height: .47rem;
 	float:right;
 }
-.exchangeList>ul{
+.exchangeList ul{
 	width: 100%;
 }
-.exchangeList>ul>li{
+.List{
 	width: 93.6%;
 	height: 1.925rem;
 	margin: 0rem auto;
 	margin-top: .12rem;
 	background-color: #FFFFFF;
 }
-.exchangeList>ul>li>ul{
+.List ul{
 	width: 91.453%;
 	height: 100%;
 	margin: 0rem auto;
 }
-.exchangeList>ul>li>ul>li:first-child{
+.List ul li:first-child{
 	width: 100%;
 	height: .425rem;
 	line-height: .425rem;
 	color: #999999;
 	border-bottom: 1px solid #EEEEEE;
 }
-.exchangeList>ul>li>ul>li:nth-child(2){
+.List ul li:nth-child(2){
 	width: 100%;
 	height: .75rem;
 	border-bottom: 1px solid #EEEEEE;
 	padding: .12rem 0rem;
 }
-.exchangeList>ul>li>ul>li:nth-child(2)>h4{
+.List ul li:nth-child(2)>h4{
 	font-weight: bold;
 	font-size: .15rem;
 	line-height: .34rem;
 }
-.exchangeList>ul>li>ul>li:nth-child(2)>p{
+.List ul li:nth-child(2)>p{
 	color: #999999;
 	line-height: .21rem;
 	font-size: .13rem;
 }
-.exchangeList>ul>li>ul>li:last-child{
+.List ul li:last-child{
 	height: .49rem;
 	line-height: .49rem;
 	text-align: right;
 }
-.exchangeList>ul>li>ul>li:last-child>p{
+.List ul li:last-child>p{
 	color: #999999;
 	font-size: .13rem;
 }
-.exchangeList>ul>li>ul>li:last-child>p>span{
+.List ul li:last-child>p>span{
 	color: #FF951B;
+}
+>>>.van-pull-refresh {
+    overflow: hidden;
+    -webkit-user-select: none;
+    user-select: none;
+	padding-top: .5rem;
 }
 </style>
