@@ -3,7 +3,7 @@
 		<div class="top_search">
 			<div class="search_return">
 				<a @click="goBackFn">
-					<img src="static/img/shape@2x.png" alt="">
+					<img src="static/img/shape@3x.png" alt="">
 				</a>
 			</div>
 			<div class="search_input">

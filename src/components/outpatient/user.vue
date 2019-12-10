@@ -6,7 +6,7 @@
 			</div>
 			<div class="user_message">
 				<div class="top_left">
-					<img :src="coverImg? coverImg:'static/门诊端/img/logo@2x.png'" alt="">
+					<img :src="coverImg? coverImg:'static/img/logo@2x.png'" alt="">
 					<span>已认证</span>
 				</div>
 				<div class="top_center">
