@@ -3,6 +3,7 @@ import axios from 'axios'
 import qs from 'qs';
 import { Dialog } from 'vant'
 import moment from 'moment'
+import h5p from '../../../build/h5p.js'
 const state={
 	//账号协议checked
 	checked: true,
@@ -174,6 +175,7 @@ const mutations={
 		// console.log(_postUrl);
 		// console.log(_postRefresh);
 		// console.log(_url);
+		// console.log(h5p);
 		axios.post(_postUrl,qs.stringify({
 				account : state.account.name,
 				password : state.account.password

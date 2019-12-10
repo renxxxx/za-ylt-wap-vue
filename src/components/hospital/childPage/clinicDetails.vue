@@ -18,7 +18,7 @@
 		</div>
 		<div class="statistics" v-model="list">
 			<van-circle v-model="currentRate" :rate="list.yesNum/list.allNum*100" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
-			  size="1.15rem" :text="list.allNum" />
+			  size="1.15rem" :text="String(this.list.noNum + this.list.yesNum)" />
 			<div class="statisticsText">
 				<div class="noText">
 					<span>未就诊：{{list.noNum}}</span>
@@ -38,7 +38,9 @@
 				</van-dropdown-menu>
 			</div>
 		</div>
-		<component v-bind:is="componentName"  ref='clinicAll' v-bind:list = 'list'></component>
+		<keep-alive>
+			<component v-bind:is="componentName"  ref='clinicAll' v-bind:list = 'list'></component>
+		</keep-alive>
 	</div>
 </template>
 
@@ -73,7 +75,7 @@ export default {
 				yesTitle:'已就诊',
 				noNum : 0,
 				yesNum : 0,
-				allNum : this.noNum + this.yesNum,
+				allNum : '',
 				clinicId: '',
 			}
 		}
@@ -88,9 +90,9 @@ export default {
 		
 	},
 	mounted () {
+		console.log(this.$route.params.item.itemId)
 		this.ItemIdFn();
-		console.log(this.$route.params.item)
-		// this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = ''
+		this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = ''
 	},
 	methods: {
 		//回退方法
@@ -119,6 +121,7 @@ export default {
 				itemId : this.list.clinicId,
 			}))
 			.then(_d => {
+				this.clinicDetails = {}
 				this.clinicDetails = _d.data.data;
 			})
 			.catch((err)=>{

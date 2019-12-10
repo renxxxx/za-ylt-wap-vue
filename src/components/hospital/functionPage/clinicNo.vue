@@ -39,7 +39,7 @@ export default {
 			finished: false,
 			//显示下拉加载
 			isLoading: false,
-			page : 2,
+			page : 1,
 		}
 	},
 	computed:{
@@ -53,7 +53,7 @@ export default {
 		
 	},
 	mounted () {
-		this.getdata();
+		// this.getdata();
 	},
 	methods: {
 		// 详情页
@@ -62,7 +62,7 @@ export default {
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
-				clinicId : this.account.itemId,
+				clinicId : this.list.clinicId,
 				status :1,
 				pn : 1,
 				ps : 10
@@ -106,10 +106,12 @@ export default {
 				Dialog({ message: err});
 			})
 		},
+		
 		nextdata(){
+			debugger;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				clinicId : this.account.itemId,
+				clinicId : this.list.clinicId,
 				status :1,
 				pn : this.page,
 				ps : 10,
