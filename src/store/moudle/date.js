@@ -239,6 +239,8 @@ const mutations={
 	
 	//登陆页面的表单验证
 	submitFn(state,landingState){
+		h5p.shareWeb("www.baidu.com",'_www/logo.png','title','content');
+
 		// console.log(this.account.name+this.account.password)
 		state.account.isLogin = landingState;
 		// console.log(landingState)
