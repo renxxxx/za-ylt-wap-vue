@@ -16,6 +16,8 @@ import vueHashCalendar from 'vue-hash-calendar'
 import 'vue-hash-calendar/lib/vue-hash-calendar.css'
 import VueScroller from 'vue-scroller'
 
+import h5p from '../build/h5p.js'
+
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.moment = moment;
@@ -40,6 +42,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  h5p,
   components: { App },
   template: '<App/>'
 })
