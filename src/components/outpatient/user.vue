@@ -24,10 +24,12 @@
 		</van-image-preview>
 		<div class="user_center">
 			<ul>
-				<li @click="exitFn">
-					<span>退出登陆</span>
-					<img src="static/img/Chevron Copy 2@2x.png" alt="">
-				</li>
+				<router-link :to="{name: 'landingPage'}">
+					<li @click="exitFn">
+						<span>退出登陆</span>
+						<img src="static/img/Chevron Copy 2@2x.png" alt="">
+					</li>
+				</router-link>
 			</ul>
 		</div>
 		<routerNav v-bind:name='name'></routerNav>
@@ -101,7 +103,6 @@ export default {
 		this.account.name = '';
 		this.account.password = '';
 		console.log(this.account.isLogin);
-		window.location.href = '/#/landingPage';
 		this.$axios.post('/hospital/logout')
 	}
   },

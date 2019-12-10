@@ -44,6 +44,7 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import { Toast } from 'vant';
 export default {
 	name: 'exchangeAdd',
 	data () {
