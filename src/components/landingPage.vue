@@ -2,7 +2,7 @@
   <div class="landing">
 		<div class="nav">
 			<div class="topNav">
-				<img src="../../static/新登陆-10.25/切图/name@2x.png" alt="">
+				<img src="static/img/name@2x.png" alt="">
 			</div>
 			<div class="typeNav" type="line" border="false">
 				<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)' 
@@ -10,12 +10,12 @@
 				<van-tab title="医院端" >
 					<form @submit.prevent="submit('100')" class="content">
 						<div class="inputBox">
-							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
+							<img class="telephoneImg" src="static/img/iphone@2x.png" alt="">
 							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" autofocus="autofocus">
 						</div>
 						<div class="inputBox">
-							<img  class="passwordImg" src="../../static/新登陆-10.25/切图/mima@2x.png" alt="">
-							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码">
+							<img  class="passwordImg" src="/static/img/mima@2x.png" alt="">
+							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码" autocomplete>
 						</div>
 						<div class="checkBox">
 							<input type="checkbox"
@@ -29,7 +29,7 @@
 							<router-link  to="/retrievePassword">
 								<div  @click="forgetFn(100)">
 									忘记密码
-									<img src="../../static/iOS切图/reset@2.png" alt="">
+									<img src="static/iOS切图/reset@2.png" alt="">
 								</div>	
 							</router-link>
 						</div>
@@ -39,13 +39,13 @@
 				<van-tab title="门诊端" type="line" border="false" >
 					<form @submit.prevent="submit('200')" class="content">
 						<div class="inputBox">
-							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
+							<img class="telephoneImg" src="static/img/iphone@2x.png" alt="">
 							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" v-focus="true">
 							
 						</div>
 						<div class="inputBox">
-							<img  class="passwordImg" src="../../static/新登陆-10.25/切图/mima@2x.png" alt="">
-							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码">
+							<img  class="passwordImg" src="static/img/mima@2x.png" alt="">
+							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码" autocomplete>
 						</div>
 						<div class="checkBox">
 							<input type="checkbox"
@@ -59,7 +59,7 @@
 							<router-link  to="/retrievePassword">
 								<div @click="forgetFn(200)">
 									忘记密码
-									<img src="../../static/iOS切图/reset@2.png" alt="">
+									<img src="static/img/reset@2.png" alt="">
 								</div>
 							</router-link>
 						</div>
@@ -68,12 +68,12 @@
 				<van-tab title="运营端" type="line" border="false">
 					<form @submit.prevent="submit('300')" class="content">
 						<div class="inputBox">
-							<img class="telephoneImg" src="../../static/新登陆-10.25/切图/iphone@2x.png" alt="">
+							<img class="telephoneImg" src="static/img/iphone@2x.png" alt="">
 							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" v-focus="true">
 						</div>
 						<div class="inputBox">
-							<img  class="passwordImg" src="../../static/新登陆-10.25/切图/mima@2x.png" alt="">
-							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码">
+							<img  class="passwordImg" src="static/img/mima@2x.png" alt="">
+							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码"  autocomplete>
 						</div>
 						<div class="checkBox">
 							<input type="checkbox"
@@ -87,7 +87,7 @@
 							<router-link  to="/retrievePassword">
 								<div @click="forgetFn(300)">
 									修改密码
-									<img src="../../static/iOS切图/reset@2.png" alt="">
+									<img src="static/img/reset@2.png" alt="">
 								</div>
 							</router-link>
 						</div>
@@ -290,7 +290,7 @@ export default {
   display:inline-block;
   width: .17rem;
   height: .17rem;
-  background-image: url('../../static/iOS切图/Not-checkbox@2x.png');
+  background-image: url('../../static/img/Not-checkbox@2x.png');
   box-sizing:border-box;  
   border-radius: 3px;
   position: absolute;
@@ -312,8 +312,7 @@ export default {
   width: .17rem;
   height: .17rem;
   border: 1px dotted #D2A47E;
-  /* background-image: url('../../static/iOS切图/checkbox@2x.png'); */
-  background-image: url(../../static/iOS切图/checkbox@2x.png);
+  background-image: url('../../static/img/checkbox@2x.png');
   background-size: .17rem .17rem;
   box-sizing:border-box;  
   border-radius: 3px;

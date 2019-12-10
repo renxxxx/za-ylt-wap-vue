@@ -1,8 +1,8 @@
 <template>
 	<div class="caseDetails" >
 		<div class="topNav">
-			<img src="static/iOS切图/shape@2x.png" alt="" @click="goBackFn">
-			<img src="static/iOS切图/share@3x.png" alt="">
+			<img src="static/img/shape@2x.png" alt="" @click="goBackFn">
+			<img src="static/img/share@3x.png" alt="">
 		</div>
 		<div class="banner">
 			<img :src="caseDetails.cover" alt="">
@@ -10,7 +10,7 @@
 		<div class="content" v-model='caseDetails'>
 			<h3>{{caseDetails.name}}</h3>
 			<div class="headPortrait">
-				<img src="static/iOS切图/logo@2x.png" alt="">
+				<img src="static/img/logo@2x.png" alt="">
 				<span>{{caseDetails.hosptialName}}</span>
 				<span>{{moment(caseDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 			</div>

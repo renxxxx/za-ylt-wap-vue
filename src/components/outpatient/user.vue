@@ -2,11 +2,11 @@
 	<div class="user">
 		<div class="user_top">
 			<div class="user_set" v-show="false">
-				<img src="static/iOS切图/set up@2x.png" alt="">
+				<img src="static/img/set up@2x.png" alt="">
 			</div>
 			<div class="user_message">
 				<div class="top_left">
-					<img :src="coverImg? coverImg:'static/门诊端/iOS切图/logo@2x.png'" alt="">
+					<img :src="coverImg? coverImg:'static/门诊端/img/logo@2x.png'" alt="">
 					<span>已认证</span>
 				</div>
 				<div class="top_center">
@@ -15,7 +15,7 @@
 				</div>
 				<div class="top_right" @click="showImgFn">
 					<span>营业执照</span>
-					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
+					<img src="static/img/Chevron Copy 2@2x.png" alt="">
 				</div>
 			</div>
 		</div>
@@ -26,7 +26,7 @@
 			<ul>
 				<li @click="exitFn">
 					<span>退出登陆</span>
-					<img src="static/iOS切图/Chevron Copy 2@2x.png" alt="">
+					<img src="static/img/Chevron Copy 2@2x.png" alt="">
 				</li>
 			</ul>
 		</div>
@@ -154,7 +154,7 @@ export default {
 	top: 1.15rem;
 	font-size: .03rem;
 	color: #FFFFFF;
-	background:url('../../../static/iOS切图/Gradualchange@2x.png');
+	background:url('../../../static/img/Gradualchange@2x.png');
 	background-size:100% 100%;
 	padding: .02rem .1rem;
 }

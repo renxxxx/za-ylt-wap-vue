@@ -45,26 +45,26 @@ export default {
   	return{
 		active: 0,
 		index:{
-		    active: 'static/iOS切图/shouye@2x.png',
-		    inactive: 'static/iOS切图/shouye-blue@2x.png'
+		    active: 'static/img/shouye@2x.png',
+		    inactive: 'static/img/shouye-blue@2x.png'
 		},
 		hospital:{
-		    active: 'static/门诊端/iOS切图/Hospital@2x.png',
-		    inactive: 'static/门诊端/iOS切图/Hospital-blue@2x.png'
+		    active: 'static/img/Hospital@2x.png',
+		    inactive: 'static/img/Hospital-blue@2x.png'
 		},
 		gene:{
-		    active: 'static/切图-基因/jiyin-gray@2x.png',
-		    inactive: 'static/切图-基因/jiyin-blue@2x.png'
+		    active: 'static/img/jiyin-gray@2x.png',
+		    inactive: 'static/img/jiyin-blue@2x.png'
 		},
 		my:{
-		    active: 'static/iOS切图/wode@2x.png',
-		    inactive: 'static/iOS切图/wode-blue@2x.png'
+		    active: 'static/img/wode@2x.png',
+		    inactive: 'static/img/wode-blue@2x.png'
 		},
 		//主导航栏图片
-		colorImg:['static/iOS切图/shouye-blue@2x.png',
-				'static/门诊端/iOS切图/Hospital@2x.png',
-				'static/切图-基因/jiyin-gray@2x.png',
-				'static/iOS切图/wode@2x.png'],
+		colorImg:['static/img/shouye-blue@2x.png',
+				'static/img/Hospital@2x.png',
+				'static/img/jiyin-gray@2x.png',
+				'static/img/wode@2x.png'],
 		dataValue : ''
 	}
   },

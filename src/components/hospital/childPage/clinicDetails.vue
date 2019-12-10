@@ -2,14 +2,16 @@
 	<div class="clinicDetails">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/iOS切图/shape@2x.png" alt="">
+				<img src="static/img/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>{{this.clinicDetails.name}}</h3>
 			</div>
-			<div class="right">
-				<img src="static/iOS切图/Preview@2x.png" alt="">
-			</div>
+			<router-link :to="{name : 'hospital_addCLinic' ,params : {item : list.clinicId}}">
+				<div class="right">
+					<img src="static/img/Preview@2x.png" alt="">
+				</div>
+			</router-link>
 		</div>
 		<div class="detailsTime">
 			<span>{{moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
@@ -86,9 +88,9 @@ export default {
 		
 	},
 	mounted () {
+		this.ItemIdFn();
 		console.log(this.$route.params.item)
-		this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = ''
-		
+		// this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = ''
 	},
 	methods: {
 		//回退方法
@@ -118,7 +120,6 @@ export default {
 			}))
 			.then(_d => {
 				this.clinicDetails = _d.data.data;
-				
 			})
 			.catch((err)=>{
 				console.log(err);

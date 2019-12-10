@@ -3,11 +3,11 @@
 		<div class="navWarp">
 			<div class="topNav">
 				<div class="clinic_information" @click="goBackFn">
-					<img src="static/iOS切图/shape@2x.png" alt="">
+					<img src="static/img/shape@3x.png" alt="">
 				</div>
 				<div class="clinic_search">
 					<input type="text" placeholder="输入门诊名"  v-model="keywords" @keyup="inputNow">
-					<img src="static/iOS切图/sousuo@2x.png" alt="">
+					<img src="static/img/sousuo@2x.png" alt="">
 				</div>
 			</div>
 			<div class="listTitle">
@@ -17,7 +17,7 @@
 				<div class="titleRight">
 					<router-link :to="{name : 'hospital_addCLinic'}">
 						<span>新增</span>
-						<img src="static/iOS切图/xinzeng@2x.png" alt="">
+						<img src="static/img/xinzeng@2x.png" alt="">
 					</router-link>
 				</div>
 			</div>

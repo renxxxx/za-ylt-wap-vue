@@ -2,7 +2,7 @@
 	<div class="exchangeList">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/iOS切图/shape@2x.png" alt="">
+				<img src="static/img/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>门诊兑换清单</h3>

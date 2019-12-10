@@ -1,7 +1,7 @@
 <template>
 	<div class="typeDetails">
 		<div class="topNav">
-			<img src="static/iOS切图/shape@2x.png" alt=""  @click="goBackFn">
+			<img src="static/img/shape@3x.png" alt=""  @click="goBackFn">
 			<h3>{{this.about.name}}</h3>
 		</div>
 		<div class="typeTItle" v-show="!this.doctor||this.doctor.length==0? false:true">
@@ -15,14 +15,14 @@
 			</ul>
 			<van-popup v-model="show">
 				<div class="popup">
-					<img src="static/iOS切图/Bookmark@2x.png" alt="">
+					<img src="static/img/Bookmark@2x.png" alt="">
 					<div class="popupTitle">
 						<img :src="doctorAbout.headimg" alt="">
 						<h5>{{doctorAbout.name}}<span>{{doctorAbout.jobTitles}}</span></h5>
 						<p>{{doctorAbout.hosptialName}}</p>
 						<p>{{doctorAbout.intro}}</p>
 					</div>
-					<img src="static/iOS切图/close2@2x.png" alt="" @click='show = false'>
+					<img src="static/img/close2@2x.png" alt="" @click='show = false'>
 				</div>
 			</van-popup>
 			

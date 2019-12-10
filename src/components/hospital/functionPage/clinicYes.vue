@@ -6,7 +6,7 @@
 					<li v-for="(item,inx) in clinicDetails" :key="inx" @click="detailsValueFn(item)">
 						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
 							<div class="contentTitle">
-								<img src="static/iOS切图/blue@2x.png" alt="">
+								<img src="static/img/blue@2x.png" alt="">
 								<span>{{item.realname}}</span>
 							</div>
 							<div class="contnet_left">

@@ -2,7 +2,7 @@
 	<div class="exchangeAddImg">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/iOS切图/shape@2x.png" alt="">
+				<img src="static/img/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>推送通知</h3>
@@ -14,7 +14,7 @@
 		
 		<div class="addImg" v-model="exchangeAdd">
 			<div class="addImgButton" v-show="this.$route.params.exchangeAdd.show">
-				<img src="static/iOS切图/append@2x.png" alt="">
+				<img src="static/img/append@2x.png" alt="">
 				<span>请添加照片</span>
 			</div>
 			<img v-bind:src="imgUrl" alt="">

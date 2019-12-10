@@ -18,51 +18,51 @@
 			<ul>
 				<li>
 					<router-link :to="{name : 'hospital_indexSearch'}">
-						<img src="static/iOS切图/qudaomenzhen@2x.png" alt="">
+						<img src="static/img/qudaomenzhen@2x.png" alt="">
 						<span>渠道门诊</span>
 					</router-link>
 				</li>
 				<li>
 					<router-link :to="{name : 'hospital_sourceManagement'}">
-						<img src="static/iOS切图/bingyuanguanli@2x.png" alt="">
+						<img src="static/img/bingyuanguanli@2x.png" alt="">
 						<span>病源管理</span>
 					</router-link>
 				</li>
 				<li>
 					<router-link :to="{name : 'hospital_collect'}">
-						<img src="static/iOS切图/qixiejicai@2x.png" alt="">
+						<img src="static/img/qixiejicai@2x.png" alt="">
 						<span>器械集采</span>
 					</router-link>
 					
 				</li>
 				<li @click="noLinkFn">
 					<router-link :to="{name : ''}">
-						<img src="static/iOS切图/yunyingzhongxin@2x.png" alt="">
+						<img src="static/img/yunyingzhongxin@2x.png" alt="">
 						<span>运营中心</span>
 					</router-link>
 				</li>
 				<li @click="noLinkFn">
 					<router-link :to="{name : ''}">
-						<img src="static/iOS切图/jiyinjiance@2x.png" alt="">
+						<img src="static/img/jiyinjiance@2x.png" alt="">
 						<span>基因检测</span>
 					</router-link>
 					
 				</li>
 				<li @click="noLinkFn">
 					<router-link :to="{name : ''}">
-						<img src="static/iOS切图/yiliaoziyuan@2x.png" alt="">
+						<img src="static/img/yiliaoziyuan@2x.png" alt="">
 						<span>医疗资源</span>
 					</router-link>
 				</li>
 				<li>
 					<router-link :to="{name : 'hospital_activityReleased'}">
-						<img src="static/iOS切图/yiyuanhuodong@2x.png" alt="">
+						<img src="static/img/yiyuanhuodong@2x.png" alt="">
 						<span>医院活动</span>
 					</router-link>
 				</li>
 				<li @click="noLinkFn">
 					<router-link :to="{name : ''}">
-						<img src="static/iOS切图/qita@2x.png" alt="">
+						<img src="static/img/qita@2x.png" alt="">
 						<span>其他项目</span>
 					</router-link>
 				</li>
@@ -71,7 +71,7 @@
 		
 		<div class="article">
 			<div class="articleTitle">
-				<img src="static/iOS切图/Combined Shape@2x.png" alt="">
+				<img src="static/img/Combined Shape@2x.png" alt="">
 				<h3>运营精选</h3>
 			</div>
 			<ul :model="article">
@@ -81,7 +81,7 @@
 							<div class="article_left">
 								<p>{{items.content}}</p>
 								<div class="article_leftTime">
-									<img src="static/iOS切图/time@2x.png" alt="">
+									<img src="static/img/time@2x.png" alt="">
 									<span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
 								</div>
 							</div>
@@ -200,7 +200,7 @@ export default {
 .navWarp{
 	height: 2.26rem;
 	width: 100%;
-	background: url('../../../static/iOS切图/88-1.png') no-repeat;
+	background: url('../../../static/img/88-1.png') no-repeat;
 	background-size: 100% 1.8rem;
 	padding-top: .12rem;
 }

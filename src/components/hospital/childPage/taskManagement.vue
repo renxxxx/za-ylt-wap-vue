@@ -2,7 +2,7 @@
 	<div class="task">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/iOS切图/shape@2x.png" alt="">
+				<img src="static/img/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>任务管理</h3>
@@ -144,7 +144,7 @@ export default {
 .topNav{
 	width: 100%;
 	height: 1.76rem;
-	background: url('../../../../static/iOS切图/tu1.png')  center no-repeat,linear-gradient(#FDFDFD, #FBFBFB) ;
+	background: url('../../../../static/img/tu1.png')  center no-repeat,linear-gradient(#FDFDFD, #FBFBFB) ;
 	background-size: 1.84rem 1.29rem;
 	margin-bottom: .15rem;
 }	
@@ -221,7 +221,7 @@ export default {
 .taskList>ul>li input[type=checkbox] {
   width: .22rem;
   height: .22rem;
-  background: url('../../../../static/iOS切图/Notselected@2x.png') center no-repeat;
+  background: url('../../../../static/img/Notselected@2x.png') center no-repeat;
   -webkit-appearance: none;
   background-size: .22rem .22rem;
   border: none;
@@ -239,7 +239,7 @@ export default {
   display:inline-block;
   width: .22rem;
   height: .22rem;
-  background: url('../../../../static/iOS切图/Select@2x.png')center no-repeat;
+  background: url('../../../../static/img/Select@2x.png')center no-repeat;
   background-size: .22rem .22rem;
   box-sizing:border-box;  
   position: absolute;

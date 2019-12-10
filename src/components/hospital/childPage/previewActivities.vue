@@ -83,7 +83,7 @@ export default {
 					startTime : undefined,
 					endTime : undefined,
 					content : '',
-					cover : 'static/iOS切图/Group@2x.png'
+					cover : 'static/img/Group@2x.png'
 				},
 				console.log(this.activity)
 				window.location.href='#/hospital_activityReleased';

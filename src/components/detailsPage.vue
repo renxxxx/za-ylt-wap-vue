@@ -3,7 +3,7 @@
 		<div class="topNav">
 			<div class="nav_left">
 				<a @click="goBackFn">
-					<img src="static/iOS切图/back-white@2x.png" alt="">
+					<img src="static/img/back-white@2x.png" alt="">
 				</a>
 			</div>
 			<div class="nav_center">
@@ -81,7 +81,7 @@ export default {
 		postImgList:[],
 		modify:{
 			value:'编辑',
-			img:'static/iOS切图/editor.png',
+			img:'static/img/editor.png',
 			data:false,					//保存状态
 			readonly : 'true',		//读取状态
 			num: 0,						//点击次数
@@ -137,7 +137,7 @@ export default {
 			// console.log(this.fileList)
 			this.modify.data = true;
 			this.modify.value = '编辑';
-			this.modify.img = 'static/iOS切图/editor.png';
+			this.modify.img = 'static/img/editor.png';
 			document.getElementsByClassName('van-uploader__upload')[0].style.display = 'none';
 			console.log(document.getElementsByClassName('van-uploader__upload')[0])
 			let classDomList = document.getElementsByClassName('van-uploader__preview-delete');
@@ -180,7 +180,7 @@ export default {
 		if(this.modify.num % 2 != 0){
 			// console.log(this.modify.num)
 			this.modify.value = '保存';
-			this.modify.img = 'static/iOS切图/save@2x.png';
+			this.modify.img = 'static/img/save@2x.png';
 			this.modify.data = true;
 			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
@@ -221,7 +221,7 @@ export default {
 			// console.log(this.fileList)
 			if(this.fileList.length > 0){
 				this.modify.value = '编辑';
-				this.modify.img = 'static/iOS切图/editor.png';
+				this.modify.img = 'static/img/editor.png';
 				document.getElementsByClassName('van-uploader__upload')[0].style.display = 'none'
 				let classDomList = document.getElementsByClassName('van-uploader__preview-delete');
 				// console.log(classDomList)
@@ -232,7 +232,7 @@ export default {
 			}else{
 				this.modify.data = false;
 				this.modify.value = '编辑';
-				this.modify.img = 'static/iOS切图/editor.png';
+				this.modify.img = 'static/img/editor.png';
 			}
 		}
 	},

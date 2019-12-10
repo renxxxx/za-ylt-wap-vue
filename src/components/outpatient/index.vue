@@ -5,13 +5,13 @@
 			<div class="topNav">
 				<div class="indexSearch">
 					<router-link to="/outpatient_search">
-						<img src="static/iOS切图/sousuo@2x.png" alt="">
+						<img src="static/img/sousuo@2x.png" alt="">
 						<input type="text" placeholder="搜索病源" autofocus="autofocus">
 					</router-link>
 				</div>
 				<div class="indexScreening" @click="showPopup">
 					<span>筛选</span>
-					<img src="static/iOS切图/screen@2x.png" alt="加载中" >
+					<img src="static/img/screen@2x.png" alt="加载中" >
 				</div>
 				<van-popup v-model="show" position="right" :style="{ height: '100%',width:'78.7%'}">
 					<div id="indexLabel" v-model="Time">
@@ -58,7 +58,7 @@
 					<van-tab title="新增病源">
 						<form @submit.prevent="hospitalSubmit" class="newAdd">
 							<div class="newAddTitle">
-								<img src="static/iOS切图/bitian@2x.png" alt="">
+								<img src="static/img/bitian@2x.png" alt="">
 								<h3>必填项</h3>
 								<ul class="Fill">
 									<li>
@@ -76,7 +76,7 @@
 								</ul>
 							</div>
 							<div class="newAddTitle bottom">
-								<img src="static/iOS切图/bitian@2x.png" alt="">
+								<img src="static/img/bitian@2x.png" alt="">
 								<h3>选填项</h3>
 								<ul class="Fill">
 									<li>
@@ -99,7 +99,7 @@
 													<span>{{_notDiagnosis.realname}}</span>
 												</div>
 												<div class="content_right">
-													<img src='static/门诊端/iOS切图/weijiuzhen@2x.png'>
+													<img src='static/img/weijiuzhen@2x.png'>
 													<span class="AlreadySpanColor">未就诊</span>
 												</div>
 												<p>{{moment(_notDiagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
@@ -120,7 +120,7 @@
 												<span>{{_diagnosis.realname}}</span>
 											</div>
 											<div class="content_right">
-												<img src='static/门诊端/iOS切图/yijiuzhen@2x.png'>
+												<img src='static/img/yijiuzhen@2x.png'>
 												<span>已就诊</span>
 											</div>
 											<p>{{moment(_diagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
@@ -461,7 +461,7 @@ export default {
 	line-height:.335rem;
 	width: 100%;
 	padding-top: 0.14rem;
-	background:url('../../../static/门诊端/iOS切图/BJ-blue.png');
+	background:url('../../../static/img/BJ-blue.png');
 	background-size:100% 100%;
 	position: relative;
 }

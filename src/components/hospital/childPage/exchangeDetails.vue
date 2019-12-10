@@ -2,7 +2,7 @@
 	<div class="exchangeDetails">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/iOS切图/shape@2x.png" alt="">
+				<img src="static/img/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>专家介绍</h3>
@@ -11,7 +11,7 @@
 		</div> 
 		<div class="address">
 			<div class="addressLeft">
-				<img src="static/iOS切图/exchangeAdress.png" alt="">
+				<img src="static/img/exchangeAdress.png" alt="">
 			</div>
 			<div class="addressCenter">
 				<h4>邵先生</h4>

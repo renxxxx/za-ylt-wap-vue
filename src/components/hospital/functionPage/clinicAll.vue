@@ -90,7 +90,7 @@ export default {
 								pushTime : _d.data.data.items[nums].pushTime,
 								realname : _d.data.data.items[nums].realname,
 								status : _d.data.data.items[nums].status,
-								img : "static/iOS切图/orange@2x.png",
+								img : "static/img/orange@2x.png",
 								button : "确认就诊"
 							});
 							this.noNum++;
@@ -103,7 +103,7 @@ export default {
 								pushTime : _d.data.data.items[nums].pushTime,
 								realname : _d.data.data.items[nums].realname,
 								status : _d.data.data.items[nums].status,
-								img : "static/iOS切图/blue@2x.png",
+								img : "static/img/blue@2x.png",
 								button : "已就诊",
 								buttonColor : "buttonColor"
 							});
@@ -147,7 +147,7 @@ export default {
 								pushTime : _d.data.data.items[nums].pushTime,
 								realname : _d.data.data.items[nums].realname,
 								status : _d.data.data.items[nums].status,
-								img : "static/iOS切图/orange@2x.png",
+								img : "static/img/orange@2x.png",
 								button : "确认就诊"
 							});
 							this.list.noNum = _d.data.data.sum.totalCount
@@ -159,7 +159,7 @@ export default {
 								pushTime : _d.data.data.items[nums].pushTime,
 								realname : _d.data.data.items[nums].realname,
 								status : _d.data.data.items[nums].status,
-								img : "static/iOS切图/blue@2x.png",
+								img : "static/img/blue@2x.png",
 								button : "已就诊",
 								buttonColor : "buttonColor"
 							});

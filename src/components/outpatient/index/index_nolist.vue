@@ -10,7 +10,7 @@
 									<span>{{_notDiagnosis.realname}}</span>
 								</div>
 								<div class="content_right">
-									<img src='static/门诊端/iOS切图/weijiuzhen@2x.png'>
+									<img src='static/img/weijiuzhen@2x.png'>
 									<span class="AlreadySpanColor">未就诊</span>
 								</div>
 								<p>{{moment(_notDiagnosis.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>

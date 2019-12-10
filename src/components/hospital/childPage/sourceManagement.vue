@@ -4,15 +4,15 @@
 			<!-- 搜索及其筛选 -->
 			<div class="topNav">
 				<div class="indexReturn" @click="goBackFn">
-					<img src="static/iOS切图/back-white@2x.png" alt="">
+					<img src="static/img/back-white@2x.png" alt="">
 				</div>
 				<div class="indexSearch">
-					<img src="static/iOS切图/sousuo@2x.png" alt="">
+					<img src="static/img/sousuo@2x.png" alt="">
 					<input type="text" placeholder="搜索病源" autofocus="autofocus" v-model="list.keywords" @keyup="inputNow">
 				</div>
 				<div class="indexScreening" @click="showPopup">
 					<span>筛选</span>
-					<img src="static/iOS切图/screen@2x.png" alt="加载中" >
+					<img src="static/img/screen@2x.png" alt="加载中" >
 				</div>
 				<van-popup v-model="show" position="right" :style="{ height: '100%',width:'78.7%'}">
 					<div id="indexLabel" v-model="Time">
@@ -169,7 +169,7 @@ export default {
 							pushTime : _d.data.data.items[nums].pushTime,
 							realname : _d.data.data.items[nums].realname,
 							status : _d.data.data.items[nums].status,
-							img : "static/iOS切图/orange@2x.png",
+							img : "static/img/orange@2x.png",
 							button : "确认就诊"
 						});
 						this.allTitle = '已就诊' + _d.data.data.sum.totalCount
@@ -181,7 +181,7 @@ export default {
 							pushTime : _d.data.data.items[nums].pushTime,
 							realname : _d.data.data.items[nums].realname,
 							status : _d.data.data.items[nums].status,
-							img : "static/iOS切图/blue@2x.png",
+							img : "static/img/blue@2x.png",
 							button : "已就诊",
 							buttonColor : "buttonColor"
 						});
@@ -230,7 +230,7 @@ export default {
 	line-height:.335rem;
 	width: 100%;
 	padding-top: 0.14rem;
-	background:url('../../../../static/门诊端/iOS切图/BJ-blue.png');
+	background:url('../../../../static/img/BJ-blue.png');
 	background-size:100% 100%;
 	position: relative;
 }

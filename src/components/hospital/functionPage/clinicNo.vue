@@ -87,7 +87,7 @@ export default {
 							pushTime : _d.data.data.items[nums].pushTime,
 							realname : _d.data.data.items[nums].realname,
 							status : _d.data.data.items[nums].status,
-							img : "static/iOS切图/orange@2x.png",
+							img : "static/img/orange@2x.png",
 							button : "确认就诊"
 						});
 					}
@@ -124,7 +124,7 @@ export default {
 							pushTime : _d.data.data.items[nums].pushTime,
 							realname : _d.data.data.items[nums].realname,
 							status : _d.data.data.items[nums].status,
-							img : "static/iOS切图/orange@2x.png",
+							img : "static/img/orange@2x.png",
 							button : "确认就诊"
 						});
 						this.noNum++;

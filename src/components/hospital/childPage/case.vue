@@ -1,7 +1,7 @@
 <template>
 	<div class="case">
 		<div class="topNav">
-			<img src="static/iOS切图/shape@2x.png" alt=""  @click="goBackFn">
+			<img src="static/img/shape@3x.png" alt=""  @click="goBackFn">
 			<h3>优质案例</h3>
 		</div>
 		<div class="article">
@@ -11,7 +11,7 @@
 						<div class="article_left">
 							<p>{{items.content}}</p>
 							<div class="article_leftTime">
-								<img src="static/iOS切图/time@2x.png" alt="">
+								<img src="static/img/time@2x.png" alt="">
 								<span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
 							</div>
 						</div>

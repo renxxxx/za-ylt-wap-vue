@@ -2,15 +2,15 @@
 	<div class="collect"  id='read' ref="Box"  @scroll="scrollToTop">
 		<div class="topNav">
 			<div class="return" @click="goBackFn">
-				<img src="static/iOS切图/shape@2x.png" alt="">
+				<img src="static/img/shape@3x.png" alt="">
 			</div>
 			<div class="searchInput">
-				<img src="static/iOS切图/sousuo@2x.png" alt="">
+				<img src="static/img/sousuo@2x.png" alt="">
 				<input type="text" placeholder="搜索器械">
 			</div>
 			<div class="rightImg">
-				<img src="static/iOS切图/shopping@2x.png" alt="">
-				<img src="static/iOS切图/Import@2x.png" alt="">
+				<img src="static/img/shopping@2x.png" alt="">
+				<img src="static/img/Import@2x.png" alt="">
 			</div>
 		</div>
 		<div class="slide">
@@ -29,7 +29,7 @@
 			<div class="contnet_right">
 				<ul>
 					<li v-for="(item,inx) in 99" :key='inx'>
-						<img src="static/iOS切图/small-logo@2x.png" alt="">
+						<img src="static/img/small-logo@2x.png" alt="">
 						<div class="liRight">
 							<h4>半自动体外除颤器</h4>
 							<span>心脏骤停-分秒必争</span>
