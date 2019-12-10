@@ -11,10 +11,10 @@
 					<form @submit.prevent="submit('100')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="static/img/iphone@2x.png" alt="">
-							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" autofocus="autofocus">
+							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
 						</div>
 						<div class="inputBox">
-							<img  class="passwordImg" src="/static/img/mima@2x.png" alt="">
+							<img  class="passwordImg" src="static/img/mima@2x.png" alt="">
 							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码" autocomplete>
 						</div>
 						<div class="checkBox">
@@ -29,7 +29,7 @@
 							<router-link  to="/retrievePassword">
 								<div  @click="forgetFn(100)">
 									忘记密码
-									<img src="static/iOS切图/reset@2.png" alt="">
+									<img src="static/reset@2.png" alt="">
 								</div>	
 							</router-link>
 						</div>
@@ -136,20 +136,20 @@ export default {
 		console.log(e)
 		switch(e){
 			case 0:
-			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.2rem';
+			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.24rem';
 			document.getElementsByClassName('van-ellipsis')[1].style.fontSize = '.14rem';
 			document.getElementsByClassName('van-ellipsis')[2].style.fontSize = '.14rem';
 			break;
 			
 			case 1:
 			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.14rem';
-			document.getElementsByClassName('van-ellipsis')[1].style.fontSize = '.2rem';
+			document.getElementsByClassName('van-ellipsis')[1].style.fontSize = '.24rem';
 			document.getElementsByClassName('van-ellipsis')[2].style.fontSize = '.14rem';
 			break;
 			case 2:
 			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.14rem';
 			document.getElementsByClassName('van-ellipsis')[1].style.fontSize = '.14rem';
-			document.getElementsByClassName('van-ellipsis')[2].style.fontSize = '.2rem';
+			document.getElementsByClassName('van-ellipsis')[2].style.fontSize = '.24rem';
 			break;
 		}
 	},
@@ -187,8 +187,8 @@ export default {
     bottom: 28%;
     left: 0;
     z-index: 1;
-    height: .03rem;
-    width: .6rem!important;
+    height: .07rem;
+    width: 1rem!important;
     background-color: #FFFFFF;
     border-radius: 3px;
 }

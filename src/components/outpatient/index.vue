@@ -6,7 +6,7 @@
 				<div class="indexSearch">
 					<router-link to="/outpatient_search">
 						<img src="static/img/sousuo@2x.png" alt="">
-						<input type="text" placeholder="搜索病源" autofocus="autofocus">
+						<input type="text" placeholder="搜索病源" >
 					</router-link>
 				</div>
 				<div class="indexScreening" @click="showPopup">

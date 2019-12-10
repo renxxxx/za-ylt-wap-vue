@@ -8,7 +8,7 @@
 				</div>
 				<div class="indexSearch">
 					<img src="static/img/sousuo@2x.png" alt="">
-					<input type="text" placeholder="搜索病源" autofocus="autofocus" v-model="list.keywords" @keyup="inputNow">
+					<input type="text" placeholder="搜索病源" v-model="list.keywords" @keyup="inputNow">
 				</div>
 				<div class="indexScreening" @click="showPopup">
 					<span>筛选</span>
