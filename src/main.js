@@ -19,6 +19,11 @@ import VueScroller from 'vue-scroller'
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.moment = moment;
+
+
+
+
+
 moment.locale('zh-cn');
 
 import { Image, Row, Col,Search,Tabbar, TabbarItem,Tab,Tabs,Checkbox, CheckboxGroup,Dialog,Popup,RadioGroup, Radio,Cell, CellGroup,
@@ -38,3 +43,5 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+

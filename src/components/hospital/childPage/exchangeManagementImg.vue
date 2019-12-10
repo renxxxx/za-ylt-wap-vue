@@ -90,6 +90,7 @@ export default {
 			}
 		},
 		submitFn(){
+			
 			console.log(this.imgUrl)
 			if(this.imgUrl != ''){
 				this.$axios.post('/c2/commodity/itemadd',qs.stringify({

@@ -4,6 +4,7 @@
 			<div class="topNav">
 				<img src="static/img/name@2x.png" alt="">
 			</div>
+
 			<div class="typeNav" type="line" border="false">
 				<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)' 
 				title-active-color='rgba(255, 255, 255)' @click="titleScroll"  v-model='data'>
@@ -29,7 +30,7 @@
 							<router-link  to="/retrievePassword">
 								<div  @click="forgetFn(100)">
 									忘记密码
-									<img src="static/reset@2.png" alt="">
+									<img src="static/img/reset@2.png" alt="">
 								</div>	
 							</router-link>
 						</div>
