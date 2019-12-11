@@ -63,6 +63,10 @@ export default {
 		
   },
   mounted () {
+	  if(window.plus){
+		plus.navigator.setStatusBarBackground("#ffffff");
+		plus.navigator.setStatusBarStyle("dark")
+  	}
 	this.userFn();
 	this.coverImg = this.account.data.data.clinic.cover;
 	this.images.push(this.account.data.data.clinic.license)

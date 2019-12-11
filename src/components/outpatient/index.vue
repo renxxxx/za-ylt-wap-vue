@@ -169,6 +169,12 @@ export default {
     }
   },
   mounted(){
+	
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#2B77EF");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+
 	// //未就诊请求
 	this.$axios.post('/c2/patient/items',qs.stringify({
 		clinicId : this.account.data.data.clinic.clinicId,
@@ -461,7 +467,8 @@ export default {
 	line-height:.335rem;
 	width: 100%;
 	padding-top: 0.14rem;
-	background:url('../../../static/img/BJ-blue.png');
+ /* background:url('../../../static/img/BJ-blue.png');  */
+	background-color:#2B77EF; 
 	background-size:100% 100%;
 	position: relative;
 }

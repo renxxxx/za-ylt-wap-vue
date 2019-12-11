@@ -42,6 +42,10 @@ function cancelAuth(){
   }
 }
 function shareWeb(url,cover,title,content){
+
+		if(!window.plus)
+			return
+
 		var sweixin =null,shares=null, buttons=[
 			{title:'我的好友',extra:{scene:'WXSceneSession'}},
 			{title:'朋友圈',extra:{scene:'WXSceneTimeline'}},

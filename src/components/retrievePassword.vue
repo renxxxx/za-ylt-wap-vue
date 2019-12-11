@@ -65,7 +65,10 @@ export default {
 	  ...mapGetters(['account'])
   },
   mounted () {
-		
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#2B77EF");
+			plus.navigator.setStatusBarStyle("light")
+  		}
   },
   methods: {
 	 //回退方法

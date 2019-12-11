@@ -41,7 +41,7 @@
 					<form @submit.prevent="submit('200')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="static/img/iphone@2x.png" alt="">
-							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" v-focus="true">
+							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
 							
 						</div>
 						<div class="inputBox">
@@ -70,7 +70,7 @@
 					<form @submit.prevent="submit('300')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="static/img/iphone@2x.png" alt="">
-							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" v-focus="true">
+							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
 						</div>
 						<div class="inputBox">
 							<img  class="passwordImg" src="static/img/mima@2x.png" alt="">
@@ -121,8 +121,12 @@ export default {
         }
     }
   },
+
   mounted () {
-	
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#2B77EF");
+			plus.navigator.setStatusBarStyle("light")
+  		}
   },
   computed:{
   	...mapGetters(['account','checked'])

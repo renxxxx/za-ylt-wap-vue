@@ -23,7 +23,31 @@ Vue.prototype.$axios = axios
 Vue.prototype.moment = moment;
 
 
+if(window.plus){
+	plusReady();
+}else{
+	document.addEventListener('plusready',plusReady,false);
+}
 
+
+function plusReady(){
+	    plus.navigator.setStatusBarBackground("#2B77EF");
+      plus.navigator.setStatusBarStyle("light")
+
+      function location(position){
+        axios.defaults.headers.common['latitude']=position.coords.latitude
+        axios.defaults.headers.common['longitude']=position.coords.longitude
+        axios.defaults.headers.common['heading']=position.coords.heading
+        axios.defaults.headers.common['speed']=position.coords.heading
+      }
+
+      plus.geolocation.getCurrentPosition( location, function ( e ) {
+      },{geocode:true});
+
+      plus.geolocation.watchPosition( location, function ( e ) {
+       
+      }, {geocode:false} );
+}
 
 
 moment.locale('zh-cn');
