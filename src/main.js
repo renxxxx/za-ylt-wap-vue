@@ -48,7 +48,7 @@ function plusReady(){
       },{geocode:true});
 
       plus.geolocation.watchPosition( location, function ( e ) {
-       
+
       }, {geocode:false} );
 }
 
@@ -73,5 +73,3 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
-
-

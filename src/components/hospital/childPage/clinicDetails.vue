@@ -49,9 +49,9 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
-import clinicAll from '../functionPage/clinicAll.vue'
-import clinicYes from '../functionPage/clinicYes.vue'
-import clinicNo from '../functionPage/clinicNo.vue'
+import clinicAll from '../../common/functionPage/clinicAll.vue'
+import clinicYes from '../../common/functionPage/clinicYes.vue'
+import clinicNo from '../../common/functionPage/clinicNo.vue'
 export default {
 	name: 'case',
 	data () {

@@ -29,7 +29,7 @@ import hospital_clinicSearch from '@/components/hospital/childPage/clinic_search
 // 医院端门诊添加门诊页面
 import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
 // 医院端病源管理页面页
-import hospital_sourceManagement from '@/components/hospital/childPage/sourceManagement.vue'
+import hospital_sourceManagement from '@/components/common/page/sourceManagement.vue'
 // 医院端器械采集页面
 import hospital_collect from '@/components/hospital/childPage/collect.vue'
 
@@ -76,6 +76,7 @@ Vue.use(Router)
 
 const router = new Router({
 	// mode: 'history',
+  // base:'/landingPage/',
 	routes: [
 		{
 			// 医院端主页
@@ -83,7 +84,6 @@ const router = new Router({
 			name: 'hospital_index',
 			component: hospital_index,
 			meta: {auth:true},
-			
 		},
 		{
 			// 医院端门诊主页
@@ -98,7 +98,7 @@ const router = new Router({
 			name: 'hospital_gene',
 			component: hospital_gene,
 			meta: {auth:true},
-			
+
 		},
 		{
 			// 医院端用户主页
@@ -106,7 +106,7 @@ const router = new Router({
 			name: 'hospital_user',
 			component: hospital_user,
 			meta: {auth:true},
-			
+
 		},
 		{
 			// 医院端门诊主页搜索页面
@@ -206,7 +206,7 @@ const router = new Router({
 			component: hospital_addActivity,
 			meta: {auth:true},
 		},
-		
+
 		{
 			// 医院端门诊主页的活动发布模块中的编辑活动页的预览页面
 			path: '/hospital_previewActivities',
@@ -276,7 +276,7 @@ const router = new Router({
 			name: 'outpatient_index',
 			component: outpatient_index,
 			meta: {auth:true},
-			
+
 		},
 		{
 			// 门诊端的主页搜索
@@ -338,20 +338,20 @@ router.beforeEach((to,from,next) => {
 		if(to.meta.auth){
 			// console.log(store.state.shop.account.isLogin)
 			switch(store.state.shop.account.isLogin){
-				case 100: 
+				case 100:
 				// console.log('暂未开放中');
 				next();
 				break;
-				
-				case 200: 
+
+				case 200:
 				next();
 				break;
-				
+
 				case 300:
 				// console.log('暂未开放中');
 				next({path : '/landingPage'});
 				break;
-				
+
 				default:next({path : '/landingPage'});
 			}
 		}else{
@@ -360,6 +360,6 @@ router.beforeEach((to,from,next) => {
 	}else{
 		next();
 	}
-	
+
 })
 export default router
