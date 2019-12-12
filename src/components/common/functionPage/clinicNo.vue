@@ -3,7 +3,7 @@
 		<van-pull-refresh v-model="isLoading" @refresh="refresh">
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
-					<li v-for="(item,inx) in clinicDetails" :key="inx" @click="detailsValueFn(item)">
+					<li v-for="(item,inx) in list.clinicNo" :key="inx" @click="detailsValueFn(item)">
 						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
 							<div class="contentTitle">
 								<img :src="item.img" alt="">
@@ -33,7 +33,7 @@ export default {
 	name: 'clinicYes',
 	data () {
 		return {
-			clinicDetails :[],
+			// list.clinicNo :[],
 			loading: false,
 			// 加载状态结束
 			finished: false,
@@ -68,7 +68,7 @@ export default {
 				ps : 10
 			}))
 			.then(_d => {
-				this.clinicDetails =[];
+				this.list.clinicNo =[];
 				this.page = 2;
 				this.finished = false;
 				this.isLoading = false;
@@ -81,7 +81,7 @@ export default {
 					this.finished = false;
 				}else{
 					for (let nums in _d.data.data.items) {
-						this.clinicDetails.push({
+						this.list.clinicNo.push({
 							clinicName : _d.data.data.items[nums].clinicName,
 							itemId : _d.data.data.items[nums].itemId,
 							pushTime : _d.data.data.items[nums].pushTime,
@@ -120,7 +120,7 @@ export default {
 				this.page++;
 				if(_d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
-						this.clinicDetails.push({
+						this.list.clinicNo.push({
 							clinicName : _d.data.data.items[nums].clinicName,
 							itemId : _d.data.data.items[nums].itemId,
 							pushTime : _d.data.data.items[nums].pushTime,
@@ -133,6 +133,7 @@ export default {
 						// console.log(this.clinicDetails)
 					}
 					// this.noTitle = '未就诊' + this.noNum
+					console.log(this.list.noNum)
 					this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;
@@ -153,10 +154,12 @@ export default {
 			})
 		},
 		onLoad(){
-			this.nextdata()
+			this.list.data? this.nextdata():''
 		},
 		refresh(){
-			this.getdata()
+			// console.log(this.keywords);
+			this.list.data? this.getdata():this.loading = false
+			// this.getdata()
 		},
 		detailsValueFn(_item){
 			this.account.patientId = '';

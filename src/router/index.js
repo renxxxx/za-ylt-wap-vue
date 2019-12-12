@@ -5,11 +5,18 @@ import landingPage from '@/components/landingPage.vue'
 import retrievePassword from '@/components/retrievePassword.vue'
 import details from '@/components/detailsPage.vue'
 //门诊端页面及其组件
+//门诊端病源主页
 import outpatient_index from '@/components/outpatient/index.vue'
+//门诊端医院主页
 import outpatient_hospital from '@/components/outpatient/hospital.vue'
+//门诊端基因主页
 import outpatient_gene from '@/components/outpatient/gene.vue'
+//门诊端用户主页
 import outpatient_user from '@/components/outpatient/user.vue'
-import outpatient_search from '@/components/outpatient/index/index_search.vue'
+//门诊端病源主页的搜索主页
+import outpatient_search from '@/components/outpatient/page/index_search.vue'
+//门诊端用户主页的任务中心
+import outpatient_taskCenter from '@/components/outpatient/page/taskCenter.vue'
 
 //医院端页面及其组件
 // 医院端主页
@@ -305,6 +312,13 @@ const router = new Router({
 			name: 'outpatient_user',
 			meta: {auth:true},
 			component: outpatient_user,
+		},
+		{
+			//门诊端用户主页的任务中心
+			path: '/outpatient_taskCenter',
+			name: 'outpatient_taskCenter',
+			component: outpatient_taskCenter,
+			meta: {auth:true},
 		},
 		{
 			//详情页

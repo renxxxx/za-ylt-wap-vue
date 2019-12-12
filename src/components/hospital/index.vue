@@ -316,6 +316,13 @@ export default {
 .article_left p{
 	font-size: .14rem;
 	font-weight: bold;
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	height: .42rem;
 }
 .article_leftTime{
 	margin-top: .23rem;

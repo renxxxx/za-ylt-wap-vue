@@ -3,7 +3,7 @@
 		<van-pull-refresh v-model="isLoading" @refresh="refresh">
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
-					<li v-for="(item,inx) in clinicDetails" :key="inx" @click="detailsValueFn(item)">
+					<li v-for="(item,inx) in list.clinicAll" :key="inx" @click="detailsValueFn(item)">
 						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
 							<div class="contentTitle">
 								<img :src="item.img" alt="">
@@ -33,7 +33,7 @@ export default {
 	name: 'clinicAll',
 	data () {
 		return {
-			clinicDetails :[],
+			// clinicDetails :[],
 			loading: false,
 			// 加载状态结束
 			finished: false,
@@ -57,7 +57,7 @@ export default {
 
 	},
 	mounted () {
-		console.log(this.list.clinicId)
+		console.log(this.list)
 		// this.getdata();
 	},
 	methods:{
@@ -75,7 +75,7 @@ export default {
 				// 加载状态结束
 				this.loading = false;
 				this.finished = false;
-				this.clinicDetails =[];
+				this.list.clinicAll =[];
 				this.page = 2;
 				if( _d.data.data.items.length == 0){
 					this.isLoading = false;
@@ -85,7 +85,7 @@ export default {
 				}else{
 					for (let nums in _d.data.data.items) {
 						if(_d.data.data.items[nums].status == 1){
-							this.clinicDetails.push({
+							this.list.clinicAll.push({
 								clinicName : _d.data.data.items[nums].clinicName,
 								itemId : _d.data.data.items[nums].itemId,
 								pushTime : _d.data.data.items[nums].pushTime,
@@ -96,7 +96,7 @@ export default {
 							});
 							// console.log(this.list.noNum)
 						}else if(_d.data.data.items[nums].status == 4){
-							this.clinicDetails.push({
+							this.list.clinicAll.push({
 								clinicName : _d.data.data.items[nums].clinicName,
 								itemId : _d.data.data.items[nums].itemId,
 								pushTime : _d.data.data.items[nums].pushTime,
@@ -139,7 +139,7 @@ export default {
 				if(_d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
 						if(_d.data.data.items[nums].status == 1){
-							this.clinicDetails.push({
+							this.list.clinicAll.push({
 								clinicName : _d.data.data.items[nums].clinicName,
 								itemId : _d.data.data.items[nums].itemId,
 								pushTime : _d.data.data.items[nums].pushTime,
@@ -153,7 +153,7 @@ export default {
 							// this.list.noNum = _d.data.data.sum.totalCount
 						}else if(_d.data.data.items[nums].status == 4){
 							// console.log(_d.data.data.items[nums].status )
-							this.clinicDetails.push({
+							this.list.clinicAll.push({
 								clinicName : _d.data.data.items[nums].clinicName,
 								itemId : _d.data.data.items[nums].itemId,
 								pushTime : _d.data.data.items[nums].pushTime,
@@ -188,40 +188,7 @@ export default {
 				console.log(err);
 				Dialog({ message: err});
 			});
-			this.$axios.post('/c2/patient/items',qs.stringify({
-				kw : this.list.keywords,
-				hospitalId : this.account.hospitalId,
-				clinicId : this.list.clinicId,
-				status :1,
-				pn : 1,
-				ps : 10
-			}))
-			.then(_d => {
-				this.list.noNum = _d.data.data.sum.totalCount
-			})
-			.catch((err)=>{
-				console.log(err);
-				Dialog({ message: err});
-			})
-			this.$axios.post('/c2/patient/items',qs.stringify({
-				kw : this.list.keywords,
-				hospitalId : this.account.hospitalId,
-				clinicId : this.list.clinicId,
-				status :4,
-				pn : 1,
-				ps : 10
-			}))
-			.then(_d => {
-				this.list.yesNum = _d.data.data.sum.totalCount
-			})
-			.catch((err)=>{
-				console.log(err);
-				Dialog({ message: err});
-			});
-			// this.list.allNum = this.list.noNum + this.list.yesNum;
-			// this.list.allTitle = '全部' + this.list.allNum;
-			// this.list.noTitle = '未就诊' + this.list.noNum;
-			// this.list.yesTitle = '已就诊' + this.list.yesNum;
+			
 		},
 		detailsValueFn(_item){
 			this.account.patientId = '';
@@ -229,11 +196,12 @@ export default {
 			console.log(this.account.patientId)
 		},
 		onLoad(){
-			this.nextdata()
+			this.list.data? this.nextdata():''
 		},
 		refresh(){
-			// console.log(this.keywords);
-			this.getdata()
+			// console.log(this.list.data);
+			this.list.data? this.getdata():''
+			// this.getdata()
 		}
 	},
 }

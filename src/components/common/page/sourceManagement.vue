@@ -14,13 +14,15 @@
 					<span>筛选</span>
 					<img src="static/img/screen@2x.png" alt="加载中" >
 				</div>
-				<timeChoose></timeChoose>
-      </div>
+				<keep-alive>
+					<timeChoose :list = 'list'></timeChoose>
+				</keep-alive>
+			</div>
 			<!-- 就诊情况 -->
 			<div class="typeNav">
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF'>
 					<!-- <van-tab :title='this.$refs.all.allTitle'> -->
-					<van-tab :title='list.allNum==0? list.allTitle:list.allTitle+(list.noNum+list.yesNum)'>
+					<van-tab :title='list.allNum==0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'>
 						<clinicAll ref='all' :list = 'list'></clinicAll>
 					</van-tab>
 					<!-- <van-tab :title='this.$refs.no.noTitle'> -->
@@ -28,7 +30,7 @@
 						<clinicNo ref='no' :list = 'list'></clinicNo>
 					</van-tab>
 					<!-- <van-tab :title='this.$refs.yes.yesTitle'> -->
-					<van-tab :title='list.yesNum==0? list.yesTitle:list.noTitle+list.yesNum'>
+					<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
 						<clinicYes ref='yes' :list = 'list'></clinicYes>
 					</van-tab>
 				</van-tabs>
@@ -41,7 +43,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
-import timeChoose from '../../common/functionPage/timeChoose.vue'
+import timeChoose from '../functionPage/timeChoose.vue'
 import clinicAll from '../functionPage/clinicAll.vue'
 import clinicYes from '../functionPage/clinicYes.vue'
 import clinicNo from '../functionPage/clinicNo.vue'
@@ -60,11 +62,15 @@ export default {
         allNum : 0,
         noNum : 0,
         yesNum : 0,
+		clinicAll : [],
+		clinicNo : [],
+		clinicYes : [],
+		data: true,
       }
     }
   },
   mounted(){
-
+	  this.getNum();
   },
   computed:{
     ...mapGetters(['Time','labelDocument','showTime','show','account','detail']),
@@ -110,60 +116,6 @@ export default {
 		    this.getdata();
 		}
 	},
-	//获取数据
-	getdata(){
-		this.$axios.post('/c2/patient/items',qs.stringify({
-			kw : this.list.keywords,
-			hospitalId : this.account.hospitalId,
-			clinicId : this.account.itemId,
-			pn : 1,
-			ps : 10,
-			pushTimeStart : this.Time.pushStart,
-			pushTimeEnd : this.Time.pushOver,
-			hospitalConfirmTimeStart : this.Time.confirmStart,
-			hospitalConfirmTimeEnd : this.Time.confirmOver,
-		}))
-		.then(_d => {
-			this.selectValue =[];
-			this.page = 2;
-			console.log( _d.data.data.items.length)
-			if( _d.data.data.items.length != 0){
-				for (let nums in _d.data.data.items) {
-					// this.clinicDetails.push(_d.data.data.items[nums]);
-					console.log(_d.data.data.items[nums].status)
-					if(_d.data.data.items[nums].status == 1){
-						this.selectValue.push({
-							clinicName : _d.data.data.items[nums].clinicName,
-							itemId : _d.data.data.items[nums].itemId,
-							pushTime : _d.data.data.items[nums].pushTime,
-							realname : _d.data.data.items[nums].realname,
-							status : _d.data.data.items[nums].status,
-							img : "static/img/orange@2x.png",
-							button : "确认就诊"
-						});
-						// this.allTitle = '已就诊' + _d.data.data.sum.totalCount
-					}else if(_d.data.data.items[nums].status == 4){
-						console.log(_d.data.data.items[nums].status )
-						this.selectValue.push({
-							clinicName : _d.data.data.items[nums].clinicName,
-							itemId : _d.data.data.items[nums].itemId,
-							pushTime : _d.data.data.items[nums].pushTime,
-							realname : _d.data.data.items[nums].realname,
-							status : _d.data.data.items[nums].status,
-							img : "static/img/blue@2x.png",
-							button : "已就诊",
-							buttonColor : "buttonColor"
-						});
-					}
-					console.log(this.selectValue)
-				}
-			}
-		})
-		.catch((err)=>{
-			console.log(err);
-			Dialog({ message: err});
-		})
-	},
 	// 详情页
 	detailsValueFn(_diagnosis){
 		console.log(_diagnosis.itemId)
@@ -173,9 +125,45 @@ export default {
 	dateFn(e){
 		console.log(e)
 	},
-  showPopup(){
-    this.show = true;
-  },
+	showPopup(){
+		this.show = true;
+	},
+	getNum(){
+		this.$axios.post('/c2/patient/items',qs.stringify({
+			kw : this.list.keywords,
+			hospitalId : this.account.hospitalId,
+			clinicId : this.list.clinicId,
+			status :1,	
+			pn : 1,
+			ps : 10
+		}))
+		.then(_d => {
+			this.list.noNum = _d.data.data.sum.totalCount;
+			console.log(this.list.noNum)
+		})
+		.catch((err)=>{
+			console.log(err);
+			Dialog({ message: err});
+		})
+		this.$axios.post('/c2/patient/items',qs.stringify({
+			kw : this.list.keywords,
+			hospitalId : this.account.hospitalId,
+			clinicId : this.list.clinicId,
+			status :4,
+			pn : 1,
+			ps : 10
+		}))
+		.then(_d => {
+			this.list.yesNum = _d.data.data.sum.totalCount;
+			console.log(this.list.yesNum)
+		})
+		.catch((err)=>{
+			console.log(err);
+			Dialog({ message: err});
+		});
+		this.list.allNum = this.list.noNum + this.list.yesNum;
+		console.log(this.list.allNum)
+	},
 	...mapActions(['labelLabelFn','dateConfirm','closeFn','screeningSubmit','screeningResult','confirm','cancel','hospitalSubmit'])
   },
 }

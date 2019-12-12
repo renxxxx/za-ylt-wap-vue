@@ -24,6 +24,18 @@
 		</van-image-preview>
 		<div class="user_center">
 			<ul>
+				<router-link :to="{name: 'outpatient_taskCenter'}">
+					<li>
+						<span>任务中心</span>
+						<img src="static/img/Chevron Copy 2@2x.png" alt="">
+					</li>
+				</router-link>
+				<router-link :to="{name: ''}">
+					<li>
+						<span>积分兑换</span>
+						<img src="static/img/Chevron Copy 2@2x.png" alt="">
+					</li>
+				</router-link>
 				<router-link :to="{name: 'landingPage'}">
 					<li @click="exitFn">
 						<span>退出登陆</span>
@@ -40,7 +52,7 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import routerNav from './childPage/router.vue'
+import routerNav from './functionPage/router.vue'
 export default {
   name: 'user',
   data () {

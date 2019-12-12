@@ -3,7 +3,7 @@
 		<van-pull-refresh v-model="isLoading" @refresh="refresh">
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
-					<li v-for="(item,inx) in clinicDetails" :key="inx" @click="detailsValueFn(item)">
+					<li v-for="(item,inx) in list.clinicYes" :key="inx" @click="detailsValueFn(item)">
 						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
 							<div class="contentTitle">
 								<img src="static/img/blue@2x.png" alt="">
@@ -33,13 +33,13 @@ export default {
 	name: 'clinicYes',
 	data () {
 		return {
-			clinicDetails :[],
+			// list.clinicYes :[],
 			loading: false,
 			// 加载状态结束
 			finished: false,
 			//显示下拉加载
 			isLoading: false,
-			page : 1,
+			page : 1,	
 			yesNum : 0,
 			yesTitle :'已就诊',
 		}
@@ -75,7 +75,7 @@ export default {
 				this.finished = false;
 				this.isLoading = false;
 				this.loading = false;
-				this.clinicDetails =[];
+				this.list.clinicYes =[];
 				this.page = 2;
 				console.log( _d.data.data.items.length)
 				if( _d.data.data.items.length == 0){
@@ -85,7 +85,7 @@ export default {
 					this.finished = true;
 				}else{
 					for (let nums in _d.data.data.items) {
-						this.clinicDetails.push({
+						this.list.clinicYes.push({
 							clinicName : _d.data.data.items[nums].clinicName,
 							itemId : _d.data.data.items[nums].itemId,
 							pushTime : _d.data.data.items[nums].pushTime,
@@ -93,7 +93,7 @@ export default {
 							status : _d.data.data.items[nums].status,
 							button : "确认就诊"
 						});
-						// console.log(this.clinicDetails)
+						// console.log(this.list.clinicYes)
 					}
 					// this.list.yesNum  = _d.data.data.sum.totalCount
 					// console.log(_d.data.data.sum.totalCount)
@@ -123,7 +123,7 @@ export default {
 				this.page++;
 				if(_d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
-						this.clinicDetails.push({
+						this.list.clinicYes.push({
 							clinicName : _d.data.data.items[nums].clinicName,
 							itemId : _d.data.data.items[nums].itemId,
 							pushTime : _d.data.data.items[nums].pushTime,
@@ -132,7 +132,7 @@ export default {
 							button : "确认就诊"
 						});
 						// this.yesNum++;
-						// console.log(this.clinicDetails)
+						// console.log(this.list.clinicYes)
 					}
 					// this.yesTitle = '已就诊' + this.yesNum
 					this.isLoading = false;
@@ -160,12 +160,13 @@ export default {
 			console.log(this.account.patientId)
 		},
 		onLoad(){
-			this.nextdata()
+			this.list.data? this.nextdata():''
 		},
 		refresh(){
-
-			this.getdata()
-		}
+			console.log(this.list.data);
+			this.list.data? this.getdata():this.loading = false;
+			// this.getdata()
+		},
 	},
 }
 </script>

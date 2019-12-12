@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import routerNav from './childPage/router.vue'
+import routerNav from './functionPage/router.vue'
 export default {
   name: 'hospital',
   data () {

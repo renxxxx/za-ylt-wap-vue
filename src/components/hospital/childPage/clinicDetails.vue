@@ -16,9 +16,9 @@
 		<div class="detailsTime">
 			<span>{{moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 		</div>
-		<div class="statistics" v-model="list">
-			<van-circle v-model="currentRate" :rate="list.yesNum/list.allNum*100" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
-			  size="1.15rem" :text="String(this.list.noNum + this.list.yesNum)" />
+		<div class="statistics">
+			<van-circle v-model="list.yesNum" :rate="list.yesNum" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
+			  size="1.15rem" :text="String(list.yesNum + list.noNum)" />
 			<div class="statisticsText">
 				<div class="noText">
 					<span>未就诊：{{list.noNum}}</span>
@@ -75,9 +75,14 @@ export default {
 				yesTitle:'已就诊',
 				noNum : 0,
 				yesNum : 0,
-				allNum : '',
+				allNum : 0,
 				clinicId: '',
-			}
+				clinicAll : [],
+				clinicNo : [],
+				clinicYes : [],
+				data: true,
+			},
+			
 		}
 	},
 	computed:{
@@ -90,9 +95,9 @@ export default {
 		
 	},
 	mounted () {
-		console.log(this.$route.params.item.itemId)
 		this.ItemIdFn();
-		this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = ''
+		this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = '';
+		this.getNum();
 	},
 	methods: {
 		//回退方法
@@ -102,7 +107,7 @@ export default {
 		// 列表来回切换组件
 		menuFn(){
 			// let _geneData =  this.option.find( n => n.value == this.value);
-			console.log('ss')
+			// console.log('ss')
 			switch(this.value){
 				case 0: 
 				this.componentName = 'clinicAll';
@@ -128,7 +133,43 @@ export default {
 				console.log(err);
 				Dialog({ message: err});
 			})
-		}
+		},
+		getNum(){
+			this.$axios.post('/c2/patient/items',qs.stringify({
+				kw : this.list.keywords,
+				hospitalId : this.account.hospitalId,
+				clinicId : this.list.clinicId,
+				status :1,
+				pn : 1,
+				ps : 10
+			}))
+			.then(_d => {
+				this.list.noNum = _d.data.data.sum.totalCount;
+				// console.log(this.list.noNum)
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: err});
+			})
+			this.$axios.post('/c2/patient/items',qs.stringify({
+				kw : this.list.keywords,
+				hospitalId : this.account.hospitalId,
+				clinicId : this.list.clinicId,
+				status :4,
+				pn : 1,
+				ps : 10
+			}))
+			.then(_d => {
+				this.list.yesNum = _d.data.data.sum.totalCount;
+				// console.log(this.list.yesNum)
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: err});
+			});
+			this.list.allNum = this.list.noNum + this.list.yesNum;
+			console.log(this.list.allNum)
+		},
 	},
 }
 </script>

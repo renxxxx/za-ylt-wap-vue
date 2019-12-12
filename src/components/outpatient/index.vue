@@ -142,7 +142,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
-import routerNav from './childPage/router.vue'
+import routerNav from './functionPage/router.vue'
 export default {
   name: 'index',
   data () {

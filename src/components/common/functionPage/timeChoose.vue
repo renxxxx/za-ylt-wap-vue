@@ -9,19 +9,19 @@
           </div>
     			<div class="labelLabel" >
     				<strong>就诊时间</strong>
-    				<button class="rightLine" @click="labelLabelFn(2,$event)" :id="labelDocument[0]">
+    				<button class="rightLine" @click="labelLabelFn(2,$event)" :id="labelDocument[2]">
     					{{Time.confirmStart?  moment(Time.confirmStart).format('YYYY-MM-DD'):'开始时间'}}
     				</button>
-    				<button  @click="labelLabelFn(3,$event)" :id="labelDocument[1]">
+    				<button  @click="labelLabelFn(3,$event)" :id="labelDocument[3]">
     					{{Time.confirmOver? moment(Time.confirmOver).format('YYYY-MM-DD'):'结束时间'}}
     				</button>
     			</div>
     			<div class="labelLabel">
     				<strong>推送时间</strong>
-    				<button class="rightLine"  @click="labelLabelFn(4,$event)"  :id="labelDocument[2]">
+    				<button class="rightLine"  @click="labelLabelFn(4,$event)"  :id="labelDocument[4]">
     					{{Time.pushStart? moment(Time.pushStart).format('YYYY-MM-DD'):'开始时间'}}
     				</button>
-    				<button  @click="labelLabelFn(5,$event)"  :id="labelDocument[3]">
+    				<button  @click="labelLabelFn(5,$event)"  :id="labelDocument[5]">
     					{{Time.pushOver? moment(Time.pushOver).format('YYYY-MM-DD'):'结束时间'}}
     				</button>
     			</div>
@@ -49,6 +49,7 @@ import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 import moment from 'moment'
+import Vue from 'vue'
 export default {
 	name: 'clinicYes',
 	data () {
@@ -92,7 +93,7 @@ export default {
 	components:{
 
 	},
-	props:[],
+	props:['list'],
 	created () {
 
 	},
@@ -102,7 +103,7 @@ export default {
 	methods: {
     // 筛选确定
     screeningSubmit(){
-      axios.post('/c2/patient/items',qs.stringify({
+      this.$axios.post('/c2/patient/items',qs.stringify({
         clinicId : this.account.clinicId,
         hospitalId :  this.account.hospitalId,
         status : this.Time.postState,
@@ -113,8 +114,87 @@ export default {
       }))
       .then(_d => {
         // console.log(_d.data.data.items)
-        this.search_userList = _d.data.data.items
         this.show = false;
+		this.list.clinicAll =[];
+		this.list.clinicYes =[];
+		this.list.clinicNo =[];
+		this.list.allNum = 0;
+		this.list.noNum = 0;
+		this.list.yesNum = 0;
+		this.list.allTitle = '全部';
+		this.list.noTitle = '未就诊';
+		this.list.noTitle = '未就诊';
+		console.log(_d.data.data.items.length)
+		if(_d.data.data.items.length>0){
+			for (let nums in _d.data.data.items) {
+				// console.log(_d.data.data.items[nums])
+				if(_d.data.data.items[nums].status == 1){
+					this.list.clinicAll.push({
+						clinicName : _d.data.data.items[nums].clinicName,
+						itemId : _d.data.data.items[nums].itemId,
+						pushTime : _d.data.data.items[nums].pushTime,
+						realname : _d.data.data.items[nums].realname,
+						status : _d.data.data.items[nums].status,
+						img : "static/img/orange@2x.png",
+						button : "确认就诊"
+					});
+					this.list.clinicNo.push({
+						clinicName : _d.data.data.items[nums].clinicName,
+						itemId : _d.data.data.items[nums].itemId,
+						pushTime : _d.data.data.items[nums].pushTime,
+						realname : _d.data.data.items[nums].realname,
+						status : _d.data.data.items[nums].status,
+						img : "static/img/orange@2x.png",
+						button : "确认就诊"
+					});
+					this.list.noNum++;
+					this.list.noTitle = '未就诊'
+					this.list.noTitle = '未就诊' + this.list.noNum;
+					// console.log(this.list)
+				}else if(_d.data.data.items[nums].status == 4){
+					// console.log(_d.data.data.items[nums].status )
+					this.list.clinicAll.push({
+						clinicName : _d.data.data.items[nums].clinicName,
+						itemId : _d.data.data.items[nums].itemId,
+						pushTime : _d.data.data.items[nums].pushTime,
+						realname : _d.data.data.items[nums].realname,
+						status : _d.data.data.items[nums].status,
+						img : "static/img/orange@2x.png",
+						button : "确认就诊"
+					});
+					this.list.clinicYes.push({
+						clinicName : _d.data.data.items[nums].clinicName,
+						itemId : _d.data.data.items[nums].itemId,
+						pushTime : _d.data.data.items[nums].pushTime,
+						realname : _d.data.data.items[nums].realname,
+						status : _d.data.data.items[nums].status,
+						img : "static/img/blue@2x.png",
+						button : "已就诊",
+						buttonColor : "buttonColor"
+					});
+					this.list.yesNum++;
+					this.list.yesTitle = '已就诊'
+					this.list.yesTitle = '已就诊' + this.list.yesNum;
+					console.log(this.list)
+				}
+			}
+			this.list.allTitle = '全部';
+			this.list.allTitle = '全部' + (this.list.noNum + this.list.yesNum)
+		}else{
+			console.log('s')
+			this.list.data = false;
+			this.list.clinicAll =[];
+			this.list.clinicYes =[];
+			this.list.clinicNo =[];
+			this.list.allNum = 0;
+			this.list.noNum = 0;
+			this.list.yesNum = 0;
+			this.list.allTitle = '全部';
+			this.list.noTitle = '未就诊';
+			this.list.noTitle = '未就诊';
+			
+			this.$toast.fail('暂无病源数据');
+		}
       })
       .catch((err)=>{
         console.log(err);
@@ -123,10 +203,9 @@ export default {
     },
     // 筛选重置
     screeningResult(){
-    	// console.log("已重置");
     	// console.log(this.labelDocument);
     	if(this.account.isLogin  == 100){
-    		for(let _a=0 ;_a < 4; _a++){
+    		for(let _a=0 ;_a < 6; _a++){
     			console.log(_a)
     			document.getElementById(this.labelDocument[_a]).style.backgroundColor = "#EEEEEE";
     		}
@@ -140,6 +219,7 @@ export default {
     	Vue.set(this.Time,'confirmOver',0);
     	Vue.set(this.Time,'pushStart',0);
     	Vue.set(this.Time,'pushOver',0);
+    	console.log(this.Time);
     	// console.log(typeof this.labelDocument)
     },
     //选择框样式
@@ -224,8 +304,8 @@ export default {
     	// this.time = _value
     	let time = moment(_value).format('YYYY-MM-DD HH:mm:ss')
     	this.time = new Date(time).getTime();
-    	console.log(this.time)
-    	console.log(this.calendarTime)
+    	// console.log(this.time)
+    	// console.log(this.calendarTime)
     	switch (this.dateStata){
     		case 2:
     		this.Time.confirmStart = '';
@@ -244,7 +324,7 @@ export default {
     		this.Time.pushOver = this.time;
     		break;
     	}
-    	console.log(this.Time)
+    	// console.log(this.Time)
     	// console.log(mutations.labelLabelFn._vlaue)
     },
     //取消选择的日期
