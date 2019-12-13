@@ -30,7 +30,7 @@
 						<img src="static/img/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
-				<router-link :to="{name: ''}">
+				<router-link :to="{name: 'outpatient_integralExchange'}">
 					<li>
 						<span>积分兑换</span>
 						<img src="static/img/Chevron Copy 2@2x.png" alt="">

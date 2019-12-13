@@ -1,7 +1,7 @@
 <template>
 	<div id="mainButton">
 		<van-tabbar v-model="active" route>
-			<van-tabbar-item to="/outpatient_index">
+			<van-tabbar-item :to="{name : 'outpatient_index'}"> 
 			    <span>首页</span>
 			    <img
 					slot="icon"
@@ -9,7 +9,7 @@
 					:src="props.active ? index.inactive : index.active "
 			    />
 			</van-tabbar-item>
-			<van-tabbar-item to="/outpatient_hospital"> 
+			<van-tabbar-item :to="{name : 'outpatient_hospital'}"> 
 			    <img
 					slot="icon"
 					slot-scope="props"
@@ -17,7 +17,7 @@
 			    >
 			    <span>医院</span>
 			</van-tabbar-item>
-			<van-tabbar-item to="/outpatient_gene"> 
+			<van-tabbar-item :to="{name : 'outpatient_gene'}"> 
 			    <span>基因</span>
 			    <img
 					slot="icon"
@@ -25,7 +25,7 @@
 					:src="props.active ? gene.inactive : gene.active"
 			    >
 			</van-tabbar-item>
-			<van-tabbar-item to="/outpatient_user">
+			<van-tabbar-item :to="{name : 'outpatient_user'}"> 
 			    <span>我的</span>
 			    <img
 					slot="icon"
