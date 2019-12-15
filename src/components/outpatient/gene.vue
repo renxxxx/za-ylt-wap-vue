@@ -122,7 +122,7 @@ export default {
 .topNav{
 	width: 100%;
 	height: .47rem;
-	background-color: #FFFFFFFF;
+	background-color: #FFFFFF;
 }
 .nav_left{
 	float: left;

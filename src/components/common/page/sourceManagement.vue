@@ -133,7 +133,7 @@ export default {
 			kw : this.list.keywords,
 			hospitalId : this.account.hospitalId,
 			clinicId : this.list.clinicId,
-			status :1,	
+			status :1,
 			pn : 1,
 			ps : 10
 		}))

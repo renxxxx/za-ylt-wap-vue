@@ -15,7 +15,7 @@
 			<div class="Explain" @click="showExplainFn">
 				<button>积分说明</button>
 			</div>
-		</div> 
+		</div>
 		<van-overlay :show="showExplain" @click="showExplain = false">
 			<div class="explainContent">
 				<div class="explainTitle">
@@ -45,8 +45,8 @@
 			<ul>
 				<h3 class="titleBefore">每日收益</h3>
 				<li v-for="(item,inx) in task.daily" :key='inx+1'>
-					<h4>{{item.name}}<span>+{{item.everyDayIs}}</span><span>/每日首次登录</span></h4>
-					<van-progress :percentage="50" :show-pivot='false' :color="'#FF1A2E'" :rack-color="'#E5E5E5'" stroke-width='0.05rem'/>
+					<h4>{{item.name}}<span>+{{item.everyDayIs}}</span><span>/</span></h4>
+					<van-progress :percentage="item.gotExchangePointToday/item.exchangePointUpperPerDay*100" :show-pivot='false' :color="'#FF1A2E'" :rack-color="'#E5E5E5'" stroke-width='0.05rem'/>
 					<p>已获{{item.exchangePoint}}分/上限{{item.exchangePointUpperPerDay}}分</p>
 					<button :class="item.doneIs? 'buttonColorYes':'buttonColorNo'">{{item.doneIs? '已完成':'去完成'}}</button>
 				</li>
@@ -75,10 +75,10 @@ export default {
 	  ...mapGetters(['account'])
 	},
 	components:{
-		
+
 	},
 	created(){
-		
+
 	},
 	mounted(){
 		this.$axios.post('/clientend2/clinicend/taskcenter/tasks',qs.stringify({
@@ -126,7 +126,7 @@ export default {
 	background-size: 1.84rem 1.29rem;
 	margin-bottom: .15rem;
 	position: relative;
-}	
+}
 .leftImg{
 	width: 22%;
 	height: .47rem;
@@ -150,7 +150,7 @@ export default {
 	font-size: .16rem;
 	font-weight: bolder;
 }
-.right{	
+.right{
 	width: 22%;
 	height: .47rem;
 	line-height: .47rem;
@@ -266,7 +266,7 @@ export default {
 	height: .3rem;
 	line-height: .3rem;
 	text-align: center;
-	
+
 	border-radius: .15rem;
 }
 .buttonColorYes{

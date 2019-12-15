@@ -21,6 +21,10 @@ import outpatient_taskCenter from '@/components/outpatient/page/taskCenter.vue'
 import outpatient_integralExchange from '@/components/outpatient/page/integralExchange.vue'
 //门诊端用户主页的积分兑换列表
 import outpatient_ExchangeList from '@/components/outpatient/page/ExchangeList.vue'
+//门诊端用户主页的积分明细列表
+import outpatient_integralDetails from '@/components/outpatient/page/integralDetails.vue'
+//门诊端用户主页的兑换历史记录
+import outpatient_integralHistory from '@/components/outpatient/page/integralHistory.vue'
 
 //医院端页面及其组件
 // 医院端主页
@@ -329,7 +333,7 @@ const router = new Router({
 			name: 'outpatient_integralExchange',
 			component: outpatient_integralExchange,
 			meta: {auth:true},
-		},	
+		},
 		{
 			//门诊端用户主页的积分兑换列表
 			path: '/outpatient_ExchangeList',
@@ -337,6 +341,20 @@ const router = new Router({
 			component: outpatient_ExchangeList,
 			meta: {auth:true},
 		},
+    {
+    	//门诊端用户主页的积分明细列表
+    	path: '/outpatient_integralDetails',
+    	name: 'outpatient_integralDetails',
+    	component: outpatient_integralDetails,
+    	// meta: {auth:true},
+    },
+    {
+    	//门诊端用户主页的兑换历史记录
+    	path: '/outpatient_integralHistory',
+    	name: 'outpatient_integralHistory',
+    	component: outpatient_integralHistory,
+    	// meta: {auth:true},
+    },
 		{
 			//详情页
 			path: '/details',

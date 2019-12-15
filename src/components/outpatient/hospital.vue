@@ -137,7 +137,7 @@ export default {
 	border: none;
 	border-radius: .33rem;
 	padding-left: 11.6%;
-	background-color: #0000000D;
+	background-color: rgba(0, 0, 0, 0.05);
 }
 .hospital_search img{
 	width: .14rem;

@@ -11,10 +11,14 @@
 				<h2>81,250</h2>
 			</div>
 			<div class="integralExchangeButton">
-				<button>积分明细</button>
-				<button>兑换记录</button>
+        <router-link :to="{name : 'outpatient_integralDetails'}">
+          <button>积分明细</button>
+        </router-link>
+        <router-link :to="{name : 'outpatient_integralHistory'}">
+          <button>兑换记录</button>
+        </router-link>
 			</div>
-		</div> 
+		</div>
 		<div class="flowHeading" id ="flowHeading">
 		    <ul class="rollScreen_list" :style = {transform:transform}  :class="{rollScreen_list_unanim:num===0}">
 				<li class="rollScreen_once" v-for="(item,index) in contentArr" :key='index'>
@@ -113,7 +117,7 @@ export default {
 	position: relative;
 	color: #FFFFFF;
 	text-align: center;
-}	
+}
 .leftImg{
 	width: 22%;
 	height: .47rem;
@@ -139,7 +143,7 @@ export default {
 	font-size: .16rem;
 	font-weight: bolder;
 }
-.right{	
+.right{
 	width: 22%;
 	height: .47rem;
 	line-height: .47rem;
@@ -163,14 +167,15 @@ export default {
 	float: left;
 	margin-top: .2rem;
 }
-.integralExchangeButton button{
+.integralExchangeButton a button{
 	width: 1.1rem;
 	height: .29rem;
+  color: #FFFFFF;
 	background: none;
 	border: 1px solid #FFFFFF;
 	border-radius: .15rem;
 }
-.integralExchangeButton button:first-child{
+.integralExchangeButton a:first-child button{
 	margin-right: .5rem;
 }
 .flowHeading{
