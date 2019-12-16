@@ -303,7 +303,7 @@ export default {
 .article ul li {
 	width: 100%;
 	height: .97rem;
-	border-bottom:1px solid #D8D8D8FF ;
+	border-bottom:1px solid #D8D8D8 ;
 	margin: .12rem 0;
 }
 .article ul li:last-child{

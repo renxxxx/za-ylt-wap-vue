@@ -62,7 +62,7 @@ export default {
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
-				clinicId : this.list.clinicId,
+				clinicId : this.account.data.data.clinic.clinicId,
 				status :1,
 				pn : 1,
 				ps : 10
@@ -111,7 +111,7 @@ export default {
 			debugger;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				clinicId : this.list.clinicId,
+				clinicId : this.account.data.data.clinic.clinicId,
 				status :1,
 				pn : this.page,
 				ps : 10,

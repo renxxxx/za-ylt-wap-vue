@@ -55,7 +55,7 @@
 		
 		<clinicContent :clinic = 'clinic'></clinicContent>
 		
-		<bottomNav v-bind:name='name'></bottomNav>
+		<bottomNav></bottomNav>
 	</div>
 </template>
 
@@ -70,7 +70,6 @@ export default {
 	name: 'clinic',
 	data () {
 		return {
-			name: 'hospital',
 			clinic : {
 				num : 0
 			},

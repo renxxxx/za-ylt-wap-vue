@@ -119,7 +119,7 @@ const getters={
 	//医院端用户的任务管理参数
 	task : state => state.task,
 	// 医院端兑换管理的新增和商品修改信息参数
-	exchangeAdd : state => state.task,
+	exchangeAdd : state => state.exchangeAdd,
 	//医院端兑换管理详情页参数
 	taskSubmitValue : state => state.taskSubmitValue,
 	// 门诊端兑换详情页数据

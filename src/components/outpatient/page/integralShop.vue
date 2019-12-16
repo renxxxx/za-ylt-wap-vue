@@ -32,7 +32,7 @@ export default {
 	name: 'integralShop',
 	data () {
 		return {
-			
+
 		}
 	},
 	computed:{
@@ -48,10 +48,10 @@ export default {
 		}
 	},
 	components:{
-		
+
 	},
 	created () {
-		
+
 	},
 	mounted () {
 		this.$route.params.item? this.getdata():''
@@ -162,5 +162,6 @@ export default {
 	padding: 0;
 	border-radius: 0rem .5rem .5rem 0rem;
 	box-shadow: hsla(0, 0%, 0%, 10%) 0rem 0rem .05rem 0rem;
+  margin-left: -0.05rem;
 }
 </style>

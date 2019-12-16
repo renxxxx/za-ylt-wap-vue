@@ -55,13 +55,13 @@ export default {
 		...mapGetters(['account'])
 	},
 	components:{
-		
+
 	},
 	created () {
-		
+
 	},
 	mounted () {
-		
+
 	},
 	methods: {
 		goBackFn(){
@@ -78,7 +78,7 @@ export default {
 			}))
 			.then(res => {
 				this.$toast.success({
-					 duration: 1000, 
+					 duration: 1000,
 					  message: '修改成功',
 				});
 			})
@@ -151,6 +151,10 @@ export default {
 	padding: 0rem .12rem;
 	border-bottom: 1px solid #ebe7e7;
 }
+.content ul li:nth-child(2) input::-webkit-outer-spin-button,.content ul li:nth-child(2) input::-webkit-inner-spin-button{
+  -webkit-appearance: none !important;
+  margin: 0;
+}
 .content ul li:last-child{
 	border: none;
 }
@@ -166,7 +170,6 @@ export default {
 	width: 80%;
 	float: right;
 	border:none;
-	
 }
 .content ul li textarea{
 	height: .26rem;

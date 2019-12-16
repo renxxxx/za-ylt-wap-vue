@@ -22,9 +22,43 @@
 			<div class="typeNav">
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF'>
 					<!-- <van-tab :title='this.$refs.all.allTitle'> -->
-					<van-tab :title='list.allNum==0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'>
+					<van-tab :title='list.allNum==0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'
+            v-if="account.isLogin == 200? false:true">
 						<clinicAll ref='all' :list = 'list'></clinicAll>
 					</van-tab>
+          <van-tab title="新增病源" v-if="account.isLogin == 200? true:false">
+          	<form @submit.prevent="hospitalSubmit" class="newAdd">
+          		<div class="newAddTitle">
+          			<img src="static/img/bitian@2x.png" alt="">
+          			<h3>必填项</h3>
+          			<ul class="Fill">
+          				<li>
+          					<span>病患姓名</span>
+          					<input type="text" v-model="account.user.realname"  placeholder="请填写" >
+          				</li>
+          				<li>
+          					<span>联系电话</span>
+          					<input type="text" v-model="account.user.tel" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+          				</li>
+          				<li>
+          					<span>身份证号</span>
+          					<input type="text" v-model="account.user.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')"placeholder="请填写">
+          				</li>
+          			</ul>
+          		</div>
+          		<div class="newAddTitle bottom">
+          			<img src="static/img/bitian@2x.png" alt="">
+          			<h3>选填项</h3>
+          			<ul class="Fill">
+          				<li>
+          					<span>备注</span>
+          					<input type="text" v-model="account.user.remark"  placeholder="请填写" >
+          				</li>
+          			</ul>
+          		</div>
+          		<input class="submitClass" type="submit" value="提交"></input>
+          	</form>
+          </van-tab>
 					<!-- <van-tab :title='this.$refs.no.noTitle'> -->
 					<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
 						<clinicNo ref='no' :list = 'list'></clinicNo>
@@ -36,6 +70,7 @@
 				</van-tabs>
 			</div>
 		</div>
+    <router v-if="account.isLogin == 200? true:false"></router>
   </div>
 </template>
 <script>
@@ -47,6 +82,7 @@ import timeChoose from '../functionPage/timeChoose.vue'
 import clinicAll from '../functionPage/clinicAll.vue'
 import clinicYes from '../functionPage/clinicYes.vue'
 import clinicNo from '../functionPage/clinicNo.vue'
+import router from '../../outpatient/functionPage/router.vue'
 export default {
   name: 'index',
   data () {
@@ -70,6 +106,10 @@ export default {
     }
   },
   mounted(){
+    if(window.plus){
+    	plus.navigator.setStatusBarBackground("#2B77EF");
+    	plus.navigator.setStatusBarStyle("dark")
+    }
 	  this.getNum();
   },
   computed:{
@@ -95,7 +135,7 @@ export default {
   },
   //注册组件
   components:{
-	  timeChoose,clinicAll,clinicYes,clinicNo
+	  timeChoose,clinicAll,clinicYes,clinicNo,router
   },
   methods:{
 	//回退方法
@@ -132,7 +172,7 @@ export default {
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
 			hospitalId : this.account.hospitalId,
-			clinicId : this.list.clinicId,
+      clinicId : this.account.data.data.clinic.clinicId,
 			status :1,
 			pn : 1,
 			ps : 10
@@ -148,7 +188,7 @@ export default {
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
 			hospitalId : this.account.hospitalId,
-			clinicId : this.list.clinicId,
+			clinicId : this.account.data.data.clinic.clinicId,
 			status :4,
 			pn : 1,
 			ps : 10
@@ -164,6 +204,7 @@ export default {
 		this.list.allNum = this.list.noNum + this.list.yesNum;
 		console.log(this.list.allNum)
 	},
+
 	...mapActions(['labelLabelFn','dateConfirm','closeFn','screeningSubmit','screeningResult','confirm','cancel','hospitalSubmit'])
   },
 }
@@ -422,5 +463,61 @@ export default {
 
 >>>van-tabs{
 	height: 100%;
+}
+.submitClass{
+	width:2.41rem;
+	height: .4rem;
+	display:block;margin:0 auto;
+	margin-top: .5rem;
+
+	background: linear-gradient(#56AFF8, #2B77EF);
+	border: none;
+	border-radius: .2rem;
+	color: #FFFFFF;
+	font-size: 	.14rem;
+}
+.newAddTitle{
+	width: 91.4%;
+	margin-top: 2.9%;
+	margin: 0 auto;
+	padding-top: .2rem;
+}
+.newAddTitle img{
+	width: .165rem;
+	height: .185rem;
+}
+.newAddTitle h3{
+	margin-left: .05rem;
+	width: .45rem;
+	height: .21rem;
+	display: inline;
+}
+.Fill {
+	width:90%;
+	height: 1.59rem;
+}
+.Fill li{
+	border: 1px solid #D8D8D8;
+	border-radius: .02rem;
+	padding: .12rem .15rem;
+	margin-top:.12rem;
+	width: 100%;
+}
+.Fill li span{
+	height: .21rem;width: .6rem;
+
+}
+.Fill li input{
+	border: none;
+	float:right;
+	text-align: right;
+	background-color: #F5F5F5;
+}
+.bottom{
+	margin-top: .2rem;
+	height: .78rem;
+}
+.AlreadySpanColor{
+	color: #2B77EF!important;
 }
 </style>

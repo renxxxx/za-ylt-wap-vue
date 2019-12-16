@@ -66,7 +66,7 @@ export default {
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
-				clinicId : this.list.clinicId,
+				clinicId : this.account.data.data.clinic.clinicId,
 				pn : 1,
 				ps : 10
 			}))
@@ -130,7 +130,7 @@ export default {
 		nextdata(){
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				clinicId : this.list.clinicId,
+				clinicId : this.account.data.data.clinic.clinicId,
 				pn : this.page,
 				ps : 10,
 			}))
@@ -188,7 +188,7 @@ export default {
 				console.log(err);
 				Dialog({ message: err});
 			});
-			
+
 		},
 		detailsValueFn(_item){
 			this.account.patientId = '';

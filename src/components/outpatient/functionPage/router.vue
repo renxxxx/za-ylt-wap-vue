@@ -1,7 +1,8 @@
 <template>
 	<div id="mainButton">
 		<van-tabbar v-model="active" route>
-			<van-tabbar-item :to="{name : 'outpatient_index'}"> 
+      <!-- <router-link :to="{name : 'hospital_sourceManagement'}"> -->
+			<van-tabbar-item :to="{name : 'hospital_sourceManagement'}"> 
 			    <span>首页</span>
 			    <img
 					slot="icon"

@@ -76,7 +76,7 @@
 				</li>
 			</ul>
 		</div>
-		<bottomNav v-bind:name='name'></bottomNav>
+		<bottomNav></bottomNav>
 	</div>
 </template>
 
@@ -89,7 +89,6 @@ export default {
 	name: 'gene',
 	data () {
 		return {
-			name: 'gene',
 			value: 0,
 			option: [
 			    { text: '全部', value: 0 },

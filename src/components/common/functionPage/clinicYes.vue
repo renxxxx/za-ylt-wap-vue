@@ -39,7 +39,7 @@ export default {
 			finished: false,
 			//显示下拉加载
 			isLoading: false,
-			page : 1,	
+			page : 1,
 			yesNum : 0,
 			yesTitle :'已就诊',
 		}
@@ -66,7 +66,7 @@ export default {
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
-				clinicId : this.list.clinicId,
+				clinicId : this.account.data.data.clinic.clinicId,
 				status :4,
 				pn : 1,
 				ps : 10
@@ -114,7 +114,7 @@ export default {
 		nextdata(){
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				clinicId : this.list.clinicId,
+				clinicId : this.account.data.data.clinic.clinicId,
 				status :4,
 				pn : this.page,
 				ps : 10,

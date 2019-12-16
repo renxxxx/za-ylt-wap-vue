@@ -57,7 +57,7 @@
 				
 			</ul>
 		</div>
-		<bottomNav v-bind:name='name'></bottomNav>
+		<bottomNav></bottomNav>
 	</div>
 </template>
 
@@ -70,7 +70,6 @@ export default {
 	name: 'user',
 	data () {
 		return {
-			name: 'user',
 			coverImg: '',
 			show: false,
 			index: 0,
