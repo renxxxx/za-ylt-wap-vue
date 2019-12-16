@@ -94,6 +94,8 @@ const state={
 		cover : '',
 		show : true,
 	},
+	// 门诊端兑换详情页数据
+	shopDetails:{},
 }
 const getters={
 	//账号协议checked
@@ -120,6 +122,8 @@ const getters={
 	exchangeAdd : state => state.task,
 	//医院端兑换管理详情页参数
 	taskSubmitValue : state => state.taskSubmitValue,
+	// 门诊端兑换详情页数据
+	shopDetails : state => state.shopDetails,
 }
 const actions={
 	//复选框的选择

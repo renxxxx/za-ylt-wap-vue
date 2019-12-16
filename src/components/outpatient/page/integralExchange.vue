@@ -11,12 +11,12 @@
 				<h2>81,250</h2>
 			</div>
 			<div class="integralExchangeButton">
-        <router-link :to="{name : 'outpatient_integralDetails'}">
-          <button>积分明细</button>
-        </router-link>
-        <router-link :to="{name : 'outpatient_integralHistory'}">
-          <button>兑换记录</button>
-        </router-link>
+				<router-link :to="{name : 'outpatient_integralDetails'}">
+				  <button>积分明细</button>
+				</router-link>
+				<router-link :to="{name : 'outpatient_integralHistory'}">
+				  <button>兑换记录</button>
+				</router-link>
 			</div>
 		</div>
 		<div class="flowHeading" id ="flowHeading">
@@ -61,6 +61,9 @@ export default {
 	},
 	components:{
 		integralExchangeList
+	},
+	destroyed() {
+		
 	},
 	created () {
 		let _this = this

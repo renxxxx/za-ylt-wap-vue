@@ -10,14 +10,14 @@
     	<div class="right"></div>
     </div>
     <div class="detailsTitle">
-      <img src="static/img/Select@2x.png" alt="">
+      <img src="static/img/lishi.png" alt="">
       <span>积分使用明细</span>
     </div>
     <ul>
-      <li v-for="(item,inx) in 4" :key="inx">
-        <h4>订单编号：027493938462742</h4>
-        <p>2017-12-28 14:36</p>
-        <span>-5,400</span>
+      <li v-for="(item,inx) in integralDetails" :key="inx">
+        <h4>{{item.note}}</h4>
+        <p>{{moment(item.addTime).format('YYYY-MM-DD hh:mm')}}</p>
+        <span>{{item.amount}}</span>
       </li>
     </ul>
   </div>
@@ -32,26 +32,25 @@ export default {
   name: 'integralDetails',
   data () {
     return {
-
+		integralDetails : [],
     }
   },
   computed:{
-
-
+	...mapGetters(['account']),
   },
   created () {
 
   },
   mounted () {
-    this.$axios.post('/clientend2/clinicend/pointexchange/msgs',qs.stringify({
+    this.$axios.post('/clientend2/clinicend/pointexchange/exchangepointdetails',qs.stringify({
     	clinicId : this.account.clinicId,
     	pn : 1,
-    	ps : 10
+    	ps : 99
     }))
     .then(res => {
-    	if(res.data.codeMsg == '' || res.data.codeMsg == null || res.data.codeMsg == undefined){
+    	if(res.data.codeMsg == null || res.data.codeMsg == '' || res.data.codeMsg == undefined){
     		for(let i in res.data.data.items){
-    			this.contentArr.push(res.data.data.items[i].title);
+    			this.integralDetails.push(res.data.data.items[i]);
     		}
     	}else{
     		this.$toast.fail(res.data.codeMsg)

@@ -95,7 +95,7 @@ export default {
 		
 	},
 	mounted () {
-		this.ItemIdFn();
+		// this.ItemIdFn();
 		this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = '';
 		this.getNum();
 	},

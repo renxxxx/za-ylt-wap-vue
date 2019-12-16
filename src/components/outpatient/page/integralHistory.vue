@@ -5,22 +5,22 @@
     		<img src="static/img/shape@3x.png" alt="">
     	</div>
     	<div class="centerTitle">
-    		<h3>积分明细</h3>
+    		<h3>兑换记录</h3>
     	</div>
     	<div class="right"></div>
     </div>
     <div class="detailsTitle">
-      <img src="static/img/Select@2x.png" alt="">
-      <span>积分使用明细</span>
+      <img src="static/img/lishi.png" alt="">
+      <span>兑换历史记录</span>
     </div>
     <ul>
-      <li v-for="(item,inx) in 4" :key="inx">
-        <img src="static/img/bj-keshi@2x.png" alt="">
+      <li v-for="(item,inx) in integralHistory" :key="inx">
+        <img :src="item.cover" alt="">
         <div class="ulTitle">
-          <h4>半自动体外除颤器</h4>
-          <p>心脏骤停-分秒必争</p>
-          <p>2017-12-28 14:36</p>
-          <span>数量 <strong>2</strong></span>
+          <h4>{{item.name}}</h4>
+          <p>{{item.unitExchangePoint}} 积分/个</p>
+          <p>{{moment(item.orderTime).format('YYYY-MM-DD hh:mm')}}</p>
+          <span>数量 <strong>{{item.count}}</strong></span>
         </div>
       </li>
     </ul>
@@ -36,26 +36,25 @@ export default {
   name: 'integralHistory',
   data () {
     return {
-
+		integralHistory : [],
     }
   },
   computed:{
-
-
+	...mapGetters(['account'])
   },
   created () {
 
   },
   mounted () {
-    this.$axios.post('/clientend2/clinicend/pointexchange/msgs',qs.stringify({
+    this.$axios.post('/clientend2/clinicend/pointexchange/orderdetails',qs.stringify({
     	clinicId : this.account.clinicId,
     	pn : 1,
-    	ps : 10
+    	ps : 99
     }))
     .then(res => {
     	if(res.data.codeMsg == '' || res.data.codeMsg == null || res.data.codeMsg == undefined){
     		for(let i in res.data.data.items){
-    			this.contentArr.push(res.data.data.items[i].title);
+    			this.integralHistory.push(res.data.data.items[i]);
     		}
     	}else{
     		this.$toast.fail(res.data.codeMsg)

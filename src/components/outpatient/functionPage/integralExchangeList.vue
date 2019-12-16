@@ -8,10 +8,12 @@
 		</div>
 		<ul>
 			<li v-for="(item,inx) in list" :key='inx'>
-				<img :src="item.cover" alt="">
-				<h4>{{item.name}}</h4>
-				<p><span>{{item.payExchangepoint}}</span> 积分</p>
-				<button>立即兑换</button>
+				<router-link :to="{name : 'outpatient_integralShop',params : {item : item}}">
+					<img :src="item.cover" alt="">
+					<h4>{{item.name}}</h4>
+					<p><span>{{item.payExchangepoint}}</span> 积分</p>
+					<button>立即兑换</button>
+				</router-link>
 			</li>
 		</ul>
 	</div>

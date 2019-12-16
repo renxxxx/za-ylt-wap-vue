@@ -25,6 +25,12 @@ import outpatient_ExchangeList from '@/components/outpatient/page/ExchangeList.v
 import outpatient_integralDetails from '@/components/outpatient/page/integralDetails.vue'
 //门诊端用户主页的兑换历史记录
 import outpatient_integralHistory from '@/components/outpatient/page/integralHistory.vue'
+//门诊端用户主页的积分兑换详情页
+import outpatient_integralShop from '@/components/outpatient/page/integralShop.vue'
+//门诊端用户主页的积分兑换结算页
+import outpatient_integralShopDetails from '@/components/outpatient/page/integralShopDetails.vue'
+//门诊端用户主页的积分兑换结算页面中的地址编辑页面
+import outpatient_shopAddress from '@/components/outpatient/page/shopAddress.vue'
 
 //医院端页面及其组件
 // 医院端主页
@@ -70,7 +76,6 @@ import hospital_previewActivities from '@/components/hospital/childPage/previewA
 import hospital_clinicDetails from '@/components/hospital/childPage/clinicDetails.vue'
 //医院端门诊主页的消息通知页面
 import hospital_clinicMessage from '@/components/hospital/childPage/clinicMessage.vue'
-
 //医院端用户主页的任务管理页面
 import hospital_taskManagement from '@/components/hospital/childPage/taskManagement.vue'
 //医院端用户主页的任务管理详情页页面
@@ -341,20 +346,41 @@ const router = new Router({
 			component: outpatient_ExchangeList,
 			meta: {auth:true},
 		},
-    {
-    	//门诊端用户主页的积分明细列表
-    	path: '/outpatient_integralDetails',
-    	name: 'outpatient_integralDetails',
-    	component: outpatient_integralDetails,
-    	// meta: {auth:true},
-    },
-    {
-    	//门诊端用户主页的兑换历史记录
-    	path: '/outpatient_integralHistory',
-    	name: 'outpatient_integralHistory',
-    	component: outpatient_integralHistory,
-    	// meta: {auth:true},
-    },
+		{
+			//门诊端用户主页的积分明细列表
+			path: '/outpatient_integralDetails',
+			name: 'outpatient_integralDetails',
+			component: outpatient_integralDetails,
+			// meta: {auth:true},
+		},
+		{
+			//门诊端用户主页的兑换历史记录
+			path: '/outpatient_integralHistory',
+			name: 'outpatient_integralHistory',
+			component: outpatient_integralHistory,
+			// meta: {auth:true},
+		},
+		{
+			//门诊端用户主页的积分兑换详情页
+			path: '/outpatient_integralShop',
+			name: 'outpatient_integralShop',
+			component: outpatient_integralShop,
+			// meta: {auth:true},
+		},
+		{
+			//门诊端用户主页的积分兑换结算页
+			path: '/outpatient_integralShopDetails',
+			name: 'outpatient_integralShopDetails',
+			component: outpatient_integralShopDetails,
+			// meta: {auth:true},
+		},
+		{
+			//门诊端用户主页的积分兑换结算页面中的地址编辑页面
+			path: '/outpatient_shopAddress',
+			name: 'outpatient_shopAddress',
+			component: outpatient_shopAddress,
+			// meta: {auth:true},
+		},
 		{
 			//详情页
 			path: '/details',
