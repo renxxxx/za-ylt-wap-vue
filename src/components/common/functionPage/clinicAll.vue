@@ -99,15 +99,15 @@ export default {
 								img : "static/img/orange@2x.png",
 								button : "确认就诊"
 							});
-							this.list.clinicNo.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								img : "static/img/orange@2x.png",
-								button : "确认就诊"
-							});
+							// this.list.clinicNo.push({
+							// 	clinicName : _d.data.data.items[nums].clinicName,
+							// 	itemId : _d.data.data.items[nums].itemId,
+							// 	pushTime : _d.data.data.items[nums].pushTime,
+							// 	realname : _d.data.data.items[nums].realname,
+							// 	status : _d.data.data.items[nums].status,
+							// 	img : "static/img/orange@2x.png",
+							// 	button : "确认就诊"
+							// });
 							noNum++
 							// console.log(this.list.noNum)
 						}else if(_d.data.data.items[nums].status == 4){
@@ -121,14 +121,14 @@ export default {
 								button : "已就诊",
 								buttonColor : "buttonColor"
 							});
-							this.list.clinicYes.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								button : "确认就诊"
-							});
+							// this.list.clinicYes.push({
+							// 	clinicName : _d.data.data.items[nums].clinicName,
+							// 	itemId : _d.data.data.items[nums].itemId,
+							// 	pushTime : _d.data.data.items[nums].pushTime,
+							// 	realname : _d.data.data.items[nums].realname,
+							// 	status : _d.data.data.items[nums].status,
+							// 	button : "确认就诊"
+							// });
 							yesNum++;
 							// console.log(this.yesNum)
 						}
@@ -146,7 +146,7 @@ export default {
 					}
 					// this.list.yesNum  = _d.data.data.sum.yesNum;
 					// console.log(this.list.noNum)
-					
+
 					// console.log(this.allTitle)
 					this.isLoading = false;
 					// 加载状态结束
@@ -181,15 +181,15 @@ export default {
 								img : "static/img/orange@2x.png",
 								button : "确认就诊"
 							});
-							this.list.clinicNo.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								img : "static/img/orange@2x.png",
-								button : "确认就诊"
-							});
+							// this.list.clinicNo.push({
+							// 	clinicName : _d.data.data.items[nums].clinicName,
+							// 	itemId : _d.data.data.items[nums].itemId,
+							// 	pushTime : _d.data.data.items[nums].pushTime,
+							// 	realname : _d.data.data.items[nums].realname,
+							// 	status : _d.data.data.items[nums].status,
+							// 	img : "static/img/orange@2x.png",
+							// 	button : "确认就诊"
+							// });
 							// this.noNum++;
 							// this.list.noNum = this.noNum;
 							// this.list.noNum = _d.data.data.sum.totalCount
@@ -205,14 +205,14 @@ export default {
 								button : "已就诊",
 								buttonColor : "buttonColor"
 							});
-							this.list.clinicYes.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								button : "确认就诊"
-							});
+							// this.list.clinicYes.push({
+							// 	clinicName : _d.data.data.items[nums].clinicName,
+							// 	itemId : _d.data.data.items[nums].itemId,
+							// 	pushTime : _d.data.data.items[nums].pushTime,
+							// 	realname : _d.data.data.items[nums].realname,
+							// 	status : _d.data.data.items[nums].status,
+							// 	button : "确认就诊"
+							// });
 							// this.yesNum++;
 							// this.list.yesNum = this.yesNum;
 							// this.list.yesNum  = _d.data.data.sum.totalCount
