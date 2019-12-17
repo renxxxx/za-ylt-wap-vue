@@ -1,9 +1,9 @@
 <template>
 	<div class="no">
 		<van-pull-refresh v-model="isLoading" @refresh="refresh">
-			<ul>
+			<ul class="hospitalList" v-if="account.isLogin == 100? true:false">
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
-					<li v-for="(item,inx) in list.clinicNo" :key="inx" @click="detailsValueFn(item)">
+					<li v-for="(item,inx) in list.clinicNo" :key="inx" >
 						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
 							<div class="contentTitle">
 								<img :src="item.img" alt="">
@@ -20,6 +20,23 @@
 					</li>
 				</van-list>
 			</ul>
+			<ul class="clinicList" v-if="account.isLogin == 200? true:false">
+				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
+					<li v-for="(item,inx) in list.clinicNo" :key="inx">
+						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
+							<div class="content_left">
+								<span>{{item.realname}}</span>
+							</div>
+							<div class="content_right">
+								<img src='static/img/weijiuzhen@2x.png'>
+								<span class="AlreadySpanColor">未就诊</span>
+							</div>
+							<p>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
+						</router-link>	
+					</li>
+				</van-list>
+			</ul>	
+			</van-list>
 		</van-pull-refresh>
 	</div>
 </template>
@@ -62,7 +79,7 @@ export default {
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
-				clinicId : this.account.data.data.clinic.clinicId,
+				clinicId : this.account.clinicId,
 				status :1,
 				pn : 1,
 				ps : 10
@@ -73,6 +90,9 @@ export default {
 				this.finished = false;
 				this.isLoading = false;
 				this.loading = false;
+				let yesNum = 0;
+				let noNum = 0;
+				let allNum = 0;
 				// console.log( _d.data.data.items.length)
 				if( _d.data.data.items.length == 0){
 					this.isLoading = false;
@@ -90,15 +110,16 @@ export default {
 							img : "static/img/orange@2x.png",
 							button : "确认就诊"
 						});
+						noNum++
 					}
-					// this.list.noNum  = _d.data.data.sum.totalCount
-					// this.list.allNum = this.list.noNum + this.list.yesNum;
-					// this.list.allTitle = '全部' + this.list.allNum;
-					// this.list.noTitle = '未就诊' + this.list.noNum;
-					// this.list.yesTitle = '已就诊' + this.list.yesNum;
 					this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;
+				}
+				if(this.list.keywords != ''){
+					this.list.noNum = noNum;
+				}else{
+					this.list.noNum  = _d.data.data.sum.totalCount
 				}
 			})
 			.catch((err)=>{
@@ -108,10 +129,9 @@ export default {
 		},
 
 		nextdata(){
-			debugger;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				clinicId : this.account.data.data.clinic.clinicId,
+				clinicId : this.account.clinicId,
 				status :1,
 				pn : this.page,
 				ps : 10,
@@ -154,17 +174,15 @@ export default {
 			})
 		},
 		onLoad(){
-			this.list.data? this.nextdata():''
+			(this.list.keywords||this.list.data)? this.nextdata():this.noPostFn;
+		},
+		noPostFn(){
+			this.nextdata(),
+			this.loading=false
 		},
 		refresh(){
 			// console.log(this.keywords);
-			this.list.data? this.getdata():this.loading = false
-			// this.getdata()
-		},
-		detailsValueFn(_item){
-			this.account.patientId = '';
-			this.account.patientId = _item.itemId;
-			console.log(this.account.patientId)
+			this.getdata();
 		},
 	},
 }
@@ -174,7 +192,7 @@ export default {
 .no{
 	width: 100%;
 }
-.no li{
+.hospitalList li{
 	height:.84rem;
 	width: 91.5%;
 	background-color: #FFFFFF;
@@ -219,5 +237,44 @@ export default {
 .buttonColor{
     color: #333333!important;
     background-color: #EEEEEE!important;
+}
+.clinicList{
+	margin: 0 .12rem;
+}
+.clinicList li {
+	height:1.01rem;
+	margin-top:.12rem;
+	background-color:#FFFFFF;
+	position:relative;
+	/*padding:.14rem .15rem;*/
+}
+.clinicList li p{
+	position:absolute;
+	bottom:0;
+	height:.5rem;
+	width:93%;
+	line-height:.5rem;
+	margin-left:.14rem;
+	border-top:1px solid #E5E5E5;
+}
+.content_left{
+	float:left;
+	height:.5rem;
+	margin-top:.14rem;
+	margin-left:.15rem;
+}
+.content_right{
+	float:right;
+	height:.5rem;
+	margin-right:.14rem;
+	margin-top:.15rem
+}
+.content_right img{
+	width:.11rem;
+	height:.11rem;
+	margin-right:.04rem;
+}
+.content_right span{
+	color: #2B77EF;
 }
 </style>

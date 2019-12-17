@@ -55,7 +55,7 @@ export default {
 	},
 	computed:{
 		...mapGetters(['account']),
-	   transform: function () {
+		transform: function () {
 	        return 'translateY(-' + this.num * .42 + 'rem)'
 	    },
 	},

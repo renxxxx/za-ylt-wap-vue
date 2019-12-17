@@ -4,6 +4,7 @@ import qs from 'qs';
 import { Dialog } from 'vant'
 import moment from 'moment'
 import h5p from '../../../build/h5p.js'
+import router from '../../router'
 const state={
 	//账号协议checked
 	checked: true,
@@ -193,7 +194,7 @@ const mutations={
 						.then( res =>{
 							switch(_isLogin){
 								case 100:
-								window.location.href=_url;
+								router.push({ name : _url});
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
 								console.log(state.account.hospitalId)
 								state.account.data = {};
@@ -201,7 +202,7 @@ const mutations={
 								break;
 
 								case 200:
-								window.location.href=_url;
+								router.push({ name : _url});
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
 								console.log(state.account.hospitalId)
@@ -210,7 +211,7 @@ const mutations={
 								break;
 
 								case 300:
-								window.location.href=_url;
+								router.push({ name : _url});
 								Dialog({ message: '正在开发中，敬请期待' });
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
@@ -251,17 +252,17 @@ const mutations={
 		if(state.checked == true){
 			switch (landingState){
 				case '100':
-				mutations.submintGetData('/hospital/login','/hospital/login-refresh',100,'#/hospital_index')
-					break;
+				mutations.submintGetData('/hospital/login','/hospital/login-refresh',100,'hospital_index')
+				break;
 				case '200':
 				// console.log('200')
-				mutations.submintGetData('/clinic/login','/clinic/login-refresh',200,'#/outpatient_index')
-					break;
+				mutations.submintGetData('/clinic/login','/clinic/login-refresh',200,'hospital_sourceManagement')
+				break;
 				case '300':
-				mutations.submintGetData('/manager/login','/manager/login-refresh',300,'#/outpatient_index')
-					break;
+				mutations.submintGetData('/manager/login','/manager/login-refresh',300,'outpatient_index')
+				break;
 				default:
-					break;
+				break;
 			}
 		}else{
 			Dialog({ message: '请勾选同意条款' });

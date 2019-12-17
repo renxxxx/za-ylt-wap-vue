@@ -152,7 +152,7 @@ export default {
 		// 详情页
 		detailsValueFn(_items){
 			this.account.itemId = '';
-			// this.account.itemId = _items.itemId;
+			// this.account.clinicId = _items.itemId;
 		},
 	},
 }

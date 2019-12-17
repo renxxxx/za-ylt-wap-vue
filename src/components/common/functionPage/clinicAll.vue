@@ -3,7 +3,7 @@
 		<van-pull-refresh v-model="isLoading" @refresh="refresh">
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
-					<li v-for="(item,inx) in list.clinicAll" :key="inx" @click="detailsValueFn(item)">
+					<li v-for="(item,inx) in list.clinicAll" :key="inx">
 						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
 							<div class="contentTitle">
 								<img :src="item.img" alt="">
@@ -57,7 +57,7 @@ export default {
 
 	},
 	mounted () {
-		console.log(this.list)
+		// console.log(this.list)
 		// this.getdata();
 	},
 	methods:{
@@ -66,7 +66,7 @@ export default {
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
-				clinicId : this.account.data.data.clinic.clinicId,
+				clinicId : this.account.clinicId,
 				pn : 1,
 				ps : 10
 			}))
@@ -75,7 +75,12 @@ export default {
 				// 加载状态结束
 				this.loading = false;
 				this.finished = false;
-				this.list.clinicAll =[];
+				this.list.clinicAll = [];
+				this.list.clinicNo = [];
+				this.list.clinicYes = [];
+				let yesNum = 0;
+				let noNum = 0;
+				let allNum = 0;
 				this.page = 2;
 				if( _d.data.data.items.length == 0){
 					this.isLoading = false;
@@ -94,6 +99,16 @@ export default {
 								img : "static/img/orange@2x.png",
 								button : "确认就诊"
 							});
+							this.list.clinicNo.push({
+								clinicName : _d.data.data.items[nums].clinicName,
+								itemId : _d.data.data.items[nums].itemId,
+								pushTime : _d.data.data.items[nums].pushTime,
+								realname : _d.data.data.items[nums].realname,
+								status : _d.data.data.items[nums].status,
+								img : "static/img/orange@2x.png",
+								button : "确认就诊"
+							});
+							noNum++
 							// console.log(this.list.noNum)
 						}else if(_d.data.data.items[nums].status == 4){
 							this.list.clinicAll.push({
@@ -106,15 +121,32 @@ export default {
 								button : "已就诊",
 								buttonColor : "buttonColor"
 							});
+							this.list.clinicYes.push({
+								clinicName : _d.data.data.items[nums].clinicName,
+								itemId : _d.data.data.items[nums].itemId,
+								pushTime : _d.data.data.items[nums].pushTime,
+								realname : _d.data.data.items[nums].realname,
+								status : _d.data.data.items[nums].status,
+								button : "确认就诊"
+							});
+							yesNum++;
 							// console.log(this.yesNum)
 						}
 					}
+					// console.log(this.list.keywords)
+					if(this.list.keywords != ''){
+						allNum = noNum + yesNum;
+						this.list.allNum = allNum;
+						this.list.noNum = noNum;
+						this.list.yesNum = yesNum;
+						// console.log(this.list.noNum+this.list.yesNum)
+					}else{
+						this.list.allNum  = _d.data.data.sum.totalCount;
+						// console.log(_d.data.data.sum.totalCount)
+					}
 					// this.list.yesNum  = _d.data.data.sum.yesNum;
-					console.log(this.list.noNum)
-					// this.list.allNum = this.list.noNum + this.list.yesNum;
-					// this.list.allTitle = '全部' + this.list.allNum;
-					// this.list.noTitle = '未就诊' + this.list.noNum;
-					// this.list.yesTitle = '已就诊' + this.list.yesNum;
+					// console.log(this.list.noNum)
+					
 					// console.log(this.allTitle)
 					this.isLoading = false;
 					// 加载状态结束
@@ -128,9 +160,10 @@ export default {
 
 		},
 		nextdata(){
+			// debugger;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				clinicId : this.account.data.data.clinic.clinicId,
+				clinicId : this.account.clinicId,
 				pn : this.page,
 				ps : 10,
 			}))
@@ -140,6 +173,15 @@ export default {
 					for (let nums in _d.data.data.items) {
 						if(_d.data.data.items[nums].status == 1){
 							this.list.clinicAll.push({
+								clinicName : _d.data.data.items[nums].clinicName,
+								itemId : _d.data.data.items[nums].itemId,
+								pushTime : _d.data.data.items[nums].pushTime,
+								realname : _d.data.data.items[nums].realname,
+								status : _d.data.data.items[nums].status,
+								img : "static/img/orange@2x.png",
+								button : "确认就诊"
+							});
+							this.list.clinicNo.push({
 								clinicName : _d.data.data.items[nums].clinicName,
 								itemId : _d.data.data.items[nums].itemId,
 								pushTime : _d.data.data.items[nums].pushTime,
@@ -162,6 +204,14 @@ export default {
 								img : "static/img/blue@2x.png",
 								button : "已就诊",
 								buttonColor : "buttonColor"
+							});
+							this.list.clinicYes.push({
+								clinicName : _d.data.data.items[nums].clinicName,
+								itemId : _d.data.data.items[nums].itemId,
+								pushTime : _d.data.data.items[nums].pushTime,
+								realname : _d.data.data.items[nums].realname,
+								status : _d.data.data.items[nums].status,
+								button : "确认就诊"
 							});
 							// this.yesNum++;
 							// this.list.yesNum = this.yesNum;
@@ -190,17 +240,15 @@ export default {
 			});
 
 		},
-		detailsValueFn(_item){
-			this.account.patientId = '';
-			this.account.patientId = _item.itemId;
-			console.log(this.account.patientId)
-		},
 		onLoad(){
-			this.list.data? this.nextdata():''
+			(this.list.keywords||this.list.data)? this.nextdata():this.noPostFn;
+		},
+		noPostFn(){
+			this.nextdata(),this.loading=false
 		},
 		refresh(){
 			// console.log(this.list.data);
-			this.list.data? this.getdata():''
+			this.getdata()
 			// this.getdata()
 		}
 	},

@@ -1,12 +1,12 @@
 <template>
-  <div class="">
-    <van-popup v-model="show" position="right" :style="{ height: '100%',width:'78.7%'}">
+	<div class="">
+		<van-popup v-model="show" position="right" :style="{ height: '100%',width:'78.7%'}">
     		<div id="indexLabel" v-model="Time">
-          <div class="labelLabel" >
-          	<strong>状态</strong>
-          	<button  class="right" @click="labelLabelFn(0,$event)" :id="labelDocument[0]">未就诊</button>
-          	<button @click="labelLabelFn(1,$event)" :id="labelDocument[1]">已就诊</button>
-          </div>
+			<div class="labelLabel" >
+				<strong>状态</strong>
+				<button  class="right" @click="labelLabelFn(0,$event)" :id="labelDocument[0]">未就诊</button>
+				<button @click="labelLabelFn(1,$event)" :id="labelDocument[1]">已就诊</button>
+			</div>
     			<div class="labelLabel" >
     				<strong>就诊时间</strong>
     				<button class="rightLine" @click="labelLabelFn(2,$event)" :id="labelDocument[2]">
@@ -32,14 +32,14 @@
     		</div>
     	</van-popup>
 
-    <van-popup @click="closeFn" v-model="showTime" position="bottom" :style="{ height: '40%',width:'100%'}">
-    	<van-datetime-picker
-    	  type="date"
-    	  @confirm="confirm"
-    	  @cancel="cancel"
-    	/>
-    </van-popup>
-  </div>
+		<van-popup @click="closeFn" v-model="showTime" position="bottom" :style="{ height: '40%',width:'100%'}">
+			<van-datetime-picker
+			  type="date"
+			  @confirm="confirm"
+			  @cancel="cancel"
+			/>
+		</van-popup>
+	</div>
 </template>
 
 
@@ -98,7 +98,7 @@ export default {
 
 	},
 	mounted () {
-    console.log(this.show)
+		
 	},
 	methods: {
     // 筛选确定
@@ -124,7 +124,9 @@ export default {
 		this.list.allTitle = '全部';
 		this.list.noTitle = '未就诊';
 		this.list.noTitle = '未就诊';
-		console.log(_d.data.data.items.length)
+		let yesNum = 0;
+		let noNum = 0;
+		let allNum = 0;
 		if(_d.data.data.items.length>0){
 			for (let nums in _d.data.data.items) {
 				// console.log(_d.data.data.items[nums])
@@ -147,9 +149,7 @@ export default {
 						img : "static/img/orange@2x.png",
 						button : "确认就诊"
 					});
-					this.list.noNum++;
-					this.list.noTitle = '未就诊'
-					this.list.noTitle = '未就诊' + this.list.noNum;
+					noNum++;
 					// console.log(this.list)
 				}else if(_d.data.data.items[nums].status == 4){
 					// console.log(_d.data.data.items[nums].status )
@@ -172,14 +172,16 @@ export default {
 						button : "已就诊",
 						buttonColor : "buttonColor"
 					});
-					this.list.yesNum++;
-					this.list.yesTitle = '已就诊'
-					this.list.yesTitle = '已就诊' + this.list.yesNum;
-					console.log(this.list)
+					yesNum++;
 				}
 			}
-			this.list.allTitle = '全部';
-			this.list.allTitle = '全部' + (this.list.noNum + this.list.yesNum)
+
+			this.list.allNum = allNum;
+			this.list.noNum = noNum;
+			this.list.yesNum = yesNum;
+			this.list.data = false;
+			// this.list.yesTitle = '已就诊' + this.list.yesNum;
+			// this.list.allTitle = '全部' + (this.list.noNum + this.list.yesNum)
 		}else{
 			console.log('s')
 			this.list.data = false;
@@ -192,8 +194,20 @@ export default {
 			this.list.allTitle = '全部';
 			this.list.noTitle = '未就诊';
 			this.list.noTitle = '未就诊';
-			
 			this.$toast.fail('暂无病源数据');
+		}
+		switch(this.Time.postState){
+			case 0:
+			this.list.titleData = 0;
+			break;
+			case 1:
+			this.list.titleData = 1;
+			console.log(this.list.titlData)
+			break;
+			case 4:
+			this.list.titleData = 2;
+			console.log(this.list.titlData)
+			break;
 		}
       })
       .catch((err)=>{
@@ -206,7 +220,7 @@ export default {
     	// console.log(this.labelDocument);
     	if(this.account.isLogin  == 100){
     		for(let _a=0 ;_a < 6; _a++){
-    			console.log(_a)
+    			// console.log(_a)
     			document.getElementById(this.labelDocument[_a]).style.backgroundColor = "#EEEEEE";
     		}
     	}else{

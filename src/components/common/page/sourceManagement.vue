@@ -3,10 +3,10 @@
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
 			<div class="topNav">
-				<div class="indexReturn" @click="goBackFn">
+				<div class="indexReturn" @click="goBackFn" v-if="account.isLogin == 100? true:false">
 					<img src="static/img/back-white@2x.png" alt="">
 				</div>
-				<div class="indexSearch">
+				<div class="indexSearch" v-bind:class="[account.isLogin == 200? 'clinicSearchStyle':'']">
 					<img src="static/img/sousuo@2x.png" alt="">
 					<input type="text" placeholder="搜索病源" v-model="list.keywords" @keyup="inputNow">
 				</div>
@@ -20,57 +20,54 @@
 			</div>
 			<!-- 就诊情况 -->
 			<div class="typeNav">
-				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF'>
-					<!-- <van-tab :title='this.$refs.all.allTitle'> -->
-					<van-tab :title='list.allNum==0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'
-            v-if="account.isLogin == 200? false:true">
+				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
+					<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'
+						v-if="account.isLogin == 200? false:true">
 						<clinicAll ref='all' :list = 'list'></clinicAll>
 					</van-tab>
-          <van-tab title="新增病源" v-if="account.isLogin == 200? true:false">
-          	<form @submit.prevent="hospitalSubmit" class="newAdd">
-          		<div class="newAddTitle">
-          			<img src="static/img/bitian@2x.png" alt="">
-          			<h3>必填项</h3>
-          			<ul class="Fill">
-          				<li>
-          					<span>病患姓名</span>
-          					<input type="text" v-model="account.user.realname"  placeholder="请填写" >
-          				</li>
-          				<li>
-          					<span>联系电话</span>
-          					<input type="text" v-model="account.user.tel" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
-          				</li>
-          				<li>
-          					<span>身份证号</span>
-          					<input type="text" v-model="account.user.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')"placeholder="请填写">
-          				</li>
-          			</ul>
-          		</div>
-          		<div class="newAddTitle bottom">
-          			<img src="static/img/bitian@2x.png" alt="">
-          			<h3>选填项</h3>
-          			<ul class="Fill">
-          				<li>
-          					<span>备注</span>
-          					<input type="text" v-model="account.user.remark"  placeholder="请填写" >
-          				</li>
-          			</ul>
-          		</div>
-          		<input class="submitClass" type="submit" value="提交"></input>
-          	</form>
-          </van-tab>
-					<!-- <van-tab :title='this.$refs.no.noTitle'> -->
+					<van-tab title="新增病源" v-if="account.isLogin == 200? true:false">
+						<form @submit.prevent="hospitalSubmit" class="newAdd">
+							<div class="newAddTitle">
+								<img src="static/img/bitian@2x.png" alt="">
+								<h3>必填项</h3>
+								<ul class="Fill">
+									<li>
+										<span>病患姓名</span>
+										<input type="text" v-model="account.user.realname"  placeholder="请填写" >
+									</li>
+									<li>
+										<span>联系电话</span>
+										<input type="text" v-model="account.user.tel" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+									</li>
+									<li>
+										<span>身份证号</span>
+										<input type="text" v-model="account.user.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')"placeholder="请填写">
+									</li>
+								</ul>
+							</div>
+							<div class="newAddTitle bottom">
+								<img src="static/img/bitian@2x.png" alt="">
+								<h3>选填项</h3>
+								<ul class="Fill">
+									<li>
+										<span>备注</span>
+										<input type="text" v-model="account.user.remark"  placeholder="请填写" >
+									</li>
+								</ul>
+							</div>
+							<input class="submitClass" type="submit" value="提交"></input>
+						</form>
+					</van-tab>
 					<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
 						<clinicNo ref='no' :list = 'list'></clinicNo>
 					</van-tab>
-					<!-- <van-tab :title='this.$refs.yes.yesTitle'> -->
 					<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
 						<clinicYes ref='yes' :list = 'list'></clinicYes>
 					</van-tab>
 				</van-tabs>
 			</div>
 		</div>
-    <router v-if="account.isLogin == 200? true:false"></router>
+		<router v-if="account.isLogin == 200? true:false"></router>
   </div>
 </template>
 <script>
@@ -87,22 +84,23 @@ export default {
   name: 'index',
   data () {
     return {
-      name: 'index',
-      selectValue : [],
-      //导航栏切换标题
-      list:{
-        keywords : '',			//搜索框的关键字value
-        allTitle: '全部',
-        noTitle:'未就诊',
-        yesTitle:'已就诊',
-        allNum : 0,
-        noNum : 0,
-        yesNum : 0,
-		clinicAll : [],
-		clinicNo : [],
-		clinicYes : [],
-		data: true,
-      }
+		name: 'index',
+		selectValue : [],
+		//导航栏切换标题
+		list:{
+			keywords : '',			//搜索框的关键字value
+			allTitle: '全部',
+			noTitle:'未就诊',
+			yesTitle:'已就诊',
+			allNum : 0,
+			noNum : 0,
+			yesNum : 0,
+			clinicAll : [],
+			clinicNo : [],
+			clinicYes : [],
+			data: true,
+			titleData:0,
+		}
     }
   },
   mounted(){
@@ -110,28 +108,28 @@ export default {
     	plus.navigator.setStatusBarBackground("#2B77EF");
     	plus.navigator.setStatusBarStyle("dark")
     }
-	  this.getNum();
+	this.getNum();
   },
   computed:{
-    ...mapGetters(['Time','labelDocument','showTime','show','account','detail']),
-    show: {
-        get: function() {
-        // console.log(this.$store)
-            return this.$store.state.shop.show
-        },
-        set: function (newValue) {
-        this.$store.state.shop.show = newValue;
-        },
-    },
-    showTime: {
-        get: function() {
-        // console.log(this.$store)
-            return this.$store.state.shop.showTime
-        },
-        set: function (newValue) {
-        this.$store.state.shop.showTime = newValue;
-        },
-    },
+		...mapGetters(['Time','labelDocument','showTime','show','account','detail']),
+		show: {
+			get: function() {
+			// console.log(this.$store)
+				return this.$store.state.shop.show
+			},
+			set: function (newValue) {
+			this.$store.state.shop.show = newValue;
+		   },
+		},
+		showTime: {
+			get: function() {
+			// console.log(this.$store)
+				return this.$store.state.shop.showTime
+			},
+			set: function (newValue) {
+			this.$store.state.shop.showTime = newValue;
+			},
+		},
   },
   //注册组件
   components:{
@@ -149,18 +147,32 @@ export default {
 		}
 		if (_keywordsCode) {
 		    this.timer = setTimeout(() => {
-				this.$refs.all.getdata();
+				switch(this.list.titleData){
+					case 0: 
+					this.account.isLogin == 100? this.$refs.all.getdata():'';
+					break;
+					case 1: 
+					this.account.isLogin == 100? this.$refs.all.getdata():'';
+					this.$refs.no.getdata();
+					break;
+					case 2: 
+					this.account.isLogin == 100? this.$refs.all.getdata():'';
+					this.$refs.yes.getdata();
+					break;
+				}
 		    }, 200);
-		} else {
+		}
+		if(this.list.keywords ==''){
 		    // 输入框中的内容被删为空时触发，此时会清除之前展示的搜索结果
-		    this.getdata();
+			// console.log('结束搜索')
+		    this.getNum();
 		}
 	},
 	// 详情页
 	detailsValueFn(_diagnosis){
-		console.log(_diagnosis.itemId)
+		// console.log(_diagnosis.itemId)
 		this.detail.patientId = _diagnosis.itemId;
-		console.log(this.detail.patientId)
+		// console.log(this.detail.patientId)
 	},
 	dateFn(e){
 		console.log(e)
@@ -172,14 +184,14 @@ export default {
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
 			hospitalId : this.account.hospitalId,
-      clinicId : this.account.data.data.clinic.clinicId,
+			clinicId : this.account.clinicId,
 			status :1,
 			pn : 1,
 			ps : 10
 		}))
 		.then(_d => {
 			this.list.noNum = _d.data.data.sum.totalCount;
-			console.log(this.list.noNum)
+			// console.log(this.list.noNum)
 		})
 		.catch((err)=>{
 			console.log(err);
@@ -188,23 +200,22 @@ export default {
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
 			hospitalId : this.account.hospitalId,
-			clinicId : this.account.data.data.clinic.clinicId,
+			clinicId : this.account.clinicId,
 			status :4,
 			pn : 1,
 			ps : 10
 		}))
 		.then(_d => {
 			this.list.yesNum = _d.data.data.sum.totalCount;
-			console.log(this.list.yesNum)
+			// console.log(this.list.yesNum)
 		})
 		.catch((err)=>{
 			console.log(err);
 			Dialog({ message: err});
 		});
-		this.list.allNum = this.list.noNum + this.list.yesNum;
-		console.log(this.list.allNum)
+		
+		// console.log(this.list.allNum)
 	},
-
 	...mapActions(['labelLabelFn','dateConfirm','closeFn','screeningSubmit','screeningResult','confirm','cancel','hospitalSubmit'])
   },
 }
@@ -519,5 +530,10 @@ export default {
 }
 .AlreadySpanColor{
 	color: #2B77EF!important;
+}
+.clinicSearchStyle{
+	margin-left: .16rem;
+	width: 77%;
+
 }
 </style>

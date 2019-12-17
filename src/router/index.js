@@ -4,6 +4,8 @@ import Router from 'vue-router'
 import landingPage from '@/components/landingPage.vue'
 import retrievePassword from '@/components/retrievePassword.vue'
 import details from '@/components/detailsPage.vue'
+//病源管理页面页
+import hospital_sourceManagement from '@/components/common/page/sourceManagement.vue'
 //门诊端页面及其组件
 //门诊端病源主页
 import outpatient_index from '@/components/outpatient/index.vue'
@@ -49,8 +51,6 @@ import hospital_indexSearch from '@/components/hospital/childPage/indexSearch.vu
 import hospital_clinicSearch from '@/components/hospital/childPage/clinic_search.vue'
 // 医院端门诊添加门诊页面
 import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
-// 医院端病源管理页面页
-import hospital_sourceManagement from '@/components/common/page/sourceManagement.vue'
 // 医院端器械采集页面
 import hospital_collect from '@/components/hospital/childPage/collect.vue'
 
@@ -142,7 +142,7 @@ const router = new Router({
 			meta: {auth:true},
 		},
 		{
-			// 医院端病源管理页面页
+			//病源管理页面页
 			path: '/hospital_sourceManagement',
 			name: 'hospital_sourceManagement',
 			component: hospital_sourceManagement,

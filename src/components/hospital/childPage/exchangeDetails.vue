@@ -14,14 +14,24 @@
 				<img src="static/img/exchangeAdress.png" alt="">
 			</div>
 			<div class="addressCenter">
-				<h4>邵先生</h4>
-				<span>153*****38</span>
-				<p>江苏省 南京市 鼓楼区 XX路</p>
+				<h4>{{exchangeDetails.receiverName}}</h4>
+				<span>{{exchangeDetails.receiverTel}}</span>
+				<p>{{exchangeDetails.receiverAddress}}</p>
 			</div>
-			<div class="addressRight">
-				
+		</div>
+		<div class="productList">
+			<div class="listTitle">
+				<h4>{{exchangeDetails.clinicName}}</h4>
 			</div>
-			
+			<ul>
+				<li>
+					<img src="static/img/Group@2x.png" alt="">
+					<h5>{{exchangeDetails.details[0].name}}</h5>
+					<p>{{exchangeDetails.details[0].intro}}</p>
+					<p>{{moment(exchangeDetails.addTime).format('YYYY-MM-DD HH:mm')}}</p>
+					<p>数量<span>{{exchangeDetails.details[0].count}}</span></p>
+				</li>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -150,5 +160,58 @@ export default {
 .addressCenter span{
 	color: #999999;
 	font-size: .14rem;
+}
+.productList{
+	width: 100%;
+	background-color: #FFFFFF;
+	margin-top: .155rem;
+}
+.listTitle{
+	height: .52rem;
+	line-height: .52rem;
+}
+.listTitle h4{
+	padding-left: .16rem;
+	font-size: .15rem;
+	border-bottom: 1px solid #EEEEEE;
+}
+.productList ul{
+	width: 100%;
+}
+.productList ul li{
+	height: .56rem;
+	padding: .16rem;
+	padding-left: 0rem;
+	margin-left: 4.27%;
+	position: relative;
+}
+.productList ul li img{
+	width: .66rem;
+	height: .66rem;
+	object-fit: cover;
+	float: left;
+	margin-right: .14rem;
+}
+.productList ul li h5{
+	color: #333333;
+	font-size: .14rem;
+	font-weight: bold;
+}
+.productList ul li p{
+	color: #999999;
+	font-size: .125rem;
+}
+.productList ul li p:nth-child(4){
+	padding-top: .05rem;
+}
+.productList ul li p:last-child{
+	position: absolute;
+	right: .16rem;
+	bottom: .15rem;
+}
+.productList ul li p:last-child span{
+	color: #333333;
+	font-size: .145rem;
+	padding-left: .15rem;
 }
 </style>
