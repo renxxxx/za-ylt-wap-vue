@@ -1,12 +1,12 @@
 <template>
 	<div class="imageType">
 		<ul>
-			<router-link :to="{name : 'hospital_typeDetails'}">
-				<li v-for="(item,inx) in type" :key='inx' @click="itemPostFn(item)">
+			<li v-for="(item,inx) in type" :key='inx'>
+				<router-link :to="{name : 'hospital_typeDetails' ,params : {item : item.itemId}}">
 					<img :src="item.url" alt="">
 					<span>{{item.name}}</span>
-				</li>
-			</router-link>
+				</router-link>
+			</li>
 		</ul>
 	</div>
 </template>
@@ -49,11 +49,7 @@ export default {
   },
   
   methods: {
-	itemPostFn(_id){
-		this.account.itemId = _id.itemId;
-		// console.log(this.account.itemId)
-	}
-
+	
   },
 }
 </script>

@@ -17,7 +17,7 @@
 		<div class="addImg">
 			<img :src="activity.cover" alt="">
 			<div class="addImgTitle">
-				<img src="static/img/replace@2x.png" alt="">
+				<img src="/static/img/replace@2x.png" alt="">
 				<span>选择背景</span> 
 			</div>
 			<input

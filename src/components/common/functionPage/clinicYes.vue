@@ -76,10 +76,12 @@ export default {
 		// 详情页
 		getdata(){
 			this.yesNum = 0;
+			let clinicId = '';
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
-				clinicId : this.account.clinicId,
+				clinicId : clinicId,
 				status :4,
 				pn : 1,
 				ps : 10
@@ -128,9 +130,11 @@ export default {
 			})
 		},
 		nextdata(){
+			let clinicId = '';
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				clinicId : this.account.clinicId,
+				clinicId : clinicId,
 				status :4,
 				pn : this.page,
 				ps : 10,

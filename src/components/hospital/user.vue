@@ -36,15 +36,15 @@
 						<img src="static/img/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
-				<li>
+				<li @click="noLinkFn">
 					<span>集采订单</span>
 					<img src="static/img/Chevron Copy 2@2x.png" alt="">
 				</li>
-				<li>
+				<li @click="noLinkFn">
 					<span>集采积分</span>
 					<img src="static/img/Chevron Copy 2@2x.png" alt="">
 				</li>
-				<li>
+				<li @click="noLinkFn">
 					<span>推广人员管理</span>
 					<img src="static/img/Chevron Copy 2@2x.png" alt="">
 				</li>
@@ -123,6 +123,10 @@ export default {
 		//退出方法
 		exitFn(){
 			this.$axios.post('/hospital/logout')
+		},
+		noLinkFn(){
+			this.$toast.setDefaultOptions({ duration: 1000 });
+			this.$toast.fail('暂未开通');
 		}
 	},
 }

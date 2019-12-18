@@ -36,7 +36,7 @@
 						<img src="static/img/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
-				<router-link :to="{name: 'landingPage'}">
+				<router-link replace :to="{name: 'landingPage'}">
 					<li @click="exitFn">
 						<span>退出登陆</span>
 						<img src="static/img/Chevron Copy 2@2x.png" alt="">
@@ -121,7 +121,7 @@ export default {
 		this.account.name = '';
 		this.account.password = '';
 		console.log(this.account.isLogin);
-		this.$axios.post('/hospital/logout')
+		this.$axios.post('/hospital/logout');
 	}
   },
 }

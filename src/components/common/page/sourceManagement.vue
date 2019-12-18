@@ -95,6 +95,7 @@ export default {
 			allNum : 0,
 			noNum : 0,
 			yesNum : 0,
+			clinicId : '',
 			clinicAll : [],
 			clinicNo : [],
 			clinicYes : [],
@@ -149,14 +150,14 @@ export default {
 		    this.timer = setTimeout(() => {
 				switch(this.list.titleData){
 					case 0: 
-					this.account.isLogin == 100? this.$refs.all.getdata():'';
+					this.account.isLogin == 100? this.$refs.all.search():'';
 					break;
 					case 1: 
-					this.account.isLogin == 100? this.$refs.all.getdata():'';
+					this.account.isLogin == 100? this.$refs.all.search():'';
 					this.$refs.no.getdata();
 					break;
 					case 2: 
-					this.account.isLogin == 100? this.$refs.all.getdata():'';
+					this.account.isLogin == 100? this.$refs.all.search():'';
 					this.$refs.yes.getdata();
 					break;
 				}
@@ -181,10 +182,12 @@ export default {
 		this.show = true;
 	},
 	getNum(){
+		let clinicId = '';
+		this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.account.clinicId;
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
 			hospitalId : this.account.hospitalId,
-			clinicId : this.account.clinicId,
+			clinicId : clinicId,
 			status :1,
 			pn : 1,
 			ps : 10
@@ -200,7 +203,7 @@ export default {
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
 			hospitalId : this.account.hospitalId,
-			clinicId : this.account.clinicId,
+			clinicId : clinicId,
 			status :4,
 			pn : 1,
 			ps : 10

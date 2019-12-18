@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Store from '../store'
 //登陆页面及其忘记密码和详情页
 import landingPage from '@/components/landingPage.vue'
 import retrievePassword from '@/components/retrievePassword.vue'
@@ -406,7 +407,7 @@ const router = new Router({
 })
 
 router.beforeEach((to,from,next) => {
-	// console.log(to)
+	
 	// console.log(to)
 	// console.log(next)
 	if(to.meta){
@@ -435,6 +436,9 @@ router.beforeEach((to,from,next) => {
 	}else{
 		next();
 	}
-
+	if(to.path == '/hospital_sourceManagement' && Store.state.shop.account.isLogin == 100){
+		// Store.state.shop.list.clinicId == '';
+		// console.log(Store.state.shop);
+	}
 })
 export default router

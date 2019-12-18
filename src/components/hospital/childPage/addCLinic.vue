@@ -148,7 +148,7 @@ export default {
 			console.log(err);
 			Dialog({ message: '加载失败!'});
 		})
-		console.log(this.$route.params.item)
+		// console.log(this.$route.params.item)
 		this.$axios.post('/c2/clinic/item',qs.stringify({
 			itemId : this.$route.params.item,
 		}))

@@ -103,8 +103,10 @@ export default {
 	methods: {
     // 筛选确定
     screeningSubmit(){
+		let clinicId = '';
+		this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
       this.$axios.post('/c2/patient/items',qs.stringify({
-        clinicId : this.account.clinicId,
+        clinicId : clinicId,
         hospitalId :  this.account.hospitalId,
         status : this.Time.postState,
         pushTimeStart : this.Time.pushStart,

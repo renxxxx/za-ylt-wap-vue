@@ -3,7 +3,7 @@
 		<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
-					<li v-for="(items,inx) in content" :key="inx" @click="detailsValueFn(items)">
+					<li v-for="(items,inx) in content" :key="inx">
 						<router-link :to="{name : 'hospital_clinicDetails' ,params : {item : items}}">
 							<div class="contentLi">
 								<h4>{{items.name}}</h4>
@@ -46,10 +46,8 @@ export default {
 	},
 	mounted () {
 		this.getdata(0);
-		
 	},
 	methods: {
-		
 		onRefresh() {
 			this.page = 1;
 			this.content = [];
@@ -64,8 +62,6 @@ export default {
 					ps : 10
 				}))
 				.then(res => {
-					// this.clinic.num = res.data.data.sum.totalCount
-					// console.log(this.clinic.num)
 					if(res.data.data.items.length != 0){
 						// console.log(this.page)
 						for(let i in res.data.data.items){
@@ -76,8 +72,6 @@ export default {
 								duration: 1000,
 								background:'#79abf9',
 							})
-							// this.loading = false;
-							// this.finished = true;
 						}else{
 							this.content.push(res.data.data.items[i])
 						}
@@ -101,7 +95,6 @@ export default {
 					Dialog({ message: '加载失败!'});
 				})
 			}else{
-				// console.log(this.page)
 				this.page++
 				this.$axios.post('/c2/clinic/items',qs.stringify({
 					hospitalId : this.account.hospitalId,
@@ -109,7 +102,6 @@ export default {
 					ps : 10
 				}))
 				.then(res => {
-					
 					if(res.data.data.items.length != 0){
 						// console.log(this.page)
 						for(let i in res.data.data.items){
@@ -120,13 +112,10 @@ export default {
 								duration: 1000,
 								background:'#79abf9',
 							})
-							// this.loading = false;
-							// this.finished = true;
 						}else{
 							this.content.push(res.data.data.items[i])
 						}
 					}
-					
 					// 加载状态结束
 					this.loading = false;
 					}else{
@@ -144,15 +133,9 @@ export default {
 					Dialog({ message: '加载失败!'});
 				})
 			}
-			
 		},
 		onLoad(){
 			this.getdata(1)
-		},
-		// 详情页
-		detailsValueFn(_items){
-			this.account.itemId = '';
-			// this.account.clinicId = _items.itemId;
 		},
 	},
 }

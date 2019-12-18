@@ -72,7 +72,7 @@ const state={
 		startTime : undefined,
 		endTime : undefined,
 		content : '',
-		cover : 'static/iOS切图/Group@2x.png'
+		cover : 'static/img/Group@2x.png'
 	},
 	//医院端用户的任务管理参数
 	task:{
@@ -95,6 +95,8 @@ const state={
 		cover : '',
 		show : true,
 	},
+	// 医院端门诊详情列表信息
+	clinicDetails:{},
 	// 门诊端兑换详情页数据
 	shopDetails:{},
 }
@@ -125,6 +127,8 @@ const getters={
 	taskSubmitValue : state => state.taskSubmitValue,
 	// 门诊端兑换详情页数据
 	shopDetails : state => state.shopDetails,
+	// 医院端门诊详情列表信息
+	clinicDetails : state => state.clinicDetails,
 }
 const actions={
 	//复选框的选择
@@ -194,28 +198,28 @@ const mutations={
 						.then( res =>{
 							switch(_isLogin){
 								case 100:
-								router.push({ name : _url});
+								router.replace({ name : _url});
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
-								console.log(state.account.hospitalId)
+								// console.log(state.account.hospitalId)
 								state.account.data = {};
 								state.account.data = res.data;
 								break;
 
 								case 200:
-								router.push({ name : _url});
+								router.replace({ name : _url});
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
-								console.log(state.account.hospitalId)
+								// console.log(state.account.hospitalId)
 								state.account.data = {};
 								state.account.data = res.data;
 								break;
 
 								case 300:
-								router.push({ name : _url});
+								router.replace({ name : _url});
 								Dialog({ message: '正在开发中，敬请期待' });
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
-								console.log(state.account.hospitalId)
+								// console.log(state.account.hospitalId)
 								state.account.data = {};
 								state.account.data = res.data;
 								break;

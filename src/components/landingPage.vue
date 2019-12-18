@@ -138,7 +138,7 @@ export default {
   		// console.log(this.account.isLogin)
   	},
 	titleScroll(e){
-		console.log(e)
+		// console.log(e)
 		switch(e){
 			case 0:
 			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.24rem';

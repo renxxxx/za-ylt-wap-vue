@@ -76,10 +76,12 @@ export default {
 		// 详情页
 		getdata(){
 			this.noNum = 0;
+			let clinicId = '';
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
-				clinicId : this.account.clinicId,
+				clinicId : clinicId,
 				status :1,
 				pn : 1,
 				ps : 10
@@ -129,9 +131,11 @@ export default {
 		},
 
 		nextdata(){
+			let clinicId = '';
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				clinicId : this.account.clinicId,
+				clinicId : clinicId,
 				status :1,
 				pn : this.page,
 				ps : 10,
@@ -153,7 +157,7 @@ export default {
 						// console.log(this.clinicDetails)
 					}
 					// this.noTitle = '未就诊' + this.noNum
-					console.log(this.list.noNum)
+					// console.log(this.list.noNum)
 					this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;

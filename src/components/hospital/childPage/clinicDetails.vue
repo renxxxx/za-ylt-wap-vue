@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>{{this.clinicDetails.name}}</h3>
 			</div>
-			<router-link :to="{name : 'hospital_addCLinic' ,params : {item : list.clinicId}}">
+			<router-link :to="{name : 'hospital_addCLinic' ,params : {item : clinicDetails.clinicId}}">
 				<div class="right">
 					<img src="static/img/Preview@2x.png" alt="">
 				</div>
@@ -17,7 +17,7 @@
 			<span>{{moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 		</div>
 		<div class="statistics">
-			<van-circle v-model="list.yesNum" :rate="list.yesNum" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
+			<van-circle v-model="num" :rate="num" :speed="100" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
 			  size="1.15rem" :text="String(list.yesNum + list.noNum)" />
 			<div class="statisticsText">
 				<div class="noText">
@@ -56,8 +56,6 @@ export default {
 	name: 'case',
 	data () {
 		return {
-			// 图形统计值
-			currentRate: 30,
 			// 就诊状态选项值
 			value: 0,
 			option: [
@@ -67,8 +65,9 @@ export default {
 			],
 			// 组件切换值
 			componentName :'clinicAll',
-			clinicDetails : {},
+			// clinicDetails : {},
 			list:{
+				name:'',
 				keywords : '',			//搜索框的关键字value
 				allTitle: '全部',
 				noTitle:'未就诊',
@@ -86,7 +85,26 @@ export default {
 		}
 	},
 	computed:{
-	  ...mapGetters(['account']),
+		...mapGetters(['account']),
+		clinicDetails: {
+			get: function() {
+				// console.log(this.$store)
+				return this.$store.state.shop.clinicDetails
+			},
+			set: function (newValue) {
+				this.$store.state.shop.clinicDetails = newValue;
+			},
+		},
+		num: {
+			get: function() {
+				// console.log(this.$store)
+				return this.list.yesNum /(this.list.yesNum + this.list.noNum)*100;
+			},
+			set: function (newValue) {
+				// 图形数据加载后v-model返回的修改值,暂时项目不需要
+				// console.log(newValue)
+			},
+		}
 	},
 	components:{
 		clinicAll,clinicYes,clinicNo
@@ -126,8 +144,10 @@ export default {
 				itemId : this.list.clinicId,
 			}))
 			.then(_d => {
-				this.clinicDetails = {}
+				// this.clinicDetails = {}
 				this.clinicDetails = _d.data.data;
+				this.clinicDetails.clinicId = this.list.clinicId;
+				// console.log(this.clinicDetails)
 			})
 			.catch((err)=>{
 				console.log(err);
@@ -168,7 +188,7 @@ export default {
 				Dialog({ message: err});
 			});
 			this.list.allNum = this.list.noNum + this.list.yesNum;
-			console.log(this.list.allNum)
+			// console.log(this.list.allNum)
 		},
 	},
 }

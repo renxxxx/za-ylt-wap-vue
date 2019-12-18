@@ -90,27 +90,30 @@ export default {
 		
 	},
 	mounted(){
+		let id = '';
+		this.$router.currentRoute.params.item? id = this.$router.currentRoute.params.item: ''
 		this.$axios.post('/c2/office/item',qs.stringify({
-			itemId : this.account.itemId,
+			itemId : id,
 		}))
 		.then(_d => {
 			this.about = _d.data.data;
-			this.about.image = _d.data.data.image.split(',');
-			console.log(this.about.image)
-			if(_d.data.data.shiYingZheng == null){
-				
-			}else{
-				this.about.shiYingZheng = _d.data.data.shiYingZheng.split(',')
+			// console.log()
+			if(this.about.image!=null){
+				this.about.image = _d.data.data.image.split(',');
+				console.log(this.about.image)
+				if(_d.data.data.shiYingZheng == null){
+					
+				}else{
+					this.about.shiYingZheng = _d.data.data.shiYingZheng.split(',')
+				}
 			}
-			// console.log(_d.data.data)
-			// console.log(this.about.shiYingZheng)
 		})
 		.catch((err)=>{
 			console.log(err);
 			Dialog({ message: err});
 		})
 		this.$axios.post('/c2/doctor/items',qs.stringify({
-			officeId : this.account.itemId,
+			officeId : id,
 			hospitalId : this.account.hospitalId,
 		}))
 		.then(_d => {
@@ -135,7 +138,8 @@ export default {
 	methods: {
 		//回退方法
 		goBackFn(){
-			this.$router.back(-1)
+			// this.$router.back(-1)
+			this.$router.push({ name : 'hospitalImage',params :{components : "hospital_imageType"}});
 		},
 		//医生介绍
 		doctorAboutFn(_about){
