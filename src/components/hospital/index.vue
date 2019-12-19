@@ -6,10 +6,12 @@
 			</div>
 			<div class="slider" >
 				<!-- :autoplay="3000" -->
-				<van-swipe >
-				  <van-swipe-item v-for="(image, index) in images" :key="index">
-				    <img v-lazy="image" class="silder_img"/>
-				  </van-swipe-item>
+				<van-swipe>
+					<van-swipe-item v-for="(image, index) in images" :key="index">
+						<router-link :to="image.url">
+							<img v-lazy="image.cover" class="silder_img"/>
+						</router-link>
+					</van-swipe-item>
 				</van-swipe>
 			</div>
 		</div>
@@ -126,12 +128,23 @@ export default {
 	},
 	mounted () {
 		//轮播图图片路径请求
-		this.$axios.post('/hospitaler/currentHospitalMaincarouselList')
+		this.$axios.get('/hospital/hospital-ads')
 			.then(res =>{
-				for(let i in res.data.data.items){
-					// console.log(res.data.data.items[i])
-					this.images.push(res.data.data.items[i].cover)
+				for(let i in res.data.data.rows){
+					console.log(res.data.data.rows[i])
+					switch(res.data.data.rows[i].type){
+						case 0: this.images.push({'cover':res.data.data.rows[i].cover,'url':''});break;
+						case 1: this.images.push({'cover':res.data.data.rows[i].cover,'url':res.data.data.rows[i].type1Url});break;
+						case 2: this.images.push({'cover':res.data.data.rows[i].cover,'url':'caseDeatail'});break;
+						case 3: this.images.push({'cover':res.data.data.rows[i].cover,'url':''});break;
+						case 4: this.images.push({'cover':res.data.data.rows[i].cover,'url':''});break;
+						case 5: this.images.push({'cover':res.data.data.rows[i].cover,'url':''});break;
+						case 6: this.images.push({'cover':res.data.data.rows[i].cover,'url':'hospitalImage'});break;
+						case 7: this.images.push({'cover':res.data.data.rows[i].cover,'url':'hospital_expertsIntroduction'});break;
+						case 8: this.images.push({'cover':res.data.data.rows[i].cover,'url':''});break;
+					}
 				}
+				console.log(this.images.cover)
 			}).catch((err)=>{
 				console.log(err)
 				Dialog({ message: '加载失败!' });
@@ -221,6 +234,11 @@ export default {
 	margin-top: .05rem;
 	/* background-color: red; */
 }
+.slider a{
+	width: 100%;
+	height: 1.96rem;
+	display: block;
+}
 >>>.van-swipe {
     position: relative;
     overflow: hidden;
@@ -303,7 +321,7 @@ export default {
 .article ul li {
 	width: 100%;
 	height: .97rem;
-	border-bottom:1px solid #D8D8D8FF ;
+	border-bottom:1px solid #D8D8D8 ;
 	margin: .12rem 0;
 }
 .article ul li:last-child{
@@ -316,6 +334,13 @@ export default {
 .article_left p{
 	font-size: .14rem;
 	font-weight: bold;
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	height: .42rem;
 }
 .article_leftTime{
 	margin-top: .23rem;

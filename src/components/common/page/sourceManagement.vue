@@ -3,10 +3,10 @@
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
 			<div class="topNav">
-				<div class="indexReturn" @click="goBackFn">
+				<div class="indexReturn" @click="goBackFn" v-if="account.isLogin == 100? true:false">
 					<img src="static/img/back-white@2x.png" alt="">
 				</div>
-				<div class="indexSearch">
+				<div class="indexSearch" v-bind:class="[account.isLogin == 200? 'clinicSearchStyle':'']">
 					<img src="static/img/sousuo@2x.png" alt="">
 					<input type="text" placeholder="搜索病源" v-model="list.keywords" @keyup="inputNow">
 				</div>
@@ -14,58 +14,60 @@
 					<span>筛选</span>
 					<img src="static/img/screen@2x.png" alt="加载中" >
 				</div>
-				<van-popup v-model="show" position="right" :style="{ height: '100%',width:'78.7%'}">
-					<div id="indexLabel" v-model="Time">
-						<div class="labelLabel" >
-							<strong>就诊时间</strong>
-							<button class="rightLine" @click="labelLabelFn([2,$event])" :id="labelDocument[0]">
-								{{Time.confirmStart?  moment(Time.confirmStart).format('YYYY-MM-DD'):'开始时间'}}
-							</button>
-							<button  @click="labelLabelFn([3,$event])" :id="labelDocument[1]">
-								{{Time.confirmOver? moment(Time.confirmOver).format('YYYY-MM-DD'):'结束时间'}}
-							</button>
-						</div>
-						<div class="labelLabel">
-							<strong>推送时间</strong>
-							<button class="rightLine"  @click="labelLabelFn([4,$event])"  :id="labelDocument[2]">
-								{{Time.pushStart? moment(Time.pushStart).format('YYYY-MM-DD'):'开始时间'}}
-							</button>
-							<button  @click="labelLabelFn([5,$event])"  :id="labelDocument[3]">
-								{{Time.pushOver? moment(Time.pushOver).format('YYYY-MM-DD'):'结束时间'}}
-							</button>
-						</div>
-						<div class="LabelResult">
-							<button @click="screeningResult">重选</button>
-							<button @click="screeningSubmit">确定</button>
-						</div>
-					</div>
-				</van-popup>
+				<keep-alive>
+					<timeChoose :list = 'list'></timeChoose>
+				</keep-alive>
 			</div>
-			<van-popup @click="closeFn" v-model="showTime" position="bottom" :style="{ height: '20%',width:'100%'}">
-				<van-datetime-picker
-				  type="date"
-				  @confirm="confirm"
-				  @cancel="cancel"
-				/>
-			</van-popup>
 			<!-- 就诊情况 -->
 			<div class="typeNav">
-				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF'>
-					<!-- <van-tab :title='this.$refs.all.allTitle'> -->
-					<van-tab :title='list.allTitle'>
+				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
+					<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'
+						v-if="account.isLogin == 200? false:true">
 						<clinicAll ref='all' :list = 'list'></clinicAll>
 					</van-tab>
-					<!-- <van-tab :title='this.$refs.no.noTitle'> -->
-					<van-tab :title='list.noTitle'>
+					<van-tab title="新增病源" v-if="account.isLogin == 200? true:false">
+						<form @submit.prevent="hospitalSubmit" class="newAdd">
+							<div class="newAddTitle">
+								<img src="static/img/bitian@2x.png" alt="">
+								<h3>必填项</h3>
+								<ul class="Fill">
+									<li>
+										<span>病患姓名</span>
+										<input type="text" v-model="account.user.realname"  placeholder="请填写" >
+									</li>
+									<li>
+										<span>联系电话</span>
+										<input type="text" v-model="account.user.tel" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+									</li>
+									<li>
+										<span>身份证号</span>
+										<input type="text" v-model="account.user.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')"placeholder="请填写">
+									</li>
+								</ul>
+							</div>
+							<div class="newAddTitle bottom">
+								<img src="static/img/bitian@2x.png" alt="">
+								<h3>选填项</h3>
+								<ul class="Fill">
+									<li>
+										<span>备注</span>
+										<input type="text" v-model="account.user.remark"  placeholder="请填写" >
+									</li>
+								</ul>
+							</div>
+							<input class="submitClass" type="submit" value="提交"></input>
+						</form>
+					</van-tab>
+					<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
 						<clinicNo ref='no' :list = 'list'></clinicNo>
 					</van-tab>
-					<!-- <van-tab :title='this.$refs.yes.yesTitle'> -->
-					<van-tab :title='list.yesTitle'>
+					<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
 						<clinicYes ref='yes' :list = 'list'></clinicYes>
 					</van-tab>
 				</van-tabs>
 			</div>
 		</div>
+		<router v-if="account.isLogin == 200? true:false"></router>
   </div>
 </template>
 <script>
@@ -73,9 +75,11 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import timeChoose from '../functionPage/timeChoose.vue'
 import clinicAll from '../functionPage/clinicAll.vue'
 import clinicYes from '../functionPage/clinicYes.vue'
 import clinicNo from '../functionPage/clinicNo.vue'
+import router from '../../outpatient/functionPage/router.vue'
 export default {
   name: 'index',
   data () {
@@ -91,36 +95,46 @@ export default {
 			allNum : 0,
 			noNum : 0,
 			yesNum : 0,
+			clinicId : '',
+			clinicAll : [],
+			clinicNo : [],
+			clinicYes : [],
+			data: true,
+			titleData:0,
 		}
     }
   },
   mounted(){
-	  
+    if(window.plus){
+    	plus.navigator.setStatusBarBackground("#2B77EF");
+    	plus.navigator.setStatusBarStyle("dark")
+    }
+	this.getNum();
   },
   computed:{
-	...mapGetters(['Time','labelDocument','showTime','show','account','detail']),
-	show: {
-	    get: function() {
+		...mapGetters(['Time','labelDocument','showTime','show','account','detail']),
+		show: {
+			get: function() {
 			// console.log(this.$store)
-	        return this.$store.state.shop.show
-	    },
-	    set: function (newValue) {
+				return this.$store.state.shop.show
+			},
+			set: function (newValue) {
 			this.$store.state.shop.show = newValue;
-	    },
-	},
-	showTime: {
-	    get: function() {
+		   },
+		},
+		showTime: {
+			get: function() {
 			// console.log(this.$store)
-	        return this.$store.state.shop.showTime
-	    },
-	    set: function (newValue) {
+				return this.$store.state.shop.showTime
+			},
+			set: function (newValue) {
 			this.$store.state.shop.showTime = newValue;
-	    },
-	},
+			},
+		},
   },
   //注册组件
   components:{
-	  clinicAll,clinicYes,clinicNo
+	  timeChoose,clinicAll,clinicYes,clinicNo,router
   },
   methods:{
 	//回退方法
@@ -134,80 +148,76 @@ export default {
 		}
 		if (_keywordsCode) {
 		    this.timer = setTimeout(() => {
-				this.$refs.all.getdata();
+				switch(this.list.titleData){
+					case 0: 
+					this.account.isLogin == 100? this.$refs.all.search():'';
+					break;
+					case 1: 
+					this.account.isLogin == 100? this.$refs.all.search():'';
+					this.$refs.no.getdata();
+					break;
+					case 2: 
+					this.account.isLogin == 100? this.$refs.all.search():'';
+					this.$refs.yes.getdata();
+					break;
+				}
 		    }, 200);
-		} else {
+		}
+		if(this.list.keywords ==''){
 		    // 输入框中的内容被删为空时触发，此时会清除之前展示的搜索结果
-		    this.getdata();
+			// console.log('结束搜索')
+		    this.getNum();
 		}
 	},
-	//获取数据
-	getdata(){
+	// 详情页
+	detailsValueFn(_diagnosis){
+		// console.log(_diagnosis.itemId)
+		this.detail.patientId = _diagnosis.itemId;
+		// console.log(this.detail.patientId)
+	},
+	dateFn(e){
+		console.log(e)
+	},
+	showPopup(){
+		this.show = true;
+	},
+	getNum(){
+		let clinicId = '';
+		this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.account.clinicId;
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
 			hospitalId : this.account.hospitalId,
-			clinicId : this.account.itemId,
+			clinicId : clinicId,
+			status :1,
 			pn : 1,
-			ps : 10,
-			pushTimeStart : this.Time.pushStart,
-			pushTimeEnd : this.Time.pushOver,
-			hospitalConfirmTimeStart : this.Time.confirmStart,
-			hospitalConfirmTimeEnd : this.Time.confirmOver,
+			ps : 10
 		}))
 		.then(_d => {
-			this.selectValue =[];
-			this.page = 2;
-			console.log( _d.data.data.items.length)
-			if( _d.data.data.items.length != 0){
-				for (let nums in _d.data.data.items) {
-					// this.clinicDetails.push(_d.data.data.items[nums]);
-					console.log(_d.data.data.items[nums].status)
-					if(_d.data.data.items[nums].status == 1){
-						this.selectValue.push({
-							clinicName : _d.data.data.items[nums].clinicName,
-							itemId : _d.data.data.items[nums].itemId,
-							pushTime : _d.data.data.items[nums].pushTime,
-							realname : _d.data.data.items[nums].realname,
-							status : _d.data.data.items[nums].status,
-							img : "static/img/orange@2x.png",
-							button : "确认就诊"
-						});
-						this.allTitle = '已就诊' + _d.data.data.sum.totalCount
-					}else if(_d.data.data.items[nums].status == 4){
-						console.log(_d.data.data.items[nums].status )
-						this.selectValue.push({
-							clinicName : _d.data.data.items[nums].clinicName,
-							itemId : _d.data.data.items[nums].itemId,
-							pushTime : _d.data.data.items[nums].pushTime,
-							realname : _d.data.data.items[nums].realname,
-							status : _d.data.data.items[nums].status,
-							img : "static/img/blue@2x.png",
-							button : "已就诊",
-							buttonColor : "buttonColor"
-						});
-					}
-					console.log(this.selectValue)
-				}
-				
-			}
+			this.list.noNum = _d.data.data.sum.totalCount;
+			// console.log(this.list.noNum)
 		})
 		.catch((err)=>{
 			console.log(err);
 			Dialog({ message: err});
 		})
-	},
-	// 详情页
-	detailsValueFn(_diagnosis){
-		console.log(_diagnosis.itemId)
-		this.detail.patientId = _diagnosis.itemId;
-		console.log(this.detail.patientId)	
-	},
-	//显示筛选弹窗
-	showPopup() {
-	   this.show = true;
-	},
-	dateFn(e){
-		console.log(e)
+		this.$axios.post('/c2/patient/items',qs.stringify({
+			kw : this.list.keywords,
+			hospitalId : this.account.hospitalId,
+			clinicId : clinicId,
+			status :4,
+			pn : 1,
+			ps : 10
+		}))
+		.then(_d => {
+			this.list.yesNum = _d.data.data.sum.totalCount;
+			// console.log(this.list.yesNum)
+		})
+		.catch((err)=>{
+			console.log(err);
+			Dialog({ message: err});
+		});
+		
+		// console.log(this.list.allNum)
 	},
 	...mapActions(['labelLabelFn','dateConfirm','closeFn','screeningSubmit','screeningResult','confirm','cancel','hospitalSubmit'])
   },
@@ -216,6 +226,7 @@ export default {
 <style scoped>
 .index{
 	width: 100%;
+  height: 100%;
 	background-color: #F5F5F5;
 }
 .navWarp{
@@ -262,9 +273,7 @@ export default {
 .indexSearch input{
 	border-radius: .18rem;border: none;
 	height: .335rem;width: 2.4rem;
-	/* margin:.09rem .12rem 0rem .16rem; */
-	/* padding:0 0 0 .39rem; */
-	/* margin-left: 0.16rem; */
+  /* line-height: .3rem; */
 	padding: 0;
 	width: 82.5%;
 	padding-left: 12%;
@@ -308,58 +317,10 @@ export default {
 .indexFrom label{
 	background: red;
 }
-#indexLabel{
-	width: 85.5%;
-	padding: .32rem .2rem .25rem .2rem;
-	position: relative;
-}
-.labelLabel{
-	height: .95rem;
-}
-.labelLabel:first-child{
-	height: .95rem;
-	border-bottom: 1px dotted  rgba(0, 0, 0, 0.4);
-}
-.labelLabel strong{
-	display: block;
-}
-.rightLine{
-	margin-right: .25rem;
-}
-.rightLine:after{
-	content: " ";
-	position: absolute;
-	height: .01rem;
-	width: .15rem;
-	bottom: 0;
-	top: 50%;
-	left:107%;
-	background-color: #999999;
-	
-}
-.labelLabel button{
-	height: .3rem;width: 1.05rem;
-	margin-top: .1rem;
-	border-radius: .15rem;
-	border: none;background: #EEEEEE;
-	text-align: center;position: relative;
-}
-.LabelResult{
-	position: fixed;bottom: .25rem;right: .2rem;
-}
-.LabelResult button:first-child{
-	border: none;height: .3rem;text-align: center;width: .8rem;
-	border-radius: 100px  0px  0px  100px;
-	background-color: #1ECAC6;
-}
-.LabelResult button:last-child{
-	border: none;height: .3rem;text-align: center;width: .8rem;
-	border-radius:0px 100px 100px 0px;
-	background-color: #FF951B;
-}
+
 .typeNav{
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
 	margin-top: -.45rem;
 }
 .content{
@@ -516,5 +477,66 @@ export default {
 
 >>>van-tabs{
 	height: 100%;
+}
+.submitClass{
+	width:2.41rem;
+	height: .4rem;
+	display:block;margin:0 auto;
+	margin-top: .5rem;
+
+	background: linear-gradient(#56AFF8, #2B77EF);
+	border: none;
+	border-radius: .2rem;
+	color: #FFFFFF;
+	font-size: 	.14rem;
+}
+.newAddTitle{
+	width: 91.4%;
+	margin-top: 2.9%;
+	margin: 0 auto;
+	padding-top: .2rem;
+}
+.newAddTitle img{
+	width: .165rem;
+	height: .185rem;
+}
+.newAddTitle h3{
+	margin-left: .05rem;
+	width: .45rem;
+	height: .21rem;
+	display: inline;
+}
+.Fill {
+	width:90%;
+	height: 1.59rem;
+}
+.Fill li{
+	border: 1px solid #D8D8D8;
+	border-radius: .02rem;
+	padding: .12rem .15rem;
+	margin-top:.12rem;
+	width: 100%;
+}
+.Fill li span{
+	height: .21rem;width: .6rem;
+
+}
+.Fill li input{
+	border: none;
+	float:right;
+	text-align: right;
+	background-color: #F5F5F5;
+}
+.bottom{
+	margin-top: .2rem;
+	height: .78rem;
+}
+.AlreadySpanColor{
+	color: #2B77EF!important;
+}
+.clinicSearchStyle{
+	margin-left: .16rem;
+	width: 77%;
+
 }
 </style>

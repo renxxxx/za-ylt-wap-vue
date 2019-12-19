@@ -30,7 +30,7 @@
 						</li>
 						<li>
 							<span>分配账号</span>
-							<input type="text" maxlength="11" v-model="addClinic.phone"  placeholder="请填写">
+							<input type="text" maxlength="11" v-model="addClinic.userPhone"  placeholder="请填写">
 						</li>
 						<li>
 							<span>分配密码</span>
@@ -148,12 +148,13 @@ export default {
 			console.log(err);
 			Dialog({ message: '加载失败!'});
 		})
-		console.log(this.$route.params.item)
+		// console.log(this.$route.params.item)
 		this.$axios.post('/c2/clinic/item',qs.stringify({
 			itemId : this.$route.params.item,
 		}))
 		.then(_d => {
-			this.clinicDetails = _d.data.data;
+			this.addClinic = _d.data.data;
+			this.imageUpload = _d.data.data.license
 		})
 		.catch((err)=>{
 			console.log(err);

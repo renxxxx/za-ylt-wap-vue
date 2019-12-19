@@ -1,7 +1,7 @@
 <template>
 	<div class="caseDetails" >
 		<div class="topNav">
-			<img src="static/img/shape@2x.png" alt="" @click="goBackFn">
+			<img src="static/img/shape@3x.png" alt="" @click="goBackFn">
 			<img src="static/img/share@3x.png" alt="">
 		</div>
 		<div class="banner">

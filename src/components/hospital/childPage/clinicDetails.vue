@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>{{this.clinicDetails.name}}</h3>
 			</div>
-			<router-link :to="{name : 'hospital_addCLinic' ,params : {item : list.clinicId}}">
+			<router-link :to="{name : 'hospital_addCLinic' ,params : {item : clinicDetails.clinicId}}">
 				<div class="right">
 					<img src="static/img/Preview@2x.png" alt="">
 				</div>
@@ -16,9 +16,9 @@
 		<div class="detailsTime">
 			<span>{{moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 		</div>
-		<div class="statistics" v-model="list">
-			<van-circle v-model="currentRate" :rate="list.yesNum/list.allNum*100" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
-			  size="1.15rem" :text="String(this.list.noNum + this.list.yesNum)" />
+		<div class="statistics">
+			<van-circle v-model="num" :rate="num" :speed="100" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
+			  size="1.15rem" :text="String(list.yesNum + list.noNum)" />
 			<div class="statisticsText">
 				<div class="noText">
 					<span>未就诊：{{list.noNum}}</span>
@@ -49,15 +49,13 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
-import clinicAll from '../functionPage/clinicAll.vue'
-import clinicYes from '../functionPage/clinicYes.vue'
-import clinicNo from '../functionPage/clinicNo.vue'
+import clinicAll from '../../common/functionPage/clinicAll.vue'
+import clinicYes from '../../common/functionPage/clinicYes.vue'
+import clinicNo from '../../common/functionPage/clinicNo.vue'
 export default {
 	name: 'case',
 	data () {
 		return {
-			// 图形统计值
-			currentRate: 30,
 			// 就诊状态选项值
 			value: 0,
 			option: [
@@ -67,21 +65,46 @@ export default {
 			],
 			// 组件切换值
 			componentName :'clinicAll',
-			clinicDetails : {},
+			// clinicDetails : {},
 			list:{
+				name:'',
 				keywords : '',			//搜索框的关键字value
 				allTitle: '全部',
 				noTitle:'未就诊',
 				yesTitle:'已就诊',
 				noNum : 0,
 				yesNum : 0,
-				allNum : '',
+				allNum : 0,
 				clinicId: '',
-			}
+				clinicAll : [],
+				clinicNo : [],
+				clinicYes : [],
+				data: true,
+			},
+			
 		}
 	},
 	computed:{
-	  ...mapGetters(['account']),
+		...mapGetters(['account']),
+		clinicDetails: {
+			get: function() {
+				// console.log(this.$store)
+				return this.$store.state.shop.clinicDetails
+			},
+			set: function (newValue) {
+				this.$store.state.shop.clinicDetails = newValue;
+			},
+		},
+		num: {
+			get: function() {
+				// console.log(this.$store)
+				return this.list.yesNum /(this.list.yesNum + this.list.noNum)*100;
+			},
+			set: function (newValue) {
+				// 图形数据加载后v-model返回的修改值,暂时项目不需要
+				// console.log(newValue)
+			},
+		}
 	},
 	components:{
 		clinicAll,clinicYes,clinicNo
@@ -90,9 +113,9 @@ export default {
 		
 	},
 	mounted () {
-		console.log(this.$route.params.item.itemId)
-		this.ItemIdFn();
-		this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = ''
+		// this.ItemIdFn();
+		this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = '';
+		this.getNum();
 	},
 	methods: {
 		//回退方法
@@ -102,7 +125,7 @@ export default {
 		// 列表来回切换组件
 		menuFn(){
 			// let _geneData =  this.option.find( n => n.value == this.value);
-			console.log('ss')
+			// console.log('ss')
 			switch(this.value){
 				case 0: 
 				this.componentName = 'clinicAll';
@@ -121,14 +144,52 @@ export default {
 				itemId : this.list.clinicId,
 			}))
 			.then(_d => {
-				this.clinicDetails = {}
+				// this.clinicDetails = {}
 				this.clinicDetails = _d.data.data;
+				this.clinicDetails.clinicId = this.list.clinicId;
+				// console.log(this.clinicDetails)
 			})
 			.catch((err)=>{
 				console.log(err);
 				Dialog({ message: err});
 			})
-		}
+		},
+		getNum(){
+			this.$axios.post('/c2/patient/items',qs.stringify({
+				kw : this.list.keywords,
+				hospitalId : this.account.hospitalId,
+				clinicId : this.list.clinicId,
+				status :1,
+				pn : 1,
+				ps : 10
+			}))
+			.then(_d => {
+				this.list.noNum = _d.data.data.sum.totalCount;
+				// console.log(this.list.noNum)
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: err});
+			})
+			this.$axios.post('/c2/patient/items',qs.stringify({
+				kw : this.list.keywords,
+				hospitalId : this.account.hospitalId,
+				clinicId : this.list.clinicId,
+				status :4,
+				pn : 1,
+				ps : 10
+			}))
+			.then(_d => {
+				this.list.yesNum = _d.data.data.sum.totalCount;
+				// console.log(this.list.yesNum)
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: err});
+			});
+			this.list.allNum = this.list.noNum + this.list.yesNum;
+			// console.log(this.list.allNum)
+		},
 	},
 }
 </script>

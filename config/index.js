@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
 		 '/': {
-	target: 'http://test.zaylt.njshangka.com/',//设置你调用的接口域名和端口号 别忘了加http
+	target: 'https://test.zaylt.njshangka.com/',//设置你调用的接口域名和端口号 别忘了加http
 	changeOrigin: true,
 	secure: false,
 	pathRewrite: {

@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import routerNav from './childPage/router.vue'
+import routerNav from './functionPage/router.vue'
 export default {
 	name: 'gene',
 	data () {
@@ -122,7 +122,7 @@ export default {
 .topNav{
 	width: 100%;
 	height: .47rem;
-	background-color: #FFFFFFFF;
+	background-color: #FFFFFF;
 }
 .nav_left{
 	float: left;

@@ -1,15 +1,39 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Store from '../store'
 //登陆页面及其忘记密码和详情页
 import landingPage from '@/components/landingPage.vue'
 import retrievePassword from '@/components/retrievePassword.vue'
 import details from '@/components/detailsPage.vue'
+//病源管理页面页
+import hospital_sourceManagement from '@/components/common/page/sourceManagement.vue'
 //门诊端页面及其组件
+//门诊端病源主页
 import outpatient_index from '@/components/outpatient/index.vue'
+//门诊端医院主页
 import outpatient_hospital from '@/components/outpatient/hospital.vue'
+//门诊端基因主页
 import outpatient_gene from '@/components/outpatient/gene.vue'
+//门诊端用户主页
 import outpatient_user from '@/components/outpatient/user.vue'
-import outpatient_search from '@/components/outpatient/index/index_search.vue'
+//门诊端病源主页的搜索主页
+import outpatient_search from '@/components/outpatient/page/index_search.vue'
+//门诊端用户主页的任务中心
+import outpatient_taskCenter from '@/components/outpatient/page/taskCenter.vue'
+//门诊端用户主页的积分兑换
+import outpatient_integralExchange from '@/components/outpatient/page/integralExchange.vue'
+//门诊端用户主页的积分兑换列表
+import outpatient_ExchangeList from '@/components/outpatient/page/ExchangeList.vue'
+//门诊端用户主页的积分明细列表
+import outpatient_integralDetails from '@/components/outpatient/page/integralDetails.vue'
+//门诊端用户主页的兑换历史记录
+import outpatient_integralHistory from '@/components/outpatient/page/integralHistory.vue'
+//门诊端用户主页的积分兑换详情页
+import outpatient_integralShop from '@/components/outpatient/page/integralShop.vue'
+//门诊端用户主页的积分兑换结算页
+import outpatient_integralShopDetails from '@/components/outpatient/page/integralShopDetails.vue'
+//门诊端用户主页的积分兑换结算页面中的地址编辑页面
+import outpatient_shopAddress from '@/components/outpatient/page/shopAddress.vue'
 
 //医院端页面及其组件
 // 医院端主页
@@ -28,8 +52,6 @@ import hospital_indexSearch from '@/components/hospital/childPage/indexSearch.vu
 import hospital_clinicSearch from '@/components/hospital/childPage/clinic_search.vue'
 // 医院端门诊添加门诊页面
 import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
-// 医院端病源管理页面页
-import hospital_sourceManagement from '@/components/hospital/childPage/sourceManagement.vue'
 // 医院端器械采集页面
 import hospital_collect from '@/components/hospital/childPage/collect.vue'
 
@@ -55,7 +77,6 @@ import hospital_previewActivities from '@/components/hospital/childPage/previewA
 import hospital_clinicDetails from '@/components/hospital/childPage/clinicDetails.vue'
 //医院端门诊主页的消息通知页面
 import hospital_clinicMessage from '@/components/hospital/childPage/clinicMessage.vue'
-
 //医院端用户主页的任务管理页面
 import hospital_taskManagement from '@/components/hospital/childPage/taskManagement.vue'
 //医院端用户主页的任务管理详情页页面
@@ -70,43 +91,42 @@ import hospital_exchangeManagementImg from '@/components/hospital/childPage/exch
 import hospital_exchangeManagementList from '@/components/hospital/childPage/exchangeManagementList.vue'
 //医院端用户主页的兑换管理中的门诊兑换清单详情
 import hospital_exchangeDetails from '@/components/hospital/childPage/exchangeDetails.vue'
-
 import store from '../store'
 Vue.use(Router)
 
 const router = new Router({
 	// mode: 'history',
+  // base:'/landingPage/',
 	routes: [
 		{
 			// 医院端主页
 			path: '/hospital_index',
 			name: 'hospital_index',
 			component: hospital_index,
-			meta: {auth:true},
-			
+			// meta: {auth:true},
 		},
 		{
 			// 医院端门诊主页
 			path: '/hospital_clinic',
 			name: 'hospital_clinic',
 			component: hospital_clinic,
-			meta: {auth:true},
+			// meta: {auth:true},
 		},
 		{
 			// 医院端基因主页
 			path: '/hospital_gene',
 			name: 'hospital_gene',
 			component: hospital_gene,
-			meta: {auth:true},
-			
+			// meta: {auth:true},
+
 		},
 		{
 			// 医院端用户主页
 			path: '/hospital_user',
 			name: 'hospital_user',
 			component: hospital_user,
-			meta: {auth:true},
-			
+			// meta: {auth:true},
+
 		},
 		{
 			// 医院端门诊主页搜索页面
@@ -123,7 +143,7 @@ const router = new Router({
 			meta: {auth:true},
 		},
 		{
-			// 医院端病源管理页面页
+			//病源管理页面页
 			path: '/hospital_sourceManagement',
 			name: 'hospital_sourceManagement',
 			component: hospital_sourceManagement,
@@ -206,7 +226,7 @@ const router = new Router({
 			component: hospital_addActivity,
 			meta: {auth:true},
 		},
-		
+
 		{
 			// 医院端门诊主页的活动发布模块中的编辑活动页的预览页面
 			path: '/hospital_previewActivities',
@@ -276,7 +296,7 @@ const router = new Router({
 			name: 'outpatient_index',
 			component: outpatient_index,
 			meta: {auth:true},
-			
+
 		},
 		{
 			// 门诊端的主页搜索
@@ -307,6 +327,62 @@ const router = new Router({
 			component: outpatient_user,
 		},
 		{
+			//门诊端用户主页的任务中心
+			path: '/outpatient_taskCenter',
+			name: 'outpatient_taskCenter',
+			component: outpatient_taskCenter,
+			meta: {auth:true},
+		},
+		{
+			//门诊端用户主页的积分兑换
+			path: '/outpatient_integralExchange',
+			name: 'outpatient_integralExchange',
+			component: outpatient_integralExchange,
+			meta: {auth:true},
+		},
+		{
+			//门诊端用户主页的积分兑换列表
+			path: '/outpatient_ExchangeList',
+			name: 'outpatient_ExchangeList',
+			component: outpatient_ExchangeList,
+			meta: {auth:true},
+		},
+		{
+			//门诊端用户主页的积分明细列表
+			path: '/outpatient_integralDetails',
+			name: 'outpatient_integralDetails',
+			component: outpatient_integralDetails,
+			// meta: {auth:true},
+		},
+		{
+			//门诊端用户主页的兑换历史记录
+			path: '/outpatient_integralHistory',
+			name: 'outpatient_integralHistory',
+			component: outpatient_integralHistory,
+			// meta: {auth:true},
+		},
+		{
+			//门诊端用户主页的积分兑换详情页
+			path: '/outpatient_integralShop',
+			name: 'outpatient_integralShop',
+			component: outpatient_integralShop,
+			// meta: {auth:true},
+		},
+		{
+			//门诊端用户主页的积分兑换结算页
+			path: '/outpatient_integralShopDetails',
+			name: 'outpatient_integralShopDetails',
+			component: outpatient_integralShopDetails,
+			// meta: {auth:true},
+		},
+		{
+			//门诊端用户主页的积分兑换结算页面中的地址编辑页面
+			path: '/outpatient_shopAddress',
+			name: 'outpatient_shopAddress',
+			component: outpatient_shopAddress,
+			// meta: {auth:true},
+		},
+		{
 			//详情页
 			path: '/details',
 			name: 'details',
@@ -331,27 +407,27 @@ const router = new Router({
 })
 
 router.beforeEach((to,from,next) => {
-	// console.log(to)
+	
 	// console.log(to)
 	// console.log(next)
 	if(to.meta){
 		if(to.meta.auth){
 			// console.log(store.state.shop.account.isLogin)
 			switch(store.state.shop.account.isLogin){
-				case 100: 
+				case 100:
 				// console.log('暂未开放中');
 				next();
 				break;
-				
-				case 200: 
+
+				case 200:
 				next();
 				break;
-				
+
 				case 300:
 				// console.log('暂未开放中');
 				next({path : '/landingPage'});
 				break;
-				
+
 				default:next({path : '/landingPage'});
 			}
 		}else{
@@ -360,6 +436,9 @@ router.beforeEach((to,from,next) => {
 	}else{
 		next();
 	}
-	
+	if(to.path == '/hospital_sourceManagement' && Store.state.shop.account.isLogin == 100){
+		// Store.state.shop.list.clinicId == '';
+		// console.log(Store.state.shop);
+	}
 })
 export default router

@@ -1,25 +1,42 @@
 <template>
-	<div class="yes">
+	<div class="no">
 		<van-pull-refresh v-model="isLoading" @refresh="refresh">
-			<ul>
+			<ul class="hospitalList" v-if="account.isLogin == 100? true:false">
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
-					<li v-for="(item,inx) in clinicDetails" :key="inx" @click="detailsValueFn(item)">
+					<li v-for="(item,inx) in list.clinicNo" :key="inx" >
 						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
 							<div class="contentTitle">
-								<img src="static/img/blue@2x.png" alt="">
+								<img :src="item.img" alt="">
 								<span>{{item.realname}}</span>
 							</div>
 							<div class="contnet_left">
 								<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
-									<span>状态：未就诊</span>
+									<span>状态：已就诊</span>
 							</div>
 							<div class="content_right">
-								<button  class="buttonColor">{{item.button}}</button>
+								<button>{{item.button}}</button>
 							</div>
 						</router-link>
 					</li>
 				</van-list>
 			</ul>
+			<ul class="clinicList" v-if="account.isLogin == 200? true:false">
+				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
+					<li v-for="(item,inx) in list.clinicNo" :key="inx">
+						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
+							<div class="content_left">
+								<span>{{item.realname}}</span>
+							</div>
+							<div class="content_right">
+								<img src='static/img/weijiuzhen@2x.png'>
+								<span class="AlreadySpanColor">未就诊</span>
+							</div>
+							<p>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
+						</router-link>	
+					</li>
+				</van-list>
+			</ul>	
+			</van-list>
 		</van-pull-refresh>
 	</div>
 </template>
@@ -33,77 +50,78 @@ export default {
 	name: 'clinicYes',
 	data () {
 		return {
-			clinicDetails :[],
+			// list.clinicNo :[],
 			loading: false,
 			// 加载状态结束
 			finished: false,
 			//显示下拉加载
 			isLoading: false,
 			page : 1,
-			yesNum : 0,
-			yesTitle :'已就诊',
 		}
 	},
 	computed:{
 	  ...mapGetters(['account']),
-	
 	},
 	components:{
-		
+
 	},
 	props:['list'],
 	created () {
-		
+
 	},
 	mounted () {
 		// this.getdata();
-		// this.clinicDetails = this.selectValue
 	},
 	methods: {
 		// 详情页
 		getdata(){
-			this.yesNum = 0;
+			this.noNum = 0;
+			let clinicId = '';
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
-				clinicId : this.list.clinicId,
-				status :4,
+				clinicId : clinicId,
+				status :1,
 				pn : 1,
 				ps : 10
 			}))
 			.then(_d => {
+				this.list.clinicNo =[];
+				this.page = 2;
 				this.finished = false;
 				this.isLoading = false;
 				this.loading = false;
-				this.clinicDetails =[];
-				this.page = 2;
-				console.log( _d.data.data.items.length)
+				let yesNum = 0;
+				let noNum = 0;
+				let allNum = 0;
+				// console.log( _d.data.data.items.length)
 				if( _d.data.data.items.length == 0){
 					this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;
-					this.finished = true;
+					this.finished = false;
 				}else{
 					for (let nums in _d.data.data.items) {
-						this.clinicDetails.push({
+						this.list.clinicNo.push({
 							clinicName : _d.data.data.items[nums].clinicName,
 							itemId : _d.data.data.items[nums].itemId,
 							pushTime : _d.data.data.items[nums].pushTime,
 							realname : _d.data.data.items[nums].realname,
 							status : _d.data.data.items[nums].status,
+							img : "static/img/orange@2x.png",
 							button : "确认就诊"
 						});
-						// console.log(this.clinicDetails)
+						noNum++
 					}
-					this.list.yesNum  = _d.data.data.sum.totalCount
-					// console.log(_d.data.data.sum.totalCount)
-					this.list.allNum = this.list.noNum + this.list.yesNum;
-					this.list.allTitle = '全部' + this.list.allNum;
-					this.list.noTitle = '未就诊' + this.list.noNum;
-					this.list.yesTitle = '已就诊' + this.list.yesNum;
 					this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;
+				}
+				if(this.list.keywords != ''){
+					this.list.noNum = noNum;
+				}else{
+					this.list.noNum  = _d.data.data.sum.totalCount
 				}
 			})
 			.catch((err)=>{
@@ -111,11 +129,14 @@ export default {
 				Dialog({ message: err});
 			})
 		},
+
 		nextdata(){
+			let clinicId = '';
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				clinicId : this.list.clinicId,
-				status :4,
+				clinicId : clinicId,
+				status :1,
 				pn : this.page,
 				ps : 10,
 			}))
@@ -123,18 +144,20 @@ export default {
 				this.page++;
 				if(_d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
-						this.clinicDetails.push({
+						this.list.clinicNo.push({
 							clinicName : _d.data.data.items[nums].clinicName,
 							itemId : _d.data.data.items[nums].itemId,
 							pushTime : _d.data.data.items[nums].pushTime,
 							realname : _d.data.data.items[nums].realname,
 							status : _d.data.data.items[nums].status,
+							img : "static/img/orange@2x.png",
 							button : "确认就诊"
 						});
-						this.yesNum++;
+						// this.noNum++;
 						// console.log(this.clinicDetails)
 					}
-					this.yesTitle = '已就诊' + this.yesNum
+					// this.noTitle = '未就诊' + this.noNum
+					// console.log(this.list.noNum)
 					this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;
@@ -154,27 +177,26 @@ export default {
 				Dialog({ message: '加载失败!'});
 			})
 		},
-		detailsValueFn(_item){
-			this.account.patientId = '';
-			this.account.patientId = _item.itemId;
-			console.log(this.account.patientId)
-		},
 		onLoad(){
-			this.nextdata()
+			(this.list.keywords||this.list.data)? this.nextdata():this.noPostFn;
+		},
+		noPostFn(){
+			this.nextdata(),
+			this.loading=false
 		},
 		refresh(){
-			
-			this.getdata()
-		}
+			// console.log(this.keywords);
+			this.getdata();
+		},
 	},
 }
 </script>
 
 <style scoped>
-.yes{
+.no{
 	width: 100%;
 }
-.yes li{
+.hospitalList li{
 	height:.84rem;
 	width: 91.5%;
 	background-color: #FFFFFF;
@@ -219,5 +241,44 @@ export default {
 .buttonColor{
     color: #333333!important;
     background-color: #EEEEEE!important;
+}
+.clinicList{
+	margin: 0 .12rem;
+}
+.clinicList li {
+	height:1.01rem;
+	margin-top:.12rem;
+	background-color:#FFFFFF;
+	position:relative;
+	/*padding:.14rem .15rem;*/
+}
+.clinicList li p{
+	position:absolute;
+	bottom:0;
+	height:.5rem;
+	width:93%;
+	line-height:.5rem;
+	margin-left:.14rem;
+	border-top:1px solid #E5E5E5;
+}
+.content_left{
+	float:left;
+	height:.5rem;
+	margin-top:.14rem;
+	margin-left:.15rem;
+}
+.content_right{
+	float:right;
+	height:.5rem;
+	margin-right:.14rem;
+	margin-top:.15rem
+}
+.content_right img{
+	width:.11rem;
+	height:.11rem;
+	margin-right:.04rem;
+}
+.content_right span{
+	color: #2B77EF;
 }
 </style>

@@ -46,9 +46,11 @@ export default {
 		
   },
   mounted () {
+	console.log(this.$router.currentRoute.params.components)
+	this.$router.currentRoute.params.components? this.backFN(): this.componentName = 'hospital_imageAbout'
 	this.$axios.post('/c2/hospital/item',qs.stringify({
-				itemId : this.account.hospitalId,
-			}))
+		itemId : this.account.hospitalId,
+	}))
 	.then(_d => {
 		this.hospitalImage = {
 			address : _d.data.data.address,
@@ -58,8 +60,13 @@ export default {
 			name : _d.data.data.name,
 			tel : _d.data.data.tel,
 		};
-		let imgUrl = this.hospitalImage.cover
-		this.$refs.img.style.background='url('+imgUrl+')';
+		let imgUrl = '';
+		this.hospitalImage.cover? imgUrl = this.hospitalImage.cover : imgUrl = ''
+		// imgUrl = this.hospitalImage.cover;
+		console.log(imgUrl)
+		if(imgUrl != ''){
+			this.$refs.img.style.background='url('+imgUrl+')';
+		}
 		// console.log(this.hospitalImage)
 	})
 	.catch((err)=>{
@@ -70,27 +77,34 @@ export default {
   
   methods: {
 	  //回退方法
-	  goBackFn(){
-	  		 this.$router.back(-1)
-	  },
+	goBackFn(){
+		this.$router.back(-1)
+	  	// this.$router.push({ name : 'outpatient_hospital'});	
+	},
 	  // 组件切换
-	  switchFn(data){
-			if(data == 'about'){
-				this.componentName = 'hospital_imageAbout';
-				this.$refs.about.style.color='#2B77EF'
-				this.$refs.type.style.color='#666666'
-				this.$refs.about.classList.add('xiahuaxian');
-				this.$refs.type.classList.remove('xiahuaxian');
-				console.log(this.$refs.about)
-			}else{
-				this.$refs.about.style.color='#666666'
-				this.$refs.type.style.color='#2B77EF'
-				this.$refs.about.classList.remove('xiahuaxian');
-				this.$refs.type.classList.add('xiahuaxian');
-				this.componentName = 'hospital_imageType';
-			}
-		  
-	  }
+	switchFn(data){
+		if(data == 'about'){
+			this.componentName = 'hospital_imageAbout';
+			this.$refs.about.style.color='#2B77EF'
+			this.$refs.type.style.color='#666666'
+			this.$refs.about.classList.add('xiahuaxian');
+			this.$refs.type.classList.remove('xiahuaxian');
+			console.log(this.$refs.about)
+		}else{
+			this.$refs.about.style.color='#666666'
+			this.$refs.type.style.color='#2B77EF'
+			this.$refs.about.classList.remove('xiahuaxian');
+			this.$refs.type.classList.add('xiahuaxian');
+			this.componentName = 'hospital_imageType';
+		}
+	},
+	backFN(){
+		this.$refs.about.style.color='#666666'
+		this.$refs.type.style.color='#2B77EF'
+		this.$refs.about.classList.remove('xiahuaxian');
+		this.$refs.type.classList.add('xiahuaxian');
+		this.componentName = this.$router.currentRoute.params.components;
+	}
   },
 }
 </script>

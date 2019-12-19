@@ -63,12 +63,21 @@ export default {
 	},
 	computed:{
 		...mapGetters(['account']),
+    exchangeAdd: {
+        get: function() {
+    		// console.log(this.$store)
+            return this.$store.state.shop.exchangeAdd
+        },
+        set: function (newValue) {
+    		this.$store.state.shop.exchangeAdd = newValue;
+        },
+    },
 	},
 	components:{
-		
+
 	},
 	created () {
-		
+
 	},
 	mounted () {
 		this.getdata();
@@ -76,7 +85,7 @@ export default {
 	methods: {
 		//回退方法
 		goBackFn(){
-				 this.$router.back(-1)
+			this.$router.back(-1)
 		},
 		deleteActiviteFn(_item){
 			this.$axios.post('/c2/commodity/itemdel',qs.stringify({
@@ -126,7 +135,7 @@ export default {
 	height: .47rem;
 	margin-bottom: .15rem;
 	background-color: #FFFFFF;
-}	
+}
 .leftImg{
 	width: 10%;
 	height: .47rem;
@@ -150,7 +159,7 @@ export default {
 	font-size: .16rem;
 	font-weight: bolder;
 }
-.right{	
+.right{
 	width: 10%;
 	height: .47rem;
 	line-height: .47rem;

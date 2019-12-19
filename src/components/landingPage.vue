@@ -4,9 +4,8 @@
 			<div class="topNav">
 				<img src="static/img/name@2x.png" alt="">
 			</div>
-
 			<div class="typeNav" type="line" border="false">
-				<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)' 
+				<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)'
 				title-active-color='rgba(255, 255, 255)' @click="titleScroll"  v-model='data'>
 				<van-tab title="医院端" >
 					<form @submit.prevent="submit('100')" class="content">
@@ -20,10 +19,10 @@
 						</div>
 						<div class="checkBox">
 							<input type="checkbox"
-							    class="input_check" 
+							    class="input_check"
 							    :checked="checked"
 							    @change="change"/>
-							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
+							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
 						</div>
 						<input class="submitClass" type="submit" value="登陆"></input>
 						<div class="passwordReset">
@@ -31,18 +30,18 @@
 								<div  @click="forgetFn(100)">
 									忘记密码
 									<img src="static/img/reset@2.png" alt="">
-								</div>	
+								</div>
 							</router-link>
 						</div>
-					</form>	
-					
+					</form>
+
 				</van-tab>
 				<van-tab title="门诊端" type="line" border="false" >
 					<form @submit.prevent="submit('200')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="static/img/iphone@2x.png" alt="">
 							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
-							
+
 						</div>
 						<div class="inputBox">
 							<img  class="passwordImg" src="static/img/mima@2x.png" alt="">
@@ -50,10 +49,10 @@
 						</div>
 						<div class="checkBox">
 							<input type="checkbox"
-							    class="input_check" 
+							    class="input_check"
 							    :checked="checked"
 							    @change="change"/>
-							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
+							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
 						</div>
 						<input class="submitClass" type="submit" value="登陆"></input>
 						<div class="passwordReset">
@@ -64,7 +63,7 @@
 								</div>
 							</router-link>
 						</div>
-					</form>	
+					</form>
 				</van-tab>
 				<van-tab title="运营端" type="line" border="false">
 					<form @submit.prevent="submit('300')" class="content">
@@ -78,10 +77,10 @@
 						</div>
 						<div class="checkBox">
 							<input type="checkbox"
-							    class="input_check" 
+							    class="input_check"
 							    :checked="checked"
 							    @change="change"/>
-							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
+							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
 						</div>
 						<input class="submitClass" type="submit" value="登陆"></input>
 						<div class="passwordReset">
@@ -92,17 +91,17 @@
 								</div>
 							</router-link>
 						</div>
-					</form>	
+					</form>
 				</van-tab>
 				</van-tabs>
 			</div>
 		</div>
-		
+
   </div>
 </template>
 
 <script>
-import {mapActions,mapGetters} from 'vuex'
+import {mapActions,mapGetters,mapState} from 'vuex'
 import router from '../router'
 export default {
   name: 'landingPage',
@@ -112,14 +111,14 @@ export default {
     }
   },
   directives: {
-    focus: {
+    focus: {
 		inserted: function (el, {value}) {
-            if (value) {
+            if (value) {
 				// console.log('ss')
-                el.focus();
-            }
-        }
-    }
+                el.focus();
+            }
+        }
+    }
   },
 
   mounted () {
@@ -129,7 +128,8 @@ export default {
   		}
   },
   computed:{
-  	...mapGetters(['account','checked'])
+	...mapGetters(['checked','account']),
+  	// ...mapState([])
   },
   methods:{
 	 //传递页面状态值
@@ -138,14 +138,14 @@ export default {
   		// console.log(this.account.isLogin)
   	},
 	titleScroll(e){
-		console.log(e)
+		// console.log(e)
 		switch(e){
 			case 0:
 			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.24rem';
 			document.getElementsByClassName('van-ellipsis')[1].style.fontSize = '.14rem';
 			document.getElementsByClassName('van-ellipsis')[2].style.fontSize = '.14rem';
 			break;
-			
+
 			case 1:
 			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.14rem';
 			document.getElementsByClassName('van-ellipsis')[1].style.fontSize = '.24rem';
@@ -178,7 +178,7 @@ export default {
 	width: 50%;margin: auto;
 }
 .topNav img{
-	margin-top:40%; 
+	margin-top:40%;
 	height: 100%;width: 100%;z-index: 999;
 }
 .typeNav{
@@ -289,14 +289,14 @@ export default {
   color: #d8d8d8;
   position: relative;
   margin: 0!important;
-} 
+}
 .checkBox input[type=checkbox]:before{
   content: "";
   display:inline-block;
   width: .17rem;
   height: .17rem;
   background-image: url('../../static/img/Not-checkbox@2x.png');
-  box-sizing:border-box;  
+  box-sizing:border-box;
   border-radius: 3px;
   position: absolute;
 }
@@ -307,7 +307,7 @@ export default {
   width: .17rem;
   height: .17rem;
   background-color: #333;
-  box-sizing:border-box;  
+  box-sizing:border-box;
   border-radius: 3px;
   position: absolute;
 }
@@ -319,7 +319,7 @@ export default {
   border: 1px dotted #D2A47E;
   background-image: url('../../static/img/checkbox@2x.png');
   background-size: .17rem .17rem;
-  box-sizing:border-box;  
+  box-sizing:border-box;
   border-radius: 3px;
   position: absolute;
 }
@@ -330,7 +330,7 @@ export default {
   height:.17rem;
   border-left: 0rem dotted #fff;
   border-top: 0rem dotted #fff;
-  box-sizing:border-box; 
+  box-sizing:border-box;
   position: absolute;
   transform: rotate(-135deg) translate(-70%, 25%);
 }
@@ -370,5 +370,6 @@ export default {
 }
 >>>.van-tab:nth-child(2) span{
 	font-size: .2rem;
+  color: rgba(255, 255, 255, 0.6);
 }
 </style>

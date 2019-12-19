@@ -9,7 +9,7 @@
 			<div class="nav_center">
 				<h3>基因检测</h3>
 			</div>
-			<div class="nav_right" @click="modifyFn" v-model='modify'>
+			<div class="nav_right" @click="modifyFn" v-model='modify' v-if="account.isLogin == 200? false:true">
 				<span>{{modify.value}}</span>
 				<img :src=modify.img alt="">
 			</div>
@@ -156,11 +156,11 @@ export default {
 			// console.log(this.detail.hospitalConfirmTime)
 			this.detail.hospitalConfirmTime = ''
 		}else{
-			this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('HH:mm:ss YYYY-MM-DD');
+			this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('YYYY-MM-DD HH:mm');
 		}
 		if(res.data.data.pushTime == '' || res.data.data.pushTime == undefined || res.data.data.pushTime == null){
 		}else{
-			this.detail.pushTime = moment(res.data.data.pushTime).format('HH:mm:ss YYYY-MM-DD');
+			this.detail.pushTime = moment(res.data.data.pushTime).format('YYYY-MM-DD HH:mm');
 		}
 		// this.detail = res.data.data
 		// console.log(this.detail);

@@ -4,6 +4,8 @@ import qs from 'qs';
 import { Dialog } from 'vant'
 import moment from 'moment'
 import h5p from '../../../build/h5p.js'
+import router from '../../router'
+
 const state={
 	//账号协议checked
 	checked: true,
@@ -43,7 +45,7 @@ const state={
 		sickness : undefined		//病例
 	},
 	//筛选的弹窗显示值
-	show: false,	
+	show: false,
 	//筛选数据
 	Time:{
 		look:'',
@@ -71,7 +73,7 @@ const state={
 		startTime : undefined,
 		endTime : undefined,
 		content : '',
-		cover : 'static/iOS切图/Group@2x.png'
+		cover : 'static/img/Group@2x.png'
 	},
 	//医院端用户的任务管理参数
 	task:{
@@ -94,6 +96,10 @@ const state={
 		cover : '',
 		show : true,
 	},
+	// 医院端门诊详情列表信息
+	clinicDetails:{},
+	// 门诊端兑换详情页数据
+	shopDetails:{},
 }
 const getters={
 	//账号协议checked
@@ -117,20 +123,25 @@ const getters={
 	//医院端用户的任务管理参数
 	task : state => state.task,
 	// 医院端兑换管理的新增和商品修改信息参数
-	exchangeAdd : state => state.task,
+	exchangeAdd : state => state.exchangeAdd,
 	//医院端兑换管理详情页参数
 	taskSubmitValue : state => state.taskSubmitValue,
+	// 门诊端兑换详情页数据
+	shopDetails : state => state.shopDetails,
+	// 医院端门诊详情列表信息
+	clinicDetails : state => state.clinicDetails,
 }
+
 const actions={
 	//复选框的选择
 	change({commit},_value){
 		commit('changeFn',_value)
-	}, 
+	},
 	//登陆页面的表单验证
 	submit({commit},landingState){
 		// console.log(value)
 		commit('submitFn',landingState)
-		// this.$store.commit('submitFn','100') 
+		// this.$store.commit('submitFn','100')
 	},
 	//选择框样式
 	labelLabelFn({commit},obj){
@@ -172,10 +183,10 @@ const actions={
 const mutations={
 	//登陆及其刷新请求
 	submintGetData(_postUrl,_postRefresh,_isLogin,_url){
-		// console.log(_postUrl);
-		// console.log(_postRefresh);
-		// console.log(_url);
-		// console.log(h5p);
+	// state.account.name ='11111111111';
+	// state.account.password = '123456';
+		console.log(state)
+		debugger;
 		axios.post(_postUrl,qs.stringify({
 				account : state.account.name,
 				password : state.account.password
@@ -184,33 +195,33 @@ const mutations={
 				// console.log(res.data.codeMsg)
 				if(res.data.codeMsg == null ||  res.data.codeMsg == "" || res.data.codeMsg == undefined){
 					state.account.isLogin = _isLogin;
-					
+
 					 axios.post(_postRefresh)
 						.then( res =>{
 							switch(_isLogin){
 								case 100:
-								window.location.href=_url;
+								router.replace({ name : _url});
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
-								console.log(state.account.hospitalId)
+								// console.log(state.account.hospitalId)
 								state.account.data = {};
 								state.account.data = res.data;
 								break;
-								
+
 								case 200:
-								window.location.href=_url;
+								router.replace({ name : _url});
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
-								console.log(state.account.hospitalId)
+								// console.log(state.account.hospitalId)
 								state.account.data = {};
 								state.account.data = res.data;
 								break;
-								
+
 								case 300:
-								window.location.href=_url;
+								router.replace({ name : _url});
 								Dialog({ message: '正在开发中，敬请期待' });
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
-								console.log(state.account.hospitalId)
+								// console.log(state.account.hospitalId)
 								state.account.data = {};
 								state.account.data = res.data;
 								break;
@@ -228,7 +239,7 @@ const mutations={
 			.catch((err)=>{
 				console.log(err)
 				Dialog({ message: '加载失败!' });
-			})	
+			})
 	},
 	//复选框的选择
 	changeFn(state,_value){
@@ -236,28 +247,28 @@ const mutations={
 		state.checked = _value.target.checked;
 		// console.log(_value.target.checked)
 	},
-	
+
 	//登陆页面的表单验证
 	submitFn(state,landingState){
 		h5p.shareWeb("www.baidu.com",'_www/logo.png','title','content');
-
+		
 		// console.log(this.account.name+this.account.password)
 		state.account.isLogin = landingState;
 		// console.log(landingState)
 		if(state.checked == true){
 			switch (landingState){
 				case '100':
-				mutations.submintGetData('/hospital/login','/hospital/login-refresh',100,'#/hospital_index')
-					break;
+				mutations.submintGetData('/hospital/login','/hospital/login-refresh',100,'hospital_index')
+				break;
 				case '200':
 				// console.log('200')
-				mutations.submintGetData('/clinic/login','/clinic/login-refresh',200,'#/outpatient_index')
-					break;
+				mutations.submintGetData('/clinic/login','/clinic/login-refresh',200,'hospital_sourceManagement')
+				break;
 				case '300':
-				mutations.submintGetData('/manager/login','/manager/login-refresh',300,'#/outpatient_index')
-					break;
+				mutations.submintGetData('/manager/login','/manager/login-refresh',300,'outpatient_index')
+				break;
 				default:
-					break;
+				break;
 			}
 		}else{
 			Dialog({ message: '请勾选同意条款' });
@@ -280,17 +291,17 @@ const mutations={
 		switch (state.dateStata){
 			case 2:
 			state.Time.confirmStart = '';
-			state.Time.confirmStart = state.time; 
+			state.Time.confirmStart = state.time;
 			break;
-			case 3: 
+			case 3:
 			state.Time.confirmOver = '';
-			state.Time.confirmOver = state.time; 		
+			state.Time.confirmOver = state.time;
 			break;
-			case 4: 
+			case 4:
 			state.Time.pushStart = '';
-			state.Time.pushStart = state.time;		
+			state.Time.pushStart = state.time;
 			break;
-			case 5: 
+			case 5:
 			state.Time.pushOver = '';
 			state.Time.pushOver = state.time;
 			break;
@@ -310,7 +321,7 @@ const mutations={
 		// console.log(typeof _this);
 		let buttonStyle = document.getElementById(state.labelDocument[_vlaue]);
 		switch(_vlaue){
-			case 0: 
+			case 0:
 			document.getElementById(state.labelDocument[0]).style.backgroundColor = "#EEEEEE";
 			document.getElementById(state.labelDocument[1]).style.backgroundColor = "#EEEEEE";
 			_this.target.style.backgroundColor = "#FFE1BE";
@@ -321,7 +332,7 @@ const mutations={
 			state.dateStata=_vlaue;
 			state.Time.postState = 1;
 			// console.log(state.dateStata);
-			
+
 			break;
 			case 1:
 			document.getElementById(state.labelDocument[0]).style.backgroundColor = "#EEEEEE";
@@ -335,7 +346,7 @@ const mutations={
 			state.Time.postState = 4;
 			// console.log(state.dateStata);
 			break;
-			
+
 			case 2:
 			document.getElementById(state.labelDocument[2]).style.backgroundColor = "#EEEEEE";
 			document.getElementById(state.labelDocument[3]).style.backgroundColor = "#EEEEEE";
@@ -346,25 +357,25 @@ const mutations={
 			state.Time.confirmStart = state.time;
 			state.showTime = true;
 			break;
-			
+
 			case 3:
 			_this.target.style.backgroundColor = "#FFE1BE";
 			state.dataStata = null;
 			state.dateStata=_vlaue;
 			// console.log(state.dateStata);
-			state.Time.confirmOver = state.time; 
+			state.Time.confirmOver = state.time;
 			state.showTime = true;
 			break;
-			
+
 			case 4:
 			_this.target.style.backgroundColor = "#FFE1BE";
 			state.dataStata = '';
 			state.dateStata = _vlaue;
 			// console.log(state.dateStata);
-			state.Time.pushStart = state.time; 
+			state.Time.pushStart = state.time;
 			state.showTime = true;
 			break;
-			
+
 			case 5:
 			_this.target.style.backgroundColor = "#FFE1BE";
 			state.dataStata = '';
@@ -377,7 +388,7 @@ const mutations={
 		return {_vlaue,_this};
 	},
 	// 筛选确定
-	screeningSubmitFn(state){		
+	screeningSubmitFn(state){
 		axios.post('/c2/patient/items',qs.stringify({
 			clinicId : state.account.clinicId,
 			hospitalId :  state.account.hospitalId,
@@ -430,7 +441,7 @@ const mutations={
 		Vue.set(state.Time,'pushOver',0);
 		// console.log(typeof state.labelDocument)
 	},
-	
+
 	//hospital的个人信息提交
 	hospitalSubmitFn(state,_message){
 		// console.log(_message)
@@ -443,7 +454,7 @@ const mutations={
 				tel	:  state.account.user.tel,
 				remark : state.account.user.remark,
 				idcardNo : state.account.user.idcardNo
-			}))	
+			}))
 			.then( res =>{
 				console.log(res);
 				console.log(state.account)
@@ -460,8 +471,8 @@ const mutations={
 			.catch((err)=>{
 				console.log(err)
 				Dialog({ message: '加载失败!'});
-			})	
-	}
+			})
+	},
 }
 export default  {
 	state,

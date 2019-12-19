@@ -11,9 +11,9 @@
 				<button :class="imgUrl? 'buttonColorOver' : 'buttonColorNow'" @click="submitFn">完成</button>
 			</div>
 		</div>
-		
+
 		<div class="addImg" v-model="exchangeAdd">
-			<div class="addImgButton" v-show="this.$route.params.exchangeAdd.show">
+			<div class="addImgButton" v-show="imgUrl? false : true">
 				<img src="static/img/append@2x.png" alt="">
 				<span>请添加照片</span>
 			</div>
@@ -50,10 +50,10 @@ export default {
 		},
 	},
 	components:{
-		
+
 	},
 	created () {
-		
+
 	},
 	mounted () {
 		this.imgUrl = this.exchangeAdd.cover
@@ -90,8 +90,6 @@ export default {
 			}
 		},
 		submitFn(){
-			
-			console.log(this.imgUrl)
 			if(this.imgUrl != ''){
 				this.$axios.post('/c2/commodity/itemadd',qs.stringify({
 					hospitalId : this.account.hospitalId,
@@ -101,7 +99,10 @@ export default {
 					stock: this.exchangeAdd.stock,
 					payExchangepoint : this.exchangeAdd.payExchangepoint,
 				})).then(res  =>{
-					res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn();
+					res.data.codeMsg? Toast.fail(res.data.codeMsg) : this.successFn();
+          debugger;
+          
+          console.log(this.exchangeAdd)
 				}).catch(err =>{
 					console.log(err)
 				})
@@ -111,6 +112,14 @@ export default {
 		},
 		successFn(){
 			Toast.success('添加成功');
+      this.exchangeAdd = {
+      	name : '',
+      	payExchangepoint : 0,
+      	stock : 0,
+      	intro : '',
+      	cover : '',
+      	show : true,
+      }
 			this.$router.push({ name : 'hospital_exchangeManagement'});
 		}
 	},
@@ -128,7 +137,7 @@ export default {
 	margin-bottom: .15rem;
 	background-color: #FFFFFF;
 	border-bottom: 1px solid #D8D8D8;
-}	
+}
 .leftImg{
 	width: 18%;
 	height: .47rem;
@@ -152,7 +161,7 @@ export default {
 	font-size: .16rem;
 	font-weight: bolder;
 }
-.right{	
+.right{
 	width: 18%;
 	height: .47rem;
 	line-height: .47rem;

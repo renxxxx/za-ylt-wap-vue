@@ -55,7 +55,7 @@
 		
 		<clinicContent :clinic = 'clinic'></clinicContent>
 		
-		<bottomNav v-bind:name='name'></bottomNav>
+		<bottomNav></bottomNav>
 	</div>
 </template>
 
@@ -70,7 +70,6 @@ export default {
 	name: 'clinic',
 	data () {
 		return {
-			name: 'hospital',
 			clinic : {
 				num : 0
 			},
@@ -215,7 +214,7 @@ export default {
 	border: none;
 	border-radius: .33rem;
 	padding-left: 11.6%;
-	background-color: #0000000D;
+	background-color: rgba(0, 0, 0, 0.04);
 }
 .hospital_search img{
 	width: .14rem;

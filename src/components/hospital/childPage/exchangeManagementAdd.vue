@@ -83,6 +83,14 @@ export default {
 	methods: {
 		//回退方法
 		goBackFn(){
+      this.exchangeAdd = {
+      	name : '',
+      	payExchangepoint : 0,
+      	stock : 0,
+      	intro : '',
+      	cover : '',
+      	show : true,
+      }
 			this.$router.back(-1);
 			// this.$router.back({ name : 'hospital_exchangeManagement'});
 		},

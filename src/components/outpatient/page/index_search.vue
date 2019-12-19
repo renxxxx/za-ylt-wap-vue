@@ -55,7 +55,7 @@
 		</div>
 		<van-pull-refresh v-model="isLoading" @refresh="onRefresh" style=" overflow: none!important;">
 			<ul class="search_content" v-model="search_userList">
-				<router-link to="/details" >
+				<router-link :to="{name : 'details'}">
 					<li v-for="(_user,inx) in search_userList" :key="inx" @click="detailsValueFn(_user)">
 						<div class="content_left">
 							<span>{{_user.realname}}</span>
