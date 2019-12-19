@@ -103,21 +103,21 @@ const router = new Router({
 			path: '/hospital_index',
 			name: 'hospital_index',
 			component: hospital_index,
-			meta: {auth:true},
+			// meta: {auth:true},
 		},
 		{
 			// 医院端门诊主页
 			path: '/hospital_clinic',
 			name: 'hospital_clinic',
 			component: hospital_clinic,
-			meta: {auth:true},
+			// meta: {auth:true},
 		},
 		{
 			// 医院端基因主页
 			path: '/hospital_gene',
 			name: 'hospital_gene',
 			component: hospital_gene,
-			meta: {auth:true},
+			// meta: {auth:true},
 
 		},
 		{
@@ -125,7 +125,7 @@ const router = new Router({
 			path: '/hospital_user',
 			name: 'hospital_user',
 			component: hospital_user,
-			meta: {auth:true},
+			// meta: {auth:true},
 
 		},
 		{

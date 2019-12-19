@@ -4,7 +4,6 @@
 			<div class="topNav">
 				<img src="static/img/name@2x.png" alt="">
 			</div>
-
 			<div class="typeNav" type="line" border="false">
 				<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)'
 				title-active-color='rgba(255, 255, 255)' @click="titleScroll"  v-model='data'>
@@ -23,7 +22,7 @@
 							    class="input_check"
 							    :checked="checked"
 							    @change="change"/>
-							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
+							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
 						</div>
 						<input class="submitClass" type="submit" value="登陆"></input>
 						<div class="passwordReset">
@@ -53,7 +52,7 @@
 							    class="input_check"
 							    :checked="checked"
 							    @change="change"/>
-							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
+							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
 						</div>
 						<input class="submitClass" type="submit" value="登陆"></input>
 						<div class="passwordReset">
@@ -81,7 +80,7 @@
 							    class="input_check"
 							    :checked="checked"
 							    @change="change"/>
-							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;应用服务条款&gt;&gt;</a></p>
+							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
 						</div>
 						<input class="submitClass" type="submit" value="登陆"></input>
 						<div class="passwordReset">
@@ -102,7 +101,7 @@
 </template>
 
 <script>
-import {mapActions,mapGetters} from 'vuex'
+import {mapActions,mapGetters,mapState} from 'vuex'
 import router from '../router'
 export default {
   name: 'landingPage',
@@ -112,14 +111,14 @@ export default {
     }
   },
   directives: {
-    focus: {
+    focus: {
 		inserted: function (el, {value}) {
-            if (value) {
+            if (value) {
 				// console.log('ss')
-                el.focus();
-            }
-        }
-    }
+                el.focus();
+            }
+        }
+    }
   },
 
   mounted () {
@@ -129,7 +128,8 @@ export default {
   		}
   },
   computed:{
-  	...mapGetters(['account','checked'])
+	...mapGetters(['checked','account']),
+  	// ...mapState([])
   },
   methods:{
 	 //传递页面状态值

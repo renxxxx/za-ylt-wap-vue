@@ -5,6 +5,7 @@ import { Dialog } from 'vant'
 import moment from 'moment'
 import h5p from '../../../build/h5p.js'
 import router from '../../router'
+
 const state={
 	//账号协议checked
 	checked: true,
@@ -130,6 +131,7 @@ const getters={
 	// 医院端门诊详情列表信息
 	clinicDetails : state => state.clinicDetails,
 }
+
 const actions={
 	//复选框的选择
 	change({commit},_value){
@@ -181,10 +183,10 @@ const actions={
 const mutations={
 	//登陆及其刷新请求
 	submintGetData(_postUrl,_postRefresh,_isLogin,_url){
-		// console.log(_postUrl);
-		// console.log(_postRefresh);
-		// console.log(_url);
-		// console.log(h5p);
+	// state.account.name ='11111111111';
+	// state.account.password = '123456';
+		console.log(state)
+		debugger;
 		axios.post(_postUrl,qs.stringify({
 				account : state.account.name,
 				password : state.account.password
@@ -249,7 +251,7 @@ const mutations={
 	//登陆页面的表单验证
 	submitFn(state,landingState){
 		h5p.shareWeb("www.baidu.com",'_www/logo.png','title','content');
-
+		
 		// console.log(this.account.name+this.account.password)
 		state.account.isLogin = landingState;
 		// console.log(landingState)
@@ -470,7 +472,7 @@ const mutations={
 				console.log(err)
 				Dialog({ message: '加载失败!'});
 			})
-	}
+	},
 }
 export default  {
 	state,

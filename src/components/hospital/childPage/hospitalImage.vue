@@ -60,8 +60,13 @@ export default {
 			name : _d.data.data.name,
 			tel : _d.data.data.tel,
 		};
-		let imgUrl = this.hospitalImage.cover
-		this.$refs.img.style.background='url('+imgUrl+')';
+		let imgUrl = '';
+		this.hospitalImage.cover? imgUrl = this.hospitalImage.cover : imgUrl = ''
+		// imgUrl = this.hospitalImage.cover;
+		console.log(imgUrl)
+		if(imgUrl != ''){
+			this.$refs.img.style.background='url('+imgUrl+')';
+		}
 		// console.log(this.hospitalImage)
 	})
 	.catch((err)=>{
@@ -73,7 +78,8 @@ export default {
   methods: {
 	  //回退方法
 	goBackFn(){
-	  	this.$router.push({ name : 'outpatient_hospital'});	
+		this.$router.back(-1)
+	  	// this.$router.push({ name : 'outpatient_hospital'});	
 	},
 	  // 组件切换
 	switchFn(data){
