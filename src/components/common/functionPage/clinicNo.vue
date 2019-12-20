@@ -60,7 +60,7 @@ export default {
 		}
 	},
 	computed:{
-	  ...mapGetters(['account']),
+	  ...mapGetters(['account','isLogin']),
 	},
 	components:{
 
@@ -178,10 +178,11 @@ export default {
 			})
 		},
 		onLoad(){
-			(this.list.keywords||this.list.data)? this.nextdata():this.noPostFn;
+			// this.list.keywords? this.nextdata():this.noPostFn;
+			this.nextdata()
 		},
 		noPostFn(){
-			this.nextdata(),
+			this.nextdata();
 			this.loading=false
 		},
 		refresh(){

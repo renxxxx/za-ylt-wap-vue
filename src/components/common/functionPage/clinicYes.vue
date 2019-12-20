@@ -114,8 +114,6 @@ export default {
 						yesNum++
 					}
 					this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
 				}
 				if(this.list.keywords != ''){
 					this.list.yesNum = yesNum;
@@ -153,7 +151,6 @@ export default {
 						});
 
 					}
-					this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;
 				}else{
@@ -172,10 +169,12 @@ export default {
 			})
 		}, 
 		onLoad(){
-			(this.list.keywords||this.list.data)? this.nextdata():this.noPostFn;
+			// this.list.keywords? this.nextdata():this.noPostFn;
+			this.nextdata()
 		},
 		noPostFn(){
-			this.nextdata(),this.loading=false
+			this.nextdata();
+			this.loading=false
 		},
 		refresh(){
 			// console.log(this.list.data);

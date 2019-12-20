@@ -99,7 +99,7 @@ export default {
 			clinicAll : [],
 			clinicNo : [],
 			clinicYes : [],
-			data: true,
+			data: false,
 			titleData:0,
 		}
     }
@@ -151,14 +151,17 @@ export default {
 				switch(this.list.titleData){
 					case 0: 
 					this.isLogin == 100? this.$refs.all.search():'';
+					this.list.data = true;
 					break;
 					case 1: 
 					this.isLogin == 100? this.$refs.all.search():'';
 					this.$refs.no.getdata();
+					// this.list.data = false;
 					break;
 					case 2: 
 					this.isLogin == 100? this.$refs.all.search():'';
 					this.$refs.yes.getdata();
+					// this.list.data = false;
 					break;
 				}
 		    }, 200);

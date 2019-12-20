@@ -207,6 +207,7 @@ export default {
 		},
 		nextdata(){
 			let clinicId = '';
+			debugger;
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
@@ -288,10 +289,20 @@ export default {
 
 		},
 		onLoad(){
-			(this.list.keywords||this.list.data)? this.nextdata():this.noPostFn;
+			// console.log(this.list.keywords);
+			// console.log(this.list.data);
+			// this.nextdata()
+			// this.list.keywords? this.yesFn():this.noPostFn;
+			this.nextdata()
+		},
+		yesFn(){
+			this.isLogin =true;
+			this.nextdata();
 		},
 		noPostFn(){
-			this.nextdata(),this.loading=false
+			debugger;
+			this.nextdata();
+			this.loading = true;
 		},
 		refresh(){
 			// console.log(this.list.data);
