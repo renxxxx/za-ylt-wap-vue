@@ -70,7 +70,7 @@ export default {
 		}
 	},
 	computed:{
-	  ...mapGetters(['account']),
+	  ...mapGetters(['account','isLogin']),
     show: {
         get: function() {
         // console.log(this.$store)
@@ -220,7 +220,7 @@ export default {
     // 筛选重置
     screeningResult(){
     	// console.log(this.labelDocument);
-    	if(this.account.isLogin  == 100){
+    	if(this.isLogin  == 100){
     		for(let _a=0 ;_a < 6; _a++){
     			// console.log(_a)
     			document.getElementById(this.labelDocument[_a]).style.backgroundColor = "#EEEEEE";
@@ -402,7 +402,7 @@ export default {
 }
 .LabelResult button:last-child{
 	border: none;height: .3rem;text-align: center;width: .8rem;
-	border-radius:0px 100px 100px 0px;
+	border-radius:0px 100px 100px 0px;
 	background-color: #FF951B;
 }
 </style>

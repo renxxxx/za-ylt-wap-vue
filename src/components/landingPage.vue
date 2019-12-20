@@ -126,19 +126,37 @@ export default {
 			plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("light")
   		}
+	console.log(this.$store.state.shop.account)
   },
   computed:{
-	...mapGetters(['checked']),
-  	...mapState({
-		account: state =>state.shop.account
-		
-	})
+	...mapGetters(['checked','account','isLogin']),
+	
+  	// ...mapState(['checked','account'])
+	// checked: {
+	// 	get: function() {
+	// 		// console.log(this.$store)
+	// 		return this.$store.state.shop.checked;
+	// 	},
+	// 	set: function (newValue) {
+	// 		this.$store.state.shop.checked = newValue;
+	// 	},
+	// },
+	// account: {
+	// 	get: function() {
+	// 		console.log(this.$store.state)
+	// 		return this.$store.state.shop.account
+	// 	},
+	// 	set: function (newValue) {
+	// 		console.log(newValue)
+	// 		this.$store.state.shop.account = newValue;
+	// 	},
+	// },
   },
   methods:{
 	 //传递页面状态值
   	forgetFn(e){
-  		this.account.isLogin = e
-  		// console.log(this.account.isLogin)
+  		this.isLogin = e
+  		// console.log(this.isLogin)
   	},
 	titleScroll(e){
 		// console.log(e)

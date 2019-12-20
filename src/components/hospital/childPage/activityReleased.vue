@@ -11,7 +11,7 @@
 				
 			</div>
 		</div>
-		<router-link to="/hospital_addActivity" v-show="account.isLogin== 100? true : false">
+		<router-link to="/hospital_addActivity" v-show="isLogin== 100? true : false">
 			<div class="addActive">
 				<span>+</span>
 				<span>新建活动</span>
@@ -54,7 +54,7 @@ export default {
 		}
 	},
 	computed:{
-	  ...mapGetters(['account']),
+	  ...mapGetters(['account','isLogin']),
 	},
 	components:{
 		

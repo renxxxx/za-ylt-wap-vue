@@ -12,6 +12,7 @@
 				<div class="top_center">
 					<h3>{{this.account.data.data.clinic.name}}</h3>
 					<p>账号：{{this.account.data.data.phone}}</p>
+					<p>医院：{{this.account.data.data.hospital.name}}</p>
 				</div>
 				<div class="top_right" @click="showImgFn">
 					<span>营业执照</span>
@@ -65,7 +66,7 @@ export default {
     }
   },
   computed:{
-	...mapGetters(['account']),
+	...mapGetters(['account','isLogin']),
 	
   },
   components:{
@@ -117,10 +118,10 @@ export default {
 	 },
 	//退出方法
 	exitFn(){
-		this.account.isLogin = 0;
+		this.isLogin = 0;
 		this.account.name = '';
 		this.account.password = '';
-		console.log(this.account.isLogin);
+		console.log(this.isLogin);
 		this.$axios.post('/hospital/logout');
 	}
   },
@@ -179,11 +180,10 @@ export default {
 }
 .top_center{
 	position: relative;
-	width: 30%;
-	float:left;
+	width: 36%;
+	float: left;
 	height: .49rem;
-	
-	margin: .37rem .31rem .28rem 0rem;
+	margin: .37rem .15rem .28rem 0rem;
 }
 .top_center h3{
 	height: .29rem;
@@ -194,11 +194,17 @@ export default {
 .top_center p{
 	color: #666666;
 	font-size: .11rem;
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
 }
 .top_right{
 	width: 13%;
 	float:left;
-	margin: .53rem .34rem .44rem 0rem;
+	margin: .53rem .25rem .44rem 0rem;
 	color: #999999;
 	position: relative;
 }

@@ -10,10 +10,10 @@ const state={
 	//账号协议checked
 	checked: true,
 	//账号
+	isLogin:0,
 	account:{
 		name:'',
 		password:'',
-		isLogin:0,
 		user:{
 			realname:'',
 			tel: undefined,
@@ -130,6 +130,7 @@ const getters={
 	shopDetails : state => state.shopDetails,
 	// 医院端门诊详情列表信息
 	clinicDetails : state => state.clinicDetails,
+	isLogin : state => state.isLogin
 }
 
 const actions={
@@ -183,9 +184,12 @@ const actions={
 const mutations={
 	//登陆及其刷新请求
 	submintGetData(_postUrl,_postRefresh,_isLogin,_url){
-		// state.account.name ='11111111111';
+		debugger
+		state.isLogin = _isLogin;
+		localStorage.setItem("isLogin",_isLogin);
+		// state.account.name ='999999';
 		// state.account.password = '123456';
-		console.log(state.account)
+		// console.log(state)
 		axios.post(_postUrl,qs.stringify({
 				account : state.account.name,
 				password : state.account.password
@@ -193,13 +197,12 @@ const mutations={
 			.then( res =>{
 				// console.log(res.data.codeMsg)
 				if(res.data.codeMsg == null ||  res.data.codeMsg == "" || res.data.codeMsg == undefined){
-					state.account.isLogin = _isLogin;
-
+					
 					 axios.post(_postRefresh)
 						.then( res =>{
 							switch(_isLogin){
 								case 100:
-								// router.replace({ name : _url});
+								router.replace({ name : _url});
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
 								// console.log(state.account.hospitalId)
 								state.account.data = {};
@@ -207,7 +210,7 @@ const mutations={
 								break;
 
 								case 200:
-								// router.replace({ name : _url});
+								router.replace({ name : _url});
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
 								// console.log(state.account.hospitalId)
@@ -216,7 +219,7 @@ const mutations={
 								break;
 
 								case 300:
-								// router.replace({ name : _url});
+								router.replace({ name : _url});
 								Dialog({ message: '正在开发中，敬请期待' });
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
@@ -252,7 +255,7 @@ const mutations={
 		h5p.shareWeb("www.baidu.com",'_www/logo.png','title','content');
 		
 		// console.log(this.account.name+this.account.password)
-		state.account.isLogin = landingState;
+		state.isLogin = landingState;
 		// console.log(landingState)
 		if(state.checked == true){
 			switch (landingState){
@@ -406,7 +409,7 @@ const mutations={
 			console.log(err);
 			Dialog({ message: '加载失败!'});
 		})
-		switch(state.account.isLogin){
+		switch(state.isLogin){
 			case 100:
 			state.show = false;
 			break;
@@ -423,7 +426,7 @@ const mutations={
 	screeningResultFn(state){
 		// console.log("已重置");
 		// console.log(state.labelDocument);
-		if(state.account.isLogin  == 100){
+		if(state.isLogin  == 100){
 			for(let _a=0 ;_a < 4; _a++){
 				console.log(_a)
 				document.getElementById(state.labelDocument[_a]).style.backgroundColor = "#EEEEEE";

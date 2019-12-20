@@ -9,7 +9,7 @@
 			<div class="nav_center">
 				<h3>基因检测</h3>
 			</div>
-			<div class="nav_right" @click="modifyFn" v-model='modify' v-if="account.isLogin == 200? false:true">
+			<div class="nav_right" @click="modifyFn" v-model='modify' v-if="isLogin == 200? false:true">
 				<span>{{modify.value}}</span>
 				<img :src=modify.img alt="">
 			</div>

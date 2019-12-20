@@ -1,7 +1,7 @@
 <template>
 	<div class="no">
 		<van-pull-refresh v-model="isLoading" @refresh="refresh">
-			<ul class="hospitalList" v-if="account.isLogin == 100? true:false">
+			<ul class="hospitalList" v-if="isLogin == 100? true:false">
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 					<li v-for="(item,inx) in list.clinicNo" :key="inx" >
 						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
@@ -20,7 +20,7 @@
 					</li>
 				</van-list>
 			</ul>
-			<ul class="clinicList" v-if="account.isLogin == 200? true:false">
+			<ul class="clinicList" v-if="isLogin == 200? true:false">
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 					<li v-for="(item,inx) in list.clinicNo" :key="inx">
 						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">

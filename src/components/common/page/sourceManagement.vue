@@ -3,10 +3,10 @@
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
 			<div class="topNav">
-				<div class="indexReturn" @click="goBackFn" v-if="account.isLogin == 100? true:false">
+				<div class="indexReturn" @click="goBackFn" v-if="isLogin == 100? true:false">
 					<img src="static/img/back-white@2x.png" alt="">
 				</div>
-				<div class="indexSearch" v-bind:class="[account.isLogin == 200? 'clinicSearchStyle':'']">
+				<div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
 					<img src="static/img/sousuo@2x.png" alt="">
 					<input type="text" placeholder="搜索病源" v-model="list.keywords" @keyup="inputNow">
 				</div>
@@ -22,10 +22,10 @@
 			<div class="typeNav">
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
 					<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'
-						v-if="account.isLogin == 200? false:true">
+						v-if="isLogin == 200? false:true">
 						<clinicAll ref='all' :list = 'list'></clinicAll>
 					</van-tab>
-					<van-tab title="新增病源" v-if="account.isLogin == 200? true:false">
+					<van-tab title="新增病源" v-if="isLogin == 200? true:false">
 						<form @submit.prevent="hospitalSubmit" class="newAdd">
 							<div class="newAddTitle">
 								<img src="static/img/bitian@2x.png" alt="">
@@ -67,7 +67,7 @@
 				</van-tabs>
 			</div>
 		</div>
-		<router v-if="account.isLogin == 200? true:false"></router>
+		<router v-if="isLogin == 200? true:false"></router>
   </div>
 </template>
 <script>
@@ -112,7 +112,7 @@ export default {
 	this.getNum();
   },
   computed:{
-		...mapGetters(['Time','labelDocument','showTime','show','account','detail']),
+		...mapGetters(['Time','labelDocument','showTime','show','account','detail','isLogin']),
 		show: {
 			get: function() {
 			// console.log(this.$store)
@@ -150,14 +150,14 @@ export default {
 		    this.timer = setTimeout(() => {
 				switch(this.list.titleData){
 					case 0: 
-					this.account.isLogin == 100? this.$refs.all.search():'';
+					this.isLogin == 100? this.$refs.all.search():'';
 					break;
 					case 1: 
-					this.account.isLogin == 100? this.$refs.all.search():'';
+					this.isLogin == 100? this.$refs.all.search():'';
 					this.$refs.no.getdata();
 					break;
 					case 2: 
-					this.account.isLogin == 100? this.$refs.all.search():'';
+					this.isLogin == 100? this.$refs.all.search():'';
 					this.$refs.yes.getdata();
 					break;
 				}

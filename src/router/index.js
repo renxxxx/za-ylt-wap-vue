@@ -413,7 +413,7 @@ router.beforeEach((to,from,next) => {
 	if(to.meta){
 		if(to.meta.auth){
 			// console.log(store.state.shop.account.isLogin)
-			switch(store.state.shop.account.isLogin){
+			switch(store.state.shop.isLogin){
 				case 100:
 				// console.log('暂未开放中');
 				next();

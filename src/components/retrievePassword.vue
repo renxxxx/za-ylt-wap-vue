@@ -62,7 +62,7 @@ export default {
 		
   },
   computed:{
-	  ...mapGetters(['account'])
+	  ...mapGetters(['account','isLogin'])
   },
   mounted () {
 		if(window.plus){
@@ -126,8 +126,8 @@ export default {
 	},
 	// 提交重设信息
 	retrieveSubmit(){
-		console.log(this.account.isLogin)
-		switch(this.account.isLogin){
+		console.log(this.isLogin)
+		switch(this.isLogin){
 			case 100:
 			this.getdata('/hospital/set-pwd-by-phone');
 			break;

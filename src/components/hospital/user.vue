@@ -25,7 +25,7 @@
 		<div class="user_center">
 			<ul>
 				<router-link :to="{name : 'hospital_taskManagement'}">
-					<li @click="exitFn">
+					<li>
 						<span>任务管理</span>
 						<img src="static/img/Chevron Copy 2@2x.png" alt="">
 					</li>

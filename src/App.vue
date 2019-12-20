@@ -7,17 +7,20 @@
 <script>
 import {mapActions,mapGetters} from 'vuex'
 export default {
-  name: 'App',
-  data(){
-  	return{
+	name: 'App',
+	data(){
+		return{
 		
-	}
-  },
-  computed:{
-  },
-  methods:{
+		}
+	},
+	created () {
+	   
+	},
+	computed:{
+	},
+	methods:{
 	
-  },
+	},
 }
 </script>
 
