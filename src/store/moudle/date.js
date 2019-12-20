@@ -183,10 +183,9 @@ const actions={
 const mutations={
 	//登陆及其刷新请求
 	submintGetData(_postUrl,_postRefresh,_isLogin,_url){
-	// state.account.name ='11111111111';
-	// state.account.password = '123456';
-		console.log(state)
-		debugger;
+		// state.account.name ='11111111111';
+		// state.account.password = '123456';
+		console.log(state.account)
 		axios.post(_postUrl,qs.stringify({
 				account : state.account.name,
 				password : state.account.password
@@ -200,7 +199,7 @@ const mutations={
 						.then( res =>{
 							switch(_isLogin){
 								case 100:
-								router.replace({ name : _url});
+								// router.replace({ name : _url});
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
 								// console.log(state.account.hospitalId)
 								state.account.data = {};
@@ -208,7 +207,7 @@ const mutations={
 								break;
 
 								case 200:
-								router.replace({ name : _url});
+								// router.replace({ name : _url});
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
 								// console.log(state.account.hospitalId)
@@ -217,7 +216,7 @@ const mutations={
 								break;
 
 								case 300:
-								router.replace({ name : _url});
+								// router.replace({ name : _url});
 								Dialog({ message: '正在开发中，敬请期待' });
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;

@@ -21,7 +21,7 @@ import h5p from '../build/h5p.js'
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.moment = moment;
-
+Vue.prototype.store = store
 
 
 

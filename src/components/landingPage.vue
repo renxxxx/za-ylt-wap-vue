@@ -128,8 +128,11 @@ export default {
   		}
   },
   computed:{
-	...mapGetters(['checked','account']),
-  	// ...mapState([])
+	...mapGetters(['checked']),
+  	...mapState({
+		account: state =>state.shop.account
+		
+	})
   },
   methods:{
 	 //传递页面状态值
