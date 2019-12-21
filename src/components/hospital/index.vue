@@ -131,7 +131,7 @@ export default {
 		this.$axios.get('/hospital/hospital-ads')
 			.then(res =>{
 				for(let i in res.data.data.rows){
-					console.log(res.data.data.rows[i])
+					// console.log(res.data.data.rows[i])
 					switch(res.data.data.rows[i].type){
 						case 0: this.images.push({'cover':res.data.data.rows[i].cover,'url':''});break;
 						case 1: this.images.push({'cover':res.data.data.rows[i].cover,'url':res.data.data.rows[i].type1Url});break;

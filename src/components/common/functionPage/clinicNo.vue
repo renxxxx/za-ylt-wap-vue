@@ -32,10 +32,10 @@
 								<span class="AlreadySpanColor">未就诊</span>
 							</div>
 							<p>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
-						</router-link>	
+						</router-link>
 					</li>
 				</van-list>
-			</ul>	
+			</ul>
 			</van-list>
 		</van-pull-refresh>
 	</div>
@@ -71,6 +71,8 @@ export default {
 	},
 	mounted () {
 		// this.getdata();
+    let winHeight = document.documentElement.clientHeight;                   //视口大小
+    document.getElementById('list-content').style.height = (winHeight - 46) +'px'  //调整上拉加载框高度
 	},
 	methods: {
 		// 详情页
@@ -89,18 +91,11 @@ export default {
 			.then(_d => {
 				this.list.clinicNo =[];
 				this.page = 2;
-				this.finished = false;
-				this.isLoading = false;
-				this.loading = false;
 				let yesNum = 0;
 				let noNum = 0;
 				let allNum = 0;
 				// console.log( _d.data.data.items.length)
 				if( _d.data.data.items.length == 0){
-					this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
-					this.finished = false;
 				}else{
 					for (let nums in _d.data.data.items) {
 						this.list.clinicNo.push({
@@ -183,7 +178,7 @@ export default {
 		},
 		noPostFn(){
 			this.nextdata();
-			this.loading=false
+			// this.loading=false
 		},
 		refresh(){
 			// console.log(this.keywords);

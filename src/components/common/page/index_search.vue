@@ -8,67 +8,15 @@
 			</div>
 			<div class="search_input">
 				<img src="static/img/sousuo@2x.png" alt="">
-				<input type="text" placeholder="搜索病源" v-model="keywords" @keyup="inputNow">
+				<input type="text" placeholder="搜索病源" v-model="list.keywords" @keyup="inputNow">
 			</div>
 			<div class="screening" @click="showPopup">
 				<span>筛选</span>
 				<img src="static/img/screening.png" alt="">
 			</div>
-			<van-popup v-model="show" position="right" :style="{ height: '100%',width:'78.7%'}">
-				<div id="indexLabel" v-model="Time">
-					<div class="labelLabel" >
-						<strong>状态</strong>
-						<button   @click="labelLabelFn([0,$event])" :id="labelDocument[0]">未就诊</button>
-						<button @click="labelLabelFn([1,$event])" :id="labelDocument[1]">已就诊</button>
-					</div>
-					<div class="labelLabel" >
-						<strong>确认就诊时间</strong>
-						<button class="rightLine" @click="labelLabelFn([2,$event])" :id="labelDocument[2]">
-							{{Time.confirmStart}}
-						</button>
-						<button  @click="labelLabelFn([3,$event])" :id="labelDocument[3]">
-							{{Time.confirmOver}}
-						</button>
-					</div>
-					<div class="labelLabel">
-						<strong>门诊推送时间</strong>
-						<button class="rightLine"  @click="labelLabelFn([4,$event])"  :id="labelDocument[4]">
-							{{Time.pushStart}}
-						</button>
-						<button  @click="labelLabelFn([5,$event])"  :id="labelDocument[5]">
-							{{Time.pushOver}}
-						</button>
-					</div>
-					<div class="LabelResult">
-						<button @click="screeningResult">重选</button>
-						<button @click="screeningSubmit">确定</button>
-					</div>
-				</div>
-			</van-popup>
-			<van-popup @click="closeFn" v-model="showTime" position="bottom" :style="{ height: '40%',width:'100%'}">
-				<van-datetime-picker
-				  type="date"
-				  @confirm="confirm"
-				  @cancel="cancel"
-				/>
-			</van-popup>
+      <timeChoose :list = 'list'></timeChoose>
 		</div>
-		<van-pull-refresh v-model="isLoading" @refresh="onRefresh" style=" overflow: none!important;">
-			<ul class="search_content" v-model="search_userList">
-				<router-link :to="{name : 'details'}">
-					<li v-for="(_user,inx) in search_userList" :key="inx" @click="detailsValueFn(_user)">
-						<div class="content_left">
-							<span>{{_user.realname}}</span>
-						</div>
-						<div class="content_right">
-							<img :src='_user.imgUrl'>
-							<span>{{_user.span}}</span>
-						</div>
-						<p>{{moment(_user.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
-					</li>
-				</router-link>
-			</ul>
-		</van-pull-refresh>
+		<clinicAll ref='all' :list = 'list'></clinicAll>
   </div>
 </template>
 
@@ -77,19 +25,23 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import timeChoose from '../functionPage/timeChoose.vue'
+import clinicAll from '../functionPage/clinicAll.vue'
 export default {
   name: 'index_search',
   data () {
     return {
-     	keywords : '',
-     	
-     	isLoading: false,
-		
-		timer :undefined
+      timer :undefined,
+      list:{
+      	keywords : '',			//搜索框的关键字value
+      	allNum : 0,
+      	clinicId : '',
+      	clinicAll : [],
+      }
     }
   },
   computed:{
-	...mapGetters(['Time','labelDocument','show','showTime','detail','account','search_userList']),
+	...mapGetters(['Time','showTime','detail','account']),
 	show: {
 	      get: function() {
 	  		// console.log(this.$store)
@@ -108,18 +60,12 @@ export default {
 			this.$store.state.shop.showTime = newValue;
 	    },
 	},
-	search_userList: {
-	    get: function() {
-			// console.log(this.$store)
-	        return this.$store.state.shop.search_userList
-	    },
-	    set: function (newValue) {
-			this.$store.state.shop.search_userList = newValue;
-	    },
-	},
+  },
+  components:{
+    timeChoose,clinicAll
   },
   created () {
-		
+
   },
   mounted () {
 	this.getdata();
@@ -131,41 +77,8 @@ export default {
 	},
 	//获取数据
 	getdata(){
-		// console.log(this.Time)
-		this.$axios.post('/c2/patient/items',qs.stringify({
-			kw : this.keywords,
-			clinicId : this.account.clinicId,
-			status : this.Time.postState,
-			pushTimeStart : this.Time.pushStart,
-			pushTimeEnd : this.Time.pushOver,
-			hospitalConfirmTimeStart : this.Time.confirmStart,
-			hospitalConfirmTimeEnd : this.Time.confirmOver,
-		}))
-		.then(_d => {
-			// console.log(_d.data.data.items)
-			this.search_userList = _d.data.data.items
-			for(var i in _d.data.data.items){
-				if(_d.data.data.items[i].status == 1){
-					_d.data.data.items[i].span = '未就诊'
-					_d.data.data.items[i].imgUrl = 'static/img/weijiuzhen@2x.png'
-				}else{
-					_d.data.data.items[i].span = '已就诊'
-					_d.data.data.items[i].imgUrl = 'static/img/yijiuzhen@2x.png'
-				}
-				// console.log(_d.data.data.items[i].status)
-			}
-					
-		})
-		.catch((err)=>{
-			console.log(err);
-			Dialog({ message: '加载失败!'});
-		})
+
 	},
-	//刷新数据方法
-  	onRefresh(){
-  		this.getdata();
-		this.isLoading = false;
-  	},
 	//键盘输入值时触发
   	inputNow(_keywordsCode){
 		//清除计时器
@@ -174,23 +87,17 @@ export default {
 		}
 		if (_keywordsCode) {
 		    this.timer = setTimeout(() => {
-				this.getdata();
+				this.$refs.all.search();
 		    }, 200);
 		} else {
 		    // 输入框中的内容被删为空时触发，此时会清除之前展示的搜索结果
-		    this.getdata();
+		    this.$refs.all.search();
 		}
   	},
 	goBackFn(){
 		this.$router.back(-1)
 	},
-	//详情页单个商品数据赋值
-	detailsValueFn(_diagnosis){
-		// console.log(_diagnosis)
-		this.detail.patientId = _diagnosis.itemId;
-		// console.log(this.detail)
-	},
-	...mapActions(['labelLabelFn','closeFn','screeningSubmit','screeningResult','confirm','cancel',])
+	...mapActions([])
   },
 }
 </script>
@@ -200,7 +107,7 @@ export default {
 ._search{
 	position: relative;
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
 	padding-top: .52rem;
 	background-color: #F5F5F5;
 }
@@ -223,7 +130,7 @@ export default {
 	width: .09rem;
 	height: .16rem;
 	margin: .17rem .18rem;
-	
+
 }
 .search_input{
 	float: left;width: 73%;
@@ -331,7 +238,7 @@ export default {
 	top: 50%;
 	left:107%;
 	background-color: #999999;
-	
+
 }
 .labelLabel button{
 	height: .3rem;width: 1.05rem;

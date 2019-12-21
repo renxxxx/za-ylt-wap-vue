@@ -31,17 +31,17 @@
 				</li>
 				<li>
 					<span>所属门诊</span>
-					<input type="text" v-model="detail.clinicName" :readonly="true">
+					<input type="text" v-model="detail.clinicName" :placeholder="modify.readonly? '':'请输入' " :readonly="true">
 				</li>
 			</ul>
 			<ul>
 				<li>
 					<span>门诊推送时间</span>
-					<input type="text" :value="detail.pushTime" placeholder="请输入" :readonly="true">
+					<input type="text" :value="detail.pushTime" :placeholder="modify.readonly? '':'请输入' " :readonly="true">
 				</li>
 				<li>
 					<span>确认就诊时间</span>
-					<input type="text" v-model="detail.hospitalConfirmTime" :readonly="true">
+					<input type="text" v-model="detail.hospitalConfirmTime" :placeholder="modify.readonly? '':'请输入' " :readonly="true">
 				</li>
 				<li>
 					<span>病种</span>
@@ -55,10 +55,22 @@
 		</div>
 		<div class="_photo">
 			<h3>发票照片</h3>
-			<div class="imageUpload" v-show="modify.data" id='readImg'>
-				<van-uploader :before-read="beforeRead" :before-delete="berforedelete" preview-size='.9rem' 
-				v-model="fileList" multiple="false" />
-			</div>
+      <ul>
+        <li v-for="(item,inx) in imgUrl" :key="inx">
+          <img v-bind:src="item.url" alt="">
+          <img v-show="show" src="static/img/detele.png" alt="" @click="deteleFn(item)">
+        </li>
+         <li v-show="show">
+            <div class="addImg">
+            	<div class="addImgButton" v-show="imgUrl? false : true">
+            		<div class="add"></div>
+                <div class="min"></div>
+            	</div>
+            	<input type="file" class="upload" ref="inputer" accept="image/png,image/jpeg,image/gif,image/jpg"
+            	    multiple @change="addImg($event)"/>
+            </div>
+         </li>
+      </ul>
 		</div>
 	</div>
 </template>
@@ -74,11 +86,8 @@ export default {
   data () {
     return {
 		//预浏览发票图img片地址
-		fileList: [],
-		//保存处理过的发票图片img地址
-		imageUpload:[],
-		// 最后提交的发票图片img
-		postImgList:[],
+    imgUrl:[],
+    show : true,
 		modify:{
 			value:'编辑',
 			img:'static/img/editor.png',
@@ -89,7 +98,7 @@ export default {
     }
   },
   computed:{
-		...mapGetters(['account','detail']),
+		...mapGetters(['account','detail','isLogin']),
 		detail: {
 			get: function() {
 				// console.log(this.$store)
@@ -101,10 +110,9 @@ export default {
 		},
   },
   created () {
-		
+
   },
   mounted () {
-	console.log(this.fileList)
 	this.$axios.post('/c2/patient/item',qs.stringify({
 		patientId : this.$route.params.patientId,
 	})).then(res =>{
@@ -112,7 +120,7 @@ export default {
 			realname : res.data.data.realname,			//病人姓名
 			clinicId : res.data.data.clinicId,		//门诊id
 			clinicName : res.data.data.clinicName,		//门诊名称
-			hospitalConfirmTime : res.data.data.hospitalConfirmTime,//医院确诊时间
+			// hospitalConfirmTime : res.data.data.hospitalConfirmTime,//医院确诊时间
 			hospitalId	: res.data.data.hospitalId,	//医院id
 			hospitalName : res.data.data.hospitalName,	//医院名称
 			idcardNo : res.data.data.idcardNo,		//身份证号
@@ -124,50 +132,34 @@ export default {
 			sickness: res.data.data.sickness	//病例
 		};
 		// 如果信息中有发票图片,就显示
-		// let code = res.data.data.invoices
-		// console.log(code != null)
-		debugger;
-		if(res.data.data.invoices != null || undefined || ''){
-			res.data.data.invoices = res.data.data.invoices.split(",")
+		console.log(this.detail)
+		if(res.data.data.invoices){
+      debugger;
+			res.data.data.invoices = res.data.data.invoices.split(",");
 			for (let i in res.data.data.invoices){
-				this.fileList.push({'url' : res.data.data.invoices[i]});
-				this.imageUpload.push({url:res.data.data.invoices[i]})
-				// console.log(res.data.data)
+				this.imgUrl.push({url : res.data.data.invoices[i],isImage: true });
 			}
-			// console.log(this.fileList)
 			this.modify.data = true;
 			this.modify.value = '编辑';
 			this.modify.img = 'static/img/editor.png';
-			document.getElementsByClassName('van-uploader__upload')[0].style.display = 'none';
-			console.log(document.getElementsByClassName('van-uploader__upload')[0])
-			let classDomList = document.getElementsByClassName('van-uploader__preview-delete');
-			for(let _d=0; _d <classDomList.length;_d++){
-				classDomList[_d].style.display = "none";
-			console.log(classDomList[_d])
-			}
+      this.show = false;
 		}else{
 			this.modify.data = false;
-			this.fileList = [];
+			this.imgUrl = [];
 		}
 		//判断时间是否为空
 		// console.log(this.detail.pushTime)
-		
-		if(res.data.data.hospitalConfirmTime == '' || res.data.data.hospitalConfirmTime == undefined || res.data.data.hospitalConfirmTime == null){
-			// console.log(this.detail.hospitalConfirmTime)
-			this.detail.hospitalConfirmTime = ''
-		}else{
+		if(!res.data.data.hospitalConfirmTime){
+			console.log(this.detail.hospitalConfirmTime)
 			this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('YYYY-MM-DD HH:mm');
 		}
-		if(res.data.data.pushTime == '' || res.data.data.pushTime == undefined || res.data.data.pushTime == null){
-		}else{
+		if(res.data.data.pushTime){
+      console.log(res.data.data.pushTime)
 			this.detail.pushTime = moment(res.data.data.pushTime).format('YYYY-MM-DD HH:mm');
 		}
-		// this.detail = res.data.data
-		// console.log(this.detail);
 	}).catch(err =>{
 		console.log(err)
 	})
-	// console.log(this.fileList)
   },
   methods: {
 	// 返回上一级
@@ -186,17 +178,17 @@ export default {
 				let _id = 'readId' + i;
 				this.modify.readonly = false;
 			}
-			document.getElementsByClassName('van-uploader__upload')[0].style.display = 'flex'
-			let classDomList = document.getElementsByClassName('van-uploader__preview-delete');
-			for(let _d=0; _d <classDomList.length;_d++){
-				classDomList[_d].style.display = "inline";
-			}
+      this.show = true;
 		}else{
-			
 			let _imgAddress = [];
-			for(let i in this.imageUpload){
-				_imgAddress[i] = this.imageUpload[i].url
-			}
+      if(this.imgUrl.length == 1){
+        _imgAddress[0] = this.imgUrl[0].url
+      }else{
+        for(let i in this.imgUrl){
+        	_imgAddress[i] = this.imgUrl[i].url
+        }
+      }
+      // console.log(_imgAddress)
 			_imgAddress =  _imgAddress.join(",");
 			// console.log(_imgAddress)
 			this.$axios.post('/c2/patient/itemalter',qs.stringify({
@@ -208,7 +200,9 @@ export default {
 				idcardNo : this.detail.idcardNo,
 				tel : this.detail.tel
 			})).then(res =>{
-				// console.log(this.imageUpload)
+        if(!res.data.codeMsg){
+          this.show = false
+        }
 			}).catch(err =>{
 				console.log(err)
 			})
@@ -217,34 +211,19 @@ export default {
 				// console.log(_id)
 				this.modify.readonly = true;
 			}
-			// console.log()
-			// console.log(this.fileList)
-			if(this.fileList.length > 0){
-				this.modify.value = '编辑';
-				this.modify.img = 'static/img/editor.png';
-				document.getElementsByClassName('van-uploader__upload')[0].style.display = 'none'
-				let classDomList = document.getElementsByClassName('van-uploader__preview-delete');
-				// console.log(classDomList)
-				for(let _d=0; _d <classDomList.length;_d++){
-					// console.log(classDomList[_d])
-					classDomList[_d].style.display = "none";
-				}
-			}else{
-				this.modify.data = false;
-				this.modify.value = '编辑';
-				this.modify.img = 'static/img/editor.png';
-			}
 		}
 	},
-	postImg(file){
-		console.log(file)
-		if(file.type == 'image/png'||'image/jpeg','image/gif'||'image/jpg'){
+	 // 上传图片触发方法
+	addImg(_fileLIst){
+		var file = _fileLIst.target.files[0]
+		// console.log(e)
+		if(file.type.indexOf('image') > -1){
 			let formData = new FormData();
 			formData.append('file', file)
 			this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
 			}}).then(res =>{
-				this.imageUpload.push({url:res.data.data.url})
-				console.log(this.imageUpload)
+				this.imgUrl.push({url:res.data.data.url})
+				console.log(this.exchangeAdd)
 			}).catch(err =>{
 				console.log(err)
 			})
@@ -253,28 +232,12 @@ export default {
 			return false;
 		}
 	},
-	 // 上传图片触发方法
-	beforeRead(file) {
-		// let _file = file;
-		// console.log('this.fileList')
-		this.postImg(file);
-		return true;
-	},
-	// 删除图片触发方法
-	berforedelete(_deteleValue){
-		// console.log(_deteleValue);
-		let deleteImg =  this.imageUpload.filter( n => n.url != _deteleValue.url);
-		this.imageUpload = deleteImg;
-		console.log(document.getElementsByClassName('van-uploader__upload')[0]);
-		
-		this.detail.invoices = [];
-		for(var _imgUrl = 0; _imgUrl < this.imageUpload.length; _imgUrl++){
-			// console.log(this.imageUpload[_imgUrl].url)
-			this.detail.invoices.push(this.imageUpload[_imgUrl].url)
-		}
-		console.log(this.detail.invoices)
-		return true
-	},
+  deteleFn(_img){
+    console.log(this.imgUrl)
+    let deleteImg =  this.imgUrl.filter( n => n.url != _img.url);
+    this.imgUrl = deleteImg;
+    console.log(this.imgUrl)
+  }
   },
 }
 </script>
@@ -288,8 +251,8 @@ export default {
 .topNav{
 	width: 100%;
 	height: .47rem;
-	background-color: #FF951BFF;
-	color:#FFFFFFFF;
+	background-color: #FF951B;
+	color:#FFFFFF;
 }
 .nav_left{
 	float: left;
@@ -352,7 +315,7 @@ export default {
 	position: absolute;
 	top: .05rem;
 	left: -.07rem;
-	
+
 }
 ._message ul{
 	margin-top: .1rem;
@@ -388,7 +351,7 @@ export default {
 ._photo h3{
 	margin-left: .23rem;
 	color: #2B77EF;
-	position: relative;	
+	position: relative;
 }
 ._photo h3:before{
 	content: "";
@@ -403,73 +366,74 @@ export default {
 	top: .05rem;
 	left: -.07rem;
 }
-.imageUpload{
-	margin-top: .1rem;
+._photo ul{
+  margin-top: .1rem;
 }
->>>.van-uploader__upload{
-    position: relative;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    box-sizing: border-box;
-    width: 80px;
-    height: 80px;
-    margin: 0 8px 8px 0;
-    background-color: #D8D8D8!important;
-    border: 1px dashed #e5e5e5;
-    border-radius: 4px;
+._photo ul li{
+  display: inline-block;
+  margin-right: .05rem;
+  height: .88rem;
+  width: .88rem;
+  overflow: hidden;
+  position: relative;
 }
->>>.van-uploader__preview{
-    position: relative;
-    margin: 0rem .05rem .05rem 0rem!important;
+._photo ul li img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
->>>.van-uploader__preview:nth-child(4n){
-    position: relative;
-    margin: 0rem 0rem .05rem 0rem!important;
+._photo ul li img:last-child{
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: .2rem;
+  width: .2rem;
 }
-
->>>.van-uploader__upload {
-    position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 80px;
-    height: 80px;
-    margin: 0 0px 8px 0;
-    background-color: #D8D8D8!important;
-    border: 1px dashed #e5e5e5;
-    border-radius: 4px;
+.addImg{
+	width: .9rem;
+	height:.9rem;
+	line-height: 88%;
+	/* margin: 0rem auto; */
+	overflow: hidden;
+	text-align: center;
+	position: relative;
+  border:1px dashed #FFC685;
 }
->>>.van-uploader__preview-delete {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    color: #969799;
-    font-size: 18px;
-    background-color: #fff;
-    border-radius: 100%;
-	z-index: 99;
+.addImg>img{
+	width: 100%;
+}
+.addImgButton{
+	display: block!important;
+	text-align: center;
+	width: 100%;
+  height: 100%;
+  line-height: 100%;
+  position: relative;
+}
+.add{
+  height:.24rem ;
+  width: .02rem;
+  background-color: #FFC685;
+  position: absolute;
+  top: .33rem;
+  left: .44rem;
+}
+.min{
+  width: .24rem;
+  height: .02rem;
+  background-color: #FFC685;
+  position: absolute;
+  top:.44rem;
+  left: .33rem;
+}
+.upload{
+	opacity: 0;
+	width: 100%;
+	height:100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 </style>

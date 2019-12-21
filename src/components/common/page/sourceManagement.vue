@@ -6,17 +6,19 @@
 				<div class="indexReturn" @click="goBackFn" v-if="isLogin == 100? true:false">
 					<img src="static/img/back-white@2x.png" alt="">
 				</div>
-				<div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
-					<img src="static/img/sousuo@2x.png" alt="">
-					<input type="text" placeholder="搜索病源" v-model="list.keywords" @keyup="inputNow">
-				</div>
-				<div class="indexScreening" @click="showPopup">
+        <div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
+          <!-- <router-link :to="{name : 'hospital_typeDetails' ,params : {item : item.itemId}}"> -->
+          <router-link :to="{name:'outpatient_search'}">
+          	<img src="static/img/sousuo@2x.png" alt="">
+          	<input type="text" placeholder="搜索病源" v-model="list.keywords">
+          </router-link>
+        </div>
+				<div class="indexScreening">
+          <router-link :to="{name:'outpatient_search'}">
 					<span>筛选</span>
 					<img src="static/img/screen@2x.png" alt="加载中" >
+          </router-link>
 				</div>
-				<keep-alive>
-					<timeChoose :list = 'list'></timeChoose>
-				</keep-alive>
 			</div>
 			<!-- 就诊情况 -->
 			<div class="typeNav">
@@ -75,7 +77,6 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
-import timeChoose from '../functionPage/timeChoose.vue'
 import clinicAll from '../functionPage/clinicAll.vue'
 import clinicYes from '../functionPage/clinicYes.vue'
 import clinicNo from '../functionPage/clinicNo.vue'
@@ -134,55 +135,12 @@ export default {
   },
   //注册组件
   components:{
-	  timeChoose,clinicAll,clinicYes,clinicNo,router
+	  clinicAll,clinicYes,clinicNo,router
   },
   methods:{
 	//回退方法
 	goBackFn(){
 		this.$router.back(-1)
-	},
-	inputNow(_keywordsCode){
-		//清除计时器
-		if (this.timer) {
-		    clearTimeout(this.timer);
-		}
-		if (_keywordsCode) {
-		    this.timer = setTimeout(() => {
-				switch(this.list.titleData){
-					case 0: 
-					this.isLogin == 100? this.$refs.all.search():'';
-					this.list.data = true;
-					break;
-					case 1: 
-					this.isLogin == 100? this.$refs.all.search():'';
-					this.$refs.no.getdata();
-					// this.list.data = false;
-					break;
-					case 2: 
-					this.isLogin == 100? this.$refs.all.search():'';
-					this.$refs.yes.getdata();
-					// this.list.data = false;
-					break;
-				}
-		    }, 200);
-		}
-		if(this.list.keywords ==''){
-		    // 输入框中的内容被删为空时触发，此时会清除之前展示的搜索结果
-			// console.log('结束搜索')
-		    this.getNum();
-		}
-	},
-	// 详情页
-	detailsValueFn(_diagnosis){
-		// console.log(_diagnosis.itemId)
-		this.detail.patientId = _diagnosis.itemId;
-		// console.log(this.detail.patientId)
-	},
-	dateFn(e){
-		console.log(e)
-	},
-	showPopup(){
-		this.show = true;
 	},
 	getNum(){
 		let clinicId = '';
@@ -219,7 +177,7 @@ export default {
 			console.log(err);
 			Dialog({ message: err});
 		});
-		
+
 		// console.log(this.list.allNum)
 	},
 	...mapActions(['labelLabelFn','dateConfirm','closeFn','screeningSubmit','screeningResult','confirm','cancel','hospitalSubmit'])

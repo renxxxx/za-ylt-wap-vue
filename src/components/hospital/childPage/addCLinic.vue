@@ -67,12 +67,12 @@
 							<div class="popupChoose">
 								<span>拍照</span>
 								<div class="uploadPictures">
-									 <input 
-									        type="file" 
-									        class="upload" 
-									        ref="inputer" 
+									 <input
+									        type="file"
+									        class="upload"
+									        ref="inputer"
 									        accept="image/png,image/jpeg,image/gif,image/jpg"
-									        multiple 
+									        multiple
 											@change="addImg($event)"
 									   />
 									   <div class="add">
@@ -127,7 +127,7 @@ export default {
 		clinic_content
 	},
 	created () {
-		
+
 	},
 	mounted () {
 		// 加载dom节点后,获取推广人列表请求
@@ -139,7 +139,7 @@ export default {
 		.then(res => {
 			for(let i in res.data.data.items){
 				this.option.push({
-					'text' : res.data.data.items[i].name, 
+					'text' : res.data.data.items[i].name,
 					'value' : res.data.data.items[i].no,
 				})
 			}
@@ -149,19 +149,23 @@ export default {
 			Dialog({ message: '加载失败!'});
 		})
 		// console.log(this.$route.params.item)
-		this.$axios.post('/c2/clinic/item',qs.stringify({
-			itemId : this.$route.params.item,
-		}))
-		.then(_d => {
-			this.addClinic = _d.data.data;
-			this.imageUpload = _d.data.data.license
-		})
-		.catch((err)=>{
-			console.log(err);
-			Dialog({ message: err});
-		})
+    this.$route.params.item ? this.clinicFn() : ""
 	},
 	methods: {
+    clinicFn(){
+      
+      this.$axios.post('/c2/clinic/item',qs.stringify({
+      	itemId : this.$route.params.item,
+      }))
+      .then(_d => {
+      	this.addClinic = _d.data.data;
+      	this.imageUpload = _d.data.data.license
+      })
+      .catch((err)=>{
+      	console.log(err);
+      	Dialog({ message: err});
+      })
+    },
 		// 返回键
 		goBackFn(){
 			this.$router.back(-1)
@@ -194,7 +198,7 @@ export default {
 				Dialog({ message: '请选择图片' });
 				return false;
 			}
-		
+
 		},
 		// 保存方法
 		saveFn(){
@@ -208,7 +212,7 @@ export default {
 				contactTel : this.addClinic.contactTel,
 				address : this.addClinic.address,
 				remark : this.addClinic.remark,
-				// license : this.addClinic.license,
+				license : this.addClinic.license,
 			}))
 			.then(res => {
 				console.log(typeof res.data.codeMsg)
@@ -418,7 +422,7 @@ export default {
 	height: .44rem!important;
 	line-height: .44rem!important;
 	/* margin-top:-.44rem
-	
+
 	; */
  }
 

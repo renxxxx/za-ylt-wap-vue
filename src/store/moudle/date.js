@@ -56,7 +56,6 @@ const state={
 		pushOver : undefined,
 		postState : undefined,
 	},
-	search_userList:[],		//搜索页面的list列表
 	// lable的dom节点
 	labelDocument:['labelDocument','labelDocument2','labelDocument3','labelDocument4','labelDocument5','labelDocument6'],
 	//label的button值
@@ -116,8 +115,6 @@ const getters={
 	labelDocument :state =>state.labelDocument,
 	//显示半遮罩及其日期选择
 	showTime : state => state.showTime,
-	//搜索页面的list列表
-	search_userList : state => state.search_userList,
 	//医院端活动发布的参数
 	activity : state => state.activity,
 	//医院端用户的任务管理参数
@@ -184,7 +181,6 @@ const actions={
 const mutations={
 	//登陆及其刷新请求
 	submintGetData(_postUrl,_postRefresh,_isLogin,_url){
-		debugger
 		state.isLogin = _isLogin;
 		localStorage.setItem("isLogin",_isLogin);
 		// state.account.name ='999999';
@@ -197,7 +193,7 @@ const mutations={
 			.then( res =>{
 				// console.log(res.data.codeMsg)
 				if(res.data.codeMsg == null ||  res.data.codeMsg == "" || res.data.codeMsg == undefined){
-					
+
 					 axios.post(_postRefresh)
 						.then( res =>{
 							switch(_isLogin){
@@ -253,7 +249,7 @@ const mutations={
 	//登陆页面的表单验证
 	submitFn(state,landingState){
 		h5p.shareWeb("www.baidu.com",'_www/logo.png','title','content');
-		
+
 		// console.log(this.account.name+this.account.password)
 		state.isLogin = landingState;
 		// console.log(landingState)

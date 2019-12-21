@@ -98,12 +98,13 @@ export default {
 
 	},
 	mounted () {
-		
+
 	},
 	methods: {
     // 筛选确定
     screeningSubmit(){
 		let clinicId = '';
+    this.list.clinicAll = []
 		this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
       this.$axios.post('/c2/patient/items',qs.stringify({
         clinicId : clinicId,
@@ -117,18 +118,6 @@ export default {
       .then(_d => {
         // console.log(_d.data.data.items)
         this.show = false;
-		this.list.clinicAll =[];
-		this.list.clinicYes =[];
-		this.list.clinicNo =[];
-		this.list.allNum = 0;
-		this.list.noNum = 0;
-		this.list.yesNum = 0;
-		this.list.allTitle = '全部';
-		this.list.noTitle = '未就诊';
-		this.list.noTitle = '未就诊';
-		let yesNum = 0;
-		let noNum = 0;
-		let allNum = 0;
 		if(_d.data.data.items.length>0){
 			for (let nums in _d.data.data.items) {
 				// console.log(_d.data.data.items[nums])
@@ -142,19 +131,9 @@ export default {
 						img : "static/img/orange@2x.png",
 						button : "确认就诊"
 					});
-					this.list.clinicNo.push({
-						clinicName : _d.data.data.items[nums].clinicName,
-						itemId : _d.data.data.items[nums].itemId,
-						pushTime : _d.data.data.items[nums].pushTime,
-						realname : _d.data.data.items[nums].realname,
-						status : _d.data.data.items[nums].status,
-						img : "static/img/orange@2x.png",
-						button : "确认就诊"
-					});
-					noNum++;
 					// console.log(this.list)
 				}else if(_d.data.data.items[nums].status == 4){
-					// console.log(_d.data.data.items[nums].status )
+					// console.log(_d.data.data.ite ms[nums].status )
 					this.list.clinicAll.push({
 						clinicName : _d.data.data.items[nums].clinicName,
 						itemId : _d.data.data.items[nums].itemId,
@@ -164,52 +143,9 @@ export default {
 						img : "static/img/blue@2x.png",
 						button : "确认就诊"
 					});
-					this.list.clinicYes.push({
-						clinicName : _d.data.data.items[nums].clinicName,
-						itemId : _d.data.data.items[nums].itemId,
-						pushTime : _d.data.data.items[nums].pushTime,
-						realname : _d.data.data.items[nums].realname,
-						status : _d.data.data.items[nums].status,
-						img : "static/img/blue@2x.png",
-						button : "已就诊",
-						buttonColor : "buttonColor"
-					});
-					yesNum++;
 				}
 			}
-
-			this.list.allNum = allNum;
-			this.list.noNum = noNum;
-			this.list.yesNum = yesNum;
-			this.list.data = false;
-			// this.list.yesTitle = '已就诊' + this.list.yesNum;
-			// this.list.allTitle = '全部' + (this.list.noNum + this.list.yesNum)
-		}else{
-			console.log('s')
-			this.list.data = false;
-			this.list.clinicAll =[];
-			this.list.clinicYes =[];
-			this.list.clinicNo =[];
-			this.list.allNum = 0;
-			this.list.noNum = 0;
-			this.list.yesNum = 0;
-			this.list.allTitle = '全部';
-			this.list.noTitle = '未就诊';
-			this.list.noTitle = '未就诊';
-			this.$toast.fail('暂无病源数据');
-		}
-		switch(this.Time.postState){
-			case 0:
-			this.list.titleData = 0;
-			break;
-			case 1:
-			this.list.titleData = 1;
-			console.log(this.list.titlData)
-			break;
-			case 4:
-			this.list.titleData = 2;
-			console.log(this.list.titlData)
-			break;
+      console.log(this.list.clinicAll)
 		}
       })
       .catch((err)=>{
@@ -220,17 +156,9 @@ export default {
     // 筛选重置
     screeningResult(){
     	// console.log(this.labelDocument);
-    	if(this.isLogin  == 100){
-    		for(let _a=0 ;_a < 6; _a++){
-    			// console.log(_a)
-    			document.getElementById(this.labelDocument[_a]).style.backgroundColor = "#EEEEEE";
-    		}
-    	}else{
-    		for(let _a=0 ;_a < this.labelDocument.length; _a++){
-    			// console.log(_a)
-    			document.getElementById(this.labelDocument[_a]).style.backgroundColor = "#EEEEEE";
-    		}
-    	}
+      for(let _a=0 ;_a < 6; _a++){
+        document.getElementById(this.labelDocument[_a]).style.backgroundColor = "#EEEEEE"; 
+      }
     	Vue.set(this.Time,'confirmStart',0);
     	Vue.set(this.Time,'confirmOver',0);
     	Vue.set(this.Time,'pushStart',0);
@@ -248,11 +176,9 @@ export default {
     		document.getElementById(this.labelDocument[0]).style.backgroundColor = "#EEEEEE";
     		document.getElementById(this.labelDocument[1]).style.backgroundColor = "#EEEEEE";
     		_this.target.style.backgroundColor = "#FFE1BE";
-    		this.dataStata = '';
     		this.Time.look = "";
     		this.Time.noLook = "";
     		this.Time.look = '未就诊';
-    		this.dateStata=_vlaue;
     		this.Time.postState = 1;
     		// console.log(this.dateStata);
 
@@ -261,11 +187,9 @@ export default {
     		document.getElementById(this.labelDocument[0]).style.backgroundColor = "#EEEEEE";
     		document.getElementById(this.labelDocument[1]).style.backgroundColor = "#EEEEEE";
     		_this.target.style.backgroundColor = "#FFE1BE";
-    		this.dataStata = '';
     		this.Time.look = "";
     		this.Time.noLook = "";
     		this.Time.noLook = '已就诊';
-    		this.dateStata=_vlaue;
     		this.Time.postState = 4;
     		// console.log(this.dateStata);
     		break;
@@ -274,17 +198,12 @@ export default {
     		document.getElementById(this.labelDocument[2]).style.backgroundColor = "#EEEEEE";
     		document.getElementById(this.labelDocument[3]).style.backgroundColor = "#EEEEEE";
     		_this.target.style.backgroundColor = "#FFE1BE";
-    		this.dataStata = '';
-    		this.dateStata=_vlaue;
-    		// console.log(this.dateStata);
     		this.Time.confirmStart = this.time;
     		this.showTime = true;
     		break;
 
     		case 3:
     		_this.target.style.backgroundColor = "#FFE1BE";
-    		this.dataStata = null;
-    		this.dateStata=_vlaue;
     		// console.log(this.dateStata);
     		this.Time.confirmOver = this.time;
     		this.showTime = true;
@@ -292,8 +211,6 @@ export default {
 
     		case 4:
     		_this.target.style.backgroundColor = "#FFE1BE";
-    		this.dataStata = '';
-    		this.dateStata = _vlaue;
     		// console.log(this.dateStata);
     		this.Time.pushStart = this.time;
     		this.showTime = true;
@@ -301,7 +218,6 @@ export default {
 
     		case 5:
     		_this.target.style.backgroundColor = "#FFE1BE";
-    		this.dataStata = '';
     		this.dateStata=_vlaue;
     		// console.log(this.dateStata);
     		this.showTime = true;

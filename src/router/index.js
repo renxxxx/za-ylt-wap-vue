@@ -17,7 +17,7 @@ import outpatient_gene from '@/components/outpatient/gene.vue'
 //门诊端用户主页
 import outpatient_user from '@/components/outpatient/user.vue'
 //门诊端病源主页的搜索主页
-import outpatient_search from '@/components/outpatient/page/index_search.vue'
+import outpatient_search from '@/components/common/page/index_search.vue'
 //门诊端用户主页的任务中心
 import outpatient_taskCenter from '@/components/outpatient/page/taskCenter.vue'
 //门诊端用户主页的积分兑换

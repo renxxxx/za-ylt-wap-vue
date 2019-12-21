@@ -1,8 +1,8 @@
 <template>
 	<div class="all">
 		<van-pull-refresh v-model="isLoading" @refresh="refresh">
-			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
+			<ul v-if="isLogin == 100? true:false">
 					<li v-for="(item,inx) in list.clinicAll" :key="inx">
 						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
 							<div class="contentTitle">
@@ -18,12 +18,27 @@
 							</div>
 						</router-link>
 					</li>
-				</van-list>
 			</ul>
+				</van-list>
+      <ul class="clinicList" v-if="isLogin == 200? true:false">
+        <van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
+      	<li v-for="(item,inx) in list.clinicAll" :key="inx">
+      		<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
+      			<div class="content_left">
+      				<span>{{item.realname}}</span>
+      			</div>
+      			<div class="content_right">
+      				<img src='static/img/yijiuzhen@2x.png'>
+      				<span class="AlreadySpanColor">已就诊</span>
+      			</div>
+      			<p>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
+      		</router-link>
+      	</li>
+        </van-list>
+      </ul>
 		</van-pull-refresh>
 	</div>
 </template>
-
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
@@ -47,7 +62,7 @@ export default {
 		}
 	},
 	computed:{
-	  ...mapGetters(['account']),
+	  ...mapGetters(['account','isLogin']),
 	},
 	props:['list'],
 	components:{
@@ -59,6 +74,8 @@ export default {
 	mounted () {
 		// console.log(this.list)
 		// this.getdata();
+    // let winHeight = document.documentElement.clientHeight;                   //视口大小
+    // document.getElementById('list-content').style.height = (winHeight - 46) +'px'  //调整上拉加载框高度
 	},
 	methods:{
 		search(){
@@ -72,13 +89,7 @@ export default {
 				ps : 10
 			}))
 			.then(_d => {
-				this.isLoading = false;
-				// 加载状态结束
-				this.loading = false;
-				this.finished = false;
 				this.list.clinicAll = [];
-				this.list.clinicNo = [];
-				this.list.clinicYes = [];
 				let yesNum = 0;
 				let noNum = 0;
 				let allNum = 0;
@@ -123,7 +134,7 @@ export default {
 					}else{
 						this.list.allNum  = _d.data.data.sum.totalCount;
 					}
-					this.isLoading = false;
+					// this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;
 				}
@@ -145,20 +156,13 @@ export default {
 				ps : 10
 			}))
 			.then(_d => {
-				this.isLoading = false;
 				// 加载状态结束
-				this.loading = false;
-				this.finished = false;
 				this.list.clinicAll = [];
 				let yesNum = 0;
 				let noNum = 0;
 				let allNum = 0;
 				this.page = 2;
 				if( _d.data.data.items.length == 0){
-					this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
-					this.finished = true;
 				}else{
 					for (let nums in _d.data.data.items) {
 						if(_d.data.data.items[nums].status == 1){
@@ -195,8 +199,6 @@ export default {
 						this.list.allNum  = _d.data.data.sum.totalCount;
 					}
 					this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
 				}
 			})
 			.catch((err)=>{
@@ -207,7 +209,6 @@ export default {
 		},
 		nextdata(){
 			let clinicId = '';
-			debugger;
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
@@ -296,13 +297,12 @@ export default {
 			this.nextdata()
 		},
 		yesFn(){
-			this.isLogin =true;
+			// this.isLogin =true;
 			this.nextdata();
 		},
 		noPostFn(){
-			debugger;
 			this.nextdata();
-			this.loading = true;
+			// this.loading = true;
 		},
 		refresh(){
 			// console.log(this.list.data);
@@ -362,5 +362,45 @@ export default {
 .buttonColor{
     color: #333333!important;
     background-color: #EEEEEE!important;
+}
+.clinicList{
+	margin: 0 .12rem;
+}
+.clinicList li {
+	height:1.01rem;
+  width: 100%;
+	margin-top:.12rem;
+	background-color:#FFFFFF;
+	position:relative;
+	/*padding:.14rem .15rem;*/
+}
+.clinicList li p{
+	position:absolute;
+	bottom:0;
+	height:.5rem;
+	width:93%;
+	line-height:.5rem;
+	margin-left:.14rem;
+	border-top:1px solid #E5E5E5;
+}
+.content_left{
+	float:left;
+	height:.5rem;
+	margin-top:.14rem;
+	margin-left:.15rem;
+}
+.content_right{
+	float:right;
+	height:.5rem;
+	margin-right:.14rem;
+	margin-top:.15rem
+}
+.content_right img{
+	width:.11rem;
+	height:.11rem;
+	margin-right:.04rem;
+}
+.content_right span{
+	color: #4DD865;
 }
 </style>
