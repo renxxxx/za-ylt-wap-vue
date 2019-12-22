@@ -1,7 +1,7 @@
 <template>
 	<div class="all">
-		<van-pull-refresh v-model="isLoading" @refresh="refresh">
-				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
+		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh"> -->
+			<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 			<ul v-if="isLogin == 100? true:false">
 					<li v-for="(item,inx) in list.clinicAll" :key="inx">
 						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
@@ -19,9 +19,7 @@
 						</router-link>
 					</li>
 			</ul>
-				</van-list>
       <ul class="clinicList" v-if="isLogin == 200? true:false">
-        <van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
       	<li v-for="(item,inx) in list.clinicAll" :key="inx">
       		<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
       			<div class="content_left">
@@ -34,9 +32,9 @@
       			<p>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
       		</router-link>
       	</li>
-        </van-list>
       </ul>
-		</van-pull-refresh>
+      </van-list>
+		<!-- </van-pull-refresh> -->
 	</div>
 </template>
 <script>
@@ -267,12 +265,8 @@ export default {
 							// this.list.yesNum  = _d.data.data.sum.totalCount
 						}
 					}
-
-					// console.log(this.allNum)
-					this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;
-					// console.log(this.message)
 				}else{
 					this.$notify({
 						message: '数据已全部加载',
@@ -290,10 +284,6 @@ export default {
 
 		},
 		onLoad(){
-			// console.log(this.list.keywords);
-			// console.log(this.list.data);
-			// this.nextdata()
-			// this.list.keywords? this.yesFn():this.noPostFn;
 			this.nextdata()
 		},
 		yesFn(){

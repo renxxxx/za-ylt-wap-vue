@@ -36,14 +36,14 @@ export default {
     }
   },
   computed:{
-	 ...mapGetters(['account']),
-	
+	 ...mapGetters(['account','isLogin']),
+
   },
   components:{
   	hospital_imageAbout,hospital_imageType
   },
   created () {
-		
+
   },
   mounted () {
 	console.log(this.$router.currentRoute.params.components)
@@ -74,12 +74,15 @@ export default {
 		Dialog({ message: '加载失败!'});
 	})
   },
-  
+
   methods: {
 	  //回退方法
 	goBackFn(){
-		this.$router.back(-1)
-	  	// this.$router.push({ name : 'outpatient_hospital'});	
+    if(this.isLogin == 100){
+      this.$router.push({ name : 'hospital_clinic'});
+    }else{
+      this.$router.push({ name : 'outpatient_hospital'});
+    }
 	},
 	  // 组件切换
 	switchFn(data){

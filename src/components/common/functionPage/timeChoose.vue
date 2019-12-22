@@ -159,10 +159,10 @@ export default {
       for(let _a=0 ;_a < 6; _a++){
         document.getElementById(this.labelDocument[_a]).style.backgroundColor = "#EEEEEE"; 
       }
-    	Vue.set(this.Time,'confirmStart',0);
-    	Vue.set(this.Time,'confirmOver',0);
-    	Vue.set(this.Time,'pushStart',0);
-    	Vue.set(this.Time,'pushOver',0);
+    	Vue.set(this.Time,'confirmStart',undefined);
+    	Vue.set(this.Time,'confirmOver',undefined);
+    	Vue.set(this.Time,'pushStart',undefined);
+    	Vue.set(this.Time,'pushOver',undefined);
     	console.log(this.Time);
     	// console.log(typeof this.labelDocument)
     },

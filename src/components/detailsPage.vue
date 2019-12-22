@@ -146,6 +146,7 @@ export default {
 		}else{
 			this.modify.data = false;
 			this.imgUrl = [];
+      this.show = false;
 		}
 		//判断时间是否为空
 		// console.log(this.detail.pushTime)
@@ -173,6 +174,7 @@ export default {
 			// console.log(this.modify.num)
 			this.modify.value = '保存';
 			this.modify.img = 'static/img/save@2x.png';
+      console.log(this.modify.value)
 			this.modify.data = true;
 			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
@@ -180,6 +182,9 @@ export default {
 			}
       this.show = true;
 		}else{
+      this.modify.value = '编辑';
+      this.modify.img = 'static/img/editor.png';
+      console.log(this.modify.value);
 			let _imgAddress = [];
       if(this.imgUrl.length == 1){
         _imgAddress[0] = this.imgUrl[0].url
@@ -222,8 +227,12 @@ export default {
 			formData.append('file', file)
 			this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
 			}}).then(res =>{
-				this.imgUrl.push({url:res.data.data.url})
-				console.log(this.exchangeAdd)
+        if(!res.data.codeMsg){
+          // console.log(res.data.codeMsg)
+          this.imgUrl.push({url:res.data.data.url})
+          // console.log(this)
+        }
+
 			}).catch(err =>{
 				console.log(err)
 			})

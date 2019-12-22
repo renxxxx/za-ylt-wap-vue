@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+		<!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
 					<li v-for="(items,inx) in content" :key="inx">
@@ -14,7 +14,7 @@
 					</li>
 				</van-list>
 			</ul>
-		</van-pull-refresh>
+		<!-- </van-pull-refresh> -->
 	</div>
 </template>
 
@@ -39,10 +39,10 @@ export default {
 		...mapGetters(['account']),
 	},
 	components:{
-		
+
 	},
 	created () {
-		
+
 	},
 	mounted () {
 		this.getdata(0);
@@ -145,7 +145,7 @@ export default {
 .content{
 	width: 100%;
 	height: 100%;
-	margin-top: .1rem;
+	margin-top: 2.1rem;
 }
 .content ul{
 	width: 94.6%;

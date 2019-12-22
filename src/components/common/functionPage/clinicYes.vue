@@ -1,6 +1,6 @@
 <template>
 	<div class="yes">
-		<van-pull-refresh v-model="isLoading" @refresh="refresh">
+		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh"> -->
 			<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 				<ul class="hospitalList" v-if="isLogin == 100? true:false">
 					<li v-for="(item,inx) in list.clinicYes" :key="inx">
@@ -34,7 +34,7 @@
 					</li>
 				</ul>
 			</van-list>
-		</van-pull-refresh>
+		<!-- </van-pull-refresh> -->
 	</div>
 </template>
 
@@ -70,8 +70,8 @@ export default {
 
 	},
 	mounted () {
-    let winHeight = document.documentElement.clientHeight;                   //视口大小
-    document.getElementById('list-content').style.height = (winHeight - 46) +'px'  //调整上拉加载框高度
+    // let winHeight = document.documentElement.clientHeight;                   //视口大小
+    // document.getElementById('list-content').style.height = (winHeight - 46) +'px'  //调整上拉加载框高度
 	},
 	methods: {
 		// 详情页
