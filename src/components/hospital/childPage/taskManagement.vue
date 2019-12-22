@@ -42,17 +42,21 @@ export default {
 	data () {
 		return {
 			checked: true,
-		
+      //医院端用户的任务管理参数
+      task:{
+        one:[],
+        no:[],
+      },
 		}
 	},
 	computed:{
-		...mapGetters(['account','task']),
+		...mapGetters(['account']),
 	},
 	components:{
-		
+
 	},
 	created () {
-		
+
 	},
 	mounted () {
 		if(this.task.one.length == 0 || this.task.no.length == 0){
@@ -64,27 +68,59 @@ export default {
 			.then(res => {
 				for(let i in res.data.data.items){
 					if(res.data.data.items[i].oneTimeIs  == 1){
-						this.task.one.push({
-							name : res.data.data.items[i].name,
-							taskId : res.data.data.items[i].taskId,
-							oneTimeIs : res.data.data.items[i].oneTimeIs,
-							checked : false,
-							exchangePointUpperPerDay : res.data.data.items[i].exchangePointUpperPerDay,
-							exchangePoint : res.data.data.items[i].exchangePoint,
-							everyDayIs : res.data.data.items[i].everyDayIs,
-							intro : res.data.data.items[i].intro,
-						})
+            if(res.data.data.items[i].issueIs){
+              // console.log(res.data.data.items[i].issueIs)
+              this.task.one.push({
+              	name : res.data.data.items[i].name,
+              	taskId : res.data.data.items[i].taskId,
+              	oneTimeIs : res.data.data.items[i].oneTimeIs,
+              	checked : true,
+              	exchangePointUpperPerDay : res.data.data.items[i].exchangePointUpperPerDay,
+              	exchangePoint : res.data.data.items[i].exchangePoint,
+              	everyDayIs : res.data.data.items[i].everyDayIs,
+              	intro : res.data.data.items[i].intro,
+                taskId : res.data.data.items[i].taskId,
+              })
+            }else{
+              this.task.one.push({
+              	name : res.data.data.items[i].name,
+              	taskId : res.data.data.items[i].taskId,
+              	oneTimeIs : res.data.data.items[i].oneTimeIs,
+              	checked : false,
+              	exchangePointUpperPerDay : res.data.data.items[i].exchangePointUpperPerDay,
+              	exchangePoint : res.data.data.items[i].exchangePoint,
+              	everyDayIs : res.data.data.items[i].everyDayIs,
+              	intro : res.data.data.items[i].intro,
+                taskId : res.data.data.items[i].taskId,
+              })
+            }
+
 					}else{
-						this.task.no.push({
-							name : res.data.data.items[i].name,
-							taskId : res.data.data.items[i].taskId,
-							oneTimeIs : res.data.data.items[i].oneTimeIs,
-							checked : false,
-							exchangePointUpperPerDay : res.data.data.items[i].exchangePointUpperPerDay,
-							exchangePoint : res.data.data.items[i].exchangePoint,
-							everyDayIs : res.data.data.items[i].everyDayIs,
-							intro : res.data.data.items[i].intro,
-						})
+            if(res.data.data.items[i].issueIs){
+              this.task.no.push({
+              	name : res.data.data.items[i].name,
+              	taskId : res.data.data.items[i].taskId,
+              	oneTimeIs : res.data.data.items[i].oneTimeIs,
+              	checked : true,
+              	exchangePointUpperPerDay : res.data.data.items[i].exchangePointUpperPerDay,
+              	exchangePoint : res.data.data.items[i].exchangePoint,
+              	everyDayIs : res.data.data.items[i].everyDayIs,
+              	intro : res.data.data.items[i].intro,
+                taskId : res.data.data.items[i].taskId,
+              })
+            }else{
+              this.task.no.push({
+              	name : res.data.data.items[i].name,
+              	taskId : res.data.data.items[i].taskId,
+              	oneTimeIs : res.data.data.items[i].oneTimeIs,
+              	checked : false,
+              	exchangePointUpperPerDay : res.data.data.items[i].exchangePointUpperPerDay,
+              	exchangePoint : res.data.data.items[i].exchangePoint,
+              	everyDayIs : res.data.data.items[i].everyDayIs,
+              	intro : res.data.data.items[i].intro,
+                taskId : res.data.data.items[i].taskId,
+              })
+            }
 					}
 				}
 			})
@@ -93,16 +129,28 @@ export default {
 				Dialog({ message: '加载失败!'});
 			})
 		}
-		
+
 	},
 	methods: {
 		// 返回上一级
 		goBackFn(){
 			this.$router.back(-1)
 		},
-		
+
 		change(_value,_item,inx){
 			// console.log(_value)
+      this.$axios.post('/c2/task/tasks',qs.stringify({
+      	hospitalId : this.account.hospitalId,
+        taskId : _item.taskId
+      }))
+      .then(res =>{
+       
+      })
+      .catch((err)=>{
+      	console.log(err);
+      	Dialog({ message: '加载失败!'});
+      })
+
 			switch(_value.target.checked){
 				case true:
 				if(_item.oneTimeIs == 1){
@@ -120,7 +168,7 @@ export default {
 					this.task.no[inx].checked = _value.target.checked
 				};
 				break;
-				
+
 			}
 			if(_item.oneTimeIs == 1){
 				this.task.one[inx].checked = true
@@ -129,7 +177,7 @@ export default {
 				this.task.no[inx].checked = true;
 				// this.$router.push({ name : 'hospital_taskManagementDetails',params : {item : _item,show : false}});
 			};
-			
+
 		},
 	},
 }
@@ -147,7 +195,7 @@ export default {
 	background: url('../../../../static/img/tu1.png')  center no-repeat,linear-gradient(#FDFDFD, #FBFBFB) ;
 	background-size: 1.84rem 1.29rem;
 	margin-bottom: .15rem;
-}	
+}
 .leftImg{
 	width: 10%;
 	height: .47rem;
@@ -171,7 +219,7 @@ export default {
 	font-size: .16rem;
 	font-weight: bolder;
 }
-.right{	
+.right{
 	width: 10%;
 	height: .47rem;
 	line-height: .47rem;
@@ -232,7 +280,7 @@ export default {
   margin-right: .15rem;
   padding: 0!important;
   float: left;
-} 
+}
 
 .taskList>ul>li input[type=checkbox]:checked:before{
   content: "";
@@ -241,7 +289,7 @@ export default {
   height: .22rem;
   background: url('../../../../static/img/Select@2x.png')center no-repeat;
   background-size: .22rem .22rem;
-  box-sizing:border-box;  
+  box-sizing:border-box;
   position: absolute;
   top: 0;
   left: 0rem;

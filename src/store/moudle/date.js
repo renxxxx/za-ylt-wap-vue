@@ -74,11 +74,6 @@ const state={
 		content : '',
 		cover : 'static/img/Group@2x.png'
 	},
-	//医院端用户的任务管理参数
-	task:{
-		one:[],
-		no:[],
-	},
 	//医院端兑换管理详情页参数
 	taskSubmitValue:{
 		name: '',
@@ -117,8 +112,6 @@ const getters={
 	showTime : state => state.showTime,
 	//医院端活动发布的参数
 	activity : state => state.activity,
-	//医院端用户的任务管理参数
-	task : state => state.task,
 	// 医院端兑换管理的新增和商品修改信息参数
 	exchangeAdd : state => state.exchangeAdd,
 	//医院端兑换管理详情页参数

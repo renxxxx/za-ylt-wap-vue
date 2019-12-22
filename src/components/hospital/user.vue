@@ -183,11 +183,10 @@ export default {
 }
 .top_center{
 	position: relative;
-	width: 30%;
-	float:left;
+	width: 33%;
+	float: left;
 	height: .49rem;
-	
-	margin: .37rem .31rem .28rem 0rem;
+	margin: .37rem .21rem .28rem 0rem;
 }
 .top_center h3{
 	height: .29rem;
