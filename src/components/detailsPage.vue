@@ -18,7 +18,7 @@
 			<h3>基本信息</h3>
 			<ul>
 				<li>
-					<span>病源姓名</span>
+					<span>病员姓名</span>
 					<input type="text" id='readId1' v-model="detail.realname"  :placeholder="modify.readonly? '':'请输入' "  :readonly="modify.readonly">
 				</li>
 				<li>
@@ -34,6 +34,8 @@
 					<input type="text" v-model="detail.clinicName" :placeholder="modify.readonly? '':'请输入' " :readonly="true">
 				</li>
 			</ul>
+			<div style="margin-top:.2rem"></div>
+			<h3>就诊信息</h3>
 			<ul>
 				<li>
 					<span>门诊推送时间</span>
@@ -53,6 +55,7 @@
 				</li>
 			</ul>
 		</div>
+		<div style="margin-top:.2rem"></div>
 		<div class="_photo">
 			<h3>发票照片</h3>
       <ul>
@@ -150,7 +153,7 @@ export default {
 		}
 		//判断时间是否为空
 		// console.log(this.detail.pushTime)
-		if(!res.data.data.hospitalConfirmTime){
+		if(res.data.data.hospitalConfirmTime){
 			// console.log(this.detail.hospitalConfirmTime)
 			this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('YYYY-MM-DD HH:mm');
 		}
@@ -255,12 +258,12 @@ export default {
 .detail{
 	width: 100%;
 	height: 100%;
-	background-color: #F5F5F5;
+	background-color: #FFFFFF;
 }
 .topNav{
 	width: 100%;
 	height: .47rem;
-	background-color: #FF951B;
+	background-color: #2B77EF;
 	color:#FFFFFF;
 }
 .nav_left{
@@ -327,7 +330,6 @@ export default {
 
 }
 ._message ul{
-	margin-top: .1rem;
 	/* margin: .1rem .16rem 0rem .1rem; */
 	/* width: 100%; */
 	background-color: #FFFFFF;
@@ -338,9 +340,9 @@ export default {
 	margin: 0 .16rem;
 	border-bottom: 1px solid #E5E5E5;
 }
-._message ul li:last-child{
+/* ._message ul li:last-child{
 	border: none;
-}
+} */
 ._message ul li span{
 	float: left;
 	font-size: .13rem;
@@ -377,12 +379,13 @@ export default {
 }
 ._photo ul{
   margin-top: .1rem;
+  padding: 0rem .16rem;
 }
 ._photo ul li{
   display: inline-block;
-  margin-right: .05rem;
-  height: .88rem;
+  margin-right: .04rem;
   width: .88rem;
+  height: .88rem;
   overflow: hidden;
   position: relative;
 }
@@ -399,14 +402,14 @@ export default {
   width: .2rem;
 }
 .addImg{
-	width: .9rem;
-	height:.9rem;
+	width: .86rem;
+	height:.86rem;
 	line-height: 88%;
 	/* margin: 0rem auto; */
 	overflow: hidden;
 	text-align: center;
 	position: relative;
-  border:1px dashed #FFC685;
+  border:1px dashed #b9b9b9;
 }
 .addImg>img{
 	width: 100%;
@@ -422,18 +425,20 @@ export default {
 .add{
   height:.24rem ;
   width: .02rem;
-  background-color: #FFC685;
+  background-color: #b9b9b9;
   position: absolute;
-  top: .33rem;
-  left: .44rem;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
 .min{
   width: .24rem;
   height: .02rem;
-  background-color: #FFC685;
+  background-color: #b9b9b9;
   position: absolute;
-  top:.44rem;
-  left: .33rem;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
 .upload{
 	opacity: 0;

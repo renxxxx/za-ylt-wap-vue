@@ -27,7 +27,7 @@
 				<li>
 					<router-link :to="{name : 'hospital_sourceManagement'}">
 						<img src="static/img/bingyuanguanli@2x.png" alt="">
-						<span>病源管理</span>
+						<span>病员管理</span>
 					</router-link>
 				</li>
 				<li>
@@ -171,20 +171,20 @@ export default {
 							itemId: res.data.data.items[i].itemId,
 						}) 
 					}else{
-						this.$notify({
-							message: '数据已全部加载',
-							duration: 1000,
-							background:'#79abf9',
-						})
+						// this.$notify({
+						// 	message: '数据已全部加载',
+						// 	duration: 1000,
+						// 	background:'#79abf9',
+						// })
 					}
 				}
 				this.loading = false;
 				}else{
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
+					// this.$notify({
+					// 	message: '数据已全部加载',
+					// 	duration: 1000,
+					// 	background:'#79abf9',
+					// })
 					this.loading = false;
 					this.finished = true;
 				}
@@ -213,9 +213,12 @@ export default {
 .navWarp{
 	height: 2.26rem;
 	width: 100%;
-	background: url('../../../static/img/88-1.png') no-repeat;
-	background-size: 100% 1.8rem;
+	/* background: url('../../../static/img/88-1.png') no-repeat; */
+	/* background-size: 100% 1.8rem; */
+	background: linear-gradient(#2B77EF,#2B77EF,  #FFFFFF);
+	/* background-color: #FFFFFF; */
 	padding-top: .12rem;
+	
 }
 .navTitle{
 	width: .88rem;
@@ -263,6 +266,7 @@ export default {
 	margin: 0rem 2.25%;
 	/* box-shadow:0px 0px 30px 5px hsla(0, 0%, 0%, 10%); */
 	box-shadow: hsla(0, 0%, 0%, 10%) 0rem 0rem .1rem 0rem;
+	object-fit: cover;
 }
 .typeList{
 	width: 100%;
@@ -272,7 +276,7 @@ export default {
 	
 }
 .typeList ul{
-	width: 3.11rem;
+	width: 89.93%;
 	height: 1.75rem;
 	margin: 0rem auto;
 	text-align: center;

@@ -117,7 +117,7 @@ export default {
 .active{
 	width: 100%;
 	height: 100%;
-	background-color: #F5F5F5;
+	background-color: #FFFFFF;
 }
 .topNav{
 	width: 100%;

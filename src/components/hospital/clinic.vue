@@ -3,7 +3,7 @@
 		<div class="navWarp">
 			<div class="topNav">
 				<div class="hospital_search">
-					<router-link to="hospital_clinicSearch">
+					<router-link :to="{name : 'hospital_indexSearch'}">
 						<input type="text" placeholder="输入门诊名">
 						<img src="static/img/sousuo@2x.png" alt="">
 					</router-link>
@@ -105,11 +105,11 @@ export default {
 						for(let i in res.data.data.items){
 						// console.log(res.data.data.items[i])
 						if(!res.data.data.items[i]){
-							this.$notify({
-								message: '数据已全部加载',
-								duration: 1000,
-								background:'#79abf9',
-							})
+							// this.$notify({
+							// 	message: '数据已全部加载',
+							// 	duration: 1000,
+							// 	background:'#79abf9',
+							// })
 							// this.loading = false;
 							// this.finished = true;
 						}else{
@@ -120,11 +120,11 @@ export default {
 					// 加载状态结束
 					this.loading = false;
 					}else{
-						this.$notify({
-							message: '数据已全部加载',
-							duration: 1000,
-							background:'#79abf9',
-						})
+						// this.$notify({
+						// 	message: '数据已全部加载',
+						// 	duration: 1000,
+						// 	background:'#79abf9',
+						// })
 						this.loading = false;
 						this.finished = true;
 					}
@@ -146,11 +146,11 @@ export default {
 						for(let i in res.data.data.items){
 						// console.log(res.data.data.items[i])
 						if(!res.data.data.items[i]){
-							this.$notify({
-								message: '数据已全部加载',
-								duration: 1000,
-								background:'#79abf9',
-							})
+							// this.$notify({
+							// 	message: '数据已全部加载',
+							// 	duration: 1000,
+							// 	background:'#79abf9',
+							// })
 							// this.loading = false;
 							// this.finished = true;
 						}else{
@@ -161,11 +161,11 @@ export default {
 					// 加载状态结束
 					this.loading = false;
 					}else{
-						this.$notify({
-							message: '数据已全部加载',
-							duration: 1000,
-							background:'#79abf9',
-						})
+						// this.$notify({
+						// 	message: '数据已全部加载',
+						// 	duration: 1000,
+						// 	background:'#79abf9',
+						// })
 						this.loading = false;
 						this.finished = true;
 					}
@@ -188,7 +188,7 @@ export default {
 <style scoped>
 .hospital{
 	width: 100%;
-	background-color: #F5F5F5;
+	background-color: #FFFFFF;
 }
 .navWarp{
 	width: 100%;

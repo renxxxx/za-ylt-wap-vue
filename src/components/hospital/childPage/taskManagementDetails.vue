@@ -12,12 +12,12 @@
 		<ul >
 			<li>
 				<span>名称</span>
-				<span>首次上传病源</span>
+				<span>首次上传病员</span>
 			</li>
 			<li>
 				<span>简介</span>
 				<p>
-					<input type="text" value="首次上传病源" v-model="taskSubmitValue.intro">
+					<input type="text" value="首次上传病员" v-model="taskSubmitValue.intro">
 				</p>
 			</li>
 			<li>

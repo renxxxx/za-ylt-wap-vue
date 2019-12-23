@@ -79,7 +79,7 @@ export default {
 			.then(res => {
 				this.$toast.success({
 					duration: 1000, 
-					message: '修改成功',
+					message: '操作成功',
 				});
 			})
 			.catch((err)=>{

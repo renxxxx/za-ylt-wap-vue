@@ -5,10 +5,10 @@ import Store from '../store'
 import landingPage from '@/components/landingPage.vue'
 import retrievePassword from '@/components/retrievePassword.vue'
 import details from '@/components/detailsPage.vue'
-//病源管理页面页
+//病员管理页面页
 import hospital_sourceManagement from '@/components/common/page/sourceManagement.vue'
 //门诊端页面及其组件
-//门诊端病源主页
+//门诊端病员主页
 import outpatient_index from '@/components/outpatient/index.vue'
 //门诊端医院主页
 import outpatient_hospital from '@/components/outpatient/hospital.vue'
@@ -16,7 +16,7 @@ import outpatient_hospital from '@/components/outpatient/hospital.vue'
 import outpatient_gene from '@/components/outpatient/gene.vue'
 //门诊端用户主页
 import outpatient_user from '@/components/outpatient/user.vue'
-//门诊端病源主页的搜索主页
+//门诊端病员主页的搜索主页
 import outpatient_search from '@/components/common/page/index_search.vue'
 //门诊端用户主页的任务中心
 import outpatient_taskCenter from '@/components/outpatient/page/taskCenter.vue'
@@ -143,7 +143,7 @@ const router = new Router({
 			meta: {auth:true},
 		},
 		{
-			//病源管理页面页
+			//病员管理页面页
 			path: '/hospital_sourceManagement',
 			name: 'hospital_sourceManagement',
 			component: hospital_sourceManagement,

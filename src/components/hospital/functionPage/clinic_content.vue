@@ -67,11 +67,11 @@ export default {
 						for(let i in res.data.data.items){
 						// console.log(res.data.data.items[i])
 						if(!res.data.data.items[i]){
-							this.$notify({
-								message: '数据已全部加载',
-								duration: 1000,
-								background:'#79abf9',
-							})
+							// this.$notify({
+							// 	message: '数据已全部加载',
+							// 	duration: 1000,
+							// 	background:'#79abf9',
+							// })
 						}else{
 							this.content.push(res.data.data.items[i])
 						}
@@ -81,11 +81,11 @@ export default {
 					this.loading = false;
 					this.finished = false;
 					}else{
-						this.$notify({
-							message: '数据已全部加载',
-							duration: 1000,
-							background:'#79abf9',
-						})
+						// this.$notify({
+						// 	message: '数据已全部加载',
+						// 	duration: 1000,
+						// 	background:'#79abf9',
+						// })
 						this.loading = false;
 						this.finished = true;
 					}
@@ -107,11 +107,11 @@ export default {
 						for(let i in res.data.data.items){
 						// console.log(res.data.data.items[i])
 						if(!res.data.data.items[i]){
-							this.$notify({
-								message: '数据已全部加载',
-								duration: 1000,
-								background:'#79abf9',
-							})
+							// this.$notify({
+							// 	message: '数据已全部加载',
+							// 	duration: 1000,
+							// 	background:'#79abf9',
+							// })
 						}else{
 							this.content.push(res.data.data.items[i])
 						}
@@ -119,11 +119,11 @@ export default {
 					// 加载状态结束
 					this.loading = false;
 					}else{
-						this.$notify({
-							message: '数据已全部加载',
-							duration: 1000,
-							background:'#79abf9',
-						})
+						// this.$notify({
+						// 	message: '数据已全部加载',
+						// 	duration: 1000,
+						// 	background:'#79abf9',
+						// })
 						this.loading = false;
 						this.finished = true;
 					}

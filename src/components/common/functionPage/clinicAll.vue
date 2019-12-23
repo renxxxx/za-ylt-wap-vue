@@ -13,10 +13,10 @@
 							<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
 							<span>状态：{{item.span}}</span>
 						</div>
-						<div class="content_right">
-							<button :class="item.buttonColor">{{item.button}}</button>
-						</div>
 					</router-link>
+						<div class="content_right">
+							<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
+						</div>
 				</li>
 			</ul>
 			<ul class="clinicList" v-if="isLogin == 200? true:false">
@@ -76,6 +76,25 @@ export default {
     // document.getElementById('list-content').style.height = (winHeight - 46) +'px'  //调整上拉加载框高度
 	},
 	methods:{
+		submitFn(_item,_input){
+			// console.log(_input)
+			this.$axios.post('/c2/patient/confirmjiuzhen',qs.stringify({
+				patientId : _item.itemId
+			}))
+			.then(res =>{
+				if(res.data.codeMsg){
+					this.$toast.fail({duration: 1000,message: res.data.codeMsg})
+				}else{
+					this.$toast.success({duration: 1000,message: '操作成功'})
+					console.log(this.list.clinicAll.map(item => item.itemId =  _item.itemId).indexOf())
+					
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: err});
+			})
+		},
 		search(){
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
@@ -356,11 +375,11 @@ export default {
 					// 加载状态结束
 					this.loading = false;
 				}else{
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
+					// this.$notify({
+					// 	message: '数据已全部加载',
+					// 	duration: 1000,
+					// 	background:'#79abf9',
+					// })
 					this.loading = false;
 					this.finished = true;
 				}

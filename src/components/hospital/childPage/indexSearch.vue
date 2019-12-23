@@ -6,8 +6,11 @@
 					<img src="static/img/shape@3x.png" alt="">
 				</div>
 				<div class="clinic_search">
-					<input type="text" placeholder="输入门诊名"  v-model="keywords" @keyup="inputNow">
+					<input type="text" placeholder="输入门诊名"  v-model="keywords">
 					<img src="static/img/sousuo@2x.png" alt="">
+				</div>
+				<div class="clinic_buttton" @click="inputNow">
+					<button>搜索</button>
 				</div>
 			</div>
 			<div class="listTitle">
@@ -108,13 +111,13 @@ export default {
 }
 .clinic_search{
 	float:left;
-	width: 90.3%;
+	width: 78.3%;
 	position: relative;
 }
 .clinic_search input{
 	margin: .09rem 0rem 0rem 0rem;
 	height:.33rem;
-	width: 80%;
+	width: 83%;
 	border: none;
 	border-radius: .33rem;
 	padding-left: 11.6%;
@@ -127,6 +130,20 @@ export default {
 	top: .18rem;
 	left: 4.8%;
 }
+.clinic_buttton{
+	float: left;
+	margin-top: .14rem;
+	margin-left: -.05rem;
+}
+.clinic_buttton button{
+	color: #FFFFFF;
+	background-color: #2B77EF;
+	border-radius: .15rem;
+	border: none;
+	height: .28rem;
+	width: .45rem;
+}
+
 .clinic_information{
 	float:left;
 	width: 5.3%;

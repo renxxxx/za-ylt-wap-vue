@@ -6,26 +6,32 @@
 				<div class="indexReturn" @click="goBackFn" v-if="isLogin == 100? true:false">
 					<img src="static/img/back-white@2x.png" alt="">
 				</div>
-        <div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
-          <!-- <router-link :to="{name : 'hospital_typeDetails' ,params : {item : item.itemId}}"> -->
-          <router-link :to="{name:'outpatient_search'}">
-          	<img src="static/img/sousuo@2x.png" alt="">
-          	<input type="text" placeholder="搜索病源" v-model="list.keywords">
-          </router-link>
-        </div>
-				<div class="indexScreening">
-          <router-link :to="{name:'outpatient_search'}">
+			<div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
+				<router-link :to="{name:'outpatient_search',params:{focus : true}}">
+					<input type="text" placeholder="搜索病源" v-model="list.keywords" readonly="readonly">
+					<img src="static/img/sousuo@2x.png" alt="">
+				</router-link>
+			</div>
+			<router-link :to="{name:'outpatient_search'}">
+				<div class="clinic_buttton">
+					<button>搜索</button>
+				</div>
+			</router-link>
+			<router-link :to="{name:'outpatient_search'}">
+				<div class="indexScreening" @click="showPopup">
 					<span>筛选</span>
 					<img src="static/img/screen@2x.png" alt="加载中" >
-          </router-link>
 				</div>
+			</router-link>
 			</div>
 			<!-- 就诊情况 -->
 			<div class="typeNav">
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
 					<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'
 						v-if="isLogin == 200? false:true">
-						<clinicAll ref='all' :list = 'list'></clinicAll>
+						<keep-alive>
+							<clinicAll ref='all' :list = 'list'></clinicAll>
+						</keep-alive>
 					</van-tab>
 					<van-tab title="新增病源" v-if="isLogin == 200? true:false">
 						<form @submit.prevent="hospitalSubmit" class="newAdd">
@@ -61,10 +67,14 @@
 						</form>
 					</van-tab>
 					<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
-						<clinicNo ref='no' :list = 'list'></clinicNo>
+						<keep-alive>
+							<clinicNo ref='no' :list = 'list'></clinicNo>
+						</keep-alive>
 					</van-tab>
 					<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
-						<clinicYes ref='yes' :list = 'list'></clinicYes>
+						<keep-alive>
+							<clinicYes ref='yes' :list = 'list'></clinicYes>
+						</keep-alive>
 					</van-tab>
 				</van-tabs>
 			</div>
@@ -142,6 +152,11 @@ export default {
 	goBackFn(){
 		this.$router.back(-1)
 	},
+	//显示筛选弹窗
+	showPopup() {
+	   this.show = true;
+	   // console.log(this.show)
+	},
 	getNum(){
 		let clinicId = '';
 		this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.account.clinicId;
@@ -197,14 +212,15 @@ export default {
 }
 .topNav{
 	height: .8rem;
-	/* height: .335rem; */
-	/* width: 3.75rem; */
 	line-height:.335rem;
 	width: 100%;
-	padding-top: 0.14rem;
-	background:url('../../../../static/img/BJ-blue.png');
-	background-size:100% 100%;
-	position: relative;
+	padding-top: 0.1rem;
+	/* background:url('../../../../static/img/BJ-blue.png'); */
+	/* background-size:100% 100%; */
+	background-color: #2B77EF;
+	position: fixed;
+	top: 0rem;
+	z-index: 1;
 }
 .indexReturn{
 	width: 10%;
@@ -219,13 +235,15 @@ export default {
 	margin: auto;
 }
 .indexSearch{
-	height: .335rem;
 	display: inline-block;
-	/* width: 3.07rem; */
-	width: 72%;
+	/* width: .43rem; */
+	width: 65%;
 	float: left;
-	position: relative;
+	/* text-align: center; */
 	z-index: 999;
+	height: .4rem;
+	line-height: .36rem;
+	position: relative;
 }
 .indexSearch img{
 	position: absolute;z-index: 9;left: .13rem;top: .09rem;
@@ -236,7 +254,7 @@ export default {
 	height: .335rem;width: 2.4rem;
   /* line-height: .3rem; */
 	padding: 0;
-	width: 82.5%;
+	width: 84%;
 	padding-left: 12%;
 	/* margin:0 5%; */
 	background: #F5F5F5;
@@ -257,23 +275,43 @@ export default {
         /* Firefox 18- */
        font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
     }
+.clinic_buttton{
+	float: left;
+	margin-top: .024rem;
+	margin-left: -.05rem;
+}
+.clinic_buttton button{
+	color: #FFFFFF;
+	background-color: rgba(0,0,0,0);
+	border-radius: .15rem;
+	border: 1px solid #FFFFFF;
+	height: .28rem;
+	width: .45rem;
+	font-size: .12rem;
+	text-align: center;
+	line-height: .25rem;
+}
 .indexScreening{
 	display:inline-block;
 	/* width: .43rem; */
-	width: 18%;
-	float: right;
+	width: 12%;
+	float: left;
 	text-align: center;
 	z-index: 999;
+	height: .4rem;
+	line-height: .38rem;
+	margin-left: .052rem;
 }
 .indexScreening span{
 	width: .15rem;height: .21rem;
-	margin: .65rem .02rem .06rem 0rem;
-	color: #FFFFFF;font-size: .15rem;
+	/* margin: .65rem .02rem .06rem 0rem; */
+	color: #FFFFFF;font-size: .12rem;
 	z-index: 3;
 	position:relative;
 }
 .indexScreening img{
-	height: .13rem;width: .12rem;margin-right: .16rem;
+	height: .13rem;width: .12rem;
+	/* margin-right: .16rem; */
 }
 .indexFrom label{
 	background: red;
@@ -282,7 +320,7 @@ export default {
 .typeNav{
 	width: 100%;
 	/* height: 100%; */
-	margin-top: -.45rem;
+	/* margin-top: -.45rem; */
 }
 .content{
 	width: 100%;
@@ -341,6 +379,9 @@ export default {
 >>>.van-tabs--line .van-tabs__wrap {
 	width: 100%;
     height: 44px;
+	position: fixed;
+	z-index: 9;
+	margin-top: .46rem
 }
 >>>.van-overlay {
     position: fixed;
@@ -399,6 +440,7 @@ export default {
 >>>.van-tabs__content{
 	background: #F5F5F5!important;
 	height: 100%;
+	padding-top: 1rem;
 }
 >>>.van-tab{
 	height: .5rem;
@@ -438,6 +480,8 @@ export default {
 
 >>>van-tabs{
 	height: 100%;
+	position: relative;
+	margin-top: .9rem;
 }
 .submitClass{
 	width:2.41rem;

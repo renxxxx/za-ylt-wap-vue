@@ -124,7 +124,7 @@ export default {
 				payExchangepoint : this.exchangeAdd.payExchangepoint,
 			})).then(res =>{
 				// console.log(res.data.codeMsg)
-				res.data.codeMsg?	this.$toast.fail(res.data.codeMsg):this.$toast.success('修改成功')
+				res.data.codeMsg?	this.$toast.fail({duration: 1000,message: res.data.codeMsg}):this.$toast.success({duration: 1000,message: '操作成功'})
 			}).catch(err =>{
 				console.log(err)
 			})
