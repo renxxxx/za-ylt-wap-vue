@@ -180,4 +180,9 @@ export default {
     user-select: none;
     margin-top: .98rem!important;
 }
+.content[data-v-5ba8ffe5] {
+    width: 100%;
+    height: 100%;
+    margin-top: .98rem;
+}
 </style>

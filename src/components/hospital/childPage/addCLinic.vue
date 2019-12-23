@@ -215,7 +215,7 @@ export default {
 				license : this.addClinic.license,
 			}))
 			.then(res => {
-				console.log(typeof res.data.codeMsg)
+				// console.log(typeof res.data.codeMsg)
 				res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn();
 
 			})

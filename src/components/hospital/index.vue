@@ -144,7 +144,7 @@ export default {
 						case 8: this.images.push({'cover':res.data.data.rows[i].cover,'url':''});break;
 					}
 				}
-				console.log(this.images.cover)
+				// console.log(this.images.cover)
 			}).catch((err)=>{
 				console.log(err)
 				Dialog({ message: '加载失败!' });

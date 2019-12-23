@@ -8,7 +8,7 @@
 				<h3>积分兑换</h3>
 			</div>
 			<div class="integralExchangeNum">
-				<h2>81,250</h2>
+				<h2>{{integral}}</h2>
 			</div>
 			<div class="integralExchangeButton">
 				<router-link :to="{name : 'outpatient_integralDetails'}">
@@ -44,6 +44,7 @@ export default {
 	name: 'integralExchange',
 	data () {
 		return {
+			integral: 0,
 			// 消息条数
 			contentArr : [],
 			//让消息显示为第一章的值
@@ -93,6 +94,17 @@ export default {
 			}else{
 				this.$toast.fail(res.data.codeMsg)
 			}
+		})
+		.catch((err)=>{
+			Dialog({ message: err});
+		})
+		this.$axios.post('/clientend2/clinicend/pointexchange/main',qs.stringify({
+			clinicId : this.account.clinicId,
+			pn : 1,
+			ps : 10
+		}))
+		.then(res => {
+			this.integral = res.data.data.exchangePoint
 		})
 		.catch((err)=>{
 			Dialog({ message: err});

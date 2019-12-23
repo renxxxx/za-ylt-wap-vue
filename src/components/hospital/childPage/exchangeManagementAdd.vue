@@ -123,7 +123,8 @@ export default {
 				stock: this.exchangeAdd.stock,
 				payExchangepoint : this.exchangeAdd.payExchangepoint,
 			})).then(res =>{
-				
+				// console.log(res.data.codeMsg)
+				res.data.codeMsg?	this.$toast.fail(res.data.codeMsg):this.$toast.success('修改成功')
 			}).catch(err =>{
 				console.log(err)
 			})

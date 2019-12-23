@@ -132,7 +132,7 @@ export default {
 			sickness: res.data.data.sickness	//病例
 		};
 		// 如果信息中有发票图片,就显示
-		console.log(this.detail)
+		// console.log(this.detail)
 		if(res.data.data.invoices){
       debugger;
 			res.data.data.invoices = res.data.data.invoices.split(",");
@@ -151,11 +151,11 @@ export default {
 		//判断时间是否为空
 		// console.log(this.detail.pushTime)
 		if(!res.data.data.hospitalConfirmTime){
-			console.log(this.detail.hospitalConfirmTime)
+			// console.log(this.detail.hospitalConfirmTime)
 			this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('YYYY-MM-DD HH:mm');
 		}
 		if(res.data.data.pushTime){
-      console.log(res.data.data.pushTime)
+      // console.log(res.data.data.pushTime)
 			this.detail.pushTime = moment(res.data.data.pushTime).format('YYYY-MM-DD HH:mm');
 		}
 	}).catch(err =>{
@@ -174,7 +174,7 @@ export default {
 			// console.log(this.modify.num)
 			this.modify.value = '保存';
 			this.modify.img = 'static/img/save@2x.png';
-      console.log(this.modify.value)
+      // console.log(this.modify.value)
 			this.modify.data = true;
 			for(let i =1; i<6; i++){
 				let _id = 'readId' + i;
@@ -184,7 +184,7 @@ export default {
 		}else{
       this.modify.value = '编辑';
       this.modify.img = 'static/img/editor.png';
-      console.log(this.modify.value);
+      // console.log(this.modify.value);
 			let _imgAddress = [];
       if(this.imgUrl.length == 1){
         _imgAddress[0] = this.imgUrl[0].url
@@ -242,10 +242,10 @@ export default {
 		}
 	},
   deteleFn(_img){
-    console.log(this.imgUrl)
+    // console.log(this.imgUrl)
     let deleteImg =  this.imgUrl.filter( n => n.url != _img.url);
     this.imgUrl = deleteImg;
-    console.log(this.imgUrl)
+    // console.log(this.imgUrl)
   }
   },
 }

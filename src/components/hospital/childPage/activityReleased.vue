@@ -72,7 +72,7 @@ export default {
 		},
 		itemPostFn(_item){
 			// this.account.itemId = '';
-			console.log(_item.itemId);
+			// console.log(_item.itemId);
 			this.account.itemId = _item.itemId;
 			// console.log(this.account.itemId);
 		},

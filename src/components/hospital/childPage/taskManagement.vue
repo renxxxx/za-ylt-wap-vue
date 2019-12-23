@@ -139,17 +139,17 @@ export default {
 
 		change(_value,_item,inx){
 			// console.log(_value)
-      this.$axios.post('/c2/task/tasks',qs.stringify({
-      	hospitalId : this.account.hospitalId,
-        taskId : _item.taskId
-      }))
-      .then(res =>{
-       
-      })
-      .catch((err)=>{
-      	console.log(err);
-      	Dialog({ message: '加载失败!'});
-      })
+			this.$axios.post('/c2/task/taskunissue',qs.stringify({
+				hospitalId : this.account.hospitalId,
+				taskId : _item.taskId
+			}))
+			.then(res =>{
+			   
+			})
+			.catch((err)=>{
+				console.log(err);
+				Dialog({ message: '加载失败!'});
+			})
 
 			switch(_value.target.checked){
 				case true:

@@ -3,36 +3,36 @@
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh"> -->
 			<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 			<ul v-if="isLogin == 100? true:false">
-					<li v-for="(item,inx) in list.clinicAll" :key="inx">
-						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
-							<div class="contentTitle">
-								<img :src="item.img" alt="">
-								<span>{{item.realname}}</span>
-							</div>
-							<div class="contnet_left">
-								<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
-									<span>状态：未就诊</span>
-							</div>
-							<div class="content_right">
-								<button :class="item.buttonColor">{{item.button}}</button>
-							</div>
-						</router-link>
-					</li>
+				<li v-for="(item,inx) in list.clinicAll" :key="inx">
+					<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
+						<div class="contentTitle">
+							<img :src="item.img" alt="">
+							<span>{{item.realname}}</span>
+						</div>
+						<div class="contnet_left">
+							<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
+							<span>状态：{{item.span}}</span>
+						</div>
+						<div class="content_right">
+							<button :class="item.buttonColor">{{item.button}}</button>
+						</div>
+					</router-link>
+				</li>
 			</ul>
-      <ul class="clinicList" v-if="isLogin == 200? true:false">
-      	<li v-for="(item,inx) in list.clinicAll" :key="inx">
-      		<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
-      			<div class="content_left">
-      				<span>{{item.realname}}</span>
-      			</div>
-      			<div class="content_right">
-      				<img src='static/img/yijiuzhen@2x.png'>
-      				<span class="AlreadySpanColor">已就诊</span>
-      			</div>
-      			<p>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
-      		</router-link>
-      	</li>
-      </ul>
+			<ul class="clinicList" v-if="isLogin == 200? true:false">
+				<li v-for="(item,inx) in list.clinicAll" :key="inx">
+					<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
+						<div class="content_left">
+							<span>{{item.realname}}</span>
+						</div>
+						<div class="content_right">
+							<img :src='item.img'>
+							<span :class="item.span=='未就诊'? 'no':'yes'">{{item.span}}</span>
+						</div>
+						<p>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
+					</router-link>
+				</li>
+			</ul>
       </van-list>
 		<!-- </van-pull-refresh> -->
 	</div>
@@ -99,29 +99,62 @@ export default {
 					this.finished = true;
 				}else{
 					for (let nums in _d.data.data.items) {
+						console.log(_d.data.data.items[nums].status)
 						if(_d.data.data.items[nums].status == 1){
-							this.list.clinicAll.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								img : "static/img/orange@2x.png",
-								button : "确认就诊"
-							});
-							noNum++
+							switch(this.isLogin){
+								case 100:
+								this.list.clinicAll.push({
+									clinicName : _d.data.data.items[nums].clinicName,
+									itemId : _d.data.data.items[nums].itemId,
+									pushTime : _d.data.data.items[nums].pushTime,
+									realname : _d.data.data.items[nums].realname,
+									status : _d.data.data.items[nums].status,
+									img : "static/img/orange@2x.png",
+									button : "确认就诊",
+									span : "未就诊"
+								});
+								noNum++;
+								break;
+								case 200:
+								this.list.clinicAll.push({
+									clinicName : _d.data.data.items[nums].clinicName,
+									itemId : _d.data.data.items[nums].itemId,
+									pushTime : _d.data.data.items[nums].pushTime,
+									realname : _d.data.data.items[nums].realname,
+									status : _d.data.data.items[nums].status,
+									img : "static/img/weijiuzhen@2x.png",
+									span : "未就诊"
+								});
+							}
+							
 						}else if(_d.data.data.items[nums].status == 4){
-							this.list.clinicAll.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								img : "static/img/blue@2x.png",
-								button : "已就诊",
-								buttonColor : "buttonColor"
-							});
-							yesNum++;
+							switch(this.isLogin){
+								case 100:
+								this.list.clinicAll.push({
+									clinicName : _d.data.data.items[nums].clinicName,
+									itemId : _d.data.data.items[nums].itemId,
+									pushTime : _d.data.data.items[nums].pushTime,
+									realname : _d.data.data.items[nums].realname,
+									status : _d.data.data.items[nums].status,
+									img : "static/img/blue@2x.png",
+									button : "已就诊",
+									buttonColor : "buttonColor",
+									span : "已就诊"
+								});
+								yesNum++;
+								break;
+								case 200:
+								this.list.clinicAll.push({
+									clinicName : _d.data.data.items[nums].clinicName,
+									itemId : _d.data.data.items[nums].itemId,
+									pushTime : _d.data.data.items[nums].pushTime,
+									realname : _d.data.data.items[nums].realname,
+									status : _d.data.data.items[nums].status,
+									img : "static/img/yijiuzhen@2x.png",
+									span : "已就诊"
+								});
+							}
+							
 						}
 					}
 					if(this.list.keywords != ''){
@@ -160,10 +193,10 @@ export default {
 				let noNum = 0;
 				let allNum = 0;
 				this.page = 2;
-				if( _d.data.data.items.length == 0){
-				}else{
+				if( _d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
-						if(_d.data.data.items[nums].status == 1){
+						switch(this.isLogin){
+							case 100:
 							this.list.clinicAll.push({
 								clinicName : _d.data.data.items[nums].clinicName,
 								itemId : _d.data.data.items[nums].itemId,
@@ -171,32 +204,57 @@ export default {
 								realname : _d.data.data.items[nums].realname,
 								status : _d.data.data.items[nums].status,
 								img : "static/img/orange@2x.png",
-								button : "确认就诊"
+								button : "确认就诊",
+								span : "未就诊"
 							});
-							noNum++
-						}else if(_d.data.data.items[nums].status == 4){
+							break;
+							case 200:
 							this.list.clinicAll.push({
 								clinicName : _d.data.data.items[nums].clinicName,
 								itemId : _d.data.data.items[nums].itemId,
 								pushTime : _d.data.data.items[nums].pushTime,
 								realname : _d.data.data.items[nums].realname,
 								status : _d.data.data.items[nums].status,
-								img : "static/img/blue@2x.png",
-								button : "已就诊",
-								buttonColor : "buttonColor"
+								img : "static/img/weijiuzhen@2x.png",
+								span : "未就诊"
 							});
-							yesNum++;
 						}
 					}
-					if(this.list.keywords != ''){
-						allNum = noNum + yesNum;
-						this.list.allNum = allNum;
-						this.list.noNum = noNum;
-						this.list.yesNum = yesNum;
-					}else{
-						this.list.allNum  = _d.data.data.sum.totalCount;
+				}else if(_d.data.data.items[nums].status == 4){
+					switch(this.isLogin){
+						case 100:
+						this.list.clinicAll.push({
+							clinicName : _d.data.data.items[nums].clinicName,
+							itemId : _d.data.data.items[nums].itemId,
+							pushTime : _d.data.data.items[nums].pushTime,
+							realname : _d.data.data.items[nums].realname,
+							status : _d.data.data.items[nums].status,
+							img : "static/img/blue@2x.png",
+							button : "已就诊",
+							buttonColor : "buttonColor",
+							span : "已就诊"
+						});
+						break;
+						case 200:
+						this.list.clinicAll.push({
+							clinicName : _d.data.data.items[nums].clinicName,
+							itemId : _d.data.data.items[nums].itemId,
+							pushTime : _d.data.data.items[nums].pushTime,
+							realname : _d.data.data.items[nums].realname,
+							status : _d.data.data.items[nums].status,
+							img : "static/img/yijiuzhen@2x.png",
+							span : "已就诊"
+						});
 					}
-					this.isLoading = false;
+				}
+				
+				if(this.list.keywords != ''){
+					allNum = noNum + yesNum;
+					this.list.allNum = allNum;
+					this.list.noNum = noNum;
+					this.list.yesNum = yesNum;
+				}else{
+					this.list.allNum  = _d.data.data.sum.totalCount;
 				}
 			})
 			.catch((err)=>{
@@ -219,15 +277,30 @@ export default {
 				if(_d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
 						if(_d.data.data.items[nums].status == 1){
-							this.list.clinicAll.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								img : "static/img/orange@2x.png",
-								button : "确认就诊"
-							});
+							switch(this.isLogin){
+								case 100:
+								this.list.clinicAll.push({
+									clinicName : _d.data.data.items[nums].clinicName,
+									itemId : _d.data.data.items[nums].itemId,
+									pushTime : _d.data.data.items[nums].pushTime,
+									realname : _d.data.data.items[nums].realname,
+									status : _d.data.data.items[nums].status,
+									img : "static/img/orange@2x.png",
+									button : "确认就诊",
+									span : "未就诊"
+								});
+								break;
+								case 200:
+								this.list.clinicAll.push({
+									clinicName : _d.data.data.items[nums].clinicName,
+									itemId : _d.data.data.items[nums].itemId,
+									pushTime : _d.data.data.items[nums].pushTime,
+									realname : _d.data.data.items[nums].realname,
+									status : _d.data.data.items[nums].status,
+									img : "static/img/weijiuzhen@2x.png",
+									span : "未就诊"
+								});
+							}
 							// this.list.clinicNo.push({
 							// 	clinicName : _d.data.data.items[nums].clinicName,
 							// 	itemId : _d.data.data.items[nums].itemId,
@@ -242,16 +315,31 @@ export default {
 							// this.list.noNum = _d.data.data.sum.totalCount
 						}else if(_d.data.data.items[nums].status == 4){
 							// console.log(_d.data.data.items[nums].status )
-							this.list.clinicAll.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								img : "static/img/blue@2x.png",
-								button : "已就诊",
-								buttonColor : "buttonColor"
-							});
+							switch(this.isLogin){
+								case 100:
+								this.list.clinicAll.push({
+									clinicName : _d.data.data.items[nums].clinicName,
+									itemId : _d.data.data.items[nums].itemId,
+									pushTime : _d.data.data.items[nums].pushTime,
+									realname : _d.data.data.items[nums].realname,
+									status : _d.data.data.items[nums].status,
+									img : "static/img/blue@2x.png",
+									button : "已就诊",
+									buttonColor : "buttonColor",
+									span : "已就诊"
+								});
+								break;
+								case 200:
+								this.list.clinicAll.push({
+									clinicName : _d.data.data.items[nums].clinicName,
+									itemId : _d.data.data.items[nums].itemId,
+									pushTime : _d.data.data.items[nums].pushTime,
+									realname : _d.data.data.items[nums].realname,
+									status : _d.data.data.items[nums].status,
+									img : "static/img/yijiuzhen@2x.png",
+									span : "已就诊"
+								});
+							}
 							// this.list.clinicYes.push({
 							// 	clinicName : _d.data.data.items[nums].clinicName,
 							// 	itemId : _d.data.data.items[nums].itemId,
@@ -390,7 +478,10 @@ export default {
 	height:.11rem;
 	margin-right:.04rem;
 }
-.content_right span{
+.yes{
 	color: #4DD865;
+}
+.no{
+	color: #2B77EF;
 }
 </style>
