@@ -49,20 +49,19 @@ export default {
 	name: 'exchangeAdd',
 	data () {
 		return {
-			
+			// 医院端兑换管理的新增和商品修改信息参数
+			exchangeAdd:{
+				name : '',
+				payExchangepoint : '',
+				stock : '',
+				intro : '',
+				cover : '',
+				show : true,
+			},
 		}
 	},
 	computed:{
 		...mapGetters(['account']),
-		exchangeAdd: {
-		    get: function() {
-				// console.log(this.$store)
-		        return this.$store.state.shop.exchangeAdd
-		    },
-		    set: function (newValue) {
-				this.$store.state.shop.exchangeAdd = newValue;
-		    },
-		},
 	},
 	components:{
 		
@@ -71,20 +70,10 @@ export default {
 		
 	},
 	mounted () {
-
 		if(window.plus){
 			plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
-		this.$route.params.item? this.exchangeAdd = {
-			name : this.$route.params.item.name,
-			payExchangepoint : this.$route.params.item.payExchangepoint,
-			stock : this.$route.params.item.stock,
-			intro : this.$route.params.item.intro,
-			cover : this.$route.params.item.cover,
-			show : true,
-		}:''
 	},
 	methods: {
 		//回退方法

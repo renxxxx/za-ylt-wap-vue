@@ -129,7 +129,8 @@ export default {
 .gene{
 	width: 100%;
 	height: 100%;
-	background-color: #F5F5F5;
+	/* background-color: #F5F5F5; */
+	background-color: #FFFFFF;
 }
 .topNav{
 	width: 100%;
@@ -187,6 +188,7 @@ export default {
 	margin-top: .12rem;
 	background-color: #FFFFFF;
 	border-radius: .03rem;
+	box-shadow: hsla(0, 0%, 0%, 10%) 0rem 0rem 0.1rem 0rem;
 }
 .geneList ul li:first-child{
 	height: .49rem;

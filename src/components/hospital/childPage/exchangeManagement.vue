@@ -15,7 +15,7 @@
 		</div>
 		<div class="exchangeTitle">
 			<h3>已有商品</h3>
-			<router-link :to="{name : 'hospital_exchangeManagementAdd' ,params : {item : ''}}">
+			<router-link :to="{name : 'hospital_exchangeManagementAdd'}">
 				<div class="add">
 					<span>新增</span>
 					<img src="static/img/xinzeng@2x.png" alt="">
@@ -25,7 +25,7 @@
 		<ul class="exchangeLists">
 			<van-swipe-cell v-for="(item,inx) in commodity" :key="inx"  :right-width= 65 >
 				<li>
-					<router-link :to="{name : 'hospital_exchangeEditor' ,params : {item : item}}">
+					<router-link :to="{name : 'hospital_exchangeEditor' ,query : {itemId : item.itemId}}">
 						<div class="list">
 							<div class="listsImg">
 								<img :src="item.cover" alt="">
@@ -224,8 +224,9 @@ export default {
 	overflow: hidden;
 }
 .listsImg img{
-	/* width: 100%; */
+	width: 100%;
 	height: 100%;
+	object-fit: cover;
 }
 .listContent{
 	height: .68rem;

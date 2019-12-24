@@ -15,7 +15,7 @@
 				<li v-for="(item,inx) in task.one" :key='inx'>
 					<input type="checkbox" class="input_check" :checked="item.checked" @change="change($event,item,inx)"/>
 					<router-link :to="{name : 'hospital_taskManagementDetails' ,params : {item : item,show : false}}">
-						<span @click="change($event,item,inx)">{{item.name}}</span>
+						<span>{{item.name}}</span>
 					</router-link>
 				</li>
 			</ul>
@@ -24,7 +24,7 @@
 				<li v-for="(item,inx) in task.no" :key='inx'>
 					<input type="checkbox" class="input_check" :checked="item.checked" @change="change($event,item,inx)"/>
 					<router-link :to="{name : 'hospital_taskManagementDetails' ,params : {item : item,show : true}}">
-						<span @click="change($event,item,inx)">{{item.name}}</span>
+						<span>{{item.name}}</span>
 					</router-link>
 				</li>
 			</ul>
@@ -143,7 +143,9 @@ export default {
 		},
 
 		change(_value,_item,inx){
-			// console.log(_value)
+			console.log(_value)
+			console.log(_item)
+			console.log(inx)
 			this.$axios.post('/c2/task/taskunissue',qs.stringify({
 				hospitalId : this.account.hospitalId,
 				taskId : _item.taskId
@@ -155,7 +157,7 @@ export default {
 				console.log(err);
 				Dialog({ message: '加载失败!'});
 			})
-
+			
 			switch(_value.target.checked){
 				case true:
 				if(_item.oneTimeIs == 1){
@@ -192,7 +194,8 @@ export default {
 .task{
 	width: 100%;
 	height: 100%;
-	background-color: #F5F5F5;
+	/* background-color: #F5F5F5; */
+	background-color: #FFFFFF;
 }
 .topNav{
 	width: 100%;
@@ -254,8 +257,9 @@ export default {
 }
 .taskList>ul{
 	width: 100%;
-	margin: .15rem auto;
+	/* margin: .15rem auto; */
 	background-color: #FFFFFF;
+	margin-bottom: .18rem;
 }
 .taskList>ul>li{
 	width: 92%;

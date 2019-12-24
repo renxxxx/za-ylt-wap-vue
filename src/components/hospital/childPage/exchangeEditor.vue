@@ -8,7 +8,6 @@
 				<h3>修改商品</h3>
 			</div>
 			<div class="right">
-				<!-- <button v-show=" this.$route.params.item? true:false" @click="modifyFn">修改</button> -->
 				<button @click="nextFn">下一步</button>
 			</div>
 		</div>
@@ -69,26 +68,30 @@ export default {
 		
 	},
 	mounted () {
-		this.$route.params.item? this.exchangeEditor = {
-			name : this.$route.params.item.name,
-			payExchangepoint : this.$route.params.item.payExchangepoint,
-			stock : this.$route.params.item.stock,
-			intro : this.$route.params.item.intro,
-			cover : this.$route.params.item.cover,
-			show : true,
-		}:''
+		
+		this.$axios.post('/c2/commodity/item',qs.stringify({
+			hospitalId : this.account.hospitalId,
+			itemId : this.$route.query.itemId
+		})).then(res  =>{
+			if(res.data.codeMsg){
+				this.$toast.fail(res.data.codeMsg)
+			}else{
+				this.exchangeEditor = {
+					name :res.data.data.name,
+					payExchangepoint : res.data.data.payExchangepoint,
+					stock : res.data.data.stock,
+					intro : res.data.data.intro,
+					cover : res.data.data.cover,
+					itemId : this.$route.query.itemId,
+				}
+			}
+		}).catch(err =>{
+			console.log(err)
+		})
 	},
 	methods: {
 		//回退方法
 		goBackFn(){
-      this.exchangeEditor = {
-      	name : '',
-      	payExchangepoint : 0,
-      	stock : 0,
-      	intro : '',
-      	cover : '',
-      	show : true,
-      }
 			this.$router.back(-1);
 			// this.$router.back({ name : 'hospital_exchangeManagement'});
 		},
@@ -97,6 +100,8 @@ export default {
 				if(this.exchangeEditor.payExchangepoint != ''){
 					if(this.exchangeEditor.stock != ''){
 						if(this.exchangeEditor.intro != ''){
+							console.log(this.exchangeEditor)
+							debugger;
 							this.$router.push({ name : 'hospital_exchangeEditorImg',params : {exchangeEditor : this.exchangeEditor}});
 						}else{
 							Toast.fail('请填写简介');
@@ -114,7 +119,7 @@ export default {
 		// modifyFn(){
 		// 	this.$axios.post('/c2/commodity/itemalter',qs.stringify({
 		// 		hospitalId : this.account.hospitalId,
-		// 		itemId : this.$route.params.item.itemId,
+		// 		itemId : this.$route.query.item.itemId,
 		// 		name : this.exchangeEditor.name,
 		// 		cover : this.exchangeEditor.cover,
 		// 		intro : this.exchangeEditor.intro,

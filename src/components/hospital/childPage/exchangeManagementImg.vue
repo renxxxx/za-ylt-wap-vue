@@ -34,20 +34,12 @@ export default {
 	data () {
 		return {
 			commodity : [],
-			imgUrl : 0,
+			imgUrl : '',
+			exchangeAdd : {},
 		}
 	},
 	computed:{
 		...mapGetters(['account']),
-		exchangeAdd: {
-			get: function() {
-				// console.log(this.$store)
-				return this.$store.state.shop.exchangeAdd
-			},
-			set: function (newValue) {
-				this.$store.state.shop.exchangeAdd.newValue;
-			},
-		},
 	},
 	components:{
 
@@ -60,9 +52,7 @@ export default {
 			plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
-		this.imgUrl = this.exchangeAdd.cover
-		console.log(this.imgUrl)
+		this.exchangeAdd = this.$route.params.exchangeAdd
 	},
 	methods: {
 		//回退方法

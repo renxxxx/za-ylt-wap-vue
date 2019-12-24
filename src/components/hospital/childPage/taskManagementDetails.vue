@@ -12,7 +12,7 @@
 		<ul >
 			<li>
 				<span>名称</span>
-				<span>首次上传病员</span>
+				<span>{{taskSubmitValue.name}}</span>
 			</li>
 			<li>
 				<span>简介</span>
@@ -73,18 +73,7 @@ export default {
 		this.show = this.$route.params.show;	
 		// this.taskSubmitValue.name = this.$route.params.item.name;
 		this.taskSubmitValue = this.$route.params.item
-		// this.$axios.post('/c2/task/taskissue',qs.stringify({
-		// 	hospitalId : this.account.hospitalId,
-		// 	taskId : this.$route.params.item.taskId,
-		// 	exchangePoint : this.taskSubmitValue.exchangePoint,
-		// 	exchangePointUpperPerDay : this.taskSubmitValue.exchangePointUpperPerDay,
-		// 	intro : this.taskSubmitValue.intro,
-		// })).then(res =>{
-		// 	res.data.codeMsg? Dialog({message : res.data.codeMsg}): Dialog({message : '已添加'})
-			
-		// }).catch(err =>{
-		// 	console.log(err)
-		// })
+		console.log(this.$route.params.item)
 	},
 	methods: {
 		// 返回上一级

@@ -116,7 +116,8 @@ export default {
 	width: 100%;
 	/* height: 100%; */
 	padding-top: .52rem;
-	background-color: #F5F5F5;
+	/* background-color: #F5F5F5; */
+	background-color: #FFFFFF;
 }
 .top_search{
 	height: .5rem;width: 100%;

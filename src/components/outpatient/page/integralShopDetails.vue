@@ -9,8 +9,8 @@
 			</div>
 			<div class="right"></div>
 		</div>
-		<router-link :to="{name : 'outpatient_shopAddress' ,params : {item : address}}">
-			<div class="address" v-show="address? false:true">
+		<router-link :to="{name : 'outpatient_shopAddressAdd'  ,params : {item : address}}">
+			<div class="address" v-show="!address.receiverId">
 				<img src="static/img/dingweiweizhi@2x.png" alt="">
 				<div class="addressContent">
 					<h4>您需要我们送到哪里？</h4>
@@ -20,7 +20,7 @@
 			</div>
 		</router-link>
 		<router-link :to="{name : 'outpatient_shopAddress' ,params : {item : address}}">
-			<div class="address" v-show="address? true:false">
+			<div class="address" v-show="!!address.receiverId">
 				<img src="static/img/exchangeAdress.png" alt="">
 				<div class="addressContent">
 					<h4>{{address.name}}</h4>
@@ -78,7 +78,8 @@ export default {
 			ps : 99
 		}))
 		.then(res => {
-			if(res.data.codeMsg == '' || res.data.codeMsg == null || res.data.codeMsg == undefined){
+			debugger
+			if(res.data.code == 0 && res.data.data.items && res.data.data.items.length>0){
 				this.address = res.data.data.items[0];
 			}else{
 				this.$toast.fail(res.data.codeMsg)
@@ -111,10 +112,9 @@ export default {
 				})
 			}))
 			.then(res => {
-				this.$toast.success({
-					 duration: 1000, 
-					  message: '操作成功',
-				});
+				debugger;
+				console.log(res.data.codeMsg)
+				res.data.codeMsg? this.$toast.fail(res.data.codeMsg):this.$toast.success('操作成功')
 			})
 			.catch((err)=>{
 				Dialog({ message: err});

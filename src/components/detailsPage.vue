@@ -7,7 +7,7 @@
 				</a>
 			</div>
 			<div class="nav_center">
-				<h3>基因检测</h3>
+				<h3>病员信息</h3>
 			</div>
 			<div class="nav_right" @click="modifyFn" v-model='modify' v-if="isLogin == 200? false:true">
 				<span>{{modify.value}}</span>
@@ -59,10 +59,19 @@
 		<div class="_photo">
 			<h3>发票照片</h3>
       <ul>
-        <li v-for="(item,inx) in imgUrl" :key="inx">
-          <img v-bind:src="item.url" alt="">
+        <li v-for="(item,inx) in imgUrl" :key="inx" @click="enlargeFn">
+          <img v-bind:src="item" alt="">
           <img v-show="show" src="static/img/detele.png" alt="" @click="deteleFn(item)">
+		  <van-image-preview
+		    v-model="enlarge"
+		    :images="imgUrl"
+			:start-position='inx'
+		    @change="onChange"
+		  >
+		    <template v-slot:index>第{{ photoNum+1 }}页</template>
+		  </van-image-preview>
         </li>
+		
          <li v-show="show">
             <div class="addImg">
             	<div class="addImgButton" v-show="imgUrl? false : true">
@@ -98,6 +107,8 @@ export default {
 			readonly : 'true',		//读取状态
 			num: 0,						//点击次数
 		},
+		photoNum : 0,
+		enlarge: false,
     }
   },
   computed:{
@@ -145,7 +156,7 @@ export default {
       debugger;
 			res.data.data.invoices = res.data.data.invoices.split(",");
 			for (let i in res.data.data.invoices){
-				this.imgUrl.push({url : res.data.data.invoices[i],isImage: true });
+				this.imgUrl.push( res.data.data.invoices[i]);
 			}
 			this.modify.data = true;
 			this.modify.value = '编辑';
@@ -171,6 +182,14 @@ export default {
 	})
   },
   methods: {
+	enlargeFn(){
+		this.enlarge = true;
+	},
+	onChange(_value){
+		
+		this.photoNum = _value;
+		console.log(_value)
+	},
 	// 返回上一级
 	goBackFn(){
 		this.$router.back(-1)
@@ -195,10 +214,10 @@ export default {
       // console.log(this.modify.value);
 			let _imgAddress = [];
       if(this.imgUrl.length == 1){
-        _imgAddress[0] = this.imgUrl[0].url
+        _imgAddress[0] = this.imgUrl[0]
       }else{
         for(let i in this.imgUrl){
-        	_imgAddress[i] = this.imgUrl[i].url
+        	_imgAddress[i] = this.imgUrl[i]
         }
       }
       // console.log(_imgAddress)
@@ -237,7 +256,7 @@ export default {
 			}}).then(res =>{
         if(!res.data.codeMsg){
           // console.log(res.data.codeMsg)
-          this.imgUrl.push({url:res.data.data.url})
+          this.imgUrl.push(res.data.data.url)
           // console.log(this)
         }
 
@@ -251,7 +270,7 @@ export default {
 	},
   deteleFn(_img){
     // console.log(this.imgUrl)
-    let deleteImg =  this.imgUrl.filter( n => n.url != _img.url);
+    let deleteImg =  this.imgUrl.filter( n => n != _img);
     this.imgUrl = deleteImg;
     // console.log(this.imgUrl)
   }

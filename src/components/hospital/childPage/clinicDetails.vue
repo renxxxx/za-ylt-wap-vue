@@ -30,7 +30,7 @@
 		</div>
 		<div class="detailsList">
 			<div class="listLeft">
-				<h4>病原列表</h4>
+				<h4>病员列表</h4>
 			</div>
 			<div class="listRight">
 				<van-dropdown-menu >
@@ -118,7 +118,7 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		// this.ItemIdFn();
-		this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = '';
+		this.$route.query.clinicId?  this.ItemIdFn() : this.list.clinicId = '';
 		this.getNum();
 	},
 	methods: {
@@ -143,7 +143,7 @@ export default {
 			}
 		},
 		ItemIdFn(){
-			this.list.clinicId = this.$route.params.item.itemId;
+			this.list.clinicId = this.$route.query.clinicId;
 			this.$axios.post('/c2/clinic/item',qs.stringify({
 				itemId : this.list.clinicId,
 			}))

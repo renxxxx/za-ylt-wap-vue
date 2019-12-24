@@ -541,7 +541,7 @@ export default {
 }
 .clinicSearchStyle{
 	margin-left: .16rem;
-	width: 77%;
+	width: 70%;
 
 }
 </style>

@@ -2,7 +2,7 @@
 	<div class="hospital">
 		<div class="navWarp">
 			<div class="navTitle">
-				<span>- 医院端 -</span>
+				<span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
 			</div>
 			<div class="slider" >
 				<!-- :autoplay="3000" -->
@@ -225,10 +225,10 @@ export default {
 	
 }
 .navTitle{
-	width: .88rem;
+	/* width: .88rem; */
 	height: .25rem;
 	line-height: .25rem;
-	color: #8a929a;
+	color: #000000;
 	font-size: .14rem;
 	/* font-weight: bolder; */
 	text-align: center;

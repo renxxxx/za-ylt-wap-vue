@@ -196,12 +196,12 @@ export default {
 .top_center h3{
 	height: .29rem;
 	line-height: .29rem;
-	font-size: 15px;
+	font-size: .16rem;
 	font-weight: bolder;
 }
 .top_center p{
 	color: #666666;
-	font-size: .11rem;
+	font-size: .13rem;
 }
 .top_right{
 	width: 13%;
@@ -226,6 +226,7 @@ export default {
 .user_center ul{
 	height: 100%;
 	width: 100%;
+	font-size: .14rem;
 }
 
 .user_center ul li{

@@ -14,7 +14,7 @@
 			</li>
 			<li>
 				<img class="yanzhengma" src="static/img/yanzhengma@2x.png" alt="">
-				<input type="text" name='password' v-model="retrieve.smsvcode" maxlength="4"  oninput="value=value.replace(/[^0-9a-zAA-Z]/g,'')" placeholder="请输入验证码">
+				<input type="text" name='password' v-model="retrieve.smsvcode" oninput="value=value.replace(/[^0-9a-zAA-Z]/g,'')" placeholder="请输入验证码">
 				<button @click="getSmsvcode">
 					<span v-if="showYan" class="showYan">获取验证码</span>
 					<van-count-down v-show="showTime" :time="time" :auto-start="false" ref="countDown" format="ss" @finish="finished"/>
@@ -79,7 +79,9 @@ export default {
 	finished(e){
 		this.retrieve.data = true;
 		 this.$refs.countDown.reset();
-		console.log(this.retrieve.data)
+		console.log(this.retrieve.data);
+		this.showYan = true;
+		this.showTime = false;
 	},
 	//获取信息的post请求方法
 	getdata(postUrl){
@@ -90,6 +92,12 @@ export default {
 			}))
 		.then( _d => {
 			console.log(_d)
+			_d.data.codeMsg? this.$toast.fail(_d.data.codeMsg):this.$toast.success('操作成功');
+			if(_d.data.code == 0){
+				setTimeout(()=>{
+					this.$router.back(-1);
+				},800)
+			}
 		})
 		.catch((err)=>{
 			console.log(err);
@@ -110,6 +118,7 @@ export default {
 				this.showTime = true;
 				this.$refs.countDown.start();
 				this.retrieve.data = false;
+				_d.data.codeMsg? this.$toast.fail(_d.data.codeMsg):'';
 				// console.log(this.retrieve.data);
 			})
 			.catch((err)=>{
@@ -239,7 +248,7 @@ export default {
 .center ul li:nth-child(2) button span{
 	font-size: .12rem;
 	position: absolute;
-	right: .29rem;
+	right: .34rem;
 	top: .02rem;
 }
 .center ul li input{

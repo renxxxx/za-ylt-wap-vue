@@ -81,15 +81,7 @@ const state={
 		exchangePointUpperPerDay : '',
 		intro : "",
 	},
-	// 医院端兑换管理的新增和商品修改信息参数
-	exchangeAdd:{
-		name : '',
-		payExchangepoint : 0,
-		stock : 0,
-		intro : '',
-		cover : '',
-		show : true,
-	},
+	
 	// 医院端门诊详情列表信息
 	clinicDetails:{},
 	// 门诊端兑换详情页数据
@@ -112,8 +104,6 @@ const getters={
 	showTime : state => state.showTime,
 	//医院端活动发布的参数
 	activity : state => state.activity,
-	// 医院端兑换管理的新增和商品修改信息参数
-	exchangeAdd : state => state.exchangeAdd,
 	//医院端兑换管理详情页参数
 	taskSubmitValue : state => state.taskSubmitValue,
 	// 门诊端兑换详情页数据

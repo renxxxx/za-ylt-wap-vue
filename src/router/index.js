@@ -34,6 +34,8 @@ import outpatient_integralShop from '@/components/outpatient/page/integralShop.v
 import outpatient_integralShopDetails from '@/components/outpatient/page/integralShopDetails.vue'
 //门诊端用户主页的积分兑换结算页面中的地址编辑页面
 import outpatient_shopAddress from '@/components/outpatient/page/shopAddress.vue'
+//门诊端用户主页的积分兑换结算页面中的地址新建页面
+import outpatient_shopAddressAdd from '@/components/outpatient/page/shopAddressAdd.vue'
 
 //医院端页面及其组件
 // 医院端主页
@@ -90,6 +92,8 @@ import hospital_exchangeManagement from '@/components/hospital/childPage/exchang
 import hospital_exchangeManagementAdd from '@/components/hospital/childPage/exchangeManagementAdd.vue'
 //医院端用户主页的兑换管理中的修改商品页面
 import hospital_exchangeEditor from '@/components/hospital/childPage/exchangeEditor.vue'
+//医院端用户主页的兑换管理中的修改商品的添加图片页面
+import hospital_exchangeEditorImg from '@/components/hospital/childPage/exchangeEditorImg.vue'
 
 //医院端用户主页的兑换管理中的添加商品后上传图片的页面
 import hospital_exchangeManagementImg from '@/components/hospital/childPage/exchangeManagementImg.vue'
@@ -283,6 +287,13 @@ const router = new Router({
 			// meta: {auth:true},
 		},
 		{
+			//医院端用户主页的兑换管理中的修改商品的添加图片页面
+			path: '/hospital_exchangeEditorImg',
+			name: 'hospital_exchangeEditorImg',
+			component: hospital_exchangeEditorImg,
+			// meta: {auth:true},
+		},
+		{
 			//医院端用户主页的兑换管理中的添加商品页面
 			path: '/hospital_exchangeManagementAdd',
 			name: 'hospital_exchangeManagementAdd',
@@ -400,6 +411,13 @@ const router = new Router({
 			path: '/outpatient_shopAddress',
 			name: 'outpatient_shopAddress',
 			component: outpatient_shopAddress,
+			// meta: {auth:true},
+		},
+		{
+			//门诊端用户主页的积分兑换结算页面中的地址新建页面
+			path: '/outpatient_shopAddressAdd',
+			name: 'outpatient_shopAddressAdd',
+			component: outpatient_shopAddressAdd,
 			// meta: {auth:true},
 		},
 		{

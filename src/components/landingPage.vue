@@ -6,8 +6,8 @@
 			</div>
 			<div class="typeNav" type="line" border="false">
 				<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)'
-				title-active-color='rgba(255, 255, 255)' @click="titleScroll"  v-model='data'>
-				<van-tab title="医院端" >
+				title-active-color='rgba(255, 255, 255)' v-model='data'>
+				<van-tab title="医院端" :title-style="{'font-size':(data==0?'.24rem':'.14rem')}" >
 					<form @submit.prevent="submit('100')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="static/img/iphone@2x.png" alt="">
@@ -26,17 +26,17 @@
 						</div>
 						<input class="submitClass" type="submit" value="登陆"></input>
 						<div class="passwordReset">
-							<router-link  to="/retrievePassword">
-								<div  @click="forgetFn(100)">
+							<router-link  :to="{name : 'retrievePassword'}">
+								<div  @click="forgetFn(100)" class="forget">
 									忘记密码
-									<img src="static/img/reset@2.png" alt="">
+									<!-- <img src="static/img/reset@2.png" alt=""> -->
 								</div>
 							</router-link>
 						</div>
 					</form>
 
 				</van-tab>
-				<van-tab title="门诊端" type="line" border="false" >
+				<van-tab title="门诊端" type="line" border="false" :title-style="{'font-size':(data==1?'.24rem':'.14rem')}" >
 					<form @submit.prevent="submit('200')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="static/img/iphone@2x.png" alt="">
@@ -56,16 +56,16 @@
 						</div>
 						<input class="submitClass" type="submit" value="登陆"></input>
 						<div class="passwordReset">
-							<router-link  to="/retrievePassword">
-								<div @click="forgetFn(200)">
+							<router-link  :to="{name : 'retrievePassword'}">
+								<div @click="forgetFn(200)" class="forget">
 									忘记密码
-									<img src="static/img/reset@2.png" alt="">
+									<!-- <img src="static/img/reset@2.png" alt=""> -->
 								</div>
 							</router-link>
 						</div>
 					</form>
 				</van-tab>
-				<van-tab title="运营端" type="line" border="false">
+				<van-tab title="运营端" type="line" border="false" :title-style="{'font-size':(data==2?'.24rem':'.14rem')}" >
 					<form @submit.prevent="submit('300')" class="content">
 						<div class="inputBox">
 							<img class="telephoneImg" src="static/img/iphone@2x.png" alt="">
@@ -84,10 +84,10 @@
 						</div>
 						<input class="submitClass" type="submit" value="登陆"></input>
 						<div class="passwordReset">
-							<router-link  to="/retrievePassword">
-								<div @click="forgetFn(300)">
+							<router-link  :to="{name : 'retrievePassword'}">
+								<div @click="forgetFn(300)" class="forget">
 									修改密码
-									<img src="static/img/reset@2.png" alt="">
+									<!-- <img src="static/img/reset@2.png" alt=""> -->
 								</div>
 							</router-link>
 						</div>
@@ -129,28 +129,16 @@ export default {
 	console.log(this.$store.state.shop.account)
   },
   computed:{
-	...mapGetters(['checked','account','isLogin']),
-	
-  	// ...mapState(['checked','account'])
-	// checked: {
-	// 	get: function() {
-	// 		// console.log(this.$store)
-	// 		return this.$store.state.shop.checked;
-	// 	},
-	// 	set: function (newValue) {
-	// 		this.$store.state.shop.checked = newValue;
-	// 	},
-	// },
-	// account: {
-	// 	get: function() {
-	// 		console.log(this.$store.state)
-	// 		return this.$store.state.shop.account
-	// 	},
-	// 	set: function (newValue) {
-	// 		console.log(newValue)
-	// 		this.$store.state.shop.account = newValue;
-	// 	},
-	// },
+	...mapGetters(['checked','account']),
+	isLogin: {
+	    get: function() {
+			// console.log(this.$store)
+	        return this.$store.state.shop.isLogin
+	    },
+	    set: function (newValue) {
+			this.$store.state.shop.isLogin = newValue;
+	    },
+	},
   },
   methods:{
 	 //传递页面状态值
@@ -158,27 +146,6 @@ export default {
   		this.isLogin = e
   		// console.log(this.isLogin)
   	},
-	titleScroll(e){
-		// console.log(e)
-		switch(e){
-			case 0:
-			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.24rem';
-			document.getElementsByClassName('van-ellipsis')[1].style.fontSize = '.14rem';
-			document.getElementsByClassName('van-ellipsis')[2].style.fontSize = '.14rem';
-			break;
-
-			case 1:
-			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.14rem';
-			document.getElementsByClassName('van-ellipsis')[1].style.fontSize = '.24rem';
-			document.getElementsByClassName('van-ellipsis')[2].style.fontSize = '.14rem';
-			break;
-			case 2:
-			document.getElementsByClassName('van-ellipsis')[0].style.fontSize = '.14rem';
-			document.getElementsByClassName('van-ellipsis')[1].style.fontSize = '.14rem';
-			document.getElementsByClassName('van-ellipsis')[2].style.fontSize = '.24rem';
-			break;
-		}
-	},
 	...mapActions(['submit','change'])
   }
 }
@@ -247,6 +214,8 @@ export default {
 	border-radius: .23rem;
 	margin-top: .8rem;
 	color: #FFFFFF;
+	border: none;
+	font-size: .16rem;
 }
 .inputBox{
 	position: relative;
@@ -316,10 +285,11 @@ export default {
   display:inline-block;
   width: .17rem;
   height: .17rem;
-  background-image: url('../../static/img/Not-checkbox@2x.png');
+  background: url('../../static/img/Not-checkbox@2x.png');
   box-sizing:border-box;
   border-radius: 3px;
   position: absolute;
+  background-size: cover;
 }
 
 .checkBox input[type=checkbox]:disabled:before{
@@ -375,7 +345,7 @@ export default {
 	color: #5ab5fc;
 }
 .passwordReset{
-	margin-top: .13rem;
+	/* margin-top: .05rem; */
 	height: .17rem;
 }
 .passwordRese{
@@ -390,7 +360,10 @@ export default {
 	height: .15rem;
 }
 >>>.van-tab:nth-child(2) span{
-	font-size: .2rem;
-  color: rgba(255, 255, 255, 0.6);
+	/* font-size: .24rem; */
+	/* color: rgba(255, 255, 255); */
+}
+.forget{
+	text-align: right;
 }
 </style>
