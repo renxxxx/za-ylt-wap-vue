@@ -6,7 +6,7 @@
 				<div class="indexSearch">
 					<router-link to="/outpatient_search">
 						<img src="static/img/sousuo@2x.png" alt="">
-						<input type="text" placeholder="搜索病源" >
+						<input type="text" placeholder="搜索病员" >
 					</router-link>
 				</div>
 				<div class="indexScreening" @click="showPopup">
@@ -55,7 +55,7 @@
 			<!-- 就诊情况 -->
 			<div class="typeNav" :v-model="message">
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF'>
-					<van-tab title="新增病源">
+					<van-tab title="新增病员">
 						<form @submit.prevent="hospitalSubmit" class="newAdd">
 							<div class="newAddTitle">
 								<img src="static/img/bitian@2x.png" alt="">
@@ -192,11 +192,11 @@ export default {
 			}, 300);
 			this.noTitle = '未就诊' + _d.data.data.sum.totalCount
 		}else{
-			this.$notify({
-				message: '数据已全部加载',
-				duration: 1000,
-				background:'#79abf9',
-			})
+			// this.$notify({
+			// 	message: '数据已全部加载',
+			// 	duration: 1000,
+			// 	background:'#79abf9',
+			// })
 			this.loading = false;
 			this.finished = true;
 		}
@@ -223,11 +223,11 @@ export default {
 			}, 300);
 			this.yesTitle = '已就诊' + _d.data.data.sum.totalCount
 		}else{
-			this.$notify({
-				message: '数据已全部加载',
-				duration: 1000,
-				background:'#79abf9',
-			})
+			// this.$notify({
+			// 	message: '数据已全部加载',
+			// 	duration: 1000,
+			// 	background:'#79abf9',
+			// })
 			this.loading = false;
 			this.finished = true;
 		}
@@ -314,11 +314,11 @@ export default {
 					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
 				}else{
 					
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
+					// this.$notify({
+					// 	message: '数据已全部加载',
+					// 	duration: 1000,
+					// 	background:'#79abf9',
+					// })
 					this.loading = false;
 					this.finished = true;
 				}
@@ -348,11 +348,11 @@ export default {
 					this.page++	
 					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
 				}else{
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
+					// this.$notify({
+					// 	message: '数据已全部加载',
+					// 	duration: 1000,
+					// 	background:'#79abf9',
+					// })
 					this.loading = false;
 					this.finished = true;
 				}
@@ -386,11 +386,11 @@ export default {
 					this.loading = false;
 					this.noTitle = '已就诊' + _d.data.data.sum.totalCount
 				}else{
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
+					// this.$notify({
+					// 	message: '数据已全部加载',
+					// 	duration: 1000,
+					// 	background:'#79abf9',
+					// })
 					this.page2++
 					this.loading = false;
 					this.finished = true;
@@ -420,11 +420,11 @@ export default {
 					this.page2++
 					this.noTitle = '未就诊' + _d.data.data.sum.totalCount
 				}else{
-					this.$notify({
-						message: '数据已全部加载',
-						duration: 1000,
-						background:'#79abf9',
-					})
+					// this.$notify({
+					// 	message: '数据已全部加载',
+					// 	duration: 1000,
+					// 	background:'#79abf9',
+					// })
 					this.loading = false;
 					this.finished = true;
 				}
@@ -582,7 +582,7 @@ export default {
 }
 .LabelResult button:last-child{
 	border: none;height: .3rem;text-align: center;width: .8rem;
-	border-radius:0px 100px 100px 0px;
+	border-radius:0px 100px 100px 0px;
 	background-color: #FF951B;
 }
 .typeNav{

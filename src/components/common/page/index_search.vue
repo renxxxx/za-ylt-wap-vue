@@ -8,7 +8,10 @@
 			</div>
 			<div class="search_input">
 				<img src="static/img/sousuo@2x.png" alt="">
-				<input type="text" placeholder="搜索病源" v-model="list.keywords" @keyup="inputNow">
+				<input type="text" placeholder="搜索病员" v-model="list.keywords" v-focus='this.$route.params.focus'>
+			</div>	
+			<div class="clinic_buttton"  @click="inputNow">
+				<button>搜索</button>
 			</div>
 			<div class="screening" @click="showPopup">
 				<span>筛选</span>
@@ -137,14 +140,14 @@ export default {
 
 }
 .search_input{
-	float: left;width: 73%;
+	float: left;width: 63%;
 }
 .search_input input{
 	background-color: #F5F5F5;
-	height: .3rem;
+	height: .335rem;
 	line-height: .3rem;
-	width: 86%;
-	margin: .1rem 0rem;
+	width: 79%;
+	margin: .082rem 0rem;
 	border: none;
 	border-radius: 25px;
 	position: relative;
@@ -158,15 +161,33 @@ export default {
 	top: .18rem;
 	left: .6rem;
 }
+.clinic_buttton{
+	float: left;
+	margin-top: .125rem;
+	margin-left: -.05rem;
+}
+.clinic_buttton button{
+	color: #FFFFFF;
+	background-color: #2B77EF;
+	border-radius: .15rem;
+	border: none;
+	height: .28rem;
+	width: .45rem;
+	font-size: .12rem;
+}
 .screening{
 	float: left;
-	width: 15.7%;
+	width: 12.7%;
 	height: .5rem;
 	line-height: .5rem;
+	margin-left: .05rem;
 }
 .screening span{
-	font-weight: bold;
+	/* font-weight: bold; */
 	margin-left: .05rem;
+	font-size: .12rem;
+	padding-top: .03rem;
+	display: inline-block;
 }
 .screening img{
 	height: .13rem;
@@ -264,7 +285,7 @@ export default {
 }
 .LabelResult button:last-child{
 	border: none;height: .3rem;text-align: center;width: .8rem;
-	border-radius:0px 100px 100px 0px;
+	border-radius:0px 100px 100px 0px;
 	background-color: #FF951B;
 }
 </style>

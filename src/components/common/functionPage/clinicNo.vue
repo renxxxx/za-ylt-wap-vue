@@ -13,10 +13,10 @@
 								<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
 									<span>状态：已就诊</span>
 							</div>
-							<div class="content_right">
-								<button>{{item.button}}</button>
-							</div>
-						</router-link>
+              </router-link>
+						<div class="content_right">
+							<button  @click="submitFn(item,$event)">{{item.button}}</button>
+						</div>
 					</li>
 				</van-list>
 			</ul>
@@ -79,6 +79,31 @@ export default {
     // document.getElementById('list-content').style.height = (winHeight - 46) +'px'  //调整上拉加载框高度
 	},
 	methods: {
+    submitFn(_item,_button){
+    	console.log(_item.status)
+
+    	this.$axios.post('/c2/patient/confirmjiuzhen',qs.stringify({
+    		patientId : _item.itemId
+    	}))
+    	.then(res =>{
+    		if(res.data.codeMsg){
+    			this.$toast.fail({duration: 1000,message: res.data.codeMsg})
+    		}else{
+    			this.$toast.success({duration: 1000,message: '操作成功'})
+          if(_item.status == 1){
+            console.log(_button.target)
+            _button.target.style.cssText="color:#333333; background-color:#EEEEEE;"
+            _button.target.innerHTML = '已就诊';
+          }
+    			// console.log(this.list.clinicAll.map(item => item.itemId =  _item.itemId).indexOf())
+
+    		}
+    	})
+    	.catch((err)=>{
+    		console.log(err);
+    		Dialog({ message: err});
+    	})
+    },
 		// 详情页
 		getdata(){
 			this.noNum = 0;
@@ -162,11 +187,11 @@ export default {
 					this.loading = false;
 					// console.log(this.message)
 				}else{
-					this.$notify({
+					/* this.$notify({
 						message: '数据已全部加载',
 						duration: 1000,
 						background:'#79abf9',
-					})
+					}) */
 					this.loading = false;
 					this.finished = true;
 				}

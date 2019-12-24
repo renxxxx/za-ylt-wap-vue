@@ -52,6 +52,8 @@ export default {
 		}
 		
 	console.log(this.$router.currentRoute.params.components)
+
+	// console.log(this.$router.currentRoute.params.components)
 	this.$router.currentRoute.params.components? this.backFN(): this.componentName = 'hospital_imageAbout'
 	this.$axios.post('/c2/hospital/item',qs.stringify({
 		itemId : this.account.hospitalId,
@@ -68,7 +70,7 @@ export default {
 		let imgUrl = '';
 		this.hospitalImage.cover? imgUrl = this.hospitalImage.cover : imgUrl = ''
 		// imgUrl = this.hospitalImage.cover;
-		console.log(imgUrl)
+		// console.log(imgUrl)
 		if(imgUrl != ''){
 			this.$refs.img.style.background='url('+imgUrl+')';
 		}

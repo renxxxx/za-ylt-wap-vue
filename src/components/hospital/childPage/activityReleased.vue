@@ -76,7 +76,7 @@ export default {
 		},
 		itemPostFn(_item){
 			// this.account.itemId = '';
-			console.log(_item.itemId);
+			// console.log(_item.itemId);
 			this.account.itemId = _item.itemId;
 			// console.log(this.account.itemId);
 		},
@@ -121,7 +121,7 @@ export default {
 .active{
 	width: 100%;
 	height: 100%;
-	background-color: #F5F5F5;
+	background-color: #FFFFFF;
 }
 .topNav{
 	width: 100%;

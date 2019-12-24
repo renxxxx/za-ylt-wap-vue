@@ -128,7 +128,8 @@ export default {
 				stock: this.exchangeAdd.stock,
 				payExchangepoint : this.exchangeAdd.payExchangepoint,
 			})).then(res =>{
-				
+				// console.log(res.data.codeMsg)
+				res.data.codeMsg?	this.$toast.fail({duration: 1000,message: res.data.codeMsg}):this.$toast.success({duration: 1000,message: '操作成功'})
 			}).catch(err =>{
 				console.log(err)
 			})

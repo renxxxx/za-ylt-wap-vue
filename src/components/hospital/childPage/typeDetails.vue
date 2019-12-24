@@ -105,7 +105,7 @@ export default {
 			// console.log()
 			if(this.about.image!=null){
 				this.about.image = _d.data.data.image.split(',');
-				console.log(this.about.image)
+				// console.log(this.about.image)
 				if(_d.data.data.shiYingZheng == null){
 					
 				}else{

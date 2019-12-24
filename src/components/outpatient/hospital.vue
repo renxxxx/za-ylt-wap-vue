@@ -135,20 +135,20 @@ export default {
 	  					itemId: res.data.data.items[i].itemId,
 	  				}) 
 	  			}else{
-	  				this.$notify({
-	  					message: '数据已全部加载',
-	  					duration: 1000,
-	  					background:'#79abf9',
-	  				})
+	  				// this.$notify({
+	  				// 	message: '数据已全部加载',
+	  				// 	duration: 1000,
+	  				// 	background:'#79abf9',
+	  				// })
 	  			}
 	  		}
 	  		this.loading = false;
 	  		}else{
-	  			this.$notify({
-	  				message: '数据已全部加载',
-	  				duration: 1000,
-	  				background:'#79abf9',
-	  			})
+	  			// this.$notify({
+	  			// 	message: '数据已全部加载',
+	  			// 	duration: 1000,
+	  			// 	background:'#79abf9',
+	  			// })
 	  			this.loading = false;
 	  			this.finished = true;
 	  		}
