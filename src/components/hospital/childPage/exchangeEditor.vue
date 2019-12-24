@@ -1,11 +1,11 @@
 <template>
-	<div class="exchangeAdd">
+	<div class="exchangeEditor">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
 				<img src="static/img/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
-				<h3>新增商品</h3>
+				<h3>修改商品</h3>
 			</div>
 			<div class="right">
 				<!-- <button v-show=" this.$route.params.item? true:false" @click="modifyFn">修改</button> -->
@@ -16,25 +16,25 @@
 			<li>
 				<span>商品名称</span>
 				<p>
-					<input type="text" v-model="exchangeAdd.name">
+					<input type="text" v-model="exchangeEditor.name">
 				</p>
 			</li>
 			<li>
 				<span>单个积分</span>
 				<p>
-					<input type="text" v-model="exchangeAdd.payExchangepoint"> 分
+					<input type="text" v-model="exchangeEditor.payExchangepoint"> 分
 				</p>
 			</li>
 			<li>
 				<span>总数量</span>
 				<p>
-					<input type="text" oninput="value=value.replace(/[^\d]/g,'')"  v-model="exchangeAdd.stock"> 个
+					<input type="text" oninput="value=value.replace(/[^\d]/g,'')"  v-model="exchangeEditor.stock"> 个
 				</p>
 			</li>
 			<li>
 				<span>简介</span>
-				<span v-show="exchangeAdd.intro? false:true">请输入</span>
-				<textarea v-model="exchangeAdd.intro"></textarea>				
+				<span v-show="exchangeEditor.intro? false:true">请输入</span>
+				<textarea v-model="exchangeEditor.intro"></textarea>				
 			</li>
 		</ul>
 	</div>
@@ -46,23 +46,21 @@ import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Toast } from 'vant';
 export default {
-	name: 'exchangeAdd',
+	name: 'exchangeEditor',
 	data () {
 		return {
-			
+			exchangeEditor:{
+				name : '',
+				payExchangepoint : 0,
+				stock : 0,
+				intro : '',
+				cover : '',
+				show : true,
+			}
 		}
 	},
 	computed:{
 		...mapGetters(['account']),
-		exchangeAdd: {
-		    get: function() {
-				// console.log(this.$store)
-		        return this.$store.state.shop.exchangeAdd
-		    },
-		    set: function (newValue) {
-				this.$store.state.shop.exchangeAdd = newValue;
-		    },
-		},
 	},
 	components:{
 		
@@ -71,28 +69,35 @@ export default {
 		
 	},
 	mounted () {
-		
+		this.$route.params.item? this.exchangeEditor = {
+			name : this.$route.params.item.name,
+			payExchangepoint : this.$route.params.item.payExchangepoint,
+			stock : this.$route.params.item.stock,
+			intro : this.$route.params.item.intro,
+			cover : this.$route.params.item.cover,
+			show : true,
+		}:''
 	},
 	methods: {
 		//回退方法
 		goBackFn(){
-			this.exchangeAdd = {
-				name : '',
-				payExchangepoint : 0,
-				stock : 0,
-				intro : '',
-				cover : '',
-				show : true,
-			}
+      this.exchangeEditor = {
+      	name : '',
+      	payExchangepoint : 0,
+      	stock : 0,
+      	intro : '',
+      	cover : '',
+      	show : true,
+      }
 			this.$router.back(-1);
 			// this.$router.back({ name : 'hospital_exchangeManagement'});
 		},
 		nextFn(){
-			if(this.exchangeAdd.name != ''){
-				if(this.exchangeAdd.payExchangepoint != ''){
-					if(this.exchangeAdd.stock != ''){
-						if(this.exchangeAdd.intro != ''){
-							this.$router.push({ name : 'hospital_exchangeManagementImg',params : {exchangeAdd : this.exchangeAdd}});
+			if(this.exchangeEditor.name != ''){
+				if(this.exchangeEditor.payExchangepoint != ''){
+					if(this.exchangeEditor.stock != ''){
+						if(this.exchangeEditor.intro != ''){
+							this.$router.push({ name : 'hospital_exchangeEditorImg',params : {exchangeEditor : this.exchangeEditor}});
 						}else{
 							Toast.fail('请填写简介');
 						}
@@ -106,12 +111,28 @@ export default {
 				Toast.fail('请填写名称');
 			}
 		},
+		// modifyFn(){
+		// 	this.$axios.post('/c2/commodity/itemalter',qs.stringify({
+		// 		hospitalId : this.account.hospitalId,
+		// 		itemId : this.$route.params.item.itemId,
+		// 		name : this.exchangeEditor.name,
+		// 		cover : this.exchangeEditor.cover,
+		// 		intro : this.exchangeEditor.intro,
+		// 		stock: this.exchangeEditor.stock,
+		// 		payExchangepoint : this.exchangeEditor.payExchangepoint,
+		// 	})).then(res =>{
+		// 		// console.log(res.data.codeMsg)
+		// 		res.data.codeMsg?	this.$toast.fail({duration: 1000,message: res.data.codeMsg}):this.$toast.success({duration: 1000,message: '操作成功'})
+		// 	}).catch(err =>{
+		// 		console.log(err)
+		// 	})
+		// }
 	},
 }
 </script>
 
 <style scoped>
-.exchangeAdd{
+.exchangeEditor{
 	width: 100%;
 }
 .topNav{
@@ -160,10 +181,10 @@ export default {
 	border: none;
 	border-radius: .03rem;
 }
-.exchangeAdd ul{
+.exchangeEditor ul{
 	width: 100%;
 }
-.exchangeAdd ul li{
+.exchangeEditor ul li{
 	width: 91.46%;
 	height: .45rem;
 	line-height: .45rem;
@@ -171,36 +192,36 @@ export default {
 	border: 1px solid #D8D8D8;
 	margin-bottom: .12rem;
 }
-.exchangeAdd ul li:last-child{
+.exchangeEditor ul li:last-child{
 	height: 3.65rem;
 	line-height: normal;
 	padding-top: .12rem;
 }
-.exchangeAdd ul li:last-child span:nth-child(2){
+.exchangeEditor ul li:last-child span:nth-child(2){
 	color: #2B77EF;
 }
-.exchangeAdd ul li span{
+.exchangeEditor ul li span{
 	font-size: .14rem;
 	margin-left: .15rem;
 	color: #333333;
 }
-.exchangeAdd>ul>li>span:nth-child(2){
+.exchangeEditor>ul>li>span:nth-child(2){
 	float: right;
 	margin-right: .15rem;
 	color: #666666;
 }
-.exchangeAdd ul li p{
+.exchangeEditor ul li p{
 	float: right;
 	margin-right: .15rem;
 	font-size: .14rem;
 }
-.exchangeAdd ul li p>input{
+.exchangeEditor ul li p>input{
 	border: none;
 	height: .43rem;
 	text-align: right;
 	color: #2B77EF;
 }
-.exchangeAdd ul li textarea{
+.exchangeEditor ul li textarea{
 	width: 91.25%;
 	height: 3.3rem;
 	margin: 0rem auto;

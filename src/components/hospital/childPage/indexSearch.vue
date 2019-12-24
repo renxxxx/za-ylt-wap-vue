@@ -6,7 +6,7 @@
 					<img src="static/img/shape@3x.png" alt="">
 				</div>
 				<div class="clinic_search">
-					<input type="text" placeholder="输入门诊名"  v-model="keywords">
+					<input type="text" placeholder="搜索门诊"  v-model="keywords">
 					<img src="static/img/sousuo@2x.png" alt="">
 				</div>
 				<div class="clinic_buttton" @click="inputNow">
@@ -15,7 +15,7 @@
 			</div>
 			<div class="listTitle">
 				<div class="titleleft">
-					<h3>合作门诊</h3>
+					<h3>合作门诊 {{clinic.num}}</h3>
 				</div>
 				<div class="titleRight">
 					<router-link :to="{name : 'hospital_addCLinic'}">
@@ -25,7 +25,7 @@
 				</div>
 			</div>
 		</div>
-		<clinic_content ref='content'></clinic_content>
+		<clinic_content ref='content' :clinic = 'clinic'></clinic_content>
 		
 		
 	</div>
@@ -42,10 +42,13 @@ export default {
 		return {
 			keywords : '',
 			content : [],
+			clinic : {
+				num : 0
+			},
 		}
 	},
 	computed:{
-	  
+		...mapGetters(['account'])
 	},
 	components:{
 		clinic_content
@@ -65,6 +68,7 @@ export default {
 			// console.log(this.Time)
 			this.$axios.post('/c2/clinic/items',qs.stringify({
 				kw : this.keywords,
+				hospitalId : this.account.hospitalId,
 			}))
 			.then(_d => {
 				this.$refs.content.content = _d.data.data.items

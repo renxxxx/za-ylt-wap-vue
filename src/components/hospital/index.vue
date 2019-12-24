@@ -15,7 +15,6 @@
 				</van-swipe>
 			</div>
 		</div>
-		
 		<div class="typeList">
 			<ul>
 				<li>
@@ -215,8 +214,8 @@ export default {
 	width: 100%;
 	/* background: url('../../../static/img/88-1.png') no-repeat; */
 	/* background-size: 100% 1.8rem; */
-	background: linear-gradient(#2B77EF,#2B77EF,  #FFFFFF);
-	/* background-color: #FFFFFF; */
+	/* background: linear-gradient(#2B77EF,#2B77EF,  #FFFFFF); */
+	background-color: #FFFFFF;
 	padding-top: .12rem;
 	
 }
@@ -224,9 +223,9 @@ export default {
 	width: .88rem;
 	height: .25rem;
 	line-height: .25rem;
-	color: #FFFFFF;
+	color: #8a929a;
 	font-size: .14rem;
-	font-weight: bolder;
+	/* font-weight: bolder; */
 	text-align: center;
 	margin: 0 auto;
 }
@@ -265,7 +264,7 @@ export default {
 	height: 1.8rem;
 	margin: 0rem 2.25%;
 	/* box-shadow:0px 0px 30px 5px hsla(0, 0%, 0%, 10%); */
-	box-shadow: hsla(0, 0%, 0%, 10%) 0rem 0rem .1rem 0rem;
+	box-shadow: hsla(0, 0%, 0%, 50%) 0rem 0rem .1rem 0rem;
 	object-fit: cover;
 }
 .typeList{

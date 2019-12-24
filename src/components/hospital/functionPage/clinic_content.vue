@@ -127,6 +127,8 @@ export default {
 						this.loading = false;
 						this.finished = true;
 					}
+					// console.log(res.data.data.sum.totalCount)
+					this.clinic.num = res.data.data.sum.totalCount;
 				})
 				.catch((err)=>{
 					console.log(err);

@@ -8,7 +8,7 @@
 				</div>
 			<div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
 				<router-link :to="{name:'outpatient_search',params:{focus : true}}">
-					<input type="text" placeholder="搜索病源" v-model="list.keywords" readonly="readonly">
+					<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
 					<img src="static/img/sousuo@2x.png" alt="">
 				</router-link>
 			</div>
@@ -33,7 +33,7 @@
 							<clinicAll ref='all' :list = 'list'></clinicAll>
 						</keep-alive>
 					</van-tab>
-					<van-tab title="新增病源" v-if="isLogin == 200? true:false">
+					<van-tab title="新增病员" v-if="isLogin == 200? true:false">
 						<form @submit.prevent="hospitalSubmit" class="newAdd">
 							<div class="newAddTitle">
 								<img src="static/img/bitian@2x.png" alt="">

@@ -154,13 +154,14 @@ export default {
 <style scoped>
 .typeDetails{
 	width: 100%;
-	background-color: #F5F5F5;
+	/* background-color: #F5F5F5; */
+	background-color: #FFFFFF;
 }
 .topNav{
 	width: 100%;
 	height: .47rem;
 	line-height: .47rem;
-	border-bottom: 1px solid #E5E5E5;
+	/* border-bottom: 1px solid #E5E5E5; */
 	text-align: center;
 	position: relative;
 	background-color: #FFFFFF;

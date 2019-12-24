@@ -25,7 +25,7 @@
 		<ul class="exchangeLists">
 			<van-swipe-cell v-for="(item,inx) in commodity" :key="inx"  :right-width= 65 >
 				<li>
-					<router-link :to="{name : 'hospital_exchangeManagementAdd' ,params : {item : item}}">
+					<router-link :to="{name : 'hospital_exchangeEditor' ,params : {item : item}}">
 						<div class="list">
 							<div class="listsImg">
 								<img :src="item.cover" alt="">
@@ -127,7 +127,7 @@ export default {
 <style scoped>
 .exchange{
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
 	background-color: #F5F5F5;
 }
 .topNav{

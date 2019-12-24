@@ -4,13 +4,16 @@
 			<div class="topNav">
 				<div class="hospital_search">
 					<router-link :to="{name : 'hospital_indexSearch'}">
-						<input type="text" placeholder="输入门诊名">
+						<input type="text" placeholder="搜索门诊">
 						<img src="static/img/sousuo@2x.png" alt="">
 					</router-link>
 				</div>
 				<router-link :to="{name : 'hospital_clinicMessage'}">
 					<div class="hospital_information">
 						<img src="static/img/xiaoxi@2x.png" alt="">
+						<div class="num" v-if="this.account.data.data.newMessageCount? true:false">
+							<span>{{this.account.data.data.newMessageCount}}</span>
+						</div>
 					</div>
 				</router-link>
 			</div>
@@ -76,7 +79,7 @@ export default {
 		}
   },
 	computed:{
-	  
+	  ...mapGetters(['account'])
 	},
 	components:{
 		clinicContent,bottomNav
@@ -86,6 +89,7 @@ export default {
 	},
 	mounted () {
 		// this.getdata(0);
+		console.log(this.account.data.data.newMessageCount)
 	},
 	methods: {	
 		onRefresh() {
@@ -96,6 +100,7 @@ export default {
 			if(_data == 0){
 				this.isLoading = false;
 				this.$axios.post('/c2/clinic/items',qs.stringify({
+					hospitalId : this.account.hospitalId,
 					pn : 1,
 					ps : 10
 				}))
@@ -137,6 +142,7 @@ export default {
 				console.log(this.page)
 				this.page++
 				this.$axios.post('/c2/clinic/items',qs.stringify({
+					hospitalId : this.account.hospitalId,
 					pn : this.page,
 					ps : 10
 				}))
@@ -228,10 +234,30 @@ export default {
 	width: 10.3%;
 	margin-left: .14rem;
 	margin-top: .15rem;
+	position: relative;
 }
 .hospital_information img{
 	width: .19rem;
 	height: .24rem;
+}
+.num{
+	height: .18rem;
+	width: .18rem;
+	line-height: .18rem;
+	text-align: center;
+	background-color: #FF951B;
+	border-radius: 50%;
+	color: #FFFFFF;
+	font-size: .12rem;
+	position: absolute;
+	top: -6px;
+	right: 12px;
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
 }
 .shared{
 	height: .73rem;

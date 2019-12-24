@@ -6,7 +6,7 @@
 					<img src="static/img/shape@3x.png" alt="">
 				</div>
 				<div class="clinic_search">
-					<input type="text" placeholder="输入门诊名"  v-model="keywords" @keyup="inputNow">
+					<input type="text" placeholder="搜索门诊"  v-model="keywords" @keyup="inputNow">
 					<img src="static/img/sousuo@2x.png" alt="">
 				</div>
 			</div>

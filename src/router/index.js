@@ -75,6 +75,9 @@ import hospital_addActivity from '@/components/hospital/childPage/addActivity.vu
 import hospital_previewActivities from '@/components/hospital/childPage/previewActivities.vue'
 //医院端门诊的门诊详情页
 import hospital_clinicDetails from '@/components/hospital/childPage/clinicDetails.vue'
+//医院端门诊的具体门诊详情页
+import hospital_clinicInfo from '@/components/hospital/childPage/clinicInfo.vue'
+
 //医院端门诊主页的消息通知页面
 import hospital_clinicMessage from '@/components/hospital/childPage/clinicMessage.vue'
 //医院端用户主页的任务管理页面
@@ -85,6 +88,9 @@ import hospital_taskManagementDetails from '@/components/hospital/childPage/task
 import hospital_exchangeManagement from '@/components/hospital/childPage/exchangeManagement.vue'
 //医院端用户主页的兑换管理中的添加商品页面
 import hospital_exchangeManagementAdd from '@/components/hospital/childPage/exchangeManagementAdd.vue'
+//医院端用户主页的兑换管理中的修改商品页面
+import hospital_exchangeEditor from '@/components/hospital/childPage/exchangeEditor.vue'
+
 //医院端用户主页的兑换管理中的添加商品后上传图片的页面
 import hospital_exchangeManagementImg from '@/components/hospital/childPage/exchangeManagementImg.vue'
 //医院端用户主页的兑换管理中的门诊兑换清单
@@ -185,6 +191,13 @@ const router = new Router({
 			meta: {auth:true},
 		},
 		{
+			//医院端门诊的具体门诊详情页
+			path: '/hospital_clinicInfo',
+			name: 'hospital_clinicInfo',
+			component: hospital_clinicInfo,
+			meta: {auth:true},
+		},
+		{
 			// 医院端门诊主页的优质案例
 			path: '/hospital_case',
 			name: 'hospital_case',
@@ -260,6 +273,13 @@ const router = new Router({
 			path: '/hospital_exchangeManagement',
 			name: 'hospital_exchangeManagement',
 			component: hospital_exchangeManagement,
+			// meta: {auth:true},
+		},
+		{
+			//医院端用户主页的兑换管理中的修改商品页面
+			path: '/hospital_exchangeEditor',
+			name: 'hospital_exchangeEditor',
+			component: hospital_exchangeEditor,
 			// meta: {auth:true},
 		},
 		{

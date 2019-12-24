@@ -5,7 +5,7 @@
 				<img src="static/img/back-white@2x.png" alt="">
 			</div>
 			<div class="centerNav">
-				<span>新增门诊</span>
+				<span>门诊详情页</span>
 			</div>
 			<div class="rightNav" @click="saveFn">
 				<span>保存</span>
@@ -54,7 +54,7 @@
 					<img src="static/img/xuantian@2x.png" alt="">
 					<h3>选填项</h3>
 					<ul class="Fill">
-						<li  >
+						<li>
 							<span>备注</span>
 							<input type="text" v-model="addClinic.remark" placeholder="请填写">
 						</li>
@@ -74,12 +74,27 @@
 								   </div>
 							</div>
 							<img class="rightImg" src="static/img/right@2x.png" alt="">
+							
 							<img  id="backimg" :src='imageUpload'  alt="" >
+							
 						</li>
+						
 						<!-- <van-action-sheet v-model="show"  :round="false" >
 							<div class="popupChoose">
-								<span>拍照</span>
-								
+								<span><input type=""></span>
+								<div class="uploadPictures">
+									 <input
+									        type="file"
+									        class="upload"
+									        ref="inputer"
+									        accept="image/png,image/jpeg,image/gif,image/jpg"
+									        multiple
+											@change="addImg($event)"
+									   />
+									   <div class="add">
+									      <p>点击上传</p>
+									   </div>
+								</div>
 							</div>
 							<button @click="closeFn" class="closeStyle">取消</button>
 						</van-action-sheet> -->
@@ -150,16 +165,25 @@ export default {
 			Dialog({ message: '加载失败!'});
 		})
 		// console.log(this.$route.params.item)
-    // this.$route.params.item ? this.clinicFn() : ""
+    this.$route.params.item ? this.clinicFn() : ""
 	},
 	methods: {
     clinicFn(){
-      
-      this.$axios.post('/c2/clinic/itemadd',qs.stringify({
+      this.$axios.post('/c2/clinic/item',qs.stringify({
       	itemId : this.$route.params.item,
       }))
       .then(_d => {
-      	this.addClinic = _d.data.data;
+		  debugger;
+		this.addClinic = {
+			name : _d.data.data.name,
+			phone : _d.data.data.userPhone,
+			pwd :'',
+			headmanName : _d.data.data.headmanName,
+			contactTel : _d.data.data.contactTel,
+			address : _d.data.data.address,
+			remark : _d.data.data.remark,
+		},
+		// console.log(this.addClinic)
       	this.imageUpload = _d.data.data.license
       })
       .catch((err)=>{
@@ -204,8 +228,9 @@ export default {
 		// 保存方法
 		saveFn(){
 			console.log(this.addClinic)
-			this.$axios.post('c2/clinic/itemadd',qs.stringify({
+			this.$axios.post('/c2/clinic/itemalter',qs.stringify({
 				hospitalId : this.account.hospitalId,
+				itemId : this.$route.params.item,
 				name : this.addClinic.name,
 				phone : this.addClinic.phone,
 				pwd : this.addClinic.pwd,
@@ -405,7 +430,6 @@ export default {
 	height: .71rem!important;
 	top: 0;
 	left: 0;
-	
 }
 .uploadPictures:hover{
    border-color:#3594F4;

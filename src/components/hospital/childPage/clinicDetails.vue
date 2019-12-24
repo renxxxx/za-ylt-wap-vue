@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>{{this.clinicDetails.name}}</h3>
 			</div>
-			<router-link :to="{name : 'hospital_addCLinic' ,params : {item : clinicDetails.clinicId}}">
+			<router-link :to="{name : 'hospital_clinicInfo' ,params : {item : clinicDetails.clinicId}}">
 				<div class="right">
 					<img src="static/img/Preview@2x.png" alt="">
 				</div>
@@ -197,12 +197,15 @@ export default {
 <style scoped>
 .clinicDetails{
 	width: 100%;
+	/* padding-top: .47rem; */
 }
 .topNav{
 	width: 100%;
 	height: .47rem;
 	line-height: .47rem;
 	background-color: #FFFFFF;
+	position: fixed;
+	z-index: 999;
 }
 .leftImg{
 	width: 10%;
@@ -249,7 +252,7 @@ export default {
 .statistics{
 	width: 65.06%;
 	margin: 0rem auto;
-	margin-top: .25rem;
+	margin-top: .47rem;
 }
 .statisticsText{
 	width: .8rem;
@@ -351,4 +354,15 @@ export default {
     text-align: center;
     z-index: -1!important;
 }
+/* >>>.van-circle svg, .van-loading__spinner--spinner i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+>>>.van-circle__text {
+    z-index: -1;
+} */
 </style>

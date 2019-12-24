@@ -5,7 +5,7 @@
 				<img src="static/img/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
-				<h3>新增商品</h3>
+				<h3>修改商品</h3>
 			</div>
 			<div class="right" >
 				<button :class="imgUrl? 'buttonColorOver' : 'buttonColorNow'" @click="submitFn">完成</button>
