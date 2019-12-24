@@ -71,6 +71,11 @@ export default {
 		
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		this.$route.params.item? this.exchangeAdd = {
 			name : this.$route.params.item.name,
 			payExchangepoint : this.$route.params.item.payExchangepoint,

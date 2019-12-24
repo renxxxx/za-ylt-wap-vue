@@ -81,6 +81,11 @@ export default {
 
 	},
 	mounted(){
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		this.$axios.post('/clientend2/clinicend/taskcenter/tasks',qs.stringify({
 			clinicId : this.account.clinicId,
 		}))

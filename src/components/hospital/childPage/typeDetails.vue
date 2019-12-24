@@ -90,6 +90,11 @@ export default {
 		
 	},
 	mounted(){
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		let id = '';
 		this.$router.currentRoute.params.item? id = this.$router.currentRoute.params.item: ''
 		this.$axios.post('/c2/office/item',qs.stringify({

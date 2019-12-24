@@ -48,6 +48,10 @@ export default {
 		
 	},
 	mounted(){
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
 		// console.log(this.$route.params.data)
 		let postUrl = '';
 		if(this.$route.params.data ==1){

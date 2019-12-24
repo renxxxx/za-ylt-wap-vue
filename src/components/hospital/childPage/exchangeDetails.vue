@@ -57,6 +57,11 @@ export default {
 		
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		console.log(this.$route.params.item.orderId);
 		this.$axios.post('/clientend2/hospitalend/exchangemanage/orderinfo',qs.stringify({
 			orderId : this.$route.params.item.orderId,

@@ -130,6 +130,11 @@ export default {
 
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		// 加载dom节点后,获取推广人列表请求
 		this.$axios.post('hospitaler/clinic-promoter/list',qs.stringify({
 			pn : 1,

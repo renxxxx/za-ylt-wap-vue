@@ -68,7 +68,10 @@ export default {
 		
   },
   mounted () {
-
+if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
 	document.addEventListener('scroll',this.scrollToTop)
 	// window.addEventListener('scroll', console.log('s'))
 	this.$axios.post('/c/procurement/entpg')

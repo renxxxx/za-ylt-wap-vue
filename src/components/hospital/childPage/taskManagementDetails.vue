@@ -65,6 +65,11 @@ export default {
 		
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		this.show = this.$route.params.show;	
 		// this.taskSubmitValue.name = this.$route.params.item.name;
 		this.taskSubmitValue = this.$route.params.item

@@ -41,6 +41,11 @@ export default {
 	},
 	props:['show'],
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		this.$axios.post('/clientend2/clinicend/pointexchange/hots',qs.stringify({
 			clinicId : this.account.clinicId,
 			pn : 1,

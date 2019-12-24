@@ -70,6 +70,10 @@ export default {
 
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
 		// console.log(this.list)
 		// this.getdata();
     // let winHeight = document.documentElement.clientHeight;                   //视口大小

@@ -86,6 +86,11 @@ export default {
 		
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		this.coverImg = this.account.data.data.hospital.cover;
 		this.images.push(this.account.data.data.hospital.license)
 		// console.log(this.account.data.data.hospital.cover)
