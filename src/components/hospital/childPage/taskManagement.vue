@@ -59,6 +59,11 @@ export default {
 
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		if(this.task.one.length == 0 || this.task.no.length == 0){
 			// this.task.no = [];
 			// this.task.one = []

@@ -98,7 +98,10 @@ export default {
 
 	},
 	mounted () {
-
+if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
 	},
 	methods: {
 		// 筛选确定

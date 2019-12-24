@@ -80,6 +80,11 @@ export default {
 		window.clearInterval(this.flowHeading)
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		// 从接口获取消息
 		this.$axios.post('/clientend2/clinicend/pointexchange/msgs',qs.stringify({
 			clinicId : this.account.clinicId,

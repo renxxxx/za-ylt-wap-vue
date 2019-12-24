@@ -126,6 +126,11 @@ export default {
 		
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		//轮播图图片路径请求
 		this.$axios.get('/hospital/hospital-ads')
 			.then(res =>{

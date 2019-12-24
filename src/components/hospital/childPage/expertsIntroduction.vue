@@ -53,6 +53,11 @@ export default {
 		
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		this.$axios.post('/c2/doctor/items',qs.stringify({
 			hospitalId : this.account.hospitalId,
 		}))

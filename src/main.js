@@ -34,9 +34,9 @@ if(window.plus){
 
 
 function plusReady(){
-	    plus.navigator.setStatusBarBackground("#2B77EF");
-      plus.navigator.setStatusBarStyle("light")
-
+        plus.navigator.setStatusBarBackground("#ffffff");
+        plus.navigator.setStatusBarStyle("dark")
+        
       function location(position){
         axios.defaults.headers.common['latitude']=position.coords.latitude
         axios.defaults.headers.common['longitude']=position.coords.longitude

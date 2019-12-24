@@ -56,6 +56,11 @@ export default {
 
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		this.imgUrl = this.exchangeAdd.cover
 		console.log(this.imgUrl)
 	},

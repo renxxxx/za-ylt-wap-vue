@@ -113,6 +113,10 @@ export default {
 		
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
 		// this.ItemIdFn();
 		this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = '';
 		this.getNum();

@@ -46,6 +46,13 @@ export default {
 
   },
   mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
+	console.log(this.$router.currentRoute.params.components)
+
 	// console.log(this.$router.currentRoute.params.components)
 	this.$router.currentRoute.params.components? this.backFN(): this.componentName = 'hospital_imageAbout'
 	this.$axios.post('/c2/hospital/item',qs.stringify({

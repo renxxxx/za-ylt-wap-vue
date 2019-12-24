@@ -67,6 +67,11 @@ export default {
 		
 	},
 	mounted () {
+		if(window.plus){
+			plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
 		this.$axios.post('/clientend2/clinicend/pointexchange/receivers',qs.stringify({
 			clinicId : this.account.clinicId,
 			pn : 1,
