@@ -29,9 +29,7 @@ Vue.prototype.qs = qs
 
 
 
-
 let isLogin = localStorage.getItem('isLogin');
-
 if (isLogin && !isNaN(parseInt(isLogin))) {
 	isLogin = parseInt(isLogin);
 	Vue.prototype.$store.state.shop.isLogin = isLogin;
@@ -51,7 +49,7 @@ if (isLogin && !isNaN(parseInt(isLogin))) {
 	}
 }
 let lastRoute=null;
- function getdata(_postRefresh, _isLogin) {			
+ function getdata(_postRefresh, _isLogin) {
 	jquery.ajax({
 		type:'post',
 		 url:_postRefresh,
@@ -64,14 +62,14 @@ let lastRoute=null;
 						Vue.prototype.$store.state.shop.account.data = {};
 						Vue.prototype.$store.state.shop.account.data = res;
 						break;
-						
+
 					case 200:
 						Vue.prototype.$store.state.shop.account.clinicId = res.data.clinic.clinicId;
 						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
 						Vue.prototype.$store.state.shop.account.data = {};
 						Vue.prototype.$store.state.shop.account.data = res;
 						break;
-						
+
 					case 300:
 						Vue.prototype.$store.state.shop.account.clinicId = res.data.clinic.clinicId;
 						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
@@ -80,7 +78,7 @@ let lastRoute=null;
 						break;
 				}
 			}
-		}			
+		}
 	})
 }
 

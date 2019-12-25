@@ -40,11 +40,20 @@ export default {
       	allNum : 0,
       	clinicId : '',
       	clinicAll : [],
-      }
+      },
+      Time:{
+      	look:'',
+      	noLook:'',
+      	confirmStart : undefined,
+      	confirmOver : undefined,
+      	pushStart : undefined,
+      	pushOver : undefined,
+      	postState : undefined,
+      },
     }
   },
   computed:{
-	...mapGetters(['Time','showTime','detail','account']),
+	...mapGetters(['showTime','detail','account']),
 	show: {
 	      get: function() {
 	  		// console.log(this.$store)

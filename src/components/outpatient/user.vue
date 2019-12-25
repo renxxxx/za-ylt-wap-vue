@@ -124,6 +124,7 @@ export default {
 		this.account.password = '';
 		console.log(this.isLogin);
 		this.$axios.post('/hospital/logout');
+    localStorage.clear();
 	}
   },
 }

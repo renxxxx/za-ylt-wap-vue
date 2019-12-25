@@ -128,6 +128,11 @@ export default {
 		//退出方法
 		exitFn(){
 			this.$axios.post('/hospital/logout')
+      this.isLogin = 0;
+      this.account.name = '';
+      this.account.password = '';
+      console.log(this.isLogin);
+      localStorage.clear();
 		},
 		noLinkFn(){
 			this.$toast.setDefaultOptions({ duration: 1000 });

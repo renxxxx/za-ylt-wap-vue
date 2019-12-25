@@ -65,7 +65,7 @@ export default {
 			],
 			// 组件切换值
 			componentName :'clinicAll',
-			// clinicDetails : {},
+			clinicDetails : {},
 			list:{
 				name:'',
 				keywords : '',			//搜索框的关键字value
@@ -81,20 +81,20 @@ export default {
 				clinicYes : [],
 				data: true,
 			},
-			
+			// clinicDetails:{},
 		}
 	},
 	computed:{
 		...mapGetters(['account']),
-		clinicDetails: {
-			get: function() {
-				// console.log(this.$store)
-				return this.$store.state.shop.clinicDetails
-			},
-			set: function (newValue) {
-				this.$store.state.shop.clinicDetails = newValue;
-			},
-		},
+		// clinicDetails: {
+		// 	get: function() {
+		// 		// console.log(this.$store)
+		// 		return this.$store.state.shop.clinicDetails
+		// 	},
+		// 	set: function (newValue) {
+		// 		this.$store.state.shop.clinicDetails = newValue;
+		// 	},
+		// },
 		num: {
 			get: function() {
 				// console.log(this.$store)
@@ -110,7 +110,7 @@ export default {
 		clinicAll,clinicYes,clinicNo
 	},
 	created () {
-		
+
 	},
 	mounted () {
 		if(window.plus){
@@ -131,10 +131,10 @@ export default {
 			// let _geneData =  this.option.find( n => n.value == this.value);
 			// console.log('ss')
 			switch(this.value){
-				case 0: 
+				case 0:
 				this.componentName = 'clinicAll';
 				break;
-				case 1: 
+				case 1:
 				this.componentName = 'clinicNo';
 				break;
 				case 2:
@@ -233,7 +233,7 @@ export default {
 	font-size: .16rem;
 	font-weight: bolder;
 }
-.right{	
+.right{
 	width: 10%;
 	height: .47rem;
 	line-height: .47rem;

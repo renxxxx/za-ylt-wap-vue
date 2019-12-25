@@ -59,19 +59,18 @@
 		<div class="_photo">
 			<h3>发票照片</h3>
       <ul>
-        <li v-for="(item,inx) in imgUrl" :key="inx" @click="enlargeFn">
+        <li v-for="(item,inx) in imgUrl" :key="inx" @click="enlargeFn(inx)">
           <img v-bind:src="item" alt="">
           <img v-show="show" src="static/img/detele.png" alt="" @click="deteleFn(item)">
 		  <van-image-preview
 		    v-model="enlarge"
 		    :images="imgUrl"
-			:start-position='inx'
+			:start-position='photoNum'
 		    @change="onChange"
 		  >
-		    <template v-slot:index>第{{ photoNum+1 }}页</template>
+		    <template v-slot:index>第{{ photoPage+1 }}页</template>
 		  </van-image-preview>
         </li>
-		
          <li v-show="show">
             <div class="addImg">
             	<div class="addImgButton" v-show="imgUrl? false : true">
@@ -108,20 +107,37 @@ export default {
 			num: 0,						//点击次数
 		},
 		photoNum : 0,
+    photoPage : 0,
 		enlarge: false,
+    detail:{
+    	patientId : undefined,		//病人id
+    	realname : undefined,		//病人姓名
+    	clinicId : undefined,		//门诊id
+    	clinicName : undefined,		//门诊名称
+    	hospitalConfirmTime : undefined	,//医院确诊时间
+    	hospitalId	: undefined,	//医院id
+    	hospitalName : undefined,	//医院名称
+    	idcardNo : undefined,		//身份证号
+    	invoices : [],		//发票
+    	patientId :undefined,		//患者id
+    	pushTime : undefined,		//推送时间
+    	remark : undefined,			//备注
+    	tel : undefined,			//电话号码
+    	sickness : undefined		//病例
+    },
     }
   },
   computed:{
-		...mapGetters(['account','detail','isLogin']),
-		detail: {
-			get: function() {
-				// console.log(this.$store)
-				return this.$store.state.shop.detail
-			},
-			set: function (newValue) {
-				this.$store.state.shop.detail = newValue;
-			},
-		},
+		...mapGetters(['account','isLogin']),
+		// detail: {
+		// 	get: function() {
+		// 		// console.log(this.$store)
+		// 		return this.$store.state.shop.detail
+		// 	},
+		// 	set: function (newValue) {
+		// 		this.$store.state.shop.detail = newValue;
+		// 	},
+		// },
   },
   created () {
 
@@ -131,7 +147,7 @@ export default {
 			plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
+
 	this.$axios.post('/c2/patient/item',qs.stringify({
 		patientId : this.$route.query.patientId,
 	})).then(res =>{
@@ -181,13 +197,14 @@ export default {
 	})
   },
   methods: {
-	enlargeFn(){
+	enlargeFn(_value){
+    this.photoNum = _value;
+    console.log(this.photoNum)
 		this.enlarge = true;
 	},
 	onChange(_value){
-		
-		this.photoNum = _value;
-		console.log(_value)
+		this.photoPage = _value;
+		console.log(this.imgUrl)
 	},
 	// 返回上一级
 	goBackFn(){
