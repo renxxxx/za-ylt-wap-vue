@@ -34,9 +34,8 @@ if(window.plus){
 
 
 function plusReady(){
-        plus.navigator.setStatusBarBackground("#ffffff");
-        plus.navigator.setStatusBarStyle("dark")
-        
+	   
+
       function location(position){
         axios.defaults.headers.common['latitude']=position.coords.latitude
         axios.defaults.headers.common['longitude']=position.coords.longitude
@@ -51,14 +50,7 @@ function plusReady(){
 
       }, {geocode:false} );
 }
-Vue.directive('focus', {
-  // 当被绑定的元素插入到 DOM 中时……
-  inserted: function (el,attr) {
-    // 聚焦元素
-	if(attr.value)
-		el.focus()
-  }
-})
+
 
 moment.locale('zh-cn');
 
