@@ -126,10 +126,20 @@ export default {
 			plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("light")
   		}
-	console.log(this.$store.state.shop.account)
+		
+		
   },
   computed:{
-	...mapGetters(['checked','account']),
+	...mapGetters(['checked']),
+	account:{
+		get: function() {
+			console.log(this.$store)
+		    return this.$store.state.shop.account
+		},
+		set: function (newValue) {
+			this.$store.state.shop.account = newValue;
+		},
+	},
 	isLogin: {
 	    get: function() {
 			// console.log(this.$store)

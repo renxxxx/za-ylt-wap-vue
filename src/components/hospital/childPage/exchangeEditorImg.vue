@@ -100,7 +100,6 @@ export default {
 		},
 		successFn(){
 			Toast.success('操作成功');
-			debugger;
 			this.$router.go(-2);
 		}
 	},

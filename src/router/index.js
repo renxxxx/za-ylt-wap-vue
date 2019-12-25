@@ -326,8 +326,7 @@ const router = new Router({
 			path: '/outpatient_index',
 			name: 'outpatient_index',
 			component: outpatient_index,
-			meta: {auth:true},
-
+			// meta: {auth:true},
 		},
 		{
 			// 门诊端的主页搜索
@@ -445,12 +444,16 @@ const router = new Router({
 })
 
 router.beforeEach((to,from,next) => {
+	debugger
+	//TODO 保存当前路由
 	
 	// console.log(to)
 	// console.log(next)
 	if(to.meta){
 		if(to.meta.auth){
-			// console.log(store.state.shop.account.isLogin)
+			console.log(store)
+			
+			// JSON.parse(localStorage.getItem("isLogin"))? isLogin = JSON.parse(localStorage.getItem("isLogin")): ''
 			switch(store.state.shop.isLogin){
 				case 100:
 				// console.log('暂未开放中');

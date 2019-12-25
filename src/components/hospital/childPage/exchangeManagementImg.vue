@@ -95,8 +95,6 @@ export default {
 					payExchangepoint : this.exchangeAdd.payExchangepoint,
 				})).then(res  =>{
 					res.data.codeMsg? Toast.fail(res.data.codeMsg) : this.successFn();
-          debugger;
-          
           console.log(this.exchangeAdd)
 				}).catch(err =>{
 					console.log(err)

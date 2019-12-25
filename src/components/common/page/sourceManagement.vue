@@ -84,7 +84,7 @@
 </template>
 <script>
 import axios from 'axios'
-import {mapActions,mapGetters} from 'vuex'
+import {mapActions,mapGetters,mapState} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 import clinicAll from '../functionPage/clinicAll.vue'
@@ -123,10 +123,12 @@ export default {
 	this.getNum();
   },
   computed:{
-		...mapGetters(['Time','labelDocument','showTime','show','account','detail','isLogin']),
+		// ...mapState({
+		// 	count: account =>
+		// }),
 		show: {
 			get: function() {
-			// console.log(this.$store)
+			console.log(this.$store)
 				return this.$store.state.shop.show
 			},
 			set: function (newValue) {
@@ -142,6 +144,7 @@ export default {
 			this.$store.state.shop.showTime = newValue;
 			},
 		},
+		...mapGetters(['Time','account','isLogin']),
   },
   //注册组件
   components:{

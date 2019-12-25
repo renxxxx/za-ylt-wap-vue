@@ -101,7 +101,6 @@ export default {
 					if(this.exchangeEditor.stock != ''){
 						if(this.exchangeEditor.intro != ''){
 							console.log(this.exchangeEditor)
-							debugger;
 							this.$router.push({ name : 'hospital_exchangeEditorImg',params : {exchangeEditor : this.exchangeEditor}});
 						}else{
 							Toast.fail('请填写简介');

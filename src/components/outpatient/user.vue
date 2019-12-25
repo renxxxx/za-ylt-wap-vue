@@ -118,7 +118,6 @@ export default {
 	 },
 	//退出方法
 	exitFn(){
-		debugger
 		this.$router.go(-400)
 		this.isLogin = 0;
 		this.account.name = '';

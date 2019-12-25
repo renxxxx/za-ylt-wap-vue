@@ -120,7 +120,7 @@ export default {
 		  bottomNav
 	},
 	computed:{
-		...mapGetters(['account']),
+		...mapGetters(['account','isLogin']),
 	},
 	created () {
 		

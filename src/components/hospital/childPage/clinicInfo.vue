@@ -173,7 +173,6 @@ export default {
       	itemId : this.$route.params.item,
       }))
       .then(_d => {
-		  debugger;
 		this.addClinic = {
 			name : _d.data.data.name,
 			phone : _d.data.data.userPhone,

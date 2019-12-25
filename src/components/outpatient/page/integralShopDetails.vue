@@ -78,7 +78,6 @@ export default {
 			ps : 99
 		}))
 		.then(res => {
-			debugger
 			if(res.data.code == 0 && res.data.data.items && res.data.data.items.length>0){
 				this.address = res.data.data.items[0];
 			}else{
@@ -112,7 +111,6 @@ export default {
 				})
 			}))
 			.then(res => {
-				debugger;
 				console.log(res.data.codeMsg)
 				res.data.codeMsg? this.$toast.fail(res.data.codeMsg):this.$toast.success('操作成功')
 			})

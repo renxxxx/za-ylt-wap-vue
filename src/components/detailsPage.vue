@@ -153,7 +153,6 @@ export default {
 		// 如果信息中有发票图片,就显示
 		// console.log(this.detail)
 		if(res.data.data.invoices){
-      debugger;
 			res.data.data.invoices = res.data.data.invoices.split(",");
 			for (let i in res.data.data.invoices){
 				this.imgUrl.push( res.data.data.invoices[i]);
