@@ -66,14 +66,16 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		console.log(this.$route.query)
-		let querAddress = JSON.parse(this.$route.query)
+		let querAddress = JSON.parse(this.$route.query.address)
+		console.log(querAddress)
 		this.address = {
 			name : querAddress.name,
 			tel : querAddress.tel,
-			city : querAddress.city,
-			detailedAddress : querAddress.detailedAddress,
+			city : querAddress.area,
+			detailedAddress : querAddress.address,
 			receiverId : querAddress.receiverId
 		}
+		console.log(this.address)
 	},
 	methods: {
 		goBackFn(){
