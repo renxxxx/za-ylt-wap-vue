@@ -74,30 +74,8 @@
 								   </div>
 							</div>
 							<img class="rightImg" src="static/img/right@2x.png" alt="">
-							
 							<img  id="backimg" :src='imageUpload'  alt="" >
-							
 						</li>
-						
-						<!-- <van-action-sheet v-model="show"  :round="false" >
-							<div class="popupChoose">
-								<span><input type=""></span>
-								<div class="uploadPictures">
-									 <input
-									        type="file"
-									        class="upload"
-									        ref="inputer"
-									        accept="image/png,image/jpeg,image/gif,image/jpg"
-									        multiple
-											@change="addImg($event)"
-									   />
-									   <div class="add">
-									      <p>点击上传</p>
-									   </div>
-								</div>
-							</div>
-							<button @click="closeFn" class="closeStyle">取消</button>
-						</van-action-sheet> -->
 					</ul>
 				</div>
 			</form>
@@ -164,13 +142,13 @@ export default {
 			console.log(err);
 			Dialog({ message: '加载失败!'});
 		})
-		// console.log(this.$route.params.item)
-    this.$route.params.item ? this.clinicFn() : ""
+		// console.log(this.$route.query.item)
+    this.$route.query.item ? this.clinicFn() : ""
 	},
 	methods: {
     clinicFn(){
       this.$axios.post('/c2/clinic/item',qs.stringify({
-      	itemId : this.$route.params.item,
+      	itemId : this.$route.query.item,
       }))
       .then(_d => {
 		this.addClinic = {
@@ -229,7 +207,7 @@ export default {
 			console.log(this.addClinic)
 			this.$axios.post('/c2/clinic/itemalter',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				itemId : this.$route.params.item,
+				itemId : this.$route.query.item,
 				name : this.addClinic.name,
 				phone : this.addClinic.phone,
 				pwd : this.addClinic.pwd,

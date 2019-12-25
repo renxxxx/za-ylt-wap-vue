@@ -62,9 +62,9 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		
-		console.log(this.$route.params.item.orderId);
+		console.log(this.$route.query.item.orderId);
 		this.$axios.post('/clientend2/hospitalend/exchangemanage/orderinfo',qs.stringify({
-			orderId : this.$route.params.item.orderId,
+			orderId : this.$route.query.item.orderId,
 		}))
 		.then(res => {
 			res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn(res);

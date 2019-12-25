@@ -8,7 +8,7 @@
 			</div>
 			<div class="search_input">
 				<img src="static/img/sousuo@2x.png" alt="">
-				<input type="text" placeholder="搜索病员" v-model="list.keywords" v-focus='this.$route.params.focus'>
+				<input type="text" placeholder="搜索病员" v-model="list.keywords" v-focus='this.$route.query.focus'>
 			</div>	
 			<div class="clinic_buttton"  @click="inputNow">
 				<button>搜索</button>

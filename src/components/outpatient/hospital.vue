@@ -41,24 +41,6 @@
 				</router-link>
 			</ul>
 		</div>
-		
-		<!-- <div class="article">
-			<h3>文章分享</h3>
-			<ul>
-				<li>
-					<div class="article_left">
-						<p>身体有这些症状，说明你可能感染了幽门螺旋杆菌</p>
-						<div class="article_leftTime">
-							<img src="static/img/time@2x.png" alt="">
-							<span>2019-02-19 12:39</span>
-						</div>
-					</div>
-					<div class="article_right">
-						<img src="static/img/Group@2x.png" alt="">
-					</div>
-				</li>
-			</ul>
-		</div> -->
 		<div class="article">
 			<div class="articleTitle">
 				<!-- <img src="static/img/Combined Shape@2x.png" alt=""> -->
@@ -67,7 +49,7 @@
 			<ul :model="article">
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @check="onLoad">
 					<li v-for="(items,inx) in article" :key="inx">
-						<router-link :to="{name : 'hospital_caseDetails' ,params : {item : items,data: 1}}">
+						<router-link :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 1}}">
 							<div class="article_left">
 								<p>{{items.content}}</p>
 								<div class="article_leftTime">

@@ -84,8 +84,6 @@ const state={
 	
 	// 医院端门诊详情列表信息
 	clinicDetails:{},
-	// 门诊端兑换详情页数据
-	shopDetails:{},
 }
 const getters={
 	//账号协议checked
@@ -106,8 +104,6 @@ const getters={
 	activity : state => state.activity,
 	//医院端兑换管理详情页参数
 	taskSubmitValue : state => state.taskSubmitValue,
-	// 门诊端兑换详情页数据
-	shopDetails : state => state.shopDetails,
 	// 医院端门诊详情列表信息
 	clinicDetails : state => state.clinicDetails,
 	isLogin : state => state.isLogin

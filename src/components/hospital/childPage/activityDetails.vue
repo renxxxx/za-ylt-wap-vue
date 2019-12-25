@@ -79,7 +79,7 @@ export default {
 		}
 		
 		this.$axios.post('/c2/activity/item',qs.stringify({
-			itemId : this.account.itemId,
+			itemId : this.$route.query.itemId,
 		}))
 		.then(_d => {
 			this.active = _d.data.data

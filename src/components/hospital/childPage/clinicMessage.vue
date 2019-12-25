@@ -13,7 +13,7 @@
 		<div class="content">
 			<ul>
 				<li v-for="(item,inx) in clinicMessage" :key='inx'>
-					<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
+					<router-link :to="{name : 'details' ,query : {patientId : item.itemId}}">
 						<div class="triangle_border_up">
 							<span></span>
 						</div>

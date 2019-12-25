@@ -76,7 +76,7 @@ export default {
 			console.log(this.address)
 			this.$axios.post('/clientend2/clinicend/pointexchange/receiveradd',qs.stringify({
 				clinicId : this.account.clinicId,
-				receiverId : this.$route.params.item.receiverId,
+				receiverId : this.$route.query.item.receiverId,
 				name : this.address.name,
 				tel : this.address.tel,
 				address : this.address.city + this.address.detailedAddress,

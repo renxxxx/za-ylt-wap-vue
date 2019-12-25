@@ -78,7 +78,7 @@
 			<ul :model="article">
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @check="onLoad">
 					<li v-for="(items,inx) in article" :key="inx">
-						<router-link :to="{name : 'hospital_caseDetails' ,params : {item : items,data: 1}}">
+						<router-link :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 1}}">
 							<div class="article_left">
 								<p>{{items.content}}</p>
 								<div class="article_leftTime">

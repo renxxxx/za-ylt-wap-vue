@@ -2,7 +2,7 @@
 	<div class="imageType">
 		<ul>
 			<li v-for="(item,inx) in type" :key='inx'>
-				<router-link :to="{name : 'hospital_typeDetails' ,params : {item : item.itemId}}">
+				<router-link :to="{name : 'hospital_typeDetails' ,query : {item : item.itemId}}">
 					<img :src="item.url" alt="">
 					<span>{{item.name}}</span>
 				</router-link>

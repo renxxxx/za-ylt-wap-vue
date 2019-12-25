@@ -48,14 +48,14 @@ export default {
 
 	},
 	mounted () {
-		this.exchangeAdd = this.$route.params.exchangeEditor
-		console.log(this.$route.params.exchangeEditor)
+		this.exchangeAdd = JSON.parse(this.$route.query.exchangeEditor)
+		console.log(this.$route.query.exchangeEditor)
 	},
 	methods: {
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)
-			// this.$router.push({ name : 'hospital_exchangeManagementAdd',params : {item : this.commodity}});
+			// this.$router.push({ name : 'hospital_exchangeManagementAdd',query : {item : this.commodity}});
 			// exchangeManagementAdd
 		},
 		//添加图片

@@ -14,7 +14,7 @@
 			<ul>
 				<li v-for="(item,inx) in task.one" :key='inx'>
 					<input type="checkbox" class="input_check" :checked="item.checked" @change="change($event,item,inx)"/>
-					<router-link :to="{name : 'hospital_taskManagementDetails' ,params : {item : item,show : false}}">
+					<router-link :to="{name : 'hospital_taskManagementDetails' ,query : {item : JSON.stringify(item),show : false}}">
 						<span>{{item.name}}</span>
 					</router-link>
 				</li>
@@ -23,7 +23,7 @@
 			<ul>
 				<li v-for="(item,inx) in task.no" :key='inx'>
 					<input type="checkbox" class="input_check" :checked="item.checked" @change="change($event,item,inx)"/>
-					<router-link :to="{name : 'hospital_taskManagementDetails' ,params : {item : item,show : true}}">
+					<router-link :to="{name : 'hospital_taskManagementDetails' ,query : {item : JSON.stringify(item),show : true}}">
 						<span>{{item.name}}</span>
 					</router-link>
 				</li>
@@ -162,10 +162,10 @@ export default {
 				case true:
 				if(_item.oneTimeIs == 1){
 					this.task.one[inx].checked = _value.target.checked
-					this.$router.push({ name : 'hospital_taskManagementDetails',params : {item : _item,show : false}});
+					this.$router.push({ name : 'hospital_taskManagementDetails',query : {item : _item,show : false}});
 				}else{
 					this.task.no[inx].checked = _value.target.checked;
-					this.$router.push({ name : 'hospital_taskManagementDetails',params : {item : _item,show : false}});
+					this.$router.push({ name : 'hospital_taskManagementDetails',query : {item : _item,show : false}});
 				};
 				break;
 				case false:
@@ -179,10 +179,8 @@ export default {
 			}
 			if(_item.oneTimeIs == 1){
 				this.task.one[inx].checked = true
-				// this.$router.push({ name : 'hospital_taskManagementDetails',params : {item : _item,show : false}});
 			}else{
 				this.task.no[inx].checked = true;
-				// this.$router.push({ name : 'hospital_taskManagementDetails',params : {item : _item,show : false}});
 			};
 
 		},

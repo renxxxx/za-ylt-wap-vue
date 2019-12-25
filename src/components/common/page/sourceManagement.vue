@@ -7,7 +7,7 @@
 					<img src="static/img/back-white@2x.png" alt="">
 				</div>
 			<div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
-				<router-link :to="{name:'outpatient_search',params:{focus : true}}">
+				<router-link :to="{name:'outpatient_search',query:{focus : true}}">
 					<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
 					<img src="static/img/sousuo@2x.png" alt="">
 				</router-link>

@@ -51,10 +51,10 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		
-	console.log(this.$router.currentRoute.params.components)
+	console.log(this.$router.currentRoute.query.components)
 
-	// console.log(this.$router.currentRoute.params.components)
-	this.$router.currentRoute.params.components? this.backFN(): this.componentName = 'hospital_imageAbout'
+	// console.log(this.$router.currentRoute.query.components)
+	this.$router.currentRoute.query.components? this.backFN(): this.componentName = 'hospital_imageAbout'
 	this.$axios.post('/c2/hospital/item',qs.stringify({
 		itemId : this.account.hospitalId,
 	}))
@@ -113,7 +113,7 @@ export default {
 		this.$refs.type.style.color='#2B77EF'
 		this.$refs.about.classList.remove('xiahuaxian');
 		this.$refs.type.classList.add('xiahuaxian');
-		this.componentName = this.$router.currentRoute.params.components;
+		this.componentName = this.$router.currentRoute.query.components;
 	}
   },
 }

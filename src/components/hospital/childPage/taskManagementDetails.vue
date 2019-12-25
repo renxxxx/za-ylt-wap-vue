@@ -69,11 +69,11 @@ export default {
 			plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
-		this.show = this.$route.params.show;	
-		// this.taskSubmitValue.name = this.$route.params.item.name;
-		this.taskSubmitValue = this.$route.params.item
-		console.log(this.$route.params.item)
+		console.log()
+		this.show = this.$route.query.show;	
+		this.taskSubmitValue = JSON.parse(this.$route.query.item)
+		// this.taskSubmitValue = this.$route.query.item
+		console.log(this.$route.query)
 	},
 	methods: {
 		// 返回上一级
@@ -84,7 +84,7 @@ export default {
 		submitFn(){
 			this.$axios.post('/c2/task/taskissue',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				taskId : this.$route.params.item.taskId,
+				taskId : this.$route.query.item.taskId,
 				exchangePoint : this.taskSubmitValue.exchangePoint,
 				exchangePointUpperPerDay : this.taskSubmitValue.exchangePointUpperPerDay,
 				intro : this.taskSubmitValue.intro,
