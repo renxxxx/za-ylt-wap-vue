@@ -4,8 +4,8 @@
 			<img src="static/img/shape@3x.png" alt="" @click="goBackFn">
 			<img src="static/img/share@3x.png" @click="share" alt="">
 		</div>
-		<div class="banner">
-			<img :src="caseInfo.cover" alt="">
+		<div class="banner" v-show="!!caseInfo.cover">
+			<img :src="caseInfo.cover"  alt="">
 		</div>
 		<div class="content" >
 			<h3>{{caseInfo.name}}</h3>
@@ -67,9 +67,10 @@ export default {
 	methods: {
 		share(){
 			debugger
+			let vue = this
 			this.$h5p.shareWeb(location.href,this.caseInfo.cover,this.caseInfo.name,'',function(){
 				debugger
-				this.$axios.post('/c2/share')
+				vue.$axios.post('/c2/share')
 			});
 		},
 		//回退方法

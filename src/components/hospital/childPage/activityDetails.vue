@@ -8,7 +8,7 @@
 				<h3>活动详情</h3>
 			</div>
 			<div class="right">
-				<img src="static/img/share@3x.png" alt="">	
+				<img src="static/img/share@3x.png" @click="share" alt="">	
 			</div>
 		</div> 
 		<div class="activeList" :model='active'>
@@ -106,9 +106,10 @@ export default {
 	methods: {
 		share(){
 			debugger
-			this.$h5p.shareWeb(location.href,this.active.cover,this.active.name,'',function(){
+			let vue = this
+			this.$h5p.shareWeb(location.href,this.active.cover,this.active.title,this.active.brief||'',function(){
 				debugger
-				this.$axios.post('/c2/share')
+				vue.$axios.post('/c2/share')
 			});
 		},
 		//回退方法

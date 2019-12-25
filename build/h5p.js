@@ -27,7 +27,8 @@ function share(srv, msg, button){
 }
 // 发送分享
 function doShare(srv, msg){
-	plus.nativeUI.alert(JSON.stringify(msg));
+	console.log(JSON.stringify(msg));
+	//plus.nativeUI.alert(JSON.stringify(msg));
 	srv.send(msg, function(){
 		console.log('分享到"'+srv.description+'"成功！')
 		//plus.nativeUI.alert('分享到"'+srv.description+'"成功！');
