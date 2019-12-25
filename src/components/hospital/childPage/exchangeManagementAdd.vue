@@ -8,7 +8,7 @@
 				<h3>新增商品</h3>
 			</div>
 			<div class="right">
-				<!-- <button v-show=" this.$route.params.item? true:false" @click="modifyFn">修改</button> -->
+				<!-- <button v-show=" this.$route.query.item? true:false" @click="modifyFn">修改</button> -->
 				<button @click="nextFn">下一步</button>
 			</div>
 		</div>
@@ -94,7 +94,7 @@ export default {
 				if(this.exchangeAdd.payExchangepoint != ''){
 					if(this.exchangeAdd.stock != ''){
 						if(this.exchangeAdd.intro != ''){
-							this.$router.push({ name : 'hospital_exchangeManagementImg',params : {exchangeAdd : this.exchangeAdd}});
+							this.$router.push({ name : 'hospital_exchangeManagementImg',query : {exchangeAdd : this.exchangeAdd}});
 						}else{
 							Toast.fail('请填写简介');
 						}

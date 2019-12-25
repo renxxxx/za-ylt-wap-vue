@@ -9,7 +9,7 @@
 			</div>
 			<div class="right"></div>
 		</div>
-		<router-link :to="{name : 'outpatient_shopAddressAdd'  ,params : {item : address}}">
+		<router-link :to="{name : 'outpatient_shopAddressAdd'  ,query : {item : address}}">
 			<div class="address" v-show="!address.receiverId">
 				<img src="static/img/dingweiweizhi@2x.png" alt="">
 				<div class="addressContent">
@@ -19,7 +19,7 @@
 				<img src="static/img/Chevron Copy 2@2x.png" alt="">
 			</div>
 		</router-link>
-		<router-link :to="{name : 'outpatient_shopAddress' ,params : {item : address}}">
+		<router-link :to="{name : 'outpatient_shopAddress' ,query : {item : JSON.stringify(address)}}">
 			<div class="address" v-show="!!address.receiverId">
 				<img src="static/img/exchangeAdress.png" alt="">
 				<div class="addressContent">
@@ -54,11 +54,12 @@ export default {
 	data () {
 		return {
 			value: 1,
-			address:{}
+			address:{},
+			shopDetails:{}
 		}
 	},
 	computed:{
-		...mapGetters(['account','shopDetails']),	
+		...mapGetters(['account']),	
 	},
 	components:{
 		
@@ -72,21 +73,8 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		
-		this.$axios.post('/clientend2/clinicend/pointexchange/receivers',qs.stringify({
-			clinicId : this.account.clinicId,
-			pn : 1,
-			ps : 99
-		}))
-		.then(res => {
-			if(res.data.code == 0 && res.data.data.items && res.data.data.items.length>0){
-				this.address = res.data.data.items[0];
-			}else{
-				this.$toast.fail(res.data.codeMsg)
-			}	
-		})
-		.catch((err)=>{
-			Dialog({ message: err});
-		})
+		
+		this.getdata();
 	},
 	methods: {
 		goBackFn(){
@@ -113,6 +101,45 @@ export default {
 			.then(res => {
 				console.log(res.data.codeMsg)
 				res.data.codeMsg? this.$toast.fail(res.data.codeMsg):this.$toast.success('操作成功')
+			})
+			.catch((err)=>{
+				Dialog({ message: err});
+			})
+		},
+		getdata(){
+			this.$axios.post('/clientend2/clinicend/pointexchange/commoditydetail',qs.stringify({
+				clinicId : this.account.clinicId,
+				commodityId : this.$route.query.commodityId,
+			}))
+			.then(res => {
+				if(!res.data.codeMsg){
+					this.shopDetails = {
+						name : res.data.data.name,
+						payExchangepoint : res.data.data.payExchangepoint,
+						stock : res.data.data.stock,
+						intro : res.data.data.intro,
+						cover : [],
+						requestId : this.$route.query.commodityId,
+					};
+					this.shopDetails.cover = res.data.data.cover.split(',')
+				}else{
+					this.$toast.fail(res.data.codeMsg)
+				}
+			})
+			.catch((err)=>{
+				Dialog({ message: err});
+			})
+			this.$axios.post('/clientend2/clinicend/pointexchange/receivers',qs.stringify({
+				clinicId : this.account.clinicId,
+				pn : 1,
+				ps : 99
+			}))
+			.then(res => {
+				if(res.data.code == 0 && res.data.data.items && res.data.data.items.length>0){
+					this.address = res.data.data.items[0];
+				}else{
+					this.$toast.fail(res.data.codeMsg)
+				}	
 			})
 			.catch((err)=>{
 				Dialog({ message: err});

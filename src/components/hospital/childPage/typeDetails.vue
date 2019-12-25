@@ -96,7 +96,7 @@ export default {
 		}
 		
 		let id = '';
-		this.$router.currentRoute.params.item? id = this.$router.currentRoute.params.item: ''
+		this.$router.currentRoute.query.item? id = this.$router.currentRoute.query.item: ''
 		this.$axios.post('/c2/office/item',qs.stringify({
 			itemId : id,
 		}))
@@ -144,7 +144,7 @@ export default {
 		//回退方法
 		goBackFn(){
 			// this.$router.back(-1)
-			this.$router.push({ name : 'hospitalImage',params :{components : "hospital_imageType"}});
+			this.$router.push({ name : 'hospitalImage',query :{components : "hospital_imageType"}});
 		},
 		//医生介绍
 		doctorAboutFn(_about){

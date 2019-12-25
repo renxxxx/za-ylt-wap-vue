@@ -5,7 +5,7 @@
 				<img src="static/img/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
-				<h3>活动详情	</h3>
+				<h3>活动详情</h3>
 			</div>
 			<div class="right">
 				<img src="" alt="">
@@ -79,7 +79,7 @@ export default {
 		}
 		
 		this.$axios.post('/c2/activity/item',qs.stringify({
-			itemId : this.account.itemId,
+			itemId : this.$route.query.itemId,
 		}))
 		.then(_d => {
 			this.active = _d.data.data
@@ -104,6 +104,13 @@ export default {
 		})
 	},
 	methods: {
+		share(){
+			debugger
+			this.$h5p.shareWeb(location.href,this.active.cover,this.active.name,'',function(){
+				debugger
+				this.$axios.post('/c2/share')
+			});
+		},
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)

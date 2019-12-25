@@ -8,7 +8,7 @@
 		</div>
 		<ul>
 			<li v-for="(item,inx) in list" :key='inx'>
-				<router-link :to="{name : 'outpatient_integralShop',params : {item : item}}">
+				<router-link :to="{name : 'outpatient_integralShop',query : {commodityId : item.commodityId}}">
 					<div class="productsImg">
 						<img :src="item.cover" alt="">
 					</div>

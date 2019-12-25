@@ -48,13 +48,14 @@ export default {
 		
 	},
 	mounted(){
+		debugger
 		if(window.plus){
 			plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		// console.log(this.$route.params.data)
+		// console.log(this.$route.query.data)
 		let postUrl = '';
-		if(this.$route.params.data ==1){
+		if(this.$route.query.data ==1){
 			let postUrl ='/c2/article/item';
 			this.getData(postUrl)
 		}else{
@@ -76,8 +77,11 @@ export default {
 			this.$router.back(-1)
 		},
 		getData(url){
+			debugger
+			// let query = JSON.stringify(this.$route.query)
+			// console.log(this.$route.query)
 			this.$axios.post(url,qs.stringify({
-				itemId : this.$route.params.item.itemId,
+				itemId : this.$route.query.itemId,
 			}))
 			.then(_d => {
 				this.caseInfo = {
@@ -85,7 +89,7 @@ export default {
 					alterTime : _d.data.data.alterTime,
 					cover : _d.data.data.cover,
 					hosptialName : _d.data.data.hosptialName,
-					name : _d.data.data.title,
+					name : _d.data.data.title?_d.data.data.title:_d.data.data.name,
 					contentBtId : _d.data.data.contentBtId
 				}
 				// console.log(this.caseInfo.contentBtId)

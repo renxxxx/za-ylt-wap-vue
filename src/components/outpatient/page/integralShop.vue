@@ -14,7 +14,7 @@
 			<h4>{{shopDetails.name}}</h4>
 			<p>{{shopDetails.intro}}</p>
 		</div>
-		<router-link :to="{name : 'outpatient_integralShopDetails'}">
+		<router-link :to="{name : 'outpatient_integralShopDetails',query:{commodityId:commodityId}}">
 			<div class="settlement">
 				<button>总计:&nbsp;&nbsp;<span>{{shopDetails.payExchangepoint}}</span>积分</button>
 				<button>立即兑换</button>
@@ -32,20 +32,12 @@ export default {
 	name: 'integralShop',
 	data () {
 		return {
-
+			shopDetails:{},
+			commodityId:'',
 		}
 	},
 	computed:{
 		...mapGetters(['account']),
-		shopDetails: {
-			get: function() {
-			  // console.log(this.$store)
-				  return this.$store.state.shop.shopDetails
-			},
-			set: function (newValue) {
-			  this.$store.state.shop.shopDetails = newValue;
-			},
-		}
 	},
 	components:{
 
@@ -59,26 +51,27 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		
-		this.$route.params.item? this.getdata():''
+		this.getdata()
 	},
 	methods: {
 		returnFn(){
 			this.$router.back(-1);
 		},
 		getdata(){
+			this.commodityId = this.$route.query.commodityId
 			this.$axios.post('/clientend2/clinicend/pointexchange/commoditydetail',qs.stringify({
 				clinicId : this.account.clinicId,
-				commodityId : this.$route.params.item.commodityId,
+				commodityId : this.commodityId,
 			}))
 			.then(res => {
-				if(res.data.codeMsg == '' || res.data.codeMsg == null || res.data.codeMsg == undefined){
+				if(!res.data.codeMsg){
 					this.shopDetails = {
 						name : res.data.data.name,
 						payExchangepoint : res.data.data.payExchangepoint,
 						stock : res.data.data.stock,
 						intro : res.data.data.intro,
 						cover : [],
-						requestId : this.$route.params.item.commodityId,
+						requestId : this.commodityId,
 					};
 					this.shopDetails.cover = res.data.data.cover.split(',')
 				}else{

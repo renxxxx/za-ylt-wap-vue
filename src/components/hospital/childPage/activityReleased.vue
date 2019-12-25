@@ -19,8 +19,8 @@
 		</router-link>
 		<van-swipe-cell v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
 			<van-cell :border="false" >
-				<router-link :to="{name : 'hospital_activityDetails'}">
-					<div class="activeList"  @click="itemPostFn(item)" >
+				<router-link :to="{name : 'hospital_activityDetails',query:{itemId:item.itemId}}">
+					<div class="activeList">
 						<img :src="item.cover" alt="">
 						<div class="activeTitle">
 							<h4>{{item.title}}</h4>
@@ -73,12 +73,6 @@ export default {
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)
-		},
-		itemPostFn(_item){
-			// this.account.itemId = '';
-			// console.log(_item.itemId);
-			this.account.itemId = _item.itemId;
-			// console.log(this.account.itemId);
 		},
 		deleteActiviteFn(_item){
 			this.$axios.post('/c2/activity/itemdel',qs.stringify({

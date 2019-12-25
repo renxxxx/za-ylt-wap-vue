@@ -4,7 +4,7 @@
 			<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 				<ul class="hospitalList" v-if="isLogin == 100? true:false">
 					<li v-for="(item,inx) in list.clinicYes" :key="inx">
-						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
+						<router-link :to="{name : 'details' ,query : {patientId : item.itemId}}">
 							<div class="contentTitle">
 								<img src="static/img/blue@2x.png" alt="">
 								<span>{{item.realname}}</span>
@@ -21,7 +21,7 @@
 				</ul>
 				<ul class="clinicList" v-if="isLogin == 200? true:false">
 					<li v-for="(item,inx) in list.clinicYes" :key="inx">
-						<router-link :to="{name : 'details' ,params : {patientId : item.itemId}}">
+						<router-link :to="{name : 'details' ,query : {patientId : item.itemId}}">
 							<div class="content_left">
 								<span>{{item.realname}}</span>
 							</div>

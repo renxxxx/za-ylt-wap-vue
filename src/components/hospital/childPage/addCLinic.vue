@@ -154,14 +154,14 @@ export default {
 			console.log(err);
 			Dialog({ message: '加载失败!'});
 		})
-		// console.log(this.$route.params.item)
-    // this.$route.params.item ? this.clinicFn() : ""
+		// console.log(this.$route.query.item)
+    // this.$route.query.item ? this.clinicFn() : ""
 	},
 	methods: {
     clinicFn(){
       
       this.$axios.post('/c2/clinic/itemadd',qs.stringify({
-      	itemId : this.$route.params.item,
+      	itemId : this.$route.query.item,
       }))
       .then(_d => {
       	this.addClinic = _d.data.data;

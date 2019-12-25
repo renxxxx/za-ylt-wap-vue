@@ -1,6 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-debugger
+
 import './assets/rem'
 import './assets/rest.css'
 import Vue from 'vue'
@@ -17,7 +17,7 @@ import vueHashCalendar from 'vue-hash-calendar'
 // 引入组件CSS样式
 import 'vue-hash-calendar/lib/vue-hash-calendar.css'
 import VueScroller from 'vue-scroller'
-
+import qs from 'qs';
 import h5p from '../build/h5p.js'
 
 Vue.config.productionTip = false
@@ -25,10 +25,9 @@ Vue.prototype.$axios = axios
 Vue.prototype.moment = moment;
 Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
+Vue.prototype.qs = qs
 
 
-
-debugger
 
 
 let isLogin = localStorage.getItem('isLogin');
@@ -36,7 +35,6 @@ let isLogin = localStorage.getItem('isLogin');
 if (isLogin && !isNaN(parseInt(isLogin))) {
 	isLogin = parseInt(isLogin);
 	Vue.prototype.$store.state.shop.isLogin = isLogin;
-
 	switch (isLogin) {
 		case 100:
 			getdata('/hospital/login-refresh', 100)
@@ -53,43 +51,38 @@ if (isLogin && !isNaN(parseInt(isLogin))) {
 	}
 }
 let lastRoute=null;
- function getdata(_postRefresh, _isLogin) {
-		debugger;
-			
-			 jquery.ajax({
-				 type:'post',
-				 url:_postRefresh,
-				 async:false,
-				 success:function(res){
-					if (res.code == 0) {
-						switch (_isLogin) {
-							case 100:
-								Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
-								Vue.prototype.$store.state.shop.account.data = {};
-								Vue.prototype.$store.state.shop.account.data = res;
-								break;
-			
-							case 200:
-								Vue.prototype.$store.state.shop.account.clinicId = res.data.clinic.clinicId;
-								Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
-								Vue.prototype.$store.state.shop.account.data = {};
-								Vue.prototype.$store.state.shop.account.data = res;
-								break;
-			
-							case 300:
-								Vue.prototype.$store.state.shop.account.clinicId = res.data.clinic.clinicId;
-								Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
-								Vue.prototype.$store.state.shop.account.data = {};
-								Vue.prototype.$store.state.shop.account.data = res;
-								break;
-						}
-					}
+ function getdata(_postRefresh, _isLogin) {			
+	jquery.ajax({
+		type:'post',
+		 url:_postRefresh,
+		 async:false,
+		 success:function(res){
+			if (res.code == 0) {
+				switch (_isLogin) {
+					case 100:
+						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
+						Vue.prototype.$store.state.shop.account.data = {};
+						Vue.prototype.$store.state.shop.account.data = res;
+						break;
+						
+					case 200:
+						Vue.prototype.$store.state.shop.account.clinicId = res.data.clinic.clinicId;
+						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
+						Vue.prototype.$store.state.shop.account.data = {};
+						Vue.prototype.$store.state.shop.account.data = res;
+						break;
+						
+					case 300:
+						Vue.prototype.$store.state.shop.account.clinicId = res.data.clinic.clinicId;
+						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
+						Vue.prototype.$store.state.shop.account.data = {};
+						Vue.prototype.$store.state.shop.account.data = res;
+						break;
 				}
-			 })
-				
-		
-		
-	}
+			}
+		}			
+	})
+}
 
 if (window.plus) {
 	plusReady();
@@ -182,7 +175,7 @@ Toast.setDefaultOptions({
 	duration: 800
 });
 /* eslint-disable no-new */
-debugger
+
 new Vue({
 	el: '#app',
 	router,
@@ -192,5 +185,3 @@ new Vue({
 	},
 	template: '<App/>'
 })
-
-debugger

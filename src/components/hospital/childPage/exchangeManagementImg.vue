@@ -52,13 +52,12 @@ export default {
 			plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		this.exchangeAdd = this.$route.params.exchangeAdd
 	},
 	methods: {
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)
-			// this.$router.push({ name : 'hospital_exchangeManagementAdd',params : {item : this.commodity}});
+			// this.$router.push({ name : 'hospital_exchangeManagementAdd',query : {item : this.commodity}});
 			// exchangeManagementAdd
 		},
 		//添加图片

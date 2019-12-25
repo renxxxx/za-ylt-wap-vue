@@ -133,7 +133,7 @@ export default {
 		}
 		
 	this.$axios.post('/c2/patient/item',qs.stringify({
-		patientId : this.$route.params.patientId,
+		patientId : this.$route.query.patientId,
 	})).then(res =>{
 		this.detail = {
 			realname : res.data.data.realname,			//病人姓名

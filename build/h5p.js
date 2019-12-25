@@ -1,22 +1,27 @@
 
 // 分享
 function share(srv, msg, button){
-	plus.nativeUI.alert('分享操作：');
+	console.log('分享操作：')
+	//plus.nativeUI.alert('分享操作：');
   if(!srv){
-    plus.nativeUI.alert('无效的分享服务！');
+	console.log('无效的分享服务！');
+    //plus.nativeUI.alert('无效的分享服务！');
     return;
   }
   button&&(msg.extra=button.extra);
 	// 发送分享
 	if(srv.authenticated){
-		plus.nativeUI.alert('---已授权---');
+		console.log('---已授权---')
+		//plus.nativeUI.alert('---已授权---');
 		doShare(srv, msg);
 	}else{
-		plus.nativeUI.alert('---未授权---');
+		console.log('---未授权---')
+		//plus.nativeUI.alert('---未授权---');
 		srv.authorize(function(){
 			doShare(srv, msg);
 		}, function(e){
-			plus.nativeUI.alert('认证授权失败：'+JSON.stringify(e));
+			console.log('认证授权失败：'+JSON.stringify(e))
+			//plus.nativeUI.alert('认证授权失败：'+JSON.stringify(e));
 		});
 	}  
 }
@@ -24,9 +29,11 @@ function share(srv, msg, button){
 function doShare(srv, msg){
 	plus.nativeUI.alert(JSON.stringify(msg));
 	srv.send(msg, function(){
-		plus.nativeUI.alert('分享到"'+srv.description+'"成功！');
+		console.log('分享到"'+srv.description+'"成功！')
+		//plus.nativeUI.alert('分享到"'+srv.description+'"成功！');
 	}, function(e){
-		plus.nativeUI.alert('分享到"'+srv.description+'"失败: '+JSON.stringify(e));
+		console.log('分享到"'+srv.description+'"失败: '+JSON.stringify(e))
+		//plus.nativeUI.alert('分享到"'+srv.description+'"失败: '+JSON.stringify(e));
 	});
 }
 // 解除授权
