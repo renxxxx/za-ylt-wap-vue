@@ -41,16 +41,18 @@ function cancelAuth(){
     plus.nativeUI.alert('当前环境不支持微信分享操作!');
   }
 }
-function shareWeb(url,cover,title,content){
 
+
+function shareWeb(url,cover,title,content,callback){
+	
 		if(!window.plus)
 			return
 
 		var sweixin =null,shares=null, buttons=[
 			{title:'我的好友',extra:{scene:'WXSceneSession'}},
 			{title:'朋友圈',extra:{scene:'WXSceneTimeline'}},
-			{title:'我的收藏',extra:{scene:'WXSceneFavorite'}}
-		  ];;
+			// {title:'我的收藏',extra:{scene:'WXSceneFavorite'}}
+		  ];
 		plus.share.getServices(function(s){
 			shares={};
 			for(var i in s){
@@ -67,6 +69,8 @@ function shareWeb(url,cover,title,content){
 		msg.content=content;
 		sweixin?plus.nativeUI.actionSheet({title:'分享网页到微信',cancel:'取消',buttons:buttons}, function(e){
 			(e.index>0)&&share(sweixin, msg, buttons[e.index-1]);
+			debugger
+			callback()
 		}):plus.nativeUI.alert('当前环境不支持微信分享操作!'); 
 
 		}, function(e){

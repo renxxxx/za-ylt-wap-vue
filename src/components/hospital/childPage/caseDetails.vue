@@ -2,19 +2,19 @@
 	<div class="caseDetails" >
 		<div class="topNav">
 			<img src="static/img/shape@3x.png" alt="" @click="goBackFn">
-			<img src="static/img/share@3x.png" alt="">
+			<img src="static/img/share@3x.png" @click="share" alt="">
 		</div>
 		<div class="banner">
-			<img :src="caseDetails.cover" alt="">
+			<img :src="caseInfo.cover" alt="">
 		</div>
-		<div class="content" v-model='caseDetails'>
-			<h3>{{caseDetails.name}}</h3>
+		<div class="content" >
+			<h3>{{caseInfo.name}}</h3>
 			<div class="headPortrait">
 				<img src="static/img/logo@2x.png" alt="">
-				<span>{{caseDetails.hosptialName}}</span>
-				<span>{{moment(caseDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
+				<span>{{caseInfo.hosptialName}}</span>
+				<span>{{moment(caseInfo.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 			</div>
-			<p v-html="caseDetails.content"></p>
+			<p v-html="caseInfo.content"></p>
 		</div>
 	</div>
 </template>
@@ -28,7 +28,7 @@ export default {
 	name: 'caseDetails',
 	data () {
 		return {
-			caseDetails:{
+			caseInfo:{
 				addTime : '',
 				alterTime : '',
 				cover : '',
@@ -64,6 +64,13 @@ export default {
 		// console.log(_d.data.data)
 	},
 	methods: {
+		share(){
+			debugger
+			this.$h5p.shareWeb(location.href,this.caseInfo.cover,this.caseInfo.name,'',function(){
+				debugger
+				this.$axios.post('/c2/share')
+			});
+		},
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)
@@ -73,19 +80,19 @@ export default {
 				itemId : this.$route.params.item.itemId,
 			}))
 			.then(_d => {
-				this.caseDetails = {
+				this.caseInfo = {
 					addTime : _d.data.data.addTime,
 					alterTime : _d.data.data.alterTime,
 					cover : _d.data.data.cover,
 					hosptialName : _d.data.data.hosptialName,
-					name : _d.data.data.name,
+					name : _d.data.data.title,
 					contentBtId : _d.data.data.contentBtId
 				}
-				// console.log(this.caseDetails.contentBtId)
-				this.$axios.get('/other/bigtxt/'+this.caseDetails.contentBtId+'/'+this.caseDetails.contentBtId)
+				// console.log(this.caseInfo.contentBtId)
+				this.$axios.get('/other/bigtxt/'+this.caseInfo.contentBtId+'/'+this.caseInfo.contentBtId)
 				.then(_d => {
 					// console.log(_d.data)
-					this.$set(this.caseDetails,'content',_d.data)
+					this.$set(this.caseInfo,'content',_d.data)
 				})
 				.catch((err)=>{
 					console.log(err);

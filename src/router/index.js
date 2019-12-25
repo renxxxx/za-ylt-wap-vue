@@ -469,7 +469,7 @@ router.beforeEach((to,from,next) => {
 				next({path : '/landingPage'});
 				break;
 
-				default:next({path : '/landingPage'});
+				// default:next({path : '/landingPage'});
 			}
 		}else{
 			next();

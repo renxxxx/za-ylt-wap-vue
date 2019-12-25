@@ -3,7 +3,6 @@ import axios from 'axios'
 import qs from 'qs';
 import { Dialog } from 'vant'
 import moment from 'moment'
-import h5p from '../../../build/h5p.js'
 import router from '../../router'
 
 const state={
@@ -241,7 +240,7 @@ const mutations={
 
 	//登陆页面的表单验证
 	submitFn(state,landingState){
-		h5p.shareWeb("www.baidu.com",'_www/logo.png','title','content');
+		
 
 		// console.log(this.account.name+this.account.password)
 		state.isLogin = landingState;

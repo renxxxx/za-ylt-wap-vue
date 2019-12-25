@@ -24,6 +24,7 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.moment = moment;
 Vue.prototype.$store = store
+Vue.prototype.$h5p = h5p
 
 
 
@@ -186,7 +187,6 @@ new Vue({
 	el: '#app',
 	router,
 	store,
-	h5p,
 	components: {
 		App
 	},
