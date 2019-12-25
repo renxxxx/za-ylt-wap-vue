@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div id="app" v-cloak>
 		<router-view />
 	</div>
 </template>
@@ -62,4 +62,8 @@
 		height: 100%;
 		/* background-color: #F5F5F5; */
 	}
+
+	[v-cloak]{
+    display: none;
+}
 </style>
