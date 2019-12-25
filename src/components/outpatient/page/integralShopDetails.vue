@@ -9,7 +9,7 @@
 			</div>
 			<div class="right"></div>
 		</div>
-		<router-link :to="{name : 'outpatient_shopAddressAdd'  ,query : {item : address}}">
+		<router-link :to="{name : 'outpatient_shopAddressAdd'  ,query : {address : JSON.stringify(address)}}">
 			<div class="address" v-show="!address.receiverId">
 				<img src="static/img/dingweiweizhi@2x.png" alt="">
 				<div class="addressContent">
@@ -19,7 +19,7 @@
 				<img src="static/img/Chevron Copy 2@2x.png" alt="">
 			</div>
 		</router-link>
-		<router-link :to="{name : 'outpatient_shopAddress' ,query : {item : JSON.stringify(address)}}">
+		<router-link :to="{name : 'outpatient_shopAddress' ,query : {address : JSON.stringify(address)}}">
 			<div class="address" v-show="!!address.receiverId">
 				<img src="static/img/exchangeAdress.png" alt="">
 				<div class="addressContent">
