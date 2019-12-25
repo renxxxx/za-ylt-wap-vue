@@ -8,7 +8,7 @@
 				<h3>活动详情</h3>
 			</div>
 			<div class="right">
-				<img src="" alt="">
+				<img src="static/img/share@3x.png" alt="">	
 			</div>
 		</div> 
 		<div class="activeList" :model='active'>
@@ -158,6 +158,13 @@ export default {
 	height: .47rem;
 	line-height: .47rem;
 	float:left;
+}
+.right img{
+    width: .19rem;
+    height: .19rem;
+    float: right;
+    margin-top: .14rem;
+    margin-right: .21rem;
 }
 .activeList{
 	width: 93.6%;

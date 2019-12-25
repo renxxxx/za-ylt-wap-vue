@@ -151,6 +151,7 @@ export default {
 	line-height: .47rem;
 	float:left;
 }	
+
 .addActive{
 	width: 93.6%;
 	height: .49rem;
