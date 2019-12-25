@@ -81,15 +81,7 @@ const state={
 		exchangePointUpperPerDay : '',
 		intro : "",
 	},
-	// 医院端兑换管理的新增和商品修改信息参数
-	exchangeAdd:{
-		name : '',
-		payExchangepoint : 0,
-		stock : 0,
-		intro : '',
-		cover : '',
-		show : true,
-	},
+	
 	// 医院端门诊详情列表信息
 	clinicDetails:{},
 	// 门诊端兑换详情页数据
@@ -112,8 +104,6 @@ const getters={
 	showTime : state => state.showTime,
 	//医院端活动发布的参数
 	activity : state => state.activity,
-	// 医院端兑换管理的新增和商品修改信息参数
-	exchangeAdd : state => state.exchangeAdd,
 	//医院端兑换管理详情页参数
 	taskSubmitValue : state => state.taskSubmitValue,
 	// 门诊端兑换详情页数据
@@ -173,7 +163,8 @@ const actions={
 }
 const mutations={
 	//登陆及其刷新请求
-	submintGetData(_postUrl,_postRefresh,_isLogin,_url){
+	submintGetData(_postUrl,_postRefresh,_isLogin,_url,state){
+		console.log(state)
 		state.isLogin = _isLogin;
 		localStorage.setItem("isLogin",_isLogin);
 		// state.account.name ='999999';
@@ -186,12 +177,15 @@ const mutations={
 			.then( res =>{
 				// console.log(res.data.codeMsg)
 				if(res.data.codeMsg == null ||  res.data.codeMsg == "" || res.data.codeMsg == undefined){
-
+					
 					 axios.post(_postRefresh)
 						.then( res =>{
 							switch(_isLogin){
 								case 100:
-								router.replace({ name : _url});
+								if(state.loginToBack)
+									router.back()
+								else
+									router.replace({ name : _url});
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
 								// console.log(state.account.hospitalId)
 								state.account.data = {};
@@ -199,7 +193,10 @@ const mutations={
 								break;
 
 								case 200:
-								router.replace({ name : _url});
+								if(state.loginToBack)
+									router.back()
+								else
+									router.replace({ name : _url});
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
 								// console.log(state.account.hospitalId)
@@ -208,7 +205,10 @@ const mutations={
 								break;
 
 								case 300:
-								router.replace({ name : _url});
+								if(state.loginToBack)
+									router.back()
+								else
+									router.replace({ name : _url});
 								Dialog({ message: '正在开发中，敬请期待' });
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
@@ -249,14 +249,14 @@ const mutations={
 		if(state.checked == true){
 			switch (landingState){
 				case '100':
-				mutations.submintGetData('/hospital/login','/hospital/login-refresh',100,'hospital_index')
+				mutations.submintGetData('/hospital/login','/hospital/login-refresh',100,'hospital_index',state)
 				break;
 				case '200':
 				// console.log('200')
-				mutations.submintGetData('/clinic/login','/clinic/login-refresh',200,'hospital_sourceManagement')
+				mutations.submintGetData('/clinic/login','/clinic/login-refresh',200,'hospital_sourceManagement',state)
 				break;
 				case '300':
-				mutations.submintGetData('/manager/login','/manager/login-refresh',300,'outpatient_index')
+				mutations.submintGetData('/manager/login','/manager/login-refresh',300,'outpatient_index',state)
 				break;
 				default:
 				break;

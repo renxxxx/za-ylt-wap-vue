@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>{{this.clinicDetails.name}}</h3>
 			</div>
-			<router-link :to="{name : 'hospital_addCLinic' ,params : {item : clinicDetails.clinicId}}">
+			<router-link :to="{name : 'hospital_clinicInfo' ,params : {item : clinicDetails.clinicId}}">
 				<div class="right">
 					<img src="static/img/Preview@2x.png" alt="">
 				</div>
@@ -30,7 +30,7 @@
 		</div>
 		<div class="detailsList">
 			<div class="listLeft">
-				<h4>病原列表</h4>
+				<h4>病员列表</h4>
 			</div>
 			<div class="listRight">
 				<van-dropdown-menu >
@@ -118,7 +118,7 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		// this.ItemIdFn();
-		this.$route.params.item?  this.ItemIdFn() : this.list.clinicId = '';
+		this.$route.query.clinicId?  this.ItemIdFn() : this.list.clinicId = '';
 		this.getNum();
 	},
 	methods: {
@@ -143,7 +143,7 @@ export default {
 			}
 		},
 		ItemIdFn(){
-			this.list.clinicId = this.$route.params.item.itemId;
+			this.list.clinicId = this.$route.query.clinicId;
 			this.$axios.post('/c2/clinic/item',qs.stringify({
 				itemId : this.list.clinicId,
 			}))
@@ -201,12 +201,15 @@ export default {
 <style scoped>
 .clinicDetails{
 	width: 100%;
+	/* padding-top: .47rem; */
 }
 .topNav{
 	width: 100%;
 	height: .47rem;
 	line-height: .47rem;
 	background-color: #FFFFFF;
+	position: fixed;
+	z-index: 999;
 }
 .leftImg{
 	width: 10%;
@@ -253,7 +256,7 @@ export default {
 .statistics{
 	width: 65.06%;
 	margin: 0rem auto;
-	margin-top: .25rem;
+	margin-top: .47rem;
 }
 .statisticsText{
 	width: .8rem;
@@ -355,4 +358,15 @@ export default {
     text-align: center;
     z-index: -1!important;
 }
+/* >>>.van-circle svg, .van-loading__spinner--spinner i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+>>>.van-circle__text {
+    z-index: -1;
+} */
 </style>

@@ -173,7 +173,7 @@ export default {
 			plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-
+		console.log(this.$store)
 	// //未就诊请求
 	this.$axios.post('/c2/patient/items',qs.stringify({
 		clinicId : this.account.data.data.clinic.clinicId,
@@ -239,6 +239,15 @@ export default {
   },
   computed:{
 	...mapGetters(['Time','labelDocument','showTime','show','account','detail']),
+	account:{
+		get: function() {
+			// console.log(this.$store)
+		    return this.$store.state.shop.account
+		},
+		set: function (newValue) {
+			this.$store.state.shop.account = newValue;
+		},
+	},
 	show: {
 	    get: function() {
 			// console.log(this.$store)

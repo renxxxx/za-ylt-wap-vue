@@ -118,6 +118,7 @@ export default {
 	 },
 	//退出方法
 	exitFn(){
+		this.$router.go(-400)
 		this.isLogin = 0;
 		this.account.name = '';
 		this.account.password = '';
@@ -188,12 +189,18 @@ export default {
 .top_center h3{
 	height: .29rem;
 	line-height: .29rem;
-	font-size: 15px;
+	font-size: 16px;
 	font-weight: bolder;
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
 }
 .top_center p{
 	color: #666666;
-	font-size: .11rem;
+	font-size: .13rem;
 	display: -webkit-box;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -202,11 +209,14 @@ export default {
 	-webkit-box-orient: vertical;
 }
 .top_right{
-	width: 13%;
+	/* width: 13%; */
 	float:left;
 	margin: .53rem .25rem .44rem 0rem;
 	color: #999999;
 	position: relative;
+}
+.top_right span{
+	font-size: .13rem;
 }
 .top_right img{
 	position: absolute;
@@ -224,6 +234,7 @@ export default {
 .user_center ul{
 	height: 100%;
 	width: 100%;
+	font-size: .14rem;
 }
 
 .user_center ul li{

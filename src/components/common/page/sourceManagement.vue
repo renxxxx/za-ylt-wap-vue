@@ -8,7 +8,7 @@
 				</div>
 			<div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
 				<router-link :to="{name:'outpatient_search',params:{focus : true}}">
-					<input type="text" placeholder="搜索病源" v-model="list.keywords" readonly="readonly">
+					<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
 					<img src="static/img/sousuo@2x.png" alt="">
 				</router-link>
 			</div>
@@ -33,7 +33,7 @@
 							<clinicAll ref='all' :list = 'list'></clinicAll>
 						</keep-alive>
 					</van-tab>
-					<van-tab title="新增病源" v-if="isLogin == 200? true:false">
+					<van-tab title="新增病员" v-if="isLogin == 200? true:false">
 						<form @submit.prevent="hospitalSubmit" class="newAdd">
 							<div class="newAddTitle">
 								<img src="static/img/bitian@2x.png" alt="">
@@ -84,7 +84,7 @@
 </template>
 <script>
 import axios from 'axios'
-import {mapActions,mapGetters} from 'vuex'
+import {mapActions,mapGetters,mapState} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 import clinicAll from '../functionPage/clinicAll.vue'
@@ -123,10 +123,12 @@ export default {
 	this.getNum();
   },
   computed:{
-		...mapGetters(['Time','labelDocument','showTime','show','account','detail','isLogin']),
+		// ...mapState({
+		// 	count: account =>
+		// }),
 		show: {
 			get: function() {
-			// console.log(this.$store)
+			console.log(this.$store)
 				return this.$store.state.shop.show
 			},
 			set: function (newValue) {
@@ -142,6 +144,7 @@ export default {
 			this.$store.state.shop.showTime = newValue;
 			},
 		},
+		...mapGetters(['Time','account','isLogin']),
   },
   //注册组件
   components:{
@@ -541,7 +544,7 @@ export default {
 }
 .clinicSearchStyle{
 	margin-left: .16rem;
-	width: 77%;
+	width: 70%;
 
 }
 </style>

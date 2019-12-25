@@ -2,15 +2,18 @@
 	<div class="hospital">
 		<div class="topNav">
 			<div class="hospital_search">
-				<input type="text" placeholder="输入文章关键字">
+				<input type="text" placeholder="搜索文章">
 				<img src="static/img/sousuo@2x.png" alt="">
+			</div>
+			<div class="clinic_buttton">
+				<button>搜索</button>
 			</div>
 			<div class="hospital_information">
 				<img src="static/img/xiaoxi@2x.png" alt="">
 			</div>
 		</div>
 		<div class="shared">
-			<h3>共享医联体</h3>
+			<!-- <h3>共享医联体</h3> -->
 			<ul>
 				<router-link :to="{name : 'hospitalImage'}">
 					<li>
@@ -176,13 +179,13 @@ export default {
 }
 .hospital_search{
 	float:left;
-	width: 85.9%;
+	width: 75%;
 	position: relative;
 }
 .hospital_search input{
 	margin: .08rem 0rem 0rem .16rem;
 	height:.34rem;
-	width: 80%;
+	width: 78%;
 	border: none;
 	border-radius: .33rem;
 	padding-left: 11.6%;
@@ -195,6 +198,20 @@ export default {
 	top: .18rem;
 	left: 9.8%;
 }
+.clinic_buttton{
+	float: left;
+	margin-top: .125rem;
+	margin-left: -.05rem;
+}
+.clinic_buttton button{
+	color: #FFFFFF;
+	background-color: #2B77EF;
+	border-radius: .15rem;
+	border: none;
+	height: .28rem;
+	width: .45rem;
+	font-size: .12rem;
+}
 .hospital_information{
 	float:left;
 	width: 10.3%;
@@ -206,7 +223,7 @@ export default {
 	height: .24rem;
 }
 .shared{
-	height: 1.29rem;
+	height: .79rem;
 	width: 89%;
 	margin: 0rem auto;
 	margin-top: .3rem;
@@ -231,66 +248,10 @@ export default {
 	margin: 0 auto;
 	margin-bottom: .12rem;
 }
-/* .article{
-	width: 91.5%;
-	margin: 0rem auto;
-	margin-top: .3rem;
-}
-.article h3{
-	font-weight: bolder;
-	font-size: .18rem;
-}
-.article ul{
-	margin-top: .18rem;
-	width: 100%;
-}
-.article ul li {
-	width: 100%;
-	height: .97rem;
-	border-bottom:1px solid #D8D8D8FF ;
-	margin: .12rem 0;
-}
-.article ul li:last-child{
-	border: none;
-}
-.article_left{
-	float: left;
-	width: 60.1%;
-}
-.article_left p{
-	font-size: .14rem;
-	font-weight: bold;
-}
-.article_leftTime{
-	margin-top: .23rem;
-	height: .16rem;
-	line-height: .16rem;
-	position: relative;
-}
-.article_leftTime img{
-	position: absolute;
-	top:.02rem;
-	width: .11rem;
-	height: .11rem;
-	
-}
-.article_leftTime span{
-	margin-left: .17rem;
-}
-.article_right{
-	float: left;
-	margin-left: 7.8%;
-	width: 32.1%;
-}
-.article_right img{
-	width: 1.08rem;
-	height: .85rem;
-} */
-
 .article{
 	width: 91.5%;
 	margin: 0rem auto;
-	border-top: 1px solid #E5E5E5;
+	/* border-top: 1px solid #E5E5E5; */
 	
 }
 .articleTitle{

@@ -9,7 +9,7 @@
 			</div>
 			<div class="right"></div>
 		</div>
-		<van-pull-refresh v-model="isLoading" @refresh="refresh" >
+		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh" > -->
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 					<li v-for="(item,inx) in exchangeList" :key='inx' class='List'>
@@ -31,7 +31,7 @@
 					</li>
 				</van-list>
 			</ul>
-		</van-pull-refresh>
+		<!-- </van-pull-refresh> -->
 	</div>
 </template>
 

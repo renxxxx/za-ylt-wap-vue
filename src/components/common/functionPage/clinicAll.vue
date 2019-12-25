@@ -91,11 +91,11 @@ export default {
 					this.$toast.fail({duration: 1000,message: res.data.codeMsg})
 				}else{
 					this.$toast.success({duration: 1000,message: '操作成功'})
-          if(_item.status == 1){
-            console.log(_button.target)
-            _button.target.style.cssText="color:#333333; background-color:#EEEEEE;"
-            _button.target.innerHTML = '已就诊';
-          }
+					if(_item.status == 1){
+						console.log(_button.target)
+						_button.target.style.cssText="color:#333333; background-color:#EEEEEE;"
+						_button.target.innerHTML = '已就诊';
+					}
 					// console.log(this.list.clinicAll.map(item => item.itemId =  _item.itemId).indexOf())
 
 				}

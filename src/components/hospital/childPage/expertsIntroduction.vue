@@ -24,7 +24,7 @@
 							<img :src="downImg" alt="" ref='showimg'>
 						</div>
 					</div>
-					
+					<hr>
 				</li>
 			</ul>
 		</div>
@@ -107,7 +107,8 @@ export default {
 .expertsIntroduction{
 	width: 100%;
 	height: 100%;
-	background-color: #F5F5F5;
+	/* background-color: #F5F5F5; */
+	background-color: #FFFFFF;
 }
 .topNav{
 	width: 100%;
@@ -152,10 +153,10 @@ export default {
 .content ul li {
 	width: 100%;
 	height: 100%;
-	margin: .12rem auto;
+	/* margin: .12rem auto; */
 	background-color: #FFFFFF;
 	position: relative;
-	padding-bottom: .18rem;
+	/* padding-bottom: .18rem; */
 }
 .content>ul>li>img{
 	width: .65rem;
@@ -202,7 +203,7 @@ export default {
 	width: 100%;
 }
 .duanluo>p{
-	height: 100%;
+	min-height: .35rem;
 	width: 100%;
 	padding-top: .04rem;
 	color: #999999;
@@ -219,5 +220,12 @@ export default {
 	position: absolute;
 	right: -.33rem;
 	bottom: .11rem;
+}
+hr{
+	width: 91%;
+	border-top:1px solid #D8D8D8;
+}
+.content ul li:last-child hr{
+	display: none;
 }
 </style>

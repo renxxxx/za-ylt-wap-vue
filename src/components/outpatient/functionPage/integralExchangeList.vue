@@ -9,7 +9,9 @@
 		<ul>
 			<li v-for="(item,inx) in list" :key='inx'>
 				<router-link :to="{name : 'outpatient_integralShop',params : {item : item}}">
-					<img :src="item.cover" alt="">
+					<div class="productsImg">
+						<img :src="item.cover" alt="">
+					</div>
 					<h4>{{item.name}}</h4>
 					<p><span>{{item.payExchangepoint}}</span> 积分</p>
 					<button>立即兑换</button>
@@ -102,11 +104,17 @@ export default {
 .productsExchange ul li:nth-child(2n){
 	margin-left: .09rem;
 }
-.productsExchange ul li img{
+.productsImg{
 	width: 100%;
 	height: 1.14rem;
-	object-fit: cover;
 	margin-bottom: .07rem;
+	object-fit: cover;
+	overflow: hidden;
+}
+.productsImg img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 .productsExchange ul li h4{
 	color: #333333;

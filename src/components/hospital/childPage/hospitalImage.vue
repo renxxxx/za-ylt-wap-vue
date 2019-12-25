@@ -72,7 +72,7 @@ export default {
 		// imgUrl = this.hospitalImage.cover;
 		// console.log(imgUrl)
 		if(imgUrl != ''){
-			this.$refs.img.style.background='url('+imgUrl+')';
+			this.$refs.img.style['background-image']='url('+imgUrl+')';
 		}
 		// console.log(this.hospitalImage)
 	})
@@ -123,8 +123,9 @@ export default {
 .topNav{
 	width: 100%;
 	height: 2.63rem;
-	background-image: url(../../../../static/img/bj-keshi@2x.png);
-	background-size: 100%;
+	background: url('../../../../static/img/bj-keshi@2x.png') no-repeat center;
+	background-size: contain;
+	/* background-size: 100%; */
 	/* background-color: #fff000; */
 }
 .topNav img{
@@ -140,6 +141,7 @@ export default {
 	border-radius: .14rem  .14rem  0rem  0rem;
 	background-color: #FFFFFF;
 	text-align: center;
+		border-top: 1px solid #F5F5F5;
 }
 
 .contentTitle{

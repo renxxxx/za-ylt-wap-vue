@@ -5,19 +5,19 @@
 				<img src="static/img/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
-				<h3>新增商品</h3>
+				<h3>修改商品</h3>
 			</div>
 			<div class="right" >
-				<button :class="imgUrl? 'buttonColorOver' : 'buttonColorNow'" @click="submitFn">完成</button>
+				<button :class="this.exchangeAdd.cover? 'buttonColorOver' : 'buttonColorNow'" @click="submitFn">完成</button>
 			</div>
 		</div>
 
 		<div class="addImg" v-model="exchangeAdd">
-			<div class="addImgButton" v-show="imgUrl? false : true">
+			<div class="addImgButton" v-show="this.exchangeAdd.cover? false : true">
 				<img src="static/img/append@2x.png" alt="">
 				<span>请添加照片</span>
 			</div>
-			<img v-bind:src="imgUrl" alt="">
+			<img v-bind:src="this.exchangeAdd.cover" alt="">
 			<input type="file" class="upload" ref="inputer" accept="image/png,image/jpeg,image/gif,image/jpg"
 			    multiple @change="addImg($event)"/>
 		</div>
@@ -34,8 +34,8 @@ export default {
 	data () {
 		return {
 			commodity : [],
-			imgUrl : '',
-			exchangeAdd : {},
+			imgUrl : 0,
+			exchangeAdd:{}
 		}
 	},
 	computed:{
@@ -48,11 +48,8 @@ export default {
 
 	},
 	mounted () {
-		if(window.plus){
-			plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-		this.exchangeAdd = this.$route.params.exchangeAdd
+		this.exchangeAdd = this.$route.params.exchangeEditor
+		console.log(this.$route.params.exchangeEditor)
 	},
 	methods: {
 		//回退方法
@@ -72,9 +69,7 @@ export default {
 				}}).then(res =>{
 					// this.imageUpload.push({name:file.name,url:res.data.data.url})
 					// this.$set(this.exchangeAdd,'cover',res.data.data.url);
-					this.imgUrl = res.data.data.url
-					this.exchangeAdd.cover = this.imgUrl;
-					this.exchangeAdd.show = false;
+					this.exchangeAdd.cover = res.data.data.url;
 					console.log(this.exchangeAdd)
 				}).catch(err =>{
 					console.log(err)
@@ -85,9 +80,10 @@ export default {
 			}
 		},
 		submitFn(){
-			if(this.imgUrl != ''){
-				this.$axios.post('/c2/commodity/itemadd',qs.stringify({
+			if(this.exchangeAdd.cover != ''){
+				this.$axios.post('/c2/commodity/itemalter',qs.stringify({
 					hospitalId : this.account.hospitalId,
+					itemId : this.exchangeAdd.itemId,
 					name : this.exchangeAdd.name,
 					cover : this.exchangeAdd.cover,
 					intro : this.exchangeAdd.intro,
@@ -95,8 +91,7 @@ export default {
 					payExchangepoint : this.exchangeAdd.payExchangepoint,
 				})).then(res  =>{
 					res.data.codeMsg? Toast.fail(res.data.codeMsg) : this.successFn();
-          console.log(this.exchangeAdd)
-				}).catch(err =>{
+          		}).catch(err =>{
 					console.log(err)
 				})
 			}else{
@@ -105,15 +100,7 @@ export default {
 		},
 		successFn(){
 			Toast.success('操作成功');
-      this.exchangeAdd = {
-      	name : '',
-      	payExchangepoint : 0,
-      	stock : 0,
-      	intro : '',
-      	cover : '',
-      	show : true,
-      }
-			this.$router.push({ name : 'hospital_exchangeManagement'});
+			this.$router.go(-2);
 		}
 	},
 }
