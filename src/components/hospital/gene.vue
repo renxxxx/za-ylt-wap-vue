@@ -1,6 +1,6 @@
 <template>
-	<div class="gene">
-		<div class="topNav">
+	<div class="gene" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="nav_left">
 				<img src="static/img/scanning@2x.png" alt="">
 			</div>
@@ -24,7 +24,7 @@
 						<img src="static/img/Chevron Copy 2@2x.png" alt="">
 					</div>
 				</li>
-				<li>
+				<li v-for="(item,inx) in 9" :key="inx">
 					<div class="title">
 						<div class="titleLeft">	
 							<img src="static/img/small-logo@2x.png" alt="">
@@ -104,8 +104,11 @@ export default {
 	computed:{
 	  
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -136,6 +139,9 @@ export default {
 	width: 100%;
 	height: .47rem;
 	background-color: #FFFFFF;
+	position: fixed;
+	top:0;
+	z-index: 999;
 }
 .nav_left{
 	float: left;
@@ -176,7 +182,7 @@ export default {
 }
 .geneList{
 	width: 100%;
-	height: 100%;
+	padding-top: .47rem;
 }
 .geneList ul{
 	height: 100%;

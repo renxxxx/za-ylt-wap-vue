@@ -1,6 +1,6 @@
 <template>
 	<div class="user">
-		<div class="user_top">
+		<div class="user_top" :style="{'padding-top': height+'px'}">
 			<div class="user_set" v-show=false>
 				<img src="static/img/set up@2x.png" alt="">
 			</div>
@@ -22,7 +22,7 @@
 		<van-image-preview v-model="show" :images="images" @change="onChange" >
 		  <!-- <template v-slot:index>第{{ index }}页</template> -->
 		</van-image-preview>
-		<div class="user_center">
+		<div class="user_center"  :style="{'padding-top': (height+140)+'px'}">
 			<ul>
 				<router-link :to="{name : 'hospital_taskManagement'}">
 					<li>
@@ -91,8 +91,11 @@ export default {
 	components:{
 		bottomNav
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -180,8 +183,10 @@ export default {
 	width: 100%;
 	height: 1.3rem;
 	background-color: #FFFFFF;
-	position: relative;
-	padding-top: .36rem;
+	/* margin-top: .36rem; */
+	position: fixed;
+	top:0;
+	z-index: 9999;
 }
 .user_set{
 	top: .18rem;
@@ -212,7 +217,7 @@ export default {
 .top_left span{
 	position: absolute;
 	left: .61rem;
-	top: 1.15rem;
+	top: .79rem;
 	font-size: .03rem;
 	color: #FFFFFF;
 	background:url('../../../static/img/Gradualchange@2x.png');
@@ -231,6 +236,13 @@ export default {
 	line-height: .29rem;
 	font-size: .16rem;
 	font-weight: bolder;
+	font-weight: bolder;
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
 }
 .top_center p{
 	color: #666666;
@@ -253,12 +265,13 @@ export default {
 
 .user_center{
 	width: 100%;
-	background-color: #FFFFFF;
-	margin-top: .12rem;
+	
+	padding-top: 1.6rem;
 }
 .user_center ul{
 	height: 100%;
 	width: 100%;
+	background-color: #FFFFFF;
 	font-size: .14rem;
 }
 
@@ -268,6 +281,9 @@ export default {
 	padding: 0rem .18rem;
 	position: relative;
 	border-bottom: 1px solid #EEEEEE;
+}
+.user_center ul a:last-child{
+	margin-bottom: .5rem;
 }
 .user_center ul li img{
 	position: absolute;

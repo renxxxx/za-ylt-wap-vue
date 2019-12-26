@@ -29,20 +29,13 @@ export default {
 	name: 'preview',
 	data () {
 		return {
-			
+			activity : {
+				
+			},
 		}
 	},
 	computed:{
-		...mapGetters(['activity','account']),
-		activity: {
-		    get: function() {
-				// console.log(this.$store)
-		        return this.$store.state.shop.activity
-		    },
-		    set: function (newValue) {
-				this.$store.state.shop.activity = newValue;
-		    },
-		},
+		...mapGetters(['account']),
 	},
 	components:{
 		
@@ -55,8 +48,8 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
-		
+		this.activity = this.$route.query.activity
+		console.log(this.$route.query.activity)
 	},
 	methods: {
 		//回退方法
@@ -79,17 +72,6 @@ export default {
 				startTime : this.activity.startTime,
 			}))
 			.then(res => {
-				//医院端活动发布的参数
-				this.activity = {
-					title : '',
-					brief : '',
-					address : '',
-					tel : '',
-					startTime : undefined,
-					endTime : undefined,
-					content : '',
-					cover : 'static/img/Group@2x.png'
-				},
 				console.log(this.activity)
 				window.location.href='#/hospital_activityReleased';
 			})

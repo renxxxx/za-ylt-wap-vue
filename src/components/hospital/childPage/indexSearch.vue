@@ -1,6 +1,6 @@
 <template>
 	<div class="search_clinic">
-		<div class="navWarp">
+		<div class="navWarp" :style="{'padding-top': height+'px'}">
 			<div class="topNav">
 				<div class="clinic_information" @click="goBackFn">
 					<img src="static/img/shape@3x.png" alt="">
@@ -25,7 +25,7 @@
 				</div>
 			</div>
 		</div>
-		<clinic_content ref='content' :clinic = 'clinic'></clinic_content>
+		<clinic_content ref='content' :clinic = 'clinic' :style="{'padding-top': height+'px'}"></clinic_content>
 		
 		
 	</div>
@@ -53,16 +53,17 @@ export default {
 	components:{
 		clinic_content
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
-	
 	},
 	methods: {
 		goBackFn(){

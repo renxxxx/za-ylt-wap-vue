@@ -1,6 +1,6 @@
 <template>
 	<div class="active">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="static/img/shape@3x.png" alt="">
 			</div>
@@ -11,8 +11,8 @@
 				
 			</div>
 		</div>
-		<router-link to="/hospital_addActivity" v-show="isLogin== 100? true : false">
-			<div class="addActive">
+		<router-link to="/hospital_addActivity" v-show="isLogin== 100? true : false" >
+			<div class="addActive" :style="{'padding-top': height+'px'}">
 				<span>+</span>
 				<span>新建活动</span>
 			</div>
@@ -59,8 +59,11 @@ export default {
 	components:{
 		
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -114,7 +117,7 @@ export default {
 <style scoped>
 .active{
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
 	background-color: #FFFFFF;
 }
 .topNav{
@@ -122,6 +125,9 @@ export default {
 	height: .47rem;
 	line-height: .47rem;
 	background-color: #FFFFFF;
+	position: fixed;
+	top:0;
+	z-index: 999;
 }
 .leftImg{
 	width: 10%;
@@ -159,7 +165,7 @@ export default {
 	text-align: center;
 	font-size: .14rem;
 	margin: 0 auto;
-	margin-top: .12rem;
+	margin-top: .59rem;
 	background-color: #FFFFFF;
 }
 .addActive span:first-child{
