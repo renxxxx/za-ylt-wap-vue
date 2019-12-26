@@ -22,18 +22,8 @@
 		
 		},
 		mounted() {
-			
 			debugger
-			
 			let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
-			
-				if(this.$store.state.shop.isLogin == 100){
-					this.$router.replace('hospital_index')
-				}else  if(this.$store.state.shop.isLogin == 200){
-					this.$router.replace('outpatient_index')
-				}else  if(this.$store.state.shop.isLogin == 300){
-					this.$router.replace('landingPage')
-				}
 		},
 		created() {
 

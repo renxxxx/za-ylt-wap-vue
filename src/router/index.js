@@ -445,6 +445,7 @@ const router = new Router({
 
 router.beforeEach((to,from,next) => {
 	//TODO 保存当前路由
+	debugger
 	if(to.name!='landingPage')
 		localStorage.setItem('lastRoute',JSON.stringify(to))
 	// console.log(to)

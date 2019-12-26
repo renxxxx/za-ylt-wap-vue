@@ -123,15 +123,21 @@ export default {
   },
 
   mounted () {
-
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("light")
-			
-			
-  		}
+		  }
+		  
+		  if(this.$store.state.shop.isLogin == 100){
+				this.$router.replace('hospital_index')
+			}else  if(this.$store.state.shop.isLogin == 200){
+				this.$router.replace('outpatient_index')
+			}else  if(this.$store.state.shop.isLogin == 300){
+				this.$router.replace('landingPage')
+			}
   },
   computed:{
+
 	...mapGetters(['checked']),
 	account:{
 		get: function() {
@@ -142,6 +148,7 @@ export default {
 			this.$store.state.shop.account = newValue;
 		},
 	},
+
 	isLogin: {
 	    get: function() {
 			// console.log(this.$store)

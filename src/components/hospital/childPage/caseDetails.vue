@@ -48,6 +48,7 @@ export default {
 		
 	},
 	mounted(){
+		alert(1)
 		debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
