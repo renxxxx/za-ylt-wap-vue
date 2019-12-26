@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Store from '../store'
-//登陆页面及其忘记密码和详情页
+//登录页面及其忘记密码和详情页
 import landingPage from '@/components/landingPage.vue'
 import retrievePassword from '@/components/retrievePassword.vue'
 import details from '@/components/detailsPage.vue'
@@ -427,7 +427,7 @@ const router = new Router({
 			meta: {auth:true},
 		},
 		{
-			// 登陆主页
+			// 登录主页
 			path: '/',
 			name: 'landingPage',
 			component: landingPage,

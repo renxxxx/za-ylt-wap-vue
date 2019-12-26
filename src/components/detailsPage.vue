@@ -144,7 +144,7 @@ export default {
   },
   mounted () {
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#ffffff");
+			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 

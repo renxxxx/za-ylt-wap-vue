@@ -50,7 +50,7 @@
 				</li>
 				<router-link :to="{name: 'landingPage'}">
 					<li @click="exitFn">
-						<span>退出登陆</span>
+						<span>退出登录</span>
 						<img src="static/img/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
@@ -96,7 +96,7 @@ export default {
 	},
 	mounted () {
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#ffffff");
+			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		
@@ -136,7 +136,9 @@ export default {
 		 },
 		//退出方法
 		exitFn(){
+
 			this.$axios.post('/hospital/logout')
+
 			this.isLogin = 0;
 			this.account = {
 				name:'',
@@ -154,6 +156,14 @@ export default {
 			},
 			console.log(this.isLogin);
 			localStorage.clear();
+
+	
+		if(plus){
+			  	plus.webview.currentWebview().clear()
+				  plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
+				  }
+
+
 		},
 		noLinkFn(){
 			this.$toast.setDefaultOptions({ duration: 1000 });

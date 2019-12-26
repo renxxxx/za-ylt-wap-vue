@@ -39,7 +39,7 @@
 				</router-link>
 				<router-link replace :to="{name: 'landingPage'}">
 					<li @click="exitFn">
-						<span>退出登陆</span>
+						<span>退出登录</span>
 						<img src="static/img/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
@@ -94,7 +94,7 @@ export default {
   },
   mounted () {
 	  if(window.plus){
-		plus.navigator.setStatusBarBackground("#ffffff");
+		//plus.navigator.setStatusBarBackground("#ffffff");
 		plus.navigator.setStatusBarStyle("dark")
 	  }
 	  
@@ -135,7 +135,7 @@ export default {
 	 },
 	//退出方法
 	exitFn(){
-		this.$router.go(-400)
+		
 		this.isLogin = 0;
 		this.account = {
 			name:'',
@@ -153,7 +153,15 @@ export default {
 		},
 		console.log(this.isLogin);
 		this.$axios.post('/hospital/logout');
+
 		localStorage.clear();
+
+	
+if(plus){
+			  	plus.webview.currentWebview().clear()
+				  plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
+				  }
+>>>>>>> edca3b76245eb1a48bf49350354b32a99f5f05f4
 	}
   },
 }

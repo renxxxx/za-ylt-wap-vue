@@ -34,7 +34,7 @@ const getters={
 	checked: state => state.checked,
 	// 详情页数据
 	detail: state => state.detail,
-	//账号登陆
+	//账号登录
 	account : state => state.account,
 	//筛选的弹窗显示值
 	show : state => state.show,
@@ -48,7 +48,7 @@ const actions={
 	change({commit},_value){
 		commit('changeFn',_value)
 	},
-	//登陆页面的表单验证
+	//登录页面的表单验证
 	submit({commit},landingState){
 		// console.log(value)
 		commit('submitFn',landingState)
@@ -60,7 +60,7 @@ const actions={
 	}
 }
 const mutations={
-	//登陆及其刷新请求
+	//登录及其刷新请求
 	submintGetData(_postUrl,_postRefresh,_isLogin,_url,state){
 		console.log(state)
 		state.isLogin = _isLogin;
@@ -135,7 +135,7 @@ const mutations={
 		state.checked = _value.target.checked;
 	},
 
-	//登陆页面的表单验证
+	//登录页面的表单验证
 	submitFn(state,landingState){
 		// console.log(this.account.name+this.account.password)
 		state.isLogin = landingState;

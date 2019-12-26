@@ -24,7 +24,7 @@
 							    @change="change"/>
 							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
 						</div>
-						<input class="submitClass" type="submit" value="登陆"></input>
+						<input class="submitClass" type="submit" value="医院登录"></input>
 						<div class="passwordReset">
 							<router-link  :to="{name : 'retrievePassword'}">
 								<div  @click="forgetFn(100)" class="forget">
@@ -54,7 +54,7 @@
 							    @change="change"/>
 							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
 						</div>
-						<input class="submitClass" type="submit" value="登陆"></input>
+						<input class="submitClass" type="submit" value="门诊登录"></input>
 						<div class="passwordReset">
 							<router-link  :to="{name : 'retrievePassword'}">
 								<div @click="forgetFn(200)" class="forget">
@@ -82,7 +82,7 @@
 							    @change="change"/>
 							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
 						</div>
-						<input class="submitClass" type="submit" value="登陆"></input>
+						<input class="submitClass" type="submit" value="运营登录"></input>
 						<div class="passwordReset">
 							<router-link  :to="{name : 'retrievePassword'}">
 								<div @click="forgetFn(300)" class="forget">
@@ -107,6 +107,7 @@ export default {
   name: 'landingPage',
   data () {
     return {
+		
 		data:1,
     }
   },
@@ -122,12 +123,13 @@ export default {
   },
 
   mounted () {
+
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#2B77EF");
+			//plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("light")
+			
+			
   		}
-		
-		
   },
   computed:{
 	...mapGetters(['checked']),

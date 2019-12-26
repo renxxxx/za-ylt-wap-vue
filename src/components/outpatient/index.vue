@@ -170,7 +170,7 @@ export default {
   },
   mounted(){
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#2B77EF");
+			//plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		console.log(this.$store)

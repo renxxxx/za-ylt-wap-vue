@@ -2,7 +2,9 @@
   <div class="index">
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
+
 			<div class="topNav" ref="topNav" :style="{'padding-top': topHeight+'px'}">
+
 				<div class="indexReturn" @click="goBackFn" v-if="isLogin == 100? true:false">
 					<img src="static/img/back-white@2x.png" alt="">
 				</div>
@@ -117,7 +119,7 @@ export default {
   },
   mounted(){
     if(window.plus){
-    	plus.navigator.setStatusBarBackground("#2B77EF");
+    	//plus.navigator.setStatusBarBackground("#2B77EF");
     	plus.navigator.setStatusBarStyle("dark")
     }
 	this.document.getElementById('')

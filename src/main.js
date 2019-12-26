@@ -26,8 +26,7 @@ Vue.prototype.moment = moment;
 Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
-Vue.prototype.topHeight = '24'
-
+Vue.prototype.topHeight = "0px"
 
 
 let isLogin = localStorage.getItem('isLogin');
@@ -92,7 +91,16 @@ if (window.plus) {
 
 
 function plusReady() {
-	plus.navigator.setStatusBarBackground("#ffffff");
+	let isImmersedStatusbar = plus.navigator.isImmersedStatusbar(); 
+	// 检测是否支持沉浸式 支持沉浸式状态栏则返回true
+
+	let _statusbarHeight = "24"; // 设置默认值
+	if (isImmersedStatusbar) {
+		_statusbarHeight = plus.navigator.getStatusbarHeight(); // 获取系统状态栏高度
+	}
+		Vue.prototype.topHeight=_statusbarHeight+'px'
+		
+	//plus.navigator.setStatusBarBackground("#ffffff");
 	plus.navigator.setStatusBarStyle("dark")
 
 	function location(position) {
@@ -174,6 +182,10 @@ Toast.setDefaultOptions({
 	duration: 800
 });
 /* eslint-disable no-new */
+
+
+
+
 
 new Vue({
 	el: '#app',

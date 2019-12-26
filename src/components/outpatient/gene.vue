@@ -1,6 +1,6 @@
 <template>
 	<div class="gene">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top':topHeight,position:'fixed',top:0,'z-index':99999}">
 			<div class="nav_left">
 				<img src="static/img/sousuo@2x.png" alt="">
 			</div>
@@ -13,7 +13,7 @@
 				</van-dropdown-menu>
 			</div>
 		</div>
-		
+	<div :style="{height:topHeight}"></div>
 		<div class="geneList">
 			<ul>
 				<li>
@@ -99,7 +99,7 @@ export default {
 	},
 	mounted () {
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#ffffff");
+			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 	},
@@ -165,6 +165,7 @@ export default {
 .geneList{
 	width: 100%;
 	height: 100%;
+	margin-top:.47rem
 }
 .geneList ul{
 	height: 100%;

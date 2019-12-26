@@ -56,7 +56,7 @@ export default {
 	},
 	mounted () {
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#ffffff");
+			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		this.$axios.post('/c2/patient/items',qs.stringify({
