@@ -52,7 +52,10 @@ function cancelAuth(){
 
 
 function shareWeb(url,cover,title,content,callback){
-	
+	if(cover && !cover.toLowerCase().startsWith("http")){
+		cover=location.origin+"/"+cover
+	}
+
 		if(!window.plus)
 			return
 

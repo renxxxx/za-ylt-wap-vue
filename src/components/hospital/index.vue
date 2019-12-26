@@ -1,6 +1,6 @@
 <template>
-	<div class="hospital"  :style="{'padding-top': height+'px'}">
-		<div class="navWarp">
+	<div class="hospital"  >
+		<div class="navWarp" :style="{'padding-top': height+'px'}">
 			<div class="navTitle">
 				<span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
 			</div>
