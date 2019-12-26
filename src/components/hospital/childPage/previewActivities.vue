@@ -72,6 +72,17 @@ export default {
 				startTime : this.activity.startTime,
 			}))
 			.then(res => {
+				//医院端活动发布的参数
+				this.activity = {
+					title : '',
+					brief : '',
+					address : '',
+					tel : '',
+					startTime : undefined,
+					endTime : undefined,
+					content : '',
+					cover : require('../../../assets/image/Group@2x.png')
+				},
 				console.log(this.activity)
 				window.location.href='#/hospital_activityReleased';
 			})

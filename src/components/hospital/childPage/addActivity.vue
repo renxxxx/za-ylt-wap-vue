@@ -17,7 +17,7 @@
 		<div class="addImg" :style="{'padding-top': (height+47)+'px'}">
 			<img :src="activity.cover" alt="">
 			<div class="addImgTitle">
-				<img src="/static/img/replace@2x.png" alt="">
+				<img src="../../../assets/image/replace@2x.png" alt="">
 				<span>选择背景</span> 
 			</div>
 			<input
@@ -57,7 +57,7 @@ export default {
 	data () {
 		return {
 			data : '',
-			activity : {
+			  activity : {
 				title : '',
 				brief : '',
 				address : '',
@@ -65,8 +65,8 @@ export default {
 				startTime : undefined,
 				endTime : undefined,
 				content : '',
-				cover : 'static/img/Group@2x.png'
-			},
+				cover : require('../../../assets/image/Group@2x.png')
+			  },
 		}
 	},
 	computed:{

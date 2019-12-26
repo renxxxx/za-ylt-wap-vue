@@ -3,11 +3,11 @@
 		<div class="top_search" :style="{'padding-top': height+'px'}">
 			<div class="search_return">
 				<a @click="goBackFn">
-					<img src="static/img/shape@3x.png" alt="">
+					<img src="../../../assets/image/shape@3x.png" alt="">
 				</a>
 			</div>
 			<div class="search_input">
-				<img src="static/img/sousuo@2x.png" alt="">
+				<img src="../../../assets/image/sousuo@2x.png" alt="">
 				<input type="text" placeholder="搜索病员" v-model="list.keywords" v-focus='this.$route.query.focus'>
 			</div>	
 			<div class="clinic_buttton"  @click="inputNow">
@@ -15,7 +15,7 @@
 			</div>
 			<div class="screening" @click="showPopup">
 				<span>筛选</span>
-				<img src="static/img/screening.png" alt="">
+				<img src="../../../assets/image/screening.png" alt="">
 			</div>
       <timeChoose :list = 'list'></timeChoose>
 		</div>

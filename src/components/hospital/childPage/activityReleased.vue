@@ -2,7 +2,7 @@
 	<div class="active">
 		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/img/shape@3x.png" alt="">
+				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>发布精准活动</h3>
@@ -31,7 +31,7 @@
 			</van-cell>
 			<template slot="right">
 				<button class="deleteStyle" @click="deleteActiviteFn(item)">
-					<img src="static/img/activiteDelete.png" alt="">
+					<img src="../../../assets/image/activiteDelete.png" alt="">
 				</button>
 			</template>
 		</van-swipe-cell>
