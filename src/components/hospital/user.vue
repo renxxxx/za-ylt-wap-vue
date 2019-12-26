@@ -50,7 +50,7 @@
 				</li>
 				<router-link :to="{name: 'landingPage'}">
 					<li @click="exitFn">
-						<span>退出登陆</span>
+						<span>退出登录</span>
 						<img src="static/img/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
@@ -127,7 +127,11 @@ export default {
 		 },
 		//退出方法
 		exitFn(){
+
+			this.isLogin = 0;
 			this.$axios.post('/hospital/logout')
+
+
 		},
 		noLinkFn(){
 			this.$toast.setDefaultOptions({ duration: 1000 });

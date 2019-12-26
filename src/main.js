@@ -93,6 +93,14 @@ if (window.plus) {
 
 
 function plusReady() {
+	let isImmersedStatusbar = plus.navigator.isImmersedStatusbar(); 
+	// 检测是否支持沉浸式 支持沉浸式状态栏则返回true
+	let _statusbarHeight = "24px"; // 设置默认值
+	if (isImmersedStatusbar) {
+		_statusbarHeight = plus.navigator.getStatusbarHeight(); // 获取系统状态栏高度
+	}
+		document.body.style['padding-top']=_statusbarHeight+"!important"
+
 	plus.navigator.setStatusBarBackground("#ffffff");
 	plus.navigator.setStatusBarStyle("dark")
 
@@ -175,6 +183,10 @@ Toast.setDefaultOptions({
 	duration: 800
 });
 /* eslint-disable no-new */
+
+
+
+
 
 new Vue({
 	el: '#app',
