@@ -2,7 +2,7 @@
 	<div class="integralShop">
 		<div class="slip">
 			<div class="return" @click="returnFn">
-				<img src="static/img/shape@3x.png" alt="">
+				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<van-swipe >
 			  <van-swipe-item v-for="(image, index) in shopDetails.cover" :key="index" :height="375">

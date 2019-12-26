@@ -2,13 +2,13 @@
 	<div class="activityDetails">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/img/shape@3x.png" alt="">
+				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>活动详情</h3>
 			</div>
 			<div class="right">
-				<img src="static/img/share@3x.png" @click="share" alt="">	
+				<img src="../../../assets/image/share@3x.png" @click="share" alt="">	
 			</div>
 		</div> 
 		<div class="activeList" :model='active'>

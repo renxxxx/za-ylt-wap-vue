@@ -2,7 +2,7 @@
 	<div class="exchangeAddImg">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/img/shape@3x.png" alt="">
+				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>修改商品</h3>
@@ -14,7 +14,7 @@
 
 		<div class="addImg" v-model="exchangeAdd">
 			<div class="addImgButton" v-show="this.exchangeAdd.cover? false : true">
-				<img src="static/img/append@2x.png" alt="">
+				<img src="../../../assets/image/append@2x.png" alt="">
 				<span>请添加照片</span>
 			</div>
 			<img v-bind:src="this.exchangeAdd.cover" alt="">

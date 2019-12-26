@@ -2,7 +2,7 @@
 	<div class="expertsIntroduction">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/img/shape@3x.png" alt="">
+				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>专家介绍</h3>
@@ -41,7 +41,7 @@ export default {
 	data () {
 		return {
 			doctor:[],
-			downImg : 'static/img/down@2x.png',
+			downImg : require('../../../assets/image/down@2x.png'),
 			clickNum: 0 ,
 		}
 	},
@@ -91,10 +91,10 @@ export default {
 			this.clickNum++;
 			if(this.clickNum % 2 == 0){
 				this.$refs.showP[inx].style.webkitLineClamp = '9'
-				this.$refs.showimg[inx].src='static/img/up-1@2x.png'
+				this.$refs.showimg[inx].src=require('../../../assets/image/up-1@2x.png')
 			}else{
 				this.$refs.showP[inx].style.webkitLineClamp = '2'
-				this.$refs.showimg[inx].src='static/img/down@2x.png'
+				this.$refs.showimg[inx].src=require('../../../assets/image/down@2x.png')
 			}
 			
 			console.log()

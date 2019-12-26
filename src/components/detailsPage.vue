@@ -3,7 +3,7 @@
 		<div class="topNav">
 			<div class="nav_left">
 				<a @click="goBackFn">
-					<img src="static/img/back-white@2x.png" alt="">
+					<img src="../assets/image/back-white@2x.png" alt="">
 				</a>
 			</div>
 			<div class="nav_center">
@@ -61,7 +61,7 @@
       <ul>
         <li v-for="(item,inx) in imgUrl" :key="inx" @click="enlargeFn(inx)">
           <img v-bind:src="item" alt="">
-          <img v-show="show" src="static/img/detele.png" alt="" @click="deteleFn(item)">
+          <img v-show="show" src="../assets/image/detele.png" alt="" @click="deteleFn(item)">
 		  <van-image-preview
 		    v-model="enlarge"
 		    :images="imgUrl"
@@ -101,7 +101,7 @@ export default {
     show : true,
 		modify:{
 			value:'编辑',
-			img:'static/img/editor.png',
+			img:require('../assets/image/editor.png'),
 			data:false,					//保存状态
 			readonly : 'true',		//读取状态
 			num: 0,						//点击次数
@@ -175,7 +175,7 @@ export default {
 			}
 			this.modify.data = true;
 			this.modify.value = '编辑';
-			this.modify.img = 'static/img/editor.png';
+			this.modify.img = require('../assets/image/editor.png');
       this.show = false;
 		}else{
 			this.modify.data = false;
@@ -216,7 +216,7 @@ export default {
 		if(this.modify.num % 2 != 0){
 			// console.log(this.modify.num)
 			this.modify.value = '保存';
-			this.modify.img = 'static/img/save@2x.png';
+			this.modify.img = require('../assets/image/save@2x.png');
       // console.log(this.modify.value)
 			this.modify.data = true;
 			for(let i =1; i<6; i++){
@@ -226,7 +226,7 @@ export default {
       this.show = true;
 		}else{
       this.modify.value = '编辑';
-      this.modify.img = 'static/img/editor.png';
+      this.modify.img = require('../assets/image/editor.png');
       // console.log(this.modify.value);
 			let _imgAddress = [];
       if(this.imgUrl.length == 1){

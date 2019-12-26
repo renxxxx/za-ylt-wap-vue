@@ -17,7 +17,7 @@
 		<div class="addImg">
 			<img :src="activity.cover" alt="">
 			<div class="addImgTitle">
-				<img src="/static/img/replace@2x.png" alt="">
+				<img src="../../../assets/image/replace@2x.png" alt="">
 				<span>选择背景</span> 
 			</div>
 			<input
@@ -65,7 +65,7 @@ export default {
       	startTime : undefined,
       	endTime : undefined,
       	content : '',
-      	cover : 'static/img/Group@2x.png'
+      	cover : require('../../../assets/image/Group@2x.png')
       },
 		}
 	},

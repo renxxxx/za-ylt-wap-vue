@@ -5,12 +5,12 @@
 				<div class="hospital_search">
 					<router-link :to="{name : 'hospital_indexSearch'}">
 						<input type="text" placeholder="搜索门诊">
-						<img src="static/img/sousuo@2x.png" alt="">
+						<img src="../../assets/image/sousuo@2x.png" alt="">
 					</router-link>
 				</div>
 				<router-link :to="{name : 'hospital_clinicMessage'}">
 					<div class="hospital_information">
-						<img src="static/img/xiaoxi@2x.png" alt="">
+						<img src="../../assets/image/xiaoxi@2x.png" alt="">
 						<div class="num" v-if="this.account.data.data.newMessageCount? true:false">
 							<span>{{this.account.data.data.newMessageCount}}</span>
 						</div>
@@ -21,25 +21,25 @@
 				<ul>
 					<router-link :to="{name : 'hospitalImage'}">
 						<li>
-							<img src="static/img/yiyuanxingxiang@2x.png" alt=""/>
+							<img src="../../assets/image/yiyuanxingxiang@2x.png" alt=""/>
 							<span>医院形象</span>
 						</li>
 					</router-link>
 					<router-link  :to="{name : 'hospital_case'}">
 						<li>
-							<img src="static/img/youzhianli@2x.png" alt=""/>
+							<img src="../../assets/image/youzhianli@2x.png" alt=""/>
 							<span>优质案例</span>
 						</li>
 					</router-link>
 					<router-link :to="{name : 'hospital_expertsIntroduction'}">
 						<li>
-							<img src="static/img/zhuanjia@2x.png" alt=""/>
+							<img src="../../assets/image/zhuanjia@2x.png" alt=""/>
 							<span>专家介绍</span>
 						</li>
 					</router-link>
 					<router-link :to="{name : 'hospital_activityReleased'}">
 						<li>
-							<img src="static/img/huodongfabu@2x.png" alt=""/>
+							<img src="../../assets/image/huodongfabu@2x.png" alt=""/>
 							<span>最新活动</span>
 						</li>
 					</router-link>
@@ -50,7 +50,7 @@
 				<div class="statisticalAdd">
 					<router-link :to="{name : 'hospital_addCLinic'}">
 						<span>新增</span>
-						<img src="static/img/xinzeng@2x.png" alt="">
+						<img src="../../assets/image/xinzeng@2x.png" alt="">
 					</router-link>
 				</div>
 			</div>

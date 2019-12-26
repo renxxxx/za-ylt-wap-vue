@@ -247,7 +247,7 @@ if(window.plus){
 								pushTime : _d.data.data.items[nums].pushTime,
 								realname : _d.data.data.items[nums].realname,
 								status : _d.data.data.items[nums].status,
-								img : "static/img/orange@2x.png",
+								img : require("../../../assets/image/orange@2x.png"),
 								button : "确认就诊",
 								span : "未就诊"
 							});
@@ -260,7 +260,7 @@ if(window.plus){
 								pushTime : _d.data.data.items[nums].pushTime,
 								realname : _d.data.data.items[nums].realname,
 								status : _d.data.data.items[nums].status,
-								img : "static/img/blue@2x.png",
+								img : require("../../../assets/image/blue@2x.png"),
 								button : "已就诊",
 								buttonColor : "buttonColor",
 								span : "已就诊"

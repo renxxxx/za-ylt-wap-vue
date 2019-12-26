@@ -2,20 +2,20 @@
 	<div class="addClinic">
 		<div class="navWarp" >
 			<div class="leftNav" @click="goBackFn">
-				<img src="static/img/back-white@2x.png" alt="">
+				<img src="../../../assets/image/back-white@2x.png" alt="">
 			</div>
 			<div class="centerNav">
 				<span>新增门诊</span>
 			</div>
 			<div class="rightNav" @click="saveFn">
 				<span>保存</span>
-				<img src="static/img/save@2x.png" alt="">
+				<img src="../../../assets/image/save@2x.png" alt="">
 			</div>
 		</div>
 		<div class="content">
 			<form @submit.prevent="hospitalSubmit" class="newAdd">
 				<div class="newAddTitle">
-					<img src="static/img/bitian@2x.png" alt="">
+					<img src="../../../assets/image/bitian@2x.png" alt="">
 					<h3>必填项</h3>
 					<ul class="Fill">
 						<li  >
@@ -51,7 +51,7 @@
 					</ul>
 				</div>
 				<div class="newAddTitle bottom">
-					<img src="static/img/xuantian@2x.png" alt="">
+					<img src="../../../assets/image/xuantian@2x.png" alt="">
 					<h3>选填项</h3>
 					<ul class="Fill">
 						<li  >
@@ -73,7 +73,7 @@
 								      <!-- <p>点击上传</p> -->
 								   </div>
 							</div>
-							<img class="rightImg" src="static/img/right@2x.png" alt="">
+							<img class="rightImg" src="../../../assets/image/right@2x.png" alt="">
 							<img  id="backimg" :src='imageUpload'  alt="" >
 						</li>
 						<!-- <van-action-sheet v-model="show"  :round="false" >

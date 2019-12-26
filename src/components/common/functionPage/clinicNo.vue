@@ -28,7 +28,7 @@
 								<span>{{item.realname}}</span>
 							</div>
 							<div class="content_right">
-								<img src='static/img/weijiuzhen@2x.png'>
+								<img src='../../../assets/image/weijiuzhen@2x.png'>
 								<span class="AlreadySpanColor">未就诊</span>
 							</div>
 							<p>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
@@ -134,7 +134,7 @@ export default {
 							pushTime : _d.data.data.items[nums].pushTime,
 							realname : _d.data.data.items[nums].realname,
 							status : _d.data.data.items[nums].status,
-							img : "static/img/orange@2x.png",
+							img : require("../../../assets/image/orange@2x.png"),
 							button : "确认就诊"
 						});
 						noNum++
@@ -176,7 +176,7 @@ export default {
 							pushTime : _d.data.data.items[nums].pushTime,
 							realname : _d.data.data.items[nums].realname,
 							status : _d.data.data.items[nums].status,
-							img : "static/img/orange@2x.png",
+							img : require("../../../assets/image/orange@2x.png"),
 							button : "确认就诊"
 						});
 						// this.noNum++;

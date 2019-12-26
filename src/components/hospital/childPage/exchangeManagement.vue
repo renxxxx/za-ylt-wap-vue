@@ -2,14 +2,14 @@
 	<div class="exchange">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/img/shape@3x.png" alt="">
+				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>兑换管理</h3>
 			</div>
 			<router-link :to="{name : 'hospital_exchangeManagementList'}">
 				<div class="right">
-					<img src="static/img/liebiao@3x.png" alt="">
+					<img src="../../../assets/image/liebiao@3x.png" alt="">
 				</div>
 			</router-link>
 		</div>
@@ -18,7 +18,7 @@
 			<router-link :to="{name : 'hospital_exchangeManagementAdd'}">
 				<div class="add">
 					<span>新增</span>
-					<img src="static/img/xinzeng@2x.png" alt="">
+					<img src="../../../assets/image/xinzeng@2x.png" alt="">
 				</div>
 			</router-link>
 		</div>
@@ -41,7 +41,7 @@
 				</li>
 				<template slot="right">
 					<button class="deleteStyle" @click="deleteActiviteFn(item)">
-						<img src="static/img/activiteDelete.png" alt="">
+						<img src="../../../assets/image/activiteDelete.png" alt="">
 					</button>
 				</template>
 			</van-swipe-cell>

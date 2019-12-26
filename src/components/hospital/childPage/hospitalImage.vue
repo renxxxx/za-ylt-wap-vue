@@ -1,7 +1,7 @@
 <template>
 	<div class="images">
 		<div class="topNav" ref='img' >
-			<img src="static/img/shape@3x.png" alt="" @click="goBackFn">
+			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn">
 		</div>
 		<div class="content">
 			<div class="contentTitle">
@@ -123,7 +123,7 @@ export default {
 .topNav{
 	width: 100%;
 	height: 2.63rem;
-	background: url('../../../../static/img/bj-keshi@2x.png') no-repeat center;
+	background: url('../../../assets/image/bj-keshi@2x.png') no-repeat center;
 	background-size: contain;
 	/* background-size: 100%; */
 	/* background-color: #fff000; */

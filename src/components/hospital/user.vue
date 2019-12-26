@@ -2,11 +2,11 @@
 	<div class="user">
 		<div class="user_top">
 			<div class="user_set" v-show=false>
-				<img src="static/img/set up@2x.png" alt="">
+				<img src="../../assets/image/set up@2x.png" alt="">
 			</div>
 			<div class="user_message">
 				<div class="top_left">
-					<img :src="coverImg? coverImg:'static/img/logo@2x.png'" alt="">
+					<img :src="coverImg? coverImg: require('../../assets/image/logo@2x.png')" alt="">
 					<span>已认证</span>
 				</div>
 				<div class="top_center">
@@ -15,7 +15,7 @@
 				</div>
 				<div class="top_right" @click="showImgFn">
 					<span>营业执照</span>
-					<img src="static/img/Chevron Copy 2@2x.png" alt="">
+					<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 				</div>
 			</div>
 		</div>
@@ -27,31 +27,31 @@
 				<router-link :to="{name : 'hospital_taskManagement'}">
 					<li>
 						<span>任务管理</span>
-						<img src="static/img/Chevron Copy 2@2x.png" alt="">
+						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
 				<router-link :to="{name : 'hospital_exchangeManagement'}">
 					<li>
 						<span>兑换管理</span>
-						<img src="static/img/Chevron Copy 2@2x.png" alt="">
+						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
 				<li @click="noLinkFn">
 					<span>集采订单</span>
-					<img src="static/img/Chevron Copy 2@2x.png" alt="">
+					<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 				</li>
 				<li @click="noLinkFn">
 					<span>集采积分</span>
-					<img src="static/img/Chevron Copy 2@2x.png" alt="">
+					<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 				</li>
 				<li @click="noLinkFn">
 					<span>推广人员管理</span>
-					<img src="static/img/Chevron Copy 2@2x.png" alt="">
+					<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 				</li>
 				<router-link :to="{name: 'landingPage'}">
 					<li @click="exitFn">
 						<span>退出登录</span>
-						<img src="static/img/Chevron Copy 2@2x.png" alt="">
+						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
 				
@@ -215,7 +215,7 @@ export default {
 	top: 1.15rem;
 	font-size: .03rem;
 	color: #FFFFFF;
-	background:url('../../../static/img/Gradualchange@2x.png');
+	background:url('../../assets/image/Gradualchange@2x.png');
 	background-size:100% 100%;
 	padding: .02rem .1rem;
 }

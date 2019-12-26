@@ -3,11 +3,11 @@
 		<div class="navWarp">
 			<div class="topNav">
 				<div class="clinic_information" @click="goBackFn">
-					<img src="static/img/shape@3x.png" alt="">
+					<img src="../../../assets/image/shape@3x.png" alt="">
 				</div>
 				<div class="clinic_search">
 					<input type="text" placeholder="搜索门诊"  v-model="keywords">
-					<img src="static/img/sousuo@2x.png" alt="">
+					<img src="../../../assets/image/sousuo@2x.png" alt="">
 				</div>
 				<div class="clinic_buttton" @click="inputNow">
 					<button>搜索</button>
@@ -20,7 +20,7 @@
 				<div class="titleRight">
 					<router-link :to="{name : 'hospital_addCLinic'}">
 						<span>新增</span>
-						<img src="static/img/xinzeng@2x.png" alt="">
+						<img src="../../../assets/image/xinzeng@2x.png" alt="">
 					</router-link>
 				</div>
 			</div>
