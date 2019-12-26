@@ -129,7 +129,7 @@ export default {
 		exitFn(){
 
 			this.$axios.post('/hospital/logout')
-
+this.$store.state.shop.isLogin = 0
 				this.isLogin = 0;
 				this.account.name = '';
 				this.account.password = '';

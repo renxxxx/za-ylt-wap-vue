@@ -38,7 +38,6 @@ if (isLogin && !isNaN(parseInt(isLogin))) {
 			getdata('/hospital/login-refresh', 100)
 			break;
 		case 200:
-			// console.log('200')
 			getdata('/clinic/login-refresh', 200)
 			break;
 		case 300:

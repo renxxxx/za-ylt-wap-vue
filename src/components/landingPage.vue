@@ -129,11 +129,11 @@ export default {
 		  }
 		  
 		  if(this.$store.state.shop.isLogin == 100){
-				this.$router.replace('hospital_index')
+				this.$router.push({ name : 'hospital_index'})
 			}else  if(this.$store.state.shop.isLogin == 200){
-				this.$router.replace('outpatient_index')
+				this.$router.push({ name : 'hospital_sourceManagement'})
 			}else  if(this.$store.state.shop.isLogin == 300){
-				this.$router.replace('landingPage')
+				this.$router.push({ name : 'landingPage'})
 			}
   },
   computed:{

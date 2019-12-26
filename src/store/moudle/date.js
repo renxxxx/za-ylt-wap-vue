@@ -80,9 +80,6 @@ const mutations={
 						.then( res =>{
 							switch(_isLogin){
 								case 100:
-								if(state.loginToBack)
-									router.back()
-								else
 									router.replace({ name : _url});
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
 								// console.log(state.account.hospitalId)
@@ -91,9 +88,6 @@ const mutations={
 								break;
 
 								case 200:
-								if(state.loginToBack)
-									router.back()
-								else
 									router.replace({ name : _url});
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
@@ -103,9 +97,6 @@ const mutations={
 								break;
 
 								case 300:
-								if(state.loginToBack)
-									router.back()
-								else
 									router.replace({ name : _url});
 								Dialog({ message: '正在开发中，敬请期待' });
 								state.account.clinicId= res.data.data.clinic.clinicId;

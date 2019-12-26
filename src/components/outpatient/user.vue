@@ -127,6 +127,7 @@ export default {
 	//退出方法
 	exitFn(){
 		
+		this.$store.state.shop.isLogin = 0
 		this.isLogin = 0;
 		this.account.name = '';
 		this.account.password = '';
