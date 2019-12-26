@@ -48,6 +48,9 @@ export default {
 		
 	},
 	mounted(){
+
+		debugger
+
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")

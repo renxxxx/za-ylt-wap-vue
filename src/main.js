@@ -28,7 +28,7 @@ Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
 Vue.prototype.topHeight = "0px"
 
-
+debugger
 let isLogin = localStorage.getItem('isLogin');
 if (isLogin && !isNaN(parseInt(isLogin))) {
 	isLogin = parseInt(isLogin);
@@ -48,8 +48,8 @@ if (isLogin && !isNaN(parseInt(isLogin))) {
 			break;
 	}
 }
-let lastRoute=null;
- function getdata(_postRefresh, _isLogin) {
+
+function getdata(_postRefresh, _isLogin) {
 	jquery.ajax({
 		type:'post',
 		 url:_postRefresh,
@@ -99,7 +99,7 @@ function plusReady() {
 		_statusbarHeight = plus.navigator.getStatusbarHeight(); // 获取系统状态栏高度
 	}
 		Vue.prototype.topHeight=_statusbarHeight+'px'
-		
+
 	//plus.navigator.setStatusBarBackground("#ffffff");
 	plus.navigator.setStatusBarStyle("dark")
 
