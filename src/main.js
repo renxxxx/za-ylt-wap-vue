@@ -26,7 +26,7 @@ Vue.prototype.moment = moment;
 Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
-Vue.prototype.topHeight = "24px"
+Vue.prototype.topHeight = "0px"
 
 debugger
 let isLogin = localStorage.getItem('isLogin');
