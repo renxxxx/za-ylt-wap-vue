@@ -28,6 +28,7 @@
 			</li>
 		</ul>
 		
+		
 	
 		<button @click="retrieveSubmit">确认</button>
 	</div>
@@ -62,7 +63,7 @@ export default {
 		
   },
   computed:{
-	  ...mapGetters(['account','isLogin'])
+	  ...mapGetters(['account','isLogin','whichClient'])
   },
   mounted () {
 		if(window.plus){
@@ -73,7 +74,7 @@ export default {
   methods: {
 	 //回退方法
 	 goBackFn(){
-		 this.$router.back(-1)
+		 this.$router.back()
 	 },
 	//倒计时结束时触发的方法
 	finished(e){
@@ -135,8 +136,8 @@ export default {
 	},
 	// 提交重设信息
 	retrieveSubmit(){
-		console.log(this.isLogin)
-		switch(this.isLogin){
+		console.log(this.whichClient)
+		switch(this.whichClient){
 			case 100:
 			this.getdata('/hospital/set-pwd-by-phone');
 			break;

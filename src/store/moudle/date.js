@@ -10,6 +10,7 @@ const state={
 	checked: true,
 	//账号
 	isLogin:0,
+	whichClient:0,
 	account:{
 		name:'',
 		password:'',
@@ -40,7 +41,9 @@ const getters={
 	show : state => state.show,
 	//显示半遮罩及其日期选择
 	showTime : state => state.showTime,
-	isLogin : state => state.isLogin
+	isLogin : state => state.isLogin,
+	whichClient : state => state.whichClient,
+	
 }
 
 const actions={
