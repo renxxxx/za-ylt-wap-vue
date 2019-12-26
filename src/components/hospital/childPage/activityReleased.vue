@@ -75,7 +75,8 @@ export default {
 	methods: {
 		//回退方法
 		goBackFn(){
-			this.$router.back(-1)
+			this.$router.push({name:'hospital_index'})
+			// this.$router.back(-1)
 		},
 		deleteActiviteFn(_item){
 			this.$axios.post('/c2/activity/itemdel',qs.stringify({
