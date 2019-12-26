@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Store from '../store'
-//登录页面及其忘记密码和详情页
+//登陆页面及其忘记密码和详情页
 import landingPage from '@/components/landingPage.vue'
 import retrievePassword from '@/components/retrievePassword.vue'
 import details from '@/components/detailsPage.vue'
@@ -206,14 +206,14 @@ const router = new Router({
 			path: '/hospital_case',
 			name: 'hospital_case',
 			component: hospital_case,
-			meta: {auth:true},
+			// meta: {auth:true},
 		},
 		{
 			// 医院端门诊主页的优质案例详情页
 			path: '/hospital_caseDetails',
 			name: 'hospital_caseDetails',
 			component: hospital_caseDetails,
-			meta: {auth:true},
+			// meta: {auth:true},
 		},
 		{
 			// 医院端门诊主页的专家介绍
@@ -427,7 +427,7 @@ const router = new Router({
 			meta: {auth:true},
 		},
 		{
-			// 登录主页
+			// 登陆主页
 			path: '/',
 			name: 'landingPage',
 			component: landingPage,
@@ -445,11 +445,11 @@ const router = new Router({
 
 router.beforeEach((to,from,next) => {
 	//TODO 保存当前路由
-	debugger
 	if(to.name!='landingPage')
 		localStorage.setItem('lastRoute',JSON.stringify(to))
 	// console.log(to)
 	// console.log(next)
+	debugger;
 	if(to.meta){
 		if(to.meta.auth){
 			switch(store.state.shop.isLogin){

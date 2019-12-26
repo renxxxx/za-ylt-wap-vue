@@ -161,7 +161,7 @@ if(plus){
 			  	plus.webview.currentWebview().clear()
 				  plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
 				  }
->>>>>>> edca3b76245eb1a48bf49350354b32a99f5f05f4
+
 	}
   },
 }

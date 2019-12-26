@@ -22,8 +22,8 @@
 		
 		},
 		mounted() {
-			debugger
-			let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
+			// debugger
+			// let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
 
 		},
 		created() {
