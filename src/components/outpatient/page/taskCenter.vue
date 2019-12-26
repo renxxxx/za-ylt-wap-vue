@@ -46,7 +46,7 @@
 				<h3 class="titleBefore">每日收益</h3>
 				<li v-for="(item,inx) in task.daily" :key='inx+1'>
 					<h4>{{item.name}}<span>+{{item.exchangePoint}}</span><span>/</span></h4>
-					<van-progress :percentage="item.gotExchangePointToday? item.gotExchangePointToday/item.exchangePointUpperPerDay*100:item.gotExchangePointToday" :show-pivot='false' :color="'#FF1A2E'" :rack-color="'#E5E5E5'" stroke-width='0.05rem'/>
+					<van-progress :percentage="item.gotExchangePointToday? item.gotExchangePointToday/item.exchangePointUpperPerDay*100:0" :show-pivot='false' :color="'#FF1A2E'" :rack-color="'#E5E5E5'" stroke-width='0.05rem'/>
 					<p>已获{{item.gotExchangePointToday? item.gotExchangePointToday:0}}分/上限{{item.exchangePointUpperPerDay}}分</p>
 					<button :class="item.doneIs? 'buttonColorYes':'buttonColorNo'">{{item.doneIs? '已完成':'去完成'}}</button>
 				</li>
@@ -82,7 +82,7 @@ export default {
 	},
 	mounted(){
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#ffffff");
+			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		

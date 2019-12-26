@@ -4,7 +4,7 @@
 			<!-- 搜索及其筛选 -->
 			<div class="topNav">
 				<div class="indexSearch">
-					<router-link to="/outpatient_search">
+					<router-link :to="{name : 'outpatient_search'}">
 						<img src="static/img/sousuo@2x.png" alt="">
 						<input type="text" placeholder="搜索病员" >
 					</router-link>
@@ -93,7 +93,7 @@
 							<div class="list">
 								<ul :model="message" class="index_content">
 									<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
-										<router-link to="/details" >
+										<router-link :to="{name : 'details'}" >
 											<li v-for="(_notDiagnosis,inx) in message.notDiagnosis" :key="inx" @click="detailsValueFn(_notDiagnosis)">
 												<div class="content_left">
 													<span>{{_notDiagnosis.realname}}</span>
@@ -114,7 +114,7 @@
 						<van-pull-refresh v-model="isLoading" @refresh="onRefresh2">
 							<ul class="index_content" :model="message">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoadss">
-									<router-link to="/details" >
+									<router-link :to="{name : 'details'}" >
 										<li v-for="(_diagnosis,inx) in message.diagnosis" :key="inx" @click="detailsValueFn(_diagnosis)">
 											<div class="content_left">
 												<span>{{_diagnosis.realname}}</span>
@@ -170,7 +170,7 @@ export default {
   },
   mounted(){
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#2B77EF");
+			//plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		console.log(this.$store)

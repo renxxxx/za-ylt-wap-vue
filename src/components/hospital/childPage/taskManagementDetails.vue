@@ -66,7 +66,7 @@ export default {
 	},
 	mounted () {
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#ffffff");
+			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		console.log()
@@ -84,7 +84,7 @@ export default {
 		submitFn(){
 			this.$axios.post('/c2/task/taskissue',qs.stringify({
 				hospitalId : this.account.hospitalId,
-				taskId : this.$route.query.item.taskId,
+				taskId : this.taskSubmitValue.taskId,
 				exchangePoint : this.taskSubmitValue.exchangePoint,
 				exchangePointUpperPerDay : this.taskSubmitValue.exchangePointUpperPerDay,
 				intro : this.taskSubmitValue.intro,

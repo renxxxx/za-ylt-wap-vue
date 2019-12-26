@@ -107,6 +107,7 @@ export default {
   name: 'landingPage',
   data () {
     return {
+		
 		data:1,
     }
   },
@@ -122,13 +123,13 @@ export default {
   },
 
   mounted () {
+
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#2B77EF");
+			//plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("light")
-			plus.currentWebview.clear()
+			
+			
   		}
-		
-		
   },
   computed:{
 	...mapGetters(['checked']),

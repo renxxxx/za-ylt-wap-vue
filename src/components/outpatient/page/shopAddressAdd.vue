@@ -55,14 +55,14 @@ export default {
 		...mapGetters(['account'])
 	},
 	components:{
-		
+
 	},
 	created () {
-		
+
 	},
 	mounted () {
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#ffffff");
+			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		console.log(this.$route.query)
@@ -70,12 +70,12 @@ export default {
 		this.address = {
 			name : querAddress.name,
 			tel : querAddress.tel,
-			city : querAddress,
+			city : querAddress.area,
 			detailedAddress : querAddress.address,
 			receiverId : querAddress.receiverId
 		}
 		console.log(this.address)
-		
+
 	},
 	methods: {
 		goBackFn(){
@@ -85,14 +85,14 @@ export default {
 			console.log(this.address)
 			this.$axios.post('/clientend2/clinicend/pointexchange/receiveradd',qs.stringify({
 				clinicId : this.account.clinicId,
-				receiverId : this.$route.query.item.receiverId,
+				receiverId : this.address.receiverId,
 				name : this.address.name,
 				tel : this.address.tel,
 				address : this.address.city + this.address.detailedAddress,
 			}))
 			.then(res => {
 				this.$toast.success({
-					duration: 1000, 
+					duration: 1000,
 					message: '操作成功',
 				});
 			})
@@ -180,7 +180,7 @@ export default {
 	width: 80%;
 	float: right;
 	border:none;
-	
+
 }
 .content ul li textarea{
 	height: .26rem;

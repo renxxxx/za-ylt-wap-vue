@@ -57,10 +57,20 @@ export default {
 	data () {
 		return {
 			data : '',
+      activity : {
+      	title : '',
+      	brief : '',
+      	address : '',
+      	tel : '',
+      	startTime : undefined,
+      	endTime : undefined,
+      	content : '',
+      	cover : 'static/img/Group@2x.png'
+      },
 		}
 	},
 	computed:{
-		...mapGetters(['account','showTime','activity']),
+		...mapGetters(['account','showTime']),
 		showTime: {
 		    get: function() {
 				// console.log(this.$store)
@@ -79,7 +89,7 @@ export default {
 	},
 	mounted () {
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#ffffff");
+			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 	},

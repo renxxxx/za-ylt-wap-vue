@@ -62,7 +62,7 @@ export default {
 	},
 	mounted () {
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#ffffff");
+			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		console.log(this.$route.query)
@@ -85,7 +85,7 @@ export default {
 			console.log(this.address)
 			this.$axios.post('/clientend2/clinicend/pointexchange/receiveralter',qs.stringify({
 				clinicId : this.account.clinicId,
-				receiverId : this.$route.query.item.receiverId,
+				receiverId : this.address.receiverId,
 				name : this.address.name,
 				tel : this.address.tel,
 				address : this.address.city + this.address.detailedAddress,

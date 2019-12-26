@@ -87,7 +87,7 @@ export default {
 	},
 	mounted () {
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#ffffff");
+			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		
@@ -128,9 +128,18 @@ export default {
 		//退出方法
 		exitFn(){
 
-			this.isLogin = 0;
 			this.$axios.post('/hospital/logout')
 
+				this.isLogin = 0;
+				this.account.name = '';
+				this.account.password = '';
+				console.log(this.isLogin);
+				localStorage.clear();
+	
+		if(plus){
+			  	plus.webview.currentWebview().clear()
+				  plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
+				  }
 
 		},
 		noLinkFn(){

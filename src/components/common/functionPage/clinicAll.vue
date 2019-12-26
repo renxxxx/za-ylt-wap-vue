@@ -71,9 +71,10 @@ export default {
 	},
 	mounted () {
 		if(window.plus){
-			plus.navigator.setStatusBarBackground("#ffffff");
+			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
+		console.log(this.$route.name)
 		// console.log(this.list)
 		// this.getdata();
     // let winHeight = document.documentElement.clientHeight;                   //视口大小
@@ -108,6 +109,7 @@ export default {
 		search(){
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
+			this.$route.name == 'hospital_sourceManagement'?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
@@ -208,6 +210,7 @@ export default {
 		getdata(){
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
+			this.$route.name == 'hospital_sourceManagement'?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
@@ -295,6 +298,7 @@ export default {
 		nextdata(){
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
+			this.$route.name == 'hospital_sourceManagement'?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
 				clinicId : clinicId,

@@ -66,8 +66,16 @@ export default {
     }
   },
   computed:{
-	...mapGetters(['account','isLogin']),
-	
+	...mapGetters(['account']),
+	isLogin: {
+	    get: function() {
+			// console.log(this.$store)
+	        return this.$store.state.shop.isLogin
+	    },
+	    set: function (newValue) {
+			this.$store.state.shop.isLogin = newValue;
+	    },
+	},
   },
   components:{
 	  routerNav
@@ -77,7 +85,7 @@ export default {
   },
   mounted () {
 	  if(window.plus){
-		plus.navigator.setStatusBarBackground("#ffffff");
+		//plus.navigator.setStatusBarBackground("#ffffff");
 		plus.navigator.setStatusBarStyle("dark")
 	  }
 	  
@@ -124,6 +132,12 @@ export default {
 		this.account.password = '';
 		console.log(this.isLogin);
 		this.$axios.post('/hospital/logout');
+	localStorage.clear();
+	
+if(plus){
+			  	plus.webview.currentWebview().clear()
+				  plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
+				  }
 	}
   },
 }

@@ -26,12 +26,10 @@ Vue.prototype.moment = moment;
 Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
-
-
+Vue.prototype.topHeight = "0px"
 
 
 let isLogin = localStorage.getItem('isLogin');
-
 if (isLogin && !isNaN(parseInt(isLogin))) {
 	isLogin = parseInt(isLogin);
 	Vue.prototype.$store.state.shop.isLogin = isLogin;
@@ -51,7 +49,7 @@ if (isLogin && !isNaN(parseInt(isLogin))) {
 	}
 }
 let lastRoute=null;
- function getdata(_postRefresh, _isLogin) {			
+ function getdata(_postRefresh, _isLogin) {
 	jquery.ajax({
 		type:'post',
 		 url:_postRefresh,
@@ -64,14 +62,14 @@ let lastRoute=null;
 						Vue.prototype.$store.state.shop.account.data = {};
 						Vue.prototype.$store.state.shop.account.data = res;
 						break;
-						
+
 					case 200:
 						Vue.prototype.$store.state.shop.account.clinicId = res.data.clinic.clinicId;
 						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
 						Vue.prototype.$store.state.shop.account.data = {};
 						Vue.prototype.$store.state.shop.account.data = res;
 						break;
-						
+
 					case 300:
 						Vue.prototype.$store.state.shop.account.clinicId = res.data.clinic.clinicId;
 						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
@@ -80,7 +78,7 @@ let lastRoute=null;
 						break;
 				}
 			}
-		}			
+		}
 	})
 }
 
@@ -95,13 +93,13 @@ if (window.plus) {
 function plusReady() {
 	let isImmersedStatusbar = plus.navigator.isImmersedStatusbar(); 
 	// 检测是否支持沉浸式 支持沉浸式状态栏则返回true
-	let _statusbarHeight = "24px"; // 设置默认值
+
+	let _statusbarHeight = "24"; // 设置默认值
 	if (isImmersedStatusbar) {
 		_statusbarHeight = plus.navigator.getStatusbarHeight(); // 获取系统状态栏高度
 	}
-		document.body.style['padding-top']=_statusbarHeight+"!important"
-
-	plus.navigator.setStatusBarBackground("#ffffff");
+		Vue.prototype.topHeight=_statusbarHeight+'px'
+	//plus.navigator.setStatusBarBackground("#ffffff");
 	plus.navigator.setStatusBarStyle("dark")
 
 	function location(position) {
