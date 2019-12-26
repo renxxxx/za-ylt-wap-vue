@@ -2,7 +2,7 @@
 	<div class="integralExchange">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/img/shape@2x.png" alt="">
+				<img src="../../../assets/image/shape@2x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>积分兑换</h3>
@@ -22,11 +22,11 @@
 		<div class="flowHeading" id ="flowHeading">
 		    <ul class="rollScreen_list" :style = {transform:transform}  :class="{rollScreen_list_unanim:num===0}">
 				<li class="rollScreen_once" v-for="(item,index) in contentArr" :key='index'>
-					<img src="static/img/horn@2x.png" alt="">
+					<img src="../../../assets/image/horn@2x.png" alt="">
 					<span>{{item}}</span>
 				</li>
 				<li class="rollScreen_once" v-for="(item,index) in contentArr" :key='index+contentArr.length' >
-					<img src="static/img/horn@2x.png" alt="">
+					<img src="../../../assets/image/horn@2x.png" alt="">
 					<span>{{item}}</span>
 				</li>
 		    </ul>
@@ -132,7 +132,7 @@ export default {
 .topNav{
 	width: 100%;
 	height: 1.76rem;
-	background: url('../../../../static/img/blue-BJ@2x.png')  center no-repeat,linear-gradient(#FDFDFD, #FBFBFB) ;
+	background: url('../../../assets/image/blue-BJ@2x.png')  center no-repeat,linear-gradient(#FDFDFD, #FBFBFB) ;
 	background-size: 100%;
 	position: relative;
 	color: #FFFFFF;

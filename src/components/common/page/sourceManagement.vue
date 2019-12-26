@@ -5,12 +5,12 @@
 			<div class="topNav" ref="topNav" :style="{'padding-top': height+'px'}">
 
 				<div class="indexReturn" @click="goBackFn" v-if="isLogin == 100? true:false">
-					<img src="static/img/back-white@2x.png" alt="">
+					<img src="../../../assets/image/back-white@2x.png" alt="">
 				</div>
 			<div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
 				<router-link :to="{name:'outpatient_search',query:{focus : true}}">
 					<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
-					<img src="static/img/sousuo@2x.png" alt="">
+					<img src="../../../assets/image/sousuo@2x.png" alt="">
 				</router-link>
 			</div>
 			<router-link :to="{name:'outpatient_search'}">
@@ -21,7 +21,7 @@
 			<router-link :to="{name:'outpatient_search'}">
 				<div class="indexScreening" @click="showPopup">
 					<span>筛选</span>
-					<img src="static/img/screen@2x.png" alt="加载中" >
+					<img src="../../../assets/image/screen@2x.png" alt="加载中" >
 				</div>
 			</router-link>
 			</div>
@@ -37,7 +37,7 @@
 					<van-tab title="新增病员" v-if="isLogin == 200? true:false">
 						<form @submit.prevent="hospitalSubmit" class="newAdd">
 							<div class="newAddTitle">
-								<img src="static/img/bitian@2x.png" alt="">
+								<img src="../../../assets/image/bitian@2x.png" alt="">
 								<h3>必填项</h3>
 								<ul class="Fill">
 									<li>
@@ -55,7 +55,7 @@
 								</ul>
 							</div>
 							<div class="newAddTitle bottom">
-								<img src="static/img/bitian@2x.png" alt="">
+								<img src="../../../assets/image/bitian@2x.png" alt="">
 								<h3>选填项</h3>
 								<ul class="Fill">
 									<li>
@@ -231,7 +231,7 @@ export default {
 	line-height:.335rem;
 	width: 100%;
 	padding-top: 0.1rem;
-	/* background:url('../../../../static/img/BJ-blue.png'); */
+	/* background:url('../../../assets/image/BJ-blue.png'); */
 	/* background-size:100% 100%; */
 	background-color: #2B77EF;
 	position: fixed;

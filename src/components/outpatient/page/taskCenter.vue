@@ -2,7 +2,7 @@
 	<div class="taskCenter">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/img/shape@3x.png" alt="">
+				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<!-- <h3>任务管理</h3> -->
@@ -28,7 +28,7 @@
 					<p>1.首次收益为第一次的任务收益：每个用户仅可领取一次。首次上传病员可一次领取20000积分；首次确认就诊即给上级医院输送的病员首次被确认就诊，用户可得20000积分；首次浏览文章可获得20000积分；首次分享文章获得20000积分。</p>
 					<p>2.每日收益为每天都可以做的任务，每天都可领取到的积分。每日首次登录获得1分；上传病员每位20分，上限200分；浏览文章5分，上限10分；分享文章5分，上限10分；上级医院确认就诊20分一位，上限200分；文章推广即分享出去的文章获得的点击量，2分一个，上限20分。</p>
 				</div>
-				<img src="static/img/Leaves@2x.png" alt="">
+				<img src="../../../assets/image/Leaves@2x.png" alt="">
 			</div>
 		</van-overlay>
 		<div class="centerOnce" v-show="task.once.length==0? false:true">
@@ -127,7 +127,7 @@ export default {
 .topNav{
 	width: 100%;
 	height: 1.76rem;
-	background: url('../../../../static/img/tu1.png')  center no-repeat,linear-gradient(#FDFDFD, #FBFBFB) ;
+	background: url('../../../assets/image/tu1.png')  center no-repeat,linear-gradient(#FDFDFD, #FBFBFB) ;
 	background-size: 1.84rem 1.29rem;
 	margin-bottom: .15rem;
 	position: relative;

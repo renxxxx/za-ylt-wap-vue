@@ -3,13 +3,13 @@
 		<div class="topNav" :style="{'padding-top':topHeight}">
 			<div class="hospital_search">
 				<input type="text" placeholder="搜索文章">
-				<img src="static/img/sousuo@2x.png" alt="">
+				<img src="../../assets/image/sousuo@2x.png" alt="">
 			</div>
 			<div class="clinic_buttton">
 				<button>搜索</button>
 			</div>
 			<div class="hospital_information">
-				<img src="static/img/xiaoxi@2x.png" alt="">
+				<img src="../../assets/image/xiaoxi@2x.png" alt="">
 			</div>
 		</div>
 		
@@ -18,25 +18,25 @@
 			<ul>
 				<router-link :to="{name : 'hospitalImage'}">
 					<li>
-						<img src="static/img/yiyuanxingxiang@2x.png" alt="">
+						<img src="../../assets/image/yiyuanxingxiang@2x.png" alt="">
 						<span>医院形象</span>
 					</li>
 				</router-link>
 				<router-link :to="{name : 'hospital_case'}">
 					<li>
-						<img src="static/img/youzhianli@2x.png" alt="">
+						<img src="../../assets/image/youzhianli@2x.png" alt="">
 						<span>优质案例</span>
 					</li>
 				</router-link>
 				<router-link :to="{name : 'hospital_expertsIntroduction'}">
 					<li>
-						<img src="static/img/zhuanjia@2x.png" alt="">
+						<img src="../../assets/image/zhuanjia@2x.png" alt="">
 						<span>专家介绍</span>
 					</li>
 				</router-link>
 				<router-link :to="{name : 'hospital_activityReleased'}">
 					<li>
-						<img src="static/img/huodongfabu@2x.png" alt="">
+						<img src="../../assets/image/huodongfabu@2x.png" alt="">
 						<span>最新活动</span>
 					</li>
 				</router-link>
@@ -44,7 +44,7 @@
 		</div>
 		<div class="article">
 			<div class="articleTitle">
-				<!-- <img src="static/img/Combined Shape@2x.png" alt=""> -->
+				<!-- <img src="../../assets/image/Combined Shape@2x.png" alt=""> -->
 				<h3>文章分享</h3>
 			</div>
 			<ul :model="article">
@@ -54,7 +54,7 @@
 							<div class="article_left">
 								<p>{{items.content}}</p>
 								<div class="article_leftTime">
-									<img src="static/img/time@2x.png" alt="">
+									<img src="../../assets/image/time@2x.png" alt="">
 									<span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
 								</div>
 							</div>

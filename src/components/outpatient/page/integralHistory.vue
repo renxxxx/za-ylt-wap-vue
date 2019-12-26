@@ -2,7 +2,7 @@
 	<div class="integralHistory">
     <div class="topNav">
     	<div class="leftImg" @click="goBackFn">
-    		<img src="static/img/shape@3x.png" alt="">
+    		<img src="../../../assets/image/shape@3x.png" alt="">
     	</div>
     	<div class="centerTitle">
     		<h3>兑换记录</h3>
@@ -10,7 +10,7 @@
     	<div class="right"></div>
     </div>
     <div class="detailsTitle">
-      <img src="static/img/lishi.png" alt="">
+      <img src="../../../assets/image/lishi.png" alt="">
       <span>兑换历史记录</span>
     </div>
     <ul>

@@ -2,7 +2,7 @@
 	<div class="integralShopDetails">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/img/shape@3x.png" alt="">
+				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>兑换详情</h3>
@@ -11,23 +11,23 @@
 		</div>
 		<router-link :to="{name : 'outpatient_shopAddressAdd'  ,query : {address : JSON.stringify(address)}}">
 			<div class="address" v-show="!address.receiverId">
-				<img src="static/img/dingweiweizhi@2x.png" alt="">
+				<img src="../../../assets/image/dingweiweizhi@2x.png" alt="">
 				<div class="addressContent">
 					<h4>您需要我们送到哪里？</h4>
 					<p>添加收货地址和联系方式</p>
 				</div>
-				<img src="static/img/Chevron Copy 2@2x.png" alt="">
+				<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
 			</div>
 		</router-link>
 		<router-link :to="{name : 'outpatient_shopAddress' ,query : {address : JSON.stringify(address)}}">
 			<div class="address" v-show="!!address.receiverId">
-				<img src="static/img/exchangeAdress.png" alt="">
+				<img src="../../../assets/image/exchangeAdress.png" alt="">
 				<div class="addressContent">
 					<h4>{{address.name}}</h4>
 					<span>{{address.tel}}</span>
 					<p class="color">{{address.address}}</p>
 				</div>
-				<img src="static/img/Chevron Copy 2@2x.png" alt="">
+				<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
 			</div>
 		</router-link>
 		<div class="shopProducts">

@@ -2,7 +2,7 @@
 	<div class="shopAddress">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/img/shape@3x.png" alt="">
+				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>新建地址</h3>

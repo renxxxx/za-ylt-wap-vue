@@ -46,26 +46,26 @@ export default {
   	return{
 		active: 0,
 		index:{
-		    active: 'static/img/shouye@2x.png',
-		    inactive: 'static/img/shouye-blue@2x.png'
+		    active: require('../../../assets/image/shouye@2x.png'),
+		    inactive: require('../../../assets/image/shouye-blue@2x.png')
 		},
 		hospital:{
-		    active: 'static/img/Hospital@2x.png',
-		    inactive: 'static/img/Hospital-blue@2x.png'
+		    active: require('../../../assets/image/Hospital@2x.png'),
+		    inactive: require('../../../assets/image/Hospital-blue@2x.png')
 		},
 		gene:{
-		    active: 'static/img/jiyin-gray@2x.png',
-		    inactive: 'static/img/jiyin-blue@2x.png'
+		    active: require('../../../assets/image/jiyin-gray@2x.png'),
+		    inactive: require('../../../assets/image/jiyin-blue@2x.png')
 		},
 		my:{
-		    active: 'static/img/wode@2x.png',
-		    inactive: 'static/img/wode-blue@2x.png'
+		    active: require('../../../assets/image/wode@2x.png'),
+		    inactive: require('../../../assets/image/wode-blue@2x.png')
 		},
 		//主导航栏图片
-		colorImg:['static/img/shouye-blue@2x.png',
-				'static/img/Hospital@2x.png',
-				'static/img/jiyin-gray@2x.png',
-				'static/img/wode@2x.png'],
+		colorImg:[require('../../../assets/image/shouye-blue@2x.png'),
+				require('../../../assets/image/Hospital@2x.png'),
+				require('../../../assets/image/jiyin-gray@2x.png'),
+				require('../../../assets/image/wode@2x.png')],
 		dataValue : ''
 	}
   },

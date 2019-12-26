@@ -2,18 +2,18 @@
   <div class="retrievePassword">
 	<div class="navWarp">
 		<a @click="goBackFn">
-			<img src="static/img/shape@2x.png" alt="">
+			<img src="../assets/image/shape@2x.png" alt="">
 		</a>
 		<span>修改密码</span>
 	</div>
 	<div class="center" v-model="retrieve">
 		<ul>
 			<li>
-				<img class="iphone" src="static/img/iphone@2x.png" alt="">
+				<img class="iphone" src="../assets/image/iphone@2x.png" alt="">
 				<input type="text" name='password' v-model="retrieve.telephone" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入手机号">
 			</li>
 			<li>
-				<img class="yanzhengma" src="static/img/yanzhengma@2x.png" alt="">
+				<img class="yanzhengma" src="../assets/image/yanzhengma@2x.png" alt="">
 				<input type="text" name='password' v-model="retrieve.smsvcode" oninput="value=value.replace(/[^0-9a-zAA-Z]/g,'')" placeholder="请输入验证码">
 				<button @click="getSmsvcode">
 					<span v-if="showYan" class="showYan">获取验证码</span>
@@ -23,7 +23,7 @@
 				<!-- <input type="button" value="获取验证码" style="direction: rtl;" @click="getdata"> -->
 			</li>
 			<li>
-				<img class="mima" src="static/img/mima@2x.png" alt="">
+				<img class="mima" src="../assets/image/mima@2x.png" alt="">
 				<input type="text" name='password' maxlength="12" v-model="retrieve.newpwd" oninput="value=value.replace(/[^0-9a-zAA-Z]/g,'')" placeholder="请输入新密码">
 			</li>
 		</ul>
@@ -165,7 +165,7 @@ export default {
 	height:22%;
 	color: #FFFFFF;
 	font-size: .2rem;
-	background-image:url('../../static/img/BJ-change@2x.png');
+	background-image:url('../assets/image/BJ-change@2x.png');
 	background-size:100% 100%;
 	position: relative;
 }

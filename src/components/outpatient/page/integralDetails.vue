@@ -2,7 +2,7 @@
 	<div class="integralDetails">
     <div class="topNav">
     	<div class="leftImg" @click="goBackFn">
-    		<img src="static/img/shape@3x.png" alt="">
+    		<img src="../../../assets/image/shape@3x.png" alt="">
     	</div>
     	<div class="centerTitle">
     		<h3>积分明细</h3>
@@ -10,7 +10,7 @@
     	<div class="right"></div>
     </div>
     <div class="detailsTitle">
-      <img src="static/img/lishi.png" alt="">
+      <img src="../../../assets/image/lishi.png" alt="">
       <span>积分使用明细</span>
     </div>
     <ul>

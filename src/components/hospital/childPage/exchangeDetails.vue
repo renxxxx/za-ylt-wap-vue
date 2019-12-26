@@ -2,7 +2,7 @@
 	<div class="exchangeDetails">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/img/shape@3x.png" alt="">
+				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>专家介绍</h3>
@@ -11,7 +11,7 @@
 		</div> 
 		<div class="address">
 			<div class="addressLeft">
-				<img src="static/img/exchangeAdress.png" alt="">
+				<img src="../../../assets/image/exchangeAdress.png" alt="">
 			</div>
 			<div class="addressCenter">
 				<h4>{{exchangeDetails.receiverName}}</h4>
@@ -25,7 +25,7 @@
 			</div>
 			<ul>
 				<li>
-					<img src="static/img/Group@2x.png" alt="">
+					<img src="../../../assets/image/Group@2x.png" alt="">
 					<h5>{{exchangeDetails.details[0].name}}</h5>
 					<p>{{exchangeDetails.details[0].intro}}</p>
 					<p>{{moment(exchangeDetails.addTime).format('YYYY-MM-DD HH:mm')}}</p>

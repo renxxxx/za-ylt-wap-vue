@@ -1,8 +1,8 @@
 <template>
 	<div class="caseDetails" >
 		<div class="topNav">
-			<img src="static/img/shape@3x.png" alt="" @click="goBackFn">
-			<img src="static/img/share@3x.png" @click="share" alt="">
+			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn">
+			<img src="../../../assets/image/share@3x.png" @click="share" alt="">
 		</div>
 		<div class="banner" v-show="!!caseInfo.cover">
 			<img :src="caseInfo.cover"  alt="">
@@ -10,7 +10,7 @@
 		<div class="content" >
 			<h3>{{caseInfo.name}}</h3>
 			<div class="headPortrait">
-				<img src="static/img/logo@2x.png" alt="">
+				<img src="../../../assets/image/logo@2x.png" alt="">
 				<span>{{caseInfo.hosptialName}}</span>
 				<span>{{moment(caseInfo.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 			</div>

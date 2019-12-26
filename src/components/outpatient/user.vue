@@ -2,11 +2,11 @@
 	<div class="user">
 		<div class="user_top">
 			<div class="user_set" v-show="false">
-				<img src="static/img/set up@2x.png" alt="">
+				<img src="../../assets/image/set up@2x.png" alt="">
 			</div>
 			<div class="user_message">
 				<div class="top_left">
-					<img :src="coverImg? coverImg:'static/img/logo@2x.png'" alt="">
+					<img :src="coverImg? coverImg:require('../../assets/image/logo@2x.png')" alt="">
 					<span>已认证</span>
 				</div>
 				<div class="top_center">
@@ -16,7 +16,7 @@
 				</div>
 				<div class="top_right" @click="showImgFn">
 					<span>营业执照</span>
-					<img src="static/img/Chevron Copy 2@2x.png" alt="">
+					<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 				</div>
 			</div>
 		</div>
@@ -28,19 +28,19 @@
 				<router-link :to="{name: 'outpatient_taskCenter'}">
 					<li>
 						<span>任务中心</span>
-						<img src="static/img/Chevron Copy 2@2x.png" alt="">
+						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
 				<router-link :to="{name: 'outpatient_integralExchange'}">
 					<li>
 						<span>积分兑换</span>
-						<img src="static/img/Chevron Copy 2@2x.png" alt="">
+						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
 				<router-link replace :to="{name: 'landingPage'}">
 					<li @click="exitFn">
 						<span>退出登录</span>
-						<img src="static/img/Chevron Copy 2@2x.png" alt="">
+						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
 			</ul>
@@ -158,7 +158,7 @@ export default {
 		localStorage.clear();
 
 	
-if(plus){
+if(window.plus){
 			  	plus.webview.currentWebview().clear()
 				  plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
 				  }
@@ -214,7 +214,7 @@ if(plus){
 	top: 1.15rem;
 	font-size: .03rem;
 	color: #FFFFFF;
-	background:url('../../../static/img/Gradualchange@2x.png');
+	background:url('../../assets/image/Gradualchange@2x.png');
 	background-size:100% 100%;
 	padding: .02rem .1rem;
 }

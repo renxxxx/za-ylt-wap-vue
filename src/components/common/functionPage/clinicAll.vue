@@ -141,7 +141,7 @@ export default {
 									pushTime : _d.data.data.items[nums].pushTime,
 									realname : _d.data.data.items[nums].realname,
 									status : _d.data.data.items[nums].status,
-									img : "static/img/orange@2x.png",
+									img : require("../../../assets/image/orange@2x.png"),
 									button : "确认就诊",
 									span : "未就诊"
 								});
@@ -154,7 +154,7 @@ export default {
 									pushTime : _d.data.data.items[nums].pushTime,
 									realname : _d.data.data.items[nums].realname,
 									status : _d.data.data.items[nums].status,
-									img : "static/img/weijiuzhen@2x.png",
+									img :require( "../../../assets/image/weijiuzhen@2x.png"),
 									span : "未就诊"
 								});
 							}
@@ -168,7 +168,7 @@ export default {
 									pushTime : _d.data.data.items[nums].pushTime,
 									realname : _d.data.data.items[nums].realname,
 									status : _d.data.data.items[nums].status,
-									img : "static/img/blue@2x.png",
+									img : require("../../../assets/image/blue@2x.png"),
 									button : "已就诊",
 									buttonColor : "buttonColor",
 									span : "已就诊"
@@ -182,7 +182,7 @@ export default {
 									pushTime : _d.data.data.items[nums].pushTime,
 									realname : _d.data.data.items[nums].realname,
 									status : _d.data.data.items[nums].status,
-									img : "static/img/yijiuzhen@2x.png",
+									img : require("../../../assets/image/yijiuzhen@2x.png"),
 									span : "已就诊"
 								});
 							}
@@ -237,7 +237,7 @@ export default {
 								pushTime : _d.data.data.items[nums].pushTime,
 								realname : _d.data.data.items[nums].realname,
 								status : _d.data.data.items[nums].status,
-								img : "static/img/orange@2x.png",
+								img : require("../../../assets/image/orange@2x.png"),
 								button : "确认就诊",
 								span : "未就诊"
 							});
@@ -249,7 +249,7 @@ export default {
 								pushTime : _d.data.data.items[nums].pushTime,
 								realname : _d.data.data.items[nums].realname,
 								status : _d.data.data.items[nums].status,
-								img : "static/img/weijiuzhen@2x.png",
+								img : require("../../../assets/image/weijiuzhen@2x.png"),
 								span : "未就诊"
 							});
 						}
@@ -263,7 +263,7 @@ export default {
 							pushTime : _d.data.data.items[nums].pushTime,
 							realname : _d.data.data.items[nums].realname,
 							status : _d.data.data.items[nums].status,
-							img : "static/img/blue@2x.png",
+							img : require("../../../assets/image/blue@2x.png"),
 							button : "已就诊",
 							buttonColor : "buttonColor",
 							span : "已就诊"
@@ -276,7 +276,7 @@ export default {
 							pushTime : _d.data.data.items[nums].pushTime,
 							realname : _d.data.data.items[nums].realname,
 							status : _d.data.data.items[nums].status,
-							img : "static/img/yijiuzhen@2x.png",
+							img : require("../../../assets/image/yijiuzhen@2x.png"),
 							span : "已就诊"
 						});
 					}
@@ -321,7 +321,7 @@ export default {
 									pushTime : _d.data.data.items[nums].pushTime,
 									realname : _d.data.data.items[nums].realname,
 									status : _d.data.data.items[nums].status,
-									img : "static/img/orange@2x.png",
+									img : require("../../../assets/image/orange@2x.png"),
 									button : "确认就诊",
 									span : "未就诊"
 								});
@@ -333,7 +333,7 @@ export default {
 									pushTime : _d.data.data.items[nums].pushTime,
 									realname : _d.data.data.items[nums].realname,
 									status : _d.data.data.items[nums].status,
-									img : "static/img/weijiuzhen@2x.png",
+									img : require("../../../assets/image/weijiuzhen@2x.png"),
 									span : "未就诊"
 								});
 							}
@@ -343,7 +343,7 @@ export default {
 							// 	pushTime : _d.data.data.items[nums].pushTime,
 							// 	realname : _d.data.data.items[nums].realname,
 							// 	status : _d.data.data.items[nums].status,
-							// 	img : "static/img/orange@2x.png",
+							// 	img : "../../../assets/image/orange@2x.png",
 							// 	button : "确认就诊"
 							// });
 							// this.noNum++;
@@ -359,7 +359,7 @@ export default {
 									pushTime : _d.data.data.items[nums].pushTime,
 									realname : _d.data.data.items[nums].realname,
 									status : _d.data.data.items[nums].status,
-									img : "static/img/blue@2x.png",
+									img :require( "../../../assets/image/blue@2x.png"),
 									button : "已就诊",
 									buttonColor : "buttonColor",
 									span : "已就诊"
@@ -372,7 +372,7 @@ export default {
 									pushTime : _d.data.data.items[nums].pushTime,
 									realname : _d.data.data.items[nums].realname,
 									status : _d.data.data.items[nums].status,
-									img : "static/img/yijiuzhen@2x.png",
+									img :require( "../../../assets/image/yijiuzhen@2x.png"),
 									span : "已就诊"
 								});
 							}

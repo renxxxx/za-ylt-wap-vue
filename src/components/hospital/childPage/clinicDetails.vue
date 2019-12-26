@@ -2,14 +2,14 @@
 	<div class="clinicDetails">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn">
-				<img src="static/img/shape@3x.png" alt="">
+				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>{{this.clinicDetails.name}}</h3>
 			</div>
 			<router-link :to="{name : 'hospital_clinicInfo' ,query : {item : clinicDetails.clinicId}}">
 				<div class="right">
-					<img src="static/img/Preview@2x.png" alt="">
+					<img src="../../../assets/image/Preview@2x.png" alt="">
 				</div>
 			</router-link>
 		</div>

@@ -6,7 +6,7 @@
 					<li v-for="(item,inx) in list.clinicYes" :key="inx">
 						<router-link :to="{name : 'details' ,query : {patientId : item.itemId}}">
 							<div class="contentTitle">
-								<img src="static/img/blue@2x.png" alt="">
+								<img src="../../../assets/image/blue@2x.png" alt="">
 								<span>{{item.realname}}</span>
 							</div>
 							<div class="contnet_left">
@@ -26,7 +26,7 @@
 								<span>{{item.realname}}</span>
 							</div>
 							<div class="content_right">
-								<img src='static/img/yijiuzhen@2x.png'>
+								<img src='../../../assets/image/yijiuzhen@2x.png'>
 								<span class="AlreadySpanColor">已就诊</span>
 							</div>
 							<p>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
