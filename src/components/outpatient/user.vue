@@ -66,8 +66,16 @@ export default {
     }
   },
   computed:{
-	...mapGetters(['account','isLogin']),
-	
+	...mapGetters(['account']),
+	isLogin: {
+	    get: function() {
+			// console.log(this.$store)
+	        return this.$store.state.shop.isLogin
+	    },
+	    set: function (newValue) {
+			this.$store.state.shop.isLogin = newValue;
+	    },
+	},
   },
   components:{
 	  routerNav

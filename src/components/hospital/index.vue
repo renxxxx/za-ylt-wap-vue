@@ -5,10 +5,9 @@
 				<span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
 			</div>
 			<div class="slider" >
-				<!-- :autoplay="3000" -->
 				<van-swipe>
 					<van-swipe-item v-for="(image, index) in images" :key="index">
-						<router-link :to="image.url">
+						<router-link :to="{name : image.url}">
 							<img v-lazy="image.cover" class="silder_img"/>
 						</router-link>
 					</van-swipe-item>
@@ -217,8 +216,8 @@ export default {
 .navWarp{
 	height: 2.26rem;
 	width: 100%;
-	/* background: url('../../../static/img/88-1.png') no-repeat; */
-	/* background-size: 100% 1.8rem; */
+	background: url('../../../static/img/88-1.png') no-repeat;
+	background-size: 100% 1.8rem;
 	/* background: linear-gradient(#2B77EF,#2B77EF,  #FFFFFF); */
 	background-color: #FFFFFF;
 	padding-top: .12rem;
@@ -228,7 +227,7 @@ export default {
 	/* width: .88rem; */
 	height: .25rem;
 	line-height: .25rem;
-	color: #000000;
+	color: #686666;
 	font-size: .14rem;
 	/* font-weight: bolder; */
 	text-align: center;

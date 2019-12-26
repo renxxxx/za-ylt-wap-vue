@@ -84,6 +84,7 @@ export default {
 			let clinicId = '';
       let yesNum = 0;
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
+			this.$route.name == 'hospital_sourceManagement'?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
@@ -126,6 +127,7 @@ export default {
 		nextdata(){
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
+			this.$route.name == 'hospital_sourceManagement'?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
 				clinicId : clinicId,
