@@ -1,5 +1,5 @@
 <template>
-	<div class="hospital">
+	<div class="hospital"  :style="{'padding-top': height+'px'}">
 		<div class="navWarp">
 			<div class="navTitle">
 				<span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
@@ -121,8 +121,11 @@ export default {
 	computed:{
 		...mapGetters(['account','isLogin']),
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){

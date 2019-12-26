@@ -1,6 +1,6 @@
 <template>
 	<div class="_search">
-		<div class="top_search">
+		<div class="top_search" :style="{'padding-top': height+'px'}">
 			<div class="search_return">
 				<a @click="goBackFn">
 					<img src="../../../assets/image/shape@3x.png" alt="">
@@ -19,7 +19,7 @@
 			</div>
       <timeChoose :list = 'list'></timeChoose>
 		</div>
-		<clinicAll ref='all' :list = 'list'></clinicAll>
+		<clinicAll ref='all' :list = 'list' :style="{'padding-top': height+'px'}"></clinicAll>
   </div>
 </template>
 
@@ -31,90 +31,93 @@ import { Dialog } from 'vant'
 import timeChoose from '../functionPage/timeChoose.vue'
 import clinicAll from '../functionPage/clinicAll.vue'
 export default {
-  name: 'index_search',
-  data () {
-    return {
-      timer :undefined,
-      list:{
-      	keywords : '',			//搜索框的关键字value
-      	allNum : 0,
-      	clinicId : '',
-      	clinicAll : [],
-      },
-      Time:{
-      	look:'',
-      	noLook:'',
-      	confirmStart : undefined,
-      	confirmOver : undefined,
-      	pushStart : undefined,
-      	pushOver : undefined,
-      	postState : undefined,
-      },
-    }
-  },
-  computed:{
-	...mapGetters(['showTime','detail','account']),
-	show: {
-	      get: function() {
-	  		// console.log(this.$store)
-	          return this.$store.state.shop.show
-	      },
-	      set: function (newValue) {
-	  		this.$store.state.shop.show = newValue;
-	      },
+	name: 'index_search',
+	data () {
+		return {
+			timer :undefined,
+			list:{
+				keywords : '',			//搜索框的关键字value
+				allNum : 0,
+				clinicId : '',
+				clinicAll : [],
+			},
+			Time:{
+				look:'',
+				noLook:'',
+				confirmStart : undefined,
+				confirmOver : undefined,
+				pushStart : undefined,
+				pushOver : undefined,
+				postState : undefined,
+			},
+		}
 	},
-	showTime: {
-	    get: function() {
-			// console.log(this.$store)
-	        return this.$store.state.shop.showTime
-	    },
-	    set: function (newValue) {
-			this.$store.state.shop.showTime = newValue;
-	    },
+	computed:{
+		...mapGetters(['showTime','detail','account']),
+		show: {
+			  get: function() {
+				// console.log(this.$store)
+				  return this.$store.state.shop.show
+			  },
+			  set: function (newValue) {
+				this.$store.state.shop.show = newValue;
+			  },
+		},
+		showTime: {
+			get: function() {
+				// console.log(this.$store)
+				return this.$store.state.shop.showTime
+			},
+			set: function (newValue) {
+				this.$store.state.shop.showTime = newValue;
+			},
+		},
 	},
-  },
-  components:{
-    timeChoose,clinicAll
-  },
-  created () {
-
-  },
-  mounted () {
-	  if(window.plus){
+	components:{
+		timeChoose,clinicAll
+	},
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
+	},
+	mounted () {
+		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-	this.getdata();
-  },
-  methods: {
-	//显示筛选弹窗
-	showPopup() {
-	   this.show = true;
+		this.getdata();
 	},
-	//获取数据
-	getdata(){
+	methods: {
+		//显示筛选弹窗
+		showPopup() {
+		   this.show = true;
+		},
+		//获取数据
+		getdata(){
 
-	},
-	//键盘输入值时触发
-  	inputNow(_keywordsCode){
-		//清除计时器
-		if (this.timer) {
-		    clearTimeout(this.timer);
-		}
-		if (_keywordsCode) {
-		    this.timer = setTimeout(() => {
+		},
+		//键盘输入值时触发
+		inputNow(_keywordsCode){
+			//清除计时器
+			if (this.timer) {
+				clearTimeout(this.timer);
+			}
+			if (_keywordsCode) {
+				this.timer = setTimeout(() => {
+					this.$refs.all.search();
+				}, 200);
+			} else {
+				// 输入框中的内容被删为空时触发，此时会清除之前展示的搜索结果
 				this.$refs.all.search();
-		    }, 200);
-		} else {
-		    // 输入框中的内容被删为空时触发，此时会清除之前展示的搜索结果
-		    this.$refs.all.search();
-		}
-  	},
-	goBackFn(){
-		this.$router.back(-1)
+			}
+		},
+		goBackFn(){
+			this.$router.back(-1)
+		},
+		...mapActions([])
 	},
-	...mapActions([])
-  },
 }
 </script>
 
@@ -147,10 +150,10 @@ export default {
 	width: .09rem;
 	height: .16rem;
 	margin: .17rem .18rem;
-
 }
 .search_input{
 	float: left;width: 63%;
+	position: relative;
 }
 .search_input input{
 	background-color: #F5F5F5;
@@ -160,7 +163,6 @@ export default {
 	margin: .082rem 0rem;
 	border: none;
 	border-radius: 25px;
-	position: relative;
 	padding-left: .37rem;
 }
 .search_input img{
@@ -169,7 +171,7 @@ export default {
 	z-index: 3;
 	position: absolute;
 	top: .18rem;
-	left: .6rem;
+	left: .15rem;
 }
 .clinic_buttton{
 	float: left;

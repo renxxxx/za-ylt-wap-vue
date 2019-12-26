@@ -1,20 +1,20 @@
 <template>
-	<div class="addAcivity">
-		<div class="topNav">
+	<div class="addAcivity" >
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="left" @click="goBackFn">
 				<span>取消</span>
 			</div>
 			<div class="centerTitle">
 				<h3>编辑活动</h3>
 			</div>
-			<router-link :to="{name : 'hospital_previewActivities'}">
+			<router-link :to="{name : 'hospital_previewActivities',query:{activity:JSON.stringify(activity)}}">
 				<div class="right">
 					<button>预览</button>
 				</div>
 			</router-link>
 			
 		</div> 
-		<div class="addImg">
+		<div class="addImg" :style="{'padding-top': (height+47)+'px'}">
 			<img :src="activity.cover" alt="">
 			<div class="addImgTitle">
 				<img src="../../../assets/image/replace@2x.png" alt="">
@@ -57,16 +57,16 @@ export default {
 	data () {
 		return {
 			data : '',
-      activity : {
-      	title : '',
-      	brief : '',
-      	address : '',
-      	tel : '',
-      	startTime : undefined,
-      	endTime : undefined,
-      	content : '',
-      	cover : require('../../../assets/image/Group@2x.png')
-      },
+			  activity : {
+				title : '',
+				brief : '',
+				address : '',
+				tel : '',
+				startTime : undefined,
+				endTime : undefined,
+				content : '',
+				cover : require('../../../assets/image/Group@2x.png')
+			  },
 		}
 	},
 	computed:{
@@ -84,8 +84,11 @@ export default {
 	components:{
 		
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -132,7 +135,15 @@ export default {
 				this.$set(this.activity,'endTime',time)
 			}
 		},
-		...mapActions(['cancel','closeFn'])
+		//关闭半遮罩
+		closeFn(){
+			// console.log(dialog)
+			this.showTime = false;
+		},
+		//取消选择的日期
+		cancel(_value){
+			console.log(_value)
+		},
 	},
 }
 </script>
@@ -147,6 +158,9 @@ export default {
 	line-height: .47rem;
 	background-color: #FFFFFF;
 	border-bottom: 1px solid #E5E5E5;
+	position: fixed;
+	top : 0;
+	z-index: 999;
 }
 .left{
 	width: 20%;

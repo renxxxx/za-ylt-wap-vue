@@ -1,7 +1,7 @@
 <template>
-	<div class="hospital">
+	<div class="hospital" :style="{'padding-top': height+'px'}">
 		<div class="navWarp">
-			<div class="topNav">
+			<div class="topNav"  :style="{'padding-top': height+'px'}">
 				<div class="hospital_search">
 					<router-link :to="{name : 'hospital_indexSearch'}">
 						<input type="text" placeholder="搜索门诊">
@@ -77,15 +77,18 @@ export default {
 				num : 0
 			},
 		}
-  },
+	},
 	computed:{
 	  ...mapGetters(['account'])
 	},
 	components:{
 		clinicContent,bottomNav
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -203,7 +206,7 @@ export default {
 }
 .navWarp{
 	width: 100%;
-	height: 2.1rem;
+	height: 2.3rem;
 	background-color: #FFFFFF;
 	position: fixed;
 	top:0;

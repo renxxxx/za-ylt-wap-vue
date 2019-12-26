@@ -29,20 +29,13 @@ export default {
 	name: 'preview',
 	data () {
 		return {
-			
+			activity : {
+				
+			},
 		}
 	},
 	computed:{
-		...mapGetters(['activity','account']),
-		activity: {
-		    get: function() {
-				// console.log(this.$store)
-		        return this.$store.state.shop.activity
-		    },
-		    set: function (newValue) {
-				this.$store.state.shop.activity = newValue;
-		    },
-		},
+		...mapGetters(['account']),
 	},
 	components:{
 		
@@ -55,8 +48,8 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
-		
+		this.activity = this.$route.query.activity
+		console.log(this.$route.query.activity)
 	},
 	methods: {
 		//回退方法
