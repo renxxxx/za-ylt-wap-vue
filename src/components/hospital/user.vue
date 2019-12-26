@@ -155,7 +155,7 @@ export default {
 			},
 			console.log(this.isLogin);
 			localStorage.clear();
-		if(plus){
+		if(window.plus){
 			  	plus.webview.currentWebview().clear()
 				  plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
 				  }
