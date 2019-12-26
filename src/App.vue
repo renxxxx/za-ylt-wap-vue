@@ -1,8 +1,6 @@
 <template>
   <div id="app" v-cloak>
-    <transition :name="transitionName">
      <router-view></router-view>
-    </transition>
   </div>
 </template>
 
@@ -14,7 +12,6 @@ export default {
   name: "App",
   data() {
     return {
-      transitionName: null
     };
   },
   beforeCreate() {},
@@ -23,17 +20,7 @@ export default {
     // let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
   },
   created() {},
-  watch: {
-    $route(to, from) {
-		debugger
-      //目标导航下标和离开导航下标进行比较
-      if (to.meta.index < from.meta.index) {
-        this.transitionName = "slide-left";
-      } else {
-        this.transitionName = "slide-right";
-      }
-    }
-  },
+ 
   computed: {},
   methods: {}
 };
