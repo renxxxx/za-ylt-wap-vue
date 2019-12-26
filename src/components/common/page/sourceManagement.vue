@@ -2,7 +2,7 @@
   <div class="index">
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
-			<div class="topNav">
+			<div class="topNav" >
 				<div class="indexReturn" @click="goBackFn" v-if="isLogin == 100? true:false">
 					<img src="static/img/back-white@2x.png" alt="">
 				</div>

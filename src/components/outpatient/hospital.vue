@@ -1,6 +1,6 @@
 <template>
 	<div class="hospital">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top':topHeight}">
 			<div class="hospital_search">
 				<input type="text" placeholder="搜索文章">
 				<img src="static/img/sousuo@2x.png" alt="">
@@ -12,6 +12,7 @@
 				<img src="static/img/xiaoxi@2x.png" alt="">
 			</div>
 		</div>
+		
 		<div class="shared">
 			<!-- <h3>共享医联体</h3> -->
 			<ul>

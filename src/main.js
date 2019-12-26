@@ -99,6 +99,7 @@ function plusReady() {
 		_statusbarHeight = plus.navigator.getStatusbarHeight(); // 获取系统状态栏高度
 	}
 		Vue.prototype.topHeight=_statusbarHeight+'px'
+		
 	//plus.navigator.setStatusBarBackground("#ffffff");
 	plus.navigator.setStatusBarStyle("dark")
 
