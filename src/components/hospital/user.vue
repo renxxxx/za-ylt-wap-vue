@@ -136,9 +136,8 @@ export default {
 		 },
 		//退出方法
 		exitFn(){
-
 			this.$axios.post('/hospital/logout')
-
+			this.$store.state.shop.isLogin = 0
 			this.isLogin = 0;
 			this.account = {
 				name:'',
@@ -156,8 +155,6 @@ export default {
 			},
 			console.log(this.isLogin);
 			localStorage.clear();
-
-	
 		if(plus){
 			  	plus.webview.currentWebview().clear()
 				  plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')

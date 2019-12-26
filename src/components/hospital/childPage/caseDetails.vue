@@ -44,13 +44,13 @@ export default {
 	components:{
 		
 	},
+	beforeCreate(){
+		debugger
+	},
 	created(){
-		
+		debugger
 	},
 	mounted(){
-
-		debugger
-
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")

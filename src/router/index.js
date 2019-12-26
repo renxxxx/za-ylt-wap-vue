@@ -449,30 +449,34 @@ router.beforeEach((to,from,next) => {
 		localStorage.setItem('lastRoute',JSON.stringify(to))
 	// console.log(to)
 	// console.log(next)
-	debugger;
-	if(to.meta){
-		if(to.meta.auth){
-			switch(store.state.shop.isLogin){
-				case 100:
-				next();
-				break;
 
-				case 200:
-				next();
-				break;
+	next()
+	// if(to.meta){
+	// 	if(to.meta.auth){
+	// 		switch(store.state.shop.isLogin){
+	// 			case 100:
+	// 			next();
+	// 			break;
 
-				case 300:
-				// console.log('暂未开放中');
-				next({path : '/landingPage'});
-				break;
+	// 			case 200:
+	// 			next();
+	// 			break;
 
-				// default:next({path : '/landingPage'});
-			}
-		}else{
-			next();
-		}
-	}else{
-		next();
-	}
+	// 			case 300:
+	// 			// console.log('暂未开放中');
+	// 			next({path : '/landingPage'});
+	// 			break;
+	// 			// default:next({path : '/landingPage'});
+	// 		}
+	// 	}else{
+	// 		next();
+	// 	}
+	// }else{
+	// 	next();
+	// }
+	// if(to.path == '/hospital_sourceManagement' && Store.state.shop.account.isLogin == 100){
+	// 	// Store.state.shop.list.clinicId == '';
+	// 	// console.log(Store.state.shop);
+	// }
 })
 export default router

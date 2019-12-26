@@ -127,13 +127,13 @@ export default {
 			//plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("light")
 		  }
-		  
+		
 		  if(this.$store.state.shop.isLogin == 100){
-				this.$router.replace('hospital_index')
+				this.$router.push({ name : 'hospital_index'})
 			}else  if(this.$store.state.shop.isLogin == 200){
-				this.$router.replace('outpatient_index')
+				this.$router.push({ name : 'hospital_sourceManagement'})
 			}else  if(this.$store.state.shop.isLogin == 300){
-				this.$router.replace('landingPage')
+				this.$router.push({ name : 'landingPage'})
 			}
   },
   computed:{
@@ -162,7 +162,7 @@ export default {
   methods:{
 	 //传递页面状态值
   	forgetFn(e){
-  		this.isLogin = e
+  		this.$store.state.shop.whichClient = e
   		// console.log(this.isLogin)
   	},
 	...mapActions(['submit','change'])

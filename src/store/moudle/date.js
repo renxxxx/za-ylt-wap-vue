@@ -10,6 +10,7 @@ const state={
 	checked: true,
 	//账号
 	isLogin:0,
+	whichClient:0,
 	account:{
 		name:'',
 		password:'',
@@ -40,7 +41,9 @@ const getters={
 	show : state => state.show,
 	//显示半遮罩及其日期选择
 	showTime : state => state.showTime,
-	isLogin : state => state.isLogin
+	isLogin : state => state.isLogin,
+	whichClient : state => state.whichClient,
+	
 }
 
 const actions={
@@ -80,9 +83,6 @@ const mutations={
 						.then( res =>{
 							switch(_isLogin){
 								case 100:
-								if(state.loginToBack)
-									router.back()
-								else
 									router.replace({ name : _url});
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
 								// console.log(state.account.hospitalId)
@@ -91,9 +91,6 @@ const mutations={
 								break;
 
 								case 200:
-								if(state.loginToBack)
-									router.back()
-								else
 									router.replace({ name : _url});
 								state.account.clinicId= res.data.data.clinic.clinicId;
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
@@ -103,9 +100,6 @@ const mutations={
 								break;
 
 								case 300:
-								if(state.loginToBack)
-									router.back()
-								else
 									router.replace({ name : _url});
 								Dialog({ message: '正在开发中，敬请期待' });
 								state.account.clinicId= res.data.data.clinic.clinicId;
