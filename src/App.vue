@@ -28,7 +28,7 @@
 				if(this.$store.state.shop.isLogin == 100){
 					this.$router.replace('hospital_index')
 				}else  if(this.$store.state.shop.isLogin == 200){
-					this.$router.replace('outpatient_index')
+					this.$router.replace('hospital_sourceManagement')
 				}else  if(this.$store.state.shop.isLogin == 300){
 					this.$router.replace('landingPage')
 				}

@@ -76,6 +76,15 @@ export default {
 			this.$store.state.shop.isLogin = newValue;
 	    },
 	},
+	account: {
+	    get: function() {
+			// console.log(this.$store)
+	        return this.$store.state.shop.account
+	    },
+	    set: function (newValue) {
+			this.$store.state.shop.account = newValue;
+	    },
+	},
   },
   components:{
 	  routerNav
@@ -128,11 +137,23 @@ export default {
 	exitFn(){
 		this.$router.go(-400)
 		this.isLogin = 0;
-		this.account.name = '';
-		this.account.password = '';
+		this.account = {
+			name:'',
+			password:'',
+			user:{
+				realname:'',
+				tel: undefined,
+				remark:"",				//备注
+				idcardNo:undefined, 	//身份证号
+			},
+			clinicId: '',			//门诊id
+			hospitalId: '',			//医院Id
+			patientId : '',			//医院端门诊主页的门诊详情页id
+			data:{},
+		},
 		console.log(this.isLogin);
 		this.$axios.post('/hospital/logout');
-    localStorage.clear();
+		localStorage.clear();
 	}
   },
 }

@@ -11,7 +11,7 @@
 							</div>
 							<div class="contnet_left">
 								<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
-									<span>状态：未就诊</span>
+									<span>状态：已就诊</span>
 							</div>
 							<div class="content_right">
 								<button  class="buttonColor">{{item.button}}</button>
@@ -84,7 +84,7 @@ export default {
 			let clinicId = '';
       let yesNum = 0;
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
-			this.$route.name == 'hospital_sourceManagement'?	clinicId='':''
+			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
@@ -106,7 +106,7 @@ export default {
 							pushTime : _d.data.data.items[nums].pushTime,
 							realname : _d.data.data.items[nums].realname,
 							status : _d.data.data.items[nums].status,
-							button : "确认就诊"
+							button : "已就诊"
 						});
 						yesNum++
 					}
@@ -127,7 +127,7 @@ export default {
 		nextdata(){
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
-			this.$route.name == 'hospital_sourceManagement'?	clinicId='':''
+			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
 				clinicId : clinicId,
@@ -145,7 +145,7 @@ export default {
 							pushTime : _d.data.data.items[nums].pushTime,
 							realname : _d.data.data.items[nums].realname,
 							status : _d.data.data.items[nums].status,
-							button : "确认就诊"
+							button : "已就诊"
 						});
 
 					}

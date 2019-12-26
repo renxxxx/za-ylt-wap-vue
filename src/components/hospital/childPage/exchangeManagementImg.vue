@@ -52,6 +52,7 @@ export default {
 			plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
+		this.exchangeAdd = JSON.parse(this.$route.query.exchangeAdd)
 	},
 	methods: {
 		//回退方法

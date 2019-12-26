@@ -2,7 +2,7 @@
   <div class="index">
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
-			<div class="topNav">
+			<div class="topNav" ref="topNav" :style="{'padding-top': topHeight+'px'}">
 				<div class="indexReturn" @click="goBackFn" v-if="isLogin == 100? true:false">
 					<img src="static/img/back-white@2x.png" alt="">
 				</div>
@@ -49,7 +49,7 @@
 									</li>
 									<li>
 										<span>身份证号</span>
-										<input type="text" v-model="account.user.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')"placeholder="请填写">
+										<input type="text" v-model="account.user.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')" placeholder="请填写">
 									</li>
 								</ul>
 							</div>
@@ -120,6 +120,10 @@ export default {
     	plus.navigator.setStatusBarBackground("#2B77EF");
     	plus.navigator.setStatusBarStyle("dark")
     }
+	this.document.getElementById('')
+	// this.$refs.topNav.padding-top
+	// console.log(this.$refs.topNav)
+	console.log(this.topHeight)
 	this.getNum();
   },
   computed:{
@@ -163,6 +167,7 @@ export default {
 	getNum(){
 		let clinicId = '';
 		this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.account.clinicId;
+		this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
 			hospitalId : this.account.hospitalId,
@@ -384,7 +389,7 @@ export default {
     height: 44px;
 	position: fixed;
 	z-index: 9;
-	margin-top: .46rem
+	/* margin-top: .46rem */
 }
 >>>.van-overlay {
     position: fixed;
@@ -443,7 +448,8 @@ export default {
 >>>.van-tabs__content{
 	background: #F5F5F5!important;
 	height: 100%;
-	padding-top: 1rem;
+	/* padding-top: 1rem; */
+	padding-top: .44rem;
 }
 >>>.van-tab{
 	height: .5rem;

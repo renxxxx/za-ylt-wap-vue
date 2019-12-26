@@ -48,7 +48,6 @@ export default {
 		
 	},
 	mounted(){
-		debugger
 		if(window.plus){
 			plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
@@ -66,10 +65,8 @@ export default {
 	},
 	methods: {
 		share(){
-			debugger
 			let vue = this
 			this.$h5p.shareWeb(location.href,this.caseInfo.cover,this.caseInfo.name,'',function(){
-				debugger
 				vue.$axios.post('/c2/share')
 			});
 		},
@@ -78,7 +75,6 @@ export default {
 			this.$router.back(-1)
 		},
 		getData(url){
-			debugger
 			// let query = JSON.stringify(this.$route.query)
 			// console.log(this.$route.query)
 			this.$axios.post(url,qs.stringify({

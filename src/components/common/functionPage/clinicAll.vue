@@ -109,7 +109,8 @@ export default {
 		search(){
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
-			this.$route.name == 'hospital_sourceManagement'?	clinicId='':''
+			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
@@ -210,7 +211,8 @@ export default {
 		getdata(){
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
-			this.$route.name == 'hospital_sourceManagement'?	clinicId='':''
+			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
@@ -298,7 +300,8 @@ export default {
 		nextdata(){
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
-			this.$route.name == 'hospital_sourceManagement'?	clinicId='':''
+			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
 				clinicId : clinicId,

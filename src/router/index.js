@@ -473,9 +473,5 @@ router.beforeEach((to,from,next) => {
 	}else{
 		next();
 	}
-	if(to.path == '/hospital_sourceManagement' && Store.state.shop.account.isLogin == 100){
-		// Store.state.shop.list.clinicId == '';
-		// console.log(Store.state.shop);
-	}
 })
 export default router

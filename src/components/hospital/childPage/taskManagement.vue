@@ -162,10 +162,10 @@ export default {
 				case true:
 				if(_item.oneTimeIs == 1){
 					this.task.one[inx].checked = _value.target.checked
-					this.$router.push({ name : 'hospital_taskManagementDetails',query : {item : _item,show : false}});
+					this.$router.push({ name : 'hospital_taskManagementDetails',query : {item : JSON.stringify(_item),show : false}});
 				}else{
 					this.task.no[inx].checked = _value.target.checked;
-					this.$router.push({ name : 'hospital_taskManagementDetails',query : {item : _item,show : false}});
+					this.$router.push({ name : 'hospital_taskManagementDetails',query : {item : JSON.stringify(_item),show : false}});
 				};
 				break;
 				case false:
