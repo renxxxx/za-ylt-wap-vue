@@ -45,10 +45,10 @@ export default {
 		
 	},
 	beforeCreate(){
-		debugger
+		
 	},
 	created(){
-		debugger
+		
 	},
 	mounted(){
 		if(window.plus){

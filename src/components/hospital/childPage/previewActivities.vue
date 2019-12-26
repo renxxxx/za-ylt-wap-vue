@@ -48,7 +48,7 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		this.activity = this.$route.query.activity
+		this.activity = JSON.parse(this.$route.query.activity)
 		console.log(this.$route.query.activity)
 	},
 	methods: {
@@ -68,21 +68,11 @@ export default {
 				content  : this.activity.content,
 				address  : this.activity.address,
 				tel : this.activity.tel,
-				endTime : this.activity.endTime,
 				startTime : this.activity.startTime,
+				endTime : this.activity.endTime? this.activity.endTime+(24*60*60*1000):this.activity.endTime,
 			}))
 			.then(res => {
-				//医院端活动发布的参数
-				this.activity = {
-					title : '',
-					brief : '',
-					address : '',
-					tel : '',
-					startTime : undefined,
-					endTime : undefined,
-					content : '',
-					cover : require('../../../assets/image/Group@2x.png')
-				},
+				res.data.codeMsg? this.$toast.fail(res.data.codeMsg):this.$toast.success('操作成功')
 				console.log(this.activity)
 				window.location.href='#/hospital_activityReleased';
 			})
