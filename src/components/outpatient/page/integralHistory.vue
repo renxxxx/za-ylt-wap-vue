@@ -1,6 +1,6 @@
 <template>
 	<div class="integralHistory">
-    <div class="topNav">
+    <div class="topNav" :style="{'padding-top': height+'px'}">
     	<div class="leftImg" @click="goBackFn">
     		<img src="../../../assets/image/shape@3x.png" alt="">
     	</div>
@@ -9,7 +9,8 @@
     	</div>
     	<div class="right"></div>
     </div>
-    <div class="detailsTitle">
+		<div class="zhangwei"></div>
+    <div class="detailsTitle" :style="{'padding-top': height+'px'}">
       <img src="../../../assets/image/lishi.png" alt="">
       <span>兑换历史记录</span>
     </div>
@@ -42,8 +43,11 @@ export default {
   computed:{
 	...mapGetters(['account'])
   },
-  created () {
-
+  created(){
+  	var heightRexg = /^[0-9]*/g
+  	var topHeight = this.topHeight.match(heightRexg)
+  	this.height = parseInt(topHeight.join()) 
+  	console.log(this.height)
   },
   mounted () {
 		if(window.plus){
@@ -87,7 +91,14 @@ export default {
 .topNav{
 	width: 100%;
 	height: .47rem;
-  background-color: #FFFFFF;
+	background-color: #FFFFFF;
+	position: fixed;
+	top:0;
+	z-index: 9999;
+}
+.zhangwei{
+	width: 100%;
+	height: .47rem;
 }
 .leftImg{
 	width: 10%;

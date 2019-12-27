@@ -1,6 +1,6 @@
 <template>
 	<div class="addClinic">
-		<div class="navWarp" >
+		<div class="navWarp" :style="{'padding-top': height+'px'}">
 			<div class="leftNav" @click="goBackFn">
 				<img src="../../../assets/image/back-white@2x.png" alt="">
 			</div>
@@ -12,7 +12,8 @@
 				<img src="../../../assets/image/save@2x.png" alt="">
 			</div>
 		</div>
-		<div class="content">
+		<div class="zhangwei"></div>
+		<div class="content" :style="{'padding-top': height+'px'}">
 			<form @submit.prevent="hospitalSubmit" class="newAdd">
 				<div class="newAddTitle">
 					<img src="../../../assets/image/bitian@2x.png" alt="">
@@ -127,8 +128,11 @@ export default {
 	components:{
 		clinic_content
 	},
-	created () {
-
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -248,6 +252,13 @@ export default {
 	line-height: .48rem;
 	background-color: #2B77EF;
 	color: #FFFFFF;
+	position: fixed;
+	top:0;
+	z-index: 9999;
+}
+.zhangwei{
+	width: 100%;
+	height: .48rem;
 }
 .leftNav{
 	float: left;

@@ -1,6 +1,6 @@
 <template>
 	<div class="clinicDetails">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -13,10 +13,11 @@
 				</div>
 			</router-link>
 		</div>
-		<div class="detailsTime">
+		<div class="detailsTime" :style="{'top': (height+47)+'px'}">
 			<span>{{moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 		</div>
-		<div class="statistics">
+		<div class="zhangwei"></div>
+		<div class="statistics" :style="{'padding-top': height+'px'}">
 			<van-circle v-model="num" :rate="num" :speed="100" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
 			  size="1.15rem" :text="String(list.yesNum + list.noNum)" />
 			<div class="statisticsText">
@@ -109,8 +110,11 @@ export default {
 	components:{
 		clinicAll,clinicYes,clinicNo
 	},
-	created () {
-
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -209,7 +213,12 @@ export default {
 	line-height: .47rem;
 	background-color: #FFFFFF;
 	position: fixed;
+	top: 0;
 	z-index: 999;
+}
+.zhangwei{
+	width: 100%;
+	height: .47rem;
 }
 .leftImg{
 	width: 10%;
@@ -249,6 +258,9 @@ export default {
 	line-height: .15rem;
 	width: 100%;
 	text-align: center;
+	position: fixed;
+	z-index: 9999;
+	background: #FFFFFF;
 }
 .detailsTime span{
 	color: #999999;

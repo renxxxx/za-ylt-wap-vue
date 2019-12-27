@@ -1,6 +1,6 @@
 <template>
 	<div class="ExchangeList">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -8,6 +8,7 @@
 				<h3>兑换列表</h3>
 			</div>
 		</div> 
+		<div class="zhangwei" :style="{'height':(height+60)+'px'}"></div>
 		<integralExchangeList></integralExchangeList>
 	</div>
 </template>
@@ -30,8 +31,11 @@ export default {
 	components:{
 		integralExchangeList
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -61,7 +65,14 @@ export default {
 	background-color: #FFFFFF;
 	text-align: center;
 	margin-bottom: .12rem;
+	position: fixed;
+	top:0;
+	z-index: 9999;
 }	
+.zhangwei{
+	width: 100%;
+	/* height: .47rem; */
+}
 .leftImg{
 	width: 22%;
 	height: .47rem;

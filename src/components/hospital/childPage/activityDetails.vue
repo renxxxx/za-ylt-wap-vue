@@ -1,6 +1,6 @@
 <template>
 	<div class="activityDetails">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -11,7 +11,8 @@
 				<img src="../../../assets/image/share@3x.png" @click="share" alt="">	
 			</div>
 		</div> 
-		<div class="activeList" :model='active'>
+		<div class="zhangwei"></div>
+		<div class="activeList" :model='active' :style="{'padding-top': height+'px'}">
 			<img :src="active.cover" alt="">
 			<div class="activeTitle">
 				<h4>{{active.title}}</h4>
@@ -69,8 +70,11 @@ export default {
 	components:{
 		
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -131,6 +135,13 @@ export default {
 	line-height: .47rem;
 	background-color: #FFFFFF;
 	border-bottom: 1px solid #E5E5E5;
+	position: fixed;
+	top:0;
+	z-index: 9999;
+}
+.zhangwei{
+	width: 100%;
+	height: .47rem;
 }
 .leftImg{
 	width: 10%;

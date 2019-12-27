@@ -1,7 +1,7 @@
 <template>
-	<div class="typeDetails" :style="{'padding-top': height+'px'}">
-		<div class="topNav">
-			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn">
+	<div class="typeDetails">
+		<div class="topNav"  :style="{'padding-top': height+'px'}">
+			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  :style="{'padding-top': height+'px'}">
 			<h3>{{this.about.name}}</h3>
 		</div>
 		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>

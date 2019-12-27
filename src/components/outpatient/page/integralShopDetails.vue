@@ -1,6 +1,6 @@
 <template>
 	<div class="integralShopDetails">
-		<div class="topNav">
+		<div class="topNav" >
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>

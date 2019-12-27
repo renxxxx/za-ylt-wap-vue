@@ -1,9 +1,12 @@
 <template>
 	<div class="images">
-		<div class="topNav" ref='img' >
+		<div class="nav" :style="{'padding-top': height+'px'}">
 			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn">
+			<h3>医院详情</h3>
 		</div>
-		<div class="content">
+		<div class="zhangwei"></div>
+		<div class="topNav" ref='img' :style="{'padding-top': height+'px'}"></div>
+		<div class="content" :style="{'margin-top': -(55-height)+'px'}">
 			<div class="contentTitle">
 				<h3 @click="switchFn('about')" ref='about' class="xiahuaxian">医院介绍</h3>
 				<h3 @click="switchFn('type')" ref='type'>特色科室</h3>
@@ -42,8 +45,11 @@ export default {
   components:{
   	hospital_imageAbout,hospital_imageType
   },
-  created () {
-
+  created(){
+  	var heightRexg = /^[0-9]*/g
+  	var topHeight = this.topHeight.match(heightRexg)
+  	this.height = parseInt(topHeight.join()) 
+  	console.log(this.height)
   },
   mounted () {
 		if(window.plus){
@@ -125,6 +131,33 @@ export default {
 	height: 100%;
 	background-color: #FFFFFF;
 }
+.nav{
+	width: 100%;
+	height: .47rem;
+	line-height: .47rem;
+	text-align: center;
+	position: fixed;
+	top:0;
+	z-index: 999;
+	background-color: #FFFFFF;
+}
+.nav img{
+	width: .09rem;
+	height: .15rem;
+	margin-left: .16rem;
+	float: left;
+	margin-top: .17rem;
+}
+.nav h3{
+	display: inline;
+	font-size: .16rem;
+	font-weight: bold;	
+	margin-left: -.25rem;
+}
+.zhangwei{
+	width: 100%;
+	height: .47rem;
+}
 .topNav{
 	width: 100%;
 	height: 2.63rem;
@@ -133,12 +166,7 @@ export default {
 	/* background-size: 100%; */
 	/* background-color: #fff000; */
 }
-.topNav img{
-	width: .09rem;
-	height: .15rem;
-	margin-left: .16rem;
-	margin-top: .17rem;
-}
+
 .content{
 	width: 100%;
 	/* height: 100%; */

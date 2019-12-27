@@ -1,6 +1,6 @@
 <template>
 	<div class="exchangeAdd">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -12,7 +12,8 @@
 				<button @click="nextFn">下一步</button>
 			</div>
 		</div>
-		<ul>
+		<div class="zhangwei"></div>
+		<ul :style="{'padding-top': height+'px'}">
 			<li>
 				<span>商品名称</span>
 				<p>
@@ -66,8 +67,11 @@ export default {
 	components:{
 		
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -122,7 +126,14 @@ export default {
 	margin-bottom: .15rem;
 	background-color: #FFFFFF;
 	border-bottom: 1px solid #D8D8D8;
+	position: fixed;
+	top:0;
+	z-index: 9999;
 }	
+.zhangwei{
+	width: 100%;
+	height: .62rem;
+}
 .leftImg{
 	width: 18%;
 	height: .47rem;

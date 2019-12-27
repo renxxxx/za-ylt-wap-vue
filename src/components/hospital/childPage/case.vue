@@ -1,10 +1,11 @@
 <template>
 	<div class="case">
-		<div class="topNav">
-			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
+			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn" :style="{'padding-top': height+'px'}">
 			<h3>优质案例</h3>
 		</div>
-		<div class="article">
+		<div class="zhangwei"></div>
+		<div class="article" :style="{'padding-top': height+'px'}">
 			<ul>
 				<li v-for="(items,inx) in article" :key="inx">
 					<router-link :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 4}}">
@@ -42,8 +43,11 @@ export default {
 	components:{
 		
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -99,8 +103,14 @@ export default {
 	height: .47rem;
 	line-height: .47rem;
 	text-align: center;
-	position: relative;
+	position: fixed;
+	top:0;
+	z-index: 999;
 	background-color: #FFFFFF;
+}
+.zhangwei{
+	width: 100%;
+	height: .47rem;
 }
 .topNav img{
 	width: .09rem;

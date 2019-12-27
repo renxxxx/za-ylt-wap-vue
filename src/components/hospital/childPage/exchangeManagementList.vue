@@ -1,6 +1,6 @@
 <template>
 	<div class="exchangeList">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -9,8 +9,9 @@
 			</div>
 			<div class="right"></div>
 		</div>
+		<div class="zhangwei"></div>
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh" > -->
-			<ul>
+			<ul :style="{'padding-top': height+'px'}">
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 					<li v-for="(item,inx) in exchangeList" :key='inx' class='List'>
 						<router-link :to="{name : 'hospital_exchangeDetails' ,query : {item : item}}">
@@ -59,8 +60,11 @@ export default {
 	components:{
 		
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -162,8 +166,13 @@ export default {
 	height: .47rem;
 	background-color: #FFFFFF;
 	position: fixed;
-    z-index: 9;
+	top:0;
+	z-index: 9999;
 }	
+.zhangwei{
+	width: 100%;
+	height: .47rem;
+}
 .leftImg{
 	width: 10%;
 	height: .47rem;

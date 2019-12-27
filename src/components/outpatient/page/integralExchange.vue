@@ -1,6 +1,6 @@
 <template>
 	<div class="integralExchange">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top':height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@2x.png" alt="">
 			</div>
@@ -19,6 +19,7 @@
 				</router-link>
 			</div>
 		</div>
+		<div class="zhangwei" :style="{'height':(height+176)+'px'}"></div>
 		<div class="flowHeading" id ="flowHeading">
 		    <ul class="rollScreen_list" :style = {transform:transform}  :class="{rollScreen_list_unanim:num===0}">
 				<li class="rollScreen_once" v-for="(item,index) in contentArr" :key='index'>
@@ -31,7 +32,8 @@
 				</li>
 		    </ul>
 		</div>
-		<integralExchangeList :show = 'show'></integralExchangeList>
+		<div class="zhangwei" :style="{'height':(height+24)+'px'}"></div>
+		<integralExchangeList :show = 'show' :style="{'padding-top':height+'px'}"></integralExchangeList>
 	</div>
 </template>
 
@@ -75,6 +77,10 @@ export default {
 				_this.num = 0
 			}
 		}, 2500)
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	destroyed() {
 		window.clearInterval(this.flowHeading)
@@ -134,9 +140,14 @@ export default {
 	height: 1.76rem;
 	background: url('../../../assets/image/blue-BJ@2x.png')  center no-repeat,linear-gradient(#FDFDFD, #FBFBFB) ;
 	background-size: 100%;
-	position: relative;
 	color: #FFFFFF;
 	text-align: center;
+	position: fixed;
+	top:0;
+	z-index: 9999;
+}
+.zhangwei{
+	width: 100%;
 }
 .leftImg{
 	width: 22%;
@@ -204,8 +215,10 @@ export default {
 	line-height: .42rem;
 	background-color: #FFFFFF;
 	display: inline-block;
-	position:relative;
 	overflow: hidden;
+	/* position:relative; */
+	position: fixed;
+	z-index: 9999;
 }
 .flowHeading ul li{
 	width: 100%;

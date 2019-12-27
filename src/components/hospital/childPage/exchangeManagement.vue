@@ -1,6 +1,6 @@
 <template>
 	<div class="exchange">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -13,7 +13,8 @@
 				</div>
 			</router-link>
 		</div>
-		<div class="exchangeTitle">
+		<div class="zhangwei"></div>
+		<div class="exchangeTitle" :style="{'padding-top': height+'px'}">
 			<h3>已有商品</h3>
 			<router-link :to="{name : 'hospital_exchangeManagementAdd'}">
 				<div class="add">
@@ -76,8 +77,11 @@ export default {
 	components:{
 
 	},
-	created () {
-
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -140,6 +144,13 @@ export default {
 	height: .47rem;
 	margin-bottom: .15rem;
 	background-color: #FFFFFF;
+	position: fixed;
+	top:0;
+	z-index: 9999;
+}
+.zhangwei{
+	width: 100%;
+	height: .47rem;
 }
 .leftImg{
 	width: 10%;

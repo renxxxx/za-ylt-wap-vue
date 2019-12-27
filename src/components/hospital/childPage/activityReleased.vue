@@ -11,6 +11,7 @@
 				
 			</div>
 		</div>
+		<div class="zhangwei"></div>
 		<router-link to="/hospital_addActivity" v-show="isLogin== 100? true : false" >
 			<div class="addActive" :style="{'padding-top': height+'px'}">
 				<span>+</span>
@@ -75,8 +76,8 @@ export default {
 	methods: {
 		//回退方法
 		goBackFn(){
-			this.$router.push({name:'hospital_index'})
-			// this.$router.back(-1)
+			// this.$router.push({name:'hospital_clinic'})
+			this.$router.back(-1)
 		},
 		deleteActiviteFn(_item){
 			this.$axios.post('/c2/activity/itemdel',qs.stringify({
@@ -129,6 +130,10 @@ export default {
 	position: fixed;
 	top:0;
 	z-index: 999;
+}
+.zhangwei{
+	width: 100%;
+	height: .47rem;
 }
 .leftImg{
 	width: 10%;

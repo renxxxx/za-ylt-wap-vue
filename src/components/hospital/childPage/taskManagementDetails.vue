@@ -9,7 +9,8 @@
 			</div>
 			<div class="right"></div>
 		</div>
-		<ul >
+		<div class="zhangwei"></div>
+		<ul :style="{'padding-top': height+'px'}">
 			<li>
 				<span>名称</span>
 				<span>{{taskSubmitValue.name}}</span>
@@ -61,8 +62,11 @@ export default {
 	components:{
 		
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -107,7 +111,14 @@ export default {
 	width: 100%;
 	height: .47rem;
 	margin-bottom: .15rem;
+	position: fixed;
+	top:0;
+	z-index: 999;
 }	
+.zhangwei{
+	width: 100%;
+	height: .62rem;
+}
 .leftImg{
 	width: 10%;
 	height: .47rem;

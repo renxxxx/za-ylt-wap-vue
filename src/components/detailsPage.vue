@@ -1,6 +1,6 @@
 <template>
 	<div class="detail">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="nav_left">
 				<a @click="goBackFn">
 					<img src="../assets/image/back-white@2x.png" alt="">
@@ -14,7 +14,8 @@
 				<img :src=modify.img alt="">
 			</div>
 		</div>
-		<div class="_message">
+		<div class="zhangwei"></div>
+		<div class="_message" :style="{'padding-top': height+'px'}">
 			<h3>基本信息</h3>
 			<ul>
 				<li>
@@ -93,204 +94,198 @@ import qs from 'qs';
 import { Dialog } from 'vant'
 import moment from 'moment'
 export default {
-  name: 'gene',
-  data () {
-    return {
-		//预浏览发票图img片地址
-    imgUrl:[],
-    show : true,
-		modify:{
-			value:'编辑',
-			img:require('../assets/image/editor.png'),
-			data:false,					//保存状态
-			readonly : 'true',		//读取状态
-			num: 0,						//点击次数
+	name: 'gene',
+	data () {
+		return {
+			//预浏览发票图img片地址
+		imgUrl:[],
+		show : true,
+			modify:{
+				value:'编辑',
+				img:require('../assets/image/editor.png'),
+				data:false,					//保存状态
+				readonly : 'true',		//读取状态
+				num: 0,						//点击次数
+			},
+			photoNum : 0,
+			photoPage : 0,
+			enlarge: false,
+			detail:{
+				patientId : undefined,		//病人id
+				realname : undefined,		//病人姓名
+				clinicId : undefined,		//门诊id
+				clinicName : undefined,		//门诊名称
+				hospitalConfirmTime : undefined	,//医院确诊时间
+				hospitalId	: undefined,	//医院id
+				hospitalName : undefined,	//医院名称
+				idcardNo : undefined,		//身份证号
+				invoices : [],		//发票
+				patientId :undefined,		//患者id
+				pushTime : undefined,		//推送时间
+				remark : undefined,			//备注
+				tel : undefined,			//电话号码
+				sickness : undefined		//病例
+			},
+		}
+	},
+	computed:{
+			...mapGetters(['account','isLogin']),
+	},
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
+	},
+	mounted () {
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+
+		this.$axios.post('/c2/patient/item',qs.stringify({
+			patientId : this.$route.query.patientId,
+		})).then(res =>{
+			this.detail = {
+				realname : res.data.data.realname,			//病人姓名
+				clinicId : res.data.data.clinicId,		//门诊id
+				clinicName : res.data.data.clinicName,		//门诊名称
+				// hospitalConfirmTime : res.data.data.hospitalConfirmTime,//医院确诊时间
+				hospitalId	: res.data.data.hospitalId,	//医院id
+				hospitalName : res.data.data.hospitalName,	//医院名称
+				idcardNo : res.data.data.idcardNo,		//身份证号
+				invoices : res.data.data.invoices,		//发票
+				patientId :res.data.data.patientId,		//患者id
+				// pushTime : res.data.data.pushTime,		//推送时间
+				remark : res.data.data.remark,			//备注
+				tel : res.data.data.tel,			//电话号码
+				sickness: res.data.data.sickness	//病例
+			};
+			// 如果信息中有发票图片,就显示
+			// console.log(this.detail)
+			if(res.data.data.invoices){
+				res.data.data.invoices = res.data.data.invoices.split(",");
+				for (let i in res.data.data.invoices){
+					this.imgUrl.push( res.data.data.invoices[i]);
+				}
+				this.modify.data = true;
+				this.modify.value = '编辑';
+				this.modify.img = require('../assets/image/editor.png');
+		  this.show = false;
+			}else{
+				this.modify.data = false;
+				this.imgUrl = [];
+		  this.show = false;
+			}
+			//判断时间是否为空
+			// console.log(this.detail.pushTime)
+			if(res.data.data.hospitalConfirmTime){
+				// console.log(this.detail.hospitalConfirmTime)
+				this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('YYYY-MM-DD HH:mm');
+			}
+			if(res.data.data.pushTime){
+		  // console.log(res.data.data.pushTime)
+				this.detail.pushTime = moment(res.data.data.pushTime).format('YYYY-MM-DD HH:mm');
+			}
+		}).catch(err =>{
+			console.log(err)
+		})
+	},
+	methods: {
+		enlargeFn(_value){
+			this.photoNum = _value;
+			console.log(this.photoNum)
+			this.enlarge = true;
 		},
-		photoNum : 0,
-    photoPage : 0,
-		enlarge: false,
-    detail:{
-    	patientId : undefined,		//病人id
-    	realname : undefined,		//病人姓名
-    	clinicId : undefined,		//门诊id
-    	clinicName : undefined,		//门诊名称
-    	hospitalConfirmTime : undefined	,//医院确诊时间
-    	hospitalId	: undefined,	//医院id
-    	hospitalName : undefined,	//医院名称
-    	idcardNo : undefined,		//身份证号
-    	invoices : [],		//发票
-    	patientId :undefined,		//患者id
-    	pushTime : undefined,		//推送时间
-    	remark : undefined,			//备注
-    	tel : undefined,			//电话号码
-    	sickness : undefined		//病例
-    },
-    }
-  },
-  computed:{
-		...mapGetters(['account','isLogin']),
-		// detail: {
-		// 	get: function() {
-		// 		// console.log(this.$store)
-		// 		return this.$store.state.shop.detail
-		// 	},
-		// 	set: function (newValue) {
-		// 		this.$store.state.shop.detail = newValue;
-		// 	},
-		// },
-  },
-  created () {
-
-  },
-  mounted () {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-
-	this.$axios.post('/c2/patient/item',qs.stringify({
-		patientId : this.$route.query.patientId,
-	})).then(res =>{
-		this.detail = {
-			realname : res.data.data.realname,			//病人姓名
-			clinicId : res.data.data.clinicId,		//门诊id
-			clinicName : res.data.data.clinicName,		//门诊名称
-			// hospitalConfirmTime : res.data.data.hospitalConfirmTime,//医院确诊时间
-			hospitalId	: res.data.data.hospitalId,	//医院id
-			hospitalName : res.data.data.hospitalName,	//医院名称
-			idcardNo : res.data.data.idcardNo,		//身份证号
-			invoices : res.data.data.invoices,		//发票
-			patientId :res.data.data.patientId,		//患者id
-			// pushTime : res.data.data.pushTime,		//推送时间
-			remark : res.data.data.remark,			//备注
-			tel : res.data.data.tel,			//电话号码
-			sickness: res.data.data.sickness	//病例
-		};
-		// 如果信息中有发票图片,就显示
-		// console.log(this.detail)
-		if(res.data.data.invoices){
-			res.data.data.invoices = res.data.data.invoices.split(",");
-			for (let i in res.data.data.invoices){
-				this.imgUrl.push( res.data.data.invoices[i]);
+		onChange(_value){
+			this.photoPage = _value;
+			console.log(this.imgUrl)
+		},
+		// 返回上一级
+		goBackFn(){
+			this.$router.back(-1)
+		},
+		//修改方法
+		modifyFn(){
+			this.modify.num++;
+			if(this.modify.num % 2 != 0){
+				// console.log(this.modify.num)
+				this.modify.value = '保存';
+				this.modify.img = require('../assets/image/save@2x.png');
+		  // console.log(this.modify.value)
+				this.modify.data = true;
+				for(let i =1; i<6; i++){
+					let _id = 'readId' + i;
+					this.modify.readonly = false;
+				}
+		  this.show = true;
+			}else{
+		  this.modify.value = '编辑';
+		  this.modify.img = require('../assets/image/editor.png');
+		  // console.log(this.modify.value);
+				let _imgAddress = [];
+		  if(this.imgUrl.length == 1){
+			_imgAddress[0] = this.imgUrl[0]
+		  }else{
+			for(let i in this.imgUrl){
+				_imgAddress[i] = this.imgUrl[i]
 			}
-			this.modify.data = true;
-			this.modify.value = '编辑';
-			this.modify.img = require('../assets/image/editor.png');
-      this.show = false;
-		}else{
-			this.modify.data = false;
-			this.imgUrl = [];
-      this.show = false;
-		}
-		//判断时间是否为空
-		// console.log(this.detail.pushTime)
-		if(res.data.data.hospitalConfirmTime){
-			// console.log(this.detail.hospitalConfirmTime)
-			this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('YYYY-MM-DD HH:mm');
-		}
-		if(res.data.data.pushTime){
-      // console.log(res.data.data.pushTime)
-			this.detail.pushTime = moment(res.data.data.pushTime).format('YYYY-MM-DD HH:mm');
-		}
-	}).catch(err =>{
-		console.log(err)
-	})
-  },
-  methods: {
-	enlargeFn(_value){
-    this.photoNum = _value;
-    console.log(this.photoNum)
-		this.enlarge = true;
-	},
-	onChange(_value){
-		this.photoPage = _value;
-		console.log(this.imgUrl)
-	},
-	// 返回上一级
-	goBackFn(){
-		this.$router.back(-1)
-	},
-	//修改方法
-	modifyFn(){
-		this.modify.num++;
-		if(this.modify.num % 2 != 0){
-			// console.log(this.modify.num)
-			this.modify.value = '保存';
-			this.modify.img = require('../assets/image/save@2x.png');
-      // console.log(this.modify.value)
-			this.modify.data = true;
-			for(let i =1; i<6; i++){
-				let _id = 'readId' + i;
-				this.modify.readonly = false;
+		  }
+		  // console.log(_imgAddress)
+				_imgAddress =  _imgAddress.join(",");
+				// console.log(_imgAddress)
+				this.$axios.post('/c2/patient/itemalter',qs.stringify({
+					realname : this.detail.realname,
+					patientId : this.detail.patientId,
+					remark : this.detail.remark,
+					sickness : this.detail.sickness,
+					invoices : _imgAddress,
+					idcardNo : this.detail.idcardNo,
+					tel : this.detail.tel
+				})).then(res =>{
+			if(!res.data.codeMsg){
+			  this.show = false
 			}
-      this.show = true;
-		}else{
-      this.modify.value = '编辑';
-      this.modify.img = require('../assets/image/editor.png');
-      // console.log(this.modify.value);
-			let _imgAddress = [];
-      if(this.imgUrl.length == 1){
-        _imgAddress[0] = this.imgUrl[0]
-      }else{
-        for(let i in this.imgUrl){
-        	_imgAddress[i] = this.imgUrl[i]
-        }
-      }
-      // console.log(_imgAddress)
-			_imgAddress =  _imgAddress.join(",");
-			// console.log(_imgAddress)
-			this.$axios.post('/c2/patient/itemalter',qs.stringify({
-				realname : this.detail.realname,
-				patientId : this.detail.patientId,
-				remark : this.detail.remark,
-				sickness : this.detail.sickness,
-				invoices : _imgAddress,
-				idcardNo : this.detail.idcardNo,
-				tel : this.detail.tel
-			})).then(res =>{
-        if(!res.data.codeMsg){
-          this.show = false
-        }
-			}).catch(err =>{
-				console.log(err)
-			})
-			for(let i =1; i<6; i++){
-				let _id = 'readId' + i;
-				// console.log(_id)
-				this.modify.readonly = true;
+				}).catch(err =>{
+					console.log(err)
+				})
+				for(let i =1; i<6; i++){
+					let _id = 'readId' + i;
+					// console.log(_id)
+					this.modify.readonly = true;
+				}
 			}
-		}
-	},
-	 // 上传图片触发方法
-	addImg(_fileLIst){
-		var file = _fileLIst.target.files[0]
-		// console.log(e)
-		if(file.type.indexOf('image') > -1){
-			let formData = new FormData();
-			formData.append('file', file)
-			this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
-			}}).then(res =>{
-        if(!res.data.codeMsg){
-          // console.log(res.data.codeMsg)
-          this.imgUrl.push(res.data.data.url)
-          // console.log(this)
-        }
+		},
+		 // 上传图片触发方法
+		addImg(_fileLIst){
+			var file = _fileLIst.target.files[0]
+			// console.log(e)
+			if(file.type.indexOf('image') > -1){
+				let formData = new FormData();
+				formData.append('file', file)
+				this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
+				}}).then(res =>{
+			if(!res.data.codeMsg){
+			  // console.log(res.data.codeMsg)
+			  this.imgUrl.push(res.data.data.url)
+			  // console.log(this)
+			}
 
-			}).catch(err =>{
-				console.log(err)
-			})
-		 }else{
-			Dialog({ message: '请选择图片' });
-			return false;
-		}
+				}).catch(err =>{
+					console.log(err)
+				})
+			 }else{
+				Dialog({ message: '请选择图片' });
+				return false;
+			}
+		},
+	  deteleFn(_img){
+		// console.log(this.imgUrl)
+		let deleteImg =  this.imgUrl.filter( n => n != _img);
+		this.imgUrl = deleteImg;
+		// console.log(this.imgUrl)
+	  }
 	},
-  deteleFn(_img){
-    // console.log(this.imgUrl)
-    let deleteImg =  this.imgUrl.filter( n => n != _img);
-    this.imgUrl = deleteImg;
-    // console.log(this.imgUrl)
-  }
-  },
 }
 </script>
 
@@ -305,6 +300,13 @@ export default {
 	height: .47rem;
 	background-color: #2B77EF;
 	color:#FFFFFF;
+	position: fixed;
+	top:0;
+	z-index: 9999;
+}
+.zhangwei{
+	width: 100%;
+	height: .47rem;
 }
 .nav_left{
 	float: left;

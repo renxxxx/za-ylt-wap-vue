@@ -1,6 +1,6 @@
 <template>
 	<div class="exchangeAddImg">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -11,8 +11,8 @@
 				<button :class="this.exchangeAdd.cover? 'buttonColorOver' : 'buttonColorNow'" @click="submitFn">完成</button>
 			</div>
 		</div>
-
-		<div class="addImg" v-model="exchangeAdd">
+		<div class="zhangwei"></div>
+		<div class="addImg" v-model="exchangeAdd" :style="{'padding-top': height+'px'}">
 			<div class="addImgButton" v-show="this.exchangeAdd.cover? false : true">
 				<img src="../../../assets/image/append@2x.png" alt="">
 				<span>请添加照片</span>
@@ -44,8 +44,11 @@ export default {
 	components:{
 
 	},
-	created () {
-
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		this.exchangeAdd = JSON.parse(this.$route.query.exchangeEditor)
@@ -117,6 +120,13 @@ export default {
 	margin-bottom: .15rem;
 	background-color: #FFFFFF;
 	border-bottom: 1px solid #D8D8D8;
+	position: fixed;
+	top:0;
+	z-index: 9999;
+}
+.zhangwei{
+	width: 100%;
+	height: .62rem;
 }
 .leftImg{
 	width: 18%;
@@ -167,7 +177,7 @@ export default {
 }
 .addImg{
 	width: 3.25rem;
-	height:88%;
+	height:84%;
 	line-height: 88%;
 	margin: 0rem auto;
 	overflow: hidden;

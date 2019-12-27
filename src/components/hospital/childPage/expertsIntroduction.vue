@@ -1,17 +1,16 @@
 <template>
 	<div class="expertsIntroduction">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
 				<h3>专家介绍</h3>
 			</div>
-			<div class="right">
-				
-			</div>
+			<div class="right"></div>
 		</div> 
-		<div class="content">
+		<div class="zhangwei"></div>
+		<div class="content" :style="{'padding-top': height+'px'}">
 			<ul>
 				<li v-for="(item,inx) in this.doctor" :key='inx'>
 					<img :src="item.headimg" alt="">
@@ -49,8 +48,11 @@ export default {
 		...mapGetters(['account']),
 	
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -115,6 +117,13 @@ export default {
 	height: .47rem;
 	line-height: .47rem;
 	background-color: #FFFFFF;
+	position: fixed;
+	top:0;
+	z-index: 9999;
+}
+.zhangwei{
+	width: 100%;
+	height: .47rem;
 }
 .leftImg{
 	width: 10%;

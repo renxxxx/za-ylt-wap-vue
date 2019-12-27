@@ -1,6 +1,6 @@
 <template>
 	<div class="task">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -9,7 +9,8 @@
 			</div>
 			<div class="right"></div>
 		</div>
-		<div class="taskList">
+		<div class="zhangwei"></div>
+		<div class="taskList" :style="{'padding-top': height+'px'}">
 			<h3>首次收益</h3>
 			<ul>
 				<li v-for="(item,inx) in task.one" :key='inx'>
@@ -55,8 +56,11 @@ export default {
 	components:{
 
 	},
-	created () {
-
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted () {
 		if(window.plus){
@@ -201,6 +205,13 @@ export default {
 	background: url('../../../assets/image/tu1.png')  center no-repeat,linear-gradient(#FDFDFD, #FBFBFB) ;
 	background-size: 1.84rem 1.29rem;
 	margin-bottom: .15rem;
+	position: fixed;
+	top: 0;
+	z-index: 999;
+}
+.zhangwei{
+	width: 100%;
+	height: 1.76rem;
 }
 .leftImg{
 	width: 10%;

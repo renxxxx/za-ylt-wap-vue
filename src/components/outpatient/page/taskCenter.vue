@@ -1,6 +1,6 @@
 <template>
 	<div class="taskCenter">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top':height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -31,7 +31,8 @@
 				<img src="../../../assets/image/Leaves@2x.png" alt="">
 			</div>
 		</van-overlay>
-		<div class="centerOnce" v-show="task.once.length==0? false:true">
+		<div class="zhangwei" :style="{'height':(height+176)+'px'}"></div>
+		<div class="centerOnce" v-show="task.once.length==0? false:true" >
 			<ul>
 				<h3 class="titleBefore">首次收益</h3>
 				<li v-for="(item,inx) in task.once" :key='inx'>
@@ -78,7 +79,10 @@ export default {
 
 	},
 	created(){
-
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted(){
 		if(window.plus){
@@ -130,7 +134,12 @@ export default {
 	background: url('../../../assets/image/tu1.png')  center no-repeat,linear-gradient(#FDFDFD, #FBFBFB) ;
 	background-size: 1.84rem 1.29rem;
 	margin-bottom: .15rem;
-	position: relative;
+	position: fixed;
+	top:0;
+	z-index: 9999;
+}
+.zhangwei{
+	width: 100%;
 }
 .leftImg{
 	width: 22%;
@@ -331,5 +340,14 @@ export default {
 }
 .explainRulenNum p:first-child{
 	padding-bottom: .15rem;
+}
+>>>.van-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.7);
+	z-index: 9999!important;
 }
 </style>
