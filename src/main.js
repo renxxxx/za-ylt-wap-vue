@@ -90,6 +90,9 @@ if (window.plus) {
 
 
 function plusReady() {
+	let currentWebview = plus.webview.currentWebview();
+	currentWebview.setStyle({scrollIndicator:"none"})
+
 	let isImmersedStatusbar = plus.navigator.isImmersedStatusbar(); 
 	// 检测是否支持沉浸式 支持沉浸式状态栏则返回true
 
@@ -101,7 +104,6 @@ function plusReady() {
 
 	//plus.navigator.setStatusBarBackground("#ffffff");
 	plus.navigator.setStatusBarStyle("dark")
-
 	function location(position) {
 		axios.defaults.headers.common['latitude'] = position.coords.latitude
 		axios.defaults.headers.common['longitude'] = position.coords.longitude
