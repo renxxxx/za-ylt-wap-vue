@@ -203,7 +203,7 @@ export default {
 	})
 	.catch((err)=>{
 		console.log(err);
-		Dialog({ message: '加载失败!'});
+		//Dialog({ message: '加载失败!'});
 	})
 	//已就诊
 	this.$axios.post('/c2/patient/items',qs.stringify({
@@ -234,7 +234,7 @@ export default {
 	})
 	.catch((err)=>{
 		console.log(err);
-		Dialog({ message: '加载失败!'});
+		//Dialog({ message: '加载失败!'});
 	})
   },
   computed:{
@@ -334,7 +334,7 @@ export default {
 			})
 			.catch((err)=>{
 				console.log(err);
-				Dialog({ message: '加载失败!'});
+				//Dialog({ message: '加载失败!'});
 			})
 		}else{
 			this.$axios.post('/c2/patient/items',qs.stringify({
@@ -368,7 +368,7 @@ export default {
 			})
 			.catch((err)=>{
 				console.log(err);
-				Dialog({ message: '加载失败!'});
+				//Dialog({ message: '加载失败!'});
 			})
 		}
 		
@@ -407,7 +407,7 @@ export default {
 			})
 			.catch((err)=>{
 				console.log(err);
-				Dialog({ message: '加载失败!'});
+				//Dialog({ message: '加载失败!'});
 			})
 		}else{
 			this.$axios.post('/c2/patient/items',qs.stringify({
@@ -440,7 +440,7 @@ export default {
 			})
 			.catch((err)=>{
 				console.log(err);
-				Dialog({ message: '加载失败!'});
+				//Dialog({ message: '加载失败!'});
 			})
 		}
 	},

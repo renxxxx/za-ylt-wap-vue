@@ -102,7 +102,7 @@ export default {
 		})
 		.catch((err)=>{
 			console.log(err);
-			Dialog({ message: '加载失败!'});
+			//Dialog({ message: '加载失败!'});
 		})
 	},
 	//获取验证码
@@ -125,7 +125,7 @@ export default {
 			.catch((err)=>{
 				console.log(err)
 				// console.log(this.retrieve.data);
-				Dialog({ message: '加载失败!'});
+				//Dialog({ message: '加载失败!'});
 			})
 			
 		}else if(this.retrieve.data == false){

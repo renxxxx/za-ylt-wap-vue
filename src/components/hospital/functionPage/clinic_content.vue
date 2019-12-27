@@ -97,7 +97,7 @@ export default {
 				})
 				.catch((err)=>{
 					console.log(err);
-					Dialog({ message: '加载失败!'});
+					//Dialog({ message: '加载失败!'});
 				})
 			}else{
 				this.page++
@@ -137,7 +137,7 @@ export default {
 				})
 				.catch((err)=>{
 					console.log(err);
-					Dialog({ message: '加载失败!'});
+					//Dialog({ message: '加载失败!'});
 				})
 			}
 		},
