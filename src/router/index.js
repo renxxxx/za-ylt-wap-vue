@@ -107,6 +107,7 @@ Vue.use(Router)
 const router = new Router({
 	// mode: 'history',
   // base:'/landingPage/',
+ 
 	routes: [
 		{
 			// 医院端主页
@@ -443,10 +444,13 @@ const router = new Router({
 	],
 })
 
+
+
+
 router.beforeEach((to,from,next) => {
 	//TODO 保存当前路由
-	if(to.name!='landingPage')
-		localStorage.setItem('lastRoute',JSON.stringify(to))
+	// if(to.name!='landingPage')
+	// 	localStorage.setItem('lastRoute',JSON.stringify(to))
 	// console.log(to)
 	// console.log(next)
 

@@ -43,7 +43,19 @@ export default {
 	created () {
 		
 	},
-	mounted () {
+	beforeRouteLeave(to, from, next) {
+    debugger;
+    this.scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    next();
+  },
+  //进入该页面时，用之前保存的滚动位置赋值
+  beforeRouteEnter(to, from, next) {
+    debugger;
+    next(vm => {
+      document.body.scrollTop = vm.scrollTop;
+    });
+  }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
@@ -74,7 +86,8 @@ export default {
 			.then(res => {
 				res.data.codeMsg? this.$toast.fail(res.data.codeMsg):this.$toast.success('操作成功')
 				console.log(this.activity)
-				window.location.href='#/hospital_activityReleased';
+				//window.location.href='#/hospital_activityReleased';
+				this.$router.go(-2)
 			})
 			.catch((err)=>{
 				console.log(err);
