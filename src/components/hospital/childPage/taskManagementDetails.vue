@@ -1,6 +1,6 @@
 <template>
 	<div class="taskDetails">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>

@@ -318,5 +318,9 @@ export default {
 	margin-left: .05rem;
 	margin-top: -.03rem;
 }
-
+.content{
+	width: 100%;
+	height: 100%;
+	margin-top: 2.1rem;
+}
 </style>

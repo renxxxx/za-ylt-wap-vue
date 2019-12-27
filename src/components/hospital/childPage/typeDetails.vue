@@ -1,9 +1,10 @@
 <template>
-	<div class="typeDetails">
+	<div class="typeDetails" :style="{'padding-top': height+'px'}">
 		<div class="topNav">
 			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn">
 			<h3>{{this.about.name}}</h3>
 		</div>
+		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
 		<div class="typeTItle" v-show="!this.doctor||this.doctor.length==0? false:true">
 			<h4 class="xia">科室医生</h4>
 			<ul ref='scrollId'>
@@ -87,7 +88,10 @@ export default {
 		
 	},
 	created(){
-		
+		var heightRexg = /^[0-9]*/g;
+		var topHeight = this.topHeight.match(heightRexg);
+		this.height = parseInt(topHeight.join()) ;
+		console.log(this.height);
 	},
 	mounted(){
 		if(window.plus){
@@ -162,6 +166,9 @@ export default {
 	/* background-color: #F5F5F5; */
 	background-color: #FFFFFF;
 }
+.zhangwei{
+	height: .47rem;width: 100%;
+}
 .topNav{
 	width: 100%;
 	height: .47rem;
@@ -170,6 +177,9 @@ export default {
 	text-align: center;
 	position: relative;
 	background-color: #FFFFFF;
+	position: fixed;
+	top: 0;
+	z-index: 999;
 }
 .topNav img{
 	width: .09rem;

@@ -152,7 +152,7 @@ export default {
 .content{
 	width: 100%;
 	height: 100%;
-	margin-top: 2.1rem;
+	/* margin-top: 2.1rem; */
 }
 .content ul{
 	width: 94.6%;

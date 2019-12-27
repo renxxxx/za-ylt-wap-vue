@@ -15,8 +15,8 @@
 				<span>{{hospitalImage.address}}</span>
 			</li>
 		</ul>
-		<span>— 医院简介 —</span>
-		<div class="content_content">
+		<span v-if="hospitalImage.intro? true:false">— 医院简介 —</span>
+		<div class="content_content" v-if="hospitalImage.intro? true:false">
 			<p>{{hospitalImage.intro}}</p>
 		</div>
 	</div>

@@ -1,9 +1,10 @@
 <template>
 	<div class="caseDetails" >
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn">
 			<img src="../../../assets/image/share@3x.png" @click="share" alt="">
 		</div>
+		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
 		<div class="banner" v-show="!!caseInfo.cover">
 			<img :src="caseInfo.cover"  alt="">
 		</div>
@@ -48,7 +49,10 @@ export default {
 		
 	},
 	created(){
-		
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
+		console.log(this.height)
 	},
 	mounted(){
 		if(window.plus){
@@ -117,6 +121,14 @@ export default {
 	width: 100%;
 	height: .47rem;
 	line-height: .47rem;
+	position: fixed;
+	top: 0;
+	z-index: 999;
+	background: #FFFFFF;
+}
+.zhangwei{
+	width: 100%;
+	height: .47rem;
 }
 .topNav img:first-child{
 	width: .09rem;

@@ -1,6 +1,6 @@
 <template>
-	<div class="hospital"  :style="{'padding-top': height+'px'}">
-		<div class="navWarp">
+	<div class="hospital"  >
+		<div class="navWarp" :style="{'padding-top': height+'px'}">
 			<div class="navTitle">
 				<span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
 			</div>
@@ -138,6 +138,7 @@ export default {
 			.then(res =>{
 				for(let i in res.data.data.rows){
 					// console.log(res.data.data.rows[i])
+					res.data.codeMsg? this.$toast.fail(res.data.codeMsg):''
 					switch(res.data.data.rows[i].type){
 						case 0: this.images.push({'cover':res.data.data.rows[i].cover,'url':''});break;
 						case 1: this.images.push({'cover':res.data.data.rows[i].cover,'url':res.data.data.rows[i].type1Url});break;
@@ -153,7 +154,7 @@ export default {
 				// console.log(this.images.cover)
 			}).catch((err)=>{
 				console.log(err)
-				Dialog({ message: '加载失败!' });
+				// Dialog({ message: '加载失败!' });
 			})
 		//文章请求
 		this.getdata()
