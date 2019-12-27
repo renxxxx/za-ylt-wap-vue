@@ -182,7 +182,7 @@ const mutations={
 			})
 			.catch((err)=>{
 				console.log(err)
-				Dialog({ message: '加载失败!'});
+				//Dialog({ message: '加载失败!'});
 			})
 	},
 }

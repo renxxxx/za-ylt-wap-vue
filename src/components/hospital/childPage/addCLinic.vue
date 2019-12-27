@@ -152,7 +152,7 @@ export default {
 		})
 		.catch((err)=>{
 			console.log(err);
-			Dialog({ message: '加载失败!'});
+			//Dialog({ message: '加载失败!'});
 		})
 		// console.log(this.$route.query.item)
     // this.$route.query.item ? this.clinicFn() : ""
@@ -227,7 +227,7 @@ export default {
 			})
 			.catch((err)=>{
 				console.log(err);
-				Dialog({ message: '加载失败!'});
+				//Dialog({ message: '加载失败!'});
 			})
 		},
 		successFn(){
