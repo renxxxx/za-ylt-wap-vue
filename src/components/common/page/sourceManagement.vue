@@ -128,16 +128,9 @@ export default {
     	//plus.navigator.setStatusBarBackground("#2B77EF");
     	plus.navigator.setStatusBarStyle("dark")
     }
-	// this.document.getElementById('')
-	// this.$refs.topNav.padding-top
-	// console.log(this.$refs.topNav)
-	// console.log(this.topHeight)
 	this.getNum();
   },
   computed:{
-		// ...mapState({
-		// 	count: account =>
-		// }),
 		show: {
 			get: function() {
 			console.log(this.$store)
@@ -244,6 +237,7 @@ export default {
 	text-align: center;
 	display: inline-block;
 	z-index: 999;
+	padding-top: 6px;
 }
 .indexReturn img{
 	width: .09rem;
@@ -260,9 +254,10 @@ export default {
 	height: .4rem;
 	line-height: .36rem;
 	position: relative;
+	padding-top: 6px;
 }
 .indexSearch img{
-	position: absolute;z-index: 9;left: .13rem;top: .09rem;
+	position: absolute;z-index: 9;left: .11rem;top: .15rem;
 	height: .15rem;width:.14rem;
 }
 .indexSearch input{
@@ -295,6 +290,7 @@ export default {
 	float: left;
 	margin-top: .024rem;
 	margin-left: -.05rem;
+	padding-top: 6px;
 }
 .clinic_buttton button{
 	color: #FFFFFF;
@@ -317,6 +313,7 @@ export default {
 	height: .4rem;
 	line-height: .38rem;
 	margin-left: .052rem;
+	padding-top: 6px;
 }
 .indexScreening span{
 	width: .15rem;height: .21rem;

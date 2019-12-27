@@ -169,7 +169,7 @@ export default {
 
 .content{
 	width: 100%;
-	/* height: 100%; */
+	height: 62%;
 	margin-top: -.4rem;
 	border-radius: .14rem  .14rem  0rem  0rem;
 	background-color: #FFFFFF;

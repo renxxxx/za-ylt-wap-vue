@@ -7,8 +7,8 @@
 						<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : items.itemId}}">
 							<div class="contentLi">
 								<h4>{{items.name}}</h4>
-								<span>推广人: {{items.clinicPromoterName}}</span>
-								<input type="text" v-model="items.pushCount" readonly="readonly">
+								<span>推广人: {{items.hospitalUserName}}</span>
+								<input type="text" v-model="items.patientCount" readonly="readonly">
 							</div>
 						</router-link>
 					</li>
@@ -49,8 +49,6 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
-		this.getdata(0);
 	},
 	methods: {
 		onRefresh() {
@@ -58,91 +56,32 @@ export default {
 			this.content = [];
 			this.getdata(0)
 		},
-		getdata(_data){
-			if(_data == 0){
-				this.isLoading = false;
-				this.$axios.post('/c2/clinic/items',qs.stringify({
-					hospitalId : this.account.hospitalId,
-					pn : 1,
-					ps : 10
-				}))
-				.then(res => {
-					if(res.data.data.items.length != 0){
-						// console.log(this.page)
-						for(let i in res.data.data.items){
-						// console.log(res.data.data.items[i])
-						if(!res.data.data.items[i]){
-							// this.$notify({
-							// 	message: '数据已全部加载',
-							// 	duration: 1000,
-							// 	background:'#79abf9',
-							// })
-						}else{
-							this.content.push(res.data.data.items[i])
+		getdata(){
+			this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({pn:this.page})+'&'+qs.stringify({ps:10}))
+			.then(res => {
+				if(res.data.data.rows.length != 0){
+					for(let i in res.data.data.rows){
+						if(res.data.data.rows[i]){
+							this.content.push(res.data.data.rows[i])
 						}
+						console.log(this.content)
 					}
-					this.isLoading = false;
-					// 加载状态结束
+				// 加载状态结束
+				this.loading = false;
+				}else{
 					this.loading = false;
-					this.finished = false;
-					}else{
-						// this.$notify({
-						// 	message: '数据已全部加载',
-						// 	duration: 1000,
-						// 	background:'#79abf9',
-						// })
-						this.loading = false;
-						this.finished = true;
-					}
-				})
-				.catch((err)=>{
-					console.log(err);
-					//Dialog({ message: '加载失败!'});
-				})
-			}else{
-				this.page++
-				this.$axios.post('/c2/clinic/items',qs.stringify({
-					hospitalId : this.account.hospitalId,
-					pn : this.page,
-					ps : 10
-				}))
-				.then(res => {
-					if(res.data.data.items.length != 0){
-						// console.log(this.page)
-						for(let i in res.data.data.items){
-						// console.log(res.data.data.items[i])
-						if(!res.data.data.items[i]){
-							// this.$notify({
-							// 	message: '数据已全部加载',
-							// 	duration: 1000,
-							// 	background:'#79abf9',
-							// })
-						}else{
-							this.content.push(res.data.data.items[i])
-						}
-					}
-					// 加载状态结束
-					this.loading = false;
-					}else{
-						// this.$notify({
-						// 	message: '数据已全部加载',
-						// 	duration: 1000,
-						// 	background:'#79abf9',
-						// })
-						this.loading = false;
-						this.finished = true;
-					}
-					// console.log(res.data.data.sum.totalCount)
-					this.clinic.num = res.data.data.sum.totalCount;
-				})
-				.catch((err)=>{
-					console.log(err);
-					//Dialog({ message: '加载失败!'});
-				})
-			}
+					this.finished = true;
+				}
+				this.clinic.num = res.data.data.sum.totalCount;
+				
+			})
+			.catch((err)=>{
+				console.log(err);
+			})
 		},
 		onLoad(){
-			this.getdata(1)
+			this.getdata()
+			this.page++
 		},
 	},
 }

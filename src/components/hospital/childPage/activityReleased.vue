@@ -171,7 +171,7 @@ export default {
 	text-align: center;
 	font-size: .14rem;
 	margin: 0 auto;
-	margin-top: .59rem;
+	/* margin-top: .59rem; */
 	background-color: #FFFFFF;
 }
 .addActive span:first-child{
