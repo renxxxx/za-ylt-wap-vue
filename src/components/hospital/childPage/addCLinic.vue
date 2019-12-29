@@ -37,6 +37,10 @@
 							<span>分配密码</span>
 							<input type="password" v-model="addClinic.pwd " placeholder="请填写">
 						</li>
+            <li>
+            	<span>确认密码</span>
+            	<input type="password" v-model="addClinic.pwdConfirm " placeholder="请填写">
+            </li>
 						<li>
 							<span>负责人</span>
 							<input type="text"  v-model="addClinic.headmanName"  placeholder="请填写">
@@ -80,7 +84,7 @@
 						<!-- <van-action-sheet v-model="show"  :round="false" >
 							<div class="popupChoose">
 								<span>拍照</span>
-								
+
 							</div>
 							<button @click="closeFn" class="closeStyle">取消</button>
 						</van-action-sheet> -->
@@ -107,14 +111,15 @@ export default {
 			option: [],
 			// 添加列表绑定数据
 			addClinic:{
-				name : '',
-				phone : '',
-				pwd : '',
-				headmanName : '',
-				contactTel : '',
-				address : '',
-				remark : '',
+				name : '',        //医院名称
+				phone : '',       //分配账号
+				pwd : '',         //分配账号密码
+				headmanName : '', //负责人姓名
+				contactTel : '',  //负责人电话
+				address : '',     //门诊地址
+				remark : '',      //备注
 				license : '',
+        pwdConfirm: '',    //确认密码
 				readonly : '',
 			},
 			// 上传图片弹窗显示
@@ -131,7 +136,7 @@ export default {
 	created(){
 		var heightRexg = /^[0-9]*/g
 		var topHeight = this.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join()) 
+		this.height = parseInt(topHeight.join())
 		console.log(this.height)
 	},
 	mounted () {
@@ -139,7 +144,7 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
+
 		// 加载dom节点后,获取推广人列表请求
 		this.$axios.post('hospitaler/clinic-promoter/list',qs.stringify({
 			pn : 1,
@@ -162,20 +167,6 @@ export default {
     // this.$route.query.item ? this.clinicFn() : ""
 	},
 	methods: {
-    clinicFn(){
-      
-      this.$axios.post('/c2/clinic/itemadd',qs.stringify({
-      	itemId : this.$route.query.item,
-      }))
-      .then(_d => {
-      	this.addClinic = _d.data.data;
-      	this.imageUpload = _d.data.data.license
-      })
-      .catch((err)=>{
-      	console.log(err);
-      	Dialog({ message: err});
-      })
-    },
 		// 返回键
 		goBackFn(){
 			this.$router.back(-1)
@@ -213,16 +204,19 @@ export default {
 		// 保存方法
 		saveFn(){
 			console.log(this.addClinic)
-			this.$axios.post('c2/clinic/itemadd',qs.stringify({
-				hospitalId : this.account.hospitalId,
-				name : this.addClinic.name,
-				phone : this.addClinic.phone,
-				pwd : this.addClinic.pwd,
-				headmanName : this.addClinic.headmanName,
-				contactTel : this.addClinic.contactTel,
-				address : this.addClinic.address,
-				remark : this.addClinic.remark,
-				license : this.imageUpload,
+			this.$axios.post('/hospital/super-admin/hospital-clinic-add',qs.stringify({
+				hospitalClinicId : this.account.hospitalId,
+        name :  this.addClinic.name,        //医院名称
+        cover: '',
+        license : this.imageUpload,         //营业执照
+        address : this.addClinic.address,   //门诊地址
+        headman : this.addClinic.headmanName, //负责人姓名
+        tel : this.addClinic.contactTel,      //负责人电话
+        remark : this.addClinic.remark,       //备注
+        clinicUserPhone : this.addClinic.phone, //分配账号
+        clinicUserPassword : this.addClinic.pwd,//分配账号密码
+        clinicUserPasswordConfirm : this.addClinic.pwdConfirm,  //确认密码
+
 			}))
 			.then(res => {
 				// console.log(typeof res.data.codeMsg)
@@ -421,7 +415,7 @@ export default {
 	height: .71rem!important;
 	top: 0;
 	left: 0;
-	
+
 }
 .uploadPictures:hover{
    border-color:#3594F4;

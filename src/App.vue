@@ -1,35 +1,66 @@
 <template>
   <div id="app" v-cloak>
      <router-view></router-view>
+     <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
+       <img src="./assets/image/returnTop.png" alt="">
+     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
+
 // import Store from '../store'
 export default {
   name: "App",
   data() {
     return {
+      returnTopButton : false,
     };
   },
   beforeCreate() {},
   mounted() {
     // debugger
     // let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
+    debugger
+     // console.log(document.documentElement.clientHeight)
+     window.addEventListener('scroll',this.handleScroll,true)
   },
   created() {},
- 
+
   computed: {},
-  methods: {}
+  methods: {
+    handleScroll(){
+      let scrollTop = document.body.scrollTop
+      let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      let data = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight)
+      let opacityValue =Math.round((scrollTop+windowHeight)/document.body.scrollHeight*100)/100;
+      console.log(opacityValue)
+      if(data&&opacityValue>.8){
+        this.$refs.returnTopRef.style.opacity = opacityValue
+      }else{
+         this.$refs.returnTopRef.style.opacity = 0
+      }
+    },
+    returnTopFn(){
+      let scrollTop = document.body.scrollTop
+      let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      for(let i=0;i<(scrollTop+windowHeight);i++){
+        var clearReturn = setTimeout(()=>{
+          document.body.scrollTop--
+        },100)
+      }
+
+    }
+  }
 };
 </script>
 
 <style>
 body {
   /* background-color:#FFFFFF; */
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
 }
 
@@ -38,11 +69,25 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  height: 100%;
+  position: relative;
+  /* height: 100%; */
   /* background-color: #F5F5F5; */
 }
 
 [v-cloak] {
   display: none;
+}
+.returnTop{
+  z-index: 9999;
+  position: fixed;
+  right: .3rem;
+  bottom: 1rem;
+  opacity: 0;
+}
+.returnTop img{
+  background: none;
+  border: none;
+  width: .5rem;
+  height: .5rem;
 }
 </style>

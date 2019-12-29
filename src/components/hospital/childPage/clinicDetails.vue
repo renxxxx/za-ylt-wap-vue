@@ -82,20 +82,11 @@ export default {
 				clinicYes : [],
 				data: true,
 			},
-			// clinicDetails:{},
 		}
 	},
 	computed:{
 		...mapGetters(['account']),
-		// clinicDetails: {
-		// 	get: function() {
-		// 		// console.log(this.$store)
-		// 		return this.$store.state.shop.clinicDetails
-		// 	},
-		// 	set: function (newValue) {
-		// 		this.$store.state.shop.clinicDetails = newValue;
-		// 	},
-		// },
+
 		num: {
 			get: function() {
 				// console.log(this.$store)
@@ -155,7 +146,7 @@ export default {
 				// this.clinicDetails = {}
 				this.clinicDetails = _d.data.data;
 				this.clinicDetails.clinicId = this.list.clinicId;
-				// console.log(this.clinicDetails)
+				console.log(this.clinicDetails)
 			})
 			.catch((err)=>{
 				console.log(err);

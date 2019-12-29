@@ -26,8 +26,8 @@
 			</div>
 		</div>
 		<clinic_content ref='content' :clinic = 'clinic' :style="{'padding-top': height+'px'}"></clinic_content>
-		
-		
+
+
 	</div>
 </template>
 
@@ -56,7 +56,7 @@ export default {
 	created(){
 		var heightRexg = /^[0-9]*/g
 		var topHeight = this.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join()) 
+		this.height = parseInt(topHeight.join())
 		console.log(this.height)
 	},
 	mounted () {
@@ -72,12 +72,10 @@ export default {
 		//获取数据
 		getdata(){
 			// console.log(this.Time)
-			this.$axios.post('/c2/clinic/items',qs.stringify({
-				kw : this.keywords,
-				hospitalId : this.account.hospitalId,
-			}))
+      this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({kw:this.keywords}))
+
 			.then(_d => {
-				this.$refs.content.content = _d.data.data.items
+				this.$refs.content.content = _d.data.data.rows
 			})
 			.catch((err)=>{
 				console.log(err);
