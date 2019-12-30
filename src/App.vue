@@ -1,6 +1,8 @@
 <template>
   <div id="app" v-cloak>
-     <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
      <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
        <img src="./assets/image/returnTop.png" alt="">
      </div>
@@ -20,7 +22,19 @@ export default {
     };
   },
   beforeCreate() {},
-  mounted() {
+  beforeRouteLeave(to, from, next) {
+    debugger;
+    this.scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    next();
+  },
+  //进入该页面时，用之前保存的滚动位置赋值
+  beforeRouteEnter(to, from, next) {
+    debugger;
+    next(vm => {
+      document.body.scrollTop = vm.scrollTop;
+    });
+  },mounted(){
     // debugger
     // let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
     debugger

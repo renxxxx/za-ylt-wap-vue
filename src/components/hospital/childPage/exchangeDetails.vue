@@ -60,7 +60,19 @@ export default {
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},
-	mounted () {
+	beforeRouteLeave(to, from, next) {
+    debugger;
+    this.scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    next();
+  },
+  //进入该页面时，用之前保存的滚动位置赋值
+  beforeRouteEnter(to, from, next) {
+    debugger;
+    next(vm => {
+      document.body.scrollTop = vm.scrollTop;
+    });
+  }, activated() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
