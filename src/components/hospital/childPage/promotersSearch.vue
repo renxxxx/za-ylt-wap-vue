@@ -9,7 +9,6 @@
 				<span @click="searchFn">搜索</span>
 			</div>
 		</div>
-		
 		<div class="zhangwei"></div>
 		<ul :style="{'padding-top': height+'px'}">
 			<li v-for="(item,inx) in promotersList" :key="inx">

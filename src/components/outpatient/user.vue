@@ -37,12 +37,10 @@
 						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
-				<router-link replace :to="{name: 'landingPage'}">
 					<li @click="exitFn">
 						<span>退出登录</span>
 						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
-				</router-link>
 			</ul>
 		</div>
 		<routerNav v-bind:name='name'></routerNav>
@@ -174,6 +172,9 @@ if(window.plus){
 			  	plus.webview.currentWebview().clear()
 				  plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
 				  }
+
+				  	location.replace(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
+			location.reload()
 
 	}
   },
