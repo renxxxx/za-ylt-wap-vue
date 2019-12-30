@@ -4,7 +4,7 @@
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
 					<li v-for="(items,inx) in content" :key="inx">
-						<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : items.itemId}}">
+						<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : items.hospitalClinicId}}">
 							<div class="contentLi">
 								<h4>{{items.name}}</h4>
 								<span>推广人: {{items.hospitalUserName}}</span>
@@ -61,6 +61,13 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
+    this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+    .then(res => {
+    	this.clinic.num = res.data.data.rowCount;
+    })
+    .catch((err)=>{
+    	console.log(err);
+    })
 	},
 	methods: {
 		onRefresh() {
@@ -76,7 +83,7 @@ export default {
 						if(res.data.data.rows[i]){
 							this.content.push(res.data.data.rows[i])
 						}
-						console.log(this.content)
+						// console.log(this.content)
 					}
 				// 加载状态结束
 				this.loading = false;
@@ -84,12 +91,13 @@ export default {
 					this.loading = false;
 					this.finished = true;
 				}
-				this.clinic.num = res.data.data.sum.totalCount;
-				
+				// this.clinic.num = res.data.data.sum.totalCount;
+
 			})
 			.catch((err)=>{
 				console.log(err);
 			})
+
 		},
 		onLoad(){
 			this.getdata()

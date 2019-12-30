@@ -242,6 +242,7 @@ export default {
 	margin: .12rem auto;
 	border-radius: .14rem;
 	box-shadow: hsla(0, 0%, 0%, 10%) 0rem 0rem 0.1rem 0rem;
+  position: relative;
 }
 .contentTitle{
 	padding: .09rem 0rem .07rem .1rem;
@@ -307,10 +308,10 @@ export default {
 	margin-left:.15rem;
 }
 .content_right{
-	float:right;
+	position: absolute;
 	height:.5rem;
-	margin-right:.14rem;
-	margin-top:.15rem
+	right:.14rem;
+	bottom:0rem;
 }
 .content_right img{
 	width:.11rem;

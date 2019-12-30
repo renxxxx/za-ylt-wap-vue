@@ -4,99 +4,99 @@
 			<div class="topNav">
 				<img src="../assets/image/name@2x.png" alt="">
 			</div>
-			<div class="typeNav" type="line" border="false">
-				<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)'
-				title-active-color='rgba(255, 255, 255)' v-model='data'>
-				<van-tab title="医院端" :title-style="{'font-size':(data==0?'.24rem':'.14rem')}" >
-					<form @submit.prevent="submit('100')" class="content">
-						<div class="inputBox">
-							<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
-							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
-						</div>
-						<div class="inputBox">
-							<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码" autocomplete>
-						</div>
-						<div class="checkBox">
-							<input type="checkbox"
-							    class="input_check"
-							    :checked="checked"
-							    @change="change"/>
-							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
-						</div>
-						<input class="submitClass" type="submit" value="医院登录"></input>
-						<div class="passwordReset">
-							<router-link  :to="{name : 'retrievePassword'}">
-								<div  @click="forgetFn(100)" class="forget">
-									忘记密码
-									<!-- <img src="../assets/image/reset@2.png" alt=""> -->
-								</div>
-							</router-link>
-						</div>
-					</form>
 
-				</van-tab>
-				<van-tab title="门诊端" type="line" border="false" :title-style="{'font-size':(data==1?'.24rem':'.14rem')}" >
-					<form @submit.prevent="submit('200')" class="content">
-						<div class="inputBox">
-							<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
-							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
-
-						</div>
-						<div class="inputBox">
-							<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码" autocomplete>
-						</div>
-						<div class="checkBox">
-							<input type="checkbox"
-							    class="input_check"
-							    :checked="checked"
-							    @change="change"/>
-							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
-						</div>
-						<input class="submitClass" type="submit" value="门诊登录"></input>
-						<div class="passwordReset">
-							<router-link  :to="{name : 'retrievePassword'}">
-								<div @click="forgetFn(200)" class="forget">
-									忘记密码
-									<!-- <img src="../assets/image/reset@2.png" alt=""> -->
-								</div>
-							</router-link>
-						</div>
-					</form>
-				</van-tab>
-				<van-tab title="运营端" type="line" border="false" :title-style="{'font-size':(data==2?'.24rem':'.14rem')}" >
-					<form @submit.prevent="submit('300')" class="content">
-						<div class="inputBox">
-							<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
-							<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
-						</div>
-						<div class="inputBox">
-							<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-							<input type="password"  v-model="account.password" name='password' placeholder="请输入密码"  autocomplete>
-						</div>
-						<div class="checkBox">
-							<input type="checkbox"
-							    class="input_check"
-							    :checked="checked"
-							    @change="change"/>
-							<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
-						</div>
-						<input class="submitClass" type="submit" value="运营登录"></input>
-						<div class="passwordReset">
-							<router-link  :to="{name : 'retrievePassword'}">
-								<div @click="forgetFn(300)" class="forget">
-									修改密码
-									<!-- <img src="../assets/image/reset@2.png" alt=""> -->
-								</div>
-							</router-link>
-						</div>
-					</form>
-				</van-tab>
-				</van-tabs>
-			</div>
 		</div>
+    <div class="typeNav" type="line" border="false">
+    	<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)'
+    	title-active-color='rgba(255, 255, 255)' v-model='data'>
+    	<van-tab title="医院端" :title-style="{'font-size':(data==0?'.24rem':'.14rem')}" >
+    		<form @submit.prevent="submit('100')" class="content">
+    			<div class="inputBox">
+    				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
+    				<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
+    			</div>
+    			<div class="inputBox">
+    				<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
+    				<input type="password"  v-model="account.password" name='password' placeholder="请输入密码" autocomplete>
+    			</div>
+    			<div class="checkBox">
+    				<input type="checkbox"
+    				    class="input_check"
+    				    :checked="checked"
+    				    @change="change"/>
+    				<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
+    			</div>
+    			<input class="submitClass" type="submit" value="医院登录"></input>
+    			<div class="passwordReset">
+    				<router-link  :to="{name : 'retrievePassword'}">
+    					<div  @click="forgetFn(100)" class="forget">
+    						忘记密码
+    						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
+    					</div>
+    				</router-link>
+    			</div>
+    		</form>
 
+    	</van-tab>
+    	<van-tab title="门诊端" type="line" border="false" :title-style="{'font-size':(data==1?'.24rem':'.14rem')}" >
+    		<form @submit.prevent="submit('200')" class="content">
+    			<div class="inputBox">
+    				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
+    				<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
+
+    			</div>
+    			<div class="inputBox">
+    				<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
+    				<input type="password"  v-model="account.password" name='password' placeholder="请输入密码" autocomplete>
+    			</div>
+    			<div class="checkBox">
+    				<input type="checkbox"
+    				    class="input_check"
+    				    :checked="checked"
+    				    @change="change"/>
+    				<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
+    			</div>
+    			<input class="submitClass" type="submit" value="门诊登录"></input>
+    			<div class="passwordReset">
+    				<router-link  :to="{name : 'retrievePassword'}">
+    					<div @click="forgetFn(200)" class="forget">
+    						忘记密码
+    						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
+    					</div>
+    				</router-link>
+    			</div>
+    		</form>
+    	</van-tab>
+    	<van-tab title="运营端" type="line" border="false" :title-style="{'font-size':(data==2?'.24rem':'.14rem')}" >
+    		<form @submit.prevent="submit('300')" class="content">
+    			<div class="inputBox">
+    				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
+    				<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
+    			</div>
+    			<div class="inputBox">
+    				<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
+    				<input type="password"  v-model="account.password" name='password' placeholder="请输入密码"  autocomplete>
+    			</div>
+    			<div class="checkBox">
+    				<input type="checkbox"
+    				    class="input_check"
+    				    :checked="checked"
+    				    @change="change"/>
+    				<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
+    			</div>
+    			<input class="submitClass" type="submit" value="运营登录"></input>
+    			<div class="passwordReset">
+    				<router-link  :to="{name : 'retrievePassword'}">
+    					<div @click="forgetFn(300)" class="forget">
+    						修改密码
+    						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
+    					</div>
+    				</router-link>
+    			</div>
+    		</form>
+    	</van-tab>
+    	</van-tabs>
+    </div>
   </div>
 </template>
 
@@ -107,7 +107,7 @@ export default {
   name: 'landingPage',
   data () {
     return {
-		
+
 		data:1,
     }
   },
@@ -139,7 +139,7 @@ export default {
 			//plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("light")
 		  }
-		
+
 		  if(this.$store.state.shop.isLogin == 100){
 				this.$router.push({ name : 'hospital_index'})
 			}else  if(this.$store.state.shop.isLogin == 200){
@@ -202,9 +202,10 @@ export default {
 }
 .typeNav{
 	padding: 0 7.5%;
-	position: absolute;
+	/* position: absolute; */
 	top: 1.63rem;
 	width: 85%;
+  margin-top: -.5rem;
 }
 >>>.van-tabs__line {
     position: absolute;

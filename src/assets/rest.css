@@ -22,5 +22,5 @@ img {vertical-align: middle;}
 img:not([src]),img[src=""] {opacity: 0;}
 table {border-collapse: collapse; border-spacing: 0;}
 input, select, button, textarea {font-size: 100%; font: inherit;}
-html, body {height: 100%; overflow-x: hidden;}
+html, body { overflow-x: hidden;}
 span{list-style: none}

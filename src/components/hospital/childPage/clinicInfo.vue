@@ -26,7 +26,7 @@
 						<li>
 							<span>推广人</span>
 							<van-dropdown-menu>
-								<van-dropdown-item v-model="value" :options="option" active-color='#2B77EF'/>
+								<van-dropdown-item v-model="value" :options="option" active-color='#2B77EF'@change='promoteFn'/>
 							</van-dropdown-menu>
 						</li>
 						<li>
@@ -37,6 +37,10 @@
 							<span>分配密码</span>
 							<input type="password" v-model="addClinic.pwd " placeholder="请填写">
 						</li>
+            <li>
+            	<span>确认密码</span>
+            	<input type="password" v-model="addClinic.pwdConfirm " placeholder="请填写">
+            </li>
 						<li>
 							<span>负责人</span>
 							<input type="text"  v-model="addClinic.headmanName"  placeholder="请填写">
@@ -103,6 +107,7 @@ export default {
 				name : '',
 				phone : '',
 				pwd : '',
+        pwdConfirm : '',
 				headmanName : '',
 				contactTel : '',
 				address : '',
@@ -124,7 +129,7 @@ export default {
 	created(){
 		var heightRexg = /^[0-9]*/g
 		var topHeight = this.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join()) 
+		this.height = parseInt(topHeight.join())
 		console.log(this.height)
 	},
 	beforeRouteLeave(to, from, next) {
@@ -158,24 +163,22 @@ export default {
 			console.log(err);
 			//Dialog({ message: '加载失败!'});
 		})
-		// console.log(this.$route.query.item)
+		console.log(this.$route.query.item)
     this.$route.query.item ? this.clinicFn() : ""
 	},
 	methods: {
     clinicFn(){
-      this.$axios.post('/c2/clinic/item',qs.stringify({
-      	itemId : this.$route.query.item,
-      }))
+      this.$axios.get('/hospital/super-admin/hospital-clinic/'+this.$route.query.item)
       .then(_d => {
-		this.addClinic = {
-			name : _d.data.data.name,
-			phone : _d.data.data.userPhone,
-			pwd :'',
-			headmanName : _d.data.data.headmanName,
-			contactTel : _d.data.data.contactTel,
-			address : _d.data.data.address,
-			remark : _d.data.data.remark,
-		},
+          this.addClinic = {
+            name : _d.data.data.name,
+            phone : _d.data.data.clinicUserPhone,
+            pwd :'',
+            headmanName : _d.data.data.headman,
+            contactTel : _d.data.data.tel,
+            address : _d.data.data.address,
+            remark : _d.data.data.remark,
+          },
 		// console.log(this.addClinic)
       	this.imageUpload = _d.data.data.license
       })
@@ -222,16 +225,17 @@ export default {
 		saveFn(){
 			console.log(this.addClinic)
 			this.$axios.post('/c2/clinic/itemalter',qs.stringify({
-				hospitalId : this.account.hospitalId,
+				hospitalClinicId : this.account.hospitalId,
 				itemId : this.$route.query.item,
 				name : this.addClinic.name,
-				phone : this.addClinic.phone,
-				pwd : this.addClinic.pwd,
-				headmanName : this.addClinic.headmanName,
-				contactTel : this.addClinic.contactTel,
-				address : this.addClinic.address,
-				remark : this.addClinic.remark,
-				license : this.imageUpload,
+				license : this.imageUpload,         //营业执照
+				address : this.addClinic.address,   //门诊地址
+				headman : this.addClinic.headmanName, //负责人姓名
+				tel : this.addClinic.contactTel,      //负责人电话
+				remark : this.addClinic.remark,       //备注
+				clinicUserPhone : this.addClinic.phone, //分配账号
+				clinicUserPassword : this.addClinic.pwd,//分配账号密码
+				clinicUserPasswordConfirm : this.addClinic.pwdConfirm,  //确认密码
 			}))
 			.then(res => {
 				// console.log(typeof res.data.codeMsg)

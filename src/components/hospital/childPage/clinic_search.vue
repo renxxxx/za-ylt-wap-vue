@@ -66,6 +66,7 @@ export default {
 			// console.log(this.Time)
 			this.$axios.post('/c2/clinic/items',qs.stringify({
 				kw : this.keywords,
+				hospitalId : this.account.hospitalId,
 			}))
 			.then(_d => {
 				// console.log( _d.data.data.items)
