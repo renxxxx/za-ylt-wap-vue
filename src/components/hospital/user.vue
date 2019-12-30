@@ -48,12 +48,10 @@
 					<span>推广人员管理</span>
 					<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 				</li>
-				<router-link :to="{name: 'landingPage'}">
 					<li @click="exitFn">
 						<span>退出登录</span>
 						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
-				</router-link>
 				
 			</ul>
 		</div>
@@ -170,11 +168,12 @@ export default {
 			},
 			console.log(this.isLogin);
 			localStorage.clear();
-		if(window.plus){
+			if(window.plus){
 			  	plus.webview.currentWebview().clear()
 				  plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
-				  }
-
+			}
+			location.replace(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
+			location.reload()
 
 		},
 		noLinkFn(){

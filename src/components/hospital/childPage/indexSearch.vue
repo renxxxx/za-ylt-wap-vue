@@ -62,13 +62,15 @@ export default {
 	beforeRouteLeave(to, from, next) {
     debugger;
     this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
+	  document.documentElement.scrollTop || document.body.scrollTop;
+	console.log(this.scrollTop)
     next();
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     debugger;
     next(vm => {
+		console.log(vm.scrollTop)
       document.body.scrollTop = vm.scrollTop;
     });
   }, mounted() {
@@ -83,6 +85,7 @@ export default {
 		},
 		//获取数据
 		getdata(){
+			debugger
 			// console.log(this.Time)
       this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({kw:this.keywords}))
 
