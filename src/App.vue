@@ -5,6 +5,7 @@
     </keep-alive>
      <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
        <img src="./assets/image/returnTop.png" alt="">
+	   <span>顶部</span>
      </div>
   </div>
 </template>
@@ -51,8 +52,8 @@ export default {
 	  // console.log( document.documentElement.scrollTop)
       let opacityValue =Math.round((scrollTop+windowHeight)/document.body.scrollHeight*100)/100;
       // console.log(opacityValue)
-      if(data&&opacityValue>.8){
-        this.$refs.returnTopRef.style.opacity = opacityValue
+      if(data&&scrollTop>350){
+        this.$refs.returnTopRef.style.opacity = 1
       }else{
          this.$refs.returnTopRef.style.opacity = 0
       }
@@ -104,11 +105,25 @@ body {
   right: .3rem;
   bottom: 1rem;
   opacity: 0;
+  width: .4rem;
+  height: .4rem;
+  /* line-height: .4rem; */
+  text-align: center;
+  border-radius: 50%;
+  background-color: #FFFFFF;
 }
 .returnTop img{
   background: none;
   border: none;
-  width: .5rem;
-  height: .5rem;
+  width: .18rem;
+  display: block;
+  margin: 0rem auto;
+  margin-top: .045rem;
+  /* height: .5rem; */
+}
+.returnTop span{
+	display: block;
+	font-size: 12px;
+	transform:scale(0.85);
 }
 </style>

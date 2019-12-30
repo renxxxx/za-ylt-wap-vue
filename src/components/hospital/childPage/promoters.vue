@@ -11,7 +11,9 @@
 				<router-link :to="{name:'hospital_promotersSearch'}">
 					<img src="../../../assets/image/sousuo@2x.png" alt="">
 				</router-link>
-				<img src="../../../assets/image/tianjia@2x.png" alt="">
+				<router-link :to="{name:'hospital_addPromoters'}">
+					<img src="../../../assets/image/tianjia@2x.png" alt="">
+				</router-link>
 			</div>
 		</div>
 		<div class="zhangwei"></div>
@@ -74,7 +76,7 @@ export default {
 		},
 		getData(){
 			this.promotersList = []
-			this.$axios.get('/hospital/admin/hospital-users?'+qs.stringify({type:1}))
+			this.$axios.get('/hospital/def/hospital-operator-users?')
 			.then(res => {
 				if(!res.data.codeMsg){
 					for(let i in res.data.data.rows){
@@ -140,12 +142,15 @@ export default {
 	line-height: .47rem;
 	float:left;
 }
+.right a{
+	width: 40%;
+}
 .right img{
 	height: .22rem;
 	width: .22rem;
 	object-fit: cover;
 }
-.right img:first-child{
+.right a:first-child img{
 	padding-right: .2rem;
 }
 .promoters ul{
