@@ -52,8 +52,8 @@ export default {
       let data = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
 	  // console.log( document.documentElement.scrollTop)
       let opacityValue =Math.round((scrollTop+windowHeight)/document.body.scrollHeight*100)/100;
-      // console.log(opacityValue)
-      if(data&&scrollTop>350){
+      console.log(scrollTop)
+      if(data&&scrollTop>150){
         this.$refs.returnTopRef.style.opacity = 1
       }else{
          this.$refs.returnTopRef.style.opacity = 0
@@ -84,7 +84,7 @@ html{
 }
 body {
   /* background-color:#FFFFFF; */
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
 }
 
