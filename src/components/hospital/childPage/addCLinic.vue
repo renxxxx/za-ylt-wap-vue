@@ -144,6 +144,10 @@ export default {
     this.scrollTop =
       document.documentElement.scrollTop || document.body.scrollTop;
 	next();
+	
+  },deactivated(){
+	  debugger
+	  this.$destroy(true);
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {

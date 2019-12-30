@@ -137,16 +137,16 @@ export default {
 	console.log(this.height)
   },
   beforeRouteLeave(to, from, next) {
+	  alert(document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop)
     debugger;
-    this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    next();
+	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	next();
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+	  document.body.scrollTop = vm.scrollTop;
     });
   },mounted(){
     if(window.plus){

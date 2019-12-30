@@ -66,6 +66,9 @@ export default {
     next(vm => {
       document.body.scrollTop = vm.scrollTop;
     });
+  },deactivated(){
+	  debugger
+	  this.$destroy(true);
   },activated(){
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");

@@ -12,6 +12,7 @@ import axios from 'axios'
 import store from './store'
 import jquery from 'jquery'
 import moment from 'moment'
+import iscroll from 'iscroll'
 // 在入口文件中（main.js），导入组件库
 import vueHashCalendar from 'vue-hash-calendar'
 // 引入组件CSS样式
@@ -27,6 +28,10 @@ Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
 Vue.prototype.topHeight = "10px"
+Vue.prototype.$jquery = jquery
+Vue.prototype.$iscroll = iscroll
+	
+
 
 debugger
 let isLogin = localStorage.getItem('isLogin');

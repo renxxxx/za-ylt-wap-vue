@@ -23,6 +23,7 @@ export default {
   },
   beforeCreate() {},
   beforeRouteLeave(to, from, next) {
+   
     debugger;
     this.scrollTop =
       document.documentElement.scrollTop || document.body.scrollTop;
@@ -40,6 +41,8 @@ export default {
     debugger
      // console.log(document.documentElement.clientHeight)
      window.addEventListener('scroll',this.handleScroll,true)
+
+    
   },
   created() {},
   computed: {},

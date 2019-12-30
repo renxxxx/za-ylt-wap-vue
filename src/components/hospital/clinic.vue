@@ -94,15 +94,22 @@ export default {
     debugger;
     this.scrollTop =
       document.documentElement.scrollTop || document.body.scrollTop;
-    next();
+	next();
+	
+  },
+  afterRouteLeave(){
+	  debugger
+	  this.$destroy(true);
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
+	  
     debugger;
     next(vm => {
       document.body.scrollTop = vm.scrollTop;
     });
-  }, mounted() {
+  }, 
+  mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
