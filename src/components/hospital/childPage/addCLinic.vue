@@ -119,7 +119,7 @@ export default {
 				address : '',     //门诊地址
 				remark : '',      //备注
 				license : '',
-        pwdConfirm: '',    //确认密码
+				pwdConfirm: '',    //确认密码
 				readonly : '',
 			},
 			// 上传图片弹窗显示

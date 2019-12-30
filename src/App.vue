@@ -45,12 +45,12 @@ export default {
   computed: {},
   methods: {
     handleScroll(){
-      let scrollTop = document.body.scrollTop
+      let scrollTop =  document.body.scrollTop||document.documentElement.scrollTop || window.pageYOffset || document.body.scroll
       let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
       let data = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
-	  console.log(scrollTop+windowHeight,document.body.scrollHeight)
+	  // console.log( document.documentElement.scrollTop)
       let opacityValue =Math.round((scrollTop+windowHeight)/document.body.scrollHeight*100)/100;
-      console.log(opacityValue)
+      // console.log(opacityValue)
       if(data&&opacityValue>.8){
         this.$refs.returnTopRef.style.opacity = opacityValue
       }else{
@@ -58,12 +58,16 @@ export default {
       }
     },
     returnTopFn(){
-      let scrollTop = document.body.scrollTop
+      let scrollTop = document.body.scrollTop||document.documentElement.scrollTop || window.pageYOffset || document.body.scroll
       let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+	  // console.log(scrollTop+windowHeight)
       for(let i=0;i<(scrollTop+windowHeight);i++){
         var clearReturn = setTimeout(()=>{
           document.body.scrollTop--
-        },100)
+		  window.pageYOffset--
+		  document.body.scroll--
+		  document.documentElement.scrollTop--
+        },10)
       }
 
     }
@@ -72,9 +76,12 @@ export default {
 </script>
 
 <style>
+html{
+	height: 100%;
+}
 body {
   /* background-color:#FFFFFF; */
-  /* height: 100%; */
+  height: 100%;
   width: 100%;
 }
 
@@ -84,7 +91,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   position: relative;
-  /* height: 100%; */
+  height: 100%;
   /* background-color: #F5F5F5; */
 }
 
