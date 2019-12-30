@@ -44,10 +44,12 @@
 					<span>集采积分</span>
 					<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 				</li>
-				<li @click="noLinkFn">
-					<span>推广人员管理</span>
-					<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
-				</li>
+				<router-link :to="{name : 'hospital_promoters'}">
+					<li>
+						<span>推广人员管理</span>
+						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
+					</li>
+				</router-link>
 					<li @click="exitFn">
 						<span>退出登录</span>
 						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
