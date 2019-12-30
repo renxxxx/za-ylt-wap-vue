@@ -46,6 +46,7 @@ export default {
   computed: {},
   methods: {
     handleScroll(){
+      debugger
       let scrollTop = document.body.scrollTop
       let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
       let data = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight)
@@ -58,6 +59,7 @@ export default {
       }
     },
     returnTopFn(){
+      debugger
       let scrollTop = document.body.scrollTop
       let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
       for(let i=0;i<(scrollTop+windowHeight);i++){
