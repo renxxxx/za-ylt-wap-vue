@@ -148,6 +148,9 @@ export default {
 				this.$router.push({ name : 'landingPage'})
 			}
   },
+  activated(){
+	
+  },
   computed:{
 
 	...mapGetters(['checked']),
