@@ -3,9 +3,9 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
-     <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
-       <img src="./assets/image/returnTop.png" alt="">
-     </div>
+    <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
+      <img src="./assets/image/returnTop.png" alt />
+    </div>
   </div>
 </template>
 
@@ -18,71 +18,66 @@ export default {
   name: "App",
   data() {
     return {
-      returnTopButton : false,
+      returnTopButton: false
     };
   },
   beforeCreate() {},
-  beforeRouteLeave(to, from, next) {
-   
-    debugger;
-    this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    debugger;
-    next(vm => {
-      document.body.scrollTop = vm.scrollTop;
-    });
-  },mounted(){
+
+  mounted() {
     // debugger
     // let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
-    debugger
-     // console.log(document.documentElement.clientHeight)
-     window.addEventListener('scroll',this.handleScroll,true)
-
-    
+    debugger;
+    // console.log(document.documentElement.clientHeight)
+    window.addEventListener("scroll", this.handleScroll, true);
   },
   created() {},
   computed: {},
   methods: {
-    handleScroll(){
-      debugger
-      let scrollTop =  document.body.scrollTop||document.documentElement.scrollTop || window.pageYOffset || document.body.scroll
-      let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-      let data = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
-	  // console.log( document.documentElement.scrollTop)
-      let opacityValue =Math.round((scrollTop+windowHeight)/document.body.scrollHeight*100)/100;
+    handleScroll() {
+      let scrollTop =
+        document.body.scrollTop ||document.documentElement.scrollTop ||window.pageYOffset ||document.body.scroll;
+      let windowHeight =
+        document.documentElement.clientHeight || document.body.clientHeight;
+      let data =
+        document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
+      // console.log( document.documentElement.scrollTop)
+      let opacityValue =
+        Math.round(
+          ((scrollTop + windowHeight) / document.body.scrollHeight) * 100
+        ) / 100;
       // console.log(opacityValue)
-      if(data&&opacityValue>.8){
-        this.$refs.returnTopRef.style.opacity = opacityValue
-      }else{
-         this.$refs.returnTopRef.style.opacity = 0
+      if (data && opacityValue > 0.8) {
+        this.$refs.returnTopRef.style.opacity = opacityValue;
+      } else {
+        this.$refs.returnTopRef.style.opacity = 0;
       }
     },
-    returnTopFn(){
-      debugger
-      let scrollTop = document.body.scrollTop||document.documentElement.scrollTop || window.pageYOffset || document.body.scroll
-      let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-	  // console.log(scrollTop+windowHeight)
-      for(let i=0;i<(scrollTop+windowHeight);i++){
-        var clearReturn = setTimeout(()=>{
-          document.body.scrollTop--
-		  window.pageYOffset--
-		  document.body.scroll--
-		  document.documentElement.scrollTop--
-        },10)
+    returnTopFn() {
+      debugger;
+      let scrollTop =
+        document.body.scrollTop ||
+        document.documentElement.scrollTop ||
+        window.pageYOffset ||
+        document.body.scroll;
+      let windowHeight =
+        document.documentElement.clientHeight || document.body.clientHeight;
+      // console.log(scrollTop+windowHeight)
+      for (let i = 0; i < scrollTop + windowHeight; i++) {
+        var clearReturn = setTimeout(() => {
+          document.body.scrollTop--;
+          window.pageYOffset--;
+          document.body.scroll--;
+          document.documentElement.scrollTop--;
+        }, 10);
       }
-
     }
   }
 };
 </script>
 
 <style>
-html{
-	height: 100%;
+html {
+  height: 100%;
 }
 body {
   /* background-color:#FFFFFF; */
@@ -103,17 +98,17 @@ body {
 [v-cloak] {
   display: none;
 }
-.returnTop{
+.returnTop {
   z-index: 9999;
   position: fixed;
-  right: .3rem;
+  right: 0.3rem;
   bottom: 1rem;
   opacity: 0;
 }
-.returnTop img{
+.returnTop img {
   background: none;
   border: none;
-  width: .5rem;
-  height: .5rem;
+  width: 0.5rem;
+  height: 0.5rem;
 }
 </style>

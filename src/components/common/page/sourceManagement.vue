@@ -137,7 +137,6 @@ export default {
 	console.log(this.height)
   },
   beforeRouteLeave(to, from, next) {
-	  alert(document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop)
     debugger;
 	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
 	next();
@@ -148,7 +147,8 @@ export default {
     next(vm => {
 	  document.body.scrollTop = vm.scrollTop;
     });
-  },mounted(){
+  },
+  mounted(){
     if(window.plus){
     	//plus.navigator.setStatusBarBackground("#2B77EF");
     	plus.navigator.setStatusBarStyle("dark")

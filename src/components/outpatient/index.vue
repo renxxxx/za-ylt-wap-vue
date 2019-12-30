@@ -180,7 +180,8 @@ export default {
     next(vm => {
       document.body.scrollTop = vm.scrollTop;
     });
-  },mounted(){
+  },
+  mounted(){
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("dark")

@@ -30,7 +30,6 @@ Vue.prototype.qs = qs
 Vue.prototype.topHeight = "10px"
 Vue.prototype.$jquery = jquery
 Vue.prototype.$iscroll = iscroll
-	
 
 
 debugger
@@ -202,3 +201,5 @@ new Vue({
 	},
 	template: '<App/>'
 })
+
+

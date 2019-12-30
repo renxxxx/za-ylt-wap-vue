@@ -14,7 +14,7 @@
 		</div>
 		
 		<div class="shared">
-			<!-- <h3>共享医联体</h3> -->
+			<!-- <h3>共享医连体</h3> -->
 			<ul>
 				<router-link :to="{name : 'hospitalImage'}">
 					<li>
