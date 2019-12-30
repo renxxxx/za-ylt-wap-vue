@@ -28,13 +28,13 @@ export default {
      window.addEventListener('scroll',this.handleScroll,true)
   },
   created() {},
-
   computed: {},
   methods: {
     handleScroll(){
       let scrollTop = document.body.scrollTop
       let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-      let data = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight)
+      let data = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
+	  console.log(scrollTop+windowHeight,document.body.scrollHeight)
       let opacityValue =Math.round((scrollTop+windowHeight)/document.body.scrollHeight*100)/100;
       console.log(opacityValue)
       if(data&&opacityValue>.8){
