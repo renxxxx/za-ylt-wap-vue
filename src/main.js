@@ -27,11 +27,12 @@ Vue.prototype.moment = moment;
 Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
-Vue.prototype.topHeight = "10px"
+if(navigator.userAgent.toLowerCase().indexOf('html5plus'))
+	Vue.prototype.topHeight = "24px"
+else
+	Vue.prototype.topHeight = "10px"
 Vue.prototype.$jquery = jquery
 Vue.prototype.$iscroll = iscroll
-
-
 
 
 if (window.plus) {
@@ -39,7 +40,6 @@ if (window.plus) {
 } else {
 	document.addEventListener('plusready', plusReady, false);
 }
-
 
 
 function plusReady() {
@@ -54,7 +54,6 @@ function plusReady() {
 		_statusbarHeight = plus.navigator.getStatusbarHeight(); // 获取系统状态栏高度
 	}
 		Vue.prototype.topHeight=_statusbarHeight+'px'
-
 	//plus.navigator.setStatusBarBackground("#ffffff");
 	plus.navigator.setStatusBarStyle("dark")
 	function location(position) {
@@ -73,7 +72,12 @@ function plusReady() {
 	}, {
 		geocode: false
 	});
+
+	plusReadyDone=1
 }
+
+
+
 
 Vue.directive('focus', {
 	// 当被绑定的元素插入到 DOM 中时……
@@ -141,6 +145,8 @@ Toast.setDefaultOptions({
 
 
 
+
+
 new Vue({
 	el: '#app',
 	router,
@@ -150,5 +156,4 @@ new Vue({
 	},
 	template: '<App/>'
 })
-
 
