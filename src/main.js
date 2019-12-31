@@ -1,6 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
+
 import './assets/rem'
 import './assets/rest.css'
 import Vue from 'vue'
@@ -35,14 +36,6 @@ Vue.prototype.$jquery = jquery
 Vue.prototype.$iscroll = iscroll
 
 
-
-if (window.plus) {
-	plusReady();
-} else {
-	document.addEventListener('plusready', plusReady, false);
-}
-
-
 function plusReady() {
 	let currentWebview = plus.webview.currentWebview();
 	currentWebview.setStyle({scrollIndicator:"none"})
@@ -74,8 +67,15 @@ function plusReady() {
 		geocode: false
 	});
 
-	plusReadyDone=1
 }
+
+
+if (window.plus) {
+	plusReady();
+} else {
+	document.addEventListener('plusready', plusReady, false);
+}
+
 
 
 
