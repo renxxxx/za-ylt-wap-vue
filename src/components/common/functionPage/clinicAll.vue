@@ -4,7 +4,7 @@
 			<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 			<ul v-if="isLogin == 100? true:false">
 				<li v-for="(item,inx) in list.clinicAll" :key="inx">
-					<router-link :to="{name : 'details' ,query : {patientId : item.itemId}}">
+					<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 						<div class="contentTitle">
 							<img :src="item.img" alt="">
 							<span>{{item.realname}}</span>
@@ -21,7 +21,7 @@
 			</ul>
 			<ul class="clinicList" v-if="isLogin == 200? true:false">
 				<li v-for="(item,inx) in list.clinicAll" :key="inx">
-					<router-link :to="{name : 'details' ,query : {patientId : item.itemId}}">
+					<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 						<div class="content_left">
 							<span>{{item.realname}}</span>
 						</div>
@@ -67,7 +67,7 @@ export default {
 
 	},
 	created () {
-
+		debugger
 	},
 	beforeRouteLeave(to, from, next) {
     debugger;
@@ -79,9 +79,10 @@ export default {
   beforeRouteEnter(to, from, next) {
     debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
   }, mounted() {
+	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
@@ -119,6 +120,7 @@ export default {
 			})
 		},
 		search(){
+			debugger
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
@@ -221,6 +223,7 @@ export default {
 		},
 		// 详情页
 		getdata(){
+			debugger
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
@@ -310,6 +313,7 @@ export default {
 
 		},
 		nextdata(){
+			debugger
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',

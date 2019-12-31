@@ -8,10 +8,12 @@
 				<h3>人员列表</h3>
 			</div>
 			<div class="right">
-				<router-link :to="{name:'hospital_promotersSearch'}">
+				<router-link :to="{name:'hospital_promotersSearch',time:new Date().getTime()}">
 					<img src="../../../assets/image/sousuo@2x.png" alt="">
 				</router-link>
-				<img src="../../../assets/image/tianjia@2x.png" alt="">
+				<router-link :to="{name:'hospital_addPromoters',time:new Date().getTime()}">
+					<img src="../../../assets/image/tianjia@2x.png" alt="">
+				</router-link>
 			</div>
 		</div>
 		<div class="zhangwei"></div>
@@ -62,10 +64,10 @@ export default {
 	  //进入该页面时，用之前保存的滚动位置赋值
 	beforeRouteEnter(to, from, next) {
 		next(vm => {
-		  document.body.scrollTop = vm.scrollTop;
+		  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 		});
 	},
-	activated(){
+	mounted(){
 		this.getData()
 	},
 	methods: {
@@ -74,7 +76,7 @@ export default {
 		},
 		getData(){
 			this.promotersList = []
-			this.$axios.get('/hospital/admin/hospital-users?'+qs.stringify({type:1}))
+			this.$axios.get('/hospital/def/hospital-operator-users?')
 			.then(res => {
 				if(!res.data.codeMsg){
 					for(let i in res.data.data.rows){
@@ -140,12 +142,15 @@ export default {
 	line-height: .47rem;
 	float:left;
 }
+.right a{
+	width: 40%;
+}
 .right img{
 	height: .22rem;
 	width: .22rem;
 	object-fit: cover;
 }
-.right img:first-child{
+.right a:first-child img{
 	padding-right: .2rem;
 }
 .promoters ul{

@@ -142,20 +142,45 @@ export default {
 	beforeRouteLeave(to, from, next) {
     debugger;
     this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
+	  document.documentElement.scrollTop || document.body.scrollTop;
+	  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+		 debugger
+            if (this.$vnode && this.$vnode.data.keepAlive)
+            {
+                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
+                {
+                    if (this.$vnode.componentOptions)
+                    {
+                        var key = this.$vnode.key == null
+                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
+                                    : this.$vnode.key;
+                        var cache = this.$vnode.parent.componentInstance.cache;
+                        var keys  = this.$vnode.parent.componentInstance.keys;
+                        if (cache[key])
+                        {
+                            if (keys.length) {
+                                var index = keys.indexOf(key);
+                                if (index > -1) {
+                                    keys.splice(index, 1);
+                                }
+                            }
+                            delete cache[key];
+                        }
+                    }
+                }
+			}
+            this.$destroy();
+		}
 	next();
 	
-  },deactivated(){
-	  debugger
-	  this.$destroy(true);
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
-  }, activated() {
+  }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")

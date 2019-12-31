@@ -1,9 +1,13 @@
 <template>
 	<div class="promotersSearch">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
-			<img src="../../../assets/image/sousuo@2x.png" alt="">  
-			<input type="text" @keyup="searchFn" v-focus='true' >
-			<span @click="goBackFn">取消</span>
+		<div class="nav">
+			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn">
+			<div class="topNav" :style="{'padding-top': height+'px'}">
+				<img src="" alt="">
+				<img src="../../../assets/image/sousuo@2x.png" alt="">  
+				<input type="text" @keyup.enter="searchFn" v-focus='true' v-model="searchInputValue">
+				<span @click="searchFn">搜索</span>
+			</div>
 		</div>
 		<div class="zhangwei"></div>
 		<ul :style="{'padding-top': height+'px'}">
@@ -31,6 +35,7 @@ export default {
 	data () {
 		return {
 			promotersList:[],
+			searchInputValue : '',
 		}
 	},
 	computed:{
@@ -53,10 +58,10 @@ export default {
 	  //进入该页面时，用之前保存的滚动位置赋值
 	beforeRouteEnter(to, from, next) {
 		next(vm => {
-		  document.body.scrollTop = vm.scrollTop;
+		  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 		});
 	},
-	activated () {
+	mounted () {
 		this.getData()
 	},
 	methods: {
@@ -65,7 +70,7 @@ export default {
 		},
 		getData(){
 			this.promotersList = []
-			this.$axios.get('/hospital/admin/hospital-users?'+qs.stringify({type:1}))
+			this.$axios.get('/hospital/admin/hospital-users?')
 			.then(res => {
 				if(!res.data.codeMsg){
 					for(let i in res.data.data.rows){
@@ -78,8 +83,20 @@ export default {
 				console.log(err);
 			})
 		},
-		searchFn(){
-			
+		searchFn(e){
+			this.$axios.get('/hospital/admin/hospital-users?'+qs.stringify({kw:this.searchInputValue}))
+			.then(res => {
+				this.promotersList = []
+				if(!res.data.codeMsg){
+					for(let i in res.data.data.rows){
+						this.promotersList.push(res.data.data.rows[i])
+					}
+					console.log(this.promotersList)
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+			})
 		}
 	},
 }
@@ -91,22 +108,36 @@ export default {
 	height: 100%;
 	background-color: #F5F5F5;
 }
-.topNav{
-	width: 93.6%;
-	height: .33rem;
-	line-height: .33rem;
+.nav{
 	position: fixed;
 	left: 0;
 	right: 0;
 	z-index: 999;
 	margin: .08rem auto 0rem;
+	width: 93.6%;
+	height: .33rem;
+	line-height: .33rem;
+}
+.nav>img{
+	width: .09rem;
+	height: .15rem;
+	/* display: inline-block;	 */
+	padding-right: .12rem;
+}
+.topNav{
+	width: 93.6%;
+	height: .33rem;
+	line-height: .33rem;
+	display: inline-block;
 	background-color: #FFFFFF;
 	border-radius: .15rem;
+	float: right;
+	position: relative;
 }	
 .topNav img{
 	width: .14rem;
 	height: .15rem;
-	padding-left: .14rem;
+	/* padding-left: .14rem; */
 	padding-right: .1rem;
 	
 }

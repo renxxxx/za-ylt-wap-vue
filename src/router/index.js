@@ -104,6 +104,8 @@ import hospital_exchangeDetails from '@/components/hospital/childPage/exchangeDe
 import hospital_promoters from '@/components/hospital/childPage/promoters.vue'
 //医院端用户主页的推广人渠道人搜索
 import hospital_promotersSearch from '@/components/hospital/childPage/promotersSearch.vue'
+//医院端用户主页的推广人渠道人增加
+import hospital_addPromoters from '@/components/hospital/childPage/addPromoters.vue'
 
 import store from '../store'
 Vue.use(Router)
@@ -334,6 +336,13 @@ const router = new Router({
 			// meta: {auth:true},
 		},
 		{
+			//医院端用户主页的推广人渠道人增加
+			path: '/hospital_addPromoters',
+			name: 'hospital_addPromoters',
+			component: hospital_addPromoters,
+			// meta: {auth:true},
+		},
+		{
 			//医院端用户主页的兑换管理中的添加商品后上传图片的页面
 			path: '/hospital_exchangeManagementImg',
 			name: 'hospital_exchangeManagementImg',
@@ -466,6 +475,8 @@ const router = new Router({
 
 
 router.beforeEach((to,from,next) => {
+	debugger
+	
 	//TODO 保存当前路由
 	// if(to.name!='landingPage')
 	// 	localStorage.setItem('lastRoute',JSON.stringify(to))

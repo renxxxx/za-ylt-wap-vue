@@ -64,12 +64,9 @@ export default {
   beforeRouteEnter(to, from, next) {
     debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
-  },deactivated(){
-	  debugger
-	  this.$destroy(true);
-  },activated(){
+  },mounted(){
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")

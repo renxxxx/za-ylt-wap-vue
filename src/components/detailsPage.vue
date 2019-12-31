@@ -140,17 +140,29 @@ export default {
 	
 	beforeRouteLeave(to, from, next) {
     debugger;
-    this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    next();
+    this.scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+	
+	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+		debugger
+		this.$destroy(this.$options.name);
+		}
+	next();
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-    debugger;
+	debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
-  }, acivated() {
+  },
+  beforeDestory(){
+		debugger
+	}
+  ,destroyed(){
+	  debugger
+	  console.log('destroyed')
+  }
+  , mounted() {
 		if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
 				plus.navigator.setStatusBarStyle("dark")

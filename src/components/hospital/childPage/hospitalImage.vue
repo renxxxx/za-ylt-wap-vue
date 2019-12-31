@@ -61,7 +61,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
   }, mounted() {
 		if(window.plus){
@@ -104,9 +104,9 @@ export default {
 	  //回退方法
 	goBackFn(){
     if(this.isLogin == 100){
-      this.$router.push({ name : 'hospital_clinic'});
+      this.$router.push({ name : 'hospital_clinic',query:{time:new Date().getTime()}});
     }else{
-      this.$router.push({ name : 'outpatient_hospital'});
+      this.$router.push({ name : 'outpatient_hospital',query:{time:new Date().getTime()}});
     }
 	},
 	  // 组件切换

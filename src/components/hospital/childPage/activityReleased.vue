@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div class="zhangwei"></div>
-		<router-link to="/hospital_addActivity" v-show="isLogin== 100? true : false" >
+		<router-link :to="{name:'hospital_addActivity',query:{time:new Date().getTime()}}" v-show="isLogin== 100? true : false" >
 			<div class="addActive" :style="{'padding-top': height+'px'}">
 				<span>+</span>
 				<span>新建活动</span>
@@ -20,7 +20,7 @@
 		</router-link>
 		<van-swipe-cell v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
 			<van-cell :border="false" >
-				<router-link :to="{name : 'hospital_activityDetails',query:{itemId:item.itemId}}">
+				<router-link :to="{name : 'hospital_activityDetails',query:{itemId:item.itemId,time:new Date().getTime()}}">
 					<div class="activeList">
 						<img :src="item.cover" alt="">
 						<div class="activeTitle">
@@ -76,9 +76,9 @@ export default {
   beforeRouteEnter(to, from, next) {
     debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
-  }, activated() {
+  }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")

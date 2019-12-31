@@ -107,7 +107,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
   }, mounted() {
 if(window.plus){
@@ -234,6 +234,7 @@ if(window.plus){
 			console.log(_value)
 		},
 		getData(){
+			debugger
 			let clinicId = '';
 			this.list.clinicAll = []
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;

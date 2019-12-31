@@ -83,7 +83,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
   }, mounted() {
 		if(window.plus){
@@ -110,7 +110,7 @@ export default {
 				if(this.exchangeAdd.payExchangepoint != ''){
 					if(this.exchangeAdd.stock != ''){
 						if(this.exchangeAdd.intro != ''){
-							this.$router.push({ name : 'hospital_exchangeManagementImg',query : {exchangeAdd : JSON.stringify(this.exchangeAdd)}});
+							this.$router.push({ name : 'hospital_exchangeManagementImg',query : {exchangeAdd : JSON.stringify(this.exchangeAdd),time:new Date().getTime()}});
 						}else{
 							Toast.fail('请填写简介');
 						}

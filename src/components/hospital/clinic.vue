@@ -3,12 +3,12 @@
 		<div class="navWarp">
 			<div class="topNav"  :style="{'padding-top': height+'px'}">
 				<div class="hospital_search">
-					<router-link :to="{name : 'hospital_indexSearch'}">
+					<router-link :to="{name : 'hospital_indexSearch',query:{time:new Date().getTime()}}">
 						<input type="text" placeholder="搜索门诊">
 						<img src="../../assets/image/sousuo@2x.png" alt="">
 					</router-link>
 				</div>
-				<router-link :to="{name : 'hospital_clinicMessage'}">
+				<router-link :to="{name : 'hospital_clinicMessage',query:{time:new Date().getTime()}}">
 					<div class="hospital_information">
 						<img src="../../assets/image/xiaoxi@2x.png" alt="">
 						<div class="num" v-if="this.account.data.data.newMessageCount? true:false">
@@ -85,6 +85,7 @@ export default {
 		clinicContent,bottomNav
 	},
 	created(){
+		debugger
 		var heightRexg = /^[0-9]*/g
 		var topHeight = this.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
@@ -97,19 +98,20 @@ export default {
 	next();
 	
   },
-  afterRouteLeave(){
-	  debugger
-	  this.$destroy(true);
-  },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
 	  
     debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
   }, 
+  destroyed(){
+	  debugger
+	  console.log('destroyed')
+  },
   mounted() {
+	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")

@@ -1,11 +1,13 @@
 <template>
   <div id="app" v-cloak>
     <keep-alive>
-      <router-view></router-view>
+       <router-view v-if="isRouterAlive"></router-view>
     </keep-alive>
-    <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
-      <img src="./assets/image/returnTop.png" alt />
-    </div>
+
+     <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
+       <img src="./assets/image/returnTop.png" alt="">
+	   <span>顶部</span>
+     </div>
   </div>
 </template>
 
@@ -16,9 +18,15 @@ import axios from "axios";
 // import Store from '../store'
 export default {
   name: "App",
+  provide () {
+    return {
+      reload: this.reload
+    }
+  },
   data() {
     return {
-      returnTopButton: false
+      returnTopButton: false,
+      isRouterAlive:true
     };
   },
   beforeCreate() {},
@@ -33,23 +41,25 @@ export default {
   created() {},
   computed: {},
   methods: {
-    handleScroll() {
-      let scrollTop =
-        document.body.scrollTop ||document.documentElement.scrollTop ||window.pageYOffset ||document.body.scroll;
-      let windowHeight =
-        document.documentElement.clientHeight || document.body.clientHeight;
-      let data =
-        document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
-      // console.log( document.documentElement.scrollTop)
-      let opacityValue =
-        Math.round(
-          ((scrollTop + windowHeight) / document.body.scrollHeight) * 100
-        ) / 100;
-      // console.log(opacityValue)
-      if (data && opacityValue > 0.8) {
-        this.$refs.returnTopRef.style.opacity = opacityValue;
-      } else {
-        this.$refs.returnTopRef.style.opacity = 0;
+     reload () {
+       debugger
+      this.isRouterAlive = false
+      this.$nextTick(function () {
+        this.isRouterAlive = true
+      })
+    },
+    handleScroll(){
+      debugger
+      let scrollTop =  document.body.scrollTop||document.documentElement.scrollTop || window.pageYOffset || document.body.scroll
+      let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      let data = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
+	  // console.log( document.documentElement.scrollTop)
+      let opacityValue =Math.round((scrollTop+windowHeight)/document.body.scrollHeight*100)/100;
+      console.log(scrollTop)
+      if(data&&scrollTop>150){
+        this.$refs.returnTopRef.style.opacity = 1
+      }else{
+         this.$refs.returnTopRef.style.opacity = 0
       }
     },
     returnTopFn() {
@@ -81,7 +91,7 @@ html {
 }
 body {
   /* background-color:#FFFFFF; */
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
 }
 
@@ -104,11 +114,25 @@ body {
   right: 0.3rem;
   bottom: 1rem;
   opacity: 0;
+  width: .4rem;
+  height: .4rem;
+  /* line-height: .4rem; */
+  text-align: center;
+  border-radius: 50%;
+  background-color: #FFFFFF;
 }
 .returnTop img {
   background: none;
   border: none;
-  width: 0.5rem;
-  height: 0.5rem;
+  width: .18rem;
+  display: block;
+  margin: 0rem auto;
+  margin-top: .045rem;
+  /* height: .5rem; */
+}
+.returnTop span{
+	display: block;
+	font-size: 12px;
+	transform:scale(0.85);
 }
 </style>

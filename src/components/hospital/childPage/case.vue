@@ -8,7 +8,7 @@
 		<div class="article" :style="{'padding-top': height+'px'}">
 			<ul>
 				<li v-for="(items,inx) in article" :key="inx">
-					<router-link :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 4}}">
+					<router-link :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 4,time:new Date().getTime()}}">
 						<div class="article_left">
 							<p>{{items.content}}</p>
 							<div class="article_leftTime">
@@ -59,7 +59,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
   }, mounted() {
 		if(window.plus){

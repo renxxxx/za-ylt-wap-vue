@@ -1,5 +1,6 @@
 <template>
   <div class="hospital">
+    <button @click="reload()">123</button>
     <div class="navWarp" :style="{'padding-top': height+'px'}">
       <div class="navTitle">
         <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
@@ -23,7 +24,7 @@
           </router-link>
         </li>
         <li>
-          <router-link :to="{name : 'hospital_sourceManagement'}">
+          <router-link :to="{name : 'hospital_sourceManagement',query:{time:new Date().getTime()}}">
             <img src="../../assets/image/bingyuanguanli@2x.png" alt />
             <span>病员管理</span>
           </router-link>
@@ -115,6 +116,7 @@ export default {
       page: 1
     };
   },
+  inject:['reload'],
   components: {
     bottomNav
   },
@@ -122,12 +124,16 @@ export default {
     ...mapGetters(["account", "isLogin"])
   },
   created() {
+    debugger
     var heightRexg = /^[0-9]*/g;
     var topHeight = this.topHeight.match(heightRexg);
     this.height = parseInt(topHeight.join());
     console.log(this.height);
+  }
+  ,destroyed(){
+	  debugger
+	  console.log('destroyed')
   },
-  
   beforeRouteLeave(to, from, next) {
     debugger;
     this.scrollTop =
@@ -139,11 +145,12 @@ export default {
   beforeRouteEnter(to, from, next) {
     debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 
     });
     
   },mounted(){
+    debugger
     if (window.plus) {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");

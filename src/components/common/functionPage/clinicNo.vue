@@ -4,7 +4,7 @@
 			<ul class="hospitalList" v-if="isLogin == 100? true:false">
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 					<li v-for="(item,inx) in list.clinicNo" :key="inx" >
-						<router-link :to="{name : 'details' ,query : {patientId : item.itemId}}">
+						<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 							<div class="contentTitle">
 								<img :src="item.img" alt="">
 								<span>{{item.realname}}</span>
@@ -23,7 +23,7 @@
 			<ul class="clinicList" v-if="isLogin == 200? true:false">
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 					<li v-for="(item,inx) in list.clinicNo" :key="inx">
-						<router-link :to="{name : 'details' ,query : {patientId : item.itemId}}">
+						<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 							<div class="content_left">
 								<span>{{item.realname}}</span>
 							</div>
@@ -67,7 +67,7 @@ export default {
 	},
 	props:['list'],
 	created () {
-
+debugger
 	},
 	beforeRouteLeave(to, from, next) {
     debugger;
@@ -79,9 +79,10 @@ export default {
   beforeRouteEnter(to, from, next) {
     debugger;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
   }, mounted() {
+	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
@@ -118,6 +119,7 @@ export default {
     },
 		// 详情页
 		getdata(){
+			debugger
 			this.noNum = 0;
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
@@ -168,6 +170,7 @@ export default {
 		},
 
 		nextdata(){
+			debugger
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',

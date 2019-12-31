@@ -18,7 +18,7 @@
 					<h3>合作门诊 {{clinic.num}}</h3>
 				</div>
 				<div class="titleRight">
-					<router-link :to="{name : 'hospital_addCLinic'}">
+					<router-link :to="{name : 'hospital_addCLinic',time:new Date().getTime()}">
 						<span>新增</span>
 						<img src="../../../assets/image/xinzeng@2x.png" alt="">
 					</router-link>
@@ -71,7 +71,7 @@ export default {
     debugger;
     next(vm => {
 		console.log(vm.scrollTop)
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
   }, mounted() {
 		if(window.plus){
