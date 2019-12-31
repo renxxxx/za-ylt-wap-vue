@@ -32,58 +32,7 @@ Vue.prototype.$jquery = jquery
 Vue.prototype.$iscroll = iscroll
 
 
-debugger
-let isLogin = localStorage.getItem('isLogin');
-if (isLogin && !isNaN(parseInt(isLogin))) {
-	isLogin = parseInt(isLogin);
-	Vue.prototype.$store.state.shop.isLogin = isLogin;
-	switch (isLogin) {
-		case 100:
-			getdata('/hospital/login-refresh', 100)
-			break;
-		case 200:
-			getdata('/clinic/login-refresh', 200)
-			break;
-		case 300:
-			getdata('/manager/login-refresh', 300)
-			break;
-		default:
-			break;
-	}
-}
 
-function getdata(_postRefresh, _isLogin) {
-	jquery.ajax({
-		type:'post',
-		 url:_postRefresh,
-		 async:false,
-		 success:function(res){
-			if (res.code == 0) {
-				switch (_isLogin) {
-					case 100:
-						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
-						Vue.prototype.$store.state.shop.account.data = {};
-						Vue.prototype.$store.state.shop.account.data = res;
-						break;
-
-					case 200:
-						Vue.prototype.$store.state.shop.account.clinicId = res.data.clinic.clinicId;
-						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
-						Vue.prototype.$store.state.shop.account.data = {};
-						Vue.prototype.$store.state.shop.account.data = res;
-						break;
-
-					case 300:
-						Vue.prototype.$store.state.shop.account.clinicId = res.data.clinic.clinicId;
-						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
-						Vue.prototype.$store.state.shop.account.data = {};
-						Vue.prototype.$store.state.shop.account.data = res;
-						break;
-				}
-			}
-		}
-	})
-}
 
 if (window.plus) {
 	plusReady();

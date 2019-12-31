@@ -478,8 +478,8 @@ router.beforeEach((to,from,next) => {
 	debugger
 	
 	//TODO 保存当前路由
-	// if(to.name!='landingPage')
-	// 	localStorage.setItem('lastRoute',JSON.stringify(to))
+	if(to.name != 'landingPage')
+	 	localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
 	// console.log(to)
 	// console.log(next)
 

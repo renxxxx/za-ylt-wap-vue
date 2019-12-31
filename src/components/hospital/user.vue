@@ -171,11 +171,11 @@ export default {
 			console.log(this.isLogin);
 			localStorage.clear();
 			if(window.plus){
-			  	plus.webview.currentWebview().clear()
-				  plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
+			  	window.plus.webview.currentWebview().clear()
+				  window.plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
 			}
-			location.replace(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
-			location.reload()
+			 location.replace(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
+			 location.reload()
 
 		},
 		noLinkFn(){

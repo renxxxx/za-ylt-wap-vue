@@ -1,13 +1,13 @@
 <template>
   <div id="app" v-cloak>
     <keep-alive>
-       <router-view v-if="isRouterAlive"></router-view>
+      <router-view v-if="isRouterAlive"></router-view>
     </keep-alive>
 
-     <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
-       <img src="./assets/image/returnTop.png" alt="">
-	   <span>顶部</span>
-     </div>
+    <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
+      <img src="./assets/image/returnTop.png" alt />
+      <span>顶部</span>
+    </div>
   </div>
 </template>
 
@@ -18,52 +18,136 @@ import axios from "axios";
 // import Store from '../store'
 export default {
   name: "App",
-  provide () {
+  provide() {
     return {
       reload: this.reload
-    }
+    };
   },
   data() {
     return {
       returnTopButton: false,
-      isRouterAlive:true
+      isRouterAlive: true
     };
   },
   beforeCreate() {},
-
+  beforeRouteLeave(to, from, next) {
+    this.scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    next();
+  },
+  //进入该页面时，用之前保存的滚动位置赋值
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      document.body.scrollTop = vm.scrollTop;
+    });
+  },
   mounted() {
-    // debugger
+    debugger
     // let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
-    debugger;
     // console.log(document.documentElement.clientHeight)
     window.addEventListener("scroll", this.handleScroll, true);
+
+   
   },
-  created() {},
+  created() {
+    let vm = this
+     debugger;
+    let isLogin = localStorage.getItem("isLogin");
+    if (isLogin && !isNaN(parseInt(isLogin))) {
+      isLogin = parseInt(isLogin);
+      this.$store.state.shop.isLogin = isLogin;
+      switch (isLogin) {
+        case 100:
+          getdata("/hospital/login-refresh", 100);
+          break;
+        case 200:
+          getdata("/clinic/login-refresh", 200);
+          break;
+        case 300:
+          getdata("/manager/login-refresh", 300);
+          break;
+        default:
+          break;
+      }
+    } else {
+      localStorage.removeItem("isLogin");
+      this.$store.state.shop.isLogin = 0;
+    }
+
+    function getdata(_postRefresh, _isLogin) {
+      vm.$jquery.ajax({
+        type: "post",
+        url: _postRefresh,
+        async: false,
+        success: function(res) {
+          if (res.code == 0) {
+            switch (_isLogin) {
+              case 100:
+                vm.$store.state.shop.account.hospitalId =
+                  res.data.hospital.hospitalId;
+                vm.$store.state.shop.account.data = {};
+                vm.$store.state.shop.account.data = res;
+                break;
+
+              case 200:
+                vm.$store.state.shop.account.clinicId =
+                  res.data.clinic.clinicId;
+                vm.$store.state.shop.account.hospitalId =
+                  res.data.hospital.hospitalId;
+                vm.$store.state.shop.account.data = {};
+                vm.$store.state.shop.account.data = res;
+                break;
+
+              case 300:
+                vm.$store.state.shop.account.clinicId =
+                  res.data.clinic.clinicId;
+                vm.$store.state.shop.account.hospitalId =
+                  res.data.hospital.hospitalId;
+                vm.$store.state.shop.account.data = {};
+                vm.$store.state.shop.account.data = res;
+                break;
+            }
+          } else {
+            localStorage.removeItem("isLogin");
+            vm.$store.state.shop.isLogin = 0;
+          }
+        }
+      });
+    }
+  },
   computed: {},
   methods: {
-     reload () {
-       debugger
-      this.isRouterAlive = false
-      this.$nextTick(function () {
-        this.isRouterAlive = true
-      })
+    reload() {
+      debugger;
+      this.isRouterAlive = false;
+      this.$nextTick(function() {
+        this.isRouterAlive = true;
+      });
     },
-    handleScroll(){
-      debugger
-      let scrollTop =  document.body.scrollTop||document.documentElement.scrollTop || window.pageYOffset || document.body.scroll
-      let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-      let data = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
-	  // console.log( document.documentElement.scrollTop)
-      let opacityValue =Math.round((scrollTop+windowHeight)/document.body.scrollHeight*100)/100;
-      console.log(scrollTop)
-      if(data&&scrollTop>150){
-        this.$refs.returnTopRef.style.opacity = 1
-      }else{
-         this.$refs.returnTopRef.style.opacity = 0
+    handleScroll() {
+      let scrollTop =
+        document.body.scrollTop ||
+        document.documentElement.scrollTop ||
+        window.pageYOffset ||
+        document.body.scroll;
+      let windowHeight =
+        document.documentElement.clientHeight || document.body.clientHeight;
+      let data =
+        document.body.scrollHeight >
+        (window.innerHeight || document.documentElement.clientHeight);
+      // console.log( document.documentElement.scrollTop)
+      let opacityValue =
+        Math.round(
+          ((scrollTop + windowHeight) / document.body.scrollHeight) * 100
+        ) / 100;
+      // console.log(scrollTop)
+      if (data && scrollTop > 150) {
+        this.$refs.returnTopRef.style.opacity = 1;
+      } else {
+        this.$refs.returnTopRef.style.opacity = 0;
       }
     },
     returnTopFn() {
-      debugger;
       let scrollTop =
         document.body.scrollTop ||
         document.documentElement.scrollTop ||
@@ -114,25 +198,26 @@ body {
   right: 0.3rem;
   bottom: 1rem;
   opacity: 0;
-  width: .4rem;
-  height: .4rem;
+  width: 0.4rem;
+  height: 0.4rem;
   /* line-height: .4rem; */
   text-align: center;
   border-radius: 50%;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
+  border: 1px solid #bfbebe;
 }
 .returnTop img {
   background: none;
   border: none;
-  width: .18rem;
+  width: 0.18rem;
   display: block;
   margin: 0rem auto;
-  margin-top: .045rem;
+  margin-top: 0.045rem;
   /* height: .5rem; */
 }
-.returnTop span{
-	display: block;
-	font-size: 12px;
-	transform:scale(0.85);
+.returnTop span {
+  display: block;
+  font-size: 12px;
+  transform: scale(0.85);
 }
 </style>

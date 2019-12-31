@@ -1,6 +1,6 @@
 <template>
+<van-pull-refresh  v-model="pullingDown" @refresh="afterPullDown">
   <div class="hospital">
-    <button @click="reload()">123</button>
     <div class="navWarp" :style="{'padding-top': height+'px'}">
       <div class="navTitle">
         <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
@@ -96,6 +96,9 @@
     </div>
     <bottomNav></bottomNav>
   </div>
+  
+    
+     </van-pull-refresh>
 </template>
 
 <script>
@@ -113,10 +116,10 @@ export default {
       article: [],
       loading: false,
       finished: false,
-      page: 1
+      page: 1,
+      pullingDown:false,
     };
   },
-  inject:['reload'],
   components: {
     bottomNav
   },
@@ -155,8 +158,19 @@ export default {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
     }
-
-    //轮播图图片路径请求
+    this.initData();
+   
+  },
+  methods: {
+     afterPullDown() {       //下拉刷新
+                setTimeout(() => {
+                    this.pullingDown = false;
+                    this.initData()
+                }, 500);
+            },
+    initData(){
+      Object.assign(this.$data, this.$options.data())
+       //轮播图图片路径请求
     this.$axios
       .get("/hospital/hospital-ads")
       .then(res => {
@@ -213,8 +227,7 @@ export default {
       });
     //文章请求
     this.getdata();
-  },
-  methods: {
+    },
     getdata(_data) {
       this.$axios
         .post(
