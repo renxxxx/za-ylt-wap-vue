@@ -145,12 +145,14 @@ export default {
     next();
   },
   //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    debugger;
-    next(vm => {
-      document.body.scrollTop = vm.scrollTop;
-    });
-  }, acivated() {
+	beforeRouteEnter(to, from, next) {
+		debugger;
+		next(vm => {
+		  document.body.scrollTop = vm.scrollTop;
+		});
+	}, 
+	activated(){
+		debugger
 		if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
 				plus.navigator.setStatusBarStyle("dark")

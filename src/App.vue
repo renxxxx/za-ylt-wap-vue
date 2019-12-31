@@ -24,21 +24,17 @@ export default {
   },
   beforeCreate() {},
   beforeRouteLeave(to, from, next) {
-    debugger;
     this.scrollTop =
       document.documentElement.scrollTop || document.body.scrollTop;
     next();
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-    debugger;
     next(vm => {
       document.body.scrollTop = vm.scrollTop;
     });
   },mounted(){
-    // debugger
     // let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
-    debugger
      // console.log(document.documentElement.clientHeight)
      window.addEventListener('scroll',this.handleScroll,true)
   },
@@ -46,21 +42,19 @@ export default {
   computed: {},
   methods: {
     handleScroll(){
-      debugger
       let scrollTop =  document.body.scrollTop||document.documentElement.scrollTop || window.pageYOffset || document.body.scroll
       let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
       let data = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
 	  // console.log( document.documentElement.scrollTop)
       let opacityValue =Math.round((scrollTop+windowHeight)/document.body.scrollHeight*100)/100;
-      console.log(scrollTop)
+      // console.log(scrollTop)
       if(data&&scrollTop>150){
-        this.$refs.returnTopRef.style.opacity = 1
+        this.$refs.returnTopRef.style.opacity = .8
       }else{
          this.$refs.returnTopRef.style.opacity = 0
       }
     },
     returnTopFn(){
-      debugger
       let scrollTop = document.body.scrollTop||document.documentElement.scrollTop || window.pageYOffset || document.body.scroll
       let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
 	  // console.log(scrollTop+windowHeight)
@@ -113,6 +107,7 @@ body {
   text-align: center;
   border-radius: 50%;
   background-color: #FFFFFF;
+  border: 1px solid #bfbebe;
 }
 .returnTop img{
   background: none;
