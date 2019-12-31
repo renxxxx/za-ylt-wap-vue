@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>编辑活动</h3>
 			</div>
-			<router-link :to="{name : 'hospital_previewActivities',query:{activity:JSON.stringify(activity)}}">
+			<router-link :to="{name : 'hospital_previewActivities',query:{activity:JSON.stringify(activity),time:new Date().getTime()}}">
 				<div class="right">
 					<button>预览</button>
 				</div>
@@ -100,9 +100,9 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
-  }, activated() {
+  }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")

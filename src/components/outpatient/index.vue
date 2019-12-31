@@ -4,7 +4,7 @@
 			<!-- 搜索及其筛选 -->
 			<div class="topNav">
 				<div class="indexSearch">
-					<router-link :to="{name : 'outpatient_search'}">
+					<router-link :to="{name : 'outpatient_search',query:{time:new Date().getTime()}}">
 						<img src="../../assets/image/sousuo@2x.png" alt="">
 						<input type="text" placeholder="搜索病员" >
 					</router-link>
@@ -93,7 +93,7 @@
 							<div class="list">
 								<ul :model="message" class="index_content">
 									<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
-										<router-link :to="{name : 'details'}" >
+										<router-link :to="{name : 'details',query:{time:new Date().getTime()}}" >
 											<li v-for="(_notDiagnosis,inx) in message.notDiagnosis" :key="inx" @click="detailsValueFn(_notDiagnosis)">
 												<div class="content_left">
 													<span>{{_notDiagnosis.realname}}</span>
@@ -114,7 +114,7 @@
 						<van-pull-refresh v-model="isLoading" @refresh="onRefresh2">
 							<ul class="index_content" :model="message">
 								<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoadss">
-									<router-link :to="{name : 'details'}" >
+									<router-link :to="{name : 'details',query:{time:new Date().getTime()}}" >
 										<li v-for="(_diagnosis,inx) in message.diagnosis" :key="inx" @click="detailsValueFn(_diagnosis)">
 											<div class="content_left">
 												<span>{{_diagnosis.realname}}</span>
@@ -178,9 +178,11 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
-  },mounted(){
+  },
+  mounted(){
+	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("dark")
@@ -311,6 +313,7 @@ export default {
 	},
 	//下拉加载获取数据
 	getdata(data,_value,shuaxin){
+		debugger
 		console.log(this.account.data.data)
 		if(shuaxin ==0 ){
 			this.$axios.post('/c2/patient/items',qs.stringify({
@@ -386,6 +389,7 @@ export default {
 		
 	},
 	getdata2(data,_value,shuaxin){
+		debugger
 		if(shuaxin ==0 ){
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw	:	"",

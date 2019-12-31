@@ -17,7 +17,7 @@
 			</li>
 			<li>
 				<h4>号码</h4>
-				<input type="text" placeholder="请输入" v-model="addPromoters.phone">
+				<input type="text" maxlength="11" placeholder="请输入" v-model="addPromoters.phone">
 			</li>
 			<li>
 				<h4>密码</h4>
@@ -73,10 +73,12 @@ export default {
 	  //进入该页面时，用之前保存的滚动位置赋值
 	beforeRouteEnter(to, from, next) {
 		next(vm => {
-		  document.body.scrollTop = vm.scrollTop;
+		  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 		});
 	},
-	activated(){
+		
+
+	mounted(){
 		let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
 		console.log(this.$refs.addPromotersRef.style.height)
 		this.$refs.addPromotersRef.style.height = windowHeight+ 'px'

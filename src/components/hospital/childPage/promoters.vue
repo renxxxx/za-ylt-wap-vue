@@ -8,10 +8,10 @@
 				<h3>人员列表</h3>
 			</div>
 			<div class="right">
-				<router-link :to="{name:'hospital_promotersSearch'}">
+				<router-link :to="{name:'hospital_promotersSearch',time:new Date().getTime()}">
 					<img src="../../../assets/image/sousuo@2x.png" alt="">
 				</router-link>
-				<router-link :to="{name:'hospital_addPromoters'}">
+				<router-link :to="{name:'hospital_addPromoters',time:new Date().getTime()}">
 					<img src="../../../assets/image/tianjia@2x.png" alt="">
 				</router-link>
 			</div>
@@ -65,10 +65,10 @@ export default {
 	  //进入该页面时，用之前保存的滚动位置赋值
 	beforeRouteEnter(to, from, next) {
 		next(vm => {
-		  document.body.scrollTop = vm.scrollTop;
+		  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 		});
 	},
-	activated(){
+	mounted(){
 		this.getData()
 	},
 	methods: {

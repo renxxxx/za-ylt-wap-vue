@@ -14,7 +14,7 @@
 		</div>
 		
 		<div class="shared">
-			<!-- <h3>共享医联体</h3> -->
+			<!-- <h3>共享医连体</h3> -->
 			<ul>
 				<router-link :to="{name : 'hospitalImage'}">
 					<li>
@@ -105,7 +105,7 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
   }, mounted() {
 		if(window.plus){

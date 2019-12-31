@@ -101,10 +101,10 @@ export default {
 	  //进入该页面时，用之前保存的滚动位置赋值
 	beforeRouteEnter(to, from, next) {
 		next(vm => {
-		  document.body.scrollTop = vm.scrollTop;
+		  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 		});
 	},
-	activated(){
+	mounted(){
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
@@ -159,7 +159,7 @@ export default {
 		//回退方法
 		goBackFn(){
 			// this.$router.back(-1)
-			this.$router.push({ name : 'hospitalImage',query :{components : "hospital_imageType"}});
+			this.$router.push({ name : 'hospitalImage',query :{components : "hospital_imageType",time:new Date().getTime()}});
 		},
 		//医生介绍
 		doctorAboutFn(_about){

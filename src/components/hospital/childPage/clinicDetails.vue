@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>{{this.clinicDetails.name}}</h3>
 			</div>
-			<router-link :to="{name : 'hospital_clinicInfo' ,query : {item : clinicDetails.clinicId}}">
+			<router-link :to="{name : 'hospital_clinicInfo' ,query : {item : clinicDetails.clinicId,time:new Date().getTime()}}">
 				<div class="right">
 					<img src="../../../assets/image/Preview@2x.png" alt="">
 				</div>
@@ -117,9 +117,9 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
-  }, activated() {
+  }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
@@ -166,6 +166,7 @@ export default {
 			})
 		},
 		getNum(){
+			debugger
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,

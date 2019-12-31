@@ -60,9 +60,9 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
-  }, activated() {
+  }, mounted() {
 		this.exchangeAdd = JSON.parse(this.$route.query.exchangeEditor)
 		console.log(this.$route.query.exchangeEditor)
 	},

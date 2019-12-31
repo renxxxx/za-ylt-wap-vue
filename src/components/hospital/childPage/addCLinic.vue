@@ -142,39 +142,88 @@ export default {
 	beforeRouteLeave(to, from, next) {
      ;
     this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
+	  document.documentElement.scrollTop || document.body.scrollTop;
+	  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+		 debugger
+            if (this.$vnode && this.$vnode.data.keepAlive)
+            {
+                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
+                {
+                    if (this.$vnode.componentOptions)
+                    {
+                        var key = this.$vnode.key == null
+                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
+                                    : this.$vnode.key;
+                        var cache = this.$vnode.parent.componentInstance.cache;
+                        var keys  = this.$vnode.parent.componentInstance.keys;
+                        if (cache[key])
+                        {
+                            if (keys.length) {
+                                var index = keys.indexOf(key);
+                                if (index > -1) {
+                                    keys.splice(index, 1);
+                                }
+                            }
+                            delete cache[key];
+                        }
+                    }
+                }
+			}
+            this.$destroy();
+		}
 	next();
+	
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
-  }, activated() {
+  }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 
-		// 加载dom节点后,获取推广人列表请求
-		this.$axios.post('hospitaler/clinic-promoter/list',qs.stringify({
-			pn : 1,
-			ps : 200,
-			hospitalId : this.account.hospitalId,
-		}))
+		this.$axios.get('/hospital/admin/hospital-users?')
 		.then(res => {
-			for(let i in res.data.data.items){
-				this.option.push({
-					'text' : res.data.data.items[i].name,
-					'value' : res.data.data.items[i].no,
-				})
+			if(!res.data.codeMsg){
+				for(let i in res.data.data.rows){
+					this.option.push({
+						'text' : res.data.data.items[i].name,
+						// 'value' : res.data.data.items[i].no,
+					})
+				}
+				if(this.promotersList.length<10){
+					let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+					console.log(this.$refs.promotersSearchRef.style.height)
+					this.$refs.promotersSearchRef.style.height = windowHeight+ 'px'
+				}
+				console.log(this.promotersList)
 			}
 		})
 		.catch((err)=>{
 			console.log(err);
-			//Dialog({ message: '加载失败!'});
 		})
+		// 加载dom节点后,获取推广人列表请求
+		// this.$axios.post('hospitaler/clinic-promoter/list',qs.stringify({
+		// 	pn : 1,
+		// 	ps : 200,
+		// 	hospitalId : this.account.hospitalId,
+		// }))
+		// .then(res => {
+		// 	for(let i in res.data.data.items){
+		// 		this.option.push({
+		// 			'text' : res.data.data.items[i].name,
+		// 			'value' : res.data.data.items[i].no,
+		// 		})
+		// 	}
+		// })
+		// .catch((err)=>{
+		// 	console.log(err);
+		// 	//Dialog({ message: '加载失败!'});
+		// })
 		// console.log(this.$route.query.item)
     // this.$route.query.item ? this.clinicFn() : ""
 	},

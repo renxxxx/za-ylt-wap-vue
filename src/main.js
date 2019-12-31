@@ -12,6 +12,7 @@ import axios from 'axios'
 import store from './store'
 import jquery from 'jquery'
 import moment from 'moment'
+import iscroll from 'iscroll'
 // 在入口文件中（main.js），导入组件库
 import vueHashCalendar from 'vue-hash-calendar'
 // 引入组件CSS样式
@@ -26,66 +27,21 @@ Vue.prototype.moment = moment;
 Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
-Vue.prototype.topHeight = "10px"
+if(navigator.userAgent.toLowerCase().indexOf('html5plus'))
+	Vue.prototype.topHeight = "24px"
+else
+	Vue.prototype.topHeight = "10px"
+Vue.prototype.$jquery = jquery
+Vue.prototype.$iscroll = iscroll
 
- 
-let isLogin = localStorage.getItem('isLogin');
-if (isLogin && !isNaN(parseInt(isLogin))) {
-	isLogin = parseInt(isLogin);
-	Vue.prototype.$store.state.shop.isLogin = isLogin;
-	switch (isLogin) {
-		case 100:
-			getdata('/hospital/login-refresh', 100)
-			break;
-		case 200:
-			getdata('/clinic/login-refresh', 200)
-			break;
-		case 300:
-			getdata('/manager/login-refresh', 300)
-			break;
-		default:
-			break;
-	}
-}
 
-function getdata(_postRefresh, _isLogin) {
-	jquery.ajax({
-		type:'post',
-		 url:_postRefresh,
-		 async:false,
-		 success:function(res){
-			if (res.code == 0) {
-				switch (_isLogin) {
-					case 100:
-						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
-						Vue.prototype.$store.state.shop.account.data = {};
-						Vue.prototype.$store.state.shop.account.data = res;
-						break;
-
-					case 200:
-						Vue.prototype.$store.state.shop.account.clinicId = res.data.clinic.clinicId;
-						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
-						Vue.prototype.$store.state.shop.account.data = {};
-						Vue.prototype.$store.state.shop.account.data = res;
-						break;
-
-					case 300:
-						Vue.prototype.$store.state.shop.account.clinicId = res.data.clinic.clinicId;
-						Vue.prototype.$store.state.shop.account.hospitalId = res.data.hospital.hospitalId;
-						Vue.prototype.$store.state.shop.account.data = {};
-						Vue.prototype.$store.state.shop.account.data = res;
-						break;
-				}
-			}
-		}
-	})
-}
 
 if (window.plus) {
 	plusReady();
 } else {
 	document.addEventListener('plusready', plusReady, false);
 }
+
 
 function plusReady() {
 	let currentWebview = plus.webview.currentWebview();
@@ -99,7 +55,6 @@ function plusReady() {
 		_statusbarHeight = plus.navigator.getStatusbarHeight(); // 获取系统状态栏高度
 	}
 		Vue.prototype.topHeight=_statusbarHeight+'px'
-
 	//plus.navigator.setStatusBarBackground("#ffffff");
 	plus.navigator.setStatusBarStyle("dark")
 	function location(position) {
@@ -118,7 +73,12 @@ function plusReady() {
 	}, {
 		geocode: false
 	});
+
+	plusReadyDone=1
 }
+
+
+
 
 Vue.directive('focus', {
 	// 当被绑定的元素插入到 DOM 中时……
@@ -183,6 +143,7 @@ Toast.setDefaultOptions({
 /* eslint-disable no-new */
 
 
+
 new Vue({
 	el: '#app',
 	router,
@@ -192,3 +153,4 @@ new Vue({
 	},
 	template: '<App/>'
 })
+

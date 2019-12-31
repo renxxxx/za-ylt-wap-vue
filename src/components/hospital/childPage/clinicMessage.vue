@@ -13,7 +13,7 @@
 		<div class="content">
 			<ul>
 				<li v-for="(item,inx) in clinicMessage" :key='inx'>
-					<router-link :to="{name : 'details' ,query : {patientId : item.itemId}}">
+					<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 						<div class="triangle_border_up">
 							<span></span>
 						</div>
@@ -64,9 +64,10 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
   }, mounted() {
+	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")

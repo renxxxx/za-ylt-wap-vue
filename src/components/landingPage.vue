@@ -132,24 +132,27 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
   }, mounted() {
+	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("light")
 		  }
 
+			let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
 		  if(this.$store.state.shop.isLogin == 100){
-				this.$router.push({ name : 'hospital_index'})
+				this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
+				this.$router.push(lastRoute)
+				
 			}else  if(this.$store.state.shop.isLogin == 200){
-				this.$router.push({ name : 'hospital_sourceManagement'})
+				this.$router.replace({ name : 'hospital_sourceManagement',query:{time:new Date().getTime()}})
+				this.$router.push(lastRoute)
 			}else  if(this.$store.state.shop.isLogin == 300){
-				this.$router.push({ name : 'landingPage'})
+				this.$router.replace({ name : 'landingPage',query:{time:new Date().getTime()}})
+				this.$router.push(lastRoute)
 			}
-  },
-  activated(){
-	
   },
   computed:{
 

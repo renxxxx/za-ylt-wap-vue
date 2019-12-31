@@ -81,9 +81,9 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
-  }, activated() {
+  }, mounted() {
 		
 		this.$axios.post('/c2/commodity/item',qs.stringify({
 			hospitalId : this.account.hospitalId,
@@ -117,7 +117,7 @@ export default {
 					if(this.exchangeEditor.stock != ''){
 						if(this.exchangeEditor.intro != ''){
 							console.log(this.exchangeEditor)
-							this.$router.push({ name : 'hospital_exchangeEditorImg',query : {exchangeEditor : JSON.stringify(this.exchangeEditor)}});
+							this.$router.push({ name : 'hospital_exchangeEditorImg',query : {exchangeEditor : JSON.stringify(this.exchangeEditor),time:new Date().getTime()}});
 						}else{
 							Toast.fail('请填写简介');
 						}

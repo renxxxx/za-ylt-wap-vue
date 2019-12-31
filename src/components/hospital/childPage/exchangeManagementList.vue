@@ -14,7 +14,7 @@
 			<ul :style="{'padding-top': height+'px'}">
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 					<li v-for="(item,inx) in exchangeList" :key='inx' class='List'>
-						<router-link :to="{name : 'hospital_exchangeDetails' ,query : {item : item}}">
+						<router-link :to="{name : 'hospital_exchangeDetails' ,query : {item : item,time:new Date().getTime()}}">
 							<ul>
 								<li>
 									<span>订单编号：{{item.orderId}}</span>
@@ -76,7 +76,7 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
   }, mounted() {
 		if(window.plus){

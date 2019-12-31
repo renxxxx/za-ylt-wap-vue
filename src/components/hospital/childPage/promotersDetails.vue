@@ -7,7 +7,7 @@
 				</div>
 				<div class="rightImg">
 					<img src="../../../assets/image/bianji@2x.png" alt="" @click="modifyFn">
-					<img src="../../../assets/image/shanchu@2x.png" alt="">
+					<img src="../../../assets/image/shanchu@2x.png" alt="" @click="deleteAlertFn">
 				</div>
 			</div>
 			<van-popup v-model="showModify">
@@ -18,24 +18,35 @@
 					<ul>
 						<li>
 							<h5>姓名:</h5>
-							<input type="text">
+							<input type="text" v-model="promoters.name" placeholder="请输入">
 						</li>
 						<li>
 							<h5>号码:</h5>
-							<input type="text">
+							<input type="text" maxlength="11" v-model="promoters.phone" placeholder="请输入">
 						</li>
 						<li>
 							<h5>密码:</h5>
-							<input type="text">
+							<input type="password" v-model="promoters.password" placeholder="请输入">
+						</li>
+						<li>
+							<h5>确认密码:</h5>
+							<input type="password" v-model="promoters.passwordConfirm" placeholder="请输入">
 						</li>
 						<li>
 							<h5>备注:</h5>
-							<input type="text">
+							<input type="text" v-model="promoters.cover" placeholder="请输入">
 						</li>
 					</ul>
 					<button @click="modifyPromotersFn">保存</button>
 				</div>
 			</van-popup>
+			<van-dialog v-model="showDeleteAlert" show-cancel-button @confirm='deteleFn'>
+				<h4>删除推广人</h4>
+				<span>该推广人名下共有{{clinicNum}}门诊，是否删除</span>
+			</van-dialog>
+			<!-- <van-popup v-model="showModify"> -->
+				
+			<!-- </van-popup> -->
 			<div class="titleNav">
 				<div class="headPortrait">
 					<img src="" alt="">
@@ -48,16 +59,18 @@
 				</div>
 			</div>
 		</div>
-		<div class="cumulative">
-			<h4>总共：16个门诊</h4>
+		<div class="cumulative"  :style="{'top': (193+height)+'px'}">
+			<h4>总共：{{clinicNum}}个门诊</h4>
 			<span>全部转移</span>
 		</div>
 		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
 		<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 		<ul>
 			<li v-for="(item,inx) in promotersList" :key='inx'>
-				<h4>北京中日友好门诊</h4>
-				<img src="../../../assets/image/zhuanyi@2x.png" alt="">
+				<div class="promotersList">
+					<h4>北京中日友好门诊</h4>
+					<img src="../../../assets/image/zhuanyi@2x.png" alt="">
+				</div>
 			</li>
 		</ul>
 		</van-list>
@@ -75,10 +88,18 @@ export default {
 			loading: false,		//加载
 			// 加载状态结束
 			finished: false,	//加载到底显示
-			promoters:{},		//推广人信息
+			promoters:{			//推广人信息
+				name: '',
+				phone: '',
+				password: '',
+				passwordConfirm: '',
+				cover: '',
+			},		
 			promotersList:[],	//推广人列表
 			page:1,		//get请求页数
 			showModify : false,	//修改显示
+			showDeleteAlert: false, //显示删除弹窗值
+			clinicNum : 0,
 		}
 	},
 	computed:{
@@ -104,27 +125,77 @@ export default {
 		  document.body.scrollTop = vm.scrollTop;
 		});
 	},
-	activated(){
+	mounted(){
 		console.log(this.$route.query.hospitalUserId)
+		// 获取推广人信息
 		this.$axios.get('/hospital/def/hospital-operator-user/'+this.$route.query.hospitalUserId)
 		.then(res => {
-			res.data.codeMsg?	this.$toast.fail(res.data.codeMsg) : this.promoters = res.data.data
+			res.data.codeMsg?	this.$toast.fail(res.data.codeMsg) : this.promoters = {name: res.data.data.name,phone: res.data.data.phone,cover: res.data.data.cover}
+		})
+		.catch((err)=>{
+			console.log(err);
+		})
+		this.$axios.get('/hospital/super-admin/hospital-clinics-sum?'+qs.stringify({hospitalUserId:this.$route.query.hospitalUserId}))
+		.then(res => {
+			res.data.codeMsg?	this.$toast.fail(res.data.codeMsg) : this.clinicNum = res.data.data.rowCount;
 		})
 		.catch((err)=>{
 			console.log(err);
 		})
 	},
 	methods: {
+		//返回上一级
 		returnFn(){
 			this.$router.back(-1)
 		},
+		// 显示修改弹窗
 		modifyFn(){
 			this.showModify = true
 			console.log(this.showModify)
 		},
+		// 修改推广人信息
 		modifyPromotersFn(){
-			
+			this.$axios.post('/hospital/def/hospital-operator-user-alter',qs.stringify({
+				hospitalUserId : this.$route.query.hospitalUserId,
+				name : this.promoters.name,
+				cover : this.promoters.cover,
+				password : this.promoters.password,
+				passwordConfirm : this.promoters.passwordConfirm,
+				phone : this.promoters.phone,
+			}))
+			.then(res=>{
+				if(!res.data.codeMsg){
+					this.$toast.success('操作成功');
+					this.showModify = false;
+				}else{
+					this.$toast.fail(res.data.codeMsg);
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+			})
 		},
+		// 显示删除推广人弹窗
+		deleteAlertFn(){
+			this.showDeleteAlert = true
+		},
+		deteleFn(){
+			this.$axios.post('/hospital/def/hospital-operator-user-delete?',qs.stringify({
+				hospitalOperatorId : this.$route.query.hospitalUserId,
+			}))
+			.then(res=>{
+				if(!res.data.codeMsg){
+					this.$toast.success('操作成功');
+					this.$router.back(-1)
+				}else{
+					this.$toast.fail(res.data.codeMsg);
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+			})
+		},
+		// 下拉加载被推广的医院
 		onLoad(){
 			this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({hospitalUserId:this.$route.query.hospitalUserId})+'&'+qs.stringify({pn:this.page})+'&'+qs.stringify({ps:10}))
 			.then(res => {
@@ -195,7 +266,7 @@ export default {
 	height: .17rem;
 }
 .rightImg img:first-child{
-	padding-right: .2rem;
+	margin-right: .2rem;
 }
 .rightImg img:last-child{
 	padding-right: .16rem;
@@ -303,7 +374,7 @@ export default {
 }
 >>>.van-popup--center{
 	width: 80%;
-	height: 70.27%;
+	height: 80.27%;
 	border-radius: .05rem;
 }
 .modify{
@@ -327,6 +398,10 @@ export default {
 	margin: 0rem auto .12rem;
 	line-height: normal;
 }
+.promotersList{
+	width: 100%;
+	height: 100%;
+}
 .modify ul li h5{
 	color: #666666;
 	font-size: .13rem;
@@ -347,10 +422,22 @@ export default {
 	border-radius: .2rem;
 	background-color: #2B77EF;
 	position: absolute;
-	bottom: 10%;
+	bottom: 7%;
 	left: 0;
 	right: 0;
 	margin: 0rem auto;
 	font-size: .14rem;
+}
+.van-dialog__content>h4{
+	height: .55rem;
+	line-height: .55rem;
+	text-align: center;
+	font-size: .17rem;
+	/* padding: .15rem auto; */
+}
+.van-dialog__content>span{
+	display: block;
+	margin: 0rem auto .15rem;
+	text-align: center;
 }
 </style>

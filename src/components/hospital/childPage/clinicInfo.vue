@@ -142,9 +142,9 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.body.scrollTop = vm.scrollTop;
+      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
-  }, activated() {
+  }, mounted() {
 		// 加载dom节点后,获取推广人列表请求
 		this.$axios.post('hospitaler/clinic-promoter/list',qs.stringify({
 			pn : 1,
