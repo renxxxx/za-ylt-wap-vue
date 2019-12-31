@@ -1,5 +1,5 @@
 <template>
-	<div class="addPromoters">
+	<div class="addPromoters" ref="addPromotersRef">
 		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@2x.png" alt="">
@@ -9,19 +9,27 @@
 			</div>
 			<div class="right"></div>
 		</div>
-		<div class="zhangwei"></div>
-		<ul>
+		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
+		<ul :style="{'padding-top': height+'px'}">
 			<li>
 				<h4>姓名</h4>
-				<input type="text" placeholder="请输入">
+				<input type="text" placeholder="请输入" v-model="addPromoters.name">
 			</li>
 			<li>
-				<h4>编号</h4>
-				<input type="text" placeholder="请输入">
+				<h4>号码</h4>
+				<input type="text" placeholder="请输入" v-model="addPromoters.phone">
+			</li>
+			<li>
+				<h4>密码</h4>
+				<input type="password" placeholder="请输入" v-model="addPromoters.password">
+			</li>
+			<li>
+				<h4>再次确认密码</h4>
+				<input type="password" placeholder="请输入" v-model="addPromoters.passwordConfirm">
 			</li>
 			<li>
 				<h4>备注</h4>
-				<input type="text" placeholder="请输入">
+				<input type="text" placeholder="请输入" v-model="addPromoters.cover">
 			</li>
 		</ul>
 		<button @click="submitFn">保存</button>
@@ -37,7 +45,11 @@ export default {
 	data () {
 		return {
 			addPromoters:{
-				name : ''
+				name : '',
+				phone : '',
+				password : '',
+				passwordConfirm : '',
+				cover : '',
 			}
 		}
 	},
@@ -65,14 +77,29 @@ export default {
 		});
 	},
 	activated(){
-		
+		let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+		console.log(this.$refs.addPromotersRef.style.height)
+		this.$refs.addPromotersRef.style.height = windowHeight+ 'px'
 	},
 	methods: {
 		goBackFn(){
 			this.$router.back(-1)
 		},
 		submitFn(){
-			
+			this.$axios.post('/hospital/def/hospital-operator-user-add',qs.stringify({
+				name : this.addPromoters.name,
+				phone : this.addPromoters.phone,
+				password : this.addPromoters.password,
+				passwordConfirm : this.addPromoters.passwordConfirm,
+				cover : this.addPromoters.cover,
+			}))
+			.then(res => {
+				res.data.codeMsg? this.$toast.fail(res.data.codeMsg):this.$toast.success('操作成功')
+			})
+			.catch((err)=>{
+				console.log(err);
+				//Dialog({ message: '加载失败!'});
+			})
 		}
 	},
 }

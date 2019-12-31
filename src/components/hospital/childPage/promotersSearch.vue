@@ -1,8 +1,8 @@
 <template>
-	<div class="promotersSearch">
-		<div class="nav">
+	<div class="promotersSearch" ref='promotersSearchRef'>
+		<div class="nav" :style="{'padding-top': height+'px'}">
 			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn">
-			<div class="topNav" :style="{'padding-top': height+'px'}">
+			<div class="topNav">
 				<img src="" alt="">
 				<img src="../../../assets/image/sousuo@2x.png" alt="">  
 				<input type="text" @keyup.enter="searchFn" v-focus='true' v-model="searchInputValue">
@@ -76,6 +76,11 @@ export default {
 					for(let i in res.data.data.rows){
 						this.promotersList.push(res.data.data.rows[i])
 					}
+					if(this.promotersList.length<10){
+						let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+						console.log(this.$refs.promotersSearchRef.style.height)
+						this.$refs.promotersSearchRef.style.height = windowHeight+ 'px'
+					}
 					console.log(this.promotersList)
 				}
 			})
@@ -90,6 +95,11 @@ export default {
 				if(!res.data.codeMsg){
 					for(let i in res.data.data.rows){
 						this.promotersList.push(res.data.data.rows[i])
+					}
+					if(this.promotersList.length<10){
+						let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+						console.log(this.$refs.promotersSearchRef.style.height)
+						this.$refs.promotersSearchRef.style.height = windowHeight+ 'px'
 					}
 					console.log(this.promotersList)
 				}

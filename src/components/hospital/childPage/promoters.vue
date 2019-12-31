@@ -1,5 +1,5 @@
 <template>
-	<div class="promoters">
+	<div class="promoters" ref='promotersRef'>
 		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
@@ -19,15 +19,16 @@
 		<div class="zhangwei"></div>
 		<ul :style="{'padding-top': height+'px'}">
 			<li v-for="(item,inx) in promotersList" :key="inx">
-				<div class="list">
-					<img src="../../../assets/image/ren@2x.png" alt="">
-					<h4>{{item.name}}</h4>
-					<div class="listRight">
-						<span>门诊数：{{item.clinicCount}}</span>
-						<img src="../../../assets/image/right@2x.png" alt="">
+				<router-link :to="{name : 'hospital_promotersDetails',query:{hospitalUserId: item.hospitalUserId}}">
+					<div class="list">
+						<img src="../../../assets/image/ren@2x.png" alt="">
+						<h4>{{item.name}}</h4>
+						<div class="listRight">
+							<span>门诊数：{{item.clinicCount}}</span>
+							<img src="../../../assets/image/right@2x.png" alt="">
+						</div>
 					</div>
-				</div>
-				
+				</router-link>
 			</li>
 		</ul>
 	</div>
@@ -81,6 +82,11 @@ export default {
 				if(!res.data.codeMsg){
 					for(let i in res.data.data.rows){
 						this.promotersList.push(res.data.data.rows[i])
+					}
+					if(this.promotersList.length<10){
+						let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+						console.log(this.$refs.promotersRef.style.height)
+						this.$refs.promotersRef.style.height = windowHeight+ 'px'
 					}
 					console.log(this.promotersList)
 				}

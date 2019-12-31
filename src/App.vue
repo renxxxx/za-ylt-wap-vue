@@ -122,5 +122,6 @@ body {
 	display: block;
 	font-size: 12px;
 	transform:scale(0.85);
+	
 }
 </style>

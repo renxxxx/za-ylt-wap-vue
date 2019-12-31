@@ -106,6 +106,8 @@ import hospital_promoters from '@/components/hospital/childPage/promoters.vue'
 import hospital_promotersSearch from '@/components/hospital/childPage/promotersSearch.vue'
 //医院端用户主页的推广人渠道人增加
 import hospital_addPromoters from '@/components/hospital/childPage/addPromoters.vue'
+//医院端用户主页的推广人详情页
+import hospital_promotersDetails from '@/components/hospital/childPage/promotersDetails.vue'
 
 import store from '../store'
 Vue.use(Router)
@@ -340,6 +342,13 @@ const router = new Router({
 			path: '/hospital_addPromoters',
 			name: 'hospital_addPromoters',
 			component: hospital_addPromoters,
+			// meta: {auth:true},
+		},
+		{
+			//医院端用户主页的推广人详情页
+			path: '/hospital_promotersDetails',
+			name: 'hospital_promotersDetails',
+			component: hospital_promotersDetails,
 			// meta: {auth:true},
 		},
 		{

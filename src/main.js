@@ -28,7 +28,7 @@ Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
 Vue.prototype.topHeight = "10px"
 
-debugger
+ 
 let isLogin = localStorage.getItem('isLogin');
 if (isLogin && !isNaN(parseInt(isLogin))) {
 	isLogin = parseInt(isLogin);
@@ -86,8 +86,6 @@ if (window.plus) {
 } else {
 	document.addEventListener('plusready', plusReady, false);
 }
-
-
 
 function plusReady() {
 	let currentWebview = plus.webview.currentWebview();
@@ -183,9 +181,6 @@ Toast.setDefaultOptions({
 	duration: 800
 });
 /* eslint-disable no-new */
-
-
-
 
 
 new Vue({

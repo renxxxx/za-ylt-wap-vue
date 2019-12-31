@@ -60,7 +60,7 @@ export default {
 		console.log(this.height)
 	},
 	beforeRouteLeave(to, from, next) {
-    debugger;
+     ;
     this.scrollTop =
 	  document.documentElement.scrollTop || document.body.scrollTop;
 	console.log(this.scrollTop)
@@ -68,7 +68,7 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-    debugger;
+     ;
     next(vm => {
 		console.log(vm.scrollTop)
       document.body.scrollTop = vm.scrollTop;
@@ -85,7 +85,7 @@ export default {
 		},
 		//获取数据
 		getdata(){
-			debugger
+			 
 			// console.log(this.Time)
       this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({kw:this.keywords}))
 

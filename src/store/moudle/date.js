@@ -29,6 +29,7 @@ const state={
 	show: false,
 	//显示半遮罩及其日期选择
 	showTime : false,
+	// topHeight : "10px"
 }
 const getters={
 	//账号协议checked
@@ -43,7 +44,7 @@ const getters={
 	showTime : state => state.showTime,
 	isLogin : state => state.isLogin,
 	whichClient : state => state.whichClient,
-	
+	// topHeight :state =>state.topHeight,
 }
 
 const actions={

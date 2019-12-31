@@ -77,14 +77,14 @@ export default {
 		console.log(this.height)
 	},
 	beforeRouteLeave(to, from, next) {
-    debugger;
+     ;
     this.scrollTop =
       document.documentElement.scrollTop || document.body.scrollTop;
     next();
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-    debugger;
+     ;
     next(vm => {
       document.body.scrollTop = vm.scrollTop;
     });
@@ -121,10 +121,10 @@ export default {
 	},
 	methods: {
 		share(){
-			debugger
+			 
 			let vue = this
 			this.$h5p.shareWeb(location.href,this.active.cover,this.active.title,this.active.brief||'',function(){
-				debugger
+				 
 				vue.$axios.post('/c2/share')
 			});
 		},
