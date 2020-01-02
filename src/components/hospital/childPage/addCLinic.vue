@@ -26,7 +26,7 @@
 						<li>
 							<span>推广人</span>
 							<van-dropdown-menu>
-								<van-dropdown-item v-model="value" :options="option" active-color='#2B77EF'/>
+								<van-dropdown-item v-model="value" :options="option" active-color='#2B77EF' @change="changeFn"/>
 							</van-dropdown-menu>
 						</li>
 						<li>
@@ -37,10 +37,10 @@
 							<span>分配密码</span>
 							<input type="password" v-model="addClinic.pwd " placeholder="请填写">
 						</li>
-            <li>
-            	<span>确认密码</span>
-            	<input type="password" v-model="addClinic.pwdConfirm " placeholder="请填写">
-            </li>
+						<li>
+							<span>确认密码</span>
+							<input type="password" v-model="addClinic.pwdConfirm " placeholder="请填写">
+						</li>
 						<li>
 							<span>负责人</span>
 							<input type="text"  v-model="addClinic.headmanName"  placeholder="请填写">
@@ -81,13 +81,6 @@
 							<img class="rightImg" src="../../../assets/image/right@2x.png" alt="">
 							<img  id="backimg" :src='imageUpload'  alt="" >
 						</li>
-						<!-- <van-action-sheet v-model="show"  :round="false" >
-							<div class="popupChoose">
-								<span>拍照</span>
-
-							</div>
-							<button @click="closeFn" class="closeStyle">取消</button>
-						</van-action-sheet> -->
 					</ul>
 				</div>
 			</form>
@@ -121,6 +114,7 @@ export default {
 				license : '',
 				pwdConfirm: '',    //确认密码
 				readonly : '',
+				clinicPromoterId : ''
 			},
 			// 上传图片弹窗显示
 			show: false,
@@ -186,46 +180,23 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 
-		this.$axios.get('/hospital/admin/hospital-users?')
+		this.$axios.get('/hospital/def/hospital-operator-users?')
 		.then(res => {
 			if(!res.data.codeMsg){
+				// console.log(res.data.data.rows)
 				for(let i in res.data.data.rows){
 					this.option.push({
-						'text' : res.data.data.items[i].name,
-						// 'value' : res.data.data.items[i].no,
+						'clinicPromoterId' : res.data.data.rows[i].hospitalUserId,
+						'text' : res.data.data.rows[i].name,
+						'value' : '00'+i,
 					})
 				}
-				if(this.promotersList.length<10){
-					let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-					console.log(this.$refs.promotersSearchRef.style.height)
-					this.$refs.promotersSearchRef.style.height = windowHeight+ 'px'
-				}
-				console.log(this.promotersList)
+				// console.log(this.promotersList)
 			}
 		})
 		.catch((err)=>{
 			console.log(err);
 		})
-		// 加载dom节点后,获取推广人列表请求
-		// this.$axios.post('hospitaler/clinic-promoter/list',qs.stringify({
-		// 	pn : 1,
-		// 	ps : 200,
-		// 	hospitalId : this.account.hospitalId,
-		// }))
-		// .then(res => {
-		// 	for(let i in res.data.data.items){
-		// 		this.option.push({
-		// 			'text' : res.data.data.items[i].name,
-		// 			'value' : res.data.data.items[i].no,
-		// 		})
-		// 	}
-		// })
-		// .catch((err)=>{
-		// 	console.log(err);
-		// 	//Dialog({ message: '加载失败!'});
-		// })
-		// console.log(this.$route.query.item)
-    // this.$route.query.item ? this.clinicFn() : ""
 	},
 	methods: {
 		// 返回键
@@ -240,6 +211,11 @@ export default {
 		closeFn() {
 		      this.show = false;
 			  console.log(this.show)
+		},
+		changeFn(id){
+			let promoter= this.option.find((n)=>n.value == id)
+			this.addClinic.clinicPromoterId = promoter.clinicPromoterId
+			// console.log(this.addClinic.clinicPromoterId )
 		},
 		addImg(_fileLIst){
 			var file = _fileLIst.target.files[0]
@@ -267,22 +243,20 @@ export default {
 			console.log(this.addClinic)
 			this.$axios.post('/hospital/super-admin/hospital-clinic-add',qs.stringify({
 				hospitalClinicId : this.account.hospitalId,
-        name :  this.addClinic.name,        //医院名称
-        cover: '',
-        license : this.imageUpload,         //营业执照
-        address : this.addClinic.address,   //门诊地址
-        headman : this.addClinic.headmanName, //负责人姓名
-        tel : this.addClinic.contactTel,      //负责人电话
-        remark : this.addClinic.remark,       //备注
-        clinicUserPhone : this.addClinic.phone, //分配账号
-        clinicUserPassword : this.addClinic.pwd,//分配账号密码
-        clinicUserPasswordConfirm : this.addClinic.pwdConfirm,  //确认密码
-
+				name :  this.addClinic.name,        //医院名称
+				clinicPromoterId : this.addClinic.clinicPromoterId,	//推广人id
+				cover: '',
+				license : this.imageUpload,         //营业执照
+				address : this.addClinic.address,   //门诊地址
+				headman : this.addClinic.headmanName, //负责人姓名
+				tel : this.addClinic.contactTel,      //负责人电话
+				remark : this.addClinic.remark,       //备注
+				clinicUserPhone : this.addClinic.phone, //分配账号
+				clinicUserPassword : this.addClinic.pwd,//分配账号密码
+				clinicUserPasswordConfirm : this.addClinic.pwdConfirm,  //确认密码
 			}))
 			.then(res => {
-				// console.log(typeof res.data.codeMsg)
 				res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn();
-
 			})
 			.catch((err)=>{
 				console.log(err);

@@ -1,8 +1,8 @@
 <template>
   <div id="app" v-cloak>
-    <keep-alive>
+    <!-- <keep-alive> -->
       <router-view v-if="isRouterAlive"></router-view>
-    </keep-alive>
+    <!-- </keep-alive> -->
 
     <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
       <img src="./assets/image/returnTop.png" alt />

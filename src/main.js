@@ -129,13 +129,14 @@ import {
 	Toast,
 	ImagePreview,
 	Progress,
-	Stepper
+	Stepper,
+	Picker
 } from 'vant';
 Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab).use(Tabs).use(Checkbox).use(Stepper)
 	.use(CheckboxGroup).use(Dialog).use(Popup).use(RadioGroup).use(Radio).use(Cell).use(CellGroup).use(PullRefresh)
 	.use(Area).use(Overlay).use(vueHashCalendar).use(DatetimePicker).use(VueScroller).use(Notify).use(CountDown).use(List)
 	.use(Uploader).use(DropdownMenu).use(DropdownItem).use(Swipe).use(SwipeItem).use(Lazyload).use(ActionSheet).use(Grid)
-	.use(GridItem).use(SwipeCell).use(Circle).use(Toast).use(ImagePreview).use(Progress);
+	.use(GridItem).use(SwipeCell).use(Circle).use(Toast).use(ImagePreview).use(Progress).use(Picker);
 //配置全局时间
 Toast.setDefaultOptions({
 	duration: 800

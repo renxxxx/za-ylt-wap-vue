@@ -44,9 +44,6 @@
 				<h4>删除推广人</h4>
 				<span>该推广人名下共有{{clinicNum}}门诊，是否删除</span>
 			</van-dialog>
-			<!-- <van-popup v-model="showModify"> -->
-				
-			<!-- </van-popup> -->
 			<div class="titleNav">
 				<div class="headPortrait">
 					<img src="" alt="">
@@ -61,18 +58,60 @@
 		</div>
 		<div class="cumulative"  :style="{'top': (193+height)+'px'}">
 			<h4>总共：{{clinicNum}}个门诊</h4>
-			<span>全部转移</span>
+			<span @click="transferPromotersShowAllFn">全部转移</span>
 		</div>
+		<van-popup v-model="modifyPromotersAllShow" overlay-class='modifyPromotersClass'>
+			<div class="modifyPromoters">
+				<div class="modifyPromotersTitle">
+					<h5>移交门诊</h5>
+					<p>将 <span>该推广人名下全部({{clinicNum}}个)门诊</span></p>
+					<p>移交给:</p>
+					<div class="choicePromoter" @click="choicePromoterFn">
+						<h5>{{modify.name}}</h5>
+						<img src="../../../assets/image/down@2x.png" alt="">	
+					</div>
+					<button @click="modifySubmitAllFn">确定</button>
+				</div>
+			</div>
+		</van-popup>
+		<van-popup v-model="choicePromoterAllShow" position="bottom">
+		  <van-picker show-toolbar :columns="option" @cancel="choicePromoterAllShow = false" @confirm="onConfirm"/>
+		</van-popup>
+		<van-dialog v-model="modify.showAll" show-cancel-button @confirm='modifyPromoterAllFn(clinicNum)'>
+			<h4>全部门诊转移</h4>
+			<span>该推广人名下共有{{clinicNum}}门诊，是否转移</span>
+		</van-dialog>
 		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
 		<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 		<ul>
 			<li v-for="(item,inx) in promotersList" :key='inx'>
-				<div class="promotersList">
-					<h4>北京中日友好门诊</h4>
-					<img src="../../../assets/image/zhuanyi@2x.png" alt="">
-				</div>
+				<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : item.hospitalClinicId}}">
+					<div class="promotersList">
+						<h4>{{item.name}}</h4>
+						<img src="../../../assets/image/zhuanyi@2x.png" alt="" @click="transferPromotersShowFn(item)">
+					</div>
+				</router-link>
+				<van-popup v-model="modifyPromotersShow" overlay-class='modifyPromotersClass'>
+					<div class="modifyPromoters">
+						<div class="modifyPromotersTitle">
+							<h5>移交门诊</h5>
+							<p>将 <span>{{item.name}}</span></p>
+							<p>移交给:</p>
+							<div class="choicePromoter" @click="choicePromoterFn">
+								<h5>{{modify.name}}</h5>
+								<img src="../../../assets/image/down@2x.png" alt="">	
+							</div>
+							<button @click="modifySubmitFn">确定</button>
+						</div>
+					</div>
+				</van-popup>
+				<van-dialog v-model="modify.show" show-cancel-button @confirm='modifyPromoterFn(item)'>
+					<h4>门诊转移</h4>
+					<span>是否将推广人{{promoters.name}}名下的{{item.name}}转移至{{modify.name}}</span>
+				</van-dialog>
 			</li>
 		</ul>
+		
 		</van-list>
 	</div>
 </template>
@@ -100,6 +139,19 @@ export default {
 			showModify : false,	//修改显示
 			showDeleteAlert: false, //显示删除弹窗值
 			clinicNum : 0,
+			modifyPromotersAllShow	: false	,//修改推广人弹窗显示
+			choicePromoterAllShow : false,	//修改推广人弹窗
+			option: [],		//推广人列表
+			modify:{		//修改推广人
+				name:''	,	
+				id : '',
+				value : '',
+				num: '',
+				show:false,	//最后确认弹窗显示值
+				showAll : false,
+			},
+			//单个的
+			modifyPromotersShow	: false	,//修改推广人弹窗显示
 		}
 	},
 	computed:{
@@ -130,7 +182,13 @@ export default {
 		// 获取推广人信息
 		this.$axios.get('/hospital/def/hospital-operator-user/'+this.$route.query.hospitalUserId)
 		.then(res => {
-			res.data.codeMsg?	this.$toast.fail(res.data.codeMsg) : this.promoters = {name: res.data.data.name,phone: res.data.data.phone,cover: res.data.data.cover}
+			if(res.data.codeMsg){
+				this.$toast.fail(res.data.codeMsg) 
+			}else{
+				this.promoters = {name: res.data.data.name,phone: res.data.data.phone,cover: res.data.data.cover},
+				this.modify.name = res.data.data.name;
+				this.modify.id = res.data.data.hospitalUserId;
+			}
 		})
 		.catch((err)=>{
 			console.log(err);
@@ -138,6 +196,24 @@ export default {
 		this.$axios.get('/hospital/super-admin/hospital-clinics-sum?'+qs.stringify({hospitalUserId:this.$route.query.hospitalUserId}))
 		.then(res => {
 			res.data.codeMsg?	this.$toast.fail(res.data.codeMsg) : this.clinicNum = res.data.data.rowCount;
+		})
+		.catch((err)=>{
+			console.log(err);
+		})
+		// 加载dom节点后,获取推广人列表请求
+		this.$axios.get('/hospital/def/hospital-operator-users?')
+		.then(res => {
+			if(!res.data.codeMsg){
+				// console.log(res.data.data.rows)
+				for(let i in res.data.data.rows){
+					this.option.push({
+						'clinicPromoterId' : res.data.data.rows[i].hospitalUserId,
+						'text' : res.data.data.rows[i].name,
+						'value' : '00'+i,
+					})
+				}
+				console.log(this.promotersList)
+			}
 		})
 		.catch((err)=>{
 			console.log(err);
@@ -152,6 +228,9 @@ export default {
 		modifyFn(){
 			this.showModify = true
 			console.log(this.showModify)
+		},
+		choicePromoterFn(){
+			this.choicePromoterAllShow = true;
 		},
 		// 修改推广人信息
 		modifyPromotersFn(){
@@ -220,7 +299,77 @@ export default {
 					this.$refs.promotersDetailsRef.style.height = windowHeight+ 'px'
 				}
 				// this.clinic.num = res.data.data.sum.totalCount;
-			
+			})
+			.catch((err)=>{
+				console.log(err);
+			})
+		},
+		// 显示推广人选择弹窗
+		transferPromotersShowAllFn(){
+			this.modifyPromotersAllShow = true
+		},
+		// 选择推广人确定按钮
+		onConfirm(_value){
+			let promoter= this.option.find((n)=>n.value == _value.value);
+			console.log(promoter)
+			this.modify={
+				name:promoter.text	,
+				id : promoter.clinicPromoterId,
+				value : promoter.value,
+				show:false,	//最后确认弹窗显示值
+			}
+			this.modify.name = promoter.text
+			// console.log(promoter)
+			this.choicePromoterAllShow = false
+		},
+		//修改确定方法的最后确认弹窗显示
+		modifySubmitAllFn(){
+			this.modify.showAll = true
+			console.log(this.modify.showAll)
+		},
+		//转移推广人
+		modifyPromoterAllFn(_num){
+			this.$axios.post('/hospital/super-admin/hospital-clinics-alter',qs.stringify({
+				hospitalUserId : this.$route.query.hospitalUserId,
+				hospitalUserIdNew : this.modify.id,
+				expectedRowCount : _num,
+			}))
+			.then(res=>{
+				if(!res.data.codeMsg){
+					this.$toast.success('操作成功');
+					this.$router.back(-1)
+				}else{
+					this.$toast.fail(res.data.codeMsg);
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+			})
+		},
+		//单个的
+		
+		// 显示推广人选择弹窗
+		transferPromotersShowFn(item){
+			console.log(item)
+			this.modifyPromotersShow = true
+		},
+		modifySubmitFn(){
+			this.modify.show = true
+		},
+		modifyPromoterFn(item){
+			this.$axios.post('/hospital/super-admin/hospital-clinics-alter',qs.stringify({
+				hospitalClinicId :　item.hospitalClinicId,
+				hospitalUserId : this.$route.query.hospitalUserId,
+				hospitalUserIdNew : this.modify.id,
+				expectedRowCount : 1,
+			}))
+			.then(res=>{
+				if(!res.data.codeMsg){
+					this.$toast.success('操作成功');
+					this.$router.back(-1)
+				}else{
+					this.$toast.fail(res.data.codeMsg);
+				}
 			})
 			.catch((err)=>{
 				console.log(err);
@@ -353,7 +502,7 @@ export default {
 	width: 100%;
 	background-color: #FFFFFF;
 }
-.promotersDetails ul li{
+.promotersDetails ul>li{
 	width: 100%;
 	height: .53rem;
 	line-height: .53rem;
@@ -372,7 +521,7 @@ export default {
 	bottom: 0;
 	margin: auto 0rem;
 }
->>>.van-popup--center{
+>>>.nav>.van-popup--center{
 	width: 80%;
 	height: 80.27%;
 	border-radius: .05rem;
@@ -439,5 +588,88 @@ export default {
 	display: block;
 	margin: 0rem auto .15rem;
 	text-align: center;
+}
+.cumulative>.modifyPromotersClass{
+	width: 80%;	height: 50.27%;
+}
+.van-popup--center{
+	width: 80%;
+	height: 41.5%;
+	border-radius: .05rem;
+}
+.modifyPromoters{
+	width: 100%;
+	height: 100%;
+}
+.modifyPromotersTitle{
+	width: 100%;
+	/* height: 100%; */
+}
+.modifyPromotersTitle h5{
+	height: .46rem;
+	color:#333333;
+	font-weight: bold;
+	line-height: .46rem;
+	text-align: center;
+	font-size: .145rem;
+	border-bottom: 1px solid #E5E5E5;
+}
+.modifyPromotersTitle p{
+	font-size: .135rem;
+	color: #666666;
+	padding-left: .28rem;
+	line-height: normal;
+}
+.modifyPromotersTitle p:nth-child(2){
+	padding-top: .17rem;
+	font-size: .135rem;
+	
+}
+.modifyPromotersTitle p>span{
+	color: #2B77EF;
+}
+.modifyPromotersTitle button{
+	width: 91.67%;
+	height: .4rem;
+	line-height: .4rem;
+	position: absolute;
+	bottom: 9%;
+	left: 0;
+	right: 0;
+	margin: 0rem auto;
+	border-radius: .2rem;
+	background-color: #2B77EF;
+	color: #FFFFFF;
+	border: none;
+	font-size: .145rem;
+	font-weight: bold;
+}
+.choicePromoter{
+	width: 81.67%;
+	height: .4rem;
+	border: 1px solid #D8D8D8;
+	position: relative;
+	margin: .1rem auto 0rem;
+	text-align: center;
+}
+.choicePromoter h5{
+	border: none;
+	display: inline-block;
+}
+.choicePromoter img{
+	width: .115rem;
+	height: .065rem;
+	position: absolute;
+	right:.15rem;
+	top:0;
+	bottom: 0;
+	margin: auto 0rem;
+}
+>>>.van-dialog__content{
+	text-align: center;
+}
+	
+>>>.van-dialog {
+	z-index: 9999;
 }
 </style>

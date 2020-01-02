@@ -26,7 +26,7 @@
 						<li>
 							<span>推广人</span>
 							<van-dropdown-menu>
-								<van-dropdown-item v-model="value" :options="option" active-color='#2B77EF'@change='promoteFn'/>
+								<van-dropdown-item v-model="value" :options="option" active-color='#2B77EF' @change="changeFn"/>
 							</van-dropdown-menu>
 						</li>
 						<li>
@@ -37,10 +37,10 @@
 							<span>分配密码</span>
 							<input type="password" v-model="addClinic.pwd " placeholder="请填写">
 						</li>
-            <li>
-            	<span>确认密码</span>
-            	<input type="password" v-model="addClinic.pwdConfirm " placeholder="请填写">
-            </li>
+						<li>
+							<span>确认密码</span>
+							<input type="password" v-model="addClinic.pwdConfirm " placeholder="请填写">
+						</li>
 						<li>
 							<span>负责人</span>
 							<input type="text"  v-model="addClinic.headmanName"  placeholder="请填写">
@@ -107,13 +107,15 @@ export default {
 				name : '',
 				phone : '',
 				pwd : '',
-        pwdConfirm : '',
+				pwdConfirm : '',
 				headmanName : '',
 				contactTel : '',
 				address : '',
 				remark : '',
 				license : '',
 				readonly : '',
+				clinicPromoterId : '',
+				hospitalUserId : ''
 			},
 			// 上传图片弹窗显示
 			show: false,
@@ -146,25 +148,26 @@ export default {
     });
   }, mounted() {
 		// 加载dom节点后,获取推广人列表请求
-		this.$axios.post('hospitaler/clinic-promoter/list',qs.stringify({
-			pn : 1,
-			ps : 200,
-			hospitalId : this.account.hospitalId,
-		}))
+		this.$axios.get('/hospital/def/hospital-operator-users?')
 		.then(res => {
-			for(let i in res.data.data.items){
-				this.option.push({
-					'text' : res.data.data.items[i].name,
-					'value' : res.data.data.items[i].no,
-				})
+			if(!res.data.codeMsg){
+				// console.log(res.data.data.rows)
+				for(let i in res.data.data.rows){
+					this.option.push({
+						'clinicPromoterId' : res.data.data.rows[i].hospitalUserId,
+						'text' : res.data.data.rows[i].name,
+						'value' : '00'+i,
+					})
+				}
+				console.log(this.promotersList)
 			}
 		})
 		.catch((err)=>{
 			console.log(err);
-			//Dialog({ message: '加载失败!'});
 		})
+		
 		console.log(this.$route.query.item)
-    this.$route.query.item ? this.clinicFn() : ""
+		this.$route.query.item ? this.clinicFn() : ""
 	},
 	methods: {
     clinicFn(){
@@ -178,9 +181,20 @@ export default {
             contactTel : _d.data.data.tel,
             address : _d.data.data.address,
             remark : _d.data.data.remark,
+			hospitalUserId : _d.data.data.hospitalUserId,
           },
 		// console.log(this.addClinic)
       	this.imageUpload = _d.data.data.license
+		this.$axios.get('/hospital/def/hospital-operator-users?'+qs.stringify({hospitalUserId:this.addClinic.hospitalUserId}))
+		.then(res => {
+			console.log(res.data.data.rows[0].name)
+			let promoter= this.option.find((n)=>n.text == res.data.data.rows[0].name)
+			this.value = promoter.value
+			console.log(promoter)
+		})
+		.catch((err)=>{
+			console.log(err);
+		})
       })
       .catch((err)=>{
       	console.log(err);
@@ -199,6 +213,11 @@ export default {
 		closeFn() {
 		      this.show = false;
 			  console.log(this.show)
+		},
+		changeFn(id){
+			let promoter= this.option.find((n)=>n.value == id)
+			this.addClinic.clinicPromoterId = promoter.clinicPromoterId
+			console.log(this.addClinic.clinicPromoterId )
 		},
 		addImg(_fileLIst){
 			var file = _fileLIst.target.files[0]
@@ -227,6 +246,7 @@ export default {
 			this.$axios.post('/c2/clinic/itemalter',qs.stringify({
 				hospitalClinicId : this.account.hospitalId,
 				itemId : this.$route.query.item,
+				clinicPromoterId : this.addClinic.clinicPromoterId,	//推广人id
 				name : this.addClinic.name,
 				license : this.imageUpload,         //营业执照
 				address : this.addClinic.address,   //门诊地址

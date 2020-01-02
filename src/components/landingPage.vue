@@ -403,5 +403,8 @@ export default {
 }
 .forget{
 	text-align: right;
+	width: 18%;
+	text-align: center;
+	float: right;
 }
 </style>
