@@ -19,25 +19,25 @@
 			</div>
 			<div class="shared">
 				<ul>
-					<router-link :to="{name : 'hospitalImage'}">
+					<router-link :to="{name : 'hospitalImage',query:{time:new Date().getTime()}}">
 						<li>
 							<img src="../../assets/image/yiyuanxingxiang@2x.png" alt=""/>
 							<span>医院形象</span>
 						</li>
 					</router-link>
-					<router-link  :to="{name : 'hospital_case'}">
+					<router-link  :to="{name : 'hospital_case',query:{time:new Date().getTime()}}">
 						<li>
 							<img src="../../assets/image/youzhianli@2x.png" alt=""/>
 							<span>优质案例</span>
 						</li>
 					</router-link>
-					<router-link :to="{name : 'hospital_expertsIntroduction'}">
+					<router-link :to="{name : 'hospital_expertsIntroduction',query:{time:new Date().getTime()}}">
 						<li>
 							<img src="../../assets/image/zhuanjia@2x.png" alt=""/>
 							<span>专家介绍</span>
 						</li>
 					</router-link>
-					<router-link :to="{name : 'hospital_activityReleased'}">
+					<router-link :to="{name : 'hospital_activityReleased',query:{time:new Date().getTime()}}">
 						<li>
 							<img src="../../assets/image/huodongfabu@2x.png" alt=""/>
 							<span>最新活动</span>
@@ -48,7 +48,7 @@
 			<div class="statisticalTitle" v-model="clinic">
 				<h3>合作门诊 {{clinic.num}}</h3>
 				<div class="statisticalAdd">
-					<router-link :to="{name : 'hospital_addCLinic'}">
+					<router-link :to="{name : 'hospital_addCLinic',query:{time:new Date().getTime()}}">
 						<span>新增</span>
 						<img src="../../assets/image/xinzeng@2x.png" alt="">
 					</router-link>
@@ -91,18 +91,46 @@ export default {
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},
-	beforeRouteLeave(to, from, next) {
-     ;
-    this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
+  beforeRouteLeave(to, from, next) {
+    debugger;
+	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+		 debugger
+            if (this.$vnode && this.$vnode.data.keepAlive)
+            {
+                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
+                {
+                    if (this.$vnode.componentOptions)
+                    {
+                        var key = this.$vnode.key == null
+                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
+                                    : this.$vnode.key;
+                        var cache = this.$vnode.parent.componentInstance.cache;
+                        var keys  = this.$vnode.parent.componentInstance.keys;
+                        if (cache[key])
+                        {
+                            if (keys.length) {
+                                var index = keys.indexOf(key);
+                                if (index > -1) {
+                                    keys.splice(index, 1);
+                                }
+                            }
+                            delete cache[key];
+                        }
+                    }
+                }
+			}
+            this.$destroy();
+		}
 	next();
-	
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
+     ;
     next(vm => {
-      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
-    });
+	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	});
+	
   }, 
   destroyed(){
 	  debugger

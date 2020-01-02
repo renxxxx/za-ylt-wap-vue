@@ -24,13 +24,13 @@
 		</van-image-preview>
 		<div class="user_center"  :style="{'padding-top': (height+140)+'px'}">
 			<ul>
-				<router-link :to="{name : 'hospital_taskManagement'}">
+				<router-link :to="{name : 'hospital_taskManagement',query:{time:new Date().getTime()}}">
 					<li>
 						<span>任务管理</span>
 						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
-				<router-link :to="{name : 'hospital_exchangeManagement'}">
+				<router-link :to="{name : 'hospital_exchangeManagement',query:{time:new Date().getTime()}}">
 					<li>
 						<span>兑换管理</span>
 						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -44,7 +44,7 @@
 					<span>集采积分</span>
 					<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 				</li>
-				<router-link :to="{name : 'hospital_promoters'}">
+				<router-link :to="{name : 'hospital_promoters',query:{time:new Date().getTime()}}">
 					<li>
 						<span>推广人员管理</span>
 						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -97,18 +97,46 @@ export default {
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},
-	beforeRouteLeave(to, from, next) {
-     ;
-    this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    next();
+  beforeRouteLeave(to, from, next) {
+    debugger;
+	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+		 debugger
+            if (this.$vnode && this.$vnode.data.keepAlive)
+            {
+                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
+                {
+                    if (this.$vnode.componentOptions)
+                    {
+                        var key = this.$vnode.key == null
+                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
+                                    : this.$vnode.key;
+                        var cache = this.$vnode.parent.componentInstance.cache;
+                        var keys  = this.$vnode.parent.componentInstance.keys;
+                        if (cache[key])
+                        {
+                            if (keys.length) {
+                                var index = keys.indexOf(key);
+                                if (index > -1) {
+                                    keys.splice(index, 1);
+                                }
+                            }
+                            delete cache[key];
+                        }
+                    }
+                }
+			}
+            this.$destroy();
+		}
+	next();
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
-    });
+	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	});
+	
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");

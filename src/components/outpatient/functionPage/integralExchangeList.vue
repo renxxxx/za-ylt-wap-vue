@@ -2,13 +2,13 @@
 	<div class="productsExchange">
 		<div class="title" v-show="show? true : false">
 			<h3>热门兑换</h3>
-			<router-link :to="{name : 'outpatient_ExchangeList'}">
+			<router-link :to="{name : 'outpatient_ExchangeList',query:{time:new Date().getTime()}}">
 				<h3>更多</h3>
 			</router-link>
 		</div>
 		<ul>
 			<li v-for="(item,inx) in list" :key='inx'>
-				<router-link :to="{name : 'outpatient_integralShop',query : {commodityId : item.commodityId}}">
+				<router-link :to="{name : 'outpatient_integralShop',query : {commodityId : item.commodityId,time:new Date().getTime()}}">
 					<div class="productsImg">
 						<img :src="item.cover" alt="">
 					</div>
@@ -42,18 +42,46 @@ export default {
 		
 	},
 	props:['show'],
-	beforeRouteLeave(to, from, next) {
-     ;
-    this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    next();
+  beforeRouteLeave(to, from, next) {
+    debugger;
+	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+		 debugger
+            if (this.$vnode && this.$vnode.data.keepAlive)
+            {
+                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
+                {
+                    if (this.$vnode.componentOptions)
+                    {
+                        var key = this.$vnode.key == null
+                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
+                                    : this.$vnode.key;
+                        var cache = this.$vnode.parent.componentInstance.cache;
+                        var keys  = this.$vnode.parent.componentInstance.keys;
+                        if (cache[key])
+                        {
+                            if (keys.length) {
+                                var index = keys.indexOf(key);
+                                if (index > -1) {
+                                    keys.splice(index, 1);
+                                }
+                            }
+                            delete cache[key];
+                        }
+                    }
+                }
+			}
+            this.$destroy();
+		}
+	next();
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
-    });
+	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	});
+	
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
