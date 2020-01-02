@@ -143,7 +143,7 @@ export default {
 				res.data.codeMsg? this.$toast.fail(res.data.codeMsg):this.$toast.success('操作成功')
 			})
 			.catch((err)=>{
-				Dialog({ message: err});
+				//Dialog({ message: err});;
 			})
 		},
 		getdata(){
@@ -167,7 +167,7 @@ export default {
 				}
 			})
 			.catch((err)=>{
-				Dialog({ message: err});
+				//Dialog({ message: err});;
 			})
 			this.$axios.post('/clientend2/clinicend/pointexchange/receivers',qs.stringify({
 				clinicId : this.account.clinicId,
@@ -182,7 +182,7 @@ export default {
 				}	
 			})
 			.catch((err)=>{
-				Dialog({ message: err});
+				//Dialog({ message: err});;
 			})
 		}
 	},

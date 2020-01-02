@@ -144,7 +144,7 @@ export default {
 			})
 			.catch((err)=>{
 				console.log(err);
-				Dialog({ message: err});
+				//Dialog({ message: err});;
 			})
 		},
 		search(){
@@ -246,7 +246,7 @@ export default {
 			})
 			.catch((err)=>{
 				console.log(err);
-				Dialog({ message: err});
+				//Dialog({ message: err});;
 			})
 		},
 		// 详情页
@@ -336,7 +336,7 @@ export default {
 			})
 			.catch((err)=>{
 				console.log(err);
-				Dialog({ message: err});
+				//Dialog({ message: err});;
 			})
 
 		},
@@ -447,7 +447,7 @@ export default {
 			})
 			.catch((err)=>{
 				console.log(err);
-				Dialog({ message: err});
+				//Dialog({ message: err});;
 			});
 
 		},

@@ -114,7 +114,7 @@ export default {
 			res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn(res);
 		})
 		.catch((err)=>{
-			Dialog({ message: err});
+			//Dialog({ message: err});;
 		})
 	},
 	methods: {

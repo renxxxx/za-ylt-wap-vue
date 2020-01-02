@@ -4,7 +4,6 @@
 			<div class="topNav">
 				<img src="../assets/image/name@2x.png" alt="">
 			</div>
-
 		</div>
     <div class="typeNav" type="line" border="false">
     	<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)'
@@ -24,7 +23,12 @@
     				    class="input_check"
     				    :checked="checked"
     				    @change="change"/>
-    				<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
+    				<p>&nbsp;&nbsp;我已经阅读并同意
+					<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
+						<router-link :to="{name : 'userAgreement' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
+							&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
+						</router-link>
+					</p>
     			</div>
     			<input class="submitClass" type="submit" value="医院登录"></input>
     			<div class="passwordReset">
@@ -54,7 +58,13 @@
     				    class="input_check"
     				    :checked="checked"
     				    @change="change"/>
-    				<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
+    				<p>&nbsp;&nbsp;我已经阅读并同意
+						<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
+						<router-link :to="{name : 'userAgreement' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
+							&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
+						</router-link>
+					</p>
+					
     			</div>
     			<input class="submitClass" type="submit" value="门诊登录"></input>
     			<div class="passwordReset">
@@ -82,7 +92,12 @@
     				    class="input_check"
     				    :checked="checked"
     				    @change="change"/>
-    				<p>&nbsp;&nbsp;我已经阅读并同意<a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a></p>
+    				<p>&nbsp;&nbsp;我已经阅读并同意
+					<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
+					<router-link :to="{name : 'userAgreement' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
+						&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
+					</router-link>
+					</p>
     			</div>
     			<input class="submitClass" type="submit" value="运营登录"></input>
     			<div class="passwordReset">

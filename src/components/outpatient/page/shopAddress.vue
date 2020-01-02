@@ -137,7 +137,7 @@ export default {
 				});
 			})
 			.catch((err)=>{
-				Dialog({ message: err});
+				//Dialog({ message: err});;
 			})
 		},
 	},

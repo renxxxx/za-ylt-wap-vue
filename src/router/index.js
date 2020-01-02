@@ -3,8 +3,14 @@ import Router from 'vue-router'
 import Store from '../store'
 //登陆页面及其忘记密码和详情页
 import landingPage from '@/components/landingPage.vue'
+//找回密码
 import retrievePassword from '@/components/retrievePassword.vue'
+//详情页
 import details from '@/components/detailsPage.vue'
+//用户协议
+import userAgreement from '@/components/userAgreement.vue'
+
+
 //病员管理页面页
 import hospital_sourceManagement from '@/components/common/page/sourceManagement.vue'
 //门诊端页面及其组件
@@ -461,6 +467,13 @@ const router = new Router({
 			path: '/details',
 			name: 'details',
 			component: details,
+			meta: {auth:true},
+		},
+		{
+			//用户协议
+			path: '/userAgreement',
+			name: 'userAgreement',
+			component: userAgreement,
 			meta: {auth:true},
 		},
 		{

@@ -264,7 +264,7 @@ export default {
           // console.log(this.images.cover)
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
           // Dialog({ message: '加载失败!' });
         });
       //文章请求

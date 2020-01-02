@@ -244,7 +244,7 @@ export default {
 		})
 		.catch((err)=>{
 			console.log(err);
-			Dialog({ message: err});
+			// //Dialog({ message: err});;
 		})
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
@@ -260,7 +260,7 @@ export default {
 		})
 		.catch((err)=>{
 			console.log(err);
-			Dialog({ message: err});
+			// //Dialog({ message: err});;
 		});
 
 		// console.log(this.list.allNum)

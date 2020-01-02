@@ -142,7 +142,7 @@ debugger
     	})
     	.catch((err)=>{
     		console.log(err);
-    		Dialog({ message: err});
+    		//Dialog({ message: err});;
     	})
     },
 		// 详情页
@@ -193,7 +193,7 @@ debugger
 			})
 			.catch((err)=>{
 				console.log(err);
-				Dialog({ message: err});
+				//Dialog({ message: err});;
 			})
 		},
 

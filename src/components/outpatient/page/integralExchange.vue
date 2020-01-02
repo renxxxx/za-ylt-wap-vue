@@ -147,7 +147,7 @@ export default {
 			}
 		})
 		.catch((err)=>{
-			Dialog({ message: err});
+			//Dialog({ message: err});;
 		})
 		this.$axios.post('/clientend2/clinicend/pointexchange/main',qs.stringify({
 			clinicId : this.account.clinicId,
@@ -158,7 +158,7 @@ export default {
 			this.integral = res.data.data.exchangePoint
 		})
 		.catch((err)=>{
-			Dialog({ message: err});
+			//Dialog({ message: err});;
 		})
 	},
 	methods: {

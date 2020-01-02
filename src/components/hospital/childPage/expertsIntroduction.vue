@@ -119,7 +119,7 @@ export default {
 		})
 		.catch((err)=>{
 			console.log(err);
-			Dialog({ message: err});
+			//Dialog({ message: err});;
 		})
 	},
 	methods: {
