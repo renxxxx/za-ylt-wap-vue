@@ -28,7 +28,7 @@
     			</div>
     			<input class="submitClass" type="submit" value="医院登录"></input>
     			<div class="passwordReset">
-    				<router-link  :to="{name : 'retrievePassword'}">
+    				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div  @click="forgetFn(100)" class="forget">
     						忘记密码
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
@@ -58,7 +58,7 @@
     			</div>
     			<input class="submitClass" type="submit" value="门诊登录"></input>
     			<div class="passwordReset">
-    				<router-link  :to="{name : 'retrievePassword'}">
+    				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div @click="forgetFn(200)" class="forget">
     						忘记密码
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
@@ -86,7 +86,7 @@
     			</div>
     			<input class="submitClass" type="submit" value="运营登录"></input>
     			<div class="passwordReset">
-    				<router-link  :to="{name : 'retrievePassword'}">
+    				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div @click="forgetFn(300)" class="forget">
     						修改密码
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
@@ -121,19 +121,46 @@ export default {
         }
     }
   },
-
   beforeRouteLeave(to, from, next) {
-     ;
-    this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    next();
+    debugger;
+	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+		 debugger
+            if (this.$vnode && this.$vnode.data.keepAlive)
+            {
+                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
+                {
+                    if (this.$vnode.componentOptions)
+                    {
+                        var key = this.$vnode.key == null
+                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
+                                    : this.$vnode.key;
+                        var cache = this.$vnode.parent.componentInstance.cache;
+                        var keys  = this.$vnode.parent.componentInstance.keys;
+                        if (cache[key])
+                        {
+                            if (keys.length) {
+                                var index = keys.indexOf(key);
+                                if (index > -1) {
+                                    keys.splice(index, 1);
+                                }
+                            }
+                            delete cache[key];
+                        }
+                    }
+                }
+			}
+            this.$destroy();
+		}
+	next();
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
-    });
+	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	});
+	
   }, mounted() {
 	  debugger
 		if(window.plus){

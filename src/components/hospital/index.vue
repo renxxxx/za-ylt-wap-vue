@@ -18,7 +18,7 @@
       <div class="typeList">
         <ul>
           <li>
-            <router-link :to="{name : 'hospital_indexSearch'}">
+            <router-link :to="{name : 'hospital_indexSearch',query:{time:new Date().getTime()}}">
               <img src="../../assets/image/qudaomenzhen@2x.png" alt />
               <span>渠道门诊</span>
             </router-link>
@@ -32,37 +32,37 @@
             </router-link>
           </li>
           <li>
-            <router-link :to="{name : 'hospital_collect'}">
+            <router-link :to="{name : 'hospital_collect',query:{time:new Date().getTime()}}">
               <img src="../../assets/image/qixiejicai@2x.png" alt />
               <span>器械集采</span>
             </router-link>
           </li>
           <li @click="noLinkFn">
-            <router-link :to="{name : ''}">
+            <router-link :to="{name : '',query:{time:new Date().getTime()}}">
               <img src="../../assets/image/yunyingzhongxin@2x.png" alt />
               <span>运营中心</span>
             </router-link>
           </li>
           <li @click="noLinkFn">
-            <router-link :to="{name : ''}">
+            <router-link :to="{name : '',query:{time:new Date().getTime()}}">
               <img src="../../assets/image/jiyinjiance@2x.png" alt />
               <span>基因检测</span>
             </router-link>
           </li>
           <li @click="noLinkFn">
-            <router-link :to="{name : ''}">
+            <router-link :to="{name : '',query:{time:new Date().getTime()}}">
               <img src="../../assets/image/yiliaoziyuan@2x.png" alt />
               <span>医疗资源</span>
             </router-link>
           </li>
           <li>
-            <router-link :to="{name : 'hospital_activityReleased'}">
+            <router-link :to="{name : 'hospital_activityReleased',query:{time:new Date().getTime()}}">
               <img src="../../assets/image/yiyuanhuodong@2x.png" alt />
               <span>医院活动</span>
             </router-link>
           </li>
           <li @click="noLinkFn">
-            <router-link :to="{name : ''}">
+            <router-link :to="{name : '',query:{time:new Date().getTime()}}">
               <img src="../../assets/image/qita@2x.png" alt />
               <span>其他项目</span>
             </router-link>
@@ -79,7 +79,7 @@
           <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @check="onLoad">
             <li v-for="(items,inx) in article" :key="inx">
               <router-link
-                :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 1}}"
+                :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
               >
                 <div class="article_left">
                   <p>{{items.content}}</p>
@@ -138,18 +138,45 @@ export default {
     console.log("destroyed");
   },
   beforeRouteLeave(to, from, next) {
-     ;
-    this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    next();
+    debugger;
+	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+		 debugger
+            if (this.$vnode && this.$vnode.data.keepAlive)
+            {
+                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
+                {
+                    if (this.$vnode.componentOptions)
+                    {
+                        var key = this.$vnode.key == null
+                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
+                                    : this.$vnode.key;
+                        var cache = this.$vnode.parent.componentInstance.cache;
+                        var keys  = this.$vnode.parent.componentInstance.keys;
+                        if (cache[key])
+                        {
+                            if (keys.length) {
+                                var index = keys.indexOf(key);
+                                if (index > -1) {
+                                    keys.splice(index, 1);
+                                }
+                            }
+                            delete cache[key];
+                        }
+                    }
+                }
+			}
+            this.$destroy();
+		}
+	next();
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-      document.documentElement.scrollTop = document.body.scrollTop =
-        vm.scrollTop;
-    });
+	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	});
+	
   },
   mounted() {
     debugger;
