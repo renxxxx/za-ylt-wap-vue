@@ -1,9 +1,10 @@
 <template>
   <div id="app" v-cloak>
-    <!-- <keep-alive> -->
-      <router-view v-if="isRouterAlive"></router-view>
-    <!-- </keep-alive> -->
-
+    <keep-alive>
+		<router-view v-if="isRouterAlive"></router-view>
+    </keep-alive>
+	
+	<router-view v-if="isRouterAlive" name="promoters"></router-view>
     <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
       <img src="./assets/image/returnTop.png" alt />
       <span>顶部</span>

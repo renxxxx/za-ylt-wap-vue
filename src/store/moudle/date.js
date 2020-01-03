@@ -10,7 +10,6 @@ const state={
 	checked: true,
 	//账号
 	isLogin:0,
-	whichClient:0,
 	account:{
 		name:'',
 		password:'',
@@ -43,7 +42,6 @@ const getters={
 	//显示半遮罩及其日期选择
 	showTime : state => state.showTime,
 	isLogin : state => state.isLogin,
-	whichClient : state => state.whichClient,
 	// topHeight :state =>state.topHeight,
 }
 
@@ -53,9 +51,9 @@ const actions={
 		commit('changeFn',_value)
 	},
 	//登录页面的表单验证
-	submit({commit},landingState){
+	submit({commit},_value){
 		// console.log(value)
-		commit('submitFn',landingState)
+		commit('submitFn',_value)
 		// this.$store.commit('submitFn','100')
 	},
 	//hospital的个人信息提交
@@ -65,7 +63,7 @@ const actions={
 }
 const mutations={
 	//登录及其刷新请求
-	submintGetData(_postUrl,_postRefresh,_isLogin,_url,state){
+	submintGetData(_postUrl,_postRefresh,_isLogin,_url,state,_account){
 		console.log(state)
 		state.isLogin = _isLogin;
 		localStorage.setItem("isLogin",_isLogin);
@@ -73,13 +71,12 @@ const mutations={
 		// state.account.password = '123456';
 		// console.log(state)
 		axios.post(_postUrl,qs.stringify({
-				account : state.account.name,
-				password : state.account.password
+				account : _account.name,
+				password : _account.password
 			}))
 			.then( res =>{
 				// console.log(res.data.codeMsg)
-				if(res.data.codeMsg == null ||  res.data.codeMsg == "" || res.data.codeMsg == undefined){
-
+				if(!res.data.codeMsg){
 					 axios.post(_postRefresh)
 						.then( res =>{
 							switch(_isLogin){
@@ -131,21 +128,25 @@ const mutations={
 	},
 
 	//登录页面的表单验证
-	submitFn(state,landingState){
+	submitFn(state,_value){
 		// console.log(this.account.name+this.account.password)
-		state.isLogin = landingState;
+		state.isLogin = _value[0];
+		let account = _value[1];
+		debugger;
+		// console.log(account)
 		// console.log(landingState)
 		if(state.checked == true){
-			switch (landingState){
+			console.log(_value[0])
+			switch (_value[0]){
 				case '100':
-				mutations.submintGetData('/hospital/login','/hospital/login-refresh',100,'hospital_index',state)
+				mutations.submintGetData('/hospital/login','/hospital/login-refresh',100,'hospital_index',state,account)
 				break;
 				case '200':
 				// console.log('200')
-				mutations.submintGetData('/clinic/login','/clinic/login-refresh',200,'hospital_sourceManagement',state)
+				mutations.submintGetData('/clinic/login','/clinic/login-refresh',200,'hospital_sourceManagement',state,account)
 				break;
 				case '300':
-				mutations.submintGetData('/manager/login','/manager/login-refresh',300,'outpatient_index',state)
+				mutations.submintGetData('/manager/login','/manager/login-refresh',300,'outpatient_index',state,account)
 				break;
 				default:
 				break;
