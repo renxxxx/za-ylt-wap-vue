@@ -65,23 +65,24 @@ const mutations={
 	//登录及其刷新请求
 	submintGetData(_postUrl,_postRefresh,_isLogin,_url,state,_account){
 		console.log(state)
-		state.isLogin = _isLogin;
-		localStorage.setItem("isLogin",_isLogin);
-		// state.account.name ='999999';
-		// state.account.password = '123456';
-		// console.log(state)
 		axios.post(_postUrl,qs.stringify({
 				account : _account.name,
 				password : _account.password
 			}))
 			.then( res =>{
 				// console.log(res.data.codeMsg)
-				if(!res.data.codeMsg){
+				if(res.data.code == 0){
 					 axios.post(_postRefresh)
 						.then( res =>{
+							state.isLogin = _isLogin;
+							localStorage.setItem("isLogin",_isLogin);
 							switch(_isLogin){
 								case 100:
+								if(res.data.data.type == 1){
+									router.replace({ name : 'promoters_index',query:{time:new Date().getTime()}});
+								}else{
 									router.replace({ name : _url,query:{time:new Date().getTime()}});
+								}
 								state.account.hospitalId= res.data.data.hospital.hospitalId;
 								// console.log(state.account.hospitalId)
 								state.account.data = {};
@@ -130,9 +131,9 @@ const mutations={
 	//登录页面的表单验证
 	submitFn(state,_value){
 		// console.log(this.account.name+this.account.password)
-		state.isLogin = _value[0];
+		// state.isLogin = _value[0];
 		let account = _value[1];
-		debugger;
+		//debugger;
 		// console.log(account)
 		// console.log(landingState)
 		if(state.checked == true){

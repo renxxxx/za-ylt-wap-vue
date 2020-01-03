@@ -170,7 +170,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
       document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
     });
@@ -191,6 +190,7 @@ export default {
 						'value' : '00'+i,
 					})
 				}
+				this.addClinic.clinicPromoterId = this.option[0].clinicPromoterId
 				// console.log(this.promotersList)
 			}
 		})
@@ -244,7 +244,7 @@ export default {
 			this.$axios.post('/hospital/super-admin/hospital-clinic-add',qs.stringify({
 				hospitalClinicId : this.account.hospitalId,
 				name :  this.addClinic.name,        //医院名称
-				clinicPromoterId : this.addClinic.clinicPromoterId,	//推广人id
+				hospitalUserId : this.addClinic.clinicPromoterId,	//推广人id
 				cover: '',
 				license : this.imageUpload,         //营业执照
 				address : this.addClinic.address,   //门诊地址

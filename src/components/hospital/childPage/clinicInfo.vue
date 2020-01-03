@@ -135,7 +135,7 @@ export default {
 		console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
-    debugger;
+    //debugger;
 	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
@@ -169,7 +169,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 	});
@@ -271,23 +270,22 @@ export default {
 		// 保存方法
 		saveFn(){
 			console.log(this.addClinic)
-			this.$axios.post('/c2/clinic/itemalter',qs.stringify({
-				hospitalClinicId : this.account.hospitalId,
-				itemId : this.$route.query.item,
-				clinicPromoterId : this.addClinic.clinicPromoterId,	//推广人id
-				name : this.addClinic.name,
-				license : this.imageUpload,         //营业执照
-				address : this.addClinic.address,   //门诊地址
-				headman : this.addClinic.headmanName, //负责人姓名
-				tel : this.addClinic.contactTel,      //负责人电话
-				remark : this.addClinic.remark,       //备注
-				clinicUserPhone : this.addClinic.phone, //分配账号
-				clinicUserPassword : this.addClinic.pwd,//分配账号密码
+			this.$axios.post('/hospital/super-admin/hospital-clinic-alter',qs.stringify({
+				hospitalClinicId :  this.$route.query.item,
+				name :  this.addClinic.name,
+				license : this.imageUpload,								//营业执照
+				address : this.addClinic.address, 						//门诊地址
+				headman : this.addClinic.headmanName, 					//负责人姓名
+				tel : this.addClinic.contactTel,						//负责人电话
+				remark : this.addClinic.remark, 						//备注
+				hospitalUserId : this.addClinic.clinicPromoterId,		//推广人id
+				clinicUserPhone : this.addClinic.phone, 				//分配账号
+				clinicUserPassword : this.addClinic.pwd,				//分配账号密码
 				clinicUserPasswordConfirm : this.addClinic.pwdConfirm,  //确认密码
 			}))
 			.then(res => {
 				// console.log(typeof res.data.codeMsg)
-				res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn();
+				res.data.codeMsg? Toast.fail(res.data.codeMsg) : this.successFn();
 
 			})
 			.catch((err)=>{

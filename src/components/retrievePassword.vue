@@ -66,7 +66,7 @@ export default {
 	  ...mapGetters(['account','isLogin','whichClient'])
   },
   beforeRouteLeave(to, from, next) {
-    debugger;
+    //debugger;
 	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
@@ -114,7 +114,7 @@ export default {
   methods: {
 	 //回退方法
 	 goBackFn(){
-		 this.$router.back()
+		 this.$router.back(-1)
 	 },
 	//倒计时结束时触发的方法
 	finished(e){

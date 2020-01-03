@@ -86,10 +86,10 @@ export default {
     clinicAll
   },
   beforeDestory() {
-    debugger;
+    //debugger;
   },
   destroyed() {
-    debugger;
+    //debugger;
   },
   created() {
     var heightRexg = /^[0-9]*/g;
@@ -98,12 +98,12 @@ export default {
     console.log(this.height);
   },
   beforeRouteLeave(to, from, next) {
-    debugger;
+    //debugger;
     this.scrollTop =
       document.documentElement.scrollTop || document.body.scrollTop;
 
     if (!to.query.time || !from.query.time || to.query.time < from.query.time) {
-      debugger;
+      //debugger;
       if (this.$vnode && this.$vnode.data.keepAlive) {
         if (
           this.$vnode.parent &&

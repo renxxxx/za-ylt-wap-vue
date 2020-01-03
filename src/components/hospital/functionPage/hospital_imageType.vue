@@ -30,7 +30,7 @@ export default {
 		
   },
   beforeRouteLeave(to, from, next) {
-    debugger;
+    //debugger;
 	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
@@ -64,7 +64,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 	});
@@ -99,7 +98,7 @@ export default {
 }
 </script>
 
-<style scoped="">
+<style scoped>
 .imageType{
 	width: 100%;
 }

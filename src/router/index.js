@@ -9,10 +9,13 @@ import retrievePassword from '@/components/retrievePassword.vue'
 import details from '@/components/detailsPage.vue'
 //用户协议
 import userAgreement from '@/components/userAgreement.vue'
-
-
 //病员管理页面页
 import hospital_sourceManagement from '@/components/common/page/sourceManagement.vue'
+
+//推广人端主页面
+import promoters_index from '@/components/promoters/page/index.vue'
+
+
 //门诊端页面及其组件
 //门诊端病员主页
 import outpatient_index from '@/components/outpatient/index.vue'
@@ -461,6 +464,14 @@ const router = new Router({
 			name: 'outpatient_shopAddressAdd',
 			component: outpatient_shopAddressAdd,
 			// meta: {auth:true},
+		},
+		
+		{
+			//推广人端主页面
+			path: '/promoters_index',
+			name: 'promoters_index',
+			component: promoters_index,
+			meta: {auth:true},
 		},
 		{
 			//详情页

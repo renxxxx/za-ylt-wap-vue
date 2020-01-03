@@ -25,7 +25,7 @@
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
-import qs from 'qs';
+import qs from 'qs'
 import { Dialog } from 'vant'
 export default {
   name: 'hospital_About',
@@ -34,7 +34,7 @@ export default {
     }
   },
   computed:{
-	 ...mapGetters([]),
+	 // ...mapGetters([]),
 	
   },
   props:['hospitalImage'],
@@ -42,7 +42,7 @@ export default {
 		
   },
   beforeRouteLeave(to, from, next) {
-    debugger;
+    //debugger;
 	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
@@ -53,8 +53,8 @@ export default {
                     if (this.$vnode.componentOptions)
                     {
                         var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
+                            ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
+                            : this.$vnode.key;
                         var cache = this.$vnode.parent.componentInstance.cache;
                         var keys  = this.$vnode.parent.componentInstance.keys;
                         if (cache[key])
@@ -76,7 +76,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 	});
@@ -91,8 +90,7 @@ export default {
   },
   
   methods: {
-
-
+	  
   },
 }
 </script>

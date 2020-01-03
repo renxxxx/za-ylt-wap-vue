@@ -3,8 +3,6 @@
     <keep-alive>
 		<router-view v-if="isRouterAlive"></router-view>
     </keep-alive>
-	
-	<router-view v-if="isRouterAlive" name="promoters"></router-view>
     <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
       <img src="./assets/image/returnTop.png" alt />
       <span>顶部</span>
@@ -66,7 +64,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 	});
@@ -106,6 +103,7 @@ export default {
     }
 
     function getdata(_postRefresh, _isLogin) {
+			debugger
       vm.$jquery.ajax({
         type: "post",
         url: _postRefresh,
