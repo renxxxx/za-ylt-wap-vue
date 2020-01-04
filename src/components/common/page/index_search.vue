@@ -14,6 +14,7 @@
             placeholder="搜索病员"
             v-model="list.keywords"
             v-focus="this.$route.query.focus"
+            @keyup.enter="inputNow"
           />
         </div>
         <div class="clinic_buttton" @click="inputNow">

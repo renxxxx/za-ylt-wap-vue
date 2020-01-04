@@ -1,7 +1,7 @@
 <template>
-  <div id="app" v-cloak>
+  <div id="app" v-cloak ref='appRef'>
     <keep-alive>
-		<router-view v-if="isRouterAlive"></router-view>
+      <router-view v-if="isRouterAlive"></router-view>
     </keep-alive>
     <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
       <img src="./assets/image/returnTop.png" alt />
@@ -67,7 +67,7 @@ export default {
     next(vm => {
 	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 	});
-	
+
   },
   mounted() {
     debugger
@@ -75,7 +75,7 @@ export default {
     // console.log(document.documentElement.clientHeight)
     window.addEventListener("scroll", this.handleScroll, true);
 
-   
+
   },
   created() {
     let vm = this
@@ -155,43 +155,43 @@ export default {
     },
     handleScroll() {
       let scrollTop =
-        document.body.scrollTop ||
-        document.documentElement.scrollTop ||
-        window.pageYOffset ||
-        document.body.scroll;
+        this.$refs.appRef.scrollTop ||
+        this.$refs.appRef.scrollTop ||
+        this.$refs.appRef.pageYOffset ||
+        this.$refs.appRef.scroll;
       let windowHeight =
-        document.documentElement.clientHeight || document.body.clientHeight;
+        document.documentElement.clientHeight || this.$refs.appRef.clientHeight;
       let data =
-        document.body.scrollHeight >
+        this.$refs.appRef.scrollHeight >
         (window.innerHeight || document.documentElement.clientHeight);
       // console.log( document.documentElement.scrollTop)
       let opacityValue =
         Math.round(
-          ((scrollTop + windowHeight) / document.body.scrollHeight) * 100
+          ((scrollTop + windowHeight) / this.$refs.appRef.scrollHeight) * 100
         ) / 100;
       // console.log(scrollTop)
-      if (data && scrollTop > 150) {
+      if (data && scrollTop > 250) {
         this.$refs.returnTopRef.style.opacity = 1;
       } else {
         this.$refs.returnTopRef.style.opacity = 0;
       }
     },
     returnTopFn() {
-      let scrollTop =
-        document.body.scrollTop ||
-        document.documentElement.scrollTop ||
-        window.pageYOffset ||
-        document.body.scroll;
+      var scrollTop =
+        this.$refs.appRef.scrollTop ||
+        this.$refs.appRef.scrollTop ||
+        this.$refs.appRef.pageYOffset ||
+        this.$refs.appRef.scroll;
       let windowHeight =
-        document.documentElement.clientHeight || document.body.clientHeight;
-      // console.log(scrollTop+windowHeight)
-      for (let i = 0; i < scrollTop + windowHeight; i++) {
+        document.documentElement.clientHeight || this.$refs.appRef.clientHeight;
+      for (let i = 0; i < (scrollTop + windowHeight); i++) {
         var clearReturn = setTimeout(() => {
-          document.body.scrollTop--;
+          this.$refs.appRef.scrollTop--;
           window.pageYOffset--;
-          document.body.scroll--;
+          this.$refs.appRef.scroll--;
           document.documentElement.scrollTop--;
         }, 10);
+
       }
     }
   }
@@ -204,7 +204,7 @@ html {
 }
 body {
   /* background-color:#FFFFFF; */
-  /* height: 100%; */
+  height: 100%;
   width: 100%;
 }
 
@@ -215,6 +215,7 @@ body {
   color: #2c3e50;
   position: relative;
   height: 100%;
+  overflow: scroll;
   /* background-color: #F5F5F5; */
 }
 

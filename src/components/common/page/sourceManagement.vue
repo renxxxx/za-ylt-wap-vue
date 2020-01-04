@@ -134,8 +134,8 @@ export default {
 	  debugger
 	var heightRexg = /^[0-9]*/g
 	var topHeight = this.topHeight.match(heightRexg)
-	this.height = parseInt(topHeight.join()) 
-	console.log(this.height)
+	this.height = parseInt(topHeight.join())
+	// console.log(this.height)
   },
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -172,11 +172,11 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
+
     next(vm => {
 	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 	});
-	
+
   }
   ,destroyed(){
 	  debugger
