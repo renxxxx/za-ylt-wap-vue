@@ -36,7 +36,7 @@
 						</keep-alive>
 					</van-tab>
 					<van-tab title="新增病员" v-if="isLogin == 200? true:false">
-						<form @submit.prevent="hospitalSubmit" class="newAdd">
+						<div class="newAdd">
 							<div class="newAddTitle">
 								<img src="../../../assets/image/bitian@2x.png" alt="">
 								<h3>必填项</h3>
@@ -65,8 +65,8 @@
 									</li>
 								</ul>
 							</div>
-							<input class="submitClass" type="submit" value="提交"></input>
-						</form>
+							<button class="submitClass" type="submit"@click="hospitalSubmit">提交</button>
+						</div>
 					</van-tab>
 					<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
 						<keep-alive>

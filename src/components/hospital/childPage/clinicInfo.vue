@@ -14,12 +14,12 @@
 		</div>
 		<div class="zhangwei"></div>
 		<div class="content" :style="{'padding-top': height+'px'}">
-			<form @submit.prevent="hospitalSubmit" class="newAdd">
+			<div class="newAdd">
 				<div class="newAddTitle">
 					<img src="../../../assets/image/bitian@2x.png" alt="">
 					<h3>必填项</h3>
 					<ul class="Fill">
-						<li  >
+						<li>
 							<span>门诊名称</span>
 							<input type="text" v-model="addClinic.name"  placeholder="请填写">
 						</li>
@@ -83,7 +83,7 @@
 						</li>
 					</ul>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 </template>
@@ -199,7 +199,7 @@ export default {
 		})
 		
 		console.log(this.$route.query.item)
-		this.$route.query.item ? this.clinicFn() : ""
+		this.$route.query.item? this.clinicFn() : ""
 	},
 	methods: {
     clinicFn(){

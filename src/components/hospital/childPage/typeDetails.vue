@@ -135,6 +135,7 @@ export default {
 	
   },
 	mounted(){
+		debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
@@ -150,12 +151,14 @@ export default {
 			// console.log()
 			if(this.about.image!=null){
 				this.about.image = _d.data.data.image.split(',');
-				// console.log(this.about.image)
-				if(_d.data.data.shiYingZheng == null){
-					
-				}else{
-					this.about.shiYingZheng = _d.data.data.shiYingZheng.split(',')
-				}
+				console.log(_d.data.data.shiYingZheng)
+			}
+			if(_d.data.data.shiYingZheng == null){
+				
+			}else{
+				debugger
+				this.about.shiYingZheng = _d.data.data.shiYingZheng.split(',');
+				console.log(this.about.shiYingZheng)
 			}
 		})
 		.catch((err)=>{
@@ -188,8 +191,8 @@ export default {
 	methods: {
 		//回退方法
 		goBackFn(){
-			// this.$router.back(-1)
-			this.$router.push({ name : 'hospitalImage',query :{components : "hospital_imageType",time:new Date().getTime()}});
+			this.$router.back(-1)
+			// this.$router.push({ name : 'hospitalImage',query :{components : "hospital_imageType",time:new Date().getTime()}});
 		},
 		//医生介绍
 		doctorAboutFn(_about){

@@ -131,7 +131,7 @@ export default {
   methods: {
 	  //回退方法
 	goBackFn(){
-		this.$router.back()
+		this.$router.back(-1)
     // if(this.isLogin == 100){
     //   this.$router.push({ name : 'hospital_clinic',query:{time:new Date().getTime()}});
     // }else{

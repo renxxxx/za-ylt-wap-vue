@@ -14,7 +14,7 @@
 		</div>
 		<div class="zhangwei"></div>
 		<div class="content" :style="{'padding-top': height+'px'}">
-			<form @submit.prevent="hospitalSubmit" class="newAdd">
+			<div class="newAdd">
 				<div class="newAddTitle">
 					<img src="../../../assets/image/bitian@2x.png" alt="">
 					<h3>必填项</h3>
@@ -83,7 +83,7 @@
 						</li>
 					</ul>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 </template>
