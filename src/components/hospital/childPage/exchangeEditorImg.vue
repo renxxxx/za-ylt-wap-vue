@@ -51,7 +51,7 @@ export default {
 		console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
-    debugger;
+    //debugger;
 	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger

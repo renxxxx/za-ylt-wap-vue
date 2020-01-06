@@ -14,6 +14,7 @@
             placeholder="搜索病员"
             v-model="list.keywords"
             v-focus="this.$route.query.focus"
+            @keyup.enter="inputNow"
           />
         </div>
         <div class="clinic_buttton" @click="inputNow">
@@ -86,10 +87,10 @@ export default {
     clinicAll
   },
   beforeDestory() {
-    debugger;
+    //debugger;
   },
   destroyed() {
-    debugger;
+    //debugger;
   },
   created() {
     var heightRexg = /^[0-9]*/g;
@@ -98,12 +99,12 @@ export default {
     console.log(this.height);
   },
   beforeRouteLeave(to, from, next) {
-    debugger;
+    //debugger;
     this.scrollTop =
       document.documentElement.scrollTop || document.body.scrollTop;
 
     if (!to.query.time || !from.query.time || to.query.time < from.query.time) {
-      debugger;
+      //debugger;
       if (this.$vnode && this.$vnode.data.keepAlive) {
         if (
           this.$vnode.parent &&

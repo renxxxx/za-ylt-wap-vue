@@ -6,7 +6,7 @@
 					<img src="../../../assets/image/shape@3x.png" alt="">
 				</div>
 				<div class="clinic_search">
-					<input type="text" placeholder="搜索门诊"  v-model="keywords">
+					<input type="text" placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
 					<img src="../../../assets/image/sousuo@2x.png" alt="">
 				</div>
 				<div class="clinic_buttton" @click="inputNow">
@@ -60,7 +60,7 @@ export default {
 		console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
-    debugger;
+    //debugger;
 	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger

@@ -9,14 +9,14 @@
     	<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)'
     	title-active-color='rgba(255, 255, 255)' v-model='data'>
     	<van-tab title="医院端" :title-style="{'font-size':(data==0?'.24rem':'.14rem')}" >
-    		<form @submit.prevent="submit('100')" class="content">
+    		<form @submit.prevent="submit(['100',hospitalAccount])" class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
-    				<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
+    				<input type="text"  v-model="hospitalAccount.name" name='name' placeholder="请输入手机号" >
     			</div>
     			<div class="inputBox">
     				<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-    				<input type="password"  v-model="account.password" name='password' placeholder="请输入密码" autocomplete>
+    				<input type="password"  v-model="hospitalAccount.password" name='password' placeholder="请输入密码" autocomplete>
     			</div>
     			<div class="checkBox">
     				<input type="checkbox"
@@ -24,34 +24,33 @@
     				    :checked="checked"
     				    @change="change"/>
     				<p>&nbsp;&nbsp;我已经阅读并同意
-					<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
-						<router-link :to="{name : 'userAgreement' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
-							&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
-						</router-link>
-					</p>
+    				<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
+    					<router-link :to="{name : 'userAgreement' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
+    						&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
+    					</router-link>
+    				</p>
     			</div>
     			<input class="submitClass" type="submit" value="医院登录"></input>
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
-    					<div  @click="forgetFn(100)" class="forget">
+    					<div class="forget">
     						忘记密码
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
     					</div>
     				</router-link>
     			</div>
     		</form>
-
     	</van-tab>
     	<van-tab title="门诊端" type="line" border="false" :title-style="{'font-size':(data==1?'.24rem':'.14rem')}" >
-    		<form @submit.prevent="submit('200')" class="content">
+    		<form @submit.prevent="submit(['200',outpatientAccount])" class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
-    				<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
+    				<input type="text"  v-model="outpatientAccount.name" name='name' placeholder="请输入手机号" >
 
     			</div>
     			<div class="inputBox">
     				<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-    				<input type="password"  v-model="account.password" name='password' placeholder="请输入密码" autocomplete>
+    				<input type="password"  v-model="outpatientAccount.password" name='password' placeholder="请输入密码" autocomplete>
     			</div>
     			<div class="checkBox">
     				<input type="checkbox"
@@ -69,7 +68,7 @@
     			<input class="submitClass" type="submit" value="门诊登录"></input>
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
-    					<div @click="forgetFn(200)" class="forget">
+    					<div class="forget">
     						忘记密码
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
     					</div>
@@ -78,14 +77,14 @@
     		</form>
     	</van-tab>
     	<van-tab title="运营端" type="line" border="false" :title-style="{'font-size':(data==2?'.24rem':'.14rem')}" >
-    		<form @submit.prevent="submit('300')" class="content">
+    		<form @submit.prevent="submit(['300',operateAccount])" class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
-    				<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
+    				<input type="text"  v-model="operateAccount.name" name='name' placeholder="请输入手机号" >
     			</div>
     			<div class="inputBox">
     				<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-    				<input type="password"  v-model="account.password" name='password' placeholder="请输入密码"  autocomplete>
+    				<input type="password"  v-model="operateAccount.password" name='password' placeholder="请输入密码"  autocomplete>
     			</div>
     			<div class="checkBox">
     				<input type="checkbox"
@@ -102,7 +101,7 @@
     			<input class="submitClass" type="submit" value="运营登录"></input>
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
-    					<div @click="forgetFn(300)" class="forget">
+    					<div class="forget">
     						修改密码
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
     					</div>
@@ -122,7 +121,18 @@ export default {
   name: 'landingPage',
   data () {
     return {
-
+		hospitalAccount:{
+			name: '',
+			password: ''
+		},
+		outpatientAccount:{
+			name: '',
+			password: ''
+		},
+		operateAccount:{
+			name: '',
+			password: ''
+		},
 		data:1,
     }
   },
@@ -137,7 +147,7 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    debugger;
+    //debugger;
 	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
@@ -220,11 +230,6 @@ export default {
 	},
   },
   methods:{
-	 //传递页面状态值
-  	forgetFn(e){
-  		this.$store.state.shop.whichClient = e
-  		// console.log(this.isLogin)
-  	},
 	...mapActions(['submit','change'])
   }
 }
@@ -284,6 +289,11 @@ export default {
     -webkit-transform: scale(.5);
     transform: scale(.5);
 }
+
+
+
+
+
 .content{
 	width: 100%;
 	margin-top: .47rem;
@@ -438,10 +448,6 @@ export default {
 .passwordReset img{
 	width: .15rem;
 	height: .15rem;
-}
->>>.van-tab:nth-child(2) span{
-	/* font-size: .24rem; */
-	/* color: rgba(255, 255, 255); */
 }
 .forget{
 	text-align: right;

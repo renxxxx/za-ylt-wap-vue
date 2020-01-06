@@ -12,20 +12,20 @@
 					<button>预览</button>
 				</div>
 			</router-link>
-			
-		</div> 
+
+		</div>
 		<div class="addImg" :style="{'padding-top': (height+47)+'px'}">
 			<img :src="activity.cover" alt="">
 			<div class="addImgTitle">
 				<img src="../../../assets/image/replace@2x.png" alt="">
-				<span>选择背景</span> 
+				<span>选择背景</span>
 			</div>
 			<input
-			    type="file" 
-			    class="upload" 
-			    ref="inputer" 
+			    type="file"
+			    class="upload"
+			    ref="inputer"
 			    accept="image/png,image/jpeg,image/gif,image/jpg"
-			    multiple 
+			    multiple
 				@change="addImg($event)"
 			  />
 		</div>
@@ -82,16 +82,16 @@ export default {
 		},
 	},
 	components:{
-		
+
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
 		var topHeight = this.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join()) 
+		this.height = parseInt(topHeight.join())
 		console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
-    debugger;
+    //debugger;
 	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
@@ -129,7 +129,7 @@ export default {
     next(vm => {
 	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
@@ -191,6 +191,7 @@ export default {
 <style scoped>
 .addAcivity{
 	width: 100%;
+  overflow: hidden;
 }
 .topNav{
 	width: 100%;
@@ -206,7 +207,7 @@ export default {
 	width: 20%;
 	height: .47rem;
 	float:left;
-	
+
 }
 .left>span{
 	width: .32rem;
@@ -247,7 +248,7 @@ export default {
 	height: 1.75rem;
 	overflow: hidden;
 	position: relative;
-	
+
 }
 .addImg>img{
 	width: 100%;
@@ -294,6 +295,7 @@ export default {
 	margin: 0 4.27%;
 	margin-top: .12rem;
 	padding: 0 4%;
+  border: 1px solid #D8D8D8;
 }
 .addcontent textarea{
 	width: 83.46%;
