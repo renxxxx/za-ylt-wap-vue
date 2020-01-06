@@ -65,7 +65,7 @@ export default {
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
-	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 
   },
@@ -81,9 +81,10 @@ export default {
     let vm = this
      debugger;
     let isLogin = localStorage.getItem("isLogin");
+    localStorage.removeItem("isLogin");
+    this.$store.state.shop.isLogin = 0;
     if (isLogin && !isNaN(parseInt(isLogin))) {
       isLogin = parseInt(isLogin);
-      this.$store.state.shop.isLogin = isLogin;
       switch (isLogin) {
         case 100:
           getdata("/hospital/login-refresh", 100);
@@ -97,10 +98,7 @@ export default {
         default:
           break;
       }
-    } else {
-      localStorage.removeItem("isLogin");
-      this.$store.state.shop.isLogin = 0;
-    }
+    } 
 
     function getdata(_postRefresh, _isLogin) {
 			debugger
@@ -110,6 +108,8 @@ export default {
         async: false,
         success: function(res) {
           if (res.code == 0) {
+            vm.$store.state.shop.isLogin = _isLogin;
+            localStorage.setItem("isLogin",_isLogin);
             switch (_isLogin) {
               case 100:
                 vm.$store.state.shop.account.hospitalId =
@@ -136,9 +136,6 @@ export default {
                 vm.$store.state.shop.account.data = res;
                 break;
             }
-          } else {
-            localStorage.removeItem("isLogin");
-            vm.$store.state.shop.isLogin = 0;
           }
         }
       });
@@ -154,11 +151,11 @@ export default {
       });
     },
     handleScroll() {
+		
       let scrollTop =
         this.$refs.appRef.scrollTop ||
         this.$refs.appRef.scrollTop ||
-        this.$refs.appRef.pageYOffset ||
-        this.$refs.appRef.scroll;
+        this.$refs.appRef.pageYOffset;
       let windowHeight =
         document.documentElement.clientHeight || this.$refs.appRef.clientHeight;
       let data =
@@ -177,11 +174,11 @@ export default {
       }
     },
     returnTopFn() {
+		
       var scrollTop =
         this.$refs.appRef.scrollTop ||
         this.$refs.appRef.scrollTop ||
-        this.$refs.appRef.pageYOffset ||
-        this.$refs.appRef.scroll;
+        this.$refs.appRef.pageYOffset;
       let windowHeight =
         document.documentElement.clientHeight || this.$refs.appRef.clientHeight;
       for (let i = 0; i < (scrollTop + windowHeight); i++) {
@@ -207,7 +204,9 @@ body {
   height: 100%;
   width: 100%;
 }
-
+img {
+  object-fit: cover
+}
 #app {
   font-family: "苹方-简 常规体", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -226,7 +225,7 @@ body {
   z-index: 9999;
   position: fixed;
   right: 0.3rem;
-  bottom: 1rem;
+  bottom: 0.6rem;
   opacity: 0;
   width: 0.4rem;
   height: 0.4rem;

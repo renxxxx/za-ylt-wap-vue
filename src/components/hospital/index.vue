@@ -1,4 +1,5 @@
 <template>
+
     <div class="hospital">
   <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" style="height:100%;overflow: auto;">
       <div class="navWarp" :style="{'padding-top': height+'px'}">
@@ -132,11 +133,6 @@ export default {
     var topHeight = this.topHeight.match(heightRexg);
     this.height = parseInt(topHeight.join());
     console.log(this.height);
-	let windowHeight =
-	  document.documentElement.clientHeight || this.$refs.refersh.clientHeight;
-	if(this.$refs.refersh.$el.offsetHeight < windowHeight){
-	  this.$refs.refersh.$el.style.height = '100%';
-	}
   },
   destroyed() {
     //debugger;
@@ -144,7 +140,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     //debugger;
-	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -177,9 +173,8 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
-	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 	
   },
@@ -498,7 +493,6 @@ li:nth-child(8) {
   height: 0.85rem;
   object-fit: cover;
 }
->>>.van-pull-refresh__track{
-	height:100%!important;
-}
+
+
 </style>

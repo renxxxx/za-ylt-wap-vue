@@ -53,7 +53,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     //debugger;
-	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -88,7 +88,7 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 	
   }, mounted() {
@@ -131,11 +131,12 @@ export default {
   methods: {
 	  //回退方法
 	goBackFn(){
-    if(this.isLogin == 100){
-      this.$router.push({ name : 'hospital_clinic',query:{time:new Date().getTime()}});
-    }else{
-      this.$router.push({ name : 'outpatient_hospital',query:{time:new Date().getTime()}});
-    }
+		this.$router.back()
+    // if(this.isLogin == 100){
+    //   this.$router.push({ name : 'hospital_clinic',query:{time:new Date().getTime()}});
+    // }else{
+    //   this.$router.push({ name : 'outpatient_hospital',query:{time:new Date().getTime()}});
+    // }
 	},
 	  // 组件切换
 	switchFn(data){

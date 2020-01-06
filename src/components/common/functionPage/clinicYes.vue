@@ -1,77 +1,78 @@
 <template>
-	<div class="yes">
+	<div class="all">
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh"> -->
-			<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
-				<ul class="hospitalList" v-if="isLogin == 100? true:false">
-					<li v-for="(item,inx) in list.clinicYes" :key="inx">
-						<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+			<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="getNextPage">
+			<ul v-if="isLogin == 100? true:false">
+				<li v-for="(item,inx) in  items" :key="inx">
+					<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+						<div class="style">
 							<div class="contentTitle">
-								<img src="../../../assets/image/blue@2x.png" alt="">
+								<img :src="item.img" alt="">
 								<span>{{item.realname}}</span>
 							</div>
 							<div class="contnet_left">
 								<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
-									<span>状态：已就诊</span>
+								<span>状态：{{item.span}}</span>
 							</div>
-							<div class="content_right">
-								<button  class="buttonColor">{{item.button}}</button>
-							</div>
-						</router-link>
-					</li>
-				</ul>
-				<ul class="clinicList" v-if="isLogin == 200? true:false">
-					<li v-for="(item,inx) in list.clinicYes" :key="inx">
-						<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
-							<div class="content_left">
-								<span>{{item.realname}}</span>
-							</div>
-							<div class="content_right">
-								<img src='../../../assets/image/yijiuzhen@2x.png'>
-								<span class="AlreadySpanColor">已就诊</span>
-							</div>
-							<p>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
-						</router-link>
-					</li>
-				</ul>
-			</van-list>
+						</div>
+					</router-link>
+						<div class="content_right">
+							<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
+						</div>
+				</li>
+			</ul>
+			<ul class="clinicList" v-if="isLogin == 200? true:false">
+				<li v-for="(item,inx) in items" :key="inx">
+					<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+						<div class="content_left">
+							<span>{{item.realname}}</span>
+						</div>
+						<div class="content_right">
+							<img :src='item.img'>
+							<span :class="item.span=='未就诊'? 'no':'yes'">{{item.span}}</span>
+						</div>
+						<p>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
+					</router-link>
+				</li>
+			</ul>
+      </van-list>
 		<!-- </van-pull-refresh> -->
 	</div>
 </template>
-
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 export default {
-	name: 'clinicYes',
+	name: 'clinicAll',
 	data () {
 		return {
-			// list.clinicYes :[],
+			// clinicDetails :[],
 			loading: false,
 			// 加载状态结束
 			finished: false,
-			//显示下拉加载
-			isLoading: false,
-			page : 1,
-			yesNum : 0,
-			yesTitle :'已就诊',
+			// 请求页数
+			page : 0,
+			noNum: 0,
+			yesNum: 0,
+			clinicId:'',
+			items:[],
 		}
 	},
 	computed:{
 	  ...mapGetters(['account','isLogin']),
-
 	},
+	 props:['list'],
 	components:{
 
 	},
-	props:['list'],
 	created () {
-
+		debugger
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
-	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -106,7 +107,7 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 	
   }, mounted() {
@@ -115,63 +116,47 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-    // let winHeight = document.documentElement.clientHeight;                   //视口大小
-    // document.getElementById('list-content').style.height = (winHeight - 46) +'px'  //调整上拉加载框高度
+		console.log(this.$route.name)
+
 	},
-	methods: {
-		// 详情页
-		getdata(){
-			debugger
-			this.yesNum = 0;
-			let clinicId = '';
-      let yesNum = 0;
-			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
-			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
-			this.$axios.post('/c2/patient/items',qs.stringify({
-				kw : this.list.keywords,
-				hospitalId : this.account.hospitalId,
-				clinicId : clinicId,
-				status :4,
-				pn : 1,
-				ps : 10
+	methods:{
+		submitFn(_item,_button){
+			this.$axios.post('/c2/patient/confirmjiuzhen',qs.stringify({
+				patientId : _item.itemId
 			}))
-			.then(_d => {
-				this.list.clinicYes =[];
-				this.page = 2;
-				// console.log( _d.data.data.items.length)
-				if( _d.data.data.items.length == 0){
+			.then(res =>{
+				if(res.data.codeMsg){
+					this.$toast.fail({duration: 1000,message: res.data.codeMsg})
 				}else{
-					for (let nums in _d.data.data.items) {
-						this.list.clinicYes.push({
-							clinicName : _d.data.data.items[nums].clinicName,
-							itemId : _d.data.data.items[nums].itemId,
-							pushTime : _d.data.data.items[nums].pushTime,
-							realname : _d.data.data.items[nums].realname,
-							status : _d.data.data.items[nums].status,
-							button : "已就诊"
-						});
-						yesNum++
+					this.$toast.success({duration: 1000,message: '操作成功'})
+					if(_item.status == 1){
+						console.log(_button.target)
+						_button.target.style.cssText="color:#333333; background-color:#EEEEEE;"
+						_button.target.innerHTML = '已就诊';
 					}
-					this.isLoading = false;
-				}
-				if(this.list.keywords != ''){
-					this.list.yesNum = yesNum;
-					// console.log(yesNum)
-				}else{
-					this.list.yesNum  = _d.data.data.sum.totalCount
 				}
 			})
 			.catch((err)=>{
 				console.log(err);
-				//Dialog({ message: err});;
 			})
 		},
-		nextdata(){
+		search(){
 			debugger
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':'',
+			Object.assign(this.$data, this.$options.data());
+			this.getNextPage()
+		},
+		getData(){
+			debugger
+			let clinicId = '';
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
+			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
+				kw : this.list.keywords,
 				hospitalId : this.account.hospitalId,
 				clinicId : clinicId,
 				status :4,
@@ -179,65 +164,77 @@ export default {
 				ps : 10,
 			}))
 			.then(_d => {
-				this.page++;
 				if(_d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
-						this.list.clinicYes.push({
-							clinicName : _d.data.data.items[nums].clinicName,
-							itemId : _d.data.data.items[nums].itemId,
-							pushTime : _d.data.data.items[nums].pushTime,
-							realname : _d.data.data.items[nums].realname,
-							status : _d.data.data.items[nums].status,
-							button : "已就诊"
-						});
-
+						switch(this.isLogin){
+							case 100:
+							this.items.push({
+								clinicName : _d.data.data.items[nums].clinicName,
+								itemId : _d.data.data.items[nums].itemId,
+								pushTime : _d.data.data.items[nums].pushTime,
+								realname : _d.data.data.items[nums].realname,
+								status : _d.data.data.items[nums].status,
+								img :require( "../../../assets/image/blue@2x.png"),
+								button : "已就诊",
+								buttonColor : "buttonColor",
+								span : "已就诊"
+							});
+							break;
+							case 200:
+							this.items.push({
+								clinicName : _d.data.data.items[nums].clinicName,
+								itemId : _d.data.data.items[nums].itemId,
+								pushTime : _d.data.data.items[nums].pushTime,
+								realname : _d.data.data.items[nums].realname,
+								status : _d.data.data.items[nums].status,
+								img :require( "../../../assets/image/yijiuzhen@2x.png"),
+								span : "已就诊"
+							});
+						}
 					}
 					// 加载状态结束
 					this.loading = false;
 				}else{
-					// this.$notify({
-					// 	message: '数据已全部加载',
-					// 	duration: 1000,
-					// 	background:'#79abf9',
-					// })
 					this.loading = false;
 					this.finished = true;
 				}
 			})
 			.catch((err)=>{
 				console.log(err);
-				//Dialog({ message: '加载失败!'});
-			})
+				//Dialog({ message: err});;
+			});
+
 		},
-		onLoad(){
-			// this.list.keywords? this.nextdata():this.noPostFn;
-			this.nextdata()
+		getNextPage(){
+			 this.page++;
+			 this.getData()
 		},
-		noPostFn(){
-			this.nextdata();
-			// this.loading=false
-		},
-		refresh(){
-			// console.log(this.list.data);
-			this.getdata();
-			// this.getdata()
+		initData() {
+			debugger
+			Object.assign(this.$data, this.$options.data());
+			this.getNextPage();
 		},
 	},
 }
 </script>
 
 <style scoped>
-.yes{
+.all{
 	width: 100%;
+	/* height:100%; */
 }
-.hospitalList li{
+.all li{
 	height:.84rem;
 	width: 91.5%;
 	background-color: #FFFFFF;
 	margin: .12rem auto;
 	border-radius: .14rem;
 	box-shadow: hsla(0, 0%, 0%, 10%) 0rem 0rem 0.1rem 0rem;
-  position: relative;
+	position: relative;
+}
+.style{
+	width: 100%;
+	height: 100%;
 }
 .contentTitle{
 	padding: .09rem 0rem .07rem .1rem;
@@ -278,12 +275,12 @@ export default {
     color: #333333!important;
     background-color: #EEEEEE!important;
 }
-
 .clinicList{
 	margin: 0 .12rem;
 }
 .clinicList li {
 	height:1.01rem;
+  width: 100%;
 	margin-top:.12rem;
 	background-color:#FFFFFF;
 	position:relative;
@@ -301,8 +298,9 @@ export default {
 .content_left{
 	float:left;
 	height:.5rem;
-	margin-top:.14rem;
+	width: 100%;
 	margin-left:.15rem;
+	margin-top:.14rem;
 }
 .content_right{
 	position: absolute;
@@ -316,7 +314,10 @@ export default {
 	height:.11rem;
 	margin-right:.04rem;
 }
-.content_right span{
+.yes{
 	color: #4DD865;
+}
+.no{
+	color: #2B77EF;
 }
 </style>

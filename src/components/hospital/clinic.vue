@@ -1,5 +1,6 @@
 <template>
 	<div class="hospital" :style="{'padding-top': height+'px'}">
+ <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 		<div class="navWarp">
 			<div class="topNav"  :style="{'padding-top': height+'px'}">
 				<div class="hospital_search">
@@ -56,8 +57,9 @@
 			</div>
 		</div>
 		
-		<clinicContent :clinic = 'clinic'></clinicContent>
+		<clinicContent  ref="clinic" :clinic = 'clinic'></clinicContent>
 		
+	  </van-pull-refresh>
 		<bottomNav></bottomNav>
 	</div>
 </template>
@@ -74,8 +76,9 @@ export default {
 	data () {
 		return {
 			clinic : {
-				num : 0
+				num : null
 			},
+			pullingDown:false
 		}
 	},
 	computed:{
@@ -92,8 +95,8 @@ export default {
 		console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
-    //debugger;
-	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	debugger;
+	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -126,9 +129,9 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
+     debugger;
     next(vm => {
-	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 	
   }, 
@@ -144,102 +147,27 @@ export default {
 		}
 		
 		// this.getdata(0);
-		console.log(this.account.data.data.newMessageCount)
+		this.initData()
 	},
 	methods: {	
-		onRefresh() {
-			this.content = []
-			this.getdata(0)
+		 afterPullDown() {
+			//下拉刷新
+		  setTimeout(() => {
+			this.pullingDown = false;
+			this.initData();
+		  }, 500);
 		},
-		getdata(_data){
-			if(_data == 0){
-				this.isLoading = false;
-				this.$axios.post('/c2/clinic/items',qs.stringify({
-					hospitalId : this.account.hospitalId,
-					pn : 1,
-					ps : 10
-				}))
-				.then(res => {
-					if(res.data.data.items.length != 0){
-						// console.log(this.page)
-						for(let i in res.data.data.items){
-						// console.log(res.data.data.items[i])
-						if(!res.data.data.items[i]){
-							// this.$notify({
-							// 	message: '数据已全部加载',
-							// 	duration: 1000,
-							// 	background:'#79abf9',
-							// })
-							// this.loading = false;
-							// this.finished = true;
-						}else{
-							this.content.push(res.data.data.items[i])
-						}
-					}
-					this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
-					}else{
-						// this.$notify({
-						// 	message: '数据已全部加载',
-						// 	duration: 1000,
-						// 	background:'#79abf9',
-						// })
-						this.loading = false;
-						this.finished = true;
-					}
-				})
-				.catch((err)=>{
-					console.log(err);
-					//Dialog({ message: '加载失败!'});
-				})
-			}else if(_data = 1){
-				console.log(this.page)
-				this.page++
-				this.$axios.post('/c2/clinic/items',qs.stringify({
-					hospitalId : this.account.hospitalId,
-					pn : this.page,
-					ps : 10
-				}))
-				.then(res => {
-					if(res.data.data.items.length != 0){
-						// console.log(this.page)
-						for(let i in res.data.data.items){
-						// console.log(res.data.data.items[i])
-						if(!res.data.data.items[i]){
-							// this.$notify({
-							// 	message: '数据已全部加载',
-							// 	duration: 1000,
-							// 	background:'#79abf9',
-							// })
-							// this.loading = false;
-							// this.finished = true;
-						}else{
-							this.content.push(res.data.data.items[i])
-						}
-					}
-					
-					// 加载状态结束
-					this.loading = false;
-					}else{
-						// this.$notify({
-						// 	message: '数据已全部加载',
-						// 	duration: 1000,
-						// 	background:'#79abf9',
-						// })
-						this.loading = false;
-						this.finished = true;
-					}
-				})
-				.catch((err)=>{
-					console.log(err);
-					//Dialog({ message: '加载失败!'});
-				})
-			}
-			
-		},
-		onLoad(){
-			this.getdata(1)
+		initData() {
+			debugger
+		  Object.assign(this.$data, this.$options.data());
+		  this.$refs.clinic.initData();
+		  this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+		  .then(res => {
+		  	this.clinic.num = res.data.data.rowCount;
+		  })
+		  .catch((err)=>{
+		  	console.log(err);
+		  })
 		}
 	},
 }
@@ -249,6 +177,7 @@ export default {
 <style scoped>
 .hospital{
 	width: 100%;
+	height: 100%;
 	background-color: #FFFFFF;
 }
 .navWarp{
@@ -370,4 +299,6 @@ export default {
 	height: 100%;
 	margin-top: 2.1rem;
 }
+
+
 </style>

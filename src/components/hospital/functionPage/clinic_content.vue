@@ -1,8 +1,7 @@
 <template>
 	<div class="content">
-		<!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
 			<ul>
-				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
+				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
 					<li v-for="(items,inx) in content" :key="inx">
 						<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : items.hospitalClinicId,time:new Date().getTime()}}">
 							<div class="contentLi">
@@ -27,14 +26,13 @@ export default {
 	name: 'content',
 	data () {
 		return {
-			isLoading: true,
 			loading: false,
 			finished: false,
 			content : [],
-			page:1
+			page:0
 		}
 	},
-	props:['clinic'],
+	// props:['clinic'],
 	computed:{
 		...mapGetters(['account']),
 	},
@@ -46,7 +44,7 @@ export default {
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
-	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -80,7 +78,7 @@ export default {
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
-	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 	
   }, mounted() {
@@ -88,21 +86,16 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-    this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
-    .then(res => {
-    	this.clinic.num = res.data.data.rowCount;
-    })
-    .catch((err)=>{
-    	console.log(err);
-    })
 	},
 	methods: {
-		onRefresh() {
-			this.page = 1;
-			this.content = [];
-			this.getdata(0)
+		initData() {
+		  Object.assign(this.$data, this.$options.data());
+		  debugger;
+		  console.log(this.content)
+		  this.getNextPage();
 		},
 		getdata(){
+			debugger
 			this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({pn:this.page})+'&'+qs.stringify({ps:10}))
 			.then(res => {
 				if(res.data.data.rows.length != 0){
@@ -126,9 +119,9 @@ export default {
 			})
 
 		},
-		onLoad(){
-			this.getdata()
+		getNextPage(){
 			this.page++
+			this.getdata()
 		},
 	},
 }
@@ -198,4 +191,6 @@ export default {
 	border: 1px solid #FF951B;
 	border-radius: .5rem;
 }
+
+
 </style>

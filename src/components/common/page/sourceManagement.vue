@@ -1,4 +1,5 @@
 <template>
+<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
   <div class="index">
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
@@ -82,6 +83,7 @@
 		</div>
 		<router v-if="isLogin == 200? true:false"></router>
   </div>
+  </van-pull-refresh>
 </template>
 <script>
 import axios from 'axios'
@@ -115,20 +117,8 @@ export default {
 			titleData:0,
 		},
 		height : undefined,
+		pullingDown: false,
     }
-  },
-   beforeRouteLeave(to, from, next) {
-     ;
-    this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-     ;
-    next(vm => {
-      document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
-    });
   },
   created(){
 	  debugger
@@ -138,8 +128,8 @@ export default {
 	// console.log(this.height)
   },
   beforeRouteLeave(to, from, next) {
-    //debugger;
-	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+    debugger;
+	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -172,9 +162,8 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-
     next(vm => {
-	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+		document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 
   }
@@ -188,7 +177,7 @@ export default {
     	//plus.navigator.setStatusBarBackground("#2B77EF");
     	plus.navigator.setStatusBarStyle("dark")
     }
-	this.getNum();
+	this.initData();
   },
   computed:{
 		show: {
@@ -216,6 +205,19 @@ export default {
 	  clinicAll,clinicYes,clinicNo,router
   },
   methods:{
+	 afterPullDown() {
+      //下拉刷新
+		setTimeout(() => {
+			this.pullingDown = false;
+			this.initData();
+		}, 500);
+    },
+    initData() {
+      Object.assign(this.$data, this.$options.data());
+      this.getNum();
+	  console.log(this.$refs)
+       this.$refs.all.initData();
+    },
 	//回退方法
 	goBackFn(){
 		this.$router.back(-1)
@@ -619,4 +621,6 @@ export default {
 	width: 70%;
 
 }
+
+
 </style>

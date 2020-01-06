@@ -1,7 +1,7 @@
 <template>
-  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" style="height:100%;overflow: auto;">
+  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
     <div class="_search" >
-      <div class="top_search"  :style="{'padding-top': height+'px'}">
+      <div class="top_search" :style="{'padding-top': height+'px'}">
         <div class="search_return">
           <a @click="goBackFn">
             <img src="../../../assets/image/shape@3x.png" alt />
@@ -58,7 +58,7 @@ export default {
         pushOver: undefined,
         postState: undefined
       },
-      pullingDown: false
+      pullingDown: false,
     };
   },
   computed: {
@@ -99,8 +99,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     //debugger;
-    this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
+    this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
     if (!to.query.time || !from.query.time || to.query.time < from.query.time) {
       //debugger;
       if (this.$vnode && this.$vnode.data.keepAlive) {
@@ -138,8 +137,7 @@ export default {
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      document.documentElement.scrollTop = document.body.scrollTop =
-        vm.scrollTop;
+      document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
     });
   },
   mounted() {
@@ -147,15 +145,15 @@ export default {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
     }
-
 	// console.log( this.$refs.refersh.$el);
+    this.initData();
   },
   methods: {
     afterPullDown() {
       //下拉刷新
 		setTimeout(() => {
 			this.pullingDown = false;
-			this.$refs.all.getdata();
+			this.initData();
 			
 			// console.log(this.$refs.refersh.$el.offsetHeight)
 			// if(this.list.clinicAll > 7)
@@ -163,7 +161,9 @@ export default {
     },
     initData() {
       Object.assign(this.$data, this.$options.data());
-      this.getNum();
+	  debugger
+      this.getdata();
+      this.$refs.all.initData();
     },
     //显示筛选弹窗
     showPopup() {
@@ -386,7 +386,5 @@ export default {
   border-radius: 0px 100px 100px 0px;
   background-color: #ff951b;
 }
->>>.van-pull-refresh__track{
-	height:100%!important;
-}
+
 </style>

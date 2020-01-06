@@ -26,7 +26,8 @@ Vue.prototype.moment = moment;
 Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
-if(navigator.userAgent.toLowerCase().indexOf('html5plus'))
+debugger
+if(navigator.userAgent.toLowerCase().indexOf('html5plus') != -1)
 	Vue.prototype.topHeight = "24px"
 else
 	Vue.prototype.topHeight = "10px"

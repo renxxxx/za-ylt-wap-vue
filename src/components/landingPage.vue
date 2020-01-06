@@ -9,7 +9,7 @@
     	<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)'
     	title-active-color='rgba(255, 255, 255)' v-model='data'>
     	<van-tab title="医院端" :title-style="{'font-size':(data==0?'.24rem':'.14rem')}" >
-    		<form @submit.prevent="submit(['100',hospitalAccount])" class="content">
+    		<form class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
     				<input type="text"  v-model="hospitalAccount.name" name='name' placeholder="请输入手机号" >
@@ -30,7 +30,7 @@
     					</router-link>
     				</p>
     			</div>
-    			<input class="submitClass" type="submit" value="医院登录"></input>
+    			<button class="submitClass" type="submit" value="门诊登录" @click="submit(['200',hospitalAccount])">医院登陆</button>
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div class="forget">
@@ -42,7 +42,7 @@
     		</form>
     	</van-tab>
     	<van-tab title="门诊端" type="line" border="false" :title-style="{'font-size':(data==1?'.24rem':'.14rem')}" >
-    		<form @submit.prevent="submit(['200',outpatientAccount])" class="content">
+    		<form class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
     				<input type="text"  v-model="outpatientAccount.name" name='name' placeholder="请输入手机号" >
@@ -65,7 +65,7 @@
 					</p>
 					
     			</div>
-    			<input class="submitClass" type="submit" value="门诊登录"></input>
+    			<button class="submitClass" type="submit" value="门诊登录" @click="submit(['200',outpatientAccount])">门诊登陆</button>
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div class="forget">
@@ -77,7 +77,7 @@
     		</form>
     	</van-tab>
     	<van-tab title="运营端" type="line" border="false" :title-style="{'font-size':(data==2?'.24rem':'.14rem')}" >
-    		<form @submit.prevent="submit(['300',operateAccount])" class="content">
+    		<form class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
     				<input type="text"  v-model="operateAccount.name" name='name' placeholder="请输入手机号" >
@@ -98,7 +98,7 @@
 					</router-link>
 					</p>
     			</div>
-    			<input class="submitClass" type="submit" value="运营登录"></input>
+    			<button class="submitClass" type="submit" value="门诊登录" @click="submit(['200',operateAccount])">运营登陆</button>
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div class="forget">
@@ -148,7 +148,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     //debugger;
-	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -183,7 +183,7 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 	
   }, mounted() {
@@ -197,7 +197,6 @@ export default {
 		  if(this.$store.state.shop.isLogin == 100){
 				this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
 				this.$router.push(lastRoute)
-				
 			}else  if(this.$store.state.shop.isLogin == 200){
 				this.$router.replace({ name : 'hospital_sourceManagement',query:{time:new Date().getTime()}})
 				this.$router.push(lastRoute)
@@ -207,7 +206,6 @@ export default {
 			}
   },
   computed:{
-
 	...mapGetters(['checked']),
 	account:{
 		get: function() {

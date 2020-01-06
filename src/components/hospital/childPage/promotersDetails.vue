@@ -70,17 +70,24 @@
 						<h5>{{modify.name}}</h5>
 						<img src="../../../assets/image/down@2x.png" alt="">	
 					</div>
-					<button @click="modifySubmitAllFn">确定</button>
+					<button @click="modifySubmitAllFn()">确定</button>
 				</div>
 			</div>
 		</van-popup>
-		<van-popup v-model="choicePromoterAllShow" position="bottom">
-		  <van-picker show-toolbar :columns="option" @cancel="choicePromoterAllShow = false" @confirm="onConfirm"/>
-		</van-popup>
-		<van-dialog v-model="modify.showAll" show-cancel-button @confirm='modifyPromoterAllFn(clinicNum)'>
+		 <!-- <div class="popup"  v-show="modify.showAll">
+			<div class="diaLog">
+				<h4>全部门诊转移</h4>
+				<p>用户{{promoters.name}}名下的{{clinicNum}}个门诊将转移至{{modify.name}}</p>
+				<div class="dialogButton">
+					<button @click="modifyPromoterNoAllFn">取消</button>
+					<button @click="modifyPromoterAllFn">确定</button>
+				</div>
+			</div>
+		</div> -->
+		<!-- <van-dialog v-model="modify.showAll" show-cancel-button @confirm='modifyPromoterAllFn(clinicNum)'>
 			<h4>全部门诊转移</h4>
 			<span>该推广人名下共有{{clinicNum}}门诊，是否转移</span>
-		</van-dialog>
+		</van-dialog> -->
 		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
 		<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 		<ul>
@@ -88,7 +95,7 @@
 				<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : item.hospitalClinicId}}">
 					<div class="promotersList">
 						<h4>{{item.name}}</h4>
-						<img src="../../../assets/image/zhuanyi@2x.png" alt="" @click="transferPromotersShowFn(item)">
+						<img src="../../../assets/image/zhuanyi@2x.png" alt="" @click.prevent="transferPromotersShowFn(item)">
 					</div>
 				</router-link>
 				<van-popup v-model="modifyPromotersShow" overlay-class='modifyPromotersClass'>
@@ -107,11 +114,15 @@
 				</van-popup>
 				<van-dialog v-model="modify.show" show-cancel-button @confirm='modifyPromoterFn(item)'>
 					<h4>门诊转移</h4>
-					<span>是否将推广人{{promoters.name}}名下的{{item.name}}转移至{{modify.name}}</span>
+					<span>用户{{promoters.name}}下的{{item.name}}将转移至{{modify.name}}</span>
 				</van-dialog>
 			</li>
 		</ul>
-		
+		<div class="popup"  v-if="choicePromoterAllShow">
+		<!-- <van-popup v-model="choicePromoterAllShow" position="bottom"> -->
+		  <van-picker show-toolbar :columns="option" @cancel="cancel" @confirm="onConfirm"/>
+		<!-- </van-popup> -->
+		</div>
 		</van-list>
 	</div>
 </template>
@@ -169,7 +180,7 @@ export default {
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
-	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -204,7 +215,7 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 	
   },
@@ -251,6 +262,10 @@ export default {
 		})
 	},
 	methods: {
+		cancel(){
+			debugger
+			this.choicePromoterAllShow = false
+		},
 		//返回上一级
 		returnFn(){
 			this.$router.back(-1)
@@ -341,6 +356,7 @@ export default {
 		},
 		// 选择推广人确定按钮
 		onConfirm(_value){
+			debugger
 			let promoter= this.option.find((n)=>n.value == _value.value);
 			console.log(promoter)
 			this.modify={
@@ -352,18 +368,44 @@ export default {
 			this.modify.name = promoter.text
 			// console.log(promoter)
 			this.choicePromoterAllShow = false
+			// this.modify.showAll = true;
 		},
 		//修改确定方法的最后确认弹窗显示
 		modifySubmitAllFn(){
-			this.modify.showAll = true
+			this.modify.showAll = true;
+			this.$dialog.confirm({
+			  title: '全部门诊转移',
+			  message: '用户'+this.promoters.name+'名下的'+this.clinicNum+'个门诊将转移至'+this.modify.name
+			}).then(() => {
+			  // on confirm
+				this.$axios.post('/hospital/super-admin/hospital-clinics-alter',qs.stringify({
+					hospitalUserId : this.$route.query.hospitalUserId,
+					hospitalUserIdNew : this.modify.id,
+					expectedRowCount : this.clinicNum,
+				}))
+				.then(res=>{
+					if(!res.data.codeMsg){
+						this.$toast.success('操作成功');
+						this.$router.back(-1)
+					}else{
+						this.$toast.fail(res.data.codeMsg);
+					}
+				})
+				.catch((err)=>{
+					console.log(err);
+				})
+			}).catch(() => {
+			  // on cancel
+			});
 			console.log(this.modify.showAll)
 		},
 		//转移推广人
-		modifyPromoterAllFn(_num){
+		modifyPromoterAllFn(){
+			debugger
 			this.$axios.post('/hospital/super-admin/hospital-clinics-alter',qs.stringify({
 				hospitalUserId : this.$route.query.hospitalUserId,
 				hospitalUserIdNew : this.modify.id,
-				expectedRowCount : _num,
+				expectedRowCount : this.clinicNum,
 			}))
 			.then(res=>{
 				if(!res.data.codeMsg){
@@ -376,6 +418,10 @@ export default {
 			.catch((err)=>{
 				console.log(err);
 			})
+		},
+		modifyPromoterNoAllFn(){
+			debugger
+			this.modify.showAll = false;
 		},
 		//单个的
 		
@@ -701,6 +747,68 @@ export default {
 }
 	
 >>>.van-dialog {
+	z-index: 9999!important;
+}
+
+.popup {
+	z-index: 9995;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,.7);
+}
+.diaLog{
+	position: absolute;
+	height: 2rem;
+	width: 320px;
+	background-color: #FFFFFF;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	border-radius: .15rem;
+	overflow: hidden;
+	z-index: 9997;
+}
+.diaLog h4{
+	height: .55rem;
+	line-height: .55rem;
+	text-align: center;
+	font-size: .17rem;
+}
+.diaLog p{
+	display: block;
+	/* height: .55rem; */
+	line-height: .35rem;
+	margin: 0rem auto .15rem;
+	text-align: center;
+	font-size: .15rem;
+}
+.dialogButton{
+	position: absolute;
+	bottom: 0;
+	height: .5rem;
+	width: 100%;
+}
+.dialogButton button{
+	border: 1px solid #ebedf0;
+	background-color: #FFFFFF;
+	height: 100%;
+	line-height: 100%;
+	width: 50%;
+	font-size: 16px;
+}
+.dialogButton button:last-child{
+	float: right;
+	color: #1989fa;
 	z-index: 9999;
+}
+>>>.van-picker{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }
 </style>
