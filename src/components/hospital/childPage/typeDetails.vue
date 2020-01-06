@@ -191,8 +191,8 @@ export default {
 	methods: {
 		//回退方法
 		goBackFn(){
-			// this.$router.back(-1)
-			this.$router.push({ name : 'hospitalImage',query :{components : "hospital_imageType",time:new Date().getTime()}});
+			this.$router.back(-1)
+			// this.$router.push({ name : 'hospitalImage',query :{components : "hospital_imageType",time:new Date().getTime()}});
 		},
 		//医生介绍
 		doctorAboutFn(_about){
