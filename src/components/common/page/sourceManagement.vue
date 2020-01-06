@@ -1,4 +1,5 @@
 <template>
+<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" style="height:100%;overflow: auto;">
   <div class="index">
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
@@ -82,6 +83,7 @@
 		</div>
 		<router v-if="isLogin == 200? true:false"></router>
   </div>
+  </van-pull-refresh>
 </template>
 <script>
 import axios from 'axios'
@@ -115,6 +117,7 @@ export default {
 			titleData:0,
 		},
 		height : undefined,
+		pullingDown: false,
     }
   },
   created(){
@@ -174,7 +177,7 @@ export default {
     	//plus.navigator.setStatusBarBackground("#2B77EF");
     	plus.navigator.setStatusBarStyle("dark")
     }
-	this.getNum();
+	this.initData();
   },
   computed:{
 		show: {
@@ -202,6 +205,18 @@ export default {
 	  clinicAll,clinicYes,clinicNo,router
   },
   methods:{
+	 afterPullDown() {
+      //下拉刷新
+		setTimeout(() => {
+			this.pullingDown = false;
+			this.initData();
+		}, 500);
+    },
+    initData() {
+      Object.assign(this.$data, this.$options.data());
+      this.getNum();
+      this.$refs.all.initData();
+    },
 	//回退方法
 	goBackFn(){
 		this.$router.back(-1)
@@ -604,5 +619,9 @@ export default {
 	margin-left: .16rem;
 	width: 70%;
 
+}
+
+>>>.van-pull-refresh__track{
+	height:100%!important
 }
 </style>

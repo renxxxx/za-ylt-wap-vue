@@ -1,5 +1,5 @@
 <template>
- <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown">
+ <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" style="height:100%;overflow: auto;">
 	<div class="hospital" :style="{'padding-top': height+'px'}">
 		<div class="navWarp">
 			<div class="topNav"  :style="{'padding-top': height+'px'}">
@@ -57,7 +57,7 @@
 			</div>
 		</div>
 		
-		<clinicContent :clinic = 'clinic'></clinicContent>
+		<clinicContent  ref="clinic" :clinic = 'clinic'></clinicContent>
 		
 		<bottomNav></bottomNav>
 	</div>
@@ -78,6 +78,7 @@ export default {
 			clinic : {
 				num : 0
 			},
+			pullingDown:false
 		}
 	},
 	computed:{
@@ -157,13 +158,17 @@ export default {
       }, 500);
     },
     initData() {
+		debugger
 	  Object.assign(this.$data, this.$options.data());
+	 
+	  this.$refs.clinic.onRefresh();
 	},
 		onRefresh() {
 			this.content = []
 			this.getdata(0)
 		},
 		getdata(_data){
+			debugger
 			if(_data == 0){
 				this.isLoading = false;
 				this.$axios.post('/c2/clinic/items',qs.stringify({
@@ -251,6 +256,7 @@ export default {
 			
 		},
 		onLoad(){
+			debugger
 			this.getdata(1)
 		}
 	},
@@ -381,5 +387,9 @@ export default {
 	width: 100%;
 	height: 100%;
 	margin-top: 2.1rem;
+}
+
+>>>.van-pull-refresh__track{
+	height:100%!important
 }
 </style>

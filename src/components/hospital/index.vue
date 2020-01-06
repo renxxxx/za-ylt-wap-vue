@@ -1,5 +1,5 @@
 <template>
-  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown">
+  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" style="height:100%;overflow:auto;">
     <div class="hospital">
       <div class="navWarp" :style="{'padding-top': height+'px'}">
         <div class="navTitle">
@@ -491,5 +491,9 @@ li:nth-child(8) {
   width: 1.08rem;
   height: 0.85rem;
   object-fit: cover;
+}
+
+>>>.van-pull-refresh__track{
+	height:100%!important
 }
 </style>

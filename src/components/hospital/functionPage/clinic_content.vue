@@ -103,6 +103,7 @@ export default {
 			this.getdata(0)
 		},
 		getdata(){
+			debugger
 			this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({pn:this.page})+'&'+qs.stringify({ps:10}))
 			.then(res => {
 				if(res.data.data.rows.length != 0){
@@ -197,5 +198,9 @@ export default {
 	text-align: center;
 	border: 1px solid #FF951B;
 	border-radius: .5rem;
+}
+
+>>>.van-pull-refresh__track{
+	height:100%!important
 }
 </style>

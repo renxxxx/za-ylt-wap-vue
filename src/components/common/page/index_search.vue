@@ -1,6 +1,6 @@
 <template>
-  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown">
-    <div class="_search">
+  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" style="height:100%;overflow: auto;">
+    <div class="_search" >
       <div class="top_search" :style="{'padding-top': height+'px'}">
         <div class="search_return">
           <a @click="goBackFn">
@@ -58,7 +58,7 @@ export default {
         pushOver: undefined,
         postState: undefined
       },
-      pullingDown: false
+      pullingDown: false,
     };
   },
   computed: {
@@ -148,7 +148,7 @@ export default {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
     }
-    this.getdata();
+    this.initData();
   },
   methods: {
     afterPullDown() {
@@ -160,7 +160,8 @@ export default {
     },
     initData() {
       Object.assign(this.$data, this.$options.data());
-      this.getNum();
+      this.getdata();
+      this.$refs.all.getdata();
     },
     //显示筛选弹窗
     showPopup() {
@@ -382,5 +383,9 @@ export default {
   width: 0.8rem;
   border-radius: 0px 100px 100px 0px;
   background-color: #ff951b;
+}
+
+>>>.van-pull-refresh__track{
+	height:100%!important
 }
 </style>

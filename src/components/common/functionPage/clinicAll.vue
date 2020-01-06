@@ -122,6 +122,11 @@ export default {
     // document.getElementById('list-content').style.height = (winHeight - 46) +'px'  //调整上拉加载框高度
 	},
 	methods:{
+		initData() {
+			debugger
+			Object.assign(this.$data, this.$options.data());
+			this.getdata();
+		},
 		submitFn(_item,_button){
 			console.log(_item.status)
 
