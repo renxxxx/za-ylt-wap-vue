@@ -79,6 +79,10 @@ export default {
 		
 	},
 	mounted () {
+		if(window.plus){
+			//plus.navigator.setStatusBarBackground("#2B77EF");
+			plus.navigator.setStatusBarStyle("dark")
+  		}
 		console.log(this.$route.query.url)
 		this.$axios.get(this.$route.query.url)
 		.then((res)=>{
