@@ -221,7 +221,7 @@ export default {
 }
 .taskDetails ul li p>input{
 	border: none;
-	height: .43rem;
+	height: .38rem;
 	text-align: right;
 	color: #2B77EF;
 }

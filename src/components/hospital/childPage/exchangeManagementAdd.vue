@@ -212,6 +212,7 @@ export default {
 	background-color: #2B77EF;
 	border: none;
 	border-radius: .03rem;
+	padding: 1px 3px;
 }
 .exchangeAdd ul{
 	width: 100%;
@@ -249,7 +250,7 @@ export default {
 }
 .exchangeAdd ul li p>input{
 	border: none;
-	height: .43rem;
+	height: .38rem;
 	text-align: right;
 	color: #2B77EF;
 }

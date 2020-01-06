@@ -235,6 +235,7 @@ export default {
 	background-color: #2B77EF;
 	border: none;
 	border-radius: .03rem;
+	padding: 1px 3px;
 }
 .exchangeEditor ul{
 	width: 100%;
@@ -272,7 +273,7 @@ export default {
 }
 .exchangeEditor ul li p>input{
 	border: none;
-	height: .43rem;
+	height: .38rem;
 	text-align: right;
 	color: #2B77EF;
 }
