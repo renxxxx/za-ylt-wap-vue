@@ -9,7 +9,7 @@
     	<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)'
     	title-active-color='rgba(255, 255, 255)' v-model='data'>
     	<van-tab title="医院端" :title-style="{'font-size':(data==0?'.24rem':'.14rem')}" >
-    		<form class="content">
+    		<div class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
     				<input type="text"  v-model="hospitalAccount.name" name='name' placeholder="请输入手机号" >
@@ -39,10 +39,10 @@
     					</div>
     				</router-link>
     			</div>
-    		</form>
+    		</div>
     	</van-tab>
     	<van-tab title="门诊端" type="line" border="false" :title-style="{'font-size':(data==1?'.24rem':'.14rem')}" >
-    		<form class="content">
+    		<div class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
     				<input type="text"  v-model="outpatientAccount.name" name='name' placeholder="请输入手机号" >
@@ -74,10 +74,10 @@
     					</div>
     				</router-link>
     			</div>
-    		</form>
+    		</div>
     	</van-tab>
     	<van-tab title="运营端" type="line" border="false" :title-style="{'font-size':(data==2?'.24rem':'.14rem')}" >
-    		<form class="content">
+    		<div class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
     				<input type="text"  v-model="operateAccount.name" name='name' placeholder="请输入手机号" >
@@ -107,7 +107,7 @@
     					</div>
     				</router-link>
     			</div>
-    		</form>
+    		</div>
     	</van-tab>
     	</van-tabs>
     </div>
