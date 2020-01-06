@@ -167,7 +167,7 @@ export default {
           ((scrollTop + windowHeight) / this.$refs.appRef.scrollHeight) * 100
         ) / 100;
       // console.log(scrollTop)
-      if (data && scrollTop > 250) {
+      if (data && scrollTop > 1000) {
         this.$refs.returnTopRef.style.opacity = 1;
       } else {
         this.$refs.returnTopRef.style.opacity = 0;

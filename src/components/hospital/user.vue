@@ -198,11 +198,16 @@ export default {
 			},
 			console.log(this.isLogin);
 			localStorage.clear();
-			if(window.plus){
-			  	window.plus.webview.currentWebview().clear()
-				  window.plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
-			}
+
+				
+		if(window.plus){
+			  	plus.webview.currentWebview().clear()
+				plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
+		}
+
+		
 			this.$router.push('/landingPage')
+				location.reload()
 
 		},
 		noLinkFn(){
