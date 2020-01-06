@@ -30,7 +30,7 @@
     					</router-link>
     				</p>
     			</div>
-    			<button class="submitClass" type="submit" value="门诊登录" @click="submit(['100',hospitalAccount])">医院登陆</button>
+    			<button class="submitClass" type="submit" value="医院登录" @click="submit(['100',hospitalAccount])">医院登陆</button>
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div class="forget">
