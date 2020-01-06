@@ -31,7 +31,7 @@ export default {
   beforeCreate() {},
   beforeRouteLeave(to, from, next) {
     debugger;
-	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
+	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || this.$refs.appRef.scrollTop
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -151,11 +151,11 @@ export default {
       });
     },
     handleScroll() {
+		
       let scrollTop =
         this.$refs.appRef.scrollTop ||
         this.$refs.appRef.scrollTop ||
-        this.$refs.appRef.pageYOffset ||
-        this.$refs.appRef.scroll;
+        this.$refs.appRef.pageYOffset;
       let windowHeight =
         document.documentElement.clientHeight || this.$refs.appRef.clientHeight;
       let data =
@@ -174,11 +174,11 @@ export default {
       }
     },
     returnTopFn() {
+		
       var scrollTop =
         this.$refs.appRef.scrollTop ||
         this.$refs.appRef.scrollTop ||
-        this.$refs.appRef.pageYOffset ||
-        this.$refs.appRef.scroll;
+        this.$refs.appRef.pageYOffset;
       let windowHeight =
         document.documentElement.clientHeight || this.$refs.appRef.clientHeight;
       for (let i = 0; i < (scrollTop + windowHeight); i++) {

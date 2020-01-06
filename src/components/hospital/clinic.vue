@@ -1,6 +1,6 @@
 <template>
- <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" style="height:100%;overflow: auto;">
 	<div class="hospital" :style="{'padding-top': height+'px'}">
+ <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 		<div class="navWarp">
 			<div class="topNav"  :style="{'padding-top': height+'px'}">
 				<div class="hospital_search">
@@ -59,9 +59,9 @@
 		
 		<clinicContent  ref="clinic" :clinic = 'clinic'></clinicContent>
 		
+	  </van-pull-refresh>
 		<bottomNav></bottomNav>
 	</div>
-	  </van-pull-refresh>
 </template>
 
 <script>
@@ -76,7 +76,7 @@ export default {
 	data () {
 		return {
 			clinic : {
-				num : 0
+				num : null
 			},
 			pullingDown:false
 		}
@@ -151,113 +151,23 @@ export default {
 	},
 	methods: {	
 		 afterPullDown() {
-      //下拉刷新
-      setTimeout(() => {
-        this.pullingDown = false;
-        this.initData();
-      }, 500);
-    },
-    initData() {
-		debugger
-	  Object.assign(this.$data, this.$options.data());
-	 
-	  this.$refs.clinic.onRefresh();
-	},
-		onRefresh() {
-			this.content = []
-			this.getdata(0)
+			//下拉刷新
+		  setTimeout(() => {
+			this.pullingDown = false;
+			this.initData();
+		  }, 500);
 		},
-		getdata(_data){
+		initData() {
 			debugger
-			if(_data == 0){
-				this.isLoading = false;
-				this.$axios.post('/c2/clinic/items',qs.stringify({
-					hospitalId : this.account.hospitalId,
-					pn : 1,
-					ps : 10
-				}))
-				.then(res => {
-					if(res.data.data.items.length != 0){
-						// console.log(this.page)
-						for(let i in res.data.data.items){
-						// console.log(res.data.data.items[i])
-						if(!res.data.data.items[i]){
-							// this.$notify({
-							// 	message: '数据已全部加载',
-							// 	duration: 1000,
-							// 	background:'#79abf9',
-							// })
-							// this.loading = false;
-							// this.finished = true;
-						}else{
-							this.content.push(res.data.data.items[i])
-						}
-					}
-					this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
-					}else{
-						// this.$notify({
-						// 	message: '数据已全部加载',
-						// 	duration: 1000,
-						// 	background:'#79abf9',
-						// })
-						this.loading = false;
-						this.finished = true;
-					}
-				})
-				.catch((err)=>{
-					console.log(err);
-					//Dialog({ message: '加载失败!'});
-				})
-			}else if(_data = 1){
-				console.log(this.page)
-				this.page++
-				this.$axios.post('/c2/clinic/items',qs.stringify({
-					hospitalId : this.account.hospitalId,
-					pn : this.page,
-					ps : 10
-				}))
-				.then(res => {
-					if(res.data.data.items.length != 0){
-						// console.log(this.page)
-						for(let i in res.data.data.items){
-						// console.log(res.data.data.items[i])
-						if(!res.data.data.items[i]){
-							// this.$notify({
-							// 	message: '数据已全部加载',
-							// 	duration: 1000,
-							// 	background:'#79abf9',
-							// })
-							// this.loading = false;
-							// this.finished = true;
-						}else{
-							this.content.push(res.data.data.items[i])
-						}
-					}
-					
-					// 加载状态结束
-					this.loading = false;
-					}else{
-						// this.$notify({
-						// 	message: '数据已全部加载',
-						// 	duration: 1000,
-						// 	background:'#79abf9',
-						// })
-						this.loading = false;
-						this.finished = true;
-					}
-				})
-				.catch((err)=>{
-					console.log(err);
-					//Dialog({ message: '加载失败!'});
-				})
-			}
-			
-		},
-		onLoad(){
-			debugger
-			this.getdata(1)
+		  Object.assign(this.$data, this.$options.data());
+		  this.$refs.clinic.initData();
+		  this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+		  .then(res => {
+		  	this.clinic.num = res.data.data.rowCount;
+		  })
+		  .catch((err)=>{
+		  	console.log(err);
+		  })
 		}
 	},
 }
@@ -267,6 +177,7 @@ export default {
 <style scoped>
 .hospital{
 	width: 100%;
+	height: 100%;
 	background-color: #FFFFFF;
 }
 .navWarp{
@@ -389,7 +300,5 @@ export default {
 	margin-top: 2.1rem;
 }
 
->>>.van-pull-refresh__track{
-	height:100%!important
-}
+
 </style>

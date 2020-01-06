@@ -1,6 +1,7 @@
 <template>
-  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" style="height:100%;overflow:auto;">
+
     <div class="hospital">
+  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" style="height:100%;overflow: auto;">
       <div class="navWarp" :style="{'padding-top': height+'px'}">
         <div class="navTitle">
           <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
@@ -96,9 +97,9 @@
           </van-list>
         </ul>
       </div>
+	</van-pull-refresh>
       <bottomNav></bottomNav>
     </div>
-  </van-pull-refresh>
 </template>
 
 <script>
@@ -172,7 +173,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
@@ -193,6 +193,7 @@ export default {
       setTimeout(() => {
         this.pullingDown = false;
         this.initData();
+		this.getdata();
       }, 500);
     },
     initData() {
@@ -493,7 +494,5 @@ li:nth-child(8) {
   object-fit: cover;
 }
 
->>>.van-pull-refresh__track{
-	height:100%!important
-}
+
 </style>

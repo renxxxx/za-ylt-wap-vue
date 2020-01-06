@@ -1,5 +1,5 @@
 <template>
-<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" style="height:100%;overflow: auto;">
+<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
   <div class="index">
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
@@ -215,7 +215,8 @@ export default {
     initData() {
       Object.assign(this.$data, this.$options.data());
       this.getNum();
-      this.$refs.all.initData();
+	  console.log(this.$refs)
+       this.$refs.all.initData();
     },
 	//回退方法
 	goBackFn(){
@@ -621,7 +622,5 @@ export default {
 
 }
 
->>>.van-pull-refresh__track{
-	height:100%!important
-}
+
 </style>

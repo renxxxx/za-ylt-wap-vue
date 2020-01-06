@@ -12,15 +12,16 @@
 		<div class="zhangwei"></div>
 		<ul :style="{'padding-top': height+'px'}">
 			<li v-for="(item,inx) in promotersList" :key="inx">
-				<div class="list">
-					<img src="../../../assets/image/ren@2x.png" alt="">
-					<h4>{{item.name}}</h4>
-					<div class="listRight">
-						<span>门诊数：{{item.clinicCount}}</span>
-						<img src="../../../assets/image/right@2x.png" alt="">
+				<router-link :to="{name : 'hospital_promotersDetails',query:{hospitalUserId: item.hospitalUserId}}">
+					<div class="list">
+						<img src="../../../assets/image/ren@2x.png" alt="">
+						<h4>{{item.name}}</h4>
+						<div class="listRight">
+							<span>门诊数：{{item.clinicCount}}</span>
+							<img src="../../../assets/image/right@2x.png" alt="">
+						</div>
 					</div>
-				</div>
-				
+				</router-link>
 			</li>
 		</ul>
 	</div>

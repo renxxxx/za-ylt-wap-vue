@@ -36,9 +36,6 @@
 				</button>
 			</template>
 		</van-swipe-cell>
-		
-			
-		
 	</div>
 </template>
 

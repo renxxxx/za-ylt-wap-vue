@@ -100,7 +100,7 @@ export default {
 	data () {
 		return {
 			// 推广人下拉列表参数
-			value: '001',
+			value: "000",
 			option: [],
 			// 添加列表绑定数据
 			addClinic:{
@@ -179,11 +179,16 @@ export default {
 		.then(res => {
 			if(!res.data.codeMsg){
 				// console.log(res.data.data.rows)
+				this.option.push({
+					'clinicPromoterId' : '',
+					'text' : '请选择',
+					'value' : '000',
+				})
 				for(let i in res.data.data.rows){
 					this.option.push({
 						'clinicPromoterId' : res.data.data.rows[i].hospitalUserId,
 						'text' : res.data.data.rows[i].name,
-						'value' : '00'+i,
+						'value' : '00'+(i+1),
 					})
 				}
 				console.log(this.promotersList)
@@ -242,8 +247,9 @@ export default {
 			  console.log(this.show)
 		},
 		changeFn(id){
+			debugger
 			let promoter= this.option.find((n)=>n.value == id)
-			this.addClinic.clinicPromoterId = promoter.clinicPromoterId
+				this.addClinic.clinicPromoterId = promoter.clinicPromoterId
 			console.log(this.addClinic.clinicPromoterId )
 		},
 		addImg(_fileLIst){

@@ -84,7 +84,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
@@ -97,7 +96,7 @@ export default {
 		this.$axios.post('/c2/project/items',qs.stringify({
 			hospitalId : this.account.hospitalId,
 			pn : 1,
-			ps : 10
+			ps : 999
 		}))
 		.then(res => {
 			if(res.data.data.items.length != 0){

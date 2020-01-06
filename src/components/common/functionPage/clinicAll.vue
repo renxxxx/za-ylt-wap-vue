@@ -1,17 +1,19 @@
 <template>
 	<div class="all">
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh"> -->
-			<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
+			<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="getNextPage">
 			<ul v-if="isLogin == 100? true:false">
-				<li v-for="(item,inx) in list.clinicAll" :key="inx">
+				<li v-for="(item,inx) in  items" :key="inx">
 					<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
-						<div class="contentTitle">
-							<img :src="item.img" alt="">
-							<span>{{item.realname}}</span>
-						</div>
-						<div class="contnet_left">
-							<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
-							<span>状态：{{item.span}}</span>
+						<div class="style">
+							<div class="contentTitle">
+								<img :src="item.img" alt="">
+								<span>{{item.realname}}</span>
+							</div>
+							<div class="contnet_left">
+								<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
+								<span>状态：{{item.span}}</span>
+							</div>
 						</div>
 					</router-link>
 						<div class="content_right">
@@ -20,7 +22,7 @@
 				</li>
 			</ul>
 			<ul class="clinicList" v-if="isLogin == 200? true:false">
-				<li v-for="(item,inx) in list.clinicAll" :key="inx">
+				<li v-for="(item,inx) in items" :key="inx">
 					<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 						<div class="content_left">
 							<span>{{item.realname}}</span>
@@ -50,19 +52,18 @@ export default {
 			loading: false,
 			// 加载状态结束
 			finished: false,
-			//显示下拉加载
-			isLoading: false,
 			// 请求页数
-			page : 1,
+			page : 0,
 			noNum: 0,
 			yesNum: 0,
 			clinicId:'',
+			items:[],
 		}
 	},
 	computed:{
 	  ...mapGetters(['account','isLogin']),
 	},
-	props:['list'],
+	 props:['list'],
 	components:{
 
 	},
@@ -116,20 +117,10 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		console.log(this.$route.name)
-		// console.log(this.list)
-		// this.getdata();
-    // let winHeight = document.documentElement.clientHeight;                   //视口大小
-    // document.getElementById('list-content').style.height = (winHeight - 46) +'px'  //调整上拉加载框高度
+
 	},
 	methods:{
-		initData() {
-			debugger
-			Object.assign(this.$data, this.$options.data());
-			this.getdata();
-		},
 		submitFn(_item,_button){
-			console.log(_item.status)
-
 			this.$axios.post('/c2/patient/confirmjiuzhen',qs.stringify({
 				patientId : _item.itemId
 			}))
@@ -143,119 +134,32 @@ export default {
 						_button.target.style.cssText="color:#333333; background-color:#EEEEEE;"
 						_button.target.innerHTML = '已就诊';
 					}
-					// console.log(this.list.clinicAll.map(item => item.itemId =  _item.itemId).indexOf())
-
 				}
 			})
 			.catch((err)=>{
 				console.log(err);
-				//Dialog({ message: err});;
 			})
+		},
+		sort(){
+			debugger
+			Object.assign(this.$data, this.$options.data());
+			this.getNextPage()
+		},
+		filter(){
+			debugger
+			Object.assign(this.$data, this.$options.data());
+			this.getNextPage()
 		},
 		search(){
 			debugger
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
-			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':''
-			this.$axios.post('/c2/patient/items',qs.stringify({
-				kw : this.list.keywords,
-				hospitalId : this.account.hospitalId,
-				clinicId : clinicId,
-				pn : 1,
-				ps : 10
-			}))
-			.then(_d => {
-				this.list.clinicAll = [];
-				let yesNum = 0;
-				let noNum = 0;
-				let allNum = 0;
-				this.page = 2;
-				if( _d.data.data.items.length == 0){
-					this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
-					this.finished = true;
-				}else{
-					for (let nums in _d.data.data.items) {
-						console.log(_d.data.data.items[nums].status)
-						if(_d.data.data.items[nums].status == 1){
-							switch(this.isLogin){
-								case 100:
-								this.list.clinicAll.push({
-									clinicName : _d.data.data.items[nums].clinicName,
-									itemId : _d.data.data.items[nums].itemId,
-									pushTime : _d.data.data.items[nums].pushTime,
-									realname : _d.data.data.items[nums].realname,
-									status : _d.data.data.items[nums].status,
-									img : require("../../../assets/image/orange@2x.png"),
-									button : "确认就诊",
-									span : "未就诊"
-								});
-								noNum++;
-								break;
-								case 200:
-								this.list.clinicAll.push({
-									clinicName : _d.data.data.items[nums].clinicName,
-									itemId : _d.data.data.items[nums].itemId,
-									pushTime : _d.data.data.items[nums].pushTime,
-									realname : _d.data.data.items[nums].realname,
-									status : _d.data.data.items[nums].status,
-									img :require( "../../../assets/image/weijiuzhen@2x.png"),
-									span : "未就诊"
-								});
-							}
-
-						}else if(_d.data.data.items[nums].status == 4){
-							switch(this.isLogin){
-								case 100:
-								this.list.clinicAll.push({
-									clinicName : _d.data.data.items[nums].clinicName,
-									itemId : _d.data.data.items[nums].itemId,
-									pushTime : _d.data.data.items[nums].pushTime,
-									realname : _d.data.data.items[nums].realname,
-									status : _d.data.data.items[nums].status,
-									img : require("../../../assets/image/blue@2x.png"),
-									button : "已就诊",
-									buttonColor : "buttonColor",
-									span : "已就诊"
-								});
-								yesNum++;
-								break;
-								case 200:
-								this.list.clinicAll.push({
-									clinicName : _d.data.data.items[nums].clinicName,
-									itemId : _d.data.data.items[nums].itemId,
-									pushTime : _d.data.data.items[nums].pushTime,
-									realname : _d.data.data.items[nums].realname,
-									status : _d.data.data.items[nums].status,
-									img : require("../../../assets/image/yijiuzhen@2x.png"),
-									span : "已就诊"
-								});
-							}
-
-						}
-					}
-					if(this.list.keywords != ''){
-						allNum = noNum + yesNum;
-						this.list.allNum = allNum;
-						this.list.noNum = noNum;
-						this.list.yesNum = yesNum;
-					}else{
-						this.list.allNum  = _d.data.data.sum.totalCount;
-					}
-					// this.isLoading = false;
-					// 加载状态结束
-					this.loading = false;
-				}
-			})
-			.catch((err)=>{
-				console.log(err);
-				//Dialog({ message: err});;
-			})
+			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':'',
+			Object.assign(this.$data, this.$options.data());
+			this.getNextPage()
 		},
-		// 详情页
-		getdata(){
+		getData(){
 			debugger
 			let clinicId = '';
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
@@ -263,108 +167,18 @@ export default {
 			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
-				hospitalId : this.account.hospitalId,
-				clinicId : clinicId,
-				pn : 1,
-				ps : 10
-			}))
-			.then(_d => {
-				// 加载状态结束
-				this.list.clinicAll = [];
-				let yesNum = 0;
-				let noNum = 0;
-				let allNum = 0;
-				this.page = 2;
-				if( _d.data.data.items.length != 0){
-					for (let nums in _d.data.data.items) {
-						switch(this.isLogin){
-							case 100:
-							this.list.clinicAll.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								img : require("../../../assets/image/orange@2x.png"),
-								button : "确认就诊",
-								span : "未就诊"
-							});
-							break;
-							case 200:
-							this.list.clinicAll.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								img : require("../../../assets/image/weijiuzhen@2x.png"),
-								span : "未就诊"
-							});
-						}
-					}
-				}else if(_d.data.data.items[nums].status == 4){
-					switch(this.isLogin){
-						case 100:
-						this.list.clinicAll.push({
-							clinicName : _d.data.data.items[nums].clinicName,
-							itemId : _d.data.data.items[nums].itemId,
-							pushTime : _d.data.data.items[nums].pushTime,
-							realname : _d.data.data.items[nums].realname,
-							status : _d.data.data.items[nums].status,
-							img : require("../../../assets/image/blue@2x.png"),
-							button : "已就诊",
-							buttonColor : "buttonColor",
-							span : "已就诊"
-						});
-						break;
-						case 200:
-						this.list.clinicAll.push({
-							clinicName : _d.data.data.items[nums].clinicName,
-							itemId : _d.data.data.items[nums].itemId,
-							pushTime : _d.data.data.items[nums].pushTime,
-							realname : _d.data.data.items[nums].realname,
-							status : _d.data.data.items[nums].status,
-							img : require("../../../assets/image/yijiuzhen@2x.png"),
-							span : "已就诊"
-						});
-					}
-				}
-
-				if(this.list.keywords != ''){
-					allNum = noNum + yesNum;
-					this.list.allNum = allNum;
-					this.list.noNum = noNum;
-					this.list.yesNum = yesNum;
-				}else{
-					this.list.allNum  = _d.data.data.sum.totalCount;
-				}
-			})
-			.catch((err)=>{
-				console.log(err);
-				//Dialog({ message: err});;
-			})
-
-		},
-		nextdata(){
-			debugger
-			let clinicId = '';
-			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
-			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
-			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':''
-			this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
 				clinicId : clinicId,
 				pn : this.page,
 				ps : 10,
 			}))
 			.then(_d => {
-				this.page++;
 				if(_d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
 						if(_d.data.data.items[nums].status == 1){
 							switch(this.isLogin){
 								case 100:
-								this.list.clinicAll.push({
+								this.items.push({
 									clinicName : _d.data.data.items[nums].clinicName,
 									itemId : _d.data.data.items[nums].itemId,
 									pushTime : _d.data.data.items[nums].pushTime,
@@ -376,7 +190,7 @@ export default {
 								});
 								break;
 								case 200:
-								this.list.clinicAll.push({
+								this.items.push({
 									clinicName : _d.data.data.items[nums].clinicName,
 									itemId : _d.data.data.items[nums].itemId,
 									pushTime : _d.data.data.items[nums].pushTime,
@@ -386,23 +200,11 @@ export default {
 									span : "未就诊"
 								});
 							}
-							// this.list.clinicNo.push({
-							// 	clinicName : _d.data.data.items[nums].clinicName,
-							// 	itemId : _d.data.data.items[nums].itemId,
-							// 	pushTime : _d.data.data.items[nums].pushTime,
-							// 	realname : _d.data.data.items[nums].realname,
-							// 	status : _d.data.data.items[nums].status,
-							// 	img : "../../../assets/image/orange@2x.png",
-							// 	button : "确认就诊"
-							// });
-							// this.noNum++;
-							// this.list.noNum = this.noNum;
-							// this.list.noNum = _d.data.data.sum.totalCount
 						}else if(_d.data.data.items[nums].status == 4){
 							// console.log(_d.data.data.items[nums].status )
 							switch(this.isLogin){
 								case 100:
-								this.list.clinicAll.push({
+								this.items.push({
 									clinicName : _d.data.data.items[nums].clinicName,
 									itemId : _d.data.data.items[nums].itemId,
 									pushTime : _d.data.data.items[nums].pushTime,
@@ -415,7 +217,7 @@ export default {
 								});
 								break;
 								case 200:
-								this.list.clinicAll.push({
+								this.items.push({
 									clinicName : _d.data.data.items[nums].clinicName,
 									itemId : _d.data.data.items[nums].itemId,
 									pushTime : _d.data.data.items[nums].pushTime,
@@ -425,27 +227,11 @@ export default {
 									span : "已就诊"
 								});
 							}
-							// this.list.clinicYes.push({
-							// 	clinicName : _d.data.data.items[nums].clinicName,
-							// 	itemId : _d.data.data.items[nums].itemId,
-							// 	pushTime : _d.data.data.items[nums].pushTime,
-							// 	realname : _d.data.data.items[nums].realname,
-							// 	status : _d.data.data.items[nums].status,
-							// 	button : "确认就诊"
-							// });
-							// this.yesNum++;
-							// this.list.yesNum = this.yesNum;
-							// this.list.yesNum  = _d.data.data.sum.totalCount
 						}
 					}
 					// 加载状态结束
 					this.loading = false;
 				}else{
-					// this.$notify({
-					// 	message: '数据已全部加载',
-					// 	duration: 1000,
-					// 	background:'#79abf9',
-					// })
 					this.loading = false;
 					this.finished = true;
 				}
@@ -456,22 +242,15 @@ export default {
 			});
 
 		},
-		onLoad(){
-			this.nextdata()
+		getNextPage(){
+			 this.page++;
+			 this.getData()
 		},
-		yesFn(){
-			// this.isLogin =true;
-			this.nextdata();
+		initData() {
+			debugger
+			Object.assign(this.$data, this.$options.data());
+			this.getNextPage();
 		},
-		noPostFn(){
-			this.nextdata();
-			// this.loading = true;
-		},
-		refresh(){
-			// console.log(this.list.data);
-			this.getdata()
-			// this.getdata()
-		}
 	},
 }
 </script>
@@ -479,6 +258,7 @@ export default {
 <style scoped>
 .all{
 	width: 100%;
+	/* height:100%; */
 }
 .all li{
 	height:.84rem;
@@ -487,7 +267,11 @@ export default {
 	margin: .12rem auto;
 	border-radius: .14rem;
 	box-shadow: hsla(0, 0%, 0%, 10%) 0rem 0rem 0.1rem 0rem;
-  position: relative;
+	position: relative;
+}
+.style{
+	width: 100%;
+	height: 100%;
 }
 .contentTitle{
 	padding: .09rem 0rem .07rem .1rem;
@@ -518,6 +302,7 @@ export default {
 .content_right button{
 	width: .8rem;
 	height: .28rem;
+	line-height: .28rem;
 	color: #FFFFFF;
 	background-color: #2B77EF;
 	border: none;
@@ -550,12 +335,14 @@ export default {
 .content_left{
 	float:left;
 	height:.5rem;
+	width: 100%;
 	margin-left:.15rem;
 	margin-top:.14rem;
 }
 .content_right{
 	position: absolute;
 	height:.5rem;
+	line-height: .5rem;
 	right:.14rem;
 	bottom:0rem;
 }

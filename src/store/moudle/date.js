@@ -130,12 +130,12 @@ const mutations={
 
 	//登录页面的表单验证
 	submitFn(state,_value){
-		// console.log(this.account.name+this.account.password)
-		// state.isLogin = _value[0];
+		console.log(_value[1])
 		let account = _value[1];
 		//debugger;
 		// console.log(account)
 		// console.log(landingState)
+		debugger
 		if(state.checked == true){
 			console.log(_value[0])
 			switch (_value[0]){
