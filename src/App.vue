@@ -187,7 +187,7 @@ export default {
           window.pageYOffset--;
           this.$refs.appRef.scroll--;
           document.documentElement.scrollTop--;
-        }, 10);
+        }, 5);
 
       }
     }
