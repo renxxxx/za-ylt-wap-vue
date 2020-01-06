@@ -204,7 +204,9 @@ body {
   height: 100%;
   width: 100%;
 }
-
+img {
+  object-fit: cover
+}
 #app {
   font-family: "苹方-简 常规体", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

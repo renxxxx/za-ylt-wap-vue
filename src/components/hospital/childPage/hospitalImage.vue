@@ -131,11 +131,12 @@ export default {
   methods: {
 	  //回退方法
 	goBackFn(){
-    if(this.isLogin == 100){
-      this.$router.push({ name : 'hospital_clinic',query:{time:new Date().getTime()}});
-    }else{
-      this.$router.push({ name : 'outpatient_hospital',query:{time:new Date().getTime()}});
-    }
+		this.$router.back()
+    // if(this.isLogin == 100){
+    //   this.$router.push({ name : 'hospital_clinic',query:{time:new Date().getTime()}});
+    // }else{
+    //   this.$router.push({ name : 'outpatient_hospital',query:{time:new Date().getTime()}});
+    // }
 	},
 	  // 组件切换
 	switchFn(data){

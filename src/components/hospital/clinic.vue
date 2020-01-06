@@ -1,4 +1,5 @@
 <template>
+ <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown">
 	<div class="hospital" :style="{'padding-top': height+'px'}">
 		<div class="navWarp">
 			<div class="topNav"  :style="{'padding-top': height+'px'}">
@@ -60,6 +61,7 @@
 		
 		<bottomNav></bottomNav>
 	</div>
+	  </van-pull-refresh>
 </template>
 
 <script>
@@ -144,9 +146,19 @@ export default {
 		}
 		
 		// this.getdata(0);
-		console.log(this.account.data.data.newMessageCount)
+		this.initData()
 	},
 	methods: {	
+		 afterPullDown() {
+      //下拉刷新
+      setTimeout(() => {
+        this.pullingDown = false;
+        this.initData();
+      }, 500);
+    },
+    initData() {
+	  Object.assign(this.$data, this.$options.data());
+	},
 		onRefresh() {
 			this.content = []
 			this.getdata(0)

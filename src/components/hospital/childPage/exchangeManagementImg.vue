@@ -100,7 +100,7 @@ export default {
 	methods: {
 		//回退方法
 		goBackFn(){
-			this.$router.back(-1)
+			this.$router.go(-1)
 			// this.$router.push({ name : 'hospital_exchangeManagementAdd',query : {item : this.commodity}});
 			// exchangeManagementAdd
 		},
@@ -156,7 +156,7 @@ export default {
 				cover : '',
 				show : true,
 			  }
-			this.$router.back(3)
+			this.$router.go(-2)
 		}
 	},
 }
