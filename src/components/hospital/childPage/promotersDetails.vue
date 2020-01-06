@@ -45,8 +45,8 @@
 				<span>该推广人名下共有{{clinicNum}}门诊，是否删除</span>
 			</van-dialog>
 			<div class="titleNav">
-				<div class="headPortrait">
-					<img src="" alt="">
+				<div class="headPortrait" v-show="promotersImg">
+					<img :src="promotersImg" alt="">
 					<span>长按可分享和保存</span>
 				</div>
 				<div class="promotersAbout">
@@ -134,6 +134,7 @@ export default {
 				passwordConfirm: '',
 				cover: '',
 			},		
+			promotersImg:'',
 			promotersList:[],	//推广人列表
 			page:1,		//get请求页数
 			showModify : false,	//修改显示

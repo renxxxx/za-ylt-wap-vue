@@ -11,10 +11,13 @@
 		<div class="article">
 		  <div class="articleTitle">
 		    <img src="../../../assets/image/Combined Shape@2x.png" alt />
-		    <h3>运营精选</h3>
+		    <h3>运营文章</h3>
+			<div class="articleDetails">
+				<span>查看更多</span>
+				<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
+			</div>
 		  </div>
-		  <ul :model="article">
-		    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @check="onLoad">
+		  <ul>
 		      <li v-for="(items,inx) in article" :key="inx">
 		        <router-link
 		          :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
@@ -31,9 +34,44 @@
 		          </div>
 		        </router-link>
 		      </li>
-		    </van-list>
 		  </ul>
 		</div>
+		<div class="article">
+		  <div class="articleTitle">
+		    <img src="../../../assets/image/Combined Shape@2x.png" alt />
+		    <h3>运营文章</h3>
+			<div class="articleDetails">
+				<span>查看更多</span>
+				<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
+			</div>
+		  </div>
+		  <div class="activeList">
+		  	<img src="" alt="">
+		  	<div class="activeTitle">
+		  		<!-- <h4>{{case}}</h4> -->
+		  		<!-- <span>{{moment(item.time).format('YYYY-MM-DD HH:mm')}}</span> -->
+		  	</div>
+		  </div>
+		  <ul>
+		      <li v-for="(items,num) in qualityCase" :key="num">
+		        <router-link
+		          :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
+		        >
+		          <div class="article_left">
+		            <p>{{items.content}}</p>
+		            <div class="article_leftTime">
+		              <img src="../../../assets/image/time@2x.png" alt />
+		              <span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
+		            </div>
+		          </div>
+		          <div class="article_right">
+		            <img :src="items.img" alt />
+		          </div>
+		        </router-link>
+		      </li>
+		  </ul>
+		</div>
+		
 	</div>
 </template>
 
@@ -46,9 +84,7 @@ export default {
 	data () {
 		return {
 			article: [],
-			loading: false,
-			finished: false,
-			page: 1,
+			qualityCase : []
 		}
 	},
 	computed:{
@@ -104,17 +140,14 @@ export default {
 		// console.log('destroyed')
 	},
 	mounted () {
-	
+		this.getdata();
 	},
 	methods: {
-		onLoad() {
-		  this.getdata();
-		},
 		getdata(_data) {
 		  this.$axios.post("/c2/article/items",qs.stringify({
 		        hospitalId: this.account.hospitalId,
-		        pn: this.page,
-		        ps: 10
+		        pn: 1,
+		        ps: 999
 		      })
 		    )
 		    .then(res => {
@@ -128,29 +161,43 @@ export default {
 		              time: res.data.data.items[i].alterTime,
 		              itemId: res.data.data.items[i].itemId
 		            });
-		          } else {
-		            // this.$notify({
-		            // 	message: '数据已全部加载',
-		            // 	duration: 1000,
-		            // 	background:'#79abf9',
-		            // })
 		          }
 		        }
-		        this.loading = false;
-		      } else {
-		        // this.$notify({
-		        // 	message: '数据已全部加载',
-		        // 	duration: 1000,
-		        // 	background:'#79abf9',
-		        // })
-		        this.loading = false;
-		        this.finished = true;
 		      }
 		    })
 		    .catch(err => {
 		      console.log(err);
-		      //Dialog({ message: '加载失败!'});
 		    });
+			this.$axios.post('/c2/project/items',qs.stringify({
+				hospitalId : this.account.hospitalId,
+				pn : 1,
+				ps : 999
+			}))
+			.then(res => {
+				if(res.data.data.items.length != 0){
+					for(let i in res.data.data.items){
+						// console.log(res.data.data.items[i])
+						if(res.data.data.items[i]){
+							this.qualityCase.push({
+								content:res.data.data.items[i].name,
+								img: res.data.data.items[i].cover,
+								time:res.data.data.items[i].alterTime,
+								itemId : res.data.data.items[i].itemId,
+							}) 
+						}else{
+							// this.$notify({
+							// 	message: '数据已全部加载',
+							// 	duration: 1000,
+							// 	background:'#79abf9',
+							// })
+						}
+					}
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				//Dialog({ message: '加载失败!'});
+			})
 		},
 	},
 }
@@ -170,6 +217,7 @@ export default {
 	top:0;
 	border-bottom: 1px solid #E2E2E2;
 	background-color: #FFFFFF;
+	z-index: 999;
 }
 .topNav h3{
 	font-size: .16rem;
@@ -194,14 +242,17 @@ export default {
 }
 
 .article {
-  width: 91.5%;
-  margin: 0rem auto;
   border-top: 1px solid #e5e5e5;
+  background-color: #FFFFFF;
+  margin-top: .1rem;
 }
 .articleTitle {
-  height: 100%;
-  width: 100%;
-  margin-top: 0.2rem;
+	width: 91.5%;
+	margin: 0rem auto;
+	height: 100%;
+	/* line-height: 100%; */
+	/* width: 100%; */
+	margin-top: 0.2rem;
 }
 .articleTitle img {
   float: left;
@@ -212,10 +263,33 @@ export default {
 .articleTitle h3 {
   font-weight: bolder;
   font-size: 0.16rem;
+  display: inline-block;
+}
+.articleDetails{
+	float: right;
+	position: relative;
+	height: .24rem;
+	line-height: .24rem;
+}
+.articleDetails span{
+	color: #666666;
+	font-size: .135rem;
+	display: inline-block;
+	height: .24rem;
+	line-height: .24rem;
+	padding-right: .05rem;
+}
+.articleDetails img{
+	float: right;
+	width: .08rem;
+	height: .13rem;
+	margin: .045rem 0rem;
 }
 .article ul {
   margin-top: 0.2rem;
   width: 100%;
+  width: 91.5%;
+  margin: 0rem auto;
 }
 .article ul li {
   width: 100%;
@@ -265,5 +339,39 @@ export default {
   width: 1.08rem;
   height: 0.85rem;
   object-fit: cover;
+}
+.activeList{
+	width: 93.6%;
+	height: 1.8rem;
+	margin: .12rem auto;
+	position: relative;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+.activeList>img{
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+}
+.activeTitle{
+	position: absolute;
+	color: #FFFFFF;
+	bottom: 0rem;
+	left: 0rem;
+	width: 100%;
+	height: 50%;
+	background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+}
+.activeTitle h4{
+	font-size: .15rem;
+	position: absolute;
+	bottom: .32rem;
+	left: .2rem;
+}
+.activeTitle span{
+	color: #EAF2FF;
+	position: absolute;
+	bottom: .15rem;
+	left: .2rem;
 }
 </style>

@@ -268,6 +268,7 @@ export default {
 .content_right button{
 	width: .8rem;
 	height: .28rem;
+	line-height: .28rem;
 	color: #FFFFFF;
 	background-color: #2B77EF;
 	border: none;
@@ -306,6 +307,7 @@ export default {
 .content_right{
 	position: absolute;
 	height:.5rem;
+	line-height: .5rem;
 	right:.14rem;
 	bottom:0rem;
 }

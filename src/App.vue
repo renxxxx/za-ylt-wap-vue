@@ -31,7 +31,7 @@ export default {
   beforeCreate() {},
   beforeRouteLeave(to, from, next) {
     debugger;
-	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || this.$refs.appRef.scrollTop
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)

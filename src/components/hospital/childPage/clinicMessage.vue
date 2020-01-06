@@ -1,6 +1,6 @@
 <template>
 	<div class="message">
-		<div class="topNav">
+		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -10,6 +10,7 @@
 			<div class="right">
 			</div>
 		</div>
+		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
 		<div class="content">
 			<ul>
 				<li v-for="(item,inx) in clinicMessage" :key='inx'>
@@ -51,8 +52,10 @@ export default {
 	components:{
 		
 	},
-	created () {
-		
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join()) 
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -132,6 +135,12 @@ export default {
 	height: .47rem;
 	line-height: .47rem;
 	background-color: #FFFFFF;
+	position: fixed;
+	top:0;
+	z-index: 999;
+}
+.zhangwei{
+	height: .47rem;
 }
 .leftImg{
 	width: 10%;

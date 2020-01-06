@@ -1,7 +1,7 @@
 <template>
-  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown">
-    <div class="_search">
-      <div class="top_search" :style="{'padding-top': height+'px'}">
+  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" style="height:100%;overflow: auto;">
+    <div class="_search" >
+      <div class="top_search"  :style="{'padding-top': height+'px'}">
         <div class="search_return">
           <a @click="goBackFn">
             <img src="../../../assets/image/shape@3x.png" alt />
@@ -96,13 +96,11 @@ export default {
     var heightRexg = /^[0-9]*/g;
     var topHeight = this.topHeight.match(heightRexg);
     this.height = parseInt(topHeight.join());
-    console.log(this.height);
   },
   beforeRouteLeave(to, from, next) {
     //debugger;
     this.scrollTop =
       document.documentElement.scrollTop || document.body.scrollTop;
-
     if (!to.query.time || !from.query.time || to.query.time < from.query.time) {
       //debugger;
       if (this.$vnode && this.$vnode.data.keepAlive) {
@@ -139,7 +137,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
       document.documentElement.scrollTop = document.body.scrollTop =
         vm.scrollTop;
@@ -150,15 +147,19 @@ export default {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
     }
-    this.getdata();
+
+	// console.log( this.$refs.refersh.$el);
   },
   methods: {
     afterPullDown() {
       //下拉刷新
-      setTimeout(() => {
-        this.pullingDown = false;
-        this.initData();
-      }, 500);
+		setTimeout(() => {
+			this.pullingDown = false;
+			this.$refs.all.getdata();
+			
+			// console.log(this.$refs.refersh.$el.offsetHeight)
+			// if(this.list.clinicAll > 7)
+		}, 500);
     },
     initData() {
       Object.assign(this.$data, this.$options.data());
@@ -317,7 +318,7 @@ export default {
   height: 0.11rem;
   margin-right: 0.04rem;
 }
->>> [data-v-6bfd94e2] .van-pull-refresh {
+>>>.van-pull-refresh{
   overflow: visible !important;
   -webkit-user-select: none;
   user-select: none;
@@ -384,5 +385,8 @@ export default {
   width: 0.8rem;
   border-radius: 0px 100px 100px 0px;
   background-color: #ff951b;
+}
+>>>.van-pull-refresh__track{
+	height:100%!important;
 }
 </style>

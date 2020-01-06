@@ -1,6 +1,6 @@
 <template>
-  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown">
     <div class="hospital">
+  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" style="height:100%;overflow: auto;">
       <div class="navWarp" :style="{'padding-top': height+'px'}">
         <div class="navTitle">
           <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
@@ -96,9 +96,9 @@
           </van-list>
         </ul>
       </div>
+	</van-pull-refresh>
       <bottomNav></bottomNav>
     </div>
-  </van-pull-refresh>
 </template>
 
 <script>
@@ -132,6 +132,11 @@ export default {
     var topHeight = this.topHeight.match(heightRexg);
     this.height = parseInt(topHeight.join());
     console.log(this.height);
+	let windowHeight =
+	  document.documentElement.clientHeight || this.$refs.refersh.clientHeight;
+	if(this.$refs.refersh.$el.offsetHeight < windowHeight){
+	  this.$refs.refersh.$el.style.height = '100%';
+	}
   },
   destroyed() {
     //debugger;
@@ -193,6 +198,7 @@ export default {
       setTimeout(() => {
         this.pullingDown = false;
         this.initData();
+		this.getdata();
       }, 500);
     },
     initData() {
@@ -491,5 +497,8 @@ li:nth-child(8) {
   width: 1.08rem;
   height: 0.85rem;
   object-fit: cover;
+}
+>>>.van-pull-refresh__track{
+	height:100%!important;
 }
 </style>

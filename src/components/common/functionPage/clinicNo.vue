@@ -304,6 +304,7 @@ debugger
 .content_right button{
 	width: .8rem;
 	height: .28rem;
+	line-height: .28rem;
 	color: #FFFFFF;
 	background-color: #2B77EF;
 	border: none;
@@ -335,12 +336,14 @@ debugger
 .content_left{
 	float:left;
 	height:.5rem;
+	
 	margin-top:.14rem;
 	margin-left:.15rem;
 }
 .content_right{
 	position: absolute;
 	height:.5rem;
+	line-height: .5rem;
 	right:.14rem;
 	bottom:0rem;
 }

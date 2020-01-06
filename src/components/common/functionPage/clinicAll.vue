@@ -3,15 +3,17 @@
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh"> -->
 			<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 			<ul v-if="isLogin == 100? true:false">
-				<li v-for="(item,inx) in list.clinicAll" :key="inx">
+				<li v-for="(item,inx) in  list.clinicAll" :key="inx">
 					<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
-						<div class="contentTitle">
-							<img :src="item.img" alt="">
-							<span>{{item.realname}}</span>
-						</div>
-						<div class="contnet_left">
-							<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
-							<span>状态：{{item.span}}</span>
+						<div class="style">
+							<div class="contentTitle">
+								<img :src="item.img" alt="">
+								<span>{{item.realname}}</span>
+							</div>
+							<div class="contnet_left">
+								<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
+								<span>状态：{{item.span}}</span>
+							</div>
 						</div>
 					</router-link>
 						<div class="content_right">
@@ -253,6 +255,10 @@ export default {
 		getdata(){
 			debugger
 			let clinicId = '';
+			loading= false,
+			// 加载状态结束
+			finished= false,
+			this.list.clinicAll = [];
 			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
 			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
 			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':''
@@ -272,57 +278,60 @@ export default {
 				this.page = 2;
 				if( _d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
-						switch(this.isLogin){
-							case 100:
-							this.list.clinicAll.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								img : require("../../../assets/image/orange@2x.png"),
-								button : "确认就诊",
-								span : "未就诊"
-							});
-							break;
-							case 200:
-							this.list.clinicAll.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								img : require("../../../assets/image/weijiuzhen@2x.png"),
-								span : "未就诊"
-							});
+						if(_d.data.data.items[nums].status == 4){
+							switch(this.isLogin){
+								case 100:
+								this.list.clinicAll.push({
+									clinicName : _d.data.data.items[nums].clinicName,
+									itemId : _d.data.data.items[nums].itemId,
+									pushTime : _d.data.data.items[nums].pushTime,
+									realname : _d.data.data.items[nums].realname,
+									status : _d.data.data.items[nums].status,
+									img : require("../../../assets/image/blue@2x.png"),
+									button : "已就诊",
+									buttonColor : "buttonColor",
+									span : "已就诊"
+								});
+								break;
+								case 200:
+								this.list.clinicAll.push({
+									clinicName : _d.data.data.items[nums].clinicName,
+									itemId : _d.data.data.items[nums].itemId,
+									pushTime : _d.data.data.items[nums].pushTime,
+									realname : _d.data.data.items[nums].realname,
+									status : _d.data.data.items[nums].status,
+									img : require("../../../assets/image/yijiuzhen@2x.png"),
+									span : "已就诊"
+								});
+							}
+						}else if(_d.data.data.items[nums].status == 1){
+							switch(this.isLogin){
+								case 100:
+								this.list.clinicAll.push({
+									clinicName : _d.data.data.items[nums].clinicName,
+									itemId : _d.data.data.items[nums].itemId,
+									pushTime : _d.data.data.items[nums].pushTime,
+									realname : _d.data.data.items[nums].realname,
+									status : _d.data.data.items[nums].status,
+									img : require("../../../assets/image/orange@2x.png"),
+									button : "确认就诊",
+									span : "未就诊"
+								});
+								break;
+								case 200:
+								this.list.clinicAll.push({
+									clinicName : _d.data.data.items[nums].clinicName,
+									itemId : _d.data.data.items[nums].itemId,
+									pushTime : _d.data.data.items[nums].pushTime,
+									realname : _d.data.data.items[nums].realname,
+									status : _d.data.data.items[nums].status,
+									img : require("../../../assets/image/weijiuzhen@2x.png"),
+									span : "未就诊"
+								});
+							}
 						}
 					}
-				}else if(_d.data.data.items[nums].status == 4){
-					switch(this.isLogin){
-						case 100:
-						this.list.clinicAll.push({
-							clinicName : _d.data.data.items[nums].clinicName,
-							itemId : _d.data.data.items[nums].itemId,
-							pushTime : _d.data.data.items[nums].pushTime,
-							realname : _d.data.data.items[nums].realname,
-							status : _d.data.data.items[nums].status,
-							img : require("../../../assets/image/blue@2x.png"),
-							button : "已就诊",
-							buttonColor : "buttonColor",
-							span : "已就诊"
-						});
-						break;
-						case 200:
-						this.list.clinicAll.push({
-							clinicName : _d.data.data.items[nums].clinicName,
-							itemId : _d.data.data.items[nums].itemId,
-							pushTime : _d.data.data.items[nums].pushTime,
-							realname : _d.data.data.items[nums].realname,
-							status : _d.data.data.items[nums].status,
-							img : require("../../../assets/image/yijiuzhen@2x.png"),
-							span : "已就诊"
-						});
-					}
+					
 				}
 
 				if(this.list.keywords != ''){
@@ -474,6 +483,7 @@ export default {
 <style scoped>
 .all{
 	width: 100%;
+	/* height:100%; */
 }
 .all li{
 	height:.84rem;
@@ -482,7 +492,11 @@ export default {
 	margin: .12rem auto;
 	border-radius: .14rem;
 	box-shadow: hsla(0, 0%, 0%, 10%) 0rem 0rem 0.1rem 0rem;
-  position: relative;
+	position: relative;
+}
+.style{
+	width: 100%;
+	height: 100%;
 }
 .contentTitle{
 	padding: .09rem 0rem .07rem .1rem;
@@ -513,6 +527,7 @@ export default {
 .content_right button{
 	width: .8rem;
 	height: .28rem;
+	line-height: .28rem;
 	color: #FFFFFF;
 	background-color: #2B77EF;
 	border: none;
@@ -545,12 +560,14 @@ export default {
 .content_left{
 	float:left;
 	height:.5rem;
+	width: 100%;
 	margin-left:.15rem;
 	margin-top:.14rem;
 }
 .content_right{
 	position: absolute;
 	height:.5rem;
+	line-height: .5rem;
 	right:.14rem;
 	bottom:0rem;
 }
