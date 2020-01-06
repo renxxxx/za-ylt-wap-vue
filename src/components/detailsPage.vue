@@ -427,6 +427,7 @@ export default {
 	line-height: .45rem;
 	margin: 0 .16rem;
 	border-bottom: 1px solid #E5E5E5;
+	position: relative;
 }
 /* ._message ul li:last-child{
 	border: none;
@@ -436,12 +437,17 @@ export default {
 	font-size: .13rem;
 }
 ._message ul li input{
-	float: right;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
 	border: none;
 	font-size: .13rem;
-	height: .43rem;
+	height: .35rem;
 	text-align: right;
 	background-color: #FFFFFFF!important;
+	width: 40%;
+	margin: auto 0rem;
 }
 ._photo{
 	width: 100%;

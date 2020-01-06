@@ -336,22 +336,6 @@ export default {
 .inputBox input:last-child{
 	margin-top: .2rem;
 }
-.inputBox input::-webkit-input-placeholder {
-                /* Chrome/Opera/Safari */
-                font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
-            }
-            ::-moz-placeholder {
-                /* Firefox 19+ */
-                font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
-            }
-            :-ms-input-placeholder {
-                /* IE 10+ */
-                font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
-            }
-            :-moz-placeholder {
-                /* Firefox 18- */
-               font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
-            }
 >>>.van-hairline--top-bottom{
 	display: block;
    width: 100%!important;
