@@ -196,13 +196,12 @@ export default {
 		localStorage.clear();
 
 	
-if(window.plus){
+		if(window.plus){
 			  	plus.webview.currentWebview().clear()
-				  plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
-				  }
+				plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
+		}
 
-				  	location.replace(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
-			location.reload()
+	this.$router.push('/landingPage')
 
 	}
   },
