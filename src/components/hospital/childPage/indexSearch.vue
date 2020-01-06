@@ -18,7 +18,7 @@
 					<h3>合作门诊 {{clinic.num}}</h3>
 				</div>
 				<div class="titleRight">
-					<router-link :to="{name : 'hospital_addCLinic',time:new Date().getTime()}">
+					<router-link :to="{name : 'hospital_addCLinic',query:{time:new Date().getTime()}}">
 						<span>新增</span>
 						<img src="../../../assets/image/xinzeng@2x.png" alt="">
 					</router-link>
@@ -61,7 +61,7 @@ export default {
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
-	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -96,7 +96,7 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 	
   }, mounted() {

@@ -92,8 +92,8 @@ export default {
 		console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
-    //debugger;
-	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	debugger;
+	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -126,9 +126,9 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
+     debugger;
     next(vm => {
-	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 	
   }, 

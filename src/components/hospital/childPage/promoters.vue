@@ -8,10 +8,10 @@
 				<h3>人员列表</h3>
 			</div>
 			<div class="right">
-				<router-link :to="{name:'hospital_promotersSearch',time:new Date().getTime()}">
+				<router-link :to="{name:'hospital_promotersSearch',query:{time:new Date().getTime()}}">
 					<img src="../../../assets/image/sousuo@2x.png" alt="">
 				</router-link>
-				<router-link :to="{name:'hospital_addPromoters',time:new Date().getTime()}">
+				<router-link :to="{name:'hospital_addPromoters',query:{time:new Date().getTime()}}">
 					<img src="../../../assets/image/tianjia@2x.png" alt="">
 				</router-link>
 			</div>
@@ -59,7 +59,7 @@ export default {
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
-	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -94,7 +94,7 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-	  document.documentElement.scrollTop=document.body.scrollTop = vm.scrollTop;
+	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 	
   },
