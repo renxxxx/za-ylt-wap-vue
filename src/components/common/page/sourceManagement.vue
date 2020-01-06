@@ -8,12 +8,12 @@
 				<div class="indexReturn" @click="goBackFn" v-if="isLogin == 100? true:false">
 					<img src="../../../assets/image/back-white@2x.png" alt="">
 				</div>
-			<div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
 				<router-link :to="{name:'outpatient_search',query:{focus : true,time:new Date().getTime()}}">
+			<div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
 					<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
 					<img src="../../../assets/image/sousuo@2x.png" alt="">
-				</router-link>
 			</div>
+				</router-link>
 			<router-link :to="{name:'outpatient_search',query:{time:new Date().getTime()}}">
 				<div class="clinic_buttton">
 					<button>搜索</button>
@@ -326,29 +326,14 @@ export default {
 .indexSearch input{
 	border-radius: .18rem;border: none;
 	height: .335rem;width: 2.4rem;
-  /* line-height: .3rem; */
-	padding: 0;
+	line-height: .3rem;
+	/* padding: 0; */
 	width: 84%;
 	padding-left: 12%;
 	/* margin:0 5%; */
 	background: #F5F5F5;
+	font-size:.15rem;
 }
-.indexSearch input::-webkit-input-placeholder {
-        /* Chrome/Opera/Safari */
-        font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
-    }
-    ::-moz-placeholder {
-        /* Firefox 19+ */
-        font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
-    }
-    :-ms-input-placeholder {
-        /* IE 10+ */
-        font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
-    }
-    :-moz-placeholder {
-        /* Firefox 18- */
-       font-size:.15rem;padding:.065rem 0rem .06rem 0rem;
-    }
 .clinic_buttton{
 	float: left;
 	margin-top: .024rem;
