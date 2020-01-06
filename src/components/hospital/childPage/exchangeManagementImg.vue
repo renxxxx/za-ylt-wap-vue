@@ -156,7 +156,7 @@ export default {
 				cover : '',
 				show : true,
 			  }
-			this.$router.push({ name : 'hospital_exchangeManagement',query:{time:new Date().getTime()}});
+			this.$router.back(3)
 		}
 	},
 }

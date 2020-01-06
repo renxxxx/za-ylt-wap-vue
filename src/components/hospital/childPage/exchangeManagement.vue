@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>兑换管理</h3>
 			</div>
-			<router-link :to="{name : 'hospital_exchangeManagementList',time:new Date().getTime()}">
+			<router-link :to="{name : 'hospital_exchangeManagementList',query:{time:new Date().getTime()}}">
 				<div class="right">
 					<img src="../../../assets/image/liebiao@3x.png" alt="">
 				</div>
@@ -16,7 +16,7 @@
 		<div class="zhangwei"></div>
 		<div class="exchangeTitle" :style="{'padding-top': height+'px'}">
 			<h3>已有商品</h3>
-			<router-link :to="{name : 'hospital_exchangeManagementAdd',time:new Date().getTime()}">
+			<router-link :to="{name : 'hospital_exchangeManagementAdd',query:{time:new Date().getTime()}}">
 				<div class="add">
 					<span>新增</span>
 					<img src="../../../assets/image/xinzeng@2x.png" alt="">
