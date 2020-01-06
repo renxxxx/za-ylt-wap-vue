@@ -102,7 +102,7 @@
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div class="forget">
-    						修改密码
+    						忘记密码
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
     					</div>
     				</router-link>
@@ -417,7 +417,7 @@ export default {
 	color: #5ab5fc;
 }
 .passwordReset{
-	/* margin-top: .05rem; */
+	 margin-top: .09rem;
 	height: .17rem;
 }
 .passwordRese{
