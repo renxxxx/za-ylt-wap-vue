@@ -217,6 +217,8 @@ export default {
       this.getNum();
 	  console.log(this.$refs)
        this.$refs.all.initData();
+	   this.$refs.no.initData();
+	   this.$refs.yes.initData();
     },
 	//回退方法
 	goBackFn(){
