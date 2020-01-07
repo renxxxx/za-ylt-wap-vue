@@ -245,6 +245,7 @@ export default {
 	width: .75rem;
 	height: .75rem;
 	position: relative;
+	border-radius: 50%;
 }
 .top_left span{
 	position: absolute;

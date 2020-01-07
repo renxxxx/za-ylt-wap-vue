@@ -5,16 +5,16 @@
 		</div>
 		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
 		<div class="typeNav">
-			<img src="../../../assets/image/qudaomenzhen@2.png" alt="">
-			<img src="../../../assets/image/bingyuanguanli@2.png" alt="">
+			<img src="../../assets/image/qudaomenzhen@2.png" alt="">
+			<img src="../../assets/image/bingyuanguanli@2.png" alt="">
 		</div>
-		<div class="article">
+		<div class="article" v-if="article.length">
 		  <div class="articleTitle">
-		    <img src="../../../assets/image/Combined Shape@2x.png" alt />
+		    <img src="../../assets/image/Combined Shape@2x.png" alt />
 		    <h3>运营文章</h3>
 			<div class="articleDetails">
 				<span>查看更多</span>
-				<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
+				<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 			</div>
 		  </div>
 		  <ul>
@@ -25,7 +25,7 @@
 		          <div class="article_left">
 		            <p>{{items.content}}</p>
 		            <div class="article_leftTime">
-		              <img src="../../../assets/image/time@2x.png" alt />
+		              <img src="../../assets/image/time@2x.png" alt />
 		              <span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
 		            </div>
 		          </div>
@@ -36,23 +36,23 @@
 		      </li>
 		  </ul>
 		</div>
-		<div class="article">
+		<div class="article" v-if="qualityCase.length">
 		  <div class="articleTitle">
-		    <img src="../../../assets/image/Combined Shape@2x.png" alt />
-		    <h3>运营文章</h3>
+		    <img src="../../assets/image/huodong@2x.png" alt />
+		    <h3>推广活动</h3>
 			<div class="articleDetails">
 				<span>查看更多</span>
-				<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
+				<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 			</div>
 		  </div>
 		  <div class="activeList">
-		  	<img src="" alt="">
+		  	<img :src="qualityCase[0].img" alt="">
 		  	<div class="activeTitle">
-		  		<!-- <h4>{{case}}</h4> -->
-		  		<!-- <span>{{moment(item.time).format('YYYY-MM-DD HH:mm')}}</span> -->
+		  		<h4>{{qualityCase[0].content}}</h4>
+		  		<span>{{moment(qualityCase[0].time).format('YYYY-MM-DD HH:mm')}}</span>
 		  	</div>
 		  </div>
-		  <ul>
+		  <ul style="">
 		      <li v-for="(items,num) in qualityCase" :key="num">
 		        <router-link
 		          :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
@@ -60,7 +60,7 @@
 		          <div class="article_left">
 		            <p>{{items.content}}</p>
 		            <div class="article_leftTime">
-		              <img src="../../../assets/image/time@2x.png" alt />
+		              <img src="../../assets/image/time@2x.png" alt />
 		              <span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
 		            </div>
 		          </div>
@@ -71,7 +71,8 @@
 		      </li>
 		  </ul>
 		</div>
-		
+		<div style="height: .5rem;"></div>
+		<bottomNav></bottomNav>
 	</div>
 </template>
 
@@ -79,6 +80,8 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import bottomNav from './functionPage/bottomNav.vue'
+
 export default {
 	name: 'index',
 	data () {
@@ -91,7 +94,7 @@ export default {
 	  ...mapGetters(["account"])
 	},
 	components:{
-		
+		bottomNav
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
@@ -168,7 +171,7 @@ export default {
 		    .catch(err => {
 		      console.log(err);
 		    });
-			this.$axios.post('/c2/project/items',qs.stringify({
+			this.$axios.post('/c2/activity/items',qs.stringify({
 				hospitalId : this.account.hospitalId,
 				pn : 1,
 				ps : 999
@@ -179,18 +182,14 @@ export default {
 						// console.log(res.data.data.items[i])
 						if(res.data.data.items[i]){
 							this.qualityCase.push({
-								content:res.data.data.items[i].name,
+								content:res.data.data.items[i].title,
 								img: res.data.data.items[i].cover,
 								time:res.data.data.items[i].alterTime,
 								itemId : res.data.data.items[i].itemId,
 							}) 
-						}else{
-							// this.$notify({
-							// 	message: '数据已全部加载',
-							// 	duration: 1000,
-							// 	background:'#79abf9',
-							// })
 						}
+						
+						
 					}
 				}
 			})

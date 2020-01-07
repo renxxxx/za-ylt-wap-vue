@@ -117,9 +117,8 @@ export default {
 		},
 		//获取数据
 		getdata(){
-			 
 			// console.log(this.Time)
-      this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({kw:this.keywords}))
+		this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({kw:this.keywords}))
 			.then(_d => {
 				this.$refs.content.content = _d.data.data.rows
 			})
