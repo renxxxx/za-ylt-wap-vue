@@ -200,14 +200,12 @@ export default {
 			localStorage.clear();
 
 				
+
 		if(window.plus){
 			  	plus.webview.currentWebview().clear()
-				plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/landingPage')
+				//plus.webview.currentWebview().loadURL(aa)
 		}
-
-		
-			this.$router.push('/landingPage')
-				location.reload()
+		location.href=location.pathname
 
 		},
 		noLinkFn(){

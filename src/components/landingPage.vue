@@ -186,7 +186,9 @@ export default {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 	
-  }, mounted() {
+  }, 
+  mounted() {
+	
 	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#2B77EF");
