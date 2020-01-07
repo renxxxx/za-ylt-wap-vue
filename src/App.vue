@@ -219,7 +219,6 @@ img[lazy="error"]{
     object-fit:scale-down!important;
  }
 
-
 #app {
   font-family: "苹方-简 常规体", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -229,6 +228,10 @@ img[lazy="error"]{
   height: 100%;
   overflow: scroll;
   /* background-color: #F5F5F5; */
+
+   overflow-y: scroll;
+	touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
 }
 
 [v-cloak] {

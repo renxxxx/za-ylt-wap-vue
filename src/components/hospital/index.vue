@@ -193,7 +193,6 @@ export default {
       setTimeout(() => {
         this.pullingDown = false;
         this.initData();
-		this.getdata();
       }, 500);
     },
     initData() {
