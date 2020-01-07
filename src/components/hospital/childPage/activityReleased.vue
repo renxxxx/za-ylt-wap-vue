@@ -22,7 +22,7 @@
 			<van-cell :border="false" >
 				<router-link :to="{name : 'hospital_activityDetails',query:{itemId:item.itemId,time:new Date().getTime()}}">
 					<div class="activeList">
-						<img :src="item.cover" alt="">
+						<img v-lazy="item.cover" alt="">
 						<div class="activeTitle">
 							<h4>{{item.title}}</h4>
 							<span>{{moment(item.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
