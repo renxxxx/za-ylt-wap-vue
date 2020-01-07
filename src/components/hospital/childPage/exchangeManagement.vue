@@ -29,7 +29,7 @@
 					<router-link :to="{name : 'hospital_exchangeEditor' ,query : {itemId : item.itemId,time:new Date().getTime()}}">
 						<div class="list">
 							<div class="listsImg">
-								<img :src="item.cover" alt="">
+								<img v-if="item.cover"  v-lazy="item.cover" alt="">
 							</div>
 							<div class="listContent">
 								<h4>{{item.name}}</h4>

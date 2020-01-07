@@ -13,7 +13,7 @@
 		</div> 
 		<div class="zhangwei"></div>
 		<div class="activeList" :model='active' :style="{'padding-top': height+'px'}">
-			<img :src="active.cover" alt="">
+			<img v-lazy="active.cover" alt="">
 			<div class="activeTitle">
 				<h4>{{active.title}}</h4>
 				<span>{{moment(active.startTime).format('YYYY-MM-DD HH:mm')}} - {{moment(active.endTime).format('YYYY-MM-DD HH:mm')}}</span>

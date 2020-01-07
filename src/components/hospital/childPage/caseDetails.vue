@@ -6,7 +6,7 @@
 		</div>
 		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
 		<div class="banner" v-show="!!caseInfo.cover">
-			<img :src="caseInfo.cover"  alt="">
+			<img v-lazy="caseInfo.cover"  alt="">
 		</div>
 		<div class="content" >
 			<h3>{{caseInfo.name}}</h3>

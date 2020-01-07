@@ -207,6 +207,17 @@ body {
 img {
   object-fit: cover
 }
+
+img[lazy="loading"]{
+   
+    object-fit:scale-down!important;
+ }
+
+img[lazy="error"]{
+    object-fit:scale-down!important;
+ }
+
+
 #app {
   font-family: "苹方-简 常规体", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

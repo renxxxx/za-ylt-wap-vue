@@ -10,7 +10,7 @@
           <van-swipe>
             <van-swipe-item v-for="(image, index) in images" :key="index">
               <router-link :to="{name : image.url}">
-                <img v-lazy="image.cover" class="silder_img" />
+                <img  v-lazy="image.cover" class="silder_img" />
               </router-link>
             </van-swipe-item>
           </van-swipe>
@@ -90,7 +90,7 @@
                   </div>
                 </div>
                 <div class="article_right">
-                  <img :src="items.img" alt />
+                  <img v-if="items.img"  v-lazy="items.img" alt />
                 </div>
               </router-link>
             </li>
