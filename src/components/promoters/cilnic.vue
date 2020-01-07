@@ -4,47 +4,11 @@
 			<div class="navWarp">
 				<div class="topNav"  :style="{'padding-top': height+'px'}">
 					<div class="hospital_search">
-						<router-link :to="{name : 'hospital_indexSearch',query:{time:new Date().getTime()}}">
+						<router-link :to="{name : 'promoters_clinicSearch',query:{time:new Date().getTime()}}">
 							<input type="text" placeholder="搜索门诊">
 							<img src="../../assets/image/sousuo@2x.png" alt="">
 						</router-link>
 					</div>
-					<router-link :to="{name : 'hospital_clinicMessage',query:{time:new Date().getTime()}}">
-						<div class="hospital_information">
-							<img src="../../assets/image/xiaoxi@2x.png" alt="">
-							<div class="num" v-if="this.account.data.data.newMessageCount? true:false">
-								<span>{{this.account.data.data.newMessageCount}}</span>
-							</div>
-						</div>
-					</router-link>
-				</div>
-				<div class="shared">
-					<ul>
-						<router-link :to="{name : 'hospitalImage',query:{time:new Date().getTime()}}">
-							<li>
-								<img src="../../assets/image/yiyuanxingxiang@2x.png" alt=""/>
-								<span>医院形象</span>
-							</li>
-						</router-link>
-						<router-link  :to="{name : 'hospital_case',query:{time:new Date().getTime()}}">
-							<li>
-								<img src="../../assets/image/youzhianli@2x.png" alt=""/>
-								<span>优质案例</span>
-							</li>
-						</router-link>
-						<router-link :to="{name : 'hospital_expertsIntroduction',query:{time:new Date().getTime()}}">
-							<li>
-								<img src="../../assets/image/zhuanjia@2x.png" alt=""/>
-								<span>专家介绍</span>
-							</li>
-						</router-link>
-						<router-link :to="{name : 'hospital_activityReleased',query:{time:new Date().getTime()}}">
-							<li>
-								<img src="../../assets/image/huodongfabu@2x.png" alt=""/>
-								<span>最新活动</span>
-							</li>
-						</router-link>
-					</ul>
 				</div>
 				<div class="statisticalTitle" v-model="clinic">
 					<h3>合作门诊 {{clinic.num}}</h3>
@@ -56,10 +20,24 @@
 					</div>
 				</div>
 			</div>
-			
-			<clinicContent  ref="clinic" :clinic = 'clinic'></clinicContent>
-			
+			<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
+			<div class="content">
+				<ul>
+					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
+						<li v-for="(items,inx) in content" :key="inx">
+							<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : items.hospitalClinicId,time:new Date().getTime()}}">
+								<div class="contentLi">
+									<h4>{{items.name}}</h4>
+									<span>推广人: {{items.hospitalUserName}}</span>
+									<input type="text" v-model="items.patientCount" readonly="readonly">
+								</div>
+							</router-link>
+						</li>
+					</van-list>
+				</ul>
+			</div>
 		</van-pull-refresh>
+		<div style="height: .5rem;"></div>
 		<bottomNav></bottomNav>
 	</div>
 </template>
@@ -70,7 +48,7 @@ import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 import bottomNav from './functionPage/bottomNav.vue'
-import clinicContent from './functionPage/clinic_content.vue'
+// import clinicContent from './functionPage/clinic_content.vue'
 export default {
 	name: 'clinic',
 	data () {
@@ -78,14 +56,19 @@ export default {
 			clinic : {
 				num : null
 			},
-			pullingDown:false
+			pullingDown:false,
+			loading: false,
+			finished: false,
+			content : [],
+			page:0
 		}
 	},
 	computed:{
 	  ...mapGetters(['account'])
 	},
 	components:{
-		clinicContent,bottomNav
+		// clinicContent,
+		bottomNav
 	},
 	created(){
 		debugger
@@ -160,15 +143,44 @@ export default {
 		initData() {
 			debugger
 		  Object.assign(this.$data, this.$options.data());
-		  this.$refs.clinic.initData();
-		  this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+		  // this.$refs.clinic.initData();
+		  this.$axios.get('/hospital/operator/hospital-clinics-sum?')
 		  .then(res => {
 		  	this.clinic.num = res.data.data.rowCount;
 		  })
 		  .catch((err)=>{
 		  	console.log(err);
 		  })
-		}
+		  this.getNextPage();
+		},
+		getNextPage(){
+			this.page++
+			this.getdata();
+		},
+		getdata(){
+			debugger
+			this.$axios.get('/hospital/operator/hospital-clinics?'+qs.stringify({pn:this.page})+'&'+qs.stringify({ps:10}))
+			.then(res => {
+				if(res.data.data.rows.length != 0){
+					for(let i in res.data.data.rows){
+						if(res.data.data.rows[i]){
+							this.content.push(res.data.data.rows[i])
+						}
+						// console.log(this.content)
+					}
+				// 加载状态结束
+				this.loading = false;
+				}else{
+					this.loading = false;
+					this.finished = true;
+				}
+				// this.clinic.num = res.data.data.sum.totalCount;
+		
+			})
+			.catch((err)=>{
+				console.log(err);
+			})
+		},
 	},
 }
 </script>
@@ -182,20 +194,25 @@ export default {
 }
 .navWarp{
 	width: 100%;
-	height: 2.3rem;
+	height: 1.2rem;
 	background-color: #FFFFFF;
 	position: fixed;
 	top:0;
 	z-index: 3;
+}
+.zhangwei{
+	height: 1.2rem;
+	width: 100%;
 }
 .topNav{
 	width: 100%;
 	height: .42rem;
 }
 .hospital_search{
-	float:left;
-	width: 85.9%;
+	/* float:left; */
+	width: 100%;
 	position: relative;
+	margin: 0rem auto;
 }
 .hospital_search input{
 	margin: .08rem 0rem 0rem .16rem;
@@ -213,58 +230,7 @@ export default {
 	top: .18rem;
 	left: 9.8%;
 }
-.hospital_information{
-	float:left;
-	width: 10.3%;
-	margin-left: .14rem;
-	margin-top: .15rem;
-	position: relative;
-}
-.hospital_information img{
-	width: .19rem;
-	height: .24rem;
-}
-.num{
-	height: .18rem;
-	width: .18rem;
-	line-height: .18rem;
-	text-align: center;
-	background-color: #FF951B;
-	border-radius: 50%;
-	color: #FFFFFF;
-	font-size: .12rem;
-	position: absolute;
-	top: -6px;
-	right: 12px;
-	display: -webkit-box;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	word-wrap: break-word;
-	-webkit-line-clamp: 1;
-	-webkit-box-orient: vertical;
-}
-.shared{
-	height: .73rem;
-	width: 89%;
-	margin: 0rem auto;
-	margin-top: .3rem;
-}
-.shared ul{
-	width: 100%;
-	margin-top: .25rem;
-}
-.shared ul li{
-	width: 25%;
-	float: left;
-	text-align: center;
-}
-.shared ul li img{
-	width: .56rem;
-	height: .43rem;
-	display: block;
-	margin: 0 auto;
-	margin-bottom: .12rem;
-}
+
 .statisticalTitle{
 	margin-top: .25rem;
 	width: 100%;
@@ -294,11 +260,72 @@ export default {
 	margin-left: .05rem;
 	margin-top: -.03rem;
 }
+
 .content{
 	width: 100%;
 	height: 100%;
-	margin-top: 2.1rem;
+	/* margin-top: 2.1rem; */
+}
+.content ul{
+	width: 94.6%;
+	margin: 0 auto;
+	/* text-align: center; */
+}
+.content ul li{
+	width: 48.6%;
+	height: 1.1rem;
+	display: inline-block;
+	margin-top: .1rem;
+	background-color: #FFFFFF;
+	text-align: center;
+}
+/* .content ul li:first-child {
+    margin-top: 2.1rem;
+} */
+>>>.van-pull-refresh {
+    overflow: visible;
+    -webkit-user-select: none;
+    user-select: none;
+    /* margin-top: 2rem; */
+}
+.content ul li:nth-child(1),.content ul li:nth-child(2){
+	margin-top: 0rem;
+}
+.content ul li:nth-child(2n){
+	margin-left:1.71% ;
+}
+.content ul li:first-child{
+	margin-top: .2rem;
+}
+.content ul li:last-child{
+	margin-bottom: .49rem;
+}
+.contentLi{
+	height: .82rem;
+	/* margin-top: .19rem; */
+	margin: .14rem auto;
+}
+.contentLi h4{
+	font-size: .14rem;
+	font-weight: bold;
+	display: block;
+	margin-top: .19rem;
+}
+.contentLi span{
+	display: block;
+	margin-top: .05rem;
+	margin-bottom: .09rem;
+	color: #999999;
+}
+.contentLi input{
+	width: .9rem;
+	height: .24rem;
+	text-align: center;
+	border: 1px solid #FF951B;
+	border-radius: .5rem;
 }
 
 
+
 </style>
+

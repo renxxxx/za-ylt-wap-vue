@@ -1,5 +1,31 @@
 <template>
-	<div class="content">
+	<div class="search_clinic">
+		<div class="navWarp" :style="{'padding-top': height+'px'}">
+			<div class="topNav">
+				<div class="clinic_information" @click="goBackFn">
+					<img src="../../../assets/image/shape@3x.png" alt="">
+				</div>
+				<div class="clinic_search">
+					<input type="text" placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
+					<img src="../../../assets/image/sousuo@2x.png" alt="">
+				</div>
+				<div class="clinic_buttton" @click="inputNow">
+					<button>搜索</button>
+				</div>
+			</div>
+			<div class="listTitle">
+				<div class="titleleft">
+					<h3>合作门诊 {{clinic.num}}</h3>
+				</div>
+				<div class="titleRight">
+					<router-link :to="{name : 'hospital_addCLinic',query:{time:new Date().getTime()}}">
+						<span>新增</span>
+						<img src="../../../assets/image/xinzeng@2x.png" alt="">
+					</router-link>
+				</div>
+			</div>
+		</div>
+		<div class="content">
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
 					<li v-for="(items,inx) in content" :key="inx">
@@ -13,33 +39,39 @@
 					</li>
 				</van-list>
 			</ul>
-		<!-- </van-pull-refresh> -->
+		</div>
+
 	</div>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
-import qs from 'qs'
-import { Dialog } from 'vant'
+import qs from 'qs';
 export default {
-	name: 'content',
+	name: 'search',
 	data () {
 		return {
+			keywords : '',
+			content : [],
+			clinic : {
+				num : 0
+			},
 			loading: false,
 			finished: false,
-			content : [],
 			page:0
 		}
 	},
-	// props:['clinic'],
 	computed:{
+		...mapGetters(['account'])
 	},
 	components:{
-
 	},
-	created () {
-
+	created(){
+		var heightRexg = /^[0-9]*/g
+		var topHeight = this.topHeight.match(heightRexg)
+		this.height = parseInt(topHeight.join())
+		console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -84,18 +116,35 @@ export default {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
-		}
+		};
+		this.initData()
 	},
 	methods: {
+		goBackFn(){
+			this.$router.back(-1)
+		},
 		initData() {
+			debugger
 		  Object.assign(this.$data, this.$options.data());
-		  debugger;
-		  console.log(this.content)
+		  // this.$refs.clinic.initData();
+		  this.$axios.get('/hospital/operator/hospital-clinics-sum?')
+		  .then(res => {
+		  	this.clinic.num = res.data.data.rowCount;
+		  })
+		  .catch((err)=>{
+		  	console.log(err);
+		  })
 		  this.getNextPage();
 		},
+		getNextPage(){
+			this.page++
+			this.getdata();
+		},
+		//获取数据
 		getdata(){
+			// console.log(this.Time)
 			debugger
-			this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({pn:this.page})+'&'+qs.stringify({ps:10}))
+			this.$axios.get('/hospital/operator/hospital-clinics?'+qs.stringify({kw:this.keywords})+'&'+qs.stringify({pn:this.page})+'&'+qs.stringify({ps:10}))
 			.then(res => {
 				if(res.data.data.rows.length != 0){
 					for(let i in res.data.data.rows){
@@ -110,22 +159,130 @@ export default {
 					this.loading = false;
 					this.finished = true;
 				}
-				// this.clinic.num = res.data.data.sum.totalCount;
-
 			})
 			.catch((err)=>{
 				console.log(err);
 			})
 		},
-		getNextPage(){
-			this.page++
-			this.getdata()
+		//键盘输入值时触发
+		inputNow(_keywordsCode){
+			this.content = [];
+			this.page = 1;
+			this.getdata();
 		},
 	},
 }
 </script>
 
 <style scoped>
+.search_clinic{
+	width: 100%;
+}
+.navWarp{
+	width: 100%;
+	height: .98rem;
+	background-color: #FFFFFF;
+	position: fixed;
+	top:0;
+	z-index: 3;
+}
+.topNav{
+	width: 100%;
+	height: .42rem;
+}
+.clinic_search{
+	float:left;
+	width: 78.3%;
+	position: relative;
+}
+.clinic_search input{
+	margin: .09rem 0rem 0rem 0rem;
+	height:.33rem;
+	width: 83%;
+	border: none;
+	border-radius: .33rem;
+	padding-left: 11.6%;
+	background-color: rgba(0, 0, 0, 0.05);
+}
+.clinic_search img{
+	width: .14rem;
+	height: .15rem;
+	position: absolute;
+	top: .18rem;
+	left: 4.8%;
+}
+.clinic_buttton{
+	float: left;
+	margin-top: .14rem;
+	margin-left: -.05rem;
+}
+.clinic_buttton button{
+	color: #FFFFFF;
+	background-color: #2B77EF;
+	border-radius: .15rem;
+	border: none;
+	height: .28rem;
+	width: .45rem;
+}
+
+.clinic_information{
+	float:left;
+	width: 5.3%;
+	margin-left: .16rem;
+	margin-top: .17rem;
+}
+.clinic_information img{
+	width: .09rem;
+	height: .15rem;
+}
+.listTitle{
+	width: 84%;
+	height: .26rem;
+	margin: 0rem auto;
+	margin-top: .3rem;
+}
+.titleleft{
+	float: left;
+	height: .26rem;
+	line-height: .26rem;
+}
+.titleleft h3{
+	font-size: .16rem;
+	font-weight: bolder;
+}
+.titleRight{
+	float: right;
+	height: .26rem;
+	line-height: .26rem;
+}
+.titleRight span{
+	font-size: .15rem;
+}
+.titleRight img{
+	width: .19rem;
+	height: .19rem;
+	margin-left: .05rem;
+	margin-top: -.03rem;
+}
+.content[data-v-3c6a3c8a] {
+    width: 100%;
+    height: 100%;
+    margin-top: 0rem;
+
+}
+>>>.van-pull-refresh {
+    overflow: visible;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-top: .98rem!important;
+}
+.content{
+    width: 100%;
+    height: 100%;
+    margin-top: .98rem;
+}
 .content{
 	width: 100%;
 	height: 100%;
@@ -151,7 +308,7 @@ export default {
     overflow: visible;
     -webkit-user-select: none;
     user-select: none;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
 }
 .content ul li:nth-child(1),.content ul li:nth-child(2){
 	margin-top: 0rem;
@@ -189,6 +346,4 @@ export default {
 	border: 1px solid #FF951B;
 	border-radius: .5rem;
 }
-
-
 </style>

@@ -77,6 +77,7 @@ export default {
 
 
   },
+  
   created() {
     let vm = this
      debugger;
@@ -190,7 +191,8 @@ export default {
         }, 5);
 
       }
-    }
+    },
+		
   }
 };
 </script>

@@ -12,9 +12,14 @@ import userAgreement from '@/components/userAgreement.vue'
 //病员管理页面页
 import hospital_sourceManagement from '@/components/common/page/sourceManagement.vue'
 
-//推广人端主页面
-import promoters_index from '@/components/promoters/page/index.vue'
-
+//推广人端首页主页面
+import promoters_index from '@/components/promoters/index.vue'
+//推广人端门诊主页面
+import promoters_cilnic from '@/components/promoters/cilnic.vue'
+//推广人端用户主页面
+import promoters_user from '@/components/promoters/user.vue'
+// 医院端用户搜索主页
+import promoters_clinicSearch from '@/components/promoters/page/clinicSearch.vue'
 
 //门诊端页面及其组件
 //门诊端病员主页
@@ -146,7 +151,6 @@ const router = new Router({
 			name: 'hospital_gene',
 			component: hospital_gene,
 			// meta: {auth:true},
-
 		},
 		{
 			// 医院端用户主页
@@ -154,7 +158,6 @@ const router = new Router({
 			name: 'hospital_user',
 			component: hospital_user,
 			// meta: {auth:true},
-
 		},
 		{
 			// 医院端门诊主页搜索页面
@@ -467,10 +470,31 @@ const router = new Router({
 		},
 		
 		{
-			//推广人端主页面
+			//推广人端首页主页面
 			path: '/promoters_index',
 			name: 'promoters_index',
 			component: promoters_index,
+			meta: {auth:true},
+		},
+		{
+			//推广人端门诊主页面
+			path: '/promoters_cilnic',
+			name: 'promoters_cilnic',
+			component: promoters_cilnic,
+			meta: {auth:true},
+		},
+		{
+			//推广人端用户主页面
+			path: '/promoters_user',
+			name: 'promoters_user',
+			component: promoters_user,
+			meta: {auth:true},
+		},
+		{
+			// 医院端用户搜索主页
+			path: '/promoters_clinicSearch',
+			name: 'promoters_clinicSearch',
+			component: promoters_clinicSearch,
 			meta: {auth:true},
 		},
 		{
