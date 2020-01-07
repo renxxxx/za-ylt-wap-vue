@@ -166,6 +166,7 @@ Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab
 		loading:require('./assets/image/loading.gif'),
 		error:require('./assets/image/loading-error.png'),
 		attempt:1,
+		preload:1.3,
 	  }).use(ActionSheet).use(Grid)
 	.use(GridItem).use(SwipeCell).use(Circle).use(Toast).use(ImagePreview).use(Progress).use(Picker);
 //配置全局时间
