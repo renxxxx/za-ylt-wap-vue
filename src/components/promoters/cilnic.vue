@@ -13,7 +13,7 @@
 				<div class="statisticalTitle" v-model="clinic">
 					<h3>合作门诊 {{clinic.num}}</h3>
 					<div class="statisticalAdd">
-						<router-link :to="{name : 'hospital_addCLinic',query:{time:new Date().getTime()}}">
+						<router-link :to="{name : 'promoters_addClinic',query:{time:new Date().getTime()}}">
 							<span>新增</span>
 							<img src="../../assets/image/xinzeng@2x.png" alt="">
 						</router-link>
@@ -25,7 +25,7 @@
 				<ul>
 					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
 						<li v-for="(items,inx) in content" :key="inx">
-							<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : items.hospitalClinicId,time:new Date().getTime()}}">
+							<router-link :to="{name : 'promoters_sourceManagement' ,query :  {clinicId : items.hospitalClinicId,time:new Date().getTime()}}">
 								<div class="contentLi">
 									<h4>{{items.name}}</h4>
 									<span>推广人: {{items.hospitalUserName}}</span>

@@ -18,8 +18,12 @@ import promoters_index from '@/components/promoters/index.vue'
 import promoters_cilnic from '@/components/promoters/cilnic.vue'
 //推广人端用户主页面
 import promoters_user from '@/components/promoters/user.vue'
-// 医院端用户搜索主页
+// 推广人用户搜索主页
 import promoters_clinicSearch from '@/components/promoters/page/clinicSearch.vue'
+// 推广人新增门诊页
+import promoters_addClinic from '@/components/promoters/page/addClinic.vue'
+// 推广人病源管理页
+import promoters_sourceManagement from '@/components/promoters/page/sourceManagement.vue'
 
 //门诊端页面及其组件
 //门诊端病员主页
@@ -491,10 +495,24 @@ const router = new Router({
 			meta: {auth:true},
 		},
 		{
-			// 医院端用户搜索主页
+			// 推广人用户搜索主页
 			path: '/promoters_clinicSearch',
 			name: 'promoters_clinicSearch',
 			component: promoters_clinicSearch,
+			meta: {auth:true},
+		},
+		{
+			// 推广人新增门诊页
+			path: '/promoters_addClinic',
+			name: 'promoters_addClinic',
+			component: promoters_addClinic,
+			meta: {auth:true},
+		},
+		{
+			// 推广人病源管理页
+			path: '/promoters_sourceManagement',
+			name: 'promoters_sourceManagement',
+			component: promoters_sourceManagement,
 			meta: {auth:true},
 		},
 		{

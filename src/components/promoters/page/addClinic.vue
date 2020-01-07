@@ -24,12 +24,6 @@
 							<input type="text" v-model="addClinic.name"  placeholder="请填写">
 						</li>
 						<li>
-							<span>推广人</span>
-							<van-dropdown-menu>
-								<van-dropdown-item  v-model="value" :options="option" active-color='#2B77EF' @change="changeFn"/>
-							</van-dropdown-menu>
-						</li>
-						<li>
 							<span>分配账号</span>
 							<input type="text" maxlength="11" v-model="addClinic.phone"  placeholder="请填写">
 						</li>
@@ -63,7 +57,7 @@
 							<span>备注</span>
 							<input type="text" v-model="addClinic.remark" placeholder="请填写">
 						</li>
-						<li class="popup" v-model="imageUpload" @click="showFn">
+						<li class="popup" @click="showFn">
 							<span>营业执照</span>
 							<div class="uploadPictures">
 								 <input
@@ -92,16 +86,11 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import { Dialog } from 'vant'
-import clinic_content from '../functionPage/clinic_content.vue'
-import { Toast } from 'vant'
+import { Dialog,Toast } from 'vant'
 export default {
 	name: 'search',
 	data () {
 		return {
-			// 推广人下拉列表参数
-			value:'000',
-			option: [],
 			// 添加列表绑定数据
 			addClinic:{
 				name : '',        //医院名称
@@ -125,7 +114,7 @@ export default {
 		...mapGetters(['account']),
 	},
 	components:{
-		clinic_content
+		
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
@@ -134,7 +123,6 @@ export default {
 		console.log(this.height)
 	},
 	beforeRouteLeave(to, from, next) {
-     ;
     this.scrollTop =
 	  document.documentElement.scrollTop || document.body.scrollTop;
 	  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
@@ -178,30 +166,6 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-
-		this.$axios.get('/hospital/def/hospital-operator-users?')
-		.then(res => {
-			if(!res.data.codeMsg){
-				// console.log(res.data.data.rows)
-				this.option.push({
-					'clinicPromoterId' : '',
-					'text' : '请选择',
-					'value' : '000',
-				})
-				for(let i in res.data.data.rows){
-					this.option.push({
-						'clinicPromoterId' : res.data.data.rows[i].hospitalUserId,
-						'text' : res.data.data.rows[i].name,
-						'value' : '00'+(i+1),
-					})
-				}
-				this.addClinic.clinicPromoterId = this.option[0].clinicPromoterId
-				// console.log(this.promotersList)
-			}
-		})
-		.catch((err)=>{
-			console.log(err);
-		})
 	},
 	methods: {
 		// 返回键
@@ -216,11 +180,6 @@ export default {
 		closeFn() {
 		      this.show = false;
 			  console.log(this.show)
-		},
-		changeFn(id){
-			let promoter= this.option.find((n)=>n.value == id)
-			this.addClinic.clinicPromoterId = promoter.clinicPromoterId
-			// console.log(this.addClinic.clinicPromoterId )
 		},
 		addImg(_fileLIst){
 			var file = _fileLIst.target.files[0]
@@ -246,7 +205,7 @@ export default {
 		// 保存方法
 		saveFn(){
 			console.log(this.addClinic)
-			this.$axios.post('/hospital/super-admin/hospital-clinic-add',qs.stringify({
+			this.$axios.post('/hospital/operator/hospital-clinic-add',qs.stringify({
 				hospitalClinicId : this.account.hospitalId,
 				name :  this.addClinic.name,        //医院名称
 				hospitalUserId : this.addClinic.clinicPromoterId,	//推广人id
