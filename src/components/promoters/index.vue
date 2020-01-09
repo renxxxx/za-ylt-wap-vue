@@ -5,7 +5,9 @@
 		</div>
 		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
 		<div class="typeNav">
-			<img src="../../assets/image/qudaomenzhen@2.png" alt="">
+			<router-link :to="{name : 'promoters_clinicSearch',query:{time:new Date().getTime()}}">
+				<img src="../../assets/image/qudaomenzhen@2.png" alt="">
+			</router-link>
 			<img src="../../assets/image/bingyuanguanli@2.png" alt="">
 		</div>
 		<div class="article" v-if="article.length">
