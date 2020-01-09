@@ -22,12 +22,24 @@ import promoters_user from '@/components/promoters/user.vue'
 import promoters_clinicSearch from '@/components/promoters/page/clinicSearch.vue'
 // 推广人新增门诊页
 import promoters_addClinic from '@/components/promoters/page/addClinic.vue'
-// 推广人病源管理页
-import promoters_sourceManagement from '@/components/promoters/page/sourceManagement.vue'
+// 推广人病源页
+import promoters_source from '@/components/promoters/page/source.vue'
 // 推广人门诊详情页
 import promoters_clinicInfo from '@/components/promoters/page/clinicInfo.vue'
 // 推广人门诊病原新增页
 import promoters_addSource from '@/components/promoters/page/addSource.vue'
+// 推广人门诊案例列表页
+import promoters_case from '@/components/promoters/page/case.vue'
+// 推广人门诊案例页
+import promoters_caseDetails from '@/components/promoters/page/caseDetails.vue'
+// 推广人门诊推广活动页面
+import promoters_activityReleased from '@/components/promoters/page/activityReleased.vue'
+// 推广人门诊推广活动详情页面
+import promoters_activityDetails from '@/components/promoters/page/activityDetails.vue'
+// 推广人门诊推广人详情页面
+import promoters_promotersDetails from '@/components/promoters/page/promotersDetails.vue'
+// 推广人病原管理页面
+import promoters_sourceManagement from '@/components/promoters/page/sourceManagement.vue'
 
 
 //门诊端页面及其组件
@@ -515,9 +527,9 @@ const router = new Router({
 		},
 		{
 			// 推广人病源管理页
-			path: '/promoters_sourceManagement',
-			name: 'promoters_sourceManagement',
-			component: promoters_sourceManagement,
+			path: '/promoters_source',
+			name: 'promoters_source',
+			component: promoters_source,
 			meta: {auth:true},
 		},
 		{
@@ -532,6 +544,48 @@ const router = new Router({
 			path: '/promoters_addSource',
 			name: 'promoters_addSource',
 			component: promoters_addSource,
+			meta: {auth:true},
+		},
+		{
+			// 推广人门诊案例列表页
+			path: '/promoters_case',
+			name: 'promoters_case',
+			component: promoters_case,
+			meta: {auth:true},
+		},
+		{
+			// 推广人门诊案例页
+			path: '/promoters_caseDetails',
+			name: 'promoters_caseDetails',
+			component: promoters_caseDetails,
+			meta: {auth:true},
+		},
+		{
+			// 推广人门诊推广活动页面
+			path: '/promoters_activityReleased',
+			name: 'promoters_activityReleased',
+			component: promoters_activityReleased,
+			meta: {auth:true},
+		},
+		{
+			// 推广人门诊推广活动页面
+			path: '/promoters_activityDetails',
+			name: 'promoters_activityDetails',
+			component: promoters_activityDetails,
+			meta: {auth:true},
+		},
+		{
+			// 推广人门诊推广人详情页面
+			path: '/promoters_promotersDetails',
+			name: 'promoters_promotersDetails',
+			component: promoters_promotersDetails,
+			meta: {auth:true},
+		},
+		{
+			// 推广人病原管理页面
+			path: '/promoters_sourceManagement',
+			name: 'promoters_sourceManagement',
+			component: promoters_sourceManagement,
 			meta: {auth:true},
 		},
 		{

@@ -20,7 +20,7 @@
 		</van-image-preview>
 		<div class="user_center">
 			<ul>
-				<router-link :to="{name: '',query:{time:new Date().getTime()}}">
+				<router-link :to="{name: 'promoters_promotersDetails',query:{time:new Date().getTime()}}">
 					<li>
 						<span>门诊列表	</span>
 						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">

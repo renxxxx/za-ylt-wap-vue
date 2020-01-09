@@ -25,7 +25,7 @@
 				<ul>
 					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
 						<li v-for="(items,inx) in content" :key="inx">
-							<router-link :to="{name : 'promoters_sourceManagement' ,query :  {clinicId : items.hospitalClinicId,clinicName:items.name,clinicTime:items.alterTime,time:new Date().getTime()}}">
+							<router-link :to="{name : 'promoters_source' ,query :  {clinicId : items.hospitalClinicId,clinicName:items.name,clinicTime:items.alterTime,time:new Date().getTime()}}">
 								<div class="contentLi">
 									<h4>{{items.name}}</h4>
 									<span>推广人: {{items.hospitalUserName}}</span>

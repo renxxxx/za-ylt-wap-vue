@@ -1,470 +1,610 @@
 <template>
-	<div class="sourceManagement">
-		<div class="topNav">
-			<div class="leftImg" @click="goBackFn">
-				<img src="../../../assets/image/shape@3x.png" alt="">
+<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+  <div class="index">
+		<div class="navWarp">
+			<!-- 搜索及其筛选 -->
+			<div class="topNav" ref="topNav" :style="{'padding-top': height+'px'}">
+				<div class="indexReturn" @click="goBackFn" v-if="isLogin == 100? true:false">
+					<img src="../../../assets/image/back-white@2x.png" alt="">
+				</div>
+				<router-link :to="{name:'outpatient_search',query:{focus : true,time:new Date().getTime()}}">
+			<div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
+					<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
+					<img src="../../../assets/image/sousuo@2x.png" alt="">
 			</div>
-			<div class="centerTitle">
-				<h3>{{this.$route.query.clinicName}}</h3>
-			</div>
-			<div class="rightImg">
-				<router-link :to="{name:'promoters_clinicInfo',query:{clinicId:this.$route.query.clinicId}}">
-					<img src="../../../assets/image/promotersEditor.png" alt="">
 				</router-link>
+			<router-link :to="{name:'outpatient_search',query:{time:new Date().getTime()}}">
+				<div class="clinic_buttton">
+					<button>搜索</button>
+				</div>
+			</router-link>
+			<router-link :to="{name:'outpatient_search',query:{time:new Date().getTime()}}">
+				<div class="indexScreening" @click="showPopup">
+					<span>筛选</span>
+					<img src="../../../assets/image/screen@2x.png" alt="加载中" >
+				</div>
+			</router-link>
 			</div>
-			<div class="navZhanwei"></div>
-			<div class="navTime">
-				<span>{{moment(this.$route.query.clinicTime).format('YYYY-MM-DD HH:mm')}}</span>
+			<!-- 就诊情况 -->
+			<div class="typeNav" :style="{'padding-top': (height+32)+'px'}">
+				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
+					<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'
+						v-if="isLogin == 200? false:true">
+						<keep-alive>
+							<!-- <clinicAll ref='all' :list = 'list'></clinicAll> -->
+						</keep-alive>
+					</van-tab>
+					<van-tab title="新增病员" v-if="isLogin == 200? true:false">
+						<div class="newAdd">
+							<div class="newAddTitle">
+								<img src="../../../assets/image/bitian@2x.png" alt="">
+								<h3>必填项</h3>
+								<ul class="Fill">
+									<li>
+										<span>病患姓名</span>
+										<input type="text" v-model="account.user.realname"  placeholder="请填写" >
+									</li>
+									<li>
+										<span>联系电话</span>
+										<input type="text" v-model="account.user.tel" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+									</li>
+									<li>
+										<span>身份证号</span>
+										<input type="text" v-model="account.user.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')" placeholder="请填写">
+									</li>
+								</ul>
+							</div>
+							<div class="newAddTitle bottom">
+								<img src="../../../assets/image/bitian@2x.png" alt="">
+								<h3>选填项</h3>
+								<ul class="Fill">
+									<li>
+										<span>备注</span>
+										<input type="text" v-model="account.user.remark"  placeholder="请填写" >
+									</li>
+								</ul>
+							</div>
+							<button class="submitClass" type="submit"@click="hospitalSubmit">提交</button>
+						</div>
+					</van-tab>
+					<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
+						<keep-alive>
+							<!-- <clinicNo ref='no' :list = 'list'></clinicNo> -->
+						</keep-alive>
+					</van-tab>
+					<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
+						<keep-alive>
+							<!-- <clinicYes ref='yes' :list = 'list'></clinicYes> -->
+						</keep-alive>
+					</van-tab>
+				</van-tabs>
 			</div>
 		</div>
-		
-		<div style="height: .575rem;width: 100%;"></div>
-		<router-link :to="{name:'promoters_addSource',query:{clinicId:this.$route.query.clinicId}}">
-			<div class="addEtiology">
-				<img src="../../../assets/image/xinzeng@2x.png" alt="">
-				<span>新增病原</span>
-			</div>
-		</router-link>
-		<div class="stateNav">
-			<van-tabs title-inactive-color='#333333' title-active-color="#FF932E" @change="tabFn">
-				<van-tab>
-					 <div slot="title" class="tabTitle">
-					      <span>全部病源</span>
-						  <span>{{itemsNum}}</span>
-					</div>
-					<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="nextPageFn">
-						<ul class="list">
-							<li v-for="(item,inx) in  items" :key="inx">
-								<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
-									<div class="style">
-										<div class="contentTitle">
-											<img :src="item.img" alt="">
-											<span>{{item.realname}}</span>
-										</div>
-										<div class="contnet_left">
-											<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
-											<span>状态：{{item.span}}</span>
-										</div>
-									</div>
-								</router-link>
-								<div class="content_right">
-									<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
-								</div>
-							</li>
-						</ul>
-					</van-list>
-				</van-tab>
-				<van-tab>
-					<div slot="title" class="tabTitle">
-					      <span>已就诊</span>
-						  <span>{{yesItemsNum}}</span>
-					</div>
-					<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="yesNextPageFn">
-						<ul class="list">
-							<li v-for="(item,inx) in  yesItems" :key="inx">
-								<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
-									<div class="style">
-										<div class="contentTitle">
-											<img :src="item.img" alt="">
-											<span>{{item.realname}}</span>
-										</div>
-										<div class="contnet_left">
-											<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
-											<span>状态：{{item.span}}</span>
-										</div>
-									</div>
-								</router-link>
-								<div class="content_right">
-									<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
-								</div>
-							</li>
-						</ul>
-					</van-list>
-				</van-tab>
-				<van-tab>
-					<div slot="title" class="tabTitle">
-					      <span>未就诊</span>
-						  <span>{{noItemsNum}}</span>
-					</div>
-					<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="noNextPageFn">
-						<ul class="list">
-							<li v-for="(item,inx) in  noItems" :key="inx">
-								<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
-									<div class="style">
-										<div class="contentTitle">
-											<img :src="item.img" alt="">
-											<span>{{item.realname}}</span>
-										</div>
-										<div class="contnet_left">
-											<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
-											<span>状态：{{item.span}}</span>
-										</div>
-									</div>
-								</router-link>
-								<div class="content_right">
-									<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
-								</div>
-							</li>
-						</ul>
-					</van-list>
-				</van-tab>
-			</van-tabs>
-		</div>
-	</div>
+		<!-- <router v-if="isLogin == 200? true:false"></router> -->
+  </div>
+  </van-pull-refresh>
 </template>
-
 <script>
 import axios from 'axios'
-import {mapActions,mapGetters} from 'vuex'
+import {mapActions,mapGetters,mapState} from 'vuex'
 import qs from 'qs';
+import { Dialog } from 'vant'
+// import clinicAll from '../functionPage/clinicAll.vue'
+// import clinicYes from '../functionPage/clinicYes.vue'
+// import clinicNo from '../functionPage/clinicNo.vue'
+// import router from '../../outpatient/functionPage/router.vue'
 export default {
-	name: '',
-	data () {
-		return {
-			items:[],
-			yesItems:[],
-			noItems:[],
-			itemsNum:'',
-			yesItemsNum:'',
-			noItemsNum:'',
-			loading: false,
-			// 加载状态结束
-			finished: false,
-			page:0,
-		}
-	},
-	computed:{
-	  ...mapGetters(['account'])
-	},
-	components:{
-		
-	},
-	created () {
-		
-	},
-	mounted () {
-		this.getAllNum();
-	},
-	methods: {
-		getAllNum() {
-			debugger
-			var num = '';
-			this.getNum("").then((v)=>{
-				this.itemsNum = v
-			})
-			this.getNum(4).then((v)=>{
-				this.yesItemsNum = v
-			})
-			this.getNum(1).then((v)=>{
-				this.noItemsNum = v
-			})
-			console.log(this.getNum(""))
-			// console.log(this.itemsNum)
+  name: 'index',
+  data () {
+    return {
+		name: 'index',
+		selectValue : [],
+		//导航栏切换标题
+		list:{
+			keywords : '',			//搜索框的关键字value
+			allTitle: '全部',
+			noTitle:'未就诊',
+			yesTitle:'已就诊',
+			allNum : 0,
+			noNum : 0,
+			yesNum : 0,
+			clinicId : '',
+			clinicAll : [],
+			clinicNo : [],
+			clinicYes : [],
+			data: false,
+			titleData:0,
 		},
-		// 返回上上一级目录
-		goBackFn(){
-			this.$router.back(-1)
-		},
-		// 获取下一页的方法
-		getData(data,page){
-			this.$axios.post('/c2/patient/items',qs.stringify({
-					clinicId : this.$route.query.clinicId,
-					status: data,
-					pn : page,
-					ps : 10,
-				}))
-				.then(res => {
-					if(res.data.data.items.length != 0){
-						for (let nums in res.data.data.items) {
-							if(res.data.data.items[nums].status == 1){
-								this.items.push({
-									clinicName : res.data.data.items[nums].clinicName,
-									itemId : res.data.data.items[nums].itemId,
-									pushTime : res.data.data.items[nums].pushTime,
-									realname : res.data.data.items[nums].realname,
-									status : res.data.data.items[nums].status,
-									img : require("../../../assets/image/orange@2x.png"),
-									button : "确认就诊",
-									span : "未就诊"
-								});
-								if(data){
-									this.noItems.push({
-										clinicName : res.data.data.items[nums].clinicName,
-										itemId : res.data.data.items[nums].itemId,
-										pushTime : res.data.data.items[nums].pushTime,
-										realname : res.data.data.items[nums].realname,
-										status : res.data.data.items[nums].status,
-										img : require("../../../assets/image/orange@2x.png"),
-										button : "确认就诊",
-										span : "未就诊"
-									});
-								}
-							}else if(res.data.data.items[nums].status == 4){
-								this.items.push({
-									clinicName : res.data.data.items[nums].clinicName,
-									itemId : res.data.data.items[nums].itemId,
-									pushTime : res.data.data.items[nums].pushTime,
-									realname : res.data.data.items[nums].realname,
-									status : res.data.data.items[nums].status,
-									img :require( "../../../assets/image/blue@2x.png"),
-									button : "已就诊",
-									buttonColor : "buttonColor",
-									span : "已就诊"
-								});
-								if(data){
-									this.yesItems.push({
-										clinicName : res.data.data.items[nums].clinicName,
-										itemId : res.data.data.items[nums].itemId,
-										pushTime : res.data.data.items[nums].pushTime,
-										realname : res.data.data.items[nums].realname,
-										status : res.data.data.items[nums].status,
-										img :require( "../../../assets/image/blue@2x.png"),
-										button : "已就诊",
-										buttonColor : "buttonColor",
-										span : "已就诊"
-									});
-								}
-							}
-						}
-						// 加载状态结束
-						this.loading = false;
-					}else{
-						this.loading = false;
-						this.finished = true;
-					}
-				})
-				.catch((err)=>{
-					console.log(err);
-					//Dialog({ message: err});;
-				});
-		},
-		
-		// 获取下一页的方法
-		async getNum(data){
-			debugger;
-			var num ='';
-			await this.$axios.post('/c2/patient/items',qs.stringify({
-					clinicId : this.$route.query.clinicId,
-					status: data,
-					pn : 1,
-					ps : 10,
-				}))
-				.then(res => {
-					num = res.data.data.sum.totalCount;
-				})
-				.catch((err)=>{
-					console.log(err);
-					//Dialog({ message: err});;
-				});
-			console.log(num)
-			return num;
-		},
-		// 全部病原列表的下一页
-		nextPageFn(){
-			debugger;
-			this.page++;
-			this.getData('',this.page);
-		},
-		// 已就诊病原列表的下一页
-		yesNextPageFn(){
-			this.page++;
-			this.getData(4,this.page);
-		},
-		// 未就诊病原列表的下一页
-		noNextPageFn(){
-			this.page++;
-			this.getData(1,this.page);
-		},
-		// 菜单切换的清空值
-		tabFn(_value){
-			console.log(_value)
-			switch(_value){
-				case 0:
-				debugger
-				if(!this.items.length){
-					this.page = 0;
-					this.finished = false;
-				}
-				break;
-				case 1:
-				if(!this.yesItems.length){
-					this.page = 0;
-					this.finished = false;
-				}
-				break;
-				case 2:
-				if(!this.noItems.length){
-					this.page = 0;
-					this.finished = false;
-				}
-				break;
+		height : undefined,
+		pullingDown: false,
+    }
+  },
+  created(){
+	  debugger
+	var heightRexg = /^[0-9]*/g
+	var topHeight = this.topHeight.match(heightRexg)
+	this.height = parseInt(topHeight.join())
+	// console.log(this.height)
+  },
+  beforeRouteLeave(to, from, next) {
+    debugger;
+	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
+	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+		 debugger
+            if (this.$vnode && this.$vnode.data.keepAlive)
+            {
+                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
+                {
+                    if (this.$vnode.componentOptions)
+                    {
+                        var key = this.$vnode.key == null
+                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
+                                    : this.$vnode.key;
+                        var cache = this.$vnode.parent.componentInstance.cache;
+                        var keys  = this.$vnode.parent.componentInstance.keys;
+                        if (cache[key])
+                        {
+                            if (keys.length) {
+                                var index = keys.indexOf(key);
+                                if (index > -1) {
+                                    keys.splice(index, 1);
+                                }
+                            }
+                            delete cache[key];
+                        }
+                    }
+                }
 			}
+            this.$destroy();
 		}
+	next();
+  },
+  //进入该页面时，用之前保存的滚动位置赋值
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+		document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
+	});
+
+  }
+  ,destroyed(){
+	  debugger
+	  console.log('destroyed')
+  },
+  mounted(){
+	  debugger
+    if(window.plus){
+    	//plus.navigator.setStatusBarBackground("#2B77EF");
+    	plus.navigator.setStatusBarStyle("dark")
+    }
+	this.initData();
+  },
+  computed:{
+		show: {
+			get: function() {
+			console.log(this.$store)
+				return this.$store.state.shop.show
+			},
+			set: function (newValue) {
+			this.$store.state.shop.show = newValue;
+		   },
+		},
+		showTime: {
+			get: function() {
+			// console.log(this.$store)
+				return this.$store.state.shop.showTime
+			},
+			set: function (newValue) {
+			this.$store.state.shop.showTime = newValue;
+			},
+		},
+		...mapGetters(['Time','account','isLogin']),
+  },
+  //注册组件
+  components:{
+	  // clinicAll,clinicYes,clinicNo,router
+  },
+  methods:{
+	 afterPullDown() {
+      //下拉刷新
+		setTimeout(() => {
+			this.pullingDown = false;
+			this.initData();
+		}, 500);
+    },
+    initData() {
+      Object.assign(this.$data, this.$options.data());
+      this.getNum();
+	  console.log(this.$refs)
+       this.$refs.all.initData();
+	   this.$refs.no.initData();
+	   this.$refs.yes.initData();
+    },
+	//回退方法
+	goBackFn(){
+		this.$router.back(-1)
 	},
+	//显示筛选弹窗
+	showPopup() {
+	   this.show = true;
+	   // console.log(this.show)
+	},
+	getNum(){
+		debugger
+		let clinicId = '';
+		this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.account.clinicId;
+		this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+		this.$axios.post('/c2/patient/items',qs.stringify({
+			kw : this.list.keywords,
+			hospitalId : this.account.hospitalId,
+			clinicId : clinicId,
+			status :1,
+			pn : 1,
+			ps : 10
+		}))
+		.then(_d => {
+			this.list.noNum = _d.data.data.sum.totalCount;
+			// console.log(this.list.noNum)
+		})
+		.catch((err)=>{
+			console.log(err);
+			// //Dialog({ message: err});;
+		})
+		this.$axios.post('/c2/patient/items',qs.stringify({
+			kw : this.list.keywords,
+			hospitalId : this.account.hospitalId,
+			clinicId : clinicId,
+			status :4,
+			pn : 1,
+			ps : 10
+		}))
+		.then(_d => {
+			this.list.yesNum = _d.data.data.sum.totalCount;
+			// console.log(this.list.yesNum)
+		})
+		.catch((err)=>{
+			console.log(err);
+			// //Dialog({ message: err});;
+		});
+
+		// console.log(this.list.allNum)
+	},
+	...mapActions(['labelLabelFn','dateConfirm','closeFn','screeningSubmit','screeningResult','confirm','cancel','hospitalSubmit'])
+  },
 }
 </script>
-
 <style scoped>
-.sourceManagement{
+.index{
 	width: 100%;
+  height: 100%;
+	background-color: #F5F5F5;
+}
+.navWarp{
+	/* background-color: #FFFFFF; */
+	/* height: 1rem; */
+	height: 100%;
 }
 .topNav{
+	height: .8rem;
+	line-height:.335rem;
 	width: 100%;
-	height: .475rem;
-	/* line-height: .575rem; */
+	padding-top: 0.1rem;
+	/* background:url('../../../assets/image/BJ-blue.png'); */
+	/* background-size:100% 100%; */
+	background-color: #2B77EF;
 	position: fixed;
-	tab-size: 0;
-	text-align: center;
-	padding-top: .1rem ;
-	background-color: #FFFFFF;
-	z-index: 999;
+	top: 0rem;
+	z-index: 1;
 }
-.leftImg{
+.indexReturn{
 	width: 10%;
 	float: left;
-	line-height: .25rem;
+	text-align: center;
+	display: inline-block;
+	z-index: 999;
+	padding-top: 6px;
 }
-.leftImg img{
+.indexReturn img{
 	width: .09rem;
 	height: .15rem;
+	margin: auto;
 }
-.centerTitle{
-	width: 80%;
-	float: left;
-	line-height: .25rem;
-}
-.centerTitle h3{
-	color: #333333;
-	font-size: .16rem;
-	font-weight: bolder;
+.indexSearch{
 	display: inline-block;
-}
-.rightImg{
-	width: 10%;
+	/* width: .43rem; */
+	width: 65%;
 	float: left;
+	/* text-align: center; */
+	z-index: 999;
+	height: .4rem;
+	line-height: .36rem;
+	position: relative;
+	padding-top: 6px;
+}
+.indexSearch img{
+	position: absolute;z-index: 9;left: .11rem;top: .15rem;
+	height: .15rem;width:.14rem;
+}
+.indexSearch input{
+	border-radius: .18rem;border: none;
+	height: .335rem;width: 2.4rem;
+	line-height: .3rem;
+	/* padding: 0; */
+	width: 84%;
+	padding-left: 12%;
+	/* margin:0 5%; */
+	background: #F5F5F5;
+	font-size:.15rem;
+}
+.clinic_buttton{
+	float: left;
+	margin-top: .024rem;
+	margin-left: -.05rem;
+	padding-top: 6px;
+}
+.clinic_buttton button{
+	color: #FFFFFF;
+	background-color: rgba(0,0,0,0);
+	border-radius: .15rem;
+	border: 1px solid #FFFFFF;
+	height: .28rem;
+	width: .45rem;
+	font-size: .12rem;
+	text-align: center;
 	line-height: .25rem;
 }
-.rightImg img{
-	width: .19rem;
-	height: .2rem;
-}
-.navZhanwei{
-	height: .25rem;
-}
-.navTime{
-	width: 100%;
+.indexScreening{
+	display:inline-block;
+	/* width: .43rem; */
+	width: 12%;
+	float: left;
 	text-align: center;
-	position: absolute;
+	z-index: 999;
+	height: .4rem;
+	line-height: .38rem;
+	margin-left: .052rem;
+	padding-top: 6px;
 }
-.navTime span{
-	font-size: .13rem;
-	color: #999999;
+.indexScreening span{
+	width: .15rem;height: .21rem;
+	/* margin: .65rem .02rem .06rem 0rem; */
+	color: #FFFFFF;font-size: .12rem;
+	z-index: 3;
+	position:relative;
 }
-.addEtiology{
-	width: 91.47%;
-	height: .42rem;
-	line-height: .42rem;
-	margin: .1rem auto 0rem;
-	text-align: center;
-	background-color: #EAF2FF;
+.indexScreening img{
+	height: .13rem;width: .12rem;
+	/* margin-right: .16rem; */
 }
-.addEtiology img{
-	width: .16rem;
-	height: .16rem;
-	margin-top: -.03rem;
+.indexFrom label{
+	background: red;
 }
-.addEtiology span{
-	font-size: .14rem;
-	color: #2B77EF;
+
+.typeNav{
+	width: 100%;
+	/* height: 100%; */
+	/* margin-top: -.45rem; */
 }
-.stateNav{
-	width: 91.47%;
-	margin: .15rem auto 0rem;
-	border-radius: .3rem;
-	box-shadow: 0px 0px 26px 3px hsla(0, 0%, 0%, 10%);
-}
->>>.van-tabs__line{
-	background-color: #FF932E;
-	width: .16rem!important;
-}
->>>.van-tabs{
-	height: .58rem;
-}
->>>.van-tabs__wrap{
-	height: .58rem;
-	border-radius: .5rem;
-}
->>>.van-tab{
-	line-height: .21rem;
-}
->>>.van-tabs__content{
-	margin-top: .15rem;
-}
->>>.van-tab>span{
-	font-size: .145rem;
-	font-weight: bold;
-}
-.list{
+.content{
 	width: 100%;
 }
-.list li{
-	width: 100%;
-	height: .845rem;
-	box-shadow: 0px 0px 26px 3px hsla(0, 0%, 0%, 10%);
-	margin-bottom: .1rem;
-	position: relative;
-	border-radius: .03rem;
-}
-.style{
-	height: 100%;
-	color: #333333;
+.content li{
+	height:.84rem;
+	width: 91.5%;
+	background-color: #FFFFFF;
+	margin: .12rem auto;
+	border-radius: .14rem;
 }
 .contentTitle{
-	width: 100%;
-	/* height: .17rem; */
-	/* line-height: .17rem; */
-	padding-top: .1rem;
-	padding-left: .1rem;
-	
+	padding: .09rem 0rem .07rem .1rem;
 }
 .contentTitle img{
 	width: .17rem;
 	height: .17rem;
-	margin-top: -.03rem;
 }
 .contentTitle span{
-	font-size: .14rem;
+	margin-left: .05rem;
 	font-weight: bold;
 }
 .contnet_left{
-	padding-left: .32rem;
-	padding-top: .04rem;
+	margin-left: .32rem;
+	float: left;
 }
 .contnet_left span{
 	display: block;
 }
+.contnet_left span:last-child{
+	margin-top: .04rem;
+}
 .content_right{
-	position: absolute;
-	right: .15rem;
-	bottom: .25rem;
+	float: right;
+	margin-right: .15rem;
+	margin-top: -.03rem;
 }
 .content_right button{
 	width: .8rem;
 	height: .28rem;
+	color: #FFFFFF;
 	background-color: #2B77EF;
 	border: none;
 	border-radius: .14rem;
-	color: #FFFFFF;
-	font-size: .125rem;
 }
 .buttonColor{
-    color: #333333!important;
-    background-color: #EEEEEE!important;
+	color: #333333!important;
+	background-color: #EEEEEE!important;
 }
-.tabTitle{
-	margin: .08rem 0rem;
+>>>.van-tabs__nav--line {
+    box-sizing: content-box;
+    height: 100%;
+    padding-bottom: 15px;
+    z-index: 99;
 }
-.tabTitle span{
-	display: block;
+>>>.van-tabs--line .van-tabs__wrap {
+	width: 100%;
+    height: 44px;
+	position: fixed;
+	z-index: 9;
+	/* margin-top: .46rem */
+}
+>>>.van-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.7);
+    z-index: 2002!important;
+}
+>>>[data-v-111b5a74] .van-hairline--top-bottom {
+    display: block;
+    width: 100%!important;
+    z-index: 99!important;
+}
+>>>.van-notify--danger {
+	margin-top: .94rem!important;
+    /* background-color: #ee0a24; */
+}
+>>>.van-picker {
+    position: fixed;
+    background-color: #fff;
+	box-shadow: #F5F5F5;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: 100%;
+    width: 100%;
+    bottom: 0;
+	border-top: 1px solid #F5F5F5;
+}
+>>>.calendar_content[data-v-0946a5a1] {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 3.5rem!important;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+>>>.calendar_group[data-v-1043c5e4] {
+    position: absolute;
+    top: .5rem;
+    left: 0;
+    bottom: 0;
+    right: 0;
+	height: 2.5rem!important;
+    overflow: hidden;
+    transition: height .3s;
+    -webkit-transition: height .3s;
+}
+
+>>>._v-container[data-v-ecaca2b0] {
+    height: 80%!important;
+    overflow: scroll;
+}
+>>>.van-tabs__content{
+	background: #F5F5F5!important;
+	height: 100%;
+	/* padding-top: 1rem; */
+	padding-top: .44rem;
+}
+>>>.van-tab{
+	height: .5rem;
+	line-height: .5rem;;
+}
+>>>.van-picker__confirm {
+    padding: 0 16px;
+    color: #1989fa;
+    font-size: 14px;
+    background-color: transparent;
+    border: 0;
+	float: right!important;
+}
+>>>.van-tabs__line{
+    position: absolute;
+    bottom: .16rem;
+    left: 0;
+    z-index: 1;
+    height: .03rem;
+	width: .24rem!important;
+    background-color: #FFFFFF!important;
+    border-radius: 3px;
+}
+>>>[class*=van-hairline]::after {
+    position: absolute;
+    box-sizing: border-box;
+    content: ' ';
+    pointer-events: none;
+    top: -50%;
+    right: -50%;
+    bottom: -50%;
+    left: -50%;
+    border:none;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+}
+
+>>>van-tabs{
+	height: 100%;
+	position: relative;
+	margin-top: .9rem;
+}
+.submitClass{
+	width:2.41rem;
+	height: .4rem;
+	display:block;margin:0 auto;
+	margin-top: .5rem;
+
+	background: linear-gradient(#56AFF8, #2B77EF);
+	border: none;
+	border-radius: .2rem;
+	color: #FFFFFF;
+	font-size: 	.14rem;
+}
+.newAddTitle{
+	width: 91.4%;
+	margin-top: 2.9%;
+	margin: 0 auto;
+	padding-top: .2rem;
+}
+.newAddTitle img{
+	width: .165rem;
+	height: .185rem;
+}
+.newAddTitle h3{
+	margin-left: .05rem;
+	width: .45rem;
+	height: .21rem;
+	display: inline;
+}
+.Fill {
+	width:90%;
+	height: 1.59rem;
+}
+.Fill li{
+	border: 1px solid #D8D8D8;
+	border-radius: .02rem;
+	padding: .12rem .15rem;
+	margin-top:.12rem;
+	width: 100%;
+}
+.Fill li span{
+	height: .21rem;width: .6rem;
+
+}
+.Fill li input{
+	border: none;
+	float:right;
+	text-align: right;
+	background-color: #F5F5F5;
+}
+.bottom{
+	margin-top: .2rem;
+	height: .78rem;
+}
+.AlreadySpanColor{
+	color: #2B77EF!important;
+}
+.clinicSearchStyle{
+	margin-left: .16rem;
+	width: 70%;
+
 }
 </style>

@@ -8,21 +8,27 @@
 			<router-link :to="{name : 'promoters_clinicSearch',query:{time:new Date().getTime()}}">
 				<img src="../../assets/image/qudaomenzhen@2.png" alt="">
 			</router-link>
-			<img src="../../assets/image/bingyuanguanli@2.png" alt="">
+			<router-link :to="{name : 'promoters_sourceManagement',query:{time:new Date().getTime()}}">
+				<img src="../../assets/image/bingyuanguanli@2.png" alt="">
+			</router-link>
 		</div>
 		<div class="article" v-if="article.length">
 		  <div class="articleTitle">
 		    <img src="../../assets/image/Combined Shape@2x.png" alt />
 		    <h3>运营文章</h3>
 			<div class="articleDetails">
+				<router-link
+				  :to="{name : 'promoters_case'}"
+				>
 				<span>查看更多</span>
 				<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
+				</router-link>
 			</div>
 		  </div>
 		  <ul>
 		      <li v-for="(items,inx) in article" :key="inx">
 		        <router-link
-		          :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
+		          :to="{name : 'promoters_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
 		        >
 		          <div class="article_left">
 		            <p>{{items.content}}</p>
@@ -43,8 +49,10 @@
 		    <img src="../../assets/image/huodong@2x.png" alt />
 		    <h3>推广活动</h3>
 			<div class="articleDetails">
+				<router-link :to="{name : 'promoters_activityReleased'}">
 				<span>查看更多</span>
 				<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
+				</router-link>
 			</div>
 		  </div>
 		  <div class="activeList">
@@ -57,7 +65,7 @@
 		  <ul style="">
 		      <li v-for="(items,num) in qualityCase" :key="num">
 		        <router-link
-		          :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
+		          :to="{name : 'promoters_activityReleased'}"
 		        >
 		          <div class="article_left">
 		            <p>{{items.content}}</p>

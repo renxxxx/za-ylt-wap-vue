@@ -1,29 +1,52 @@
 <template>
-	<div class="expertsIntroduction">
+	<div class="activityDetails">
 		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
-				<h3>专家介绍</h3>
+				<h3>活动详情</h3>
 			</div>
-			<div class="right"></div>
+			<div class="right">
+				<img src="../../../assets/image/share@3x.png" @click="share" alt="">	
+			</div>
 		</div> 
 		<div class="zhangwei"></div>
-		<div class="content" :style="{'padding-top': height+'px'}">
+		<div class="activeList" :model='active' :style="{'padding-top': height+'px'}">
+			<img v-lazy="active.cover" alt="">
+			<div class="activeTitle">
+				<h4>{{active.title}}</h4>
+				<span>{{moment(active.startTime).format('YYYY-MM-DD HH:mm')}} - {{moment(active.endTime).format('YYYY-MM-DD HH:mm')}}</span>
+			</div>
+		</div>
+		<div class="tabel">
 			<ul>
-				<li v-for="(item,inx) in doctor" :key='inx'>
-					<img :src="item.headimg" alt="">
-					<div class="contentLists">
-						<h4>{{item.name}}</h4>
-						<span>{{item.hosptialName}}</span>
-						<span class="xia">{{item.jobTitles}}</span>
-						<div class="duanluo" @click="showContent(inx)" >
-							<p ref='showP'>{{item.intro}}</p>
-							<img :src="downImg" alt="" ref='showimg'>
-						</div>
+				<li>
+					<span>标题</span>
+					<input type="text" v-model='active.title' readonly="readonly">
+				</li>
+				<li>
+					<span>副标题</span>
+					<input type="text" v-model='active.brief' readonly="readonly">
+				</li>
+				<li>
+					<span>联系电话</span>
+					<input type="text" v-model='active.tel' readonly="readonly">
+				</li>
+				<li>
+					<span>活动起止时间</span>
+					<input type="text" v-model="active.time" readonly="readonly">
+				</li>
+				<li>
+					<span>活动地址</span>
+					<input type="text" v-model='active.address' readonly="readonly">
+				</li>
+				<li>
+					<span>活动说明</span>
+					<!-- <input type="text" v-model='active.content' readonly="readonly"> -->
+					<div class="tabelContent">
+						<p>{{active.content}}</p>
 					</div>
-					<hr>
 				</li>
 			</ul>
 		</div>
@@ -34,19 +57,18 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import { Dialog } from 'vant'
 export default {
-	name: 'expertsIntroduction',
+	name: 'activityDetails',
 	data () {
 		return {
-			doctor:[],
-			downImg : require('../../../assets/image/down@2x.png'),
-			clickNum: 0 ,
+			active : {},
 		}
 	},
 	computed:{
-		...mapGetters(['account']),
-	
+	  ...mapGetters(['account']),
+	},
+	components:{
+		
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
@@ -100,22 +122,25 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		
-		this.$axios.post('/c2/doctor/items',qs.stringify({
-			hospitalId : this.account.hospitalId,
+		this.$axios.post('/c2/activity/item',qs.stringify({
+			itemId : this.$route.query.itemId,
 		}))
 		.then(_d => {
-			for(let i in _d.data.data.items){
-				this.doctor.push({
-					name : _d.data.data.items[i].name,
-					hosptialName : _d.data.data.items[i].hosptialName,
-					intro : _d.data.data.items[i].intro,
-					jobTitles : _d.data.data.items[i].jobTitles,
-					headimg : _d.data.data.items[i].headimg,
-				})
+			this.active = _d.data.data
+			if(_d.data.data.startTime != '' && _d.data.data.endTime){
+				var moment = require('moment');
+				this.active.time = moment(_d.data.data.startTime).format('YYYY-MM-DD HH:mm') + ' - ' +moment(_d.data.data.endTime).format('YYYY-MM-DD HH:mm') 
+				// console.log(this.active.time)
 			}
-			// console.log(this.doctor)
-			// this.$refs.scrollId.style.width = 50 * _d.data.data.items.length +'%'
-			// console.log(this.$refs.scrollId)
+			this.$axios.get('/other/bigtxt/'+_d.data.data.contentBtId+'/'+_d.data.data.contentBtId)
+			.then(_d => {
+				this.$set(this.active,'content',_d.data)
+				// console.log(_d.data)
+			})
+			.catch((err)=>{
+				console.log(err);
+				//Dialog({ message: err});;
+			})
 		})
 		.catch((err)=>{
 			console.log(err);
@@ -123,40 +148,33 @@ export default {
 		})
 	},
 	methods: {
+		share(){
+			 
+			let vue = this
+			this.$h5p.shareWeb(location.href,this.active.cover,this.active.title,this.active.brief||'',function(){
+				 
+				vue.$axios.post('/c2/share')
+			});
+		},
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)
 		},
-		//显示内容
-		showContent(inx){
-			// console.log(inx)
-			this.clickNum++;
-			if(this.clickNum % 2 == 0){
-				this.$refs.showP[inx].style.webkitLineClamp = '9'
-				this.$refs.showimg[inx].src=require('../../../assets/image/up-1@2x.png')
-			}else{
-				this.$refs.showP[inx].style.webkitLineClamp = '2'
-				this.$refs.showimg[inx].src=require('../../../assets/image/down@2x.png')
-			}
-			
-			console.log()
-		}
+		
 	},
 }
 </script>
 
 <style scoped>
-.expertsIntroduction{
+.activityDetails{
 	width: 100%;
-	height: 100%;
-	/* background-color: #F5F5F5; */
-	background-color: #FFFFFF;
 }
 .topNav{
 	width: 100%;
 	height: .47rem;
 	line-height: .47rem;
 	background-color: #FFFFFF;
+	border-bottom: 1px solid #E5E5E5;
 	position: fixed;
 	top:0;
 	z-index: 9999;
@@ -193,88 +211,74 @@ export default {
 	line-height: .47rem;
 	float:left;
 }
-.content{
-	width: 100%;
+.right img{
+    width: .19rem;
+    height: .19rem;
+    float: right;
+    margin-top: .14rem;
+    margin-right: .21rem;
 }
-.content ul {
-	width: 100%;
-}
-.content ul li {
-	width: 100%;
-	height: 100%;
-	/* margin: .12rem auto; */
-	background-color: #FFFFFF;
+.activeList{
+	width: 93.6%;
+	height: 1.8rem;
+	margin: .12rem auto;
 	position: relative;
-	/* padding-bottom: .18rem; */
-}
-.content>ul>li>img{
-	width: .65rem;
-	height: .65rem;
-	margin : .22rem .17rem 0rem .16rem;
-	float: left;
-	border-radius: 50%;
-	object-fit: cover;
-}
-.contentLists{
-	width: 60.8%;
-	height: 100%;
-	display: block;
-	padding-left: .98rem;
-	padding-top: .18rem;
-	
-}
-.contentLists h4{
-	font-size: .15rem;
-	font-weight: bold;
-	color: #333333;
-}
-.contentLists>span{
-	padding-top:.08rem;
-	margin-right: .1rem;
-	font-size: .12rem;
-}
-.xia{
-	margin-left: .1rem;
-	position: relative;
-}
-.xia:before{
-	content: "";
-	width: .01rem;
-	height: .06rem;
-	background-color: #D8D8D8;
-	position: absolute;
-	top: .11rem;
-	left: -.11rem;
-}
-.duanluo{
-	position: relative;
-	height: 100%;
-	width: 100%;
-}
-.duanluo>p{
-	min-height: .35rem;
-	width: 100%;
-	padding-top: .04rem;
-	color: #999999;
-	display: -webkit-box;
 	overflow: hidden;
-	text-overflow: ellipsis;
-	word-wrap: break-word;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
 }
-.duanluo>img{
-	width: .12rem;
-	height: .07rem;
+.activeList>img{
+	/* height: 100%; */
+	width: 100%;
+}
+.activeTitle{
 	position: absolute;
-	right: -.33rem;
-	bottom: .11rem;
+	color: #FFFFFF;
+	bottom: 0rem;
+	left: 0rem;
+	width: 100%;
+	height: 50%;
+	background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
 }
-hr{
-	width: 91%;
-	border-top:1px solid #D8D8D8;
+.activeTitle h4{
+	font-size: .15rem;
+	position: absolute;
+	bottom: .32rem;
+	left: .2rem;
 }
-.content ul li:last-child hr{
-	display: none;
+.activeTitle span{
+	color: #EAF2FF;
+	position: absolute;
+	bottom: .15rem;
+	left: .2rem;
+}
+.tabel{
+	width: 100%;
+}
+.tabel ul{
+	width: 91.46%;
+	margin: 0 auto;
+}
+.tabel ul li{
+	height: .71rem;
+	width: 100%;
+	margin: .12rem 0rem;
+}
+.tabel ul li span{
+	display: block;
+	color: #999999;
+	margin-bottom: .05rem;
+}
+.tabel ul li input{
+	width: 96%;
+	height: .45rem;
+	line-height: .45rem;
+	border: 1px solid #D8D8D8;
+	padding-left: 4%;
+}
+.tabelContent{
+	width: 96%;
+	/* height: 100%; */
+	line-height: .25rem;
+	border: 1px solid #D8D8D8;
+	padding-left: 4%;
 }
 </style>

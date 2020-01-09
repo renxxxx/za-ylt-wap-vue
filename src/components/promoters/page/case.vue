@@ -8,7 +8,9 @@
 		<div class="article" :style="{'padding-top': height+'px'}">
 			<ul>
 				<li v-for="(items,inx) in article" :key="inx">
-					<router-link :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 4,time:new Date().getTime()}}">
+					<router-link
+					  :to="{name : 'promoters_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
+					>
 						<div class="article_left">
 							<p>{{items.content}}</p>
 							<div class="article_leftTime">
@@ -93,7 +95,7 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		this.$axios.post('/c2/project/items',qs.stringify({
+		this.$axios.post('/c2/article/items',qs.stringify({
 			hospitalId : this.account.hospitalId,
 			pn : 1,
 			ps : 999
@@ -104,7 +106,7 @@ export default {
 					// console.log(res.data.data.items[i])
 					if(res.data.data.items[i]){
 						this.article.push({
-							content:res.data.data.items[i].name,
+							content:res.data.data.items[i].title,
 							img: res.data.data.items[i].cover,
 							time:res.data.data.items[i].alterTime,
 							itemId : res.data.data.items[i].itemId,
