@@ -68,19 +68,19 @@ export default {
 	isLogin: {
 	    get: function() {
 			// console.log(this.$store)
-	        return this.$store.state.shop.isLogin
+	        return this.$store.state.isLogin
 	    },
 	    set: function (newValue) {
-			this.$store.state.shop.isLogin = newValue;
+			this.$store.state.isLogin = newValue;
 	    },
 	},
 	account: {
 	    get: function() {
 			// console.log(this.$store)
-	        return this.$store.state.shop.account
+	        return this.$store.state.account
 	    },
 	    set: function (newValue) {
-			this.$store.state.shop.account = newValue;
+			this.$store.state.account = newValue;
 	    },
 	},
   },
@@ -174,7 +174,7 @@ export default {
 	//退出方法
 	exitFn(){
 		
-		this.$store.state.shop.isLogin = 0
+		this.$store.state.isLogin = 0
 		this.isLogin = 0;
 		this.account = {
 			name:'',

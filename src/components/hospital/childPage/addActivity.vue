@@ -74,10 +74,10 @@ export default {
 		showTime: {
 		    get: function() {
 				// console.log(this.$store)
-		        return this.$store.state.shop.showTime
+		        return this.$store.state.showTime
 		    },
 		    set: function (newValue) {
-				this.$store.state.shop.showTime = newValue;
+				this.$store.state.showTime = newValue;
 		    },
 		},
 	},
