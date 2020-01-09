@@ -196,13 +196,13 @@ export default {
 		  }
 
 			let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
-		  if(this.$store.state.shop.isLogin == 100){
+		  if(this.$store.state.isLogin == 100){
 				this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
 				this.$router.push(lastRoute)
-			}else  if(this.$store.state.shop.isLogin == 200){
+			}else  if(this.$store.state.isLogin == 200){
 				this.$router.replace({ name : 'hospital_sourceManagement',query:{time:new Date().getTime()}})
 				this.$router.push(lastRoute)
-			}else  if(this.$store.state.shop.isLogin == 300){
+			}else  if(this.$store.state.isLogin == 300){
 				this.$router.replace({ name : 'landingPage',query:{time:new Date().getTime()}})
 				this.$router.push(lastRoute)
 			}
@@ -212,20 +212,20 @@ export default {
 	account:{
 		get: function() {
 			console.log(this.$store)
-		    return this.$store.state.shop.account
+		    return this.$store.state.account
 		},
 		set: function (newValue) {
-			this.$store.state.shop.account = newValue;
+			this.$store.state.account = newValue;
 		},
 	},
 
 	isLogin: {
 	    get: function() {
 			// console.log(this.$store)
-	        return this.$store.state.shop.isLogin
+	        return this.$store.state.isLogin
 	    },
 	    set: function (newValue) {
-			this.$store.state.shop.isLogin = newValue;
+			this.$store.state.isLogin = newValue;
 	    },
 	},
   },

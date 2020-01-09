@@ -284,28 +284,28 @@ export default {
 	account:{
 		get: function() {
 			// console.log(this.$store)
-		    return this.$store.state.shop.account
+		    return this.$store.state.account
 		},
 		set: function (newValue) {
-			this.$store.state.shop.account = newValue;
+			this.$store.state.account = newValue;
 		},
 	},
 	show: {
 	    get: function() {
 			// console.log(this.$store)
-	        return this.$store.state.shop.show
+	        return this.$store.state.show
 	    },
 	    set: function (newValue) {
-			this.$store.state.shop.show = newValue;
+			this.$store.state.show = newValue;
 	    },
 	},
 	showTime: {
 	    get: function() {
 			// console.log(this.$store)
-	        return this.$store.state.shop.showTime
+	        return this.$store.state.showTime
 	    },
 	    set: function (newValue) {
-			this.$store.state.shop.showTime = newValue;
+			this.$store.state.showTime = newValue;
 	    },
 	},
   },

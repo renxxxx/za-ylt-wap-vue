@@ -67,10 +67,10 @@ export default {
     exchangeAdd: {
         get: function() {
     		// console.log(this.$store)
-            return this.$store.state.shop.exchangeAdd
+            return this.$store.state.exchangeAdd
         },
         set: function (newValue) {
-    		this.$store.state.shop.exchangeAdd = newValue;
+    		this.$store.state.exchangeAdd = newValue;
         },
     },
 	},

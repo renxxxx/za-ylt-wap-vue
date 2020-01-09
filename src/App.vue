@@ -31,6 +31,7 @@ export default {
   beforeCreate() {},
   beforeRouteLeave(to, from, next) {
     debugger;
+   
 	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || this.$refs.appRef.scrollTop
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
@@ -83,7 +84,7 @@ export default {
      debugger;
     let isLogin = localStorage.getItem("isLogin");
     localStorage.removeItem("isLogin");
-    this.$store.state.shop.isLogin = 0;
+    this.$store.state.isLogin = 0;
     if (isLogin && !isNaN(parseInt(isLogin))) {
       isLogin = parseInt(isLogin);
       switch (isLogin) {
@@ -109,32 +110,32 @@ export default {
         async: false,
         success: function(res) {
           if (res.code == 0) {
-            vm.$store.state.shop.isLogin = _isLogin;
+            vm.$store.state.isLogin = _isLogin;
             localStorage.setItem("isLogin",_isLogin);
             switch (_isLogin) {
               case 100:
-                vm.$store.state.shop.account.hospitalId =
+                vm.$store.state.account.hospitalId =
                   res.data.hospital.hospitalId;
-                vm.$store.state.shop.account.data = {};
-                vm.$store.state.shop.account.data = res;
+                vm.$store.state.account.data = {};
+                vm.$store.state.account.data = res;
                 break;
 
               case 200:
-                vm.$store.state.shop.account.clinicId =
+                vm.$store.state.account.clinicId =
                   res.data.clinic.clinicId;
-                vm.$store.state.shop.account.hospitalId =
+                vm.$store.state.account.hospitalId =
                   res.data.hospital.hospitalId;
-                vm.$store.state.shop.account.data = {};
-                vm.$store.state.shop.account.data = res;
+                vm.$store.state.account.data = {};
+                vm.$store.state.account.data = res;
                 break;
 
               case 300:
-                vm.$store.state.shop.account.clinicId =
+                vm.$store.state.account.clinicId =
                   res.data.clinic.clinicId;
-                vm.$store.state.shop.account.hospitalId =
+                vm.$store.state.account.hospitalId =
                   res.data.hospital.hospitalId;
-                vm.$store.state.shop.account.data = {};
-                vm.$store.state.shop.account.data = res;
+                vm.$store.state.account.data = {};
+                vm.$store.state.account.data = res;
                 break;
             }
           }
