@@ -25,7 +25,7 @@
     				    @change="change"/>
     				<p>&nbsp;&nbsp;我已经阅读并同意
     				<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
-    					<router-link :to="{name : 'userAgreement' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
+    					<router-link :to="{name : 'urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
     						&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
     					</router-link>
     				</p>
@@ -59,7 +59,7 @@
     				    @change="change"/>
     				<p>&nbsp;&nbsp;我已经阅读并同意
 						<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
-						<router-link :to="{name : 'userAgreement' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
+						<router-link :to="{name : 'urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
 							&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
 						</router-link>
 					</p>
@@ -93,7 +93,7 @@
     				    @change="change"/>
     				<p>&nbsp;&nbsp;我已经阅读并同意
 					<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
-					<router-link :to="{name : 'userAgreement' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
+					<router-link :to="{name : 'urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
 						&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
 					</router-link>
 					</p>
