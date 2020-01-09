@@ -4,21 +4,21 @@
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
 			<div class="topNav" ref="topNav" :style="{'padding-top': height+'px'}">
-				<div class="indexReturn" @click="goBackFn" v-if="isLogin == 100? true:false">
+				<div class="indexReturn" @click="goBackFn">
 					<img src="../../../assets/image/back-white@2x.png" alt="">
 				</div>
-				<router-link :to="{name:'outpatient_search',query:{focus : true,time:new Date().getTime()}}">
-			<div class="indexSearch" v-bind:class="[isLogin == 200? 'clinicSearchStyle':'']">
-					<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
-					<img src="../../../assets/image/sousuo@2x.png" alt="">
+				<router-link :to="{name:'promoters_sourceSearch',query:{focus : true,time:new Date().getTime()}}">
+			<div class="indexSearch">
+				<input type="text" placeholder="搜索病员" readonly="readonly">
+				<img src="../../../assets/image/sousuo@2x.png" alt="">
 			</div>
 				</router-link>
-			<router-link :to="{name:'outpatient_search',query:{time:new Date().getTime()}}">
+			<router-link :to="{name:'promoters_sourceSearch',query:{time:new Date().getTime()}}">
 				<div class="clinic_buttton">
 					<button>搜索</button>
 				</div>
 			</router-link>
-			<router-link :to="{name:'outpatient_search',query:{time:new Date().getTime()}}">
+			<router-link :to="{name:'promoters_sourceSearch',query:{time:new Date().getTime()}}">
 				<div class="indexScreening" @click="showPopup">
 					<span>筛选</span>
 					<img src="../../../assets/image/screen@2x.png" alt="加载中" >
@@ -27,60 +27,80 @@
 			</div>
 			<!-- 就诊情况 -->
 			<div class="typeNav" :style="{'padding-top': (height+32)+'px'}">
-				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
-					<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'
-						v-if="isLogin == 200? false:true">
-						<keep-alive>
-							<!-- <clinicAll ref='all' :list = 'list'></clinicAll> -->
-						</keep-alive>
+				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' @change="tabFn">
+					<van-tab :title="'全部'+itemsNum">
+						<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="nextPageFn">
+							<ul class="list" :style="{'padding-top': height+'px'}">
+								<li v-for="(item,inx) in  items" :key="inx">
+									<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+										<div class="style">
+											<div class="contentTitle">
+												<img :src="item.img" alt="">
+												<span>{{item.realname}}</span>
+											</div>
+											<div class="contnet_left">
+												<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
+												<span>状态：{{item.span}}</span>
+											</div>
+										</div>
+									</router-link>
+									<div class="content_right">
+										<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
+									</div>
+								</li>
+							</ul>
+						</van-list>
 					</van-tab>
-					<van-tab title="新增病员" v-if="isLogin == 200? true:false">
-						<div class="newAdd">
-							<div class="newAddTitle">
-								<img src="../../../assets/image/bitian@2x.png" alt="">
-								<h3>必填项</h3>
-								<ul class="Fill">
-									<li>
-										<span>病患姓名</span>
-										<input type="text" v-model="account.user.realname"  placeholder="请填写" >
-									</li>
-									<li>
-										<span>联系电话</span>
-										<input type="text" v-model="account.user.tel" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
-									</li>
-									<li>
-										<span>身份证号</span>
-										<input type="text" v-model="account.user.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')" placeholder="请填写">
-									</li>
-								</ul>
-							</div>
-							<div class="newAddTitle bottom">
-								<img src="../../../assets/image/bitian@2x.png" alt="">
-								<h3>选填项</h3>
-								<ul class="Fill">
-									<li>
-										<span>备注</span>
-										<input type="text" v-model="account.user.remark"  placeholder="请填写" >
-									</li>
-								</ul>
-							</div>
-							<button class="submitClass" type="submit"@click="hospitalSubmit">提交</button>
-						</div>
+					<van-tab :title="'已就诊'+yesItemsNum">
+					
+						<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="yesNextPageFn">
+							<ul class="list" :style="{'padding-top': height+'px'}">
+								<li v-for="(item,inx) in  yesItems" :key="inx">
+									<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+										<div class="style">
+											<div class="contentTitle">
+												<img :src="item.img" alt="">
+												<span>{{item.realname}}</span>
+											</div>
+											<div class="contnet_left">
+												<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
+												<span>状态：{{item.span}}</span>
+											</div>
+										</div>
+									</router-link>
+									<div class="content_right">
+										<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
+									</div>
+								</li>
+							</ul>
+						</van-list>
 					</van-tab>
-					<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
-						<keep-alive>
-							<!-- <clinicNo ref='no' :list = 'list'></clinicNo> -->
-						</keep-alive>
-					</van-tab>
-					<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
-						<keep-alive>
-							<!-- <clinicYes ref='yes' :list = 'list'></clinicYes> -->
-						</keep-alive>
+					<van-tab :title="'未就诊'+noItemsNum">
+						<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="noNextPageFn">
+							<ul class="list" :style="{'padding-top': height+'px'}">
+								<li v-for="(item,inx) in  noItems" :key="inx">
+									<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+										<div class="style">
+											<div class="contentTitle">
+												<img :src="item.img" alt="">
+												<span>{{item.realname}}</span>
+											</div>
+											<div class="contnet_left">
+												<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
+												<span>状态：{{item.span}}</span>
+											</div>
+										</div>
+									</router-link>
+									<div class="content_right">
+										<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
+									</div>
+								</li>
+							</ul>
+						</van-list>
 					</van-tab>
 				</van-tabs>
 			</div>
 		</div>
-		<!-- <router v-if="isLogin == 200? true:false"></router> -->
   </div>
   </van-pull-refresh>
 </template>
@@ -89,34 +109,23 @@ import axios from 'axios'
 import {mapActions,mapGetters,mapState} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
-// import clinicAll from '../functionPage/clinicAll.vue'
-// import clinicYes from '../functionPage/clinicYes.vue'
-// import clinicNo from '../functionPage/clinicNo.vue'
-// import router from '../../outpatient/functionPage/router.vue'
 export default {
   name: 'index',
   data () {
     return {
 		name: 'index',
-		selectValue : [],
 		//导航栏切换标题
-		list:{
-			keywords : '',			//搜索框的关键字value
-			allTitle: '全部',
-			noTitle:'未就诊',
-			yesTitle:'已就诊',
-			allNum : 0,
-			noNum : 0,
-			yesNum : 0,
-			clinicId : '',
-			clinicAll : [],
-			clinicNo : [],
-			clinicYes : [],
-			data: false,
-			titleData:0,
-		},
-		height : undefined,
 		pullingDown: false,
+		items:[],
+		yesItems:[],
+		noItems:[],
+		itemsNum:'',
+		yesItemsNum:'',
+		noItemsNum:'',
+		loading: false,
+		// 加载状态结束
+		finished: false,
+		page:0,
     }
   },
   created(){
@@ -165,61 +174,51 @@ export default {
 		document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 
-  }
-  ,destroyed(){
-	  debugger
-	  console.log('destroyed')
   },
   mounted(){
-	  debugger
     if(window.plus){
     	//plus.navigator.setStatusBarBackground("#2B77EF");
     	plus.navigator.setStatusBarStyle("dark")
     }
-	this.initData();
+	this.getAllNum();
   },
   computed:{
-		show: {
-			get: function() {
-			console.log(this.$store)
-				return this.$store.state.shop.show
-			},
-			set: function (newValue) {
-			this.$store.state.shop.show = newValue;
-		   },
-		},
-		showTime: {
-			get: function() {
-			// console.log(this.$store)
-				return this.$store.state.shop.showTime
-			},
-			set: function (newValue) {
-			this.$store.state.shop.showTime = newValue;
-			},
-		},
-		...mapGetters(['Time','account','isLogin']),
+		...mapGetters(['account']),
   },
   //注册组件
   components:{
-	  // clinicAll,clinicYes,clinicNo,router
+	 
   },
   methods:{
-	 afterPullDown() {
-      //下拉刷新
+	afterPullDown() {
+	  //下拉刷新
 		setTimeout(() => {
 			this.pullingDown = false;
 			this.initData();
 		}, 500);
-    },
-    initData() {
-      Object.assign(this.$data, this.$options.data());
-      this.getNum();
-	  console.log(this.$refs)
-       this.$refs.all.initData();
-	   this.$refs.no.initData();
-	   this.$refs.yes.initData();
-    },
-	//回退方法
+	},
+	initData() {
+	  Object.assign(this.$data, this.$options.data());
+	  this.getAllNum();
+	  this.nextPageFn();
+	  this.yesNextPageFn();
+	  this.noNextPageFn();
+	},
+	getAllNum() {
+		var num = '';
+		this.getNum("").then((v)=>{
+			this.itemsNum = v
+		})
+		this.getNum(4).then((v)=>{
+			this.yesItemsNum = v
+		})
+		this.getNum(1).then((v)=>{
+			this.noItemsNum = v
+		})
+		console.log(this.getNum(""))
+		// console.log(this.itemsNum)
+	},
+	// 返回上上一级目录
 	goBackFn(){
 		this.$router.back(-1)
 	},
@@ -228,47 +227,162 @@ export default {
 	   this.show = true;
 	   // console.log(this.show)
 	},
-	getNum(){
-		debugger
-		let clinicId = '';
-		this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.account.clinicId;
-		this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+	// 获取下一页的方法
+	getData(data,page){
 		this.$axios.post('/c2/patient/items',qs.stringify({
-			kw : this.list.keywords,
-			hospitalId : this.account.hospitalId,
-			clinicId : clinicId,
-			status :1,
-			pn : 1,
-			ps : 10
-		}))
-		.then(_d => {
-			this.list.noNum = _d.data.data.sum.totalCount;
-			// console.log(this.list.noNum)
-		})
-		.catch((err)=>{
-			console.log(err);
-			// //Dialog({ message: err});;
-		})
-		this.$axios.post('/c2/patient/items',qs.stringify({
-			kw : this.list.keywords,
-			hospitalId : this.account.hospitalId,
-			clinicId : clinicId,
-			status :4,
-			pn : 1,
-			ps : 10
-		}))
-		.then(_d => {
-			this.list.yesNum = _d.data.data.sum.totalCount;
-			// console.log(this.list.yesNum)
-		})
-		.catch((err)=>{
-			console.log(err);
-			// //Dialog({ message: err});;
-		});
-
-		// console.log(this.list.allNum)
+				hospitalId : this.account.data.data.hospital.hospitalId,
+				status: data,
+				pn : page,
+				ps : 10,
+			}))
+			.then(res => {
+				if(res.data.data.items.length != 0){
+					for (let nums in res.data.data.items) {
+						if(res.data.data.items[nums].status == 1){
+							this.items.push({
+								clinicName : res.data.data.items[nums].clinicName,
+								itemId : res.data.data.items[nums].itemId,
+								pushTime : res.data.data.items[nums].pushTime,
+								realname : res.data.data.items[nums].realname,
+								status : res.data.data.items[nums].status,
+								img : require("../../../assets/image/orange@2x.png"),
+								button : "确认就诊",
+								span : "未就诊"
+							});
+							if(data){
+								this.noItems.push({
+									clinicName : res.data.data.items[nums].clinicName,
+									itemId : res.data.data.items[nums].itemId,
+									pushTime : res.data.data.items[nums].pushTime,
+									realname : res.data.data.items[nums].realname,
+									status : res.data.data.items[nums].status,
+									img : require("../../../assets/image/orange@2x.png"),
+									button : "确认就诊",
+									span : "未就诊"
+								});
+							}
+						}else if(res.data.data.items[nums].status == 4){
+							this.items.push({
+								clinicName : res.data.data.items[nums].clinicName,
+								itemId : res.data.data.items[nums].itemId,
+								pushTime : res.data.data.items[nums].pushTime,
+								realname : res.data.data.items[nums].realname,
+								status : res.data.data.items[nums].status,
+								img :require( "../../../assets/image/blue@2x.png"),
+								button : "已就诊",
+								buttonColor : "buttonColor",
+								span : "已就诊"
+							});
+							if(data){
+								this.yesItems.push({
+									clinicName : res.data.data.items[nums].clinicName,
+									itemId : res.data.data.items[nums].itemId,
+									pushTime : res.data.data.items[nums].pushTime,
+									realname : res.data.data.items[nums].realname,
+									status : res.data.data.items[nums].status,
+									img :require( "../../../assets/image/blue@2x.png"),
+									button : "已就诊",
+									buttonColor : "buttonColor",
+									span : "已就诊"
+								});
+							}
+						}
+					}
+					// 加载状态结束
+					this.loading = false;
+				}else{
+					this.loading = false;
+					this.finished = true;
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				//Dialog({ message: err});;
+			});
 	},
-	...mapActions(['labelLabelFn','dateConfirm','closeFn','screeningSubmit','screeningResult','confirm','cancel','hospitalSubmit'])
+	
+	// 获取下一页的方法
+	async getNum(data){
+		debugger;
+		var num ='';
+		await this.$axios.post('/c2/patient/items',qs.stringify({
+				clinicId : this.$route.query.clinicId,
+				status: data,
+				pn : 1,
+				ps : 10,
+			}))
+			.then(res => {
+				num = res.data.data.sum.totalCount;
+			})
+			.catch((err)=>{
+				console.log(err);
+				//Dialog({ message: err});;
+			});
+		console.log(num)
+		return num;
+	},
+	// 全部病原列表的下一页
+	nextPageFn(){
+		debugger;
+		this.page++;
+		this.getData('',this.page);
+	},
+	// 已就诊病原列表的下一页
+	yesNextPageFn(){
+		this.page++;
+		this.getData(4,this.page);
+	},
+	// 未就诊病原列表的下一页
+	noNextPageFn(){
+		this.page++;
+		this.getData(1,this.page);
+	},
+	// 菜单切换的清空值
+	tabFn(_value){
+		console.log(_value)
+		switch(_value){
+			case 0:
+			debugger
+			if(!this.items.length){
+				this.page = 0;
+				this.finished = false;
+			}
+			break;
+			case 1:
+			if(!this.yesItems.length){
+				this.page = 0;
+				this.finished = false;
+			}
+			break;
+			case 2:
+			if(!this.noItems.length){
+				this.page = 0;
+				this.finished = false;
+			}
+			break;
+		}
+	},
+	submitFn(_item,_button){
+		this.$axios.post('/c2/patient/confirmjiuzhen',qs.stringify({
+			patientId : _item.itemId
+		}))
+		.then(res =>{
+			if(res.data.codeMsg){
+				this.$toast.fail({duration: 1000,message: res.data.codeMsg})
+			}else{
+				this.$toast.success({duration: 1000,message: '操作成功'})
+				if(_item.status == 1){
+					console.log(_button.target)
+					_button.target.style.cssText="color:#333333; background-color:#EEEEEE;"
+					_button.target.innerHTML = '已就诊';
+				}
+			}
+		})
+		.catch((err)=>{
+			console.log(err);
+		})
+	}
+	
   },
 }
 </script>
@@ -417,7 +531,6 @@ export default {
 }
 .content_right{
 	float: right;
-	margin-right: .15rem;
 	margin-top: -.03rem;
 }
 .content_right button{
@@ -602,9 +715,67 @@ export default {
 .AlreadySpanColor{
 	color: #2B77EF!important;
 }
-.clinicSearchStyle{
-	margin-left: .16rem;
-	width: 70%;
-
+.list{
+	width: 91.46%;
+	margin: 0rem auto;
+}
+.list li{
+	width: 100%;
+	height: .845rem;
+	box-shadow: 0px 0px 26px 3px hsla(0, 0%, 0%, 10%);
+	margin-bottom: .1rem;
+	position: relative;
+	border-radius: .1rem;
+}
+.style{
+	height: 100%;
+	color: #333333;
+}
+.contentTitle{
+	width: 100%;
+	/* height: .17rem; */
+	/* line-height: .17rem; */
+	padding-top: .1rem;
+	padding-left: .1rem;
+	
+}
+.contentTitle img{
+	width: .17rem;
+	height: .17rem;
+	margin-top: -.03rem;
+}
+.contentTitle span{
+	font-size: .14rem;
+	font-weight: bold;
+}
+.contnet_left{
+	padding-top: .04rem;
+}
+.contnet_left span{
+	display: block;
+}
+.content_right{
+	position: absolute;
+	right: .15rem;
+	bottom: .25rem;
+}
+.content_right button{
+	width: .8rem;
+	height: .28rem;
+	background-color: #2B77EF;
+	border: none;
+	border-radius: .14rem;
+	color: #FFFFFF;
+	font-size: .125rem;
+}
+.buttonColor{
+    color: #333333!important;
+    background-color: #EEEEEE!important;
+}
+.tabTitle{
+	margin: .08rem 0rem;
+}
+.tabTitle span{
+	display: block;
 }
 </style>

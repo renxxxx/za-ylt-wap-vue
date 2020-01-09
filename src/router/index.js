@@ -40,7 +40,8 @@ import promoters_activityDetails from '@/components/promoters/page/activityDetai
 import promoters_promotersDetails from '@/components/promoters/page/promotersDetails.vue'
 // 推广人病原管理页面
 import promoters_sourceManagement from '@/components/promoters/page/sourceManagement.vue'
-
+// 推广人病原管理搜索页面
+import promoters_sourceSearch from '@/components/promoters/page/sourceSearch.vue'
 
 //门诊端页面及其组件
 //门诊端病员主页
@@ -586,6 +587,13 @@ const router = new Router({
 			path: '/promoters_sourceManagement',
 			name: 'promoters_sourceManagement',
 			component: promoters_sourceManagement,
+			meta: {auth:true},
+		},
+		{
+			// 推广人病原管理搜索页面
+			path: '/promoters_sourceSearch',
+			name: 'promoters_sourceSearch',
+			component: promoters_sourceSearch,
 			meta: {auth:true},
 		},
 		{

@@ -222,16 +222,16 @@ export default {
     },
     //键盘输入值时触发
     inputNow(_keywordsCode) {
-		let status = this.Time.postState;
-		this.items = [];
-		this.finished = true;
-		if(!this.keywords){
-			this.finished = false;
-			this.page = 1;
-			this.getData(status,this.page);
-		}else{
-			this.getData(status,'');
-		}
+    	let status = this.Time.postState;
+    	this.items = [];
+    	this.finished = true;
+    	if(!this.keywords){
+    		this.finished = false;
+    		this.page = 1;
+    		this.getData(status,this.page);
+    	}else{
+    		this.getData(status,'');
+    	}
     },
     goBackFn() {
       this.$router.back(-1);
@@ -350,11 +350,8 @@ export default {
     },
 	// 获取下一页的方法
 	getData(data,page){
-		console.log(this.account)
-		let clinicId = '';
 		this.$axios.post('/c2/patient/items',qs.stringify({
-				hospitalId : this.account.hospitalId,
-				clinicId : this.account.clinicId,
+				hospitalId : this.account.data.data.hospital.hospitalId,
 				kw: this.keywords,
 				status: data,
 				pn : page,
