@@ -352,6 +352,7 @@ export default {
 	getData(data,page){
 		this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.data.data.hospital.hospitalId,
+				hospitalUserId : this.account.data.data.hospitalUserId,
 				kw: this.keywords,
 				status: data,
 				pn : page,

@@ -215,7 +215,7 @@ export default {
 		this.getNum(1).then((v)=>{
 			this.noItemsNum = v
 		})
-		console.log(this.getNum(""))
+		// console.log(this.getNum(""))
 		// console.log(this.itemsNum)
 	},
 	// 返回上上一级目录
@@ -231,6 +231,7 @@ export default {
 	getData(data,page){
 		this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.account.data.data.hospital.hospitalId,
+				hospitalUserId : this.account.data.data.hospitalUserId,
 				status: data,
 				pn : page,
 				ps : 10,
@@ -306,7 +307,8 @@ export default {
 		debugger;
 		var num ='';
 		await this.$axios.post('/c2/patient/items',qs.stringify({
-				clinicId : this.$route.query.clinicId,
+				hospitalId : this.account.data.data.hospital.hospitalId,
+				hospitalUserId : this.account.data.data.hospitalUserId,
 				status: data,
 				pn : 1,
 				ps : 10,

@@ -61,16 +61,18 @@
 			<h3>发票照片</h3>
       <ul>
         <li v-for="(item,inx) in imgUrl" :key="inx" @click="enlargeFn(inx)">
-          <img v-bind:src="item" alt="">
+			<router-link :to="{name:'pictureEnlargement',query:{inx:inx,imgUrl:imgUrl,data:true}}">
+				<img v-bind:src="item" alt="">
+			</router-link>
           <img v-show="show" src="../assets/image/detele.png" alt="" @click="deteleFn(item)">
-		  <van-image-preview
+		 <!-- <van-image-preview
 		    v-model="enlarge"
 		    :images="imgUrl"
 			:start-position='photoNum'
 		    @change="onChange"
 		  >
 		    <template v-slot:index>第{{ photoPage+1 }}页</template>
-		  </van-image-preview>
+		  </van-image-preview> -->
         </li>
          <li v-show="show">
             <div class="addImg">
@@ -172,7 +174,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
@@ -483,9 +484,14 @@ export default {
   overflow: hidden;
   position: relative;
 }
-._photo ul li img{
-  width: 100%;
-  height: 100%;
+._photo ul li a{
+	width: .88rem;
+	height: .88rem;
+	display: inline-block;
+}
+._photo ul li a img{
+  width: 100%!important;
+  height: 100%!important;
   object-fit: cover;
 }
 ._photo ul li img:last-child{

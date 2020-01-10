@@ -5,7 +5,7 @@
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
-				<h3>发布精准活动</h3>
+				<h3>推广活动</h3>
 			</div>
 			<div class="right">
 				
