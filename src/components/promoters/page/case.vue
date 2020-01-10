@@ -2,7 +2,7 @@
 	<div class="case">
 		<div class="topNav" :style="{'padding-top': height+'px'}">
 			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn" :style="{'padding-top': height+'px'}">
-			<h3>优质案例</h3>
+			<h3>运营文章</h3>
 		</div>
 		<div class="zhangwei"></div>
 		<div class="article" :style="{'padding-top': height+'px'}">

@@ -10,8 +10,8 @@
 					<span>已认证</span>
 				</div>
 				<div class="top_center">
-					<h3>{{this.account.data.data.hospital.name}}</h3>
-					<p>账号：{{this.account.data.data.hospital.tel}}</p>
+					<h3>{{this.account.data.data.name}}</h3>
+					<p>账号：{{this.account.data.data.phone}}</p>
 				</div>
 			</div>
 		</div>
@@ -20,12 +20,12 @@
 		</van-image-preview>
 		<div class="user_center">
 			<ul>
-				<router-link :to="{name: 'promoters_promotersDetails',query:{time:new Date().getTime()}}">
+				<!-- <router-link :to="{name: 'promoters_promotersDetails',query:{time:new Date().getTime()}}">
 					<li>
 						<span>门诊列表	</span>
 						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
-				</router-link>
+				</router-link> -->
 				<li @click="exitFn">
 					<span>退出登录</span>
 					<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">

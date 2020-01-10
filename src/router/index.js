@@ -11,6 +11,10 @@ import details from '@/components/detailsPage.vue'
 import urlPage from '@/components/urlPage.vue'
 //病员管理页面页
 import hospital_sourceManagement from '@/components/common/page/sourceManagement.vue'
+//图片放大功能
+import pictureEnlargement from '@/components/pictureEnlargement.vue'
+
+
 
 //推广人端首页主页面
 import promoters_index from '@/components/promoters/index.vue'
@@ -200,6 +204,13 @@ const router = new Router({
 			path: '/hospital_sourceManagement',
 			name: 'hospital_sourceManagement',
 			component: hospital_sourceManagement,
+			meta: {auth:true},
+		},
+		{
+			//图片放大功能
+			path: '/pictureEnlargement',
+			name: 'pictureEnlargement',
+			component: pictureEnlargement,
 			meta: {auth:true},
 		},
 		{
