@@ -78,9 +78,9 @@ export default {
 			}
 		}, 2500)
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join()) 
-		console.log(this.height)
+		//var topHeight = this.topHeight.match(heightRexg)
+		//this.height = parseInt(topHeight.join()) 
+		//console.log(this.height)
 	},
 	destroyed() {
 		window.clearInterval(this.flowHeading)

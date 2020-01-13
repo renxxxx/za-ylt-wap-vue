@@ -27,7 +27,7 @@
 			</router-link>
 			</div>
 			<!-- 就诊情况 -->
-			<div class="typeNav" :style="{'padding-top': ($store.state.topHeight.replace('px','')+32)+'px'}">
+			<div class="typeNav" :style="{'padding-top': (parseInt($store.state.topHeight.replace('px',''))+32)+'px'}">
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
 					<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'
 						v-if="isLogin == 200? false:true">
@@ -123,9 +123,9 @@ export default {
   created(){
 	  debugger
 	var heightRexg = /^[0-9]*/g
-	var topHeight = this.topHeight.match(heightRexg)
-	this.height = parseInt(topHeight.join())
-	// console.log(this.height)
+	//var topHeight = this.topHeight.match(heightRexg)
+	//this.height = parseInt(topHeight.join())
+	// //console.log(this.height)
   },
   beforeRouteLeave(to, from, next) {
     debugger;
@@ -213,12 +213,20 @@ export default {
 		}, 500);
     },
     initData() {
+		debugger
       Object.assign(this.$data, this.$options.data());
       this.getNum();
 	  console.log(this.$refs)
-       this.$refs.all.initData();
+	  	    console.log(this.$refs.all)
+
+	   this.$refs.all.initData();
+	   	     console.log(this.$refs.no)
+
 	   this.$refs.no.initData();
+	   	   	     console.log(this.$refs.yes)
+
 	   this.$refs.yes.initData();
+
     },
 	//回退方法
 	goBackFn(){

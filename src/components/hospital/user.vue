@@ -22,7 +22,7 @@
 		<van-image-preview v-model="show" :images="images" @change="onChange" >
 		  <!-- <template v-slot:index>第{{ index }}页</template> -->
 		</van-image-preview>
-		<div class="user_center"  :style="{'padding-top': (height+140)+'px'}">
+		<div class="user_center"  :style="{'padding-top': (parseInt($store.state.topHeight.replace('px',''))+140)+'px'}">
 			<ul>
 				<router-link :to="{name : 'hospital_taskManagement',query:{time:new Date().getTime()}}">
 					<li>
@@ -92,13 +92,14 @@ export default {
 		bottomNav
 	},
 	created(){
+		debugger
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join()) 
-		console.log(this.height)
+		//var topHeight = this.topHeight.match(heightRexg)
+		//this.height = parseInt(topHeight.join()) 
+		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
-    //debugger;
+    debugger;
 	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
@@ -132,12 +133,13 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
+     debugger;
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 	
   }, mounted() {
+	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")

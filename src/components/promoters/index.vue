@@ -108,8 +108,8 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join()) 
+		//var topHeight = this.topHeight.match(heightRexg)
+		//this.height = parseInt(topHeight.join()) 
 	},
 	beforeRouteLeave(to, from, next) {
 		this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset

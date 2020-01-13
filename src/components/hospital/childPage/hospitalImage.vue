@@ -6,7 +6,7 @@
 		</div>
 		<div class="zhangwei"></div>
 		<div class="topNav" ref='img' :style="{'padding-top':$store.state.topHeight}"></div>
-		<div class="content" :style="{'margin-top': -(55-height)+'px'}">
+		<div class="content" :style="{'margin-top': -(55-parseInt($store.state.topHeight.replace('px','')))+'px'}">
 			<div class="contentTitle">
 				<h3 @click="switchFn('about')" ref='about' class="xiahuaxian">医院介绍</h3>
 				<h3 @click="switchFn('type')" ref='type'>特色科室</h3>
@@ -47,9 +47,9 @@ export default {
   },
   created(){
   	var heightRexg = /^[0-9]*/g
-  	var topHeight = this.topHeight.match(heightRexg)
-  	this.height = parseInt(topHeight.join()) 
-  	console.log(this.height)
+  	//var topHeight = this.topHeight.match(heightRexg)
+  	//this.height = parseInt(topHeight.join()) 
+  	//console.log(this.height)
   },
   beforeRouteLeave(to, from, next) {
     //debugger;

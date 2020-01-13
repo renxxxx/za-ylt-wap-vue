@@ -15,7 +15,7 @@
 		</div>
 		
 		<div class="zhangwei"></div>
-		<div class="detailsTime" :style="{'top': (height+47)+'px'}">
+		<div class="detailsTime" :style="{'top': (parseInt($store.state.topHeight.replace('px',''))+47)+'px'}">
 			<span>{{moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 		</div>
 		<div class="statistics" :style="{'padding-top':$store.state.topHeight}">
@@ -104,9 +104,9 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join()) 
-		console.log(this.height)
+		//var topHeight = this.topHeight.match(heightRexg)
+		//this.height = parseInt(topHeight.join()) 
+		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
