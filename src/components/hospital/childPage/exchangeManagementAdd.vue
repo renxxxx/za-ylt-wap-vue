@@ -1,6 +1,6 @@
 <template>
 	<div class="exchangeAdd">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -13,7 +13,7 @@
 			</div>
 		</div>
 		<div class="zhangwei"></div>
-		<ul :style="{'padding-top': height+'px'}">
+		<ul :style="{'padding-top':$store.state.topHeight}">
 			<li>
 				<span>商品名称</span>
 				<p>
@@ -69,7 +69,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},

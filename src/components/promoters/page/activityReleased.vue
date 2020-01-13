@@ -1,6 +1,6 @@
 <template>
 	<div class="active">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -11,7 +11,7 @@
 				
 			</div>
 		</div>
-		<div class="zhangwei":style="{'padding-top': height+'px'}"></div>
+		<div class="zhangwei":style="{'padding-top':$store.state.topHeight}"></div>
 		<van-swipe-cell v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
 			<van-cell :border="false" >
 				<router-link :to="{name : 'promoters_activityDetails',query:{itemId:item.itemId,time:new Date().getTime()}}">
@@ -52,7 +52,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},

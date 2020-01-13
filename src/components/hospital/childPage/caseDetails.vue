@@ -1,10 +1,10 @@
 <template>
 	<div class="caseDetails" >
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn">
 			<img src="../../../assets/image/share@3x.png" @click="share" alt="">
 		</div>
-		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
 		<div class="banner" v-show="!!caseInfo.cover">
 			<img v-lazy="caseInfo.cover"  alt="">
 		</div>
@@ -50,7 +50,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},

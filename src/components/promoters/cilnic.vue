@@ -1,8 +1,8 @@
 <template>
-	<div class="hospital" :style="{'padding-top': height+'px'}">
+	<div class="hospital" :style="{'padding-top':$store.state.topHeight}">
 		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 			<div class="navWarp">
-				<div class="topNav"  :style="{'padding-top': height+'px'}">
+				<div class="topNav"  :style="{'padding-top':$store.state.topHeight}">
 					<div class="hospital_search">
 						<router-link :to="{name : 'promoters_clinicSearch',query:{time:new Date().getTime()}}">
 							<input type="text" placeholder="搜索门诊">
@@ -20,7 +20,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
+			<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
 			<div class="content">
 				<ul>
 					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
@@ -73,7 +73,7 @@ export default {
 	created(){
 		debugger
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},

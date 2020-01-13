@@ -2,7 +2,7 @@
 
     <div class="hospital">
   <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" style="height:100%;overflow: auto;">
-      <div class="navWarp" :style="{'padding-top': height+'px'}">
+      <div class="navWarp" :style="{'padding-top': $store.state.topHeight}">
         <div class="navTitle">
           <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
         </div>
@@ -130,9 +130,9 @@ export default {
   created() {
     //debugger;
     var heightRexg = /^[0-9]*/g;
-    var topHeight = this.topHeight.match(heightRexg);
+    var topHeight = this.$store.state.topHeight.match(heightRexg);
     this.height = parseInt(topHeight.join());
-    console.log(this.height);
+    //console.log(this.height);
   },
   destroyed() {
     //debugger;

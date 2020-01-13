@@ -9,6 +9,8 @@ import { Dialog } from 'vant'
 import router from '../router'
 
 const state={
+	topHeight:null,
+	bottomHeight:null,
 	//账号协议checked
 	checked: true,
 	//账号
@@ -26,6 +28,7 @@ const state={
 		hospitalId: '',			//医院Id
 		patientId : '',			//医院端门诊主页的门诊详情页id
 		data:{},
+
 	},
 	//筛选的弹窗显示值
 	show: false,

@@ -1,7 +1,7 @@
 <template>
   <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
     <div class="_search" >
-      <div class="top_search" :style="{'padding-top': height+'px'}">
+      <div class="top_search" :style="{'padding-top':$store.state.topHeight}">
         <div class="search_return">
           <a @click="goBackFn">
             <img src="../../../assets/image/shape@3x.png" alt />
@@ -64,7 +64,7 @@
 		</van-popup>
       </div>
 	  <van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="nextPageFn">
-	  	<ul class="list" :style="{'padding-top': height+'px'}">
+	  	<ul class="list" :style="{'padding-top':$store.state.topHeight}">
 	  		<li v-for="(item,inx) in  items" :key="inx">
 	  			<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 	  				<div class="style">
@@ -84,7 +84,7 @@
 	  		</li>
 	  	</ul>
 	  </van-list>
-      <!-- <clinicAll ref="all" :list="list" :style="{'padding-top': height+'px'}"></clinicAll> -->
+      <!-- <clinicAll ref="all" :list="list" :style="{'padding-top':$store.state.topHeight}"></clinicAll> -->
     </div>
   </van-pull-refresh>
 </template>
@@ -150,7 +150,7 @@ export default {
   },
   created() {
     var heightRexg = /^[0-9]*/g;
-    var topHeight = this.topHeight.match(heightRexg);
+    var topHeight = this.$store.state.topHeight.match(heightRexg);
     this.height = parseInt(topHeight.join());
   },
   beforeRouteLeave(to, from, next) {

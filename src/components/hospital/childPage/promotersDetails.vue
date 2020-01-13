@@ -1,6 +1,6 @@
 <template>
 	<div class="promotersDetails" ref="promotersDetailsRef">
-		<div class="nav" :style="{'padding-top': height+'px'}">
+		<div class="nav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="topNav">
 				<div class="leftImg" @click="returnFn">
 					<img src="../../../assets/image/shape@3x.png" alt="">
@@ -88,7 +88,7 @@
 			<h4>全部门诊转移</h4>
 			<span>该推广人名下共有{{clinicNum}}门诊，是否转移</span>
 		</van-dialog> -->
-		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
 		<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 		<ul>
 			<li v-for="(item,inx) in promotersList" :key='inx'>
@@ -174,7 +174,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g;
-		var topHeight = this.topHeight.match(heightRexg);
+		var topHeight = this.$store.state.topHeight.match(heightRexg);
 		this.height = parseInt(topHeight.join()) ;
 		// console.log(this.height);
 	},

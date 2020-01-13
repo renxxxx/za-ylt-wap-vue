@@ -1,6 +1,6 @@
 <template>
 	<div class="active">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -13,7 +13,7 @@
 		</div>
 		<div class="zhangwei"></div>
 		<router-link :to="{name:'hospital_addActivity',query:{time:new Date().getTime()}}" v-show="isLogin== 100? true : false" >
-			<div class="addActive" :style="{'padding-top': height+'px'}">
+			<div class="addActive" :style="{'padding-top':$store.state.topHeight}">
 				<span>+</span>
 				<span>新建活动</span>
 			</div>
@@ -59,7 +59,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},

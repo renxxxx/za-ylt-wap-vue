@@ -1,6 +1,6 @@
 <template>
 	<div class="expertsIntroduction">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -10,7 +10,7 @@
 			<div class="right"></div>
 		</div> 
 		<div class="zhangwei"></div>
-		<div class="content" :style="{'padding-top': height+'px'}">
+		<div class="content" :style="{'padding-top':$store.state.topHeight}">
 			<ul>
 				<li v-for="(item,inx) in doctor" :key='inx'>
 					<img :src="item.headimg" alt="">
@@ -50,7 +50,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},

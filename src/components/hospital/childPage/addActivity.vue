@@ -1,6 +1,6 @@
 <template>
 	<div class="addAcivity" >
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="left" @click="goBackFn">
 				<span>取消</span>
 			</div>
@@ -86,7 +86,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join())
 		console.log(this.height)
 	},

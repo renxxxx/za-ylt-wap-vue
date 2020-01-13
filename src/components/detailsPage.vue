@@ -1,6 +1,6 @@
 <template>
 	<div class="detail">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="nav_left">
 				<a @click="goBackFn">
 					<img src="../assets/image/back-white@2x.png" alt="">
@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="_message" :style="{'padding-top': height+'px'}">
+		<div class="_message" :style="{'padding-top':$store.state.topHeight}">
 			<h3>基本信息</h3>
 			<ul>
 				<li>
@@ -135,7 +135,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},

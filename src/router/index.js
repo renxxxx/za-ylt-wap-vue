@@ -8,7 +8,7 @@ import retrievePassword from '@/components/retrievePassword.vue'
 //详情页
 import details from '@/components/detailsPage.vue'
 //用户协议
-import userAgreement from '@/components/userAgreement.vue'
+import urlPage from '@/components/urlPage.vue'
 //病员管理页面页
 import hospital_sourceManagement from '@/components/common/page/sourceManagement.vue'
 //图片放大功能
@@ -616,9 +616,9 @@ const router = new Router({
 		},
 		{
 			//用户协议
-			path: '/userAgreement',
-			name: 'userAgreement',
-			component: userAgreement,
+			path: '/urlPage',
+			name: 'urlPage',
+			component: urlPage,
 			meta: {auth:true},
 		},
 		{

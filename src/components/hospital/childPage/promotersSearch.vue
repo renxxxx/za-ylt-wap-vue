@@ -1,6 +1,6 @@
 <template>
 	<div class="promotersSearch" ref='promotersSearchRef'>
-		<div class="nav" :style="{'padding-top': height+'px'}">
+		<div class="nav" :style="{'padding-top':$store.state.topHeight}">
 			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn">
 			<div class="topNav">
 				<img src="" alt="">
@@ -10,7 +10,7 @@
 			</div>
 		</div>
 		<div class="zhangwei"></div>
-		<ul :style="{'padding-top': height+'px'}">
+		<ul :style="{'padding-top':$store.state.topHeight}">
 			<li v-for="(item,inx) in promotersList" :key="inx">
 				<router-link :to="{name : 'hospital_promotersDetails',query:{hospitalUserId: item.hospitalUserId}}">
 					<div class="list">
@@ -47,7 +47,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g;
-		var topHeight = this.topHeight.match(heightRexg);
+		var topHeight = this.$store.state.topHeight.match(heightRexg);
 		this.height = parseInt(topHeight.join()) ;
 		// console.log(this.height);
 	},

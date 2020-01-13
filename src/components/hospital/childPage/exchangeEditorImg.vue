@@ -1,6 +1,6 @@
 <template>
 	<div class="exchangeAddImg">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="addImg" v-model="exchangeAdd" :style="{'padding-top': height+'px'}">
+		<div class="addImg" v-model="exchangeAdd" :style="{'padding-top':$store.state.topHeight}">
 			<div class="addImgButton" v-show="this.exchangeAdd.cover? false : true">
 				<img src="../../../assets/image/append@2x.png" alt="">
 				<span>请添加照片</span>
@@ -46,7 +46,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},

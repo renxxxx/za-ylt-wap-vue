@@ -18,6 +18,7 @@ import 'vue-hash-calendar/lib/vue-hash-calendar.css'
 import VueScroller from 'vue-scroller'
 import qs from 'qs';
 import h5p from '../build/h5p.js'
+debugger
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
@@ -25,16 +26,25 @@ Vue.prototype.moment = moment;
 Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
-debugger
-if(navigator.userAgent.toLowerCase().indexOf('html5plus') != -1)
-	Vue.prototype.topHeight = "24px"
-else
-	Vue.prototype.topHeight = "10px"
 Vue.prototype.$jquery = jquery
 Vue.prototype.$iscroll = iscroll
-Vue.prototype.bottomHeight = "0px"
 
-function plusReady() {
+if(navigator.userAgent.toLowerCase().indexOf('html5plus') != -1)
+	store.state.topHeight = "24px"
+else
+	store.state.topHeight = "0px"
+
+const overIphonex = () => {
+	if (typeof window !== 'undefined' && window) {
+		return /iphone/gi.test(window.navigator.userAgent) && window.screen.height >= 812;
+	}
+	return false;
+	};
+	store.state.bottomHeight = overIphonex()?"34px":"0px"
+
+alert(store.state.bottomHeight)
+
+  function plusReady() {
 	let currentWebview = plus.webview.currentWebview();
 	currentWebview.setStyle({scrollIndicator:"none"})
 
@@ -45,7 +55,7 @@ function plusReady() {
 	if (isImmersedStatusbar) {
 		_statusbarHeight = plus.navigator.getStatusbarHeight(); // 获取系统状态栏高度
 	}
-		Vue.prototype.topHeight=_statusbarHeight+'px'
+		store.state.topHeight=_statusbarHeight+'px'
 	//plus.navigator.setStatusBarBackground("#ffffff");
 	plus.navigator.setStatusBarStyle("dark")
 	function location(position) {
@@ -64,7 +74,6 @@ function plusReady() {
 	}, {
 		geocode: false
 	});
-
 }
 
 
@@ -82,38 +91,6 @@ Vue.directive('focus', {
 			el.focus()
 	}
 })
-
-
-
-
-// Vue.directive('real-img', async function (el, binding) {//指令名称为：real-img
-//     let imgURL = binding.value;//获取图片地址
-//     if (imgURL) {
-//         let exist = await imageIsExist(imgURL);
-		
-//         if (exist) {
-//             el.setAttribute('src', imgURL);
-//         } 
-//     }
-// })
-// let imageIsExist = function(url) {
-//     return new Promise((resolve) => {
-//         var img = new Image();
-//         img.onload = function () {
-//             if (this.complete == true){
-//                 resolve(true);
-//                 img = null;
-//             }
-//         }
-//         img.onerror = function () {
-//             resolve(false);
-//             img = null;
-//         }
-//         img.src = url;
-//     })
-// }
-
-
 
 moment.locale('zh-cn');
 

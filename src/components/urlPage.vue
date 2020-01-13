@@ -1,16 +1,16 @@
 <template>
-	<div class="userAgreement">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+	<div class="urlPage">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="backImg">
-				<img src="../assets/image/shape@3x.png" alt=""  @click="backFn" :style="{'padding-top': height+'px'}">
+				<img src="../assets/image/shape@3x.png" alt=""  @click="backFn" :style="{'padding-top':$store.state.topHeight}">
 			</div>
 			<div class="centerNav">
 				<h3>{{this.$route.query.name}}</h3>
 			</div>
 			
 		</div>
-		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
-		<div class="center" ref='userAgreementRef' >
+		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+		<div class="center" ref='urlPageRef' >
 			
 		</div>
 	</div>
@@ -21,7 +21,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 export default {
-	name: 'userAgreement',
+	name: 'urlPage',
 	data () {
 		return {
 			
@@ -35,7 +35,7 @@ export default {
 	},
 	created(){
 			var heightRexg = /^[0-9]*/g
-			var topHeight = this.topHeight.match(heightRexg)
+			var topHeight = this.$store.state.topHeight.match(heightRexg)
 			this.height = parseInt(topHeight.join()) 
 			console.log(this.height)
 		},
@@ -87,7 +87,7 @@ export default {
 		this.$axios.get(this.$route.query.url)
 		.then((res)=>{
 			// console.log(res)
-			this.$refs.userAgreementRef.innerHTML = res.data
+			this.$refs.urlPageRef.innerHTML = res.data
 		})
 		.catch((e)=>{
 			console.log(e)
@@ -102,7 +102,7 @@ export default {
 </script>
 
 <style scoped>
-.userAgreement{
+.urlPage{
 	width: 100%;
 }
 .topNav{

@@ -174,11 +174,11 @@ export default {
       // console.log(scrollTop)
       if (data && scrollTop > 1000) {
         this.$refs.returnTopRef.style.opacity = 1;
-        this.$refs.returnHomePageRef.style.bottom = '1.1rem';
+        this.$refs.returnHomePageRef.style.bottom = '1.5rem';
       } else {
         debugger
         this.$refs.returnTopRef.style.opacity = 0;
-        this.$refs.returnHomePageRef.style.bottom = '.6rem';
+        this.$refs.returnHomePageRef.style.bottom = '1rem';
       }
     },
     // 返回列表顶部按钮
@@ -271,7 +271,7 @@ img[lazy="error"]{
   z-index: 9997;
   position: fixed;
   right: 0.2rem;
-  bottom: 0.6rem;
+  bottom: 1rem;
   opacity: 0;
   width: 0.4rem;
   height: 0.4rem;
@@ -301,7 +301,7 @@ img[lazy="error"]{
   z-index: 9999;
   position: fixed;
   right: 0.2rem;
-  bottom: .6rem;
+  bottom: 1rem;
   opacity: 1;
   width: 0.4rem;
   height: 0.4rem;

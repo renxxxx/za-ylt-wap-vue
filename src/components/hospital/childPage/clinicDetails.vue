@@ -1,6 +1,6 @@
 <template>
 	<div class="clinicDetails">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -13,11 +13,12 @@
 				</div>
 			</router-link>
 		</div>
+		
+		<div class="zhangwei"></div>
 		<div class="detailsTime" :style="{'top': (height+47)+'px'}">
 			<span>{{moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 		</div>
-		<div class="zhangwei"></div>
-		<div class="statistics" :style="{'padding-top': height+'px'}">
+		<div class="statistics" :style="{'padding-top':$store.state.topHeight}">
 			<van-circle v-model="num" :rate="num" :speed="100" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
 			  size="1.15rem" :text="String(list.yesNum + list.noNum)" />
 			<div class="statisticsText">
@@ -103,7 +104,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},

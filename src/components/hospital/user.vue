@@ -1,6 +1,6 @@
 <template>
 	<div class="user">
-		<div class="user_top" :style="{'padding-top': height+'px'}">
+		<div class="user_top" :style="{'padding-top':$store.state.topHeight}">
 			<div class="user_set" v-show=false>
 				<img src="../../assets/image/set up@2x.png" alt="">
 			</div>
@@ -93,7 +93,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},

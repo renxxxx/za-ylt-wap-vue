@@ -1,6 +1,6 @@
 <template>
 	<div class="exchangeList">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -11,7 +11,7 @@
 		</div>
 		<div class="zhangwei"></div>
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh" > -->
-			<ul :style="{'padding-top': height+'px'}">
+			<ul :style="{'padding-top':$store.state.topHeight}">
 				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 					<li v-for="(item,inx) in exchangeList" :key='inx' class='List'>
 						<router-link :to="{name : 'hospital_exchangeDetails' ,query : {item : item,time:new Date().getTime()}}">
@@ -62,7 +62,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
 		console.log(this.height)
 	},

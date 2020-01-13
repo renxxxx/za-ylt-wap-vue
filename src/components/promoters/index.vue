@@ -1,9 +1,9 @@
 <template>
 	<div class="index">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<h3>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</h3>
 		</div>
-		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
 		<div class="typeNav">
 			<router-link :to="{name : 'promoters_clinicSearch',query:{time:new Date().getTime()}}">
 				<img src="../../assets/image/qudaomenzhen@2.png" alt="">
@@ -108,7 +108,7 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.topHeight.match(heightRexg)
+		var topHeight = this.$store.state.topHeight.match(heightRexg)
 		this.height = parseInt(topHeight.join()) 
 	},
 	beforeRouteLeave(to, from, next) {

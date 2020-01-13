@@ -1,6 +1,6 @@
 <template>
 	<div id="mainButton">
-		<van-tabbar v-model="active" route >
+		<van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.bottomHeight}">
 			<van-tabbar-item replace :to="{name : 'hospital_index',query:{time:new Date().getTime()}}"> 
 			    <span>首页</span>
 			    <img
@@ -63,6 +63,11 @@ export default {
 	}
   },
   props:['name'],
+  created(){
+		var heightRexg = /^[0-9]*/g
+		var bottomHeight = this.$store.state.bottomHeight.match(heightRexg)
+		this.height = parseInt(bottomHeight.join()) 
+	},
   computed:{
   },
   methods:{
