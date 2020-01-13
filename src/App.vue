@@ -3,6 +3,10 @@
     <keep-alive>
       <router-view v-if="isRouterAlive"></router-view>
     </keep-alive>
+    <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-show="returnHomePageData">
+      <img src="./assets/image/returnHome.png" alt />
+      <span>首页</span>
+    </div>
     <div class="returnTop" @click="returnTopFn" ref="returnTopRef">
       <img src="./assets/image/returnTop.png" alt />
       <span>顶部</span>
@@ -25,7 +29,8 @@ export default {
   data() {
     return {
       returnTopButton: false,
-      isRouterAlive: true
+      isRouterAlive: true,
+      // returnHomePageData : false,
     };
   },
   beforeCreate() {},
@@ -70,15 +75,15 @@ export default {
 	});
 
   },
+  computed:{
+    ...mapGetters(['returnHomePageData'])
+	},
   mounted() {
     debugger
     // let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
     // console.log(document.documentElement.clientHeight)
     window.addEventListener("scroll", this.handleScroll, true);
-
-
   },
-  
   created() {
     let vm = this
      debugger;
@@ -100,8 +105,7 @@ export default {
         default:
           break;
       }
-    } 
-
+    }
     function getdata(_postRefresh, _isLogin) {
 			debugger
       vm.$jquery.ajax({
@@ -143,7 +147,6 @@ export default {
       });
     }
   },
-  computed: {},
   methods: {
     reload() {
       debugger;
@@ -152,8 +155,8 @@ export default {
         this.isRouterAlive = true;
       });
     },
+    // 滑动一定距离出现返回顶部按钮
     handleScroll() {
-		
       let scrollTop =
         this.$refs.appRef.scrollTop ||
         this.$refs.appRef.scrollTop ||
@@ -171,12 +174,15 @@ export default {
       // console.log(scrollTop)
       if (data && scrollTop > 1000) {
         this.$refs.returnTopRef.style.opacity = 1;
+        this.$refs.returnHomePageRef.style.bottom = '1.1rem';
       } else {
+        debugger
         this.$refs.returnTopRef.style.opacity = 0;
+        this.$refs.returnHomePageRef.style.bottom = '.6rem';
       }
     },
+    // 返回列表顶部按钮
     returnTopFn() {
-		
       var scrollTop =
         this.$refs.appRef.scrollTop ||
         this.$refs.appRef.scrollTop ||
@@ -190,10 +196,33 @@ export default {
           this.$refs.appRef.scroll--;
           document.documentElement.scrollTop--;
         }, 5);
-
       }
+      this.$refs.returnHomePageRef.style.bottom = '.6rem';
+      this.$refs.returnTopRef.style.opacity = 0;
     },
-		
+    // 返回首页按钮触发事件
+		returnHomePageFn(){
+      debugger
+      console.log(this.$store.state.account.data.data)
+      switch (this.$store.state.isLogin) {
+        case 100:
+          if(this.$store.state.account.data.data.type == 1){
+            this.$router.replace({name:'promoters_index',query:{time:new Date().getTime()}});
+					}else{
+            this.$router.replace({name:'hospital_index',query:{time:new Date().getTime()}});
+					}
+          break;
+        case 200:
+          this.$router.replace({name:'hospital_sourceManagement',query:{time:new Date().getTime()}})
+          break;
+        case 300:
+          this.$router.replace({name:'outpatient_index',query:{time:new Date().getTime()}})
+          break;
+        default:
+          break;
+      }
+    // this.returnHomePageData = false;
+    },
   }
 };
 </script>
@@ -239,9 +268,9 @@ img[lazy="error"]{
   display: none;
 }
 .returnTop {
-  z-index: 9999;
+  z-index: 9997;
   position: fixed;
-  right: 0.3rem;
+  right: 0.2rem;
   bottom: 0.6rem;
   opacity: 0;
   width: 0.4rem;
@@ -266,6 +295,36 @@ img[lazy="error"]{
 	display: block;
 	font-size: 12px;
 	transform:scale(0.85);
+}
 
+.returnHomePage{
+  z-index: 9999;
+  position: fixed;
+  right: 0.2rem;
+  bottom: .6rem;
+  opacity: 1;
+  width: 0.4rem;
+  height: 0.4rem;
+  /* line-height: .4rem; */
+  text-align: center;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1px solid #bfbebe;
+}
+
+.returnHomePage img {
+  background: none;
+  border: none;
+  width: 0.18rem;
+  display: block;
+  margin: 0rem auto;
+  margin-top: 0.045rem;
+  /* height: .5rem; */
+}
+
+.returnHomePage span{
+	display: block;
+	font-size: 12px;
+	transform:scale(0.85);
 }
 </style>

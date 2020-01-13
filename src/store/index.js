@@ -32,6 +32,8 @@ const state={
 	//显示半遮罩及其日期选择
 	showTime : false,
 	// topHeight : "10px"
+	// 返回首页按钮显示值
+	returnHomePageData : true,
 }
 const getters={
 	//账号协议checked
@@ -46,6 +48,8 @@ const getters={
 	showTime : state => state.showTime,
 	isLogin : state => state.isLogin,
 	// topHeight :state =>state.topHeight,
+	// 返回首页按钮显示值
+	returnHomePageData : state => state.returnHomePageData,
 }
 
 const actions={

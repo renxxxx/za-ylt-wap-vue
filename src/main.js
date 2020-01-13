@@ -32,7 +32,7 @@ else
 	Vue.prototype.topHeight = "10px"
 Vue.prototype.$jquery = jquery
 Vue.prototype.$iscroll = iscroll
-
+Vue.prototype.bottomHeight = "0px"
 
 function plusReady() {
 	let currentWebview = plus.webview.currentWebview();

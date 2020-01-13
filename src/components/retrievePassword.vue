@@ -1,7 +1,7 @@
 <template>
   <div class="retrievePassword">
-	<div class="navWarp">
-		<a @click="goBackFn">
+	<div class="navWarp" :style="{'padding-top': height+'px'}">
+		<a @click="goBackFn" >
 			<img src="../assets/image/shape@2x.png" alt="">
 		</a>
 		<span>修改密码</span>
@@ -27,9 +27,6 @@
 				<input type="text" name='password' maxlength="12" v-model="retrieve.newpwd" oninput="value=value.replace(/[^0-9a-zAA-Z]/g,'')" placeholder="请输入新密码">
 			</li>
 		</ul>
-		
-		
-	
 		<button @click="retrieveSubmit">确认</button>
 	</div>
 		
@@ -60,7 +57,9 @@ export default {
     }
   },
   created () {
-		
+	var heightRexg = /^[0-9]*/g
+	var topHeight = this.topHeight.match(heightRexg)
+	this.height = parseInt(topHeight.join()) 
   },
   computed:{
 	  ...mapGetters(['account','isLogin','whichClient'])
