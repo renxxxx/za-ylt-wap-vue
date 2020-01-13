@@ -1,6 +1,6 @@
 <template>
 	<div class="promotersDetails" ref="promotersDetailsRef">
-		<div class="nav" :style="{'padding-top': height+'px'}">
+		<div class="nav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="topNav">
 				<div class="leftImg" @click="returnFn">
 					<img src="../../../assets/image/shape@3x.png" alt="">
@@ -18,7 +18,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
 		<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
 		<ul>
 			<li v-for="(item,inx) in promotersList" :key='inx'>

@@ -3,7 +3,7 @@
   <div class="index">
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
-			<div class="topNav" ref="topNav" :style="{'padding-top': height+'px'}">
+			<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.topHeight}">
 
 				<div class="indexReturn" @click="goBackFn" v-if="isLogin == 100? true:false">
 					<img src="../../../assets/image/back-white@2x.png" alt="">
@@ -27,7 +27,7 @@
 			</router-link>
 			</div>
 			<!-- 就诊情况 -->
-			<div class="typeNav" :style="{'padding-top': (height+32)+'px'}">
+			<div class="typeNav" :style="{'padding-top': ($store.state.topHeight.replace('px','')+32)+'px'}">
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
 					<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'
 						v-if="isLogin == 200? false:true">

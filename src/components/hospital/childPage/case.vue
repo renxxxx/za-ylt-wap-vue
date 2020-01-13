@@ -1,11 +1,11 @@
 <template>
 	<div class="case">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
-			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn" :style="{'padding-top':$store.state.topHeight}">
 			<h3>优质案例</h3>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="article" :style="{'padding-top': height+'px'}">
+		<div class="article" :style="{'padding-top':$store.state.topHeight}">
 			<ul>
 				<li v-for="(items,inx) in article" :key="inx">
 					<router-link :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 4,time:new Date().getTime()}}">

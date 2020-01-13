@@ -1,6 +1,6 @@
 <template>
 	<div class="user">
-		<div class="user_top" :style="{'padding-top': height+'px'}">
+		<div class="user_top" :style="{'padding-top':$store.state.topHeight}">
 			<div class="user_set" v-show=false>
 				<img src="../../assets/image/set up@2x.png" alt="">
 			</div>

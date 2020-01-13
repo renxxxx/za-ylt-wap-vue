@@ -1,6 +1,6 @@
 <template>
-	<div class="gene" :style="{'padding-top': height+'px'}">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+	<div class="gene" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="nav_left">
 				<img src="../../assets/image/scanning@2x.png" alt="">
 			</div>

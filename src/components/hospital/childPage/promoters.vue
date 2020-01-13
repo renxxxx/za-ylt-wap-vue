@@ -1,6 +1,6 @@
 <template>
 	<div class="promoters" ref='promotersRef'>
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -17,7 +17,7 @@
 			</div>
 		</div>
 		<div class="zhangwei"></div>
-		<ul :style="{'padding-top': height+'px'}">
+		<ul :style="{'padding-top':$store.state.topHeight}">
 			<li v-for="(item,inx) in promotersList" :key="inx">
 				<router-link :to="{name : 'hospital_promotersDetails',query:{hospitalUserId: item.hospitalUserId}}">
 					<div class="list">

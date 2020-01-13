@@ -1,11 +1,11 @@
 <template>
 	<div class="images">
-		<div class="nav" :style="{'padding-top': height+'px'}">
+		<div class="nav" :style="{'padding-top':$store.state.topHeight}">
 			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn">
 			<h3>医院详情</h3>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="topNav" ref='img' :style="{'padding-top': height+'px'}"></div>
+		<div class="topNav" ref='img' :style="{'padding-top':$store.state.topHeight}"></div>
 		<div class="content" :style="{'margin-top': -(55-height)+'px'}">
 			<div class="contentTitle">
 				<h3 @click="switchFn('about')" ref='about' class="xiahuaxian">医院介绍</h3>

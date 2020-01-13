@@ -2,7 +2,7 @@
 
     <div class="hospital">
   <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" style="height:100%;overflow: auto;">
-      <div class="navWarp" :style="{'padding-top': height+'px'}">
+      <div class="navWarp" :style="{'padding-top': $store.state.topHeight}">
         <div class="navTitle">
           <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
         </div>

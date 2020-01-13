@@ -1,8 +1,8 @@
 <template>
-	<div class="hospital" :style="{'padding-top': height+'px'}">
+	<div class="hospital" :style="{'padding-top':$store.state.topHeight}">
 		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 			<div class="navWarp">
-				<div class="topNav"  :style="{'padding-top': height+'px'}">
+				<div class="topNav"  :style="{'padding-top':$store.state.topHeight}">
 					<div class="hospital_search">
 						<router-link :to="{name : 'hospital_indexSearch',query:{time:new Date().getTime()}}">
 							<input type="text" placeholder="搜索门诊">

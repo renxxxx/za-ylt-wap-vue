@@ -1,6 +1,6 @@
 <template>
 	<div class="exchangeDetails">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -9,7 +9,7 @@
 			</div>
 			<div class="right"></div>
 		</div> 
-		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
 		<div class="address">
 			<div class="addressLeft">
 				<img src="../../../assets/image/exchangeAdress.png" alt="">

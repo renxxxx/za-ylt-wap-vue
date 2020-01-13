@@ -1,6 +1,6 @@
 <template>
 	<div class="addPromoters" ref="addPromotersRef">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@2x.png" alt="">
 			</div>
@@ -9,8 +9,8 @@
 			</div>
 			<div class="right"></div>
 		</div>
-		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
-		<ul :style="{'padding-top': height+'px'}">
+		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+		<ul :style="{'padding-top':$store.state.topHeight}">
 			<li>
 				<h4>姓名</h4>
 				<input type="text" placeholder="请输入" v-model="addPromoters.name">

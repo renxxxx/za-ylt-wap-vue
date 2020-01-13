@@ -1,15 +1,15 @@
 <template>
 	<div class="urlPage">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="backImg">
-				<img src="../assets/image/shape@3x.png" alt=""  @click="backFn" :style="{'padding-top': height+'px'}">
+				<img src="../assets/image/shape@3x.png" alt=""  @click="backFn" :style="{'padding-top':$store.state.topHeight}">
 			</div>
 			<div class="centerNav">
 				<h3>{{this.$route.query.name}}</h3>
 			</div>
 			
 		</div>
-		<div class="zhangwei" :style="{'padding-top': height+'px'}"></div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
 		<div class="center" ref='urlPageRef' >
 			
 		</div>

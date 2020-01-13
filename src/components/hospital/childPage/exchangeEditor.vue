@@ -1,6 +1,6 @@
 <template>
 	<div class="exchangeEditor">
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div class="zhangwei"></div>
-		<ul :style="{'padding-top': height+'px'}">
+		<ul :style="{'padding-top':$store.state.topHeight}">
 			<li>
 				<span>商品名称</span>
 				<p>

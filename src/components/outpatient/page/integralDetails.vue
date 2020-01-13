@@ -10,7 +10,7 @@
     	<div class="right"></div>
     </div>
 		<div class="zhangwei"></div>
-    <div class="detailsTitle" :style="{'padding-top': height+'px'}">
+    <div class="detailsTitle" :style="{'padding-top':$store.state.topHeight}">
       <img src="../../../assets/image/lishi.png" alt="">
       <span>积分使用明细</span>
     </div>

@@ -1,6 +1,6 @@
 <template>
 	<div class="addAcivity" >
-		<div class="topNav" :style="{'padding-top': height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="left" @click="goBackFn">
 				<span>取消</span>
 			</div>
