@@ -1,7 +1,7 @@
 <template>
   <div class="retrievePassword">
 	<div class="navWarp" :style="{'padding-top': height+'px'}">
-		<a @click="goBackFn" >
+		<a @click="goBackFn" id="navback">
 			<img src="../assets/image/shape@2x.png" alt="">
 		</a>
 		<span>修改密码</span>

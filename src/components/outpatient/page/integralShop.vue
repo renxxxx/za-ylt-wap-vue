@@ -1,7 +1,7 @@
 <template>
 	<div class="integralShop">
 		<div class="slip">
-			<div class="return" @click="returnFn">
+			<div class="return" @click="returnFn" id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<van-swipe >

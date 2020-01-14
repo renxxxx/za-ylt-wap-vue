@@ -1,7 +1,7 @@
 <template>
 	<div class="collect"  id='read' ref="Box"  @scroll="scrollToTop">
 		<div class="topNav">
-			<div class="return" @click="goBackFn">
+			<div class="return" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="searchInput">

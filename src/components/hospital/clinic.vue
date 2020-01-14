@@ -90,9 +90,9 @@ export default {
 	created(){
 		debugger
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.$store.state.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join()) 
-		console.log(this.height)
+		//var topHeight = this.topHeight.match(heightRexg)
+		//this.height = parseInt(topHeight.join()) 
+		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
 	debugger;

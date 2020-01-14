@@ -1,7 +1,7 @@
 <template>
 	<div class="addAcivity" >
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-			<div class="left" @click="goBackFn">
+			<div class="left" @click="goBackFn"  id="navback">
 				<span>取消</span>
 			</div>
 			<div class="centerTitle">
@@ -14,7 +14,7 @@
 			</router-link>
 
 		</div>
-		<div class="addImg" :style="{'padding-top': (height+47)+'px'}">
+		<div class="addImg" :style="{'padding-top': (parseInt($store.state.topHeight.replace('px',''))+47)+'px'}">
 			<img :src="activity.cover" alt="">
 			<div class="addImgTitle">
 				<img src="../../../assets/image/replace@2x.png" alt="">
@@ -86,9 +86,9 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.$store.state.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join())
-		console.log(this.height)
+		// var topHeight = this.topHeight.match(heightRexg)
+		// this.height = parseInt(topHeight.join())
+		// console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;

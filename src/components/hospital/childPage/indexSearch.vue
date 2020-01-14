@@ -2,7 +2,7 @@
 	<div class="search_clinic">
 		<div class="navWarp" :style="{'padding-top':$store.state.topHeight}">
 			<div class="topNav">
-				<div class="clinic_information" @click="goBackFn">
+				<div class="clinic_information" @click="goBackFn"  id="navback">
 					<img src="../../../assets/image/shape@3x.png" alt="">
 				</div>
 				<div class="clinic_search">
@@ -55,9 +55,9 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.$store.state.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join())
-		console.log(this.height)
+		//var topHeight = this.topHeight.match(heightRexg)
+		//this.height = parseInt(topHeight.join())
+		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;

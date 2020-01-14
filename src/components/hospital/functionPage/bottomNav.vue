@@ -1,7 +1,7 @@
 <template>
 	<div id="mainButton">
 		<van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.bottomHeight}">
-			<van-tabbar-item replace :to="{name : 'hospital_index',query:{time:new Date().getTime()}}"> 
+			<van-tabbar-item replace :to="{name : 'hospital_index',query:{time:new Date().getTime(),transition:'def'}}"> 
 			    <span>首页</span>
 			    <img
 					slot="icon"
@@ -9,7 +9,7 @@
 					:src="props.active ? index.inactive : index.active"
 			    />
 			</van-tabbar-item>
-			<van-tabbar-item replace :to="{name : 'hospital_clinic',query:{time:new Date().getTime()}}"> 
+			<van-tabbar-item replace :to="{name : 'hospital_clinic',query:{time:new Date().getTime(),transition:'def'}}"> 
 			    <img
 					slot="icon"
 					slot-scope="props"
@@ -17,7 +17,7 @@
 			    >
 			    <span>门诊</span>
 			</van-tabbar-item>
-			<van-tabbar-item replace :to="{name : 'hospital_gene',query:{time:new Date().getTime()}}"> 
+			<van-tabbar-item replace :to="{name : 'hospital_gene',query:{time:new Date().getTime(),transition:'def'}}"> 
 			    <span>基因</span>
 			    <img
 					slot="icon"
@@ -25,7 +25,7 @@
 					:src="props.active ? gene.inactive : gene.active"
 			    >
 			</van-tabbar-item>
-			<van-tabbar-item replace :to="{name : 'hospital_user',query:{time:new Date().getTime()}}"> 
+			<van-tabbar-item replace :to="{name : 'hospital_user',query:{time:new Date().getTime(),transition:'def'}}"> 
 			    <span>我的</span>
 			    <img
 					slot="icon"

@@ -1,7 +1,7 @@
 <template>
 	<div class="case">
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn" :style="{'padding-top':$store.state.topHeight}">
+			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
 			<h3>运营文章</h3>
 		</div>
 		<div class="zhangwei"></div>
@@ -47,9 +47,9 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.$store.state.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join()) 
-		console.log(this.height)
+		//var topHeight = this.topHeight.match(heightRexg)
+		//this.height = parseInt(topHeight.join()) 
+		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;

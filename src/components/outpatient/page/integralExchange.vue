@@ -1,7 +1,7 @@
 <template>
 	<div class="integralExchange">
 		<div class="topNav" :style="{'padding-top':height+'px'}">
-			<div class="leftImg" @click="goBackFn">
+			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@2x.png" alt="">
 			</div>
 			<div class="centerTitle">
@@ -78,9 +78,9 @@ export default {
 			}
 		}, 2500)
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.$store.state.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join()) 
-		console.log(this.height)
+		//var topHeight = this.topHeight.match(heightRexg)
+		//this.height = parseInt(topHeight.join()) 
+		//console.log(this.height)
 	},
 	destroyed() {
 		window.clearInterval(this.flowHeading)

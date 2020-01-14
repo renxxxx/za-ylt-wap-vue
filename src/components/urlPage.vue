@@ -2,7 +2,7 @@
 	<div class="urlPage">
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="backImg">
-				<img src="../assets/image/shape@3x.png" alt=""  @click="backFn" :style="{'padding-top':$store.state.topHeight}">
+				<img src="../assets/image/shape@3x.png" alt=""  @click="backFn" id="navback" :style="{'padding-top':$store.state.topHeight}">
 			</div>
 			<div class="centerNav">
 				<h3>{{this.$route.query.name}}</h3>
@@ -35,9 +35,9 @@ export default {
 	},
 	created(){
 			var heightRexg = /^[0-9]*/g
-			var topHeight = this.$store.state.topHeight.match(heightRexg)
-			this.height = parseInt(topHeight.join()) 
-			console.log(this.height)
+			//var topHeight = this.topHeight.match(heightRexg)
+			//this.height = parseInt(topHeight.join()) 
+			//console.log(this.height)
 		},
 	beforeRouteLeave(to, from, next) {
 		this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset

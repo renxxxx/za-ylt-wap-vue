@@ -3,7 +3,7 @@
     <div class="_search" >
       <div class="top_search" :style="{'padding-top':$store.state.topHeight}">
         <div class="search_return">
-          <a @click="goBackFn">
+          <a @click="goBackFn"  id="navback">
             <img src="../../../assets/image/shape@3x.png" alt />
           </a>
         </div>
@@ -150,8 +150,8 @@ export default {
   },
   created() {
     var heightRexg = /^[0-9]*/g;
-    var topHeight = this.$store.state.topHeight.match(heightRexg);
-    this.height = parseInt(topHeight.join());
+    //var topHeight = this.topHeight.match(heightRexg);
+    //this.height = parseInt(topHeight.join());
   },
   beforeRouteLeave(to, from, next) {
     //debugger;

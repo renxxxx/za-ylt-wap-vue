@@ -2,7 +2,7 @@
 	<div class="promotersDetails" ref="promotersDetailsRef">
 		<div class="nav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="topNav">
-				<div class="leftImg" @click="returnFn">
+				<div class="leftImg" @click="returnFn" id="navback">
 					<img src="../../../assets/image/shape@3x.png" alt="">
 				</div>
 			</div>
@@ -64,9 +64,9 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g;
-		var topHeight = this.$store.state.topHeight.match(heightRexg);
-		this.height = parseInt(topHeight.join()) ;
-		// console.log(this.height);
+		//var topHeight = this.topHeight.match(heightRexg);
+		//this.height = parseInt(topHeight.join()) ;
+		// //console.log(this.height);
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;

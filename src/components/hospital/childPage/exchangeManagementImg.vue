@@ -1,7 +1,7 @@
 <template>
 	<div class="exchangeAddImg">
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-			<div class="leftImg" @click="goBackFn">
+			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
@@ -46,9 +46,9 @@ export default {
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
-		var topHeight = this.$store.state.topHeight.match(heightRexg)
-		this.height = parseInt(topHeight.join()) 
-		console.log(this.height)
+		//var topHeight = this.topHeight.match(heightRexg)
+		//this.height = parseInt(topHeight.join()) 
+		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;

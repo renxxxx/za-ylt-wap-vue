@@ -42,8 +42,6 @@ const overIphonex = () => {
 	};
 	store.state.bottomHeight = overIphonex()?"34px":"0px"
 
-alert(store.state.bottomHeight)
-
   function plusReady() {
 	let currentWebview = plus.webview.currentWebview();
 	currentWebview.setStyle({scrollIndicator:"none"})
@@ -151,7 +149,9 @@ Toast.setDefaultOptions({
 });
 /* eslint-disable no-new */
 
-
+// window.vm = new Vue({
+//     router
+// });
 
 new Vue({
 	el: '#app',

@@ -1,7 +1,7 @@
 <template>
 	<div class="preview">
 		<div class="topNav">
-			<div class="left" @click="goBackFn">
+			<div class="left" @click="goBackFn"  id="navback">
 				<span>继续编辑</span>
 			</div>
 			<div class="centerTitle">
