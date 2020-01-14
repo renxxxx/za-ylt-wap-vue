@@ -328,12 +328,14 @@ export default {
 	position: absolute;
 }
 .inputBox input{
+	
 	width: 85%;
 	height: .45rem;
 	border-radius: .25rem;
 	border: 1px solid #E5E5E5;
 	padding-left: 15%;
 	background: #F5F5F5;
+	
 }
 .inputBox input:last-child{
 	margin-top: .2rem;

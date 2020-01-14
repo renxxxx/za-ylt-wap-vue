@@ -57,6 +57,7 @@
 				
 			</ul>
 		</div>
+		<span>版本：{{this.$version.split('-')[0]}}</span>
 		<bottomNav></bottomNav>
 	</div>
 </template>
@@ -338,5 +339,15 @@ export default {
 	width: .08rem;
 	right: .18rem;
 	top: .19rem;
+}
+.user>span{
+	width: 50%;
+	text-align: center;
+	color: #757677;
+	position: absolute;
+	bottom: .8rem;
+	left: 0rem;
+	right: 0rem;
+	margin: 0rem auto;
 }
 </style>

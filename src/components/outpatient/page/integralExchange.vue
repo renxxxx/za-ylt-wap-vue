@@ -32,7 +32,7 @@
 				</li>
 		    </ul>
 		</div>
-		<div class="zhangwei" :style="{'height':(height+24)+'px'}"></div>
+		<!-- <div class="zhangwei" :style="{'height':(height+24)+'px'}"></div> -->
 		<integralExchangeList :show = 'show' :style="{'padding-top':height+'px'}"></integralExchangeList>
 	</div>
 </template>
@@ -188,6 +188,7 @@ export default {
 }
 .zhangwei{
 	width: 100%;
+	height: 1.76rem;
 }
 .leftImg{
 	width: 22%;
