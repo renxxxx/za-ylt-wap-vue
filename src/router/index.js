@@ -43,7 +43,7 @@ import promoters_activityDetails from '@/components/promoters/page/activityDetai
 // 推广人门诊推广人详情页面
 import promoters_promotersDetails from '@/components/promoters/page/promotersDetails.vue'
 // 推广人病原管理页面
-import promoters_sourceManagement from '@/components/promoters/page/sourceManagement.vue'
+import promoters_sourceManagement from '@/components/promoters/page/promotersSourceManagement.vue'
 // 推广人病原管理搜索页面
 import promoters_sourceSearch from '@/components/promoters/page/sourceSearch.vue'
 

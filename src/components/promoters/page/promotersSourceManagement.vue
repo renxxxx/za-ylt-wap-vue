@@ -20,7 +20,7 @@
 			</router-link>
 			<router-link :to="{name:'promoters_sourceSearch',query:{time:new Date().getTime()}}">
 				<div class="indexScreening" @click="showPopup">
-					<span>筛选</span>
+					<span>筛选 </span>
 					<img src="../../../assets/image/screen@2x.png" alt="加载中" >
 				</div>
 			</router-link>
