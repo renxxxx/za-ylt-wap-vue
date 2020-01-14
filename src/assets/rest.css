@@ -21,6 +21,6 @@ img {vertical-align: middle;}
 /* 加载不出来的图片不要显示灰色边框 */
 img:not([src]),img[src=""] {opacity: 0;}
 table {border-collapse: collapse; border-spacing: 0;}
-input, select, button, textarea {font-size: 100%; font: inherit;}
+input, select, button, textarea {font-size: 100%; font: inherit;-webkit-appearance: none; border-radius:0px; border:none;}
 html, body { overflow-x: hidden;}
 span{list-style: none}

@@ -194,7 +194,7 @@ export default {
 	border-radius: .15rem;
 	border: none;
 	height: .28rem;
-	width: .45rem;
+	width: .5rem;
 }
 
 .clinic_information{

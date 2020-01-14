@@ -313,7 +313,7 @@ export default {
 .indexSearch{
 	display: inline-block;
 	/* width: .43rem; */
-	width: 65%;
+	width: 63%;
 	float: left;
 	/* text-align: center; */
 	z-index: 999;
@@ -323,15 +323,22 @@ export default {
 	padding-top: 6px;
 }
 .indexSearch img{
-	position: absolute;z-index: 9;left: .11rem;top: .15rem;
-	height: .15rem;width:.14rem;
+	position: absolute;
+	z-index: 9;
+	left: .11rem;
+	/* top: .15rem; */
+	top: 0rem;
+	bottom: 0rem;
+	margin: auto 0rem;
+	height: .15rem;
+	width:.14rem;
 }
 .indexSearch input{
 	border-radius: .18rem;border: none;
 	height: .335rem;width: 2.4rem;
 	line-height: .3rem;
 	/* padding: 0; */
-	width: 84%;
+	width: 80%;
 	padding-left: 12%;
 	/* margin:0 5%; */
 	background: #F5F5F5;
@@ -349,7 +356,7 @@ export default {
 	border-radius: .15rem;
 	border: 1px solid #FFFFFF;
 	height: .28rem;
-	width: .45rem;
+	width: .5rem;
 	font-size: .12rem;
 	text-align: center;
 	line-height: .25rem;
@@ -553,8 +560,8 @@ export default {
 	height: .4rem;
 	display:block;margin:0 auto;
 	margin-top: .5rem;
-
-	background: linear-gradient(#56AFF8, #2B77EF);
+	background-color: #2B77EF;
+	/* background: linear-gradient(#56AFF8, #2B77EF); */
 	border: none;
 	border-radius: .2rem;
 	color: #FFFFFF;

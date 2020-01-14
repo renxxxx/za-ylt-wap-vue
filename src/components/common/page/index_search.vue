@@ -471,14 +471,14 @@ export default {
 }
 .search_input {
   float: left;
-  width: 63%;
+  width: 62%;
   position: relative;
 }
 .search_input input {
   background-color: #f5f5f5;
   height: 0.335rem;
   line-height: 0.3rem;
-  width: 79%;
+  width: 77%;
   margin: 0.082rem 0rem;
   border: none;
   border-radius: 25px;
@@ -503,7 +503,7 @@ export default {
   border-radius: 0.15rem;
   border: none;
   height: 0.28rem;
-  width: 0.45rem;
+  width: 0.5rem;
   font-size: 0.12rem;
 }
 .screening {

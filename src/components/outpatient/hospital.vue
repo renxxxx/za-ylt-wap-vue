@@ -130,7 +130,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
@@ -168,7 +167,8 @@ export default {
 	  				// })
 	  			}
 	  		}
-	  		this.loading = false;
+			  this.loading = false;
+			  this.finished = true;
 	  		}else{
 	  			// this.$notify({
 	  			// 	message: '数据已全部加载',
@@ -202,7 +202,7 @@ export default {
 }
 .hospital_search{
 	float:left;
-	width: 75%;
+	width: 73%;
 	position: relative;
 }
 .hospital_search input{
@@ -232,7 +232,7 @@ export default {
 	border-radius: .15rem;
 	border: none;
 	height: .28rem;
-	width: .45rem;
+	width: .5rem;
 	font-size: .12rem;
 }
 .hospital_information{

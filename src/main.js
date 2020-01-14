@@ -19,7 +19,7 @@ import VueScroller from 'vue-scroller'
 import qs from 'qs';
 import h5p from '../build/h5p.js'
 debugger
-
+Vue.prototype.$version = '2001141559-5f99806'
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.moment = moment;

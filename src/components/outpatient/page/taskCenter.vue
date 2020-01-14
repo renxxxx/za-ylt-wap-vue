@@ -180,6 +180,7 @@ export default {
 }
 .zhangwei{
 	width: 100%;
+	height: 1.76rem;
 }
 .leftImg{
 	width: 22%;
