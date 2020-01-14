@@ -253,6 +253,7 @@ export default {
     bodyTouchStart: function(event) {
       // console.log(event)
       this.backBtn = document.getElementById("navback");
+      this.touchTimeFrom=new Date();
       // if (this.backBtn) {
       //   // 获得起点X坐标，初始化distance为0
       //   this.touchStartPoint = event.targetTouches[0].pageX;
@@ -261,6 +262,7 @@ export default {
     },
     bodyTouchMove: function(event) {
       this.sliderLength.push(event.targetTouches[0].clientX)
+
       // console.log(this.sliderLength)
       // console.log(event.targetTouches[0].clientX)
       // if (this.backBtn && this.touchStartPoint < this.touchLeft) {
@@ -281,13 +283,14 @@ export default {
       // }
     },
     bodyTouchEnd: function(event) {
+       this.touchTimeTo=new Date();
       // console.log(this.touchStartPoint)
       // console.log(this.touchLeft)
       var sliderData = '';
       for(let i=0;i<this.sliderLength.length;i++){
-        sliderData = this.sliderLength[i]-this.sliderLength[0]>5? true : false
+        sliderData = this.sliderLength[i]-this.sliderLength[0]>window.screen.height*0.3? true : false
       }
-      if (sliderData) {
+      if (sliderData && (this.touchTimeTo.getTime()-this.touchTimeFrom.getTime()) < 800 ) {
         // 划动结束，重置数据
         this.$router.back()
         this.touchStartPoint = 0;
