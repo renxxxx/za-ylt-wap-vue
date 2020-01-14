@@ -230,7 +230,7 @@ export default {
     // 返回首页按钮触发事件
 		returnHomePageFn(){
       debugger
-      console.log(this.$store.state.account.data.data)
+      // console.log(this.$store.state.account.data.data)
       switch (this.$store.state.isLogin) {
         case 100:
           if(this.$store.state.account.data.data.type == 1){
@@ -251,7 +251,7 @@ export default {
     // this.returnHomePageData = false;
     },
     bodyTouchStart: function(event) {
-      console.log(event)
+      // console.log(event)
       this.backBtn = document.getElementById("navback");
       // if (this.backBtn) {
       //   // 获得起点X坐标，初始化distance为0
@@ -261,8 +261,8 @@ export default {
     },
     bodyTouchMove: function(event) {
       this.sliderLength.push(event.targetTouches[0].clientX)
-      console.log(this.sliderLength)
-      console.log(event.targetTouches[0].clientX)
+      // console.log(this.sliderLength)
+      // console.log(event.targetTouches[0].clientX)
       // if (this.backBtn && this.touchStartPoint < this.touchLeft) {
       //   // 只监听单指划动，多指划动不作响应
       //   if (event.targetTouches.length > 1) {
@@ -281,8 +281,8 @@ export default {
       // }
     },
     bodyTouchEnd: function(event) {
-      console.log(this.touchStartPoint)
-      console.log(this.touchLeft)
+      // console.log(this.touchStartPoint)
+      // console.log(this.touchLeft)
       var sliderData = '';
       for(let i=0;i<this.sliderLength.length;i++){
         sliderData = this.sliderLength[i]-this.sliderLength[0]>5? true : false
