@@ -639,44 +639,23 @@ const router = new Router({
 })
 
 
-
-
 router.beforeEach((to,from,next) => {
-	debugger
-	
 	//TODO 保存当前路由
 	if(to.name != 'landingPage')
 	 	localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
-	// console.log(to)
-	// console.log(next)
-
 	next()
-	// if(to.meta){
-	// 	if(to.meta.auth){
-	// 		switch(store.state.shop.isLogin){
-	// 			case 100:
-	// 			next();
-	// 			break;
-
-	// 			case 200:
-	// 			next();
-	// 			break;
-
-	// 			case 300:
-	// 			// console.log('暂未开放中');
-	// 			next({path : '/landingPage'});
-	// 			break;
-	// 			// default:next({path : '/landingPage'});
-	// 		}
-	// 	}else{
-	// 		next();
-	// 	}
-	// }else{
-	// 	next();
-	// }
-	// if(to.path == '/hospital_sourceManagement' && Store.state.shop.account.isLogin == 100){
-	// 	// Store.state.shop.list.clinicId == '';
-	// 	// console.log(Store.state.shop);
-	// }
+})
+router.afterEach((to, from) => {	
+		if(to.name!='hospital_index' && to.name!='hospital_sourceManagement' && to.name!='outpatient_index' && to.name != 'promoters_index' &&
+		to.name!='landingPage' && to.name != 'retrievePassword'){
+			debugger
+			Store.state.returnHomePageData = true;
+		}else{
+		debugger
+		Store.state.returnHomePageData = false;
+		if(Store.state.isLogin == 100  && to.name == 'hospital_sourceManagement'){
+			Store.state.returnHomePageData = true;
+		}
+	}
 })
 export default router

@@ -1,7 +1,7 @@
 <template>
 	<div class="addAcivity" >
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-			<div class="left" @click="goBackFn">
+			<div class="left" @click="goBackFn"  id="navback">
 				<span>取消</span>
 			</div>
 			<div class="centerTitle">

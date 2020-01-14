@@ -5,7 +5,7 @@
 			<!-- 搜索及其筛选 -->
 			<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.topHeight}">
 
-				<div class="indexReturn" @click="goBackFn" v-if="isLogin == 100? true:false">
+				<div class="indexReturn" @click="goBackFn"  id="navback" v-if="isLogin == 100? true:false">
 					<img src="../../../assets/image/back-white@2x.png" alt="">
 				</div>
 				<router-link :to="{name:'outpatient_search',query:{focus : true,time:new Date().getTime()}}">
@@ -177,7 +177,7 @@ export default {
     	//plus.navigator.setStatusBarBackground("#2B77EF");
     	plus.navigator.setStatusBarStyle("dark")
     }
-	this.initData();
+	// this.initData();
   },
   computed:{
 		show: {
@@ -215,16 +215,9 @@ export default {
     initData() {
 		debugger
       Object.assign(this.$data, this.$options.data());
-      this.getNum();
-	  console.log(this.$refs)
-	  	    console.log(this.$refs.all)
-
-	   this.$refs.all.initData();
-	   	     console.log(this.$refs.no)
-
+	  this.getNum();
+       this.$refs.all.initData();
 	   this.$refs.no.initData();
-	   	   	     console.log(this.$refs.yes)
-
 	   this.$refs.yes.initData();
 
     },

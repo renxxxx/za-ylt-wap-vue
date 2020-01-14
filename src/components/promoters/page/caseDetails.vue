@@ -1,7 +1,7 @@
 <template>
 	<div class="caseDetails" >
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn">
+			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn"  id="navback">
 			<img src="../../../assets/image/share@3x.png" @click="share" alt="">
 		</div>
 		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>

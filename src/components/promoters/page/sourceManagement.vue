@@ -4,7 +4,7 @@
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
 			<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.topHeight}">
-				<div class="indexReturn" @click="goBackFn">
+				<div class="indexReturn" @click="goBackFn"  id="navback">
 					<img src="../../../assets/image/back-white@2x.png" alt="">
 				</div>
 				<router-link :to="{name:'promoters_sourceSearch',query:{focus : true,time:new Date().getTime()}}">

@@ -1,8 +1,8 @@
 <template>
 	<div id="mainButton">
-		<van-tabbar v-model="active" route>
+		<van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.bottomHeight}">
       <!-- <router-link :to="{name : 'hospital_sourceManagement'}"> -->
-			<van-tabbar-item replace :to="{name : 'promoters_index',query:{time:new Date().getTime()}}"> 
+			<van-tabbar-item replace :to="{name : 'promoters_index',query:{time:new Date().getTime(),transition:'def'}}"> 
 			    <span>首页</span>
 			    <img
 					slot="icon"
@@ -10,7 +10,7 @@
 					:src="props.active ? index.inactive : index.active "
 			    />
 			</van-tabbar-item>
-			<van-tabbar-item replace :to="{name : 'promoters_cilnic',query:{time:new Date().getTime()}}"> 
+			<van-tabbar-item replace :to="{name : 'promoters_cilnic',query:{time:new Date().getTime(),transition:'def'}}"> 
 			    <img
 					slot="icon"
 					slot-scope="props"
@@ -18,7 +18,7 @@
 			    >
 			    <span>门诊</span>
 			</van-tabbar-item>
-			<van-tabbar-item replace :to="{name : 'promoters_user',query:{time:new Date().getTime()}}"> 
+			<van-tabbar-item replace :to="{name : 'promoters_user',query:{time:new Date().getTime(),transition:'def'}}"> 
 			    <span>我的</span>
 			    <img
 					slot="icon"
@@ -58,6 +58,11 @@ export default {
 	}
   },
   props:['name'],
+   created(){
+		var heightRexg = /^[0-9]*/g
+		var bottomHeight = this.$store.state.bottomHeight.match(heightRexg)
+		this.height = parseInt(bottomHeight.join()) 
+	},
   computed:{
   },
   methods:{

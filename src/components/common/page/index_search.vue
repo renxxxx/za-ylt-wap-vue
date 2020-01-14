@@ -3,7 +3,7 @@
     <div class="_search" >
       <div class="top_search" :style="{'padding-top':$store.state.topHeight}">
         <div class="search_return">
-          <a @click="goBackFn">
+          <a @click="goBackFn"  id="navback">
             <img src="../../../assets/image/shape@3x.png" alt />
           </a>
         </div>
@@ -210,7 +210,7 @@ export default {
 		setTimeout(() => {
 			this.pullingDown = false;
 			this.initData();
-			
+			this.getData()
 		}, 500);
     },
     initData() {

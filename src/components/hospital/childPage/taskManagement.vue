@@ -1,7 +1,7 @@
 <template>
 	<div class="task">
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-			<div class="leftImg" @click="goBackFn">
+			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
@@ -187,6 +187,7 @@ export default {
 		},
 
 		change(_value,_item,inx){
+			debugger
 			console.log(_value)
 			console.log(_item)
 			console.log(inx)
@@ -226,7 +227,6 @@ export default {
 			}else{
 				this.task.no[inx].checked = true;
 			};
-
 		},
 	},
 }

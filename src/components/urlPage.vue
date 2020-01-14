@@ -2,7 +2,7 @@
 	<div class="urlPage">
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="backImg">
-				<img src="../assets/image/shape@3x.png" alt=""  @click="backFn" :style="{'padding-top':$store.state.topHeight}">
+				<img src="../assets/image/shape@3x.png" alt=""  @click="backFn" id="navback" :style="{'padding-top':$store.state.topHeight}">
 			</div>
 			<div class="centerNav">
 				<h3>{{this.$route.query.name}}</h3>

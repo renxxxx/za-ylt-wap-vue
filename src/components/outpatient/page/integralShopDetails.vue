@@ -1,7 +1,7 @@
 <template>
 	<div class="integralShopDetails">
 		<div class="topNav" >
-			<div class="leftImg" @click="goBackFn">
+			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">

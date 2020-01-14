@@ -2,7 +2,7 @@
 	<div class="detail">
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="nav_left">
-				<a @click="goBackFn">
+				<a @click="goBackFn"  id="navback">
 					<img src="../assets/image/back-white@2x.png" alt="">
 				</a>
 			</div>

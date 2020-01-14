@@ -2,7 +2,7 @@
 	<div class="search_clinic">
 		<div class="navWarp">
 			<div class="topNav">
-				<div class="clinic_information" @click="goBackFn">
+				<div class="clinic_information" @click="goBackFn"  id="navback">
 					<img src="../../../assets/image/shape@3x.png" alt="">
 				</div>
 				<div class="clinic_search">

@@ -1,7 +1,7 @@
 <template>
 	<div class="case">
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn" :style="{'padding-top':$store.state.topHeight}">
+			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
 			<h3>优质案例</h3>
 		</div>
 		<div class="zhangwei"></div>

@@ -1,7 +1,7 @@
 <template>
 	<div class="addPromoters" ref="addPromotersRef">
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-			<div class="leftImg" @click="goBackFn">
+			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@2x.png" alt="">
 			</div>
 			<div class="centerTitle">

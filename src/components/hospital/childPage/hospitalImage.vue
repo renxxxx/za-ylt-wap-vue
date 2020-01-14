@@ -1,7 +1,7 @@
 <template>
 	<div class="images">
 		<div class="nav" :style="{'padding-top':$store.state.topHeight}">
-			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn">
+			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn"  id="navback">
 			<h3>医院详情</h3>
 		</div>
 		<div class="zhangwei"></div>

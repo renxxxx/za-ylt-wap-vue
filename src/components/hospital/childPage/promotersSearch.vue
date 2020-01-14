@@ -1,7 +1,7 @@
 <template>
 	<div class="promotersSearch" ref='promotersSearchRef'>
 		<div class="nav" :style="{'padding-top':$store.state.topHeight}">
-			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn">
+			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn"  id="navback">
 			<div class="topNav">
 				<img src="" alt="">
 				<img src="../../../assets/image/sousuo@2x.png" alt="">  
