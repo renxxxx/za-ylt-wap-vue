@@ -9,14 +9,14 @@
 			<ul>
 				<li v-for="(items,inx) in article" :key="inx">
 					<router-link :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 4,time:new Date().getTime()}}">
-						<div class="article_left">
+						<div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
 							<p>{{items.content}}</p>
 							<div class="article_leftTime">
 								<img src="../../../assets/image/time@2x.png" alt="">
 								<span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
 							</div>
 						</div>
-						<div class="article_right">
+						<div v-if="items.img"  class="article_right">
 							<img :src=items.img alt="">
 						</div>
 					</router-link>

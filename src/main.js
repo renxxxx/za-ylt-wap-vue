@@ -72,6 +72,10 @@ const overIphonex = () => {
 	}, {
 		geocode: false
 	});
+
+	currentWebview.drag({direction:'right',moveMode:'silent'}, null,function(e){
+		history.back()
+	});
 }
 
 
