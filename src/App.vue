@@ -288,7 +288,7 @@ export default {
       // console.log(this.touchLeft)
       var sliderData = '';
       for(let i=0;i<this.sliderLength.length;i++){
-        sliderData = this.sliderLength[i]-this.sliderLength[0]>window.screen.height*0.3? true : false
+        sliderData = this.sliderLength[i]-this.sliderLength[0]>window.screen.height*0.2? true : false
       }
       if (sliderData && (this.touchTimeTo.getTime()-this.touchTimeFrom.getTime()) < 800 ) {
         // 划动结束，重置数据
