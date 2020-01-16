@@ -1,14 +1,15 @@
 <template>
-	<div class="_photo">
-		<van-image-preview
+	<div class="_photo" >
+		<!-- <van-image-preview
 			v-model="enlarge"
 			:images="imgUrl"
 			:start-position='photoNum'
 			@change="onChange"
-			@close = "backFn"
+			lazy-load = true			
 		>
+		@close="backFn"
 		  <template v-slot:index>第{{ photoPage+1 }}页</template>
-		</van-image-preview>
+		</van-image-preview> -->
 	</div>
 </template>
 
@@ -16,6 +17,7 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import { ImagePreview } from 'vant';
 export default {
 	name: '',
 	data () {
@@ -73,24 +75,33 @@ export default {
 		next();
 	},
 	mounted () {
-	
+		let _this = this
+		ImagePreview({
+			images: this.imgUrl,
+			asyncClose: false,
+			startPosition: this.$route.query.inx? this.$route.query.inx : 0,
+			onClose(){
+				_this.$router.back()
+			}
+		});
 	},
 	methods: {
-		backFn(){
-			debugger
-			this.enlarge = false;
-			// this.$router.back(-1)
-			console.log('关闭')
-		},
-		enlargeFn(_value){
-			this.photoNum = _value;
-			console.log(this.photoNum)
-			this.enlarge = true;
-		},
-		onChange(_value){
-			this.photoPage = _value;
-			console.log(this.imgUrl)
-		},
+		// backFn(){
+		// 	debugger
+
+		// 	//this.enlarge = false;
+		// 	this.$router.back()
+		// 	console.log('关闭')
+		// },
+		// enlargeFn(_value){
+		// 	this.photoNum = _value;
+		// 	console.log(this.photoNum)
+		// 	this.enlarge = true;
+		// },
+		// onChange(_value){
+		// 	this.photoPage = _value;
+		// 	console.log(this.imgUrl)
+		// },
 	},
 }
 </script>

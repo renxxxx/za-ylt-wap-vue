@@ -1,6 +1,6 @@
 <template>
 	<div class="hospital">
-		<div class="topNav" :style="{'padding-top':topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="hospital_search">
 				<input type="text" placeholder="搜索文章">
 				<img src="../../assets/image/sousuo@2x.png" alt="">
@@ -93,7 +93,15 @@ export default {
 	 routerNav
   },
   created () {
-		
+	  let _this = this
+		_this.flowHeading = setInterval(function () {
+			if (_this.num !== _this.contentArr.length) {
+				_this.num++
+			} else {
+				_this.num = 0
+			}
+		}, 2500)
+		var heightRexg = /^[0-9]*/g
   },
   beforeRouteLeave(to, from, next) {
     //debugger;

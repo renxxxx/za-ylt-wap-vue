@@ -25,6 +25,7 @@
 				</div>
 			</div>
 		</div>
+		<div style="height:1.1rem"></div>
 		<clinic_content ref='content' :clinic = 'clinic' :style="{'padding-top':$store.state.topHeight}"></clinic_content>
 
 
@@ -253,6 +254,6 @@ export default {
 .content{
     width: 100%;
     height: 100%;
-    margin-top: .98rem;
+    /* margin-top: .98rem; */
 }
 </style>

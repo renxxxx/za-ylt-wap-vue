@@ -1,6 +1,6 @@
 <template>
 	<div class="taskCenter">
-		<div class="topNav" :style="{'padding-top':height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -31,7 +31,7 @@
 				<img src="../../../assets/image/Leaves@2x.png" alt="">
 			</div>
 		</van-overlay>
-		<div class="zhangwei" :style="{'height':(height+176)+'px'}"></div>
+		<div class="zhangwei" :style="{'height':(parseInt($store.state.topHeight.replace('px',''))+176)+'px'}"></div>
 		<div class="centerOnce" v-show="task.once.length==0? false:true" >
 			<ul>
 				<h3 class="titleBefore">首次收益</h3>

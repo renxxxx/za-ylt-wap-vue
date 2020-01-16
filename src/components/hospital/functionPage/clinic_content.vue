@@ -1,5 +1,6 @@
 <template>
 	<div class="content">
+		<span v-if="show? true:false">已找到200条数据</span>
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
 					<li v-for="(items,inx) in content" :key="inx">
@@ -32,7 +33,7 @@ export default {
 			page:0
 		}
 	},
-	// props:['clinic'],
+	props:['show'],
 	computed:{
 	},
 	components:{
@@ -81,6 +82,7 @@ export default {
 	});
 	
   }, mounted() {
+	  console.log(this.show)
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
@@ -131,6 +133,13 @@ export default {
 	height: 100%;
 	/* margin-top: 2.1rem; */
 }
+.content>span{
+	width: 94.6%;
+	margin: 0 auto;
+	display: block;
+	margin-bottom: .05rem;
+	color: #999999;
+}
 .content ul{
 	width: 94.6%;
 	margin: 0 auto;
@@ -143,6 +152,7 @@ export default {
 	margin-top: .1rem;
 	background-color: #FFFFFF;
 	text-align: center;
+	box-shadow: 0px 0px 5px 0.5px #ded9d9;
 }
 /* .content ul li:first-child {
     margin-top: 2.1rem;
@@ -160,7 +170,7 @@ export default {
 	margin-left:1.71% ;
 }
 .content ul li:first-child{
-	margin-top: .2rem;
+	/* margin-top: .2rem; */
 }
 .content ul li:last-child{
 	margin-bottom: .49rem;

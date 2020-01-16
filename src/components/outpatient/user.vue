@@ -333,7 +333,7 @@ export default {
 .user>span{
 	width: 50%;
 	text-align: center;
-	color: #757677;
+	color: #cfd2d3;
 	position: absolute;
 	bottom: .8rem;
 	left: 0rem;

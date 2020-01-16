@@ -188,45 +188,52 @@ export default {
 
 		change(_value,_item,inx){
 			debugger
-			console.log(_value)
-			console.log(_item)
-			console.log(inx)
-			this.$axios.post('/c2/task/taskunissue',qs.stringify({
-				hospitalId : this.account.hospitalId,
-				taskId : _item.taskId
-			}))
-			.then(res =>{
-			   
-			})
-			.catch((err)=>{
-				console.log(err);
-				//Dialog({ message: '加载失败!'});
-			})
-			
-			switch(_value.target.checked){
-				case true:
-				if(_item.oneTimeIs == 1){
-					this.task.one[inx].checked = _value.target.checked
-					this.$router.push({ name : 'hospital_taskManagementDetails',query : {item : JSON.stringify(_item),show : false,time:new Date().getTime()}});
-				}else{
-					this.task.no[inx].checked = _value.target.checked;
-					this.$router.push({ name : 'hospital_taskManagementDetails',query : {item : JSON.stringify(_item),show : false,time:new Date().getTime()}});
-				};
-				break;
-				case false:
-				if(_item.oneTimeIs == 1){
-					this.task.one[inx].checked = _value.target.checked
-				}else{
-					this.task.no[inx].checked = _value.target.checked
-				};
-				break;
-
-			}
-			if(_item.oneTimeIs == 1){
-				this.task.one[inx].checked = true
+			console.log(_item.checked)
+			console.log(_value.target.checked)
+			if(_item.checked){
+				debugger
+				this.$axios.post('/c2/task/taskunissue',qs.stringify({
+					hospitalId : this.account.hospitalId,
+					taskId : _item.taskId
+				}))
+				.then(res =>{
+					this.$toast.success('操作成功')
+				})
+				.catch((err)=>{
+					console.log(err);
+					//Dialog({ message: '加载失败!'});
+				})
+				
 			}else{
-				this.task.no[inx].checked = true;
-			};
+				debugger
+				this.$axios.post('/c2/task/taskissue',qs.stringify({
+					hospitalId : this.account.hospitalId,
+					taskId : _item.taskId,
+				})).then(res =>{
+					res.data.codeMsg? this.$toast.fail(res.data.codeMsg): this.$toast.success('操作成功')
+					
+				}).catch(err =>{
+					console.log(err)
+				})
+				// switch(_value.target.checked){
+				// 	case true:
+				// 	if(_item.oneTimeIs == 1){
+				// 		this.task.one[inx].checked = _value.target.checked
+				// 		this.$router.push({ name : 'hospital_taskManagementDetails',query : {item : JSON.stringify(_item),show : false,time:new Date().getTime()}});
+				// 	}else{
+				// 		this.task.no[inx].checked = _value.target.checked;
+				// 		this.$router.push({ name : 'hospital_taskManagementDetails',query : {item : JSON.stringify(_item),show : false,time:new Date().getTime()}});
+				// 	};
+				// 	break;
+				// 	case false:
+				// 	if(_item.oneTimeIs == 1){
+				// 		this.task.one[inx].checked = _value.target.checked
+				// 	}else{
+				// 		this.task.no[inx].checked = _value.target.checked
+				// 	};
+				// 	break;
+				// }
+			}
 		},
 	},
 }

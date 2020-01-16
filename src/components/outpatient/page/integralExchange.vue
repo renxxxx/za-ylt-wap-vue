@@ -1,6 +1,6 @@
 <template>
 	<div class="integralExchange">
-		<div class="topNav" :style="{'padding-top':height+'px'}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@2x.png" alt="">
 			</div>
@@ -19,7 +19,7 @@
 				</router-link>
 			</div>
 		</div>
-		<div class="zhangwei" :style="{'height':(height+176)+'px'}"></div>
+		<div class="zhangwei" :style="{'height':(parseInt($store.state.topHeight.replace('px',''))+176)+'px'}"></div>
 		<div class="flowHeading" id ="flowHeading">
 		    <ul class="rollScreen_list" :style = {transform:transform}  :class="{rollScreen_list_unanim:num===0}">
 				<li class="rollScreen_once" v-for="(item,index) in contentArr" :key='index'>
@@ -33,7 +33,7 @@
 		    </ul>
 		</div>
 		<!-- <div class="zhangwei" :style="{'height':(height+24)+'px'}"></div> -->
-		<integralExchangeList :show = 'show' :style="{'padding-top':height+'px'}"></integralExchangeList>
+		<integralExchangeList :show = 'show' :style="{'padding-top':$store.state.topHeight}"></integralExchangeList>
 	</div>
 </template>
 
@@ -120,7 +120,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});

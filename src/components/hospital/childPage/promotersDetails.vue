@@ -56,7 +56,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="cumulative"  :style="{'top': (193+height)+'px'}">
+		<div class="cumulative"  :style="{'top': {'top':(parseInt($store.state.topHeight.replace('px',''))+193)+'px'}}">
 			<h4>总共：{{clinicNum}}个门诊</h4>
 			<span @click="transferPromotersShowAllFn">全部转移</span>
 		</div>

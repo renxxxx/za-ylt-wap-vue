@@ -1,6 +1,6 @@
 <template>
 	<div class="gene">
-		<div class="topNav" :style="{'padding-top':topHeight,position:'fixed',top:0,'z-index':99999}">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight,position:'fixed',top:0,'z-index':99999}">
 			<div class="nav_left">
 				<img src="../../assets/image/sousuo@2x.png" alt="">
 			</div>
@@ -13,7 +13,7 @@
 				</van-dropdown-menu>
 			</div>
 		</div>
-	<div :style="{height:topHeight}"></div>
+	<div :style="{height:$store.state.topHeight}"></div>
 		<div class="geneList">
 			<ul>
 				<li>
@@ -132,7 +132,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});

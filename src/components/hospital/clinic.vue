@@ -56,8 +56,8 @@
 					</div>
 				</div>
 			</div>
-			
-			<clinicContent  ref="clinic" :clinic = 'clinic'></clinicContent>
+			<div style="height:2rem"></div>
+			<clinicContent  ref="clinic" :show = 'show'></clinicContent>
 			
 		</van-pull-refresh>
 		<bottomNav></bottomNav>
@@ -76,8 +76,9 @@ export default {
 	data () {
 		return {
 			clinic : {
-				num : null
+				num : null,
 			},
+			show : true,
 			pullingDown:false
 		}
 	},
@@ -182,7 +183,7 @@ export default {
 }
 .navWarp{
 	width: 100%;
-	height: 2.3rem;
+	height: 2rem;
 	background-color: #FFFFFF;
 	position: fixed;
 	top:0;
@@ -270,11 +271,11 @@ export default {
 	width: 100%;
 	height: .26rem;
 	line-height: .26rem;
-	padding-bottom: .1rem;
+	/* padding-bottom: .1rem; */
 }
 .statisticalTitle h3{
 	float: left;
-	margin-left: .18rem;
+	margin-left: .1rem;
 	font-size: .16rem;
 	font-weight: bolder;
 }
@@ -282,7 +283,7 @@ export default {
 	float: right;
 	height: .26rem;
 	line-height: .26rem;
-	margin-right: .18rem;
+	margin-right: .1rem;
 }
 .statisticalAdd span{
 	font-size: .15rem;
@@ -294,11 +295,4 @@ export default {
 	margin-left: .05rem;
 	margin-top: -.03rem;
 }
-.content{
-	width: 100%;
-	height: 100%;
-	margin-top: 2.1rem;
-}
-
-
 </style>

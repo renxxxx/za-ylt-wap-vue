@@ -64,7 +64,7 @@
 		</van-popup>
       </div>
 	  <van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="nextPageFn">
-	  	<ul class="list" :style="{'padding-top':$store.state.topHeight}">
+	  	<ul class="list" v-if="isLogin == 100? true:false" :style="{'padding-top':$store.state.topHeight}">
 	  		<li v-for="(item,inx) in  items" :key="inx">
 	  			<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 	  				<div class="style">
@@ -83,6 +83,20 @@
 	  			</div>
 	  		</li>
 	  	</ul>
+		<ul class="clinicList" v-if="isLogin == 200? true:false" :style="{'padding-top':$store.state.topHeight}">
+				<li v-for="(item,inx) in noItems" :key="inx">
+					<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+						<div class="content_left">
+							<span>{{item.realname}}</span>
+						</div>
+						<div class="content_right">
+							<img :src='item.img'>
+							<span :class="item.span=='未就诊'? 'no':'yes'">{{item.span}}</span>
+						</div>
+						<p>{{moment(item.pushTime).format('YYYY-MM-DD HH:mm:ss')}}</p>
+					</router-link>
+				</li>
+			</ul>
 	  </van-list>
       <!-- <clinicAll ref="all" :list="list" :style="{'padding-top':$store.state.topHeight}"></clinicAll> -->
     </div>
@@ -121,6 +135,7 @@ export default {
 	  // 加载状态结束
 	  finished: false,
 	  page:0,
+	  noItems:[],
     };
   },
   computed: {
@@ -224,6 +239,7 @@ export default {
     inputNow(_keywordsCode) {
 		let status = this.Time.postState;
 		this.items = [];
+		this.noItems = [];
 		this.finished = true;
 		if(!this.keywords){
 			this.finished = false;
@@ -241,6 +257,7 @@ export default {
     	this.getData();
 		this.show = false;
 		this.items = [];
+		this.noItems = [];
 		this.finished = true;
 		console.log(this.items)
     },
@@ -378,18 +395,16 @@ export default {
 								button : "确认就诊",
 								span : "未就诊"
 							});
-							if(data){
-								this.noItems.push({
-									clinicName : res.data.data.items[nums].clinicName,
-									itemId : res.data.data.items[nums].itemId,
-									pushTime : res.data.data.items[nums].pushTime,
-									realname : res.data.data.items[nums].realname,
-									status : res.data.data.items[nums].status,
-									img : require("../../../assets/image/orange@2x.png"),
-									button : "确认就诊",
-									span : "未就诊"
+							this.noItems.push({
+								clinicName : res.data.data.items[nums].clinicName,
+								itemId : res.data.data.items[nums].itemId,
+								pushTime : res.data.data.items[nums].pushTime,
+								realname : res.data.data.items[nums].realname,
+								status : res.data.data.items[nums].status,
+								img : require("../../../assets/image/weijiuzhen@2x.png"),
+								button : "确认就诊",
+								span : "未就诊"
 								});
-							}
 						}else if(res.data.data.items[nums].status == 4){
 							this.items.push({
 								clinicName : res.data.data.items[nums].clinicName,
@@ -402,19 +417,16 @@ export default {
 								buttonColor : "buttonColor",
 								span : "已就诊"
 							});
-							if(data){
-								this.yesItems.push({
-									clinicName : res.data.data.items[nums].clinicName,
-									itemId : res.data.data.items[nums].itemId,
-									pushTime : res.data.data.items[nums].pushTime,
-									realname : res.data.data.items[nums].realname,
-									status : res.data.data.items[nums].status,
-									img :require( "../../../assets/image/blue@2x.png"),
-									button : "已就诊",
-									buttonColor : "buttonColor",
-									span : "已就诊"
-								});
-							}
+							this.noItems.push({
+								clinicName : res.data.data.items[nums].clinicName,
+								itemId : res.data.data.items[nums].itemId,
+								pushTime : res.data.data.items[nums].pushTime,
+								realname : res.data.data.items[nums].realname,
+								status : res.data.data.items[nums].status,
+								img :require( "../../../assets/image/yijiuzhen@2x.png"),
+								button : "已就诊",
+								span : "已就诊"
+							});
 						}
 					}
 					// 加载状态结束
@@ -654,5 +666,51 @@ export default {
 }
 .tabTitle span{
 	display: block;
+}
+.clinicList{
+	margin: 0 .12rem;
+}
+.clinicList li {
+	height:1.01rem;
+  width: 100%;
+	margin-top:.12rem;
+	background-color:#FFFFFF;
+	position:relative;
+	box-shadow: 0rem 0rem .1rem #d9d5d5;
+	/*padding:.14rem .15rem;*/
+}
+.clinicList li p{
+	position:absolute;
+	bottom:0;
+	height:.5rem;
+	width:93%;
+	line-height:.5rem;
+	margin-left:.14rem;
+	border-top:1px solid #E5E5E5;
+}
+.content_left{
+	float:left;
+	height:.5rem;
+	width: 100%;
+	margin-left:.15rem;
+	margin-top:.14rem;
+}
+.clinicList>li>a>.content_right{
+	position: absolute;
+	height:.5rem;
+	line-height: .5rem;
+	right:.14rem;
+	bottom:0rem;
+}
+.clinicList>li>a>.content_right img{
+	width:.11rem;
+	height:.11rem;
+	margin-right:.04rem;
+}
+.yes{
+	color: #4DD865;
+}
+.no{
+	color: #2B77EF;
 }
 </style>
