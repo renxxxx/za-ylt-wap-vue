@@ -56,17 +56,17 @@
 			</div>
 		  </div>
 		  <div class="activeList">
-		  	<img :src="qualityCase[0].img" alt="">
-		  	<div class="activeTitle">
-		  		<h4>{{qualityCase[0].content}}</h4>
-		  		<span>{{moment(qualityCase[0].time).format('YYYY-MM-DD HH:mm')}}</span>
-		  	</div>
+        <router-link :to="{name : 'promoters_activityDetails',query:{itemId:qualityCase[0].itemId,time:new Date().getTime()}}">
+          <img :src="qualityCase[0].img" alt="">
+          <div class="activeTitle">
+            <h4>{{qualityCase[0].content}}</h4>
+            <span>{{moment(qualityCase[0].time).format('YYYY-MM-DD HH:mm')}}</span>
+          </div>
+        </router-link>
 		  </div>
 		  <ul style="">
 		      <li v-for="(items,num) in qualityCase" :key="num">
-		        <router-link
-		          :to="{name : 'promoters_activityReleased'}"
-		        >
+		        <router-link :to="{name : 'promoters_activityDetails',query:{itemId:items.itemId,time:new Date().getTime()}}">
 		          <div class="article_left">
 		            <p>{{items.content}}</p>
 		            <div class="article_leftTime">
@@ -109,7 +109,7 @@ export default {
 	created(){
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
+		//this.height = parseInt(topHeight.join())
 	},
 	beforeRouteLeave(to, from, next) {
 		this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
@@ -147,7 +147,7 @@ export default {
 	  next(vm => {
 		 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 		});
-		
+
 	},
 	destroyed(){
 		// console.log('destroyed')
@@ -196,10 +196,10 @@ export default {
 								img: res.data.data.items[i].cover,
 								time:res.data.data.items[i].alterTime,
 								itemId : res.data.data.items[i].itemId,
-							}) 
+							})
 						}
-						
-						
+
+
 					}
 				}
 			})

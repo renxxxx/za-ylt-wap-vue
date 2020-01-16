@@ -8,7 +8,7 @@
     <div class="typeNav" type="line" border="false">
     	<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)'
     	title-active-color='rgba(255, 255, 255)' v-model='data'>
-    	<van-tab title="医院端" :title-style="{'font-size':(data==0?'.24rem':'.14rem')}" >
+    	<van-tab title="医院端" :title-style="{'font-size':(data==0?'.24rem':'.185rem')}" >
     		<div class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
@@ -34,14 +34,14 @@
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div class="forget">
-    						忘记密码
+    						<span>忘记密码</span>
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
     					</div>
     				</router-link>
     			</div>
     		</div>
     	</van-tab>
-    	<van-tab title="门诊端" type="line" border="false" :title-style="{'font-size':(data==1?'.24rem':'.14rem')}" >
+    	<van-tab title="门诊端" type="line" border="false" :title-style="{'font-size':(data==1?'.24rem':'.185rem')}" >
     		<div class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
@@ -63,20 +63,20 @@
 							&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
 						</router-link>
 					</p>
-					
+
     			</div>
     			<button class="submitClass" type="submit" value="门诊登录" @click="submit(['200',outpatientAccount])">门诊登陆</button>
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div class="forget">
-    						忘记密码
+    						<span>忘记密码</span>
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
     					</div>
     				</router-link>
     			</div>
     		</div>
     	</van-tab>
-    	<van-tab title="运营端" type="line" border="false" :title-style="{'font-size':(data==2?'.24rem':'.14rem')}" >
+    	<van-tab title="运营端" type="line" border="false" :title-style="{'font-size':(data==2?'.24rem':'.185rem')}" >
     		<div class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
@@ -102,7 +102,8 @@
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div class="forget">
-    						忘记密码
+                <span>忘记密码</span>
+
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
     					</div>
     				</router-link>
@@ -185,10 +186,10 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
-  }, 
+
+  },
   mounted() {
-	
+
 	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#2B77EF");
@@ -305,7 +306,7 @@ export default {
 	margin-top: .8rem;
 	color: #FFFFFF;
 	border: none;
-	font-size: .16rem;
+	font-size: .19rem;
 }
 .inputBox{
 	position: relative;
@@ -328,14 +329,14 @@ export default {
 	position: absolute;
 }
 .inputBox input{
-	
+
 	width: 85%;
 	height: .45rem;
 	border-radius: .25rem;
 	border: 1px solid #E5E5E5;
 	padding-left: 15%;
 	background: #F5F5F5;
-	
+  font-size: .17rem;
 }
 .inputBox input:last-child{
 	margin-top: .2rem;
@@ -422,7 +423,7 @@ export default {
 }
 .passwordReset{
 	 margin-top: .09rem;
-	height: .17rem;
+	/* height: .17rem; */
 }
 .passwordRese{
 	height: .21rem;
@@ -437,8 +438,11 @@ export default {
 }
 .forget{
 	text-align: right;
-	width: 18%;
+	/* width: 18%; */
 	text-align: center;
 	float: right;
+}
+.forget span{
+  font-size: .185rem;
 }
 </style>

@@ -25,6 +25,7 @@
 				</div>
 			</div>
 		</div>
+    <div style="height: .98rem"  :style="{'padding-top':$store.state.topHeight}"></div>
 		<div class="content">
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
@@ -111,7 +112,7 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
@@ -281,7 +282,6 @@ export default {
 .content{
     width: 100%;
     height: 100%;
-    margin-top: .98rem;
 }
 .content{
 	width: 100%;
