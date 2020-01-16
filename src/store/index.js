@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
 Vue.use(Vuex)
 
 import axios from 'axios'
 import qs from 'qs';
-import { Dialog } from 'vant'
+import { Dialog,Toast } from 'vant'
 import router from '../router'
 
 const state={
@@ -109,13 +108,14 @@ const mutations={
 								break;
 
 								case 300:
-									router.replace({ name : _url,query:{time:new Date().getTime()}});
-								Dialog({ message: '正在开发中，敬请期待' });
-								state.account.clinicId= res.data.data.clinic.clinicId;
-								state.account.hospitalId= res.data.data.hospital.hospitalId;
+									// router.replace({ name : _url,query:{time:new Date().getTime()}});
+									Toast.fail('正在开发中')
+								// Dialog({ message: '正在开发中，敬请期待' });
+								// state.account.clinicId= res.data.data.clinic.clinicId;
+								// state.account.hospitalId= res.data.data.hospital.hospitalId;
 								// console.log(state.account.hospitalId)
-								state.account.data = {};
-								state.account.data = res.data;
+								// state.account.data = {};
+								// state.account.data = res.data;
 								break;
 							}
 						})

@@ -161,12 +161,12 @@ export default {
                 break;
 
               case 300:
-                vm.$store.state.account.clinicId =
-                  res.data.clinic.clinicId;
-                vm.$store.state.account.hospitalId =
-                  res.data.hospital.hospitalId;
-                vm.$store.state.account.data = {};
-                vm.$store.state.account.data = res;
+                // vm.$store.state.account.clinicId =
+                  // res.data.clinic.clinicId;
+                // vm.$store.state.account.hospitalId =
+                  // res.data.hospital.hospitalId;
+                // vm.$store.state.account.data = {};
+                // vm.$store.state.account.data = res;
                 break;
             }
           }
@@ -243,7 +243,7 @@ export default {
           this.$router.replace({name:'hospital_sourceManagement',query:{time:new Date().getTime(),transition:'def'}})
           break;
         case 300:
-          this.$router.replace({name:'outpatient_index',query:{time:new Date().getTime(),transition:'def'}})
+          // this.$router.replace({name:'outpatient_index',query:{time:new Date().getTime(),transition:'def'}})
           break;
         default:
           break;

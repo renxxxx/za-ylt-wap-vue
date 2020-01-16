@@ -1,6 +1,6 @@
 <template>
-	<div class="collect"  id='read' ref="Box"  @scroll="scrollToTop">
-		<div class="topNav">
+	<div class="collect"  id='read' ref="Box"  @scroll="scrollToTop" >
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="return" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -20,7 +20,7 @@
 			  </van-swipe-item>
 			</van-swipe>
 		</div>
-		
+		<div style="height:'.47rem"></div>
 		<div class="content">
 			<div class="content_Left" id='topNav' ref='top' >
 				<h3>分类一</h3>
@@ -156,7 +156,11 @@ if(window.plus){
 .topNav{
 	height: .47rem;
 	width: 100%;
+	z-index: 999;
+    position: fixed;
+    background-color: #FFFFFF ;
 }
+
 .return{
 	width: 9.3%;
 	margin: auto;
