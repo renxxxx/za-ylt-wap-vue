@@ -29,7 +29,7 @@
 		</ul>
 		<button @click="retrieveSubmit">确认</button>
 	</div>
-		
+
 
   </div>
 </template>
@@ -59,7 +59,7 @@ export default {
   created () {
 	var heightRexg = /^[0-9]*/g
 	var topHeight = this.$store.state.topHeight.match(heightRexg)
-	this.height = parseInt(topHeight.join()) 
+	this.height = parseInt(topHeight.join())
   },
   computed:{
 	  ...mapGetters(['account','isLogin','whichClient'])
@@ -99,11 +99,10 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#2B77EF");
@@ -128,7 +127,7 @@ export default {
 		this.$axios.post(postUrl,qs.stringify({
 				phone : this.retrieve.telephone,
 				smsvcode : this.retrieve.smsvcode,
-				newpwd : this.retrieve.newpwd 
+				newpwd : this.retrieve.newpwd
 			}))
 		.then( _d => {
 			console.log(_d)
@@ -154,11 +153,16 @@ export default {
 				phone : this.retrieve.telephone,
 			}))
 			.then(_d => {
-				this.showYan = false;
-				this.showTime = true;
-				this.$refs.countDown.start();
-				this.retrieve.data = false;
-				_d.data.codeMsg? this.$toast.fail(_d.data.codeMsg):'';
+        if(_d.data.codeMsg){
+          this.$toast.fail(_d.data.codeMsg)
+          this.showYan = true;
+          this.showTime = false;
+        }else{
+          this.showYan = false;
+          this.showTime = true;
+          this.$refs.countDown.start();
+          this.retrieve.data = false;
+        }
 				// console.log(this.retrieve.data);
 			})
 			.catch((err)=>{
@@ -166,7 +170,7 @@ export default {
 				// console.log(this.retrieve.data);
 				//Dialog({ message: '加载失败!'});
 			})
-			
+
 		}else if(this.retrieve.data == false){
 			Dialog({ message: '请不要重复点击' });
 		}else{
@@ -203,7 +207,7 @@ export default {
 	width:100%;
 	height:22%;
 	color: #FFFFFF;
-	font-size: .2rem;
+	/* font-size: .2rem; */
 	background-image:url('../assets/image/BJ-change@2x.png');
 	background-size:100% 100%;
 	position: relative;
@@ -218,6 +222,7 @@ export default {
 	bottom: .15rem;
 	left: .38rem;
 	/* display: block; */
+  font-size: .2rem;
 }
 .center{
 	width:82%;
@@ -276,7 +281,7 @@ export default {
 	line-height: .21rem;
 	font-size: .11rem;
 	border-left:1px solid #E5E5E5;
-	background-color: #FFFFFF;padding-right:.18rem ;
+	background-color: #FFFFFF;text-align: center;
 	width: 31%;border-radius: 0 45px 45px 0;
 	position: relative;
 }
@@ -287,9 +292,9 @@ export default {
 }
 .center ul li:nth-child(2) button span{
 	font-size: .12rem;
-	position: absolute;
-	right: .34rem;
-	top: .02rem;
+	/* position: absolute; */
+	/* right: .34rem; */
+	/* top: .02rem; */
 }
 .center ul li input{
 	border: 1px solid #E5E5E5;
@@ -297,10 +302,12 @@ export default {
 	width:85%;
 	height: .45rem;
 	padding-left:.54rem ;
-	
+	/* font-size: .17rem; */
 }
 .center ul li:nth-child(2){
 	margin: .2rem 0;
 }
-
+>>>.van-count-down {
+    display: inline;
+}
 </style>

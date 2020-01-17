@@ -34,7 +34,7 @@
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div class="forget">
-    						忘记密码
+    						<span>忘记密码</span>
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
     					</div>
     				</router-link>
@@ -63,13 +63,13 @@
 							&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
 						</router-link>
 					</p>
-					
+
     			</div>
     			<button class="submitClass" type="submit" value="门诊登录" @click="submit(['200',outpatientAccount])">门诊登陆</button>
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div class="forget">
-    						忘记密码
+    						<span>忘记密码</span>
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
     					</div>
     				</router-link>
@@ -102,7 +102,8 @@
     			<div class="passwordReset">
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div class="forget">
-    						忘记密码
+                <span>忘记密码</span>
+
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
     					</div>
     				</router-link>
@@ -185,10 +186,10 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
-  }, 
+
+  },
   mounted() {
-	
+
 	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#2B77EF");
@@ -328,14 +329,14 @@ export default {
 	position: absolute;
 }
 .inputBox input{
-	
+
 	width: 85%;
 	height: .45rem;
 	border-radius: .25rem;
 	border: 1px solid #E5E5E5;
 	padding-left: 15%;
 	background: #F5F5F5;
-	
+  /* font-size: .17rem; */
 }
 .inputBox input:last-child{
 	margin-top: .2rem;
@@ -414,7 +415,7 @@ export default {
 }
 .checkBox p{
 	margin-top: -.05rem;
-	display: inline-block;
+	display: inline;
 	height: .17rem;line-height: .17rem;
 }
 .checkBox p a{
@@ -422,7 +423,7 @@ export default {
 }
 .passwordReset{
 	 margin-top: .09rem;
-	height: .17rem;
+	/* height: .17rem; */
 }
 .passwordRese{
 	height: .21rem;
@@ -437,8 +438,11 @@ export default {
 }
 .forget{
 	text-align: right;
-	width: 18%;
+	/* width: 18%; */
 	text-align: center;
 	float: right;
+}
+.forget span{
+  /* font-size: .185rem; */
 }
 </style>

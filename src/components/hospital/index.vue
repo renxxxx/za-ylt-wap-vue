@@ -176,11 +176,11 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   },
   mounted() {
     //debugger;
-    
+
     if (window.plus) {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
@@ -466,6 +466,7 @@ li:nth-child(8) {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   height: 0.42rem;
+  /* width: 60.64%; */
 }
 .article_leftTime {
   margin-top: 0.23rem;

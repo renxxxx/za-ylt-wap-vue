@@ -20,7 +20,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+			<div class="zhangwei" ></div>
 			<div class="content">
 				<ul>
 					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
@@ -74,7 +74,7 @@ export default {
 		debugger
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
+		//this.height = parseInt(topHeight.join())
 		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
@@ -116,8 +116,8 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
-  }, 
+
+  },
   destroyed(){
 	  debugger
 	  console.log('destroyed')
@@ -128,11 +128,11 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
+
 		// this.getdata(0);
 		this.initData()
 	},
-	methods: {	
+	methods: {
 		 afterPullDown() {
 			//下拉刷新
 		  setTimeout(() => {
@@ -175,7 +175,7 @@ export default {
 					this.finished = true;
 				}
 				// this.clinic.num = res.data.data.sum.totalCount;
-		
+
 			})
 			.catch((err)=>{
 				console.log(err);
@@ -194,14 +194,14 @@ export default {
 }
 .navWarp{
 	width: 100%;
-	height: 1.2rem;
+	/* height: 1rem; */
 	background-color: #FFFFFF;
 	position: fixed;
 	top:0;
 	z-index: 3;
 }
 .zhangwei{
-	height: 1.2rem;
+	height: 1rem;
 	width: 100%;
 }
 .topNav{
@@ -295,7 +295,7 @@ export default {
 	margin-left:1.71% ;
 }
 .content ul li:first-child{
-	margin-top: .2rem;
+	/* margin-top: .2rem; */
 }
 .content ul li:last-child{
 	margin-bottom: .49rem;
@@ -328,4 +328,3 @@ export default {
 
 
 </style>
-

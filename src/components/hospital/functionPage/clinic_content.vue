@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<span v-if="show? true:false">已找到200条数据</span>
+		<span v-if="show? true:false">已找到 {{clinicNum}} 条数据</span>
 			<ul>
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
 					<li v-for="(items,inx) in content" :key="inx">
@@ -30,7 +30,8 @@ export default {
 			loading: false,
 			finished: false,
 			content : [],
-			page:0
+			page:0,
+			clinicNum : 0
 		}
 	},
 	props:['show'],
@@ -80,13 +81,20 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 	  console.log(this.show)
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
+		 this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+		  .then(res => {
+		  	this.clinicNum = res.data.data.rowCount;
+		  })
+		  .catch((err)=>{
+		  	console.log(err);
+		  })
 	},
 	methods: {
 		initData() {
@@ -94,6 +102,13 @@ export default {
 		  debugger;
 		  console.log(this.content)
 		  this.getNextPage();
+      this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+       .then(res => {
+       	this.clinicNum = res.data.data.rowCount;
+       })
+       .catch((err)=>{
+       	console.log(err);
+       })
 		},
 		getdata(){
 			debugger

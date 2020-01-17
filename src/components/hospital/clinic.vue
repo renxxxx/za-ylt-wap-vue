@@ -47,7 +47,7 @@
 					</ul>
 				</div>
 				<div class="statisticalTitle" v-model="clinic">
-					<h3>合作门诊 {{clinic.num}}</h3>
+					<h3>合作门诊</h3>
 					<div class="statisticalAdd">
 						<router-link :to="{name : 'hospital_addCLinic',query:{time:new Date().getTime()}}">
 							<span>新增</span>
@@ -58,7 +58,7 @@
 			</div>
 			<div style="height:2rem"></div>
 			<clinicContent  ref="clinic" :show = 'show'></clinicContent>
-			
+
 		</van-pull-refresh>
 		<bottomNav></bottomNav>
 	</div>
@@ -92,7 +92,7 @@ export default {
 		debugger
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
+		//this.height = parseInt(topHeight.join())
 		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
@@ -134,8 +134,8 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
-  }, 
+
+  },
   destroyed(){
 	  debugger
 	  console.log('destroyed')
@@ -146,11 +146,11 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
+
 		// this.getdata(0);
 		this.initData()
 	},
-	methods: {	
+	methods: {
 		 afterPullDown() {
 			//下拉刷新
 		  setTimeout(() => {
@@ -162,13 +162,7 @@ export default {
 			debugger
 		  Object.assign(this.$data, this.$options.data());
 		  this.$refs.clinic.initData();
-		  this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
-		  .then(res => {
-		  	this.clinic.num = res.data.data.rowCount;
-		  })
-		  .catch((err)=>{
-		  	console.log(err);
-		  })
+
 		}
 	},
 }
@@ -183,7 +177,7 @@ export default {
 }
 .navWarp{
 	width: 100%;
-	height: 2rem;
+	/* height: 2rem; */
 	background-color: #FFFFFF;
 	position: fixed;
 	top:0;
