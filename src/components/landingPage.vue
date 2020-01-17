@@ -8,7 +8,7 @@
     <div class="typeNav" type="line" border="false">
     	<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)'
     	title-active-color='rgba(255, 255, 255)' v-model='data'>
-    	<van-tab title="医院端" :title-style="{'font-size':(data==0?'.24rem':'.14rem')}" >
+    	<van-tab title="医院端" :title-style="{'font-size':(data==0?'.24rem':'.185rem')}" >
     		<div class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
@@ -41,7 +41,7 @@
     			</div>
     		</div>
     	</van-tab>
-    	<van-tab title="门诊端" type="line" border="false" :title-style="{'font-size':(data==1?'.24rem':'.14rem')}" >
+    	<van-tab title="门诊端" type="line" border="false" :title-style="{'font-size':(data==1?'.24rem':'.185rem')}" >
     		<div class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
@@ -76,7 +76,7 @@
     			</div>
     		</div>
     	</van-tab>
-    	<van-tab title="运营端" type="line" border="false" :title-style="{'font-size':(data==2?'.24rem':'.14rem')}" >
+    	<van-tab title="运营端" type="line" border="false" :title-style="{'font-size':(data==2?'.24rem':'.185rem')}" >
     		<div class="content">
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
@@ -306,7 +306,7 @@ export default {
 	margin-top: .8rem;
 	color: #FFFFFF;
 	border: none;
-	font-size: .16rem;
+	font-size: .19rem;
 }
 .inputBox{
 	position: relative;
@@ -336,7 +336,11 @@ export default {
 	border: 1px solid #E5E5E5;
 	padding-left: 15%;
 	background: #F5F5F5;
+<<<<<<< HEAD
   /* font-size: .17rem; */
+=======
+  font-size: .17rem;
+>>>>>>> 612e533340a3fdc9adcd68cfeee4197a48eecb96
 }
 .inputBox input:last-child{
 	margin-top: .2rem;
@@ -443,6 +447,10 @@ export default {
 	float: right;
 }
 .forget span{
+<<<<<<< HEAD
   /* font-size: .185rem; */
+=======
+  font-size: .185rem;
+>>>>>>> 612e533340a3fdc9adcd68cfeee4197a48eecb96
 }
 </style>
