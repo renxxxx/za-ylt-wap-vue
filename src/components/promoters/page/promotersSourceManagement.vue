@@ -29,7 +29,7 @@
 			<div class="typeNav" :style="{ 'padding-top':(parseInt($store.state.topHeight.replace('px',''))+32)+'px'}">
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' @change="tabFn">
 					<van-tab :title="'全部'+itemsNum">
-						<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="nextPageFn">
+						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="nextPageFn">
 							<ul class="list" :style="{'padding-top':(parseInt($store.state.topHeight.replace('px',''))+12)+'px'}">
 								<li v-for="(item,inx) in  items" :key="inx">
 									<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
@@ -53,7 +53,7 @@
 					</van-tab>
 					<van-tab :title="'已就诊'+yesItemsNum">
 					
-						<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="yesNextPageFn">
+						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="yesNextPageFn">
 							<ul class="list" :style="{'padding-top':(parseInt($store.state.topHeight.replace('px',''))+12)+'px'}">
 								<li v-for="(item,inx) in  yesItems" :key="inx">
 									<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
@@ -76,7 +76,7 @@
 						</van-list>
 					</van-tab>
 					<van-tab :title="'未就诊'+noItemsNum">
-						<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="noNextPageFn">
+						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="noNextPageFn">
 							<ul class="list" :style="{'padding-top':(parseInt($store.state.topHeight.replace('px',''))+12)+'px'}">
 								<li v-for="(item,inx) in  noItems" :key="inx">
 									<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">

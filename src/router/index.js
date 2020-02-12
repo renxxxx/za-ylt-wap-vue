@@ -96,6 +96,8 @@ import hospital_clinicSearch from '@/components/hospital/childPage/clinic_search
 import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
 // 医院端器械采集页面
 import hospital_collect from '@/components/hospital/childPage/collect.vue'
+// 医院端运营手册页面
+import hospital_operating from '@/components/hospital/childPage/operating.vue'
 
 // 医院端门诊主页的医院形象页面
 import hospitalImage from '@/components/hospital/childPage/hospitalImage.vue'
@@ -227,6 +229,13 @@ const router = new Router({
 			component: hospital_collect,
 			meta: {auth:true},
 		},
+    {
+    	// 医院端运营手册页面
+    	path: '/hospital_operating',
+    	name: 'hospital_operating',
+    	component: hospital_operating,
+    	meta: {auth:true},
+    },
 		{
 			// 医院端门诊主页的医院形象页面
 			path: '/hospitalImage',
@@ -637,8 +646,6 @@ const router = new Router({
 		},
 	],
 })
-
-
 router.beforeEach((to,from,next) => {
 	//TODO 保存当前路由
 	if(to.name != 'landingPage')

@@ -182,7 +182,6 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
@@ -290,11 +289,6 @@ export default {
     -webkit-transform: scale(.5);
     transform: scale(.5);
 }
-
-
-
-
-
 .content{
 	width: 100%;
 	margin-top: .47rem;
@@ -336,11 +330,8 @@ export default {
 	border: 1px solid #E5E5E5;
 	padding-left: 15%;
 	background: #F5F5F5;
-<<<<<<< HEAD
-  /* font-size: .17rem; */
-=======
+
   font-size: .17rem;
->>>>>>> 612e533340a3fdc9adcd68cfeee4197a48eecb96
 }
 .inputBox input:last-child{
 	margin-top: .2rem;
@@ -447,10 +438,6 @@ export default {
 	float: right;
 }
 .forget span{
-<<<<<<< HEAD
-  /* font-size: .185rem; */
-=======
   font-size: .185rem;
->>>>>>> 612e533340a3fdc9adcd68cfeee4197a48eecb96
 }
 </style>

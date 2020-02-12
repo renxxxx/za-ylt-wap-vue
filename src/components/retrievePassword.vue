@@ -103,7 +103,8 @@ export default {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 
-  }, mounted() {
+  }, 
+  mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("light")
@@ -291,11 +292,7 @@ export default {
     line-height: 20px;
 }
 .center ul li:nth-child(2) button span{
-<<<<<<< HEAD
 	font-size: .12rem;
-=======
-	font-size: .145rem;
->>>>>>> 612e533340a3fdc9adcd68cfeee4197a48eecb96
 	/* position: absolute; */
 	/* right: .34rem; */
 	/* top: .02rem; */
@@ -306,11 +303,7 @@ export default {
 	width:85%;
 	height: .45rem;
 	padding-left:.54rem ;
-<<<<<<< HEAD
-	/* font-size: .17rem; */
-=======
 	font-size: .17rem;
->>>>>>> 612e533340a3fdc9adcd68cfeee4197a48eecb96
 }
 .center ul li:nth-child(2){
 	margin: .2rem 0;

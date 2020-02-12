@@ -1,7 +1,7 @@
 <template>
 	<div class="all">
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh"> -->
-			<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="getNextPage">
+			<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
 			<ul v-if="isLogin == 100? true:false">
 				<li v-for="(item,inx) in  items" :key="inx">
 					<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">

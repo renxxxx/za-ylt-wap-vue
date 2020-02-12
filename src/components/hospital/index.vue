@@ -38,8 +38,8 @@
               <span>器械集采</span>
             </router-link>
           </li>
-          <li @click="noLinkFn">
-            <router-link :to="{name : '',query:{time:new Date().getTime()}}">
+          <li>
+            <router-link :to="{name : 'hospital_operating',query:{time:new Date().getTime()}}">
               <img src="../../assets/image/yunyingzhongxin@2x.png" alt />
               <span>运营中心</span>
             </router-link>

@@ -83,7 +83,6 @@ export default {
 	});
 
   },
-  
   computed:{
     ...mapGetters(['returnHomePageData'])
 	},
@@ -94,8 +93,8 @@ export default {
   },
   watch:{
     $route(to,from){
-        console.log(to);
-        console.log(from)
+        // console.log(to);
+        // console.log(from)
         console.log(this.$router.app._route.name)
         if(!to.query.time || !from.query.time || to.query.transition=='def')
            this.direction = "";

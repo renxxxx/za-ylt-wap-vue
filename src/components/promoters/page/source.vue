@@ -32,7 +32,7 @@
 					      <span>全部病源</span>
 						  <span>{{itemsNum}}</span>
 					</div>
-					<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="nextPageFn">
+					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="nextPageFn">
 						<ul class="list">
 							<li v-for="(item,inx) in  items" :key="inx">
 								<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
@@ -59,7 +59,7 @@
 					      <span>已就诊</span>
 						  <span>{{yesItemsNum}}</span>
 					</div>
-					<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="yesNextPageFn">
+					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="yesNextPageFn">
 						<ul class="list">
 							<li v-for="(item,inx) in  yesItems" :key="inx">
 								<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
@@ -86,7 +86,7 @@
 					      <span>未就诊</span>
 						  <span>{{noItemsNum}}</span>
 					</div>
-					<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="noNextPageFn">
+					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="noNextPageFn">
 						<ul class="list">
 							<li v-for="(item,inx) in  noItems" :key="inx">
 								<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">

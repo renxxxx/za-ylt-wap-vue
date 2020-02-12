@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
-		<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
+		<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
 		<ul>
 			<li v-for="(item,inx) in promotersList" :key='inx'>
 				<!-- <router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : item.hospitalClinicId}}"> -->

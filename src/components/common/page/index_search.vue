@@ -63,7 +63,7 @@
 			/>
 		</van-popup>
       </div>
-	  <van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="nextPageFn">
+	  <van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="nextPageFn">
 	  	<ul class="list" v-if="isLogin == 100? true:false" :style="{'padding-top':$store.state.topHeight}">
 	  		<li v-for="(item,inx) in  items" :key="inx">
 	  			<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
