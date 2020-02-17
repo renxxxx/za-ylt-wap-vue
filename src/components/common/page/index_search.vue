@@ -63,7 +63,7 @@
 			/>
 		</van-popup>
       </div>
-	  <van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="nextPageFn">
+	  <van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="nextPageFn">
 	  	<ul class="list" v-if="isLogin == 100? true:false" :style="{'padding-top':$store.state.topHeight}">
 	  		<li v-for="(item,inx) in  items" :key="inx">
 	  			<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
@@ -136,6 +136,7 @@ export default {
 	  finished: false,
 	  page:0,
 	  noItems:[],
+     test:''
     };
   },
   computed: {
@@ -281,7 +282,7 @@ export default {
     		this.Time.postState = 1;
 			this.dateStata=_vlaue;
     		// console.log(this.dateStata);
-    
+
     		break;
     		case 1:
     		document.getElementById(this.labelDocument[0]).style.backgroundColor = "#EEEEEE";
@@ -294,7 +295,7 @@ export default {
 			this.dateStata=_vlaue;
     		// console.log(this.dateStata);
     		break;
-    
+
     		case 2:
     		document.getElementById(this.labelDocument[2]).style.backgroundColor = "#EEEEEE";
     		document.getElementById(this.labelDocument[3]).style.backgroundColor = "#EEEEEE";
@@ -303,7 +304,7 @@ export default {
     		this.Time.confirmStart = this.time;
     		this.showTime = true;
     		break;
-    
+
     		case 3:
     		_this.target.style.backgroundColor = "#FFE1BE";
     		// console.log(this.dateStata);
@@ -311,7 +312,7 @@ export default {
     		this.Time.confirmOver = this.time;
     		this.showTime = true;
     		break;
-    
+
     		case 4:
     		_this.target.style.backgroundColor = "#FFE1BE";
     		// console.log(this.dateStata);
@@ -319,7 +320,7 @@ export default {
     		this.Time.pushStart = this.time;
     		this.showTime = true;
     		break;
-    
+
     		case 5:
     		_this.target.style.backgroundColor = "#FFE1BE";
     		this.dateStata=_vlaue;
@@ -433,8 +434,12 @@ export default {
 					this.loading = false;
 				}else{
 					this.loading = false;
+          this.test='没有更多了'
 					this.finished = true;
 				}
+        if(this.items.length == 0 && this.noItems.length == 0){
+          this.test='无数据'
+        }
 			})
 			.catch((err)=>{
 				console.log(err);
@@ -625,7 +630,7 @@ export default {
 	width: 100%;
 	padding-top: .1rem;
 	padding-left: .1rem;
-	
+
 }
 .contentTitle img{
 	width: .17rem;

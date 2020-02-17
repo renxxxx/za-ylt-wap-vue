@@ -1,32 +1,28 @@
 <template>
-	<div class="operating">
+  <div class="pushTheManagement">
     <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
     	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
-    	<h3>优质案例</h3>
+    	<h3>推送管理</h3>
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
-    <ul>
-      <!-- <li v-for="(items,inx) in 4" :key='inx'> -->
-      <router-link :to="{name:'hospital_pushTheManagement'}">
+    <div class="addPush">
+      <span>+</span>
+      <h5>新建推送</h5>
+    </div>
+    <ul class="content">
       <li>
-          <h4>发布推送</h4>
-          <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
+        <div class="content_p">
+          <span>这有可能是脊椎疼痛患者最期待的新年礼，价值三万多的货我们只送不卖，拿到的都笑了</span>
+        </div>
+        <div class="content_time">
+          <span>2019-02-17 10:48</span>
+          <span>已推送</span>
+        </div>
       </li>
-      </router-link>
-      <li>
-        <h4>短信群发</h4>
-        <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-      </li>
-      <li>
-        <h4>发布精准活动</h4>
-        <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-      </li>
-      <li>
-        <h4>运营文章</h4>
-        <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-      </li>
+
     </ul>
   </div>
+
 </template>
 
 <script>
@@ -35,13 +31,14 @@ import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 export default {
-  name: 'operating',
+  name: 'pushTheManagement',
   data () {
     return {
 
     }
   },
   computed:{
+
 
   },
   beforeRouteLeave(to, from, next) {
@@ -87,10 +84,7 @@ export default {
 
   },
   mounted () {
-    if(window.plus){
-    	//plus.navigator.setStatusBarBackground("#ffffff");
-    	plus.navigator.setStatusBarStyle("dark")
-    }
+
   },
   methods: {
     //回退方法
@@ -103,7 +97,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.operating{
+.pushTheManagement{
   width: 100%;
   background-color: #F5F5F5;
 }
@@ -131,34 +125,69 @@ export default {
 .topNav h3{
 	font-size: .16rem;
 	font-weight: bold;
-}        
-.operating>ul{
+}
+.addPush{
+  width: 93.6%;
+  height: .49rem;
+  line-height: .49rem;
+  background-color: #FFFFFF;
+  text-align: center;
+  margin: .12rem auto;
+}
+.addPush span{
+  color: #2B77EF;
+  width: .15rem;
+  height: .15rem;
+  line-height: .15rem;
+  border: 1px solid #2B77EF;
+  display: inline-block;
+  border-radius: .03rem;
+}
+.addPush h5{
+  font-size: .145rem;
+  color: #2B77EF;
+  display: inline;
+}
+.content{
   width: 100%;
-  margin-top: .12rem;
+}
+.content li{
+  width: 93.6%;
+  height: 1.215rem;
+  margin: 0rem auto .12rem;
   background-color: #FFFFFF;
 }
-.operating>ul li{
-  width: 95.73%;
-  height: .52rem;
-  line-height: .52rem;
-  margin-left: 4.27%;
-  border-bottom: 1px solid #EEEEEE;
-  font-size: .15rem;
-  color: #333333;
-  position: relative;
+.content_p{
+  width: 100%;
+  height: .72rem;
+  border-bottom: 1px solid #E5E5E5;
 }
-.operating>ul li h4{
-  display: inline-block;
+.content_p>span{
+  width: 91.45%;
+  height: .42rem;
+  line-height: .21rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
   font-weight: bold;
+  color: #333333;
+  padding-top: .15rem;
+  margin: auto;
 }
-.operating>ul li img{
-  width: .08rem;
-  height: .13rem;
-  display: inline-block;
-  position: absolute;
-  right: 4.8%;
-  top: 0;
-  bottom: 0;
-  margin: auto 0rem;
+.content_time{
+  width: 91.45%;
+  height: .49rem;
+  line-height: .49rem;
+  margin: auto;
+}
+.content_time span{
+  color: #768892;
+}
+.content_time span:last-child{
+  float: right;
+  color: #2B77EF;
 }
 </style>

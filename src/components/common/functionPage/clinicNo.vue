@@ -1,7 +1,7 @@
 <template>
 	<div class="all">
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh"> -->
-			<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
+			<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 			<ul v-if="isLogin == 100? true:false">
 				<li v-for="(item,inx) in  items" :key="inx">
 					<router-link :to="{name : 'details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
@@ -58,6 +58,7 @@ export default {
 			yesNum: 0,
 			clinicId:'',
 			items:[],
+      test:''
 		}
 	},
 	computed:{
@@ -109,7 +110,7 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 	  debugger
 		if(window.plus){
@@ -196,7 +197,11 @@ export default {
 				}else{
 					this.loading = false;
 					this.finished = true;
+          this.test='没有更多了'
 				}
+        if(this.items.length == 0){
+          this.test='无数据'
+        }
 			})
 			.catch((err)=>{
 				console.log(err);

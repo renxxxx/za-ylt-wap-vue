@@ -13,7 +13,8 @@ import urlPage from '@/components/urlPage.vue'
 import hospital_sourceManagement from '@/components/common/page/sourceManagement.vue'
 //图片放大功能
 import pictureEnlargement from '@/components/pictureEnlargement.vue'
-
+//列表选择页
+import list from '@/components/list.vue'
 
 
 //推广人端首页主页面
@@ -96,8 +97,10 @@ import hospital_clinicSearch from '@/components/hospital/childPage/clinic_search
 import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
 // 医院端器械采集页面
 import hospital_collect from '@/components/hospital/childPage/collect.vue'
-// 医院端运营手册页面
+// 医院端运营中心页面
 import hospital_operating from '@/components/hospital/childPage/operating.vue'
+// 医院端运营中心的推广管理
+import hospital_pushTheManagement from '@/components/hospital/childPage/pushTheManagement.vue'
 
 // 医院端门诊主页的医院形象页面
 import hospitalImage from '@/components/hospital/childPage/hospitalImage.vue'
@@ -157,7 +160,7 @@ Vue.use(Router)
 const router = new Router({
 	// mode: 'history',
   // base:'/landingPage/',
- 
+
 	routes: [
 		{
 			// 医院端主页
@@ -215,6 +218,13 @@ const router = new Router({
 			component: pictureEnlargement,
 			meta: {auth:true},
 		},
+    {
+    	//列表选择页
+    	path: '/list',
+    	name: 'list',
+    	component: list,
+    	meta: {auth:true},
+    },
 		{
 			// 医院端门诊添加门诊页面
 			path: '/hospital_addCLinic',
@@ -230,10 +240,17 @@ const router = new Router({
 			meta: {auth:true},
 		},
     {
-    	// 医院端运营手册页面
+    	// 医院端运营中心
     	path: '/hospital_operating',
     	name: 'hospital_operating',
     	component: hospital_operating,
+    	meta: {auth:true},
+    },
+    {
+    	// 医院端运营中心的推广管理
+    	path: '/hospital_pushTheManagement',
+    	name: 'hospital_pushTheManagement',
+    	component: hospital_pushTheManagement,
     	meta: {auth:true},
     },
 		{
@@ -510,7 +527,7 @@ const router = new Router({
 			component: outpatient_shopAddressAdd,
 			// meta: {auth:true},
 		},
-		
+
 		{
 			//推广人端首页主页面
 			path: '/promoters_index',
@@ -652,7 +669,7 @@ router.beforeEach((to,from,next) => {
 	 	localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
 	next()
 })
-router.afterEach((to, from) => {	
+router.afterEach((to, from) => {
 		if(to.name!='hospital_index' && to.name!='hospital_sourceManagement' && to.name!='outpatient_index' && to.name != 'promoters_index' &&
 		to.name!='landingPage' && to.name != 'retrievePassword'){
 			debugger

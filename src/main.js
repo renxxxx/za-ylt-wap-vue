@@ -47,7 +47,7 @@ const overIphonex = () => {
 	let currentWebview = plus.webview.currentWebview();
 	currentWebview.setStyle({scrollIndicator:"none"})
 
-	let isImmersedStatusbar = plus.navigator.isImmersedStatusbar(); 
+	let isImmersedStatusbar = plus.navigator.isImmersedStatusbar();
 	// 检测是否支持沉浸式 支持沉浸式状态栏则返回true
 
 	let _statusbarHeight = "24"; // 设置默认值
@@ -136,7 +136,7 @@ import {
 	ImagePreview,
 	Progress,
 	Stepper,
-	Picker
+	Picker,
 } from 'vant';
 Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab).use(Tabs).use(Checkbox).use(Stepper)
 	.use(CheckboxGroup).use(Dialog).use(Popup).use(RadioGroup).use(Radio).use(Cell).use(CellGroup).use(PullRefresh)
@@ -167,4 +167,3 @@ new Vue({
 	},
 	template:'<App/>'
 })
-

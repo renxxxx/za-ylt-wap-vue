@@ -25,9 +25,12 @@
 						</li>
 						<li>
 							<span>推广人</span>
-							<van-dropdown-menu>
+							<!-- <van-dropdown-menu>
 								<van-dropdown-item v-model="value" :options="option" active-color='#2B77EF' @change="changeFn"/>
-							</van-dropdown-menu>
+							</van-dropdown-menu> -->
+              <router-link :to="{name:'list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item}}">
+                <span>{{addClinic.promoter}}</span>
+              </router-link>
 						</li>
 						<li>
 							<span>分配账号</span>
@@ -100,8 +103,8 @@ export default {
 	data () {
 		return {
 			// 推广人下拉列表参数
-			value: "000",
-			option: [],
+			// value: "000",
+			// option: [],
 			// 添加列表绑定数据
 			addClinic:{
 				name : '',
@@ -115,11 +118,13 @@ export default {
 				license : '',
 				readonly : '',
 				clinicPromoterId : '',
-				hospitalUserId : ''
+				hospitalUserId : '',
+        promoter:'请选择'
 			},
 			// 上传图片弹窗显示
 			show: false,
-			imageUpload:''
+			imageUpload:'',
+
 		}
 	},
 	computed:{
@@ -172,33 +177,10 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
-		// 加载dom节点后,获取推广人列表请求
-		this.$axios.get('/hospital/def/hospital-operator-users?')
-		.then(res => {
-			if(!res.data.codeMsg){
-				// console.log(res.data.data.rows)
-				this.option.push({
-					'clinicPromoterId' : '',
-					'text' : '请选择',
-					'value' : '000',
-				})
-				for(let i in res.data.data.rows){
-					this.option.push({
-						'clinicPromoterId' : res.data.data.rows[i].hospitalUserId,
-						'text' : res.data.data.rows[i].name,
-						'value' : '00'+(i+1),
-					})
-				}
-				console.log(this.promotersList)
-			}
-		})
-		.catch((err)=>{
-			console.log(err);
-		})
-		
-		console.log(this.$route.query.item)
+     console.log(this.$router.apps[0]._route.name)
+		// console.log(this.$route.query.item)
 		this.$route.query.item? this.clinicFn() : ""
 	},
 	methods: {
@@ -213,20 +195,25 @@ export default {
             contactTel : _d.data.data.tel,
             address : _d.data.data.address,
             remark : _d.data.data.remark,
-			hospitalUserId : _d.data.data.hospitalUserId,
+            hospitalUserId : _d.data.data.hospitalUserId,
           },
+          _d.data.data.hospitalUserName? this.addClinic.promoter = _d.data.data.hospitalUserName: ''
+          this.$route.query.promoterValue? this.addClinic.promoter = this.$route.query.promoterValue:''
+        // if(_d.data.data.hospitalUserName){
+
+        // }
 		// console.log(this.addClinic)
       	this.imageUpload = _d.data.data.license
-		this.$axios.get('/hospital/def/hospital-operator-users?'+qs.stringify({hospitalUserId:this.addClinic.hospitalUserId}))
-		.then(res => {
-			console.log(res.data.data.rows[0].name)
-			let promoter= this.option.find((n)=>n.text == res.data.data.rows[0].name)
-			this.value = promoter.value
-			console.log(promoter)
-		})
-		.catch((err)=>{
-			console.log(err);
-		})
+		// this.$axios.get('/hospital/def/hospital-operator-users?'+qs.stringify({hospitalUserId:this.addClinic.hospitalUserId}))
+		// .then(res => {
+		// 	// console.log(res.data.data.rows[0].name)
+		// 	// this.promoter= this.option.find((n)=>n.text == res.data.data.rows[0].name)
+		// 	this.value = promoter
+		// 	// console.log(promoter)
+		// })
+		// .catch((err)=>{
+		// 	console.log(err);
+		// })
       })
       .catch((err)=>{
       	console.log(err);
@@ -246,12 +233,12 @@ export default {
 		      this.show = false;
 			  console.log(this.show)
 		},
-		changeFn(id){
-			debugger
-			let promoter= this.option.find((n)=>n.value == id)
-				this.addClinic.clinicPromoterId = promoter.clinicPromoterId
-			console.log(this.addClinic.clinicPromoterId )
-		},
+		// changeFn(id){
+		// 	debugger
+		// 	let promoter= this.option.find((n)=>n.value == id)
+		// 		this.addClinic.clinicPromoterId = promoter.clinicPromoterId
+		// 	console.log(this.addClinic.clinicPromoterId )
+		// },
 		addImg(_fileLIst){
 			var file = _fileLIst.target.files[0]
 			// console.log(e)
@@ -499,16 +486,17 @@ export default {
 	bottom: 0;
 	left: 0;
 	right: 0;
-
 }
 .add{
 	display: block;
 	width: 100%!important;
 	height: .44rem!important;
 	line-height: .44rem!important;
-	/* margin-top:-.44rem
-
-	; */
  }
-
+.Fill li a span{
+  color: #2B77EF;
+  float: right;
+  text-align: right;
+  width: 60%;
+}
 </style>

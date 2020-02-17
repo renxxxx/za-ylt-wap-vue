@@ -13,10 +13,13 @@
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
     				<input type="text"  v-model="hospitalAccount.name" name='name' placeholder="请输入手机号" >
+            <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('001')" v-if="hospitalAccount.name">
     			</div>
     			<div class="inputBox">
     				<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-    				<input type="password"  v-model="hospitalAccount.password" name='password' placeholder="请输入密码" autocomplete>
+    				<input type="password"  v-model="hospitalAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd1'>
+            <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd1')" v-if="hospitalAccount.password">
+            <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('002')" v-if="hospitalAccount.password">
     			</div>
     			<div class="checkBox">
     				<input type="checkbox"
@@ -46,11 +49,13 @@
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
     				<input type="text"  v-model="outpatientAccount.name" name='name' placeholder="请输入手机号" >
-
+            <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('003')" v-if="outpatientAccount.name">
     			</div>
     			<div class="inputBox">
     				<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-    				<input type="password"  v-model="outpatientAccount.password" name='password' placeholder="请输入密码" autocomplete>
+    				<input type="password"  v-model="outpatientAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd2'>
+            <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd2')" v-if="outpatientAccount.password">
+            <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('004')" v-if="outpatientAccount.password">
     			</div>
     			<div class="checkBox">
     				<input type="checkbox"
@@ -81,10 +86,13 @@
     			<div class="inputBox">
     				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
     				<input type="text"  v-model="operateAccount.name" name='name' placeholder="请输入手机号" >
+            <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('005')" v-if="operateAccount.name">
     			</div>
     			<div class="inputBox">
     				<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-    				<input type="password"  v-model="operateAccount.password" name='password' placeholder="请输入密码"  autocomplete>
+    				<input type="password"  v-model="operateAccount.password" name='password' placeholder="请输入密码"  autocomplete id='pwd3'>
+            <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd3')" v-if="operateAccount.password">
+            <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('006')" v-if="operateAccount.password">
     			</div>
     			<div class="checkBox">
     				<input type="checkbox"
@@ -103,7 +111,6 @@
     				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
     					<div class="forget">
                 <span>忘记密码</span>
-
     						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
     					</div>
     				</router-link>
@@ -135,6 +142,7 @@ export default {
 			password: ''
 		},
 		data:1,
+    pwdImg : require('../assets/image/close-eye@2x.png')
     }
   },
   directives: {
@@ -230,6 +238,38 @@ export default {
 	},
   },
   methods:{
+    emptyAccountFn(_data){
+      switch (_data){
+        case '001': this.hospitalAccount.name = ''
+        break;
+        case '002': this.hospitalAccount.password = ''
+        break;
+        case '003': this.outpatientAccount.name = ''
+        break;
+        case '004': this.outpatientAccount.password = ''
+        break;
+        case '005': this.operateAccount.name = ''
+        break;
+        case '006': this.operateAccount.password = ''
+        break;
+      }
+    },
+    numFN(_ref){
+      console.log(_ref)
+      console.log(document.getElementById(_ref).type)
+      if(document.getElementById(_ref).type == 'password'){
+        document.getElementById(_ref).setAttribute('type','text')
+        this.pwdImg = require('../assets/image/open-eye@2x.png')
+      }else{
+
+        document.getElementById(_ref).setAttribute('type','password')
+        this.pwdImg = require('../assets/image/close-eye@2x.png')
+      }
+      if(document.getElementById(_ref).type == 'text'){
+      }
+      // this.$refs._ref.type = 'text'
+      // docuemnt.getelementbyid("refs1").attribute("type","text");
+    },
 	...mapActions(['submit','change'])
   }
 }
@@ -305,22 +345,45 @@ export default {
 .inputBox{
 	position: relative;
 	width: 100%;
-	margin: 0 auto;
+	margin: .2rem auto;
 }
 
 .passwordImg{
 	position: absolute;
 	height: .16rem;
 	width: .18rem;
-	top:.35rem;
 	left: 7%;
+  top: 0;
+  bottom: 0;
+  margin: auto 0rem;
 }
 .telephoneImg{
 	width: .13rem;
 	height: .2rem;
-	top:.35rem;
-	left: 7%;
+	/* top:.35rem; */
 	position: absolute;
+	left: 7%;
+  top: 0;
+  bottom: 0;
+  margin: auto 0rem;
+}
+.closeImg{
+  width: .11rem;
+  height: .11rem;
+  position: absolute;
+  right: 7%;
+  top:0;
+  bottom: 0;
+  margin: auto 0;
+}
+.openImg{
+  width: .15rem;
+  height: .11rem;
+  position: absolute;
+  right: 14%;
+  top:0;
+  bottom: 0;
+  margin: auto 0;
 }
 .inputBox input{
 
@@ -333,9 +396,9 @@ export default {
 
   font-size: .17rem;
 }
-.inputBox input:last-child{
-	margin-top: .2rem;
-}
+/* .inputBox:last-child{ */
+	/* margin-top: .2rem; */
+/* } */
 >>>.van-hairline--top-bottom{
 	display: block;
    width: 100%!important;

@@ -2,7 +2,7 @@
 	<div class="content">
 		<span v-if="show? true:false">已找到 {{clinicNum}} 条数据</span>
 			<ul>
-				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
+				<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 					<li v-for="(items,inx) in content" :key="inx">
 						<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : items.hospitalClinicId,time:new Date().getTime()}}">
 							<div class="contentLi">
@@ -31,7 +31,8 @@ export default {
 			finished: false,
 			content : [],
 			page:0,
-			clinicNum : 0
+			clinicNum : 0,
+      test:''
 		}
 	},
 	props:['show'],
@@ -125,18 +126,24 @@ export default {
 				this.loading = false;
 				}else{
 					this.loading = false;
+          this.test='没有更多了'
 					this.finished = true;
 				}
+        console.log(this.content.length)
+        if(this.content.length == 0){
+          this.test='无数据'
+        }
 				// this.clinic.num = res.data.data.sum.totalCount;
-
 			})
 			.catch((err)=>{
 				console.log(err);
 			})
+
 		},
 		getNextPage(){
 			this.page++
 			this.getdata()
+
 		},
 	},
 }
@@ -214,6 +221,4 @@ export default {
 	border: 1px solid #FF951B;
 	border-radius: .5rem;
 }
-
-
 </style>

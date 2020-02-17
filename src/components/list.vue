@@ -1,31 +1,23 @@
 <template>
-	<div class="operating">
-    <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-    	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
-    	<h3>优质案例</h3>
-    </div>
-    <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+	<div class="list">
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+			<img src="../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
+			<h3>{{name}}</h3>
+		</div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+    <van-search v-model="keywords" placeholder="请输入搜索关键词" @search="searchFn"/>
     <ul>
-      <!-- <li v-for="(items,inx) in 4" :key='inx'> -->
-      <router-link :to="{name:'hospital_pushTheManagement'}">
-      <li>
-          <h4>发布推送</h4>
-          <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-      </li>
-      </router-link>
-      <li>
-        <h4>短信群发</h4>
-        <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-      </li>
-      <li>
-        <h4>发布精准活动</h4>
-        <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-      </li>
-      <li>
-        <h4>运营文章</h4>
-        <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-      </li>
+        <li v-for="(item,inx) in list" :ref="'ref'+inx" :id="'list_'+inx ":key='inx' @click="subimtFn(item)">
+        	<span>{{item}}</span>
+        </li>
     </ul>
+    <!-- <van-radio-group v-model="radio">
+      <van-cell-group>
+        <van-cell :title="item" clickable @click="radioFn(inx)" v-for="(item,inx) in list" :key='inx'>
+          <van-radio slot="right-icon" :name="inx" />
+        </van-cell>
+      </van-cell-group>
+    </van-radio-group> -->
   </div>
 </template>
 
@@ -35,10 +27,13 @@ import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 export default {
-  name: 'operating',
+  name: 'list',
   data () {
     return {
-
+      name:'',
+      list:[],
+      radio:'1',
+      keywords: '',
     }
   },
   computed:{
@@ -84,18 +79,52 @@ export default {
     });
   },
   created () {
-
+    this.getData()
   },
   mounted () {
     if(window.plus){
     	//plus.navigator.setStatusBarBackground("#ffffff");
     	plus.navigator.setStatusBarStyle("dark")
     }
+    this.name = this.$route.query.name;
+
   },
   methods: {
-    //回退方法
+    // 返回上一级
     goBackFn(){
     	this.$router.back(-1)
+    },
+    subimtFn(_promoter){
+      console.log(_promoter)
+      this.$router.replace({name:this.$route.query.path,query:{promoterValue:_promoter,item:this.$route.query.item}})
+    },
+    searchFn(_kw){
+      console.log(_kw);
+      this.list = []
+      this.getData();
+    },
+    getData(){
+      // 加载dom节点后,获取推广人列表请求
+      this.$axios.get('/hospital/def/hospital-operator-users?'+qs.stringify({kw:this.keywords}))
+      .then(res => {
+      	if(!res.data.codeMsg){
+      		for(let i in res.data.data.rows){
+            this.list.push(res.data.data.rows[i].name)
+      		}
+          this.$nextTick(function(){
+            if(this.list.length){
+              debugger
+              let num = this.list.findIndex((n)=>n == this.$route.query.nowValue);
+              document.getElementById('list_'+num).style.backgroundColor = '#F0EDED'
+
+            }
+          })
+      		// console.log(this.promotersList)
+      	}
+      })
+      .catch((err)=>{
+      	console.log(err);
+      })
     },
   },
 }
@@ -103,7 +132,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.operating{
+.list{
   width: 100%;
   background-color: #F5F5F5;
 }
@@ -131,34 +160,37 @@ export default {
 .topNav h3{
 	font-size: .16rem;
 	font-weight: bold;
-}        
-.operating>ul{
-  width: 100%;
-  margin-top: .12rem;
-  background-color: #FFFFFF;
 }
-.operating>ul li{
-  width: 95.73%;
-  height: .52rem;
-  line-height: .52rem;
-  margin-left: 4.27%;
-  border-bottom: 1px solid #EEEEEE;
-  font-size: .15rem;
-  color: #333333;
-  position: relative;
+.list{
+	width: 100%;
 }
-.operating>ul li h4{
-  display: inline-block;
-  font-weight: bold;
+.list>ul{
+	width: 100%;
+	/* margin: .15rem auto; */
+	background-color: #FFFFFF;
+	/* margin-bottom: .18rem; */
+  margin: .12rem auto;
 }
-.operating>ul li img{
-  width: .08rem;
-  height: .13rem;
-  display: inline-block;
-  position: absolute;
-  right: 4.8%;
-  top: 0;
-  bottom: 0;
-  margin: auto 0rem;
+.list>ul li{
+	width: 100%;
+	height: .49rem;
+	color: #000000;
+	line-height: .49rem;
+	font-size: .15rem;
+	margin: 0rem auto;
+	border-bottom: 1px solid #DDDDDD;
+}
+.list>ul li:last-child{
+  border: none;
+}
+.list>ul li:hover{
+  background-color: #F0EDED;
+}
+.list>ul li>span{
+  display: block;
+  margin-left: .12rem
+}
+>>>.van-search{
+  margin: .12rem auto;
 }
 </style>
