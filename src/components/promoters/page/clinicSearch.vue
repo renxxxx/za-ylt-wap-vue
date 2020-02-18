@@ -6,7 +6,7 @@
 					<img src="../../../assets/image/shape@3x.png" alt="">
 				</div>
 				<div class="clinic_search">
-					<input type="text" placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
+					<input type="search" placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
 					<img src="../../../assets/image/sousuo@2x.png" alt="">
 				</div>
 				<div class="clinic_buttton" @click="inputNow">
@@ -199,11 +199,14 @@ export default {
 .clinic_search input{
 	margin: .09rem 0rem 0rem 0rem;
 	height:.33rem;
-	width: 83%;
+	width: 95%;
 	border: none;
 	border-radius: .33rem;
 	padding-left: 11.6%;
 	background-color: rgba(0, 0, 0, 0.05);
+}
+.clinic_search input[type=search]::-webkit-search-cancel-button{
+  padding-right: 5%;
 }
 .clinic_search img{
 	width: .14rem;
@@ -230,7 +233,7 @@ export default {
 	float:left;
 	width: 5.3%;
 	margin-left: .16rem;
-	margin-top: .17rem;
+	margin-top: .13rem;
 }
 .clinic_information img{
 	width: .09rem;

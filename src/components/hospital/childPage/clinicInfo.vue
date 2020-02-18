@@ -264,14 +264,14 @@ export default {
 		saveFn(){
 			console.log(this.addClinic)
 			this.$axios.post('/hospital/super-admin/hospital-clinic-alter',qs.stringify({
-				hospitalClinicId :  this.$route.query.item,
+				hospitalClinicId :  this.$route.query.item, 
 				name :  this.addClinic.name,
 				license : this.imageUpload,								//营业执照
 				address : this.addClinic.address, 						//门诊地址
 				headman : this.addClinic.headmanName, 					//负责人姓名
 				tel : this.addClinic.contactTel,						//负责人电话
 				remark : this.addClinic.remark, 						//备注
-				hospitalUserId : this.addClinic.clinicPromoterId,		//推广人id
+				hospitalUserId : this.$route.query.promoterId,		//推广人id
 				clinicUserPhone : this.addClinic.phone, 				//分配账号
 				clinicUserPassword : this.addClinic.pwd,				//分配账号密码
 				clinicUserPasswordConfirm : this.addClinic.pwdConfirm,  //确认密码

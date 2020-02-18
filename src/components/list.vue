@@ -6,9 +6,10 @@
 		</div>
 		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
     <van-search v-model="keywords" placeholder="请输入搜索关键词" @search="searchFn"/>
+    <span>当前: {{nowPromoter}}</span>
     <ul>
         <li v-for="(item,inx) in list" :ref="'ref'+inx" :id="'list_'+inx ":key='inx' @click="subimtFn(item)">
-        	<span>{{item}}</span>
+        	<span>{{item.name}}</span>
         </li>
     </ul>
     <!-- <van-radio-group v-model="radio">
@@ -34,6 +35,7 @@ export default {
       list:[],
       radio:'1',
       keywords: '',
+      nowPromoter : ''
     }
   },
   computed:{
@@ -87,7 +89,7 @@ export default {
     	plus.navigator.setStatusBarStyle("dark")
     }
     this.name = this.$route.query.name;
-
+    this.nowPromoter = this.$route.query.nowValue
   },
   methods: {
     // 返回上一级
@@ -96,11 +98,12 @@ export default {
     },
     subimtFn(_promoter){
       console.log(_promoter)
-      this.$router.replace({name:this.$route.query.path,query:{promoterValue:_promoter,item:this.$route.query.item}})
+      this.nowPromoter = _promoter.name;
+      this.$router.replace({name:this.$route.query.path,query:{promoterValue:_promoter.name,item:this.$route.query.item,promoterId:_promoter.hospitalUserId}})
     },
     searchFn(_kw){
       console.log(_kw);
-      this.list = []
+      this.list = [];
       this.getData();
     },
     getData(){
@@ -109,12 +112,12 @@ export default {
       .then(res => {
       	if(!res.data.codeMsg){
       		for(let i in res.data.data.rows){
-            this.list.push(res.data.data.rows[i].name)
+            this.list.push(res.data.data.rows[i])
       		}
           this.$nextTick(function(){
             if(this.list.length){
               debugger
-              let num = this.list.findIndex((n)=>n == this.$route.query.nowValue);
+              let num = this.list.findIndex((n)=>n.name == this.$route.query.nowValue);
               document.getElementById('list_'+num).style.backgroundColor = '#F0EDED'
 
             }
@@ -170,6 +173,10 @@ export default {
 	background-color: #FFFFFF;
 	/* margin-bottom: .18rem; */
   margin: .12rem auto;
+}
+.list>span{
+  display: block;
+  margin-left: .12rem;
 }
 .list>ul li{
 	width: 100%;

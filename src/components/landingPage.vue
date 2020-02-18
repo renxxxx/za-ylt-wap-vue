@@ -261,7 +261,6 @@ export default {
         document.getElementById(_ref).setAttribute('type','text')
         this.pwdImg = require('../assets/image/open-eye@2x.png')
       }else{
-
         document.getElementById(_ref).setAttribute('type','password')
         this.pwdImg = require('../assets/image/close-eye@2x.png')
       }

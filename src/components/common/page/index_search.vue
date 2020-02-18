@@ -10,7 +10,7 @@
         <div class="search_input">
           <img src="../../../assets/image/sousuo@2x.png" alt />
           <input
-            type="text"
+            type="search"
             placeholder="搜索病员"
             v-model="keywords"
             v-focus="this.$route.query.focus"
@@ -495,11 +495,14 @@ export default {
   background-color: #f5f5f5;
   height: 0.335rem;
   line-height: 0.3rem;
-  width: 77%;
+  width: 94%;
   margin: 0.082rem 0rem;
   border: none;
   border-radius: 25px;
   padding-left: 0.37rem;
+}
+.search_input input[type=search]::-webkit-search-cancel-button{
+  padding-right: 5%;
 }
 .search_input img {
   height: 0.15rem;
