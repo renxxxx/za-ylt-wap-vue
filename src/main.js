@@ -137,6 +137,8 @@ import {
 	Progress,
 	Stepper,
 	Picker,
+  Collapse,
+  CollapseItem
 } from 'vant';
 Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab).use(Tabs).use(Checkbox).use(Stepper)
 	.use(CheckboxGroup).use(Dialog).use(Popup).use(RadioGroup).use(Radio).use(Cell).use(CellGroup).use(PullRefresh)
@@ -147,7 +149,7 @@ Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab
 		attempt:1,
 		preload:1.3,
 	  }).use(ActionSheet).use(Grid)
-	.use(GridItem).use(SwipeCell).use(Circle).use(Toast).use(ImagePreview).use(Progress).use(Picker);
+	.use(GridItem).use(SwipeCell).use(Circle).use(Toast).use(ImagePreview).use(Progress).use(Picker).use(Collapse).use(CollapseItem);
 //配置全局时间
 Toast.setDefaultOptions({
 	duration: 800

@@ -1,25 +1,23 @@
 <template>
-	<div class="operating">
+	<div class="operatingManual">
     <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
     	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
-    	<h3>优质案例</h3>
+    	<h3>运营成功手册架构</h3>
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
-    <ul>
-      <!-- <li v-for="(items,inx) in 4" :key='inx'> -->
-      <router-link :to="{name:'hospital_pushTheManagement'}">
-      <li>
-          <h4>发布推送</h4>
-          <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-      </li>
-      </router-link>
-      <router-link :to="{name:'hospital_operatingManual'}">
-        <li>
-          <h4>运营手册</h4>
-          <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-        </li>
-      </router-link>
-    </ul>
+    <van-collapse v-model="activeNames">
+       <van-collapse-item :title="item.name" name="1" v-for="(item,inx) in operatingManual" :key="inx">
+         <div v-for="(_item,inx) in item._data" :key="inx">
+           <router-link :to="{name : 'hospital_operatingManualList',query:{name:_item.name,operatingManualId:item.operatingManualId,operatingManualSectionId : _item.operatingManualSectionId}}">
+             <div  class="manualList">
+               <span :class="[_item.done? '':'doColor']">{{_item.name}}</span>
+               <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
+             </div>
+
+           </router-link>
+         </div>
+       </van-collapse-item>
+    </van-collapse>
   </div>
 </template>
 
@@ -29,10 +27,11 @@ import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 export default {
-  name: 'operating',
+  name: 'operatingManual',
   data () {
     return {
-
+      activeNames: ['1'],
+      operatingManual : []
     }
   },
   computed:{
@@ -85,11 +84,43 @@ export default {
     	//plus.navigator.setStatusBarBackground("#ffffff");
     	plus.navigator.setStatusBarStyle("dark")
     }
+    this.getdata()
   },
   methods: {
     //回退方法
     goBackFn(){
     	this.$router.back(-1)
+    },
+    getdata(){
+    	this.$axios.get('/hospital/operating-manual/operating-manuals?')
+    	.then(res => {
+        if(!res.data.codeMsg){
+          for(let i in res.data.data.rows){
+            this.operatingManual.push(res.data.data.rows[i])
+            this.$axios.get('/hospital/operating-manual/operating-manual-sections?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
+            .then(_res => {
+              if(!_res.data.codeMsg){
+                this.operatingManual[i]._data=[]
+                for(let _i in _res.data.data.rows){
+                // console.log(_res.data.data.rows[_i])
+                  this.operatingManual[i]._data.push(_res.data.data.rows[_i])
+                 // console.dir(this.operatingManual[i]._data)
+                }
+              }else{
+                this.$toast.fail(_res.data.codeMsg)
+              }
+            })
+            .catch((err)=>{
+            	console.log(err);
+            })
+          }
+        }else{
+          this.$toast.fail(res.data.codeMsg)
+        }
+    	})
+    	.catch((err)=>{
+    		console.log(err);
+    	})
     },
   },
 }
@@ -97,7 +128,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.operating{
+.operatingManual{
   width: 100%;
   background-color: #F5F5F5;
 }
@@ -126,33 +157,31 @@ export default {
 	font-size: .16rem;
 	font-weight: bold;
 }
-.operating>ul{
-  width: 100%;
+>>>.van-collapse{
   margin-top: .12rem;
-  background-color: #FFFFFF;
 }
-.operating>ul li{
-  width: 95.73%;
-  height: .52rem;
-  line-height: .52rem;
-  margin-left: 4.27%;
-  border-bottom: 1px solid #EEEEEE;
-  font-size: .15rem;
-  color: #333333;
+>>>.van-collapse-item__content {
+    padding: 0rem;
+    /* padding-left: .16rem; */
+}
+.manualList{
+  width: 100%;
+  height: .44rem;
+  line-height: .44rem;
+  border-bottom: 1px solid #ebedf0;
+  padding-left: .16rem;
   position: relative;
+  font-size: .14rem;
 }
-.operating>ul li h4{
-  display: inline-block;
-  font-weight: bold;
-}
-.operating>ul li img{
-  width: .08rem;
-  height: .13rem;
-  display: inline-block;
+.manualList>img{
+  width: .09rem;
   position: absolute;
-  right: 4.8%;
+  right: .34rem;
   top: 0;
   bottom: 0;
   margin: auto 0rem;
+}
+.doColor{
+  color: #2B77EF;
 }
 </style>

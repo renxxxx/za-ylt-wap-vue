@@ -1,25 +1,10 @@
 <template>
-	<div class="operating">
+	<div class="operatingManualListDetailsAdd">
     <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
     	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
-    	<h3>优质案例</h3>
+      <span>保存</span>
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
-    <ul>
-      <!-- <li v-for="(items,inx) in 4" :key='inx'> -->
-      <router-link :to="{name:'hospital_pushTheManagement'}">
-      <li>
-          <h4>发布推送</h4>
-          <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-      </li>
-      </router-link>
-      <router-link :to="{name:'hospital_operatingManual'}">
-        <li>
-          <h4>运营手册</h4>
-          <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-        </li>
-      </router-link>
-    </ul>
   </div>
 </template>
 
@@ -29,7 +14,7 @@ import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 export default {
-  name: 'operating',
+  name: 'operatingManualListDetailsAdd',
   data () {
     return {
 
@@ -37,7 +22,7 @@ export default {
   },
   computed:{
 
-  },
+	},
   beforeRouteLeave(to, from, next) {
     //debugger;
   this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
@@ -97,9 +82,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.operating{
+.operatingManualListDetails{
   width: 100%;
   background-color: #F5F5F5;
+  position: relative;
 }
 .topNav{
 	width: 100%;
@@ -110,10 +96,12 @@ export default {
 	top:0;
 	z-index: 999;
 	background-color: #FFFFFF;
+  margin-bottom: .225rem;
 }
 .zhangwei{
 	width: 100%;
 	height: .47rem;
+  margin-bottom: .225rem;
 }
 .topNav img{
 	width: .09rem;
@@ -125,34 +113,5 @@ export default {
 .topNav h3{
 	font-size: .16rem;
 	font-weight: bold;
-}
-.operating>ul{
-  width: 100%;
-  margin-top: .12rem;
-  background-color: #FFFFFF;
-}
-.operating>ul li{
-  width: 95.73%;
-  height: .52rem;
-  line-height: .52rem;
-  margin-left: 4.27%;
-  border-bottom: 1px solid #EEEEEE;
-  font-size: .15rem;
-  color: #333333;
-  position: relative;
-}
-.operating>ul li h4{
-  display: inline-block;
-  font-weight: bold;
-}
-.operating>ul li img{
-  width: .08rem;
-  height: .13rem;
-  display: inline-block;
-  position: absolute;
-  right: 4.8%;
-  top: 0;
-  bottom: 0;
-  margin: auto 0rem;
 }
 </style>
