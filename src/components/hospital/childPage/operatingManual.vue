@@ -1,12 +1,15 @@
 <template>
 	<div class="operatingManual">
     <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-    	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
+    	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn" :style="{'padding-top':$store.state.topHeight}">
     	<h3>运营成功手册架构</h3>
+      <router-link :to="{name:''}">
+        <img src="../../../assets/image/jilu@2x.png" alt="">
+      </router-link>
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
     <van-collapse v-model="activeNames">
-       <van-collapse-item :title="item.name" name="1" v-for="(item,inx) in operatingManual" :key="inx">
+       <van-collapse-item :title="item.name" :name="inx" v-for="(item,inx) in operatingManual" :key="inx">
          <div v-for="(_item,inx) in item._data" :key="inx">
            <router-link :to="{name : 'hospital_operatingManualList',query:{name:_item.name,operatingManualId:item.operatingManualId,operatingManualSectionId : _item.operatingManualSectionId}}">
              <div  class="manualList">
@@ -30,7 +33,7 @@ export default {
   name: 'operatingManual',
   data () {
     return {
-      activeNames: ['1'],
+      activeNames: ['0'],
       operatingManual : []
     }
   },
@@ -89,7 +92,7 @@ export default {
   methods: {
     //回退方法
     goBackFn(){
-    	this.$router.back(-1)
+    	this.$router.back()
     },
     getdata(){
     	this.$axios.get('/hospital/operating-manual/operating-manuals?')
@@ -146,16 +149,27 @@ export default {
 	width: 100%;
 	height: .47rem;
 }
-.topNav img{
+.topNav>img:first-child{
 	width: .09rem;
 	height: .15rem;
 	position: absolute;
 	left: .16rem;
-	top:.16rem;
+	top:0;
+  bottom: 0;
+  margin: auto 0rem;
 }
 .topNav h3{
 	font-size: .16rem;
 	font-weight: bold;
+}
+.topNav a img{
+  width: .2rem;
+  height: .18rem;
+  position: absolute;
+  right: .16rem;
+  top:0;
+  bottom: 0;
+  margin: auto 0rem;
 }
 >>>.van-collapse{
   margin-top: .12rem;

@@ -6,7 +6,7 @@
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
     <ul>
-      <li v-for="(item,inx) in 100" :key="inx">
+      <li v-for="(item,inx) in operatingManualListDetails" :key="inx">
         <div class="operatingCenter">
           <img  v-if="_item" :src="_item" alt="" v-for="(_item,_inx) in item.image" :key="_inx">
           <span v-if="item.content">{{item.content}}</span>
@@ -18,7 +18,7 @@
       </li>
     </ul>
     <div class="addImg">
-      <router-link :to="{name: 'hospital_operatingManualListDetailsAdd'}">
+      <router-link :to="{name: 'hospital_operatingManualListDetailsAdd',query:{operatingManualSectionId:this.$route.query.operatingManualSectionId}}">
         <img src="../../../assets/image/add copy@2x.png" alt="">
       </router-link>
     </div>
@@ -93,7 +93,7 @@ export default {
   methods: {
     //回退方法
     goBackFn(){
-    	this.$router.back(-1)
+    	this.$router.back()
     },
     getdata(){
       console.log(this.$route.query.operatingManualSectionId)
