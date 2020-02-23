@@ -3,7 +3,7 @@
     <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
     	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn" :style="{'padding-top':$store.state.topHeight}">
     	<h3>运营成功手册架构</h3>
-      <router-link :to="{name:''}">
+      <router-link :to="{name:'hospital_operatingDate'}">
         <img src="../../../assets/image/jilu@2x.png" alt="">
       </router-link>
     </div>

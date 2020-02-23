@@ -138,7 +138,8 @@ import {
 	Stepper,
 	Picker,
   Collapse,
-  CollapseItem
+  CollapseItem,
+  Step, Steps
 } from 'vant';
 Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab).use(Tabs).use(Checkbox).use(Stepper)
 	.use(CheckboxGroup).use(Dialog).use(Popup).use(RadioGroup).use(Radio).use(Cell).use(CellGroup).use(PullRefresh)
@@ -148,7 +149,7 @@ Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab
 		error:require('./assets/image/loading-error.png'),
 		attempt:1,
 		preload:1.3,
-	  }).use(ActionSheet).use(Grid)
+	  }).use(ActionSheet).use(Grid).use(Step).use(Steps)
 	.use(GridItem).use(SwipeCell).use(Circle).use(Toast).use(ImagePreview).use(Progress).use(Picker).use(Collapse).use(CollapseItem);
 //配置全局时间
 Toast.setDefaultOptions({

@@ -3,6 +3,10 @@ import Router from 'vue-router'
 import Store from '../store'
 //登陆页面及其忘记密码和详情页
 import landingPage from '@/components/landingPage.vue'
+import account from '@/components/account.vue'
+//选择端口页面
+import chooseTheType from '@/components/chooseTheType.vue'
+
 //找回密码
 import retrievePassword from '@/components/retrievePassword.vue'
 //详情页
@@ -101,6 +105,9 @@ import hospital_collect from '@/components/hospital/childPage/collect.vue'
 import hospital_operating from '@/components/hospital/childPage/operating.vue'
 // 医院端运营中心的运营手册页面
 import hospital_operatingManual from '@/components/hospital/childPage/operatingManual.vue'
+
+// 医院端运营中心的运营手册的历史记录
+import hospital_operatingDate from '@/components/hospital/childPage/operatingDate.vue'
 // 医院端运营中心的运营手册下一级列表页面
 import hospital_operatingManualList from '@/components/hospital/childPage/operatingManualList.vue'
 // 医院端运营中心的运营手册下一级列表页面内容详情页面
@@ -262,6 +269,13 @@ const router = new Router({
     	meta: {auth:true},
     },
     {
+    	// 医院端运营中心的运营手册的历史记录
+    	path: '/hospital_operatingDate',
+    	name: 'hospital_operatingDate',
+    	component: hospital_operatingDate,
+    	meta: {auth:true},
+    },
+    {
     	// 医院端运营中心的运营手册下一级列表页面
     	path: '/hospital_operatingManualList',
     	name: 'hospital_operatingManualList',
@@ -281,7 +295,7 @@ const router = new Router({
     	name: 'hospital_operatingManualListDetailsAdd',
     	component: hospital_operatingManualListDetailsAdd,
     	meta: {auth:true},
-    },    
+    },
     {
     	// 医院端运营中心的推广管理
     	path: '/hospital_pushTheManagement',
@@ -690,6 +704,20 @@ const router = new Router({
 			component: landingPage,
 			alias:'/landingPage'
 		},
+    // {
+    // 	// 登陆主页
+    // 	path: '/',
+    // 	name: 'account',
+    // 	component: account,
+    // 	alias:'/account'
+    // },
+    // {
+    // 	//选择端口页面
+    // 	path: '/chooseTheType',
+    // 	name: 'chooseTheType',
+    // 	meta: {auth:true},
+    // 	component: chooseTheType,
+    // },
 		{
 			//找回密码页面
 			path: '/retrievePassword',
@@ -707,7 +735,7 @@ router.beforeEach((to,from,next) => {
 })
 router.afterEach((to, from) => {
 		if(to.name!='hospital_index' && to.name!='hospital_sourceManagement' && to.name!='outpatient_index' && to.name != 'promoters_index' &&
-		to.name!='landingPage' && to.name != 'retrievePassword'){
+		to.name!='landingPage' && to.name != 'retrievePassword' && to.name != 'account'){
 			debugger
 			Store.state.returnHomePageData = true;
 		}else{

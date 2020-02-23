@@ -98,8 +98,6 @@ export default {
     getdata(){
       console.log(this.$route.query.operatingManualSectionId)
     	this.$axios.get('/hospital/operating-manual/operating-manual-section-tracks?'
-      // +qs.stringify({"operatingManualId":this.$route.query.operatingManualId})
-      // +'&'
       +qs.stringify({"operatingManualSectionId":this.$route.query.operatingManualSectionId})
       )
     	.then(res => {
