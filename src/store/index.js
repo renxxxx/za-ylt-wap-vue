@@ -129,8 +129,9 @@ const mutations={
 				// console.log(res.data.codeMsg)
 			})
 			.catch((err)=>{
-				console.log(err)
-				Dialog({ message: err});
+				// console.log(err)
+				// Dialog({ message: err});
+        this.$toast.fail(err);
 			})
 	},
 	//复选框的选择

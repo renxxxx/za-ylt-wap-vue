@@ -697,27 +697,27 @@ const router = new Router({
 			component: urlPage,
 			meta: {auth:true},
 		},
-		{
-			// 登陆主页
-			path: '/',
-			name: 'landingPage',
-			component: landingPage,
-			alias:'/landingPage'
-		},
-    // {
-    // 	// 登陆主页
-    // 	path: '/',
-    // 	name: 'account',
-    // 	component: account,
-    // 	alias:'/account'
-    // },
-    // {
-    // 	//选择端口页面
-    // 	path: '/chooseTheType',
-    // 	name: 'chooseTheType',
-    // 	meta: {auth:true},
-    // 	component: chooseTheType,
-    // },
+		// {
+		// 	// 登陆主页
+		// 	path: '/',
+		// 	name: 'landingPage',
+		// 	component: landingPage,
+		// 	alias:'/landingPage'
+		// },
+    {
+    	// 登陆主页
+    	path: '/',
+    	name: 'account',
+    	component: account,
+    	alias:'/account'
+    },
+    {
+    	//选择端口页面
+    	path: '/chooseTheType',
+    	name: 'chooseTheType',
+    	meta: {auth:true},
+    	component: chooseTheType,
+    },
 		{
 			//找回密码页面
 			path: '/retrievePassword',
@@ -735,7 +735,7 @@ router.beforeEach((to,from,next) => {
 })
 router.afterEach((to, from) => {
 		if(to.name!='hospital_index' && to.name!='hospital_sourceManagement' && to.name!='outpatient_index' && to.name != 'promoters_index' &&
-		to.name!='landingPage' && to.name != 'retrievePassword' && to.name != 'account'){
+		to.name!='landingPage' && to.name != 'retrievePassword' && to.name != 'account' && to.name != 'chooseTheType'){
 			debugger
 			Store.state.returnHomePageData = true;
 		}else{
