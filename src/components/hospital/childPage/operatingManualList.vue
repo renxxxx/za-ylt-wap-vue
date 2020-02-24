@@ -5,7 +5,11 @@
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
     <van-collapse v-model="activeNames">
-       <van-collapse-item :title="this.$route.query.name" name="1">
+       <van-collapse-item  name="1">
+         <div slot="title" class="title">
+           <span>{{this.$route.query.name}}</span>
+           <!-- <p><span>{{yesNum}}</span>/{{num}}</p> -->
+         </div>
          <div v-for="(_item,inx) in operatingManualList" :key="inx">
            <router-link :to="{name : 'hospital_operatingManualListDetails',query:{name:_item.name ,operatingManualId:_item.operatingManualId,operatingManualSectionId:_item.operatingManualSectionId}}">
              <div  class="manualList">

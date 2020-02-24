@@ -9,14 +9,17 @@
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
     <van-collapse v-model="activeNames">
-       <van-collapse-item :title="item.name" :name="inx" v-for="(item,inx) in operatingManual" :key="inx">
+       <van-collapse-item :name="inx" v-for="(item,inx) in operatingManual" :key="inx">
+         <div slot="title" class="title">
+           <span>{{item.name}}</span>
+           <p><span>{{yesNum}}</span>/{{num}}</p>
+         </div>
          <div v-for="(_item,inx) in item._data" :key="inx">
            <router-link :to="{name : 'hospital_operatingManualList',query:{name:_item.name,operatingManualId:item.operatingManualId,operatingManualSectionId : _item.operatingManualSectionId}}">
              <div  class="manualList">
                <span :class="[_item.done? '':'doColor']">{{_item.name}}</span>
                <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
              </div>
-
            </router-link>
          </div>
        </van-collapse-item>
@@ -34,7 +37,9 @@ export default {
   data () {
     return {
       activeNames: ['0'],
-      operatingManual : []
+      operatingManual : [],
+      num:0,
+      yesNum:0
     }
   },
   computed:{
@@ -105,12 +110,28 @@ export default {
               if(!_res.data.codeMsg){
                 this.operatingManual[i]._data=[]
                 for(let _i in _res.data.data.rows){
+                  if(_res.data.data.rows[_i].done){
+                    ++this.yesNum
+                  }
                 // console.log(_res.data.data.rows[_i])
                   this.operatingManual[i]._data.push(_res.data.data.rows[_i])
                  // console.dir(this.operatingManual[i]._data)
                 }
               }else{
                 this.$toast.fail(_res.data.codeMsg)
+              }
+            })
+            .catch((err)=>{
+            	console.log(err);
+            })
+            this.$axios.get('/hospital/operating-manual/operating-manual-sections-sum?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
+            .then(res => {
+              console.dir(res)
+              if(!res.data.codeMsg){
+                this.num = res.data.data.rowCount
+                console.dir(res)
+              }else{
+                this.$toast.fail(res.data.codeMsg)
               }
             })
             .catch((err)=>{
@@ -124,6 +145,8 @@ export default {
     	.catch((err)=>{
     		console.log(err);
     	})
+
+
     },
   },
 }
@@ -197,5 +220,8 @@ export default {
 }
 .doColor{
   color: #2B77EF;
+}
+.title>p{
+  float: right;
 }
 </style>
