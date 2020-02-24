@@ -3,6 +3,10 @@ import Router from 'vue-router'
 import Store from '../store'
 //登陆页面及其忘记密码和详情页
 import landingPage from '@/components/landingPage.vue'
+import account from '@/components/account.vue'
+//选择端口页面
+import chooseTheType from '@/components/chooseTheType.vue'
+
 //找回密码
 import retrievePassword from '@/components/retrievePassword.vue'
 //详情页
@@ -13,7 +17,8 @@ import urlPage from '@/components/urlPage.vue'
 import hospital_sourceManagement from '@/components/common/page/sourceManagement.vue'
 //图片放大功能
 import pictureEnlargement from '@/components/pictureEnlargement.vue'
-
+//列表选择页
+import list from '@/components/list.vue'
 
 
 //推广人端首页主页面
@@ -96,6 +101,21 @@ import hospital_clinicSearch from '@/components/hospital/childPage/clinic_search
 import hospital_addCLinic from '@/components/hospital/childPage/addCLinic.vue'
 // 医院端器械采集页面
 import hospital_collect from '@/components/hospital/childPage/collect.vue'
+// 医院端运营中心页面
+import hospital_operating from '@/components/hospital/childPage/operating.vue'
+// 医院端运营中心的运营手册页面
+import hospital_operatingManual from '@/components/hospital/childPage/operatingManual.vue'
+
+// 医院端运营中心的运营手册的历史记录
+import hospital_operatingDate from '@/components/hospital/childPage/operatingDate.vue'
+// 医院端运营中心的运营手册下一级列表页面
+import hospital_operatingManualList from '@/components/hospital/childPage/operatingManualList.vue'
+// 医院端运营中心的运营手册下一级列表页面内容详情页面
+import hospital_operatingManualListDetails from '@/components/hospital/childPage/operatingManualListDetails.vue'
+// 医院端运营中心的运营手册下一级列表页面内容详情添加页面
+import hospital_operatingManualListDetailsAdd from '@/components/hospital/childPage/operatingManualListDetailsAdd.vue'
+// 医院端运营中心的推广管理
+import hospital_pushTheManagement from '@/components/hospital/childPage/pushTheManagement.vue'
 
 // 医院端门诊主页的医院形象页面
 import hospitalImage from '@/components/hospital/childPage/hospitalImage.vue'
@@ -155,7 +175,7 @@ Vue.use(Router)
 const router = new Router({
 	// mode: 'history',
   // base:'/landingPage/',
- 
+
 	routes: [
 		{
 			// 医院端主页
@@ -213,6 +233,13 @@ const router = new Router({
 			component: pictureEnlargement,
 			meta: {auth:true},
 		},
+    {
+    	//列表选择页
+    	path: '/list',
+    	name: 'list',
+    	component: list,
+    	meta: {auth:true},
+    },
 		{
 			// 医院端门诊添加门诊页面
 			path: '/hospital_addCLinic',
@@ -227,6 +254,55 @@ const router = new Router({
 			component: hospital_collect,
 			meta: {auth:true},
 		},
+    {
+    	// 医院端运营中心
+    	path: '/hospital_operating',
+    	name: 'hospital_operating',
+    	component: hospital_operating,
+    	meta: {auth:true},
+    },
+    {
+    	// 医院端运营中心的运营手册页面
+    	path: '/hospital_operatingManual',
+    	name: 'hospital_operatingManual',
+    	component: hospital_operatingManual,
+    	meta: {auth:true},
+    },
+    {
+    	// 医院端运营中心的运营手册的历史记录
+    	path: '/hospital_operatingDate',
+    	name: 'hospital_operatingDate',
+    	component: hospital_operatingDate,
+    	meta: {auth:true},
+    },
+    {
+    	// 医院端运营中心的运营手册下一级列表页面
+    	path: '/hospital_operatingManualList',
+    	name: 'hospital_operatingManualList',
+    	component: hospital_operatingManualList,
+    	meta: {auth:true},
+    },
+    {
+    	// 医院端运营中心的运营手册下一级列表页面内容详情页面
+    	path: '/hospital_operatingManualListDetails',
+    	name: 'hospital_operatingManualListDetails',
+    	component: hospital_operatingManualListDetails,
+    	meta: {auth:true},
+    },
+    {
+    	// 医院端运营中心的运营手册下一级列表页面内容详情添加页面
+    	path: '/hospital_operatingManualListDetailsAdd',
+    	name: 'hospital_operatingManualListDetailsAdd',
+    	component: hospital_operatingManualListDetailsAdd,
+    	meta: {auth:true},
+    },
+    {
+    	// 医院端运营中心的推广管理
+    	path: '/hospital_pushTheManagement',
+    	name: 'hospital_pushTheManagement',
+    	component: hospital_pushTheManagement,
+    	meta: {auth:true},
+    },
 		{
 			// 医院端门诊主页的医院形象页面
 			path: '/hospitalImage',
@@ -501,7 +577,7 @@ const router = new Router({
 			component: outpatient_shopAddressAdd,
 			// meta: {auth:true},
 		},
-		
+
 		{
 			//推广人端首页主页面
 			path: '/promoters_index',
@@ -628,6 +704,20 @@ const router = new Router({
 			component: landingPage,
 			alias:'/landingPage'
 		},
+    // {
+    // 	// 登陆主页
+    // 	path: '/',
+    // 	name: 'account',
+    // 	component: account,
+    // 	alias:'/account'
+    // },
+    // {
+    // 	//选择端口页面
+    // 	path: '/chooseTheType',
+    // 	name: 'chooseTheType',
+    // 	meta: {auth:true},
+    // 	component: chooseTheType,
+    // },
 		{
 			//找回密码页面
 			path: '/retrievePassword',
@@ -637,17 +727,15 @@ const router = new Router({
 		},
 	],
 })
-
-
 router.beforeEach((to,from,next) => {
 	//TODO 保存当前路由
 	if(to.name != 'landingPage')
 	 	localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
 	next()
 })
-router.afterEach((to, from) => {	
+router.afterEach((to, from) => {
 		if(to.name!='hospital_index' && to.name!='hospital_sourceManagement' && to.name!='outpatient_index' && to.name != 'promoters_index' &&
-		to.name!='landingPage' && to.name != 'retrievePassword'){
+		to.name!='landingPage' && to.name != 'retrievePassword' && to.name != 'account'){
 			debugger
 			Store.state.returnHomePageData = true;
 		}else{

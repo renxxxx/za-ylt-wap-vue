@@ -6,8 +6,9 @@
 					<img src="../../../assets/image/shape@3x.png" alt="">
 				</div>
 				<div class="clinic_search">
-					<input type="text" placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
 					<img src="../../../assets/image/sousuo@2x.png" alt="">
+					<input type="search" placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
+          <!-- <img src="../../../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn()" v-if="keywords"> -->
 				</div>
 				<div class="clinic_buttton" @click="inputNow">
 					<button>搜索</button>
@@ -98,7 +99,7 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
@@ -165,19 +166,22 @@ export default {
 }
 .clinic_search{
 	float:left;
-	width: 78.3%;
+	width: 70.3%;
 	position: relative;
 }
 .clinic_search input{
 	margin: .09rem 0rem 0rem 0rem;
 	height:.33rem;
-	width: 83%;
+	width: 100%;
 	border: none;
 	border-radius: .33rem;
 	padding-left: 11.6%;
 	background-color: rgba(0, 0, 0, 0.05);
 }
-.clinic_search img{
+.clinic_search input[type=search]::-webkit-search-cancel-button{
+  padding-right: 5%;
+}
+.clinic_search img:first-child{
 	width: .14rem;
 	height: .15rem;
 	position: absolute;
@@ -185,9 +189,9 @@ export default {
 	left: 4.8%;
 }
 .clinic_buttton{
-	float: left;
+	float: right;
 	margin-top: .14rem;
-	margin-left: -.05rem;
+	margin-right: .16rem;
 }
 .clinic_buttton button{
 	color: #FFFFFF;
@@ -202,7 +206,7 @@ export default {
 	float:left;
 	width: 5.3%;
 	margin-left: .16rem;
-	margin-top: .17rem;
+	margin-top: .13rem;
 }
 .clinic_information img{
 	width: .09rem;
@@ -256,4 +260,5 @@ export default {
     height: 100%;
     /* margin-top: .98rem; */
 }
+
 </style>

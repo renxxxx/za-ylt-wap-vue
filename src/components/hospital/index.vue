@@ -38,8 +38,8 @@
               <span>器械集采</span>
             </router-link>
           </li>
-          <li @click="noLinkFn">
-            <router-link :to="{name : '',query:{time:new Date().getTime()}}">
+          <li>
+            <router-link :to="{name : 'hospital_operating',query:{time:new Date().getTime()}}">
               <img src="../../assets/image/yunyingzhongxin@2x.png" alt />
               <span>运营中心</span>
             </router-link>
@@ -176,11 +176,11 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   },
   mounted() {
     //debugger;
-    
+
     if (window.plus) {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
@@ -466,6 +466,7 @@ li:nth-child(8) {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   height: 0.42rem;
+  /* width: 60.64%; */
 }
 .article_leftTime {
   margin-top: 0.23rem;

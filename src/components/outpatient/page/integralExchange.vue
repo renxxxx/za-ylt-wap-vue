@@ -19,8 +19,7 @@
 				</router-link>
 			</div>
 		</div>
-		<div class="zhangwei" :style="{'height':(parseInt($store.state.topHeight.replace('px',''))+176)+'px'}"></div>
-		<div class="flowHeading" id ="flowHeading">
+		<div class="flowHeading" id ="flowHeading" :style="{'top':(parseInt($store.state.topHeight.replace('px',''))+176)+'px'}">
 		    <ul class="rollScreen_list" :style = {transform:transform}  :class="{rollScreen_list_unanim:num===0}">
 				<li class="rollScreen_once" v-for="(item,index) in contentArr" :key='index'>
 					<img src="../../../assets/image/horn@2x.png" alt="">
@@ -32,7 +31,7 @@
 				</li>
 		    </ul>
 		</div>
-		<!-- <div class="zhangwei" :style="{'height':(height+24)+'px'}"></div> -->
+		<div :style="{'height':(parseInt($store.state.topHeight.replace('px',''))+228)+'px'}"></div>
 		<integralExchangeList :show = 'show' :style="{'padding-top':$store.state.topHeight}"></integralExchangeList>
 	</div>
 </template>
@@ -66,7 +65,7 @@ export default {
 		integralExchangeList
 	},
 	destroyed() {
-		
+
 	},
 	created () {
 		let _this = this
@@ -79,7 +78,7 @@ export default {
 		}, 2500)
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
+		//this.height = parseInt(topHeight.join())
 		//console.log(this.height)
 	},
 	destroyed() {
@@ -123,13 +122,13 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
+
 		// 从接口获取消息
 		this.$axios.post('/clientend2/clinicend/pointexchange/msgs',qs.stringify({
 			clinicId : this.account.clinicId,

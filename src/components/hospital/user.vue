@@ -54,7 +54,7 @@
 						<span>退出登录</span>
 						<img src="../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
-				
+
 			</ul>
 		</div>
 		<span>版本：{{this.$version.split('-')[0]}}</span>
@@ -96,7 +96,7 @@ export default {
 		debugger
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
+		//this.height = parseInt(topHeight.join())
 		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
@@ -138,14 +138,14 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
+
 		this.coverImg = this.account.data.data.hospital.cover;
 		this.images.push(this.account.data.data.hospital.license)
 		// console.log(this.account.data.data.hospital.cover)
@@ -170,13 +170,13 @@ export default {
 			// }else{
 			// 	this.coverImg = cover
 			// }
-			
+
 			// if(license == '' || license == undefined || license == null){
 			// 	// console.log("license为空")
 			// }else{
-					
+
 			// }
-			
+
 			// console.log(this.account.data.data.cover)
 			// console.log(this.account.data.data.license)
 		 },
@@ -202,7 +202,7 @@ export default {
 			console.log(this.isLogin);
 			localStorage.clear();
 
-				
+
 
 		if(window.plus){
 			  	plus.webview.currentWebview().clear()
@@ -277,7 +277,7 @@ export default {
 	width: 33%;
 	float: left;
 	height: .49rem;
-	margin: .37rem .21rem .28rem 0rem;
+	margin: .37rem .16rem .28rem 0rem;
 }
 .top_center h3{
 	height: .29rem;
@@ -297,23 +297,25 @@ export default {
 	font-size: .13rem;
 }
 .top_right{
-	width: 13%;
+	width: 19%;
 	float:left;
-	margin: .53rem .34rem .44rem 0rem;
+	margin: .53rem .14rem .44rem 0rem;
 	color: #999999;
 	position: relative;
 }
 .top_right img{
 	position: absolute;
 	top: .01rem;
-	left: .56rem;
+	/* left: .56rem; */
 	width: .08rem;
 	height: .13rem;
 }
-
+.top_right span{
+  margin-right: .1rem;
+}
 .user_center{
 	width: 100%;
-	
+
 	padding-top: 1.6rem;
 }
 .user_center ul{

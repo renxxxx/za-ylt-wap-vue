@@ -11,7 +11,6 @@
 		</div>
 		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
 		<div class="center" ref='urlPageRef' >
-			
 		</div>
 	</div>
 </template>

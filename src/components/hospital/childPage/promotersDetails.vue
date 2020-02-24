@@ -56,7 +56,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="cumulative"  :style="{'top': {'top':(parseInt($store.state.topHeight.replace('px',''))+193)+'px'}}">
+		<div class="cumulative"  :style="{'top': (parseInt($store.state.topHeight.replace('px',''))+193)+'px'}">
 			<h4>总共：{{clinicNum}}个门诊</h4>
 			<span @click="transferPromotersShowAllFn">全部转移</span>
 		</div>
@@ -89,7 +89,7 @@
 			<span>该推广人名下共有{{clinicNum}}门诊，是否转移</span>
 		</van-dialog> -->
 		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
-		<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
+		<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
 		<ul>
 			<li v-for="(item,inx) in promotersList" :key='inx'>
 				<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : item.hospitalClinicId}}">

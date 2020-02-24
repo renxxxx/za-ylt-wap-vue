@@ -12,7 +12,7 @@
 		<div class="zhangwei"></div>
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh" > -->
 			<ul :style="{'padding-top':$store.state.topHeight}">
-				<van-list  v-model="loading" :finished="finished" finished-text="已加载全部数据"  @load="onLoad">
+				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
 					<li v-for="(item,inx) in exchangeList" :key='inx' class='List'>
 						<router-link :to="{name : 'hospital_exchangeDetails' ,query : {item : item,time:new Date().getTime()}}">
 							<ul>
@@ -58,12 +58,12 @@ export default {
 		...mapGetters(['account']),
 	},
 	components:{
-		
+
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
+		//this.height = parseInt(topHeight.join())
 		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
@@ -105,13 +105,13 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
+
 		this.getdata()
 	},
 	methods: {
@@ -208,7 +208,7 @@ export default {
 	position: fixed;
 	top:0;
 	z-index: 9999;
-}	
+}
 .zhangwei{
 	width: 100%;
 	height: .47rem;
@@ -236,7 +236,7 @@ export default {
 	font-size: .16rem;
 	font-weight: bolder;
 }
-.right{	
+.right{
 	width: 10%;
 	height: .47rem;
 	line-height: .47rem;

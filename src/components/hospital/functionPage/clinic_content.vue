@@ -1,8 +1,8 @@
 <template>
 	<div class="content">
-		<span v-if="show? true:false">已找到200条数据</span>
+		<span v-if="show? true:false">已找到 {{clinicNum}} 条数据</span>
 			<ul>
-				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
+				<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 					<li v-for="(items,inx) in content" :key="inx">
 						<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : items.hospitalClinicId,time:new Date().getTime()}}">
 							<div class="contentLi">
@@ -30,7 +30,9 @@ export default {
 			loading: false,
 			finished: false,
 			content : [],
-			page:0
+			page:0,
+			clinicNum : 0,
+      test:''
 		}
 	},
 	props:['show'],
@@ -80,13 +82,20 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 	  console.log(this.show)
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
+		 this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+		  .then(res => {
+		  	this.clinicNum = res.data.data.rowCount;
+		  })
+		  .catch((err)=>{
+		  	console.log(err);
+		  })
 	},
 	methods: {
 		initData() {
@@ -94,6 +103,13 @@ export default {
 		  debugger;
 		  console.log(this.content)
 		  this.getNextPage();
+      this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+       .then(res => {
+       	this.clinicNum = res.data.data.rowCount;
+       })
+       .catch((err)=>{
+       	console.log(err);
+       })
 		},
 		getdata(){
 			debugger
@@ -110,18 +126,24 @@ export default {
 				this.loading = false;
 				}else{
 					this.loading = false;
+          this.test='没有更多了'
 					this.finished = true;
 				}
+        console.log(this.content.length)
+        if(this.content.length == 0){
+          this.test='无数据'
+        }
 				// this.clinic.num = res.data.data.sum.totalCount;
-
 			})
 			.catch((err)=>{
 				console.log(err);
 			})
+
 		},
 		getNextPage(){
 			this.page++
 			this.getdata()
+
 		},
 	},
 }
@@ -199,6 +221,4 @@ export default {
 	border: 1px solid #FF951B;
 	border-radius: .5rem;
 }
-
-
 </style>

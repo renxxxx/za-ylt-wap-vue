@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
 		 '/': {
-	target: 'https://test.zaylt.njshangka.com/',//设置你调用的接口域名和端口号 别忘了加http
+	target: 'https://zaylt.njshangka.com/',//设置你调用的接口域名和端口号 别忘了加http
 	changeOrigin: true,
 	secure: false,
 	pathRewrite: {
@@ -28,7 +28,7 @@ module.exports = {
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
-    
+
     /**
      * Source Maps
      */

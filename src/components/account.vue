@@ -1,123 +1,43 @@
 <template>
   <div class="landing">
 		<div class="nav">
-			<div class="topNav">
-				<img src="../assets/image/name@2x.png" alt="">
-			</div>
+				<img src="../assets/image/name-bj@2x.png" alt="">
 		</div>
     <div class="typeNav" type="line" border="false">
-    	<van-tabs  background='none' line-width=.6rem title-inactive-color='rgba(255, 255, 255, .6)'
-    	title-active-color='rgba(255, 255, 255)' v-model='data'>
-    	<van-tab title="医院端" :title-style="{'font-size':(data==0?'.24rem':'.185rem')}" >
-    		<div class="content">
-    			<div class="inputBox">
-    				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
-    				<input type="text"  v-model="hospitalAccount.name" name='name' placeholder="请输入手机号" >
-            <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('001')" v-if="hospitalAccount.name">
-    			</div>
-    			<div class="inputBox">
-    				<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-    				<input type="password"  v-model="hospitalAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd1'>
-            <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd1')" v-if="hospitalAccount.password">
-            <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('002')" v-if="hospitalAccount.password">
-    			</div>
-    			<div class="checkBox">
-    				<input type="checkbox"
-    				    class="input_check"
-    				    :checked="checked"
-    				    @change="change"/>
-    				<p>&nbsp;&nbsp;我已经阅读并同意
-    				<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
-    					<router-link :to="{name : 'urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
-    						&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
-    					</router-link>
-    				</p>
-    			</div>
-    			<button class="submitClass" type="submit" value="医院登录" @click="submit(['100',hospitalAccount])">医院登陆</button>
-    			<div class="passwordReset">
-    				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
-    					<div class="forget">
-    						<span>忘记密码</span>
-    						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
-    					</div>
-    				</router-link>
-    			</div>
-    		</div>
-    	</van-tab>
-    	<van-tab title="门诊端" type="line" border="false" :title-style="{'font-size':(data==1?'.24rem':'.185rem')}" >
-    		<div class="content">
-    			<div class="inputBox">
-    				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
-    				<input type="text"  v-model="outpatientAccount.name" name='name' placeholder="请输入手机号" >
-            <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('003')" v-if="outpatientAccount.name">
-    			</div>
-    			<div class="inputBox">
-    				<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-    				<input type="password"  v-model="outpatientAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd2'>
-            <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd2')" v-if="outpatientAccount.password">
-            <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('004')" v-if="outpatientAccount.password">
-    			</div>
-    			<div class="checkBox">
-    				<input type="checkbox"
-    				    class="input_check"
-    				    :checked="checked"
-    				    @change="change"/>
-    				<p>&nbsp;&nbsp;我已经阅读并同意
-						<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
-						<router-link :to="{name : 'urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
-							&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
-						</router-link>
-					</p>
-
-    			</div>
-    			<button class="submitClass" type="submit" value="门诊登录" @click="submit(['200',outpatientAccount])">门诊登陆</button>
-    			<div class="passwordReset">
-    				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
-    					<div class="forget">
-    						<span>忘记密码</span>
-    						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
-    					</div>
-    				</router-link>
-    			</div>
-    		</div>
-    	</van-tab>
-    	<van-tab title="运营端" type="line" border="false" :title-style="{'font-size':(data==2?'.24rem':'.185rem')}" >
-    		<div class="content">
-    			<div class="inputBox">
-    				<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
-    				<input type="text"  v-model="operateAccount.name" name='name' placeholder="请输入手机号" >
-            <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('005')" v-if="operateAccount.name">
-    			</div>
-    			<div class="inputBox">
-    				<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-    				<input type="password"  v-model="operateAccount.password" name='password' placeholder="请输入密码"  autocomplete id='pwd3'>
-            <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd3')" v-if="operateAccount.password">
-            <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('006')" v-if="operateAccount.password">
-    			</div>
-    			<div class="checkBox">
-    				<input type="checkbox"
-    				    class="input_check"
-    				    :checked="checked"
-    				    @change="change"/>
-    				<p>&nbsp;&nbsp;我已经阅读并同意
-					<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
-					<router-link :to="{name : 'urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
-						&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
-					</router-link>
-					</p>
-    			</div>
-    			<button class="submitClass" type="submit" value="门诊登录" @click="submit(['300',operateAccount])">运营登陆</button>
-    			<div class="passwordReset">
-    				<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
-    					<div class="forget">
-                <span>忘记密码</span>
-    						<!-- <img src="../assets/image/reset@2.png" alt=""> -->
-    					</div>
-    				</router-link>
-    			</div>
-    		</div>
-    	</van-tab>
-    	</van-tabs>
+      <div class="content">
+      	<div class="inputBox">
+      		<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
+      		<input type="text"  v-model="hospitalAccount.name" name='name' placeholder="请输入手机号" >
+          <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('001')" v-if="hospitalAccount.name">
+      	</div>
+      	<div class="inputBox">
+      		<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
+      		<input type="password"  v-model="hospitalAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd1'>
+          <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd1')" v-if="hospitalAccount.password">
+          <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('002')" v-if="hospitalAccount.password">
+      	</div>
+      	<div class="checkBox">
+      		<input type="checkbox"
+      		    class="input_check"
+      		    :checked="checked"
+      		    @change="change"/>
+      		<p>&nbsp;&nbsp;我已经阅读并同意
+      		<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
+      			<router-link :to="{name : 'urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
+      				&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
+      			</router-link>
+      		</p>
+      	</div>
+      	<button class="submitClass" type="submit" value="医院登录" @click="submit(['100',hospitalAccount])">医院登陆</button>
+      	<div class="passwordReset">
+      		<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
+      			<div class="forget">
+      				<span>忘记密码</span>
+      				<!-- <img src="../assets/image/reset@2.png" alt=""> -->
+      			</div>
+      		</router-link>
+      	</div>
+      </div>
     </div>
   </div>
 </template>
@@ -126,7 +46,7 @@
 import {mapActions,mapGetters,mapState} from 'vuex'
 import router from '../router'
 export default {
-  name: 'landingPage',
+  name: 'account',
   data () {
     return {
 		hospitalAccount:{
@@ -211,7 +131,7 @@ export default {
 				this.$router.replace({ name : 'hospital_sourceManagement',query:{time:new Date().getTime()}})
 				this.$router.push(lastRoute)
 			}else  if(this.$store.state.isLogin == 300){
-				this.$router.replace({ name : 'landingPage',query:{time:new Date().getTime()}})
+				this.$router.replace({ name : 'account',query:{time:new Date().getTime()}})
 				this.$router.push(lastRoute)
 			}
   },
@@ -226,7 +146,6 @@ export default {
 			this.$store.state.account = newValue;
 		},
 	},
-
 	isLogin: {
 	    get: function() {
 			// console.log(this.$store)
@@ -269,6 +188,7 @@ export default {
       // this.$refs._ref.type = 'text'
       // docuemnt.getelementbyid("refs1").attribute("type","text");
     },
+    
 	...mapActions(['submit','change'])
   }
 }
@@ -276,7 +196,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.landing{
+.account{
 	width: 100%;
 	height: 100%;
 }
@@ -284,49 +204,26 @@ export default {
 	width: 100%;
 	height: 2.07rem;
 	background: #2B77EF;position: relative;
+  position: relative;
+  margin-bottom: .47rem;
 }
-.topNav{
-	width: 50%;margin: auto;
-}
-.topNav img{
-	margin-top:40%;
-	height: 100%;width: 100%;z-index: 999;
+.nav img{
+	height: 100%;
+  width: 100%;
+  z-index: 999;
+  position: absolute;
+  top:0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
 }
 .typeNav{
 	padding: 0 7.5%;
 	/* position: absolute; */
 	top: 1.63rem;
 	width: 85%;
-  margin-top: -.5rem;
-}
->>>.van-tabs__line {
-    position: absolute;
-    bottom: 28%;
-    left: 0;
-    z-index: 1;
-    height: .07rem;
-    width: 1rem!important;
-    background-color: #FFFFFF;
-    border-radius: 3px;
-}
-
->>>.van-tabs__nav--line {
-    box-sizing: content-box;
-    height: 100%;
-    padding-bottom: 5.5%!important;
-}
->>>[class*=van-hairline]::after {
-    position: absolute;
-    box-sizing: border-box;
-    content: ' ';
-    pointer-events: none;
-    top: -50%;
-    right: -50%;
-    bottom: -50%;
-    left: -50%;
-    border: none!important;
-    -webkit-transform: scale(.5);
-    transform: scale(.5);
+  /* margin-to:   ;p: -.5rem; */
 }
 .content{
 	width: 100%;
