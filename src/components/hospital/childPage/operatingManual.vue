@@ -4,19 +4,22 @@
     	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn" :style="{'padding-top':$store.state.topHeight}">
     	<h3>运营成功手册架构</h3>
       <router-link :to="{name:'hospital_operatingDate'}">
-        <img src="../../../assets/image/jilu@2x.png" alt="">
+        <img src="../../../assets/image/jilu@2x.png" alt="" :style="{'padding-top':$store.state.topHeight}">
       </router-link>
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
     <van-collapse v-model="activeNames">
-       <van-collapse-item :title="item.name" :name="inx" v-for="(item,inx) in operatingManual" :key="inx">
+       <van-collapse-item :name="inx" v-for="(item,inx) in operatingManual" :key="inx">
+         <div slot="title" class="title">
+           <span>{{item.name}}</span>
+           <p><span>{{yesNum[inx]}}</span>/{{num[inx]}}</p>
+         </div>
          <div v-for="(_item,inx) in item._data" :key="inx">
            <router-link :to="{name : 'hospital_operatingManualList',query:{name:_item.name,operatingManualId:item.operatingManualId,operatingManualSectionId : _item.operatingManualSectionId}}">
              <div  class="manualList">
                <span :class="[_item.done? '':'doColor']">{{_item.name}}</span>
                <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
              </div>
-
            </router-link>
          </div>
        </van-collapse-item>
@@ -34,7 +37,9 @@ export default {
   data () {
     return {
       activeNames: ['0'],
-      operatingManual : []
+      operatingManual : [],
+      num:[],
+      yesNum:[]
     }
   },
   computed:{
@@ -94,23 +99,46 @@ export default {
     goBackFn(){
     	this.$router.back()
     },
-    getdata(){
-    	this.$axios.get('/hospital/operating-manual/operating-manuals?')
+    async getdata(){
+      debugger;
+    	await this.$axios.get('/hospital/operating-manual/operating-manuals?')
     	.then(res => {
         if(!res.data.codeMsg){
-          for(let i in res.data.data.rows){
+            for(let i in res.data.data.rows){
             this.operatingManual.push(res.data.data.rows[i])
             this.$axios.get('/hospital/operating-manual/operating-manual-sections?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
             .then(_res => {
               if(!_res.data.codeMsg){
                 this.operatingManual[i]._data=[]
+
+                 let num = 0;
                 for(let _i in _res.data.data.rows){
+                  if(_res.data.data.rows[_i].done){
+                    ++num
+                  }
+                  // console.log(num)
+                    this.yesNum.push(num)
                 // console.log(_res.data.data.rows[_i])
                   this.operatingManual[i]._data.push(_res.data.data.rows[_i])
                  // console.dir(this.operatingManual[i]._data)
                 }
               }else{
                 this.$toast.fail(_res.data.codeMsg)
+              }
+            })
+            .catch((err)=>{
+            	console.log(err);
+            })
+            this.$axios.get('/hospital/operating-manual/operating-manual-sections-sum?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
+            .then(res => {
+              console.dir(res)
+              if(!res.data.codeMsg){
+                console.log(res.data.data.rowCount)
+                this.num.push(res.data.data.rowCount)
+                // this.num = res.data.data.rowCount
+                // console.log(this.operatingManual[i].num)
+              }else{
+                this.$toast.fail(res.data.codeMsg)
               }
             })
             .catch((err)=>{
@@ -124,6 +152,8 @@ export default {
     	.catch((err)=>{
     		console.log(err);
     	})
+
+
     },
   },
 }
@@ -197,5 +227,8 @@ export default {
 }
 .doColor{
   color: #2B77EF;
+}
+.title>p{
+  float: right;
 }
 </style>

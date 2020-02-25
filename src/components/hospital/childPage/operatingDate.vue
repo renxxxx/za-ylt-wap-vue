@@ -5,7 +5,7 @@
     	<h3>{{nowYear}}年</h3>
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
-    <van-swipe :show-indicators='false' ref="Swipe" @change="changeFn" :initial-swipe='(nowYear-1950)*2'>
+    <van-swipe :show-indicators='false' ref="Swipe" @change="changeFn" :initial-swipe='indedxOf'>
       <div v-for="year in data">
         <van-swipe-item>
           <div class='mounth' v-for="(item,inx) in year.minMounth" @click="mouthFn(year.year,item.num)" ref='minMounth' :key="inx" @touchstart="startFn" @touchend="endFn">
@@ -24,8 +24,8 @@
         <span>{{moment(data.time[0]).format('MM-DD')}}</span>
         <!-- <span>{{data.value[0].content}}</span> -->
         <van-steps direction="vertical" :active="-9999">
-          <van-step v-for="riqi in data.value">
-            <span class="addTime">{{moment(riqi.addTime).format('mm:ss')}}</span>
+          <van-step v-for="riqi in data.value" key="riqi">
+            <span class="addTime">{{moment(riqi.addTime).format('hh:mm')}}</span>
             <p class="riqiP">{{riqi.hospitalUserName}} 上传了 <span>{{riqi.operatingManualSectionName}}</span> </p>
           </van-step>
         </van-steps>
@@ -61,12 +61,11 @@ export default {
       start:0,
       end:0,
       data:[],
-      dataValue:[]
+      dataValue:[],
+      indedxOf:undefined,
     }
   },
   computed:{
-
-
   },
   beforeRouteLeave(to, from, next) {
   this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
@@ -121,6 +120,7 @@ export default {
       let timestamp = Date.parse(new Date());
       let date = new Date(timestamp);
       this.nowYear = date.getFullYear();
+      this.indedxOf = (this.nowYear-1950)*2
       this.nowMonth = date.getMonth()+1;
       for(let i = 1950;i<=2099;i++){
         if(this.nowYear == i){
@@ -131,19 +131,28 @@ export default {
           })
           for(let num = 1;num<7;num++){
             if(this.nowMonth == num){
-              console.log('sss')
+              // console.log('sss')
               if(this.nowMonth>6){
                 this.data[this.nowYear-1950].maxMounth.push({
                   num: num+6,
                   color:'color'
                 })
+                this.data[this.nowYear-1950].minMounth.push({
+                  num: num,
+                  color:'noColor'
+                })
               }else{
+                this.data[this.nowYear-1950].maxMounth.push({
+                  num: num+6,
+                  color:'noColor'
+                })
                 this.data[this.nowYear-1950].minMounth.push({
                   num: num,
                   color:'color'
                 })
               }
             }else{
+              console.log(num)
               this.data[this.nowYear-1950].minMounth.push({
                 num: num,
                 color:'noColor'
@@ -174,7 +183,7 @@ export default {
         }
 
       }
-      console.log(this.data[this.nowYear-1950])
+      console.dir(this.data)
       // for(let num = 1;num<(this.nowYear-1950);num++){
       //   this.$refs.Swipe.next();
       // }
@@ -273,31 +282,38 @@ export default {
         }else{
           this.$toast.fail(res.data.codeMsg)
         }
-        // let _time = _dataValue[0].addTime.split(' ');
-        let num = 0;
-        this.dataValue.push({
-          time:undefined,
-          value:[]
-        })
-        this.dataValue[num].time = _dataValue[0].addTime.split(' ');
-        console.log(this.dataValue[num].time[0])
-        for(let i = 0;i<_dataValue.length;i++){
-          let _time = _dataValue[i].addTime.split(' ');
-          if(this.dataValue[num].time[0] == _time[0]){
-            console.log(_time)
-            this.dataValue[num].value.push(_dataValue[i])
-          }else{
-            ++num;
-            this.dataValue[num] = {
-              time : undefined,
-              value :[]
+
+        if(res.data.data.rows.length){
+          // let _time = _dataValue[0].addTime.split(' ');
+          let num = 0;
+          this.dataValue.push({
+            time:undefined,
+            value:[]
+          })
+          console.dir(_dataValue[0]);
+          console.log(this.dataValue)
+          this.dataValue[num].time = _dataValue[0].addTime.split(' ');
+          console.log(this.dataValue[num].time[0])
+          for(let i = 0;i<_dataValue.length;i++){
+            let _time = _dataValue[i].addTime.split(' ');
+            if(this.dataValue[num].time[0] == _time[0]){
+              console.log(_time)
+              this.dataValue[num].value.push(_dataValue[i])
+            }else{
+              ++num;
+              this.dataValue[num] = {
+                time : undefined,
+                value :[]
+              }
+              this.dataValue[num].time = _dataValue[i].addTime.split(' ');
+              this.dataValue[num].value.push(_dataValue[i])
+              // this.dataValue[num].time = _dataValue[i].addTime.split(' ')[0];
+              // this.dataValue[num].value.push(_dataValue[i])
             }
-            this.dataValue[num].time = _dataValue[i].addTime.split(' ');
-            this.dataValue[num].value.push(_dataValue[i])
-            // this.dataValue[num].time = _dataValue[i].addTime.split(' ')[0];
-            // this.dataValue[num].value.push(_dataValue[i])
           }
         }
+          console.log(this.dataValue)
+
         // console.dir(this.dataValue)
       })
       .catch((err)=>{
