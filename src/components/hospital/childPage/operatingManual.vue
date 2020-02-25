@@ -12,7 +12,7 @@
        <van-collapse-item :name="inx" v-for="(item,inx) in operatingManual" :key="inx">
          <div slot="title" class="title">
            <span>{{item.name}}</span>
-           <p><span>{{yesNum}}</span>/{{num}}</p>
+           <p><span>{{yesNum[inx]}}</span>/{{num[inx]}}</p>
          </div>
          <div v-for="(_item,inx) in item._data" :key="inx">
            <router-link :to="{name : 'hospital_operatingManualList',query:{name:_item.name,operatingManualId:item.operatingManualId,operatingManualSectionId : _item.operatingManualSectionId}}">
@@ -38,8 +38,8 @@ export default {
     return {
       activeNames: ['0'],
       operatingManual : [],
-      num:0,
-      yesNum:0
+      num:[],
+      yesNum:[]
     }
   },
   computed:{
@@ -99,20 +99,25 @@ export default {
     goBackFn(){
     	this.$router.back()
     },
-    getdata(){
-    	this.$axios.get('/hospital/operating-manual/operating-manuals?')
+    async getdata(){
+      debugger;
+    	await this.$axios.get('/hospital/operating-manual/operating-manuals?')
     	.then(res => {
         if(!res.data.codeMsg){
-          for(let i in res.data.data.rows){
+            for(let i in res.data.data.rows){
             this.operatingManual.push(res.data.data.rows[i])
             this.$axios.get('/hospital/operating-manual/operating-manual-sections?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
             .then(_res => {
               if(!_res.data.codeMsg){
                 this.operatingManual[i]._data=[]
+
+                 let num = 0;
                 for(let _i in _res.data.data.rows){
                   if(_res.data.data.rows[_i].done){
-                    ++this.yesNum
+                    ++num
                   }
+                  // console.log(num)
+                    this.yesNum.push(num)
                 // console.log(_res.data.data.rows[_i])
                   this.operatingManual[i]._data.push(_res.data.data.rows[_i])
                  // console.dir(this.operatingManual[i]._data)
@@ -128,8 +133,10 @@ export default {
             .then(res => {
               console.dir(res)
               if(!res.data.codeMsg){
-                this.num = res.data.data.rowCount
-                console.dir(res)
+                console.log(res.data.data.rowCount)
+                this.num.push(res.data.data.rowCount)
+                // this.num = res.data.data.rowCount
+                // console.log(this.operatingManual[i].num)
               }else{
                 this.$toast.fail(res.data.codeMsg)
               }

@@ -5,10 +5,10 @@
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
     <van-collapse v-model="activeNames">
-       <van-collapse-item  name="1">
+       <van-collapse-item :title="this.$route.query.name" name="1">
          <div slot="title" class="title">
            <span>{{this.$route.query.name}}</span>
-           <!-- <p><span>{{yesNum}}</span>/{{num}}</p> -->
+           <p><span>{{yesNum}}</span>/{{num}}</p>
          </div>
          <div v-for="(_item,inx) in operatingManualList" :key="inx">
            <router-link :to="{name : 'hospital_operatingManualListDetails',query:{name:_item.name ,operatingManualId:_item.operatingManualId,operatingManualSectionId:_item.operatingManualSectionId}}">
@@ -34,7 +34,9 @@ export default {
   data () {
     return {
       activeNames: ['1'],
-      operatingManualList : []
+      operatingManualList : [],
+      num:0,
+      yesNum:0
     }
   },
   computed:{
@@ -113,6 +115,22 @@ export default {
     	.catch((err)=>{
     		console.log(err);
     	})
+      this.$axios.get('/hospital/operating-manual/operating-manual-sections-sum?'
+      +qs.stringify({operatingManualId:this.$route.query.operatingManualId})+'&'
+      +qs.stringify({"upperId":this.$route.query.operatingManualSectionId})
+      )
+      .then(res => {
+        console.dir(res)
+        if(!res.data.codeMsg){
+          this.num = res.data.data.rowCount
+          console.dir(res)
+        }else{
+          this.$toast.fail(res.data.codeMsg)
+        }
+      })
+      .catch((err)=>{
+      	console.log(err);
+      })
     },
   },
 }
@@ -175,5 +193,8 @@ export default {
 }
 .doColor{
   color: #2B77EF;
+}
+.title>p{
+  float: right;
 }
 </style>
