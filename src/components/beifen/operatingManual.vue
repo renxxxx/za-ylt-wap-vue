@@ -1,22 +1,25 @@
 <template>
-	<div class="operatingManualList">
+	<div class="operatingManual">
     <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-    	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
+    	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn" :style="{'padding-top':$store.state.topHeight}">
+    	<h3>运营成功手册架构</h3>
+      <router-link :to="{name:'hospital_operatingDate'}">
+        <img src="../../../assets/image/jilu@2x.png" alt="" :style="{'padding-top':$store.state.topHeight}">
+      </router-link>
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
     <van-collapse v-model="activeNames">
-       <van-collapse-item :title="this.$route.query.name" name="1">
+       <van-collapse-item :name="inx" v-for="(item,inx) in operatingManual" :key="inx">
          <div slot="title" class="title">
-           <span>{{this.$route.query.name}}</span>
-           <p><span>{{yesNum}}</span>/{{num}}</p>
+           <span>{{item.name}}</span>
+           <p><span>{{yesNum[inx]}}</span>/{{num[inx]}}</p>
          </div>
-         <div v-for="(_item,inx) in operatingManualList" :key="inx">
-           <router-link :to="{name : 'hospital_operatingManualListDetails',query:{name:_item.name ,operatingManualId:_item.operatingManualId,operatingManualSectionId:_item.operatingManualSectionId}}">
+         <div v-for="(_item,inx) in item._data" :key="inx">
+           <router-link :to="{name : 'hospital_operatingManualList',query:{name:_item.name,operatingManualId:item.operatingManualId,operatingManualSectionId : _item.operatingManualSectionId}}">
              <div  class="manualList">
                <span :class="[_item.done? '':'doColor']">{{_item.name}}</span>
                <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
              </div>
-
            </router-link>
          </div>
        </van-collapse-item>
@@ -30,13 +33,13 @@ import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
 export default {
-  name: 'operatingManualList',
+  name: 'operatingManual',
   data () {
     return {
-      activeNames: ['1'],
-      operatingManualList : [],
-      num:0,
-      yesNum:0
+      activeNames: ['0'],
+      operatingManual : [],
+      num:[],
+      yesNum:[]
     }
   },
   computed:{
@@ -94,29 +97,54 @@ export default {
   methods: {
     //回退方法
     goBackFn(){
-    	this.$router.back(-1)
+    	this.$router.back()
     },
     async getdata(){
-      console.log(this.$route.query.operatingManualSectionId)
-    	await this.$axios.get('/hospital/operating-manual/operating-manual-sections?'
-      +qs.stringify({"operatingManualId":this.$route.query.operatingManualId})+'&'
-      +qs.stringify({"upperId":this.$route.query.operatingManualSectionId})
-      )
+      debugger;
+    	await this.$axios.get('/hospital/operating-manual/operating-manuals?')
     	.then(res => {
         if(!res.data.codeMsg){
-          for(let i in res.data.data.rows){
-            this.operatingManualList.push(res.data.data.rows[i])
-            console.dir(this.operatingManualList)
+            for(let i in res.data.data.rows){
+            this.operatingManual.push(res.data.data.rows[i])
+            this.$axios.get('/hospital/operating-manual/operating-manual-sections?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
+            .then(_res => {
+              if(!_res.data.codeMsg){
+                this.operatingManual[i]._data=[]
 
+                 let num = 0;
+                for(let _i in _res.data.data.rows){
+                  if(_res.data.data.rows[_i].done){
+                    ++num
+                  }
+                  // console.log(num)
+                    this.yesNum.push(num)
+                // console.log(_res.data.data.rows[_i])
+                  this.operatingManual[i]._data.push(_res.data.data.rows[_i])
+                 // console.dir(this.operatingManual[i]._data)
+                }
+              }else{
+                this.$toast.fail(_res.data.codeMsg)
+              }
+            })
+            .catch((err)=>{
+            	console.log(err);
+            })
+            this.$axios.get('/hospital/operating-manual/operating-manual-sections-sum?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
+            .then(res => {
+              console.dir(res)
+              if(!res.data.codeMsg){
+                console.log(res.data.data.rowCount)
+                this.num.push(res.data.data.rowCount)
+                // this.num = res.data.data.rowCount
+                // console.log(this.operatingManual[i].num)
+              }else{
+                this.$toast.fail(res.data.codeMsg)
+              }
+            })
+            .catch((err)=>{
+            	console.log(err);
+            })
           }
-          let num = 0;
-          for(let _i in _res.data.data.rows){
-            if(_res.data.data.rows[_i].done){
-              ++num
-            }
-          }
-            // console.log(num)
-              this.yesNum = num
         }else{
           this.$toast.fail(res.data.codeMsg)
         }
@@ -124,22 +152,8 @@ export default {
     	.catch((err)=>{
     		console.log(err);
     	})
-      await this.$axios.get('/hospital/operating-manual/operating-manual-sections-sum?'
-      +qs.stringify({operatingManualId:this.$route.query.operatingManualId})+'&'
-      +qs.stringify({"upperId":this.$route.query.operatingManualSectionId})
-      )
-      .then(res => {
-        console.dir(res)
-        if(!res.data.codeMsg){
-          this.num = res.data.data.rowCount
-          console.dir(res)
-        }else{
-          this.$toast.fail(res.data.codeMsg)
-        }
-      })
-      .catch((err)=>{
-      	console.log(err);
-      })
+
+
     },
   },
 }
@@ -147,7 +161,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.operatingManualList{
+.operatingManual{
   width: 100%;
   background-color: #F5F5F5;
 }
@@ -165,16 +179,27 @@ export default {
 	width: 100%;
 	height: .47rem;
 }
-.topNav img{
+.topNav>img:first-child{
 	width: .09rem;
 	height: .15rem;
 	position: absolute;
 	left: .16rem;
-	top:.16rem;
+	top:0;
+  bottom: 0;
+  margin: auto 0rem;
 }
 .topNav h3{
 	font-size: .16rem;
 	font-weight: bold;
+}
+.topNav a img{
+  width: .2rem;
+  height: .18rem;
+  position: absolute;
+  right: .16rem;
+  top:0;
+  bottom: 0;
+  margin: auto 0rem;
 }
 >>>.van-collapse{
   margin-top: .12rem;

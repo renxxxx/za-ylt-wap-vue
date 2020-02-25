@@ -1,7 +1,7 @@
 <template>
   <div class="landing">
 		<div class="nav">
-				<img src="../assets/image/name-bj@2x.png" alt="">
+				<img src="../assets/image/beijing.png" alt="">
 		</div>
     <div class="typeNav" type="line" border="false">
       <div class="content">
@@ -24,16 +24,16 @@
       		<p>&nbsp;&nbsp;我已经阅读并同意
       		<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
       			<router-link :to="{name : 'urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
-      				&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;
+      			《应用服务条款》
       			</router-link>
       		</p>
       	</div>
-      	<button class="submitClass" type="submit" value="医院登录" @click="submit()">医院登陆</button>
+      	<button class="submitClass" type="submit" value="医院登录" @click="submit()">登陆</button>
       	<div class="passwordReset">
       		<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
       			<div class="forget">
       				<span>忘记密码</span>
-      				<!-- <img src="../assets/image/reset@2.png" alt=""> -->
+      				<img src="../assets/image/wenhao@2x.png" alt="">
       			</div>
       		</router-link>
       	</div>
@@ -131,25 +131,6 @@ export default {
 			}
   },
   computed:{
-	// ...mapGetters(['checked']),
-	// account:{
-	// 	get: function() {
-	// 		console.log(this.$store)
-	// 	    return this.$store.state.account
-	// 	},
-	// 	set: function (newValue) {
-	// 		this.$store.state.account = newValue;
-	// 	},
-	// },
-	// isLogin: {
-	//     get: function() {
-	// 		// console.log(this.$store)
-	//         return this.$store.state.isLogin
-	//     },
-	//     set: function (newValue) {
-	// 		this.$store.state.isLogin = newValue;
-	//     },
-	// },
   },
   methods:{
     emptyAccountFn(value){
@@ -173,13 +154,8 @@ export default {
       }
       if(document.getElementById(_ref).type == 'text'){
       }
-      // this.$refs._ref.type = 'text'
-      // docuemnt.getelementbyid("refs1").attribute("type","text");
     },
     async submit(){
-    	// console.log(_value[1])
-    	// let account = _value;
-    	// console.log(account)
     	 if(this.checked == true){
         console.log(this.checked)
         this.isLoginData = []
@@ -191,22 +167,6 @@ export default {
         await this.submintGetData('/manager/login','manager')
         debugger;
        await this.nextPageFn()
-
-    		// console.log(_value[0])
-    		// switch (_value[0]){
-    		// 	case '100':
-    		// 	this.submintGetData('/hospital/login',account)
-    		// 	break;
-    		// 	case '200':
-    		// 	// console.log('200')
-    		// 	this.submintGetData('/clinic/login',account)
-    		// 	break;
-    		// 	case '300':
-    		// 	this.submintGetData('/manager/login',account)
-    		// 	break;
-    		// 	default:
-    		// 	break;
-    		// }
     	}else{
         this.$toast.fail('请勾选用户协议');
     	}
@@ -219,7 +179,6 @@ export default {
           this.$router.replace({ name : 'chooseTheType',query:{time:new Date().getTime(),phone:this.account.name}});
         }else{
            let fail = this.isLoginData.filter((n)=>n.code == false);
-          // console.log(fail[0].codeMsg)
           this.$toast.fail(fail[0].codeMsg);
         }
     },
@@ -244,58 +203,6 @@ export default {
               codeMsg:res.data.codeMsg
             })
           }
-          // console.dir(this.isLoginData)
-    			// console.log(res.data.codeMsg)
-    			// if(res.data.code == 0){
-            // debugger;
-              // this.isLoginData = true
-              // router.replace({ name : 'chooseTheType',query:{time:new Date().getTime()}});
-    				 // axios.post(_postRefresh)
-    					// .then( res =>{
-    					// 	state.isLogin = _isLogin;
-    					// 	local   Storage.setItem("isLogin",_isLogin);
-    					// 	switch(_isLogin){
-    					// 		case 100:
-    					// 		if(res.data.data.type == 1){
-    					// 			router.replace({ name : 'promoters_index',query:{time:new Date().getTime()}});
-    					// 		}else{
-    					// 			router.replace({ name : _url,query:{time:new Date().getTime()}});
-    					// 		}
-    					// 		state.account.hospitalId= res.data.data.hospital.hospitalId;
-    					// 		// console.log(state.account.hospitalId)
-    					// 		state.account.data = {};
-    					// 		state.account.data = res.data;
-    					// 		break;
-
-    					// 		case 200:
-    					// 			router.replace({ name : _url,query:{time:new Date().getTime()}});
-    					// 		state.account.clinicId= res.data.data.clinic.clinicId;
-    					// 		state.account.hospitalId= res.data.data.hospital.hospitalId;
-    					// 		// console.log(state.account.hospitalId)
-    					// 		state.account.data = {};
-    					// 		state.account.data = res.data;
-    					// 		break;
-
-    					// 		case 300:
-    					// 			// router.replace({ name : _url,query:{time:new Date().getTime()}});
-    					// 			Toast.fail('正在开发中')
-    					// 		// Dialog({ message: '正在开发中，敬请期待' });
-    					// 		// state.account.clinicId= res.data.data.clinic.clinicId;
-    					// 		// state.account.hospitalId= res.data.data.hospital.hospitalId;
-    					// 		// console.log(state.account.hospitalId)
-    					// 		// state.account.data = {};
-    					// 		// state.account.data = res.data;
-    					// 		break;
-    					// 	}
-    					// })
-    					// .catch((err)=>{
-    					// 	console.log(err)
-    					// 	Dialog({ message: err });
-    					// })
-    			// }else{
-    				// this.$toast.fail(res.data.codeMsg);
-    			// }
-    			// console.log(res.data.codeMsg)
     		})
     		.catch((err)=>{
     			console.log(err)
@@ -346,7 +253,8 @@ export default {
 	margin-top: .47rem;
 }
 .submitClass{
-	background-color: #2B77EF;
+	/* background-color: #2B77EF; */
+  background-image: linear-gradient(to left, #F75178, #ED2828);
 	width: 100%;height: .45rem;
 	border-radius: .23rem;
 	margin-top: .8rem;
@@ -398,19 +306,14 @@ export default {
   margin: auto 0;
 }
 .inputBox input{
-
 	width: 85%;
 	height: .45rem;
 	border-radius: .25rem;
 	border: 1px solid #E5E5E5;
 	padding-left: 15%;
-	background: #F5F5F5;
-
+	/* background: #F5F5F5; */
   font-size: .17rem;
 }
-/* .inputBox:last-child{ */
-	/* margin-top: .2rem; */
-/* } */
 >>>.van-hairline--top-bottom{
 	display: block;
    width: 100%!important;
@@ -432,7 +335,7 @@ export default {
   display:inline-block;
   width: .17rem;
   height: .17rem;
-  background: url('../assets/image/Not-checkbox@2x.png');
+  background: url('../assets/image/Rectangle29.png');
   box-sizing:border-box;
   border-radius: 3px;
   position: absolute;
@@ -455,7 +358,7 @@ export default {
   width: .17rem;
   height: .17rem;
   border: 1px dotted #D2A47E;
-  background-image: url('../assets/image/checkbox@2x.png');
+  background-image: url('../assets/image/select.png');
   background-size: .17rem .17rem;
   box-sizing:border-box;
   border-radius: 3px;
@@ -508,11 +411,23 @@ export default {
 }
 .forget{
 	text-align: right;
-	/* width: 18%; */
+	width: .95rem;
+  height: .25rem;
+  line-height: .25rem;
 	text-align: center;
-	float: right;
+	float: left;
+  position: relative;
+  text-align: left;
 }
 .forget span{
+  /* width: .8rem; */
   font-size: .185rem;
+}
+.forget img{
+  position: absolute;
+  right: 0rem;
+  top: 0rem;
+  bottom: 0rem;
+  margin: auto 0rem;
 }
 </style>

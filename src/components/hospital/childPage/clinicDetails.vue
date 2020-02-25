@@ -13,10 +13,10 @@
 				</div>
 			</router-link>
 		</div>
-		
+
 		<div class="zhangwei"></div>
 		<div class="detailsTime" :style="{'top': (parseInt($store.state.topHeight.replace('px',''))+47)+'px'}">
-			<span>{{moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
+			<span>{{clinicDetails.alterTime}}</span>
 		</div>
 		<div class="statistics" :style="{'padding-top':$store.state.topHeight}">
 			<van-circle v-model="num" :rate="num" :speed="100" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
@@ -105,7 +105,7 @@ export default {
 	created(){
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
+		//this.height = parseInt(topHeight.join())
 		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
@@ -147,7 +147,7 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
@@ -187,6 +187,7 @@ export default {
 				// this.clinicDetails = {}
 				this.clinicDetails = _d.data.data;
 				this.clinicDetails.clinicId = this.list.clinicId;
+        this.clinicDetails.alterTime = moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm')
 				console.log(this.clinicDetails)
 			})
 			.catch((err)=>{

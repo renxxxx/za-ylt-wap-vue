@@ -1,16 +1,27 @@
 <template>
 	<div class="chooseTheType">
-		<div class="options" @click="submitFn('/hospital/login-refresh',100)" v-if="showValue.hospitalUser">
+    <div class="nav">
+      <h3>您有以下端口</h3>
+      <p>请选择进入</p>
+    </div>
+
+		<div class="options" @click="choseFn('1')" v-if="showValue.hospitalUser">
+      <img src="../assets/image/yy.png" alt="">
+      <h3>Hospital</h3>
       <span>医院端</span>
     </div>
-    <!-- <div class="options" @click="submitFn('/hospital/login-refresh'),100"> -->
-      <!-- <span>推广人端</span> -->
-    <!-- </div> -->
-    <div class="options" @click="submitFn('/clinic/login-refresh',200)" v-if="showValue.clinicUser">
+    <div class="options" @click="choseFn('2')" v-if="showValue.clinicUser">
+      <img src="../assets/image/mz.png" alt="">
+      <h3>Outpatient</h3>
       <span>门诊端</span>
     </div>
-    <div class="options" @click="submitFn('/manager/login-refresh',300)" v-if="showValue.managerUser">
+    <div class="options" @click="choseFn('3')" v-if="showValue.managerUser">
+      <img src="../assets/image/yying.png" alt="">
+      <h3>Operation</h3>
       <span>运营端</span>
+    </div>
+    <div class="nextPage">
+      <img src="../assets/image/go.png" alt="" @click="submit">
     </div>
   </div>
 </template>
@@ -24,7 +35,8 @@ export default {
   name: '',
   data () {
     return {
-      showValue:{}
+      showValue:{},
+      stata:undefined,
     }
   },
   computed:{
@@ -53,14 +65,41 @@ export default {
     this.getData();
   },
   methods: {
+    choseFn(stata){
+      this.stata = stata;
+      console.log(this.stata)
+    },
+    submit(){
+      console.log(this.stata)
+      if(this.stata){
+        switch(this.stata){
+          case '1':
+          console.log(this.stata)
+          this.submitFn('/hospital/login-refresh',100)
+          break;
+          case '2':
+          console.log(this.stata)
+          this.submitFn('/clinic/login-refresh',200);
+          break;
+          case '3':
+          console.log(this.stata)
+          this.submitFn('/manager/login-refresh',300)
+          break;
+        }
+      }else{
+        this.$toast.fail('请选择端口')
+      }
+
+    },
     submitFn(_postRefresh,_isLogin){
-      console.log('ss')
+      console.log(this.isLogin)
       this.$axios.post(_postRefresh)
         .then( res =>{
       		this.isLogin = _isLogin;
       		localStorage.setItem("isLogin",_isLogin);
       		switch(_isLogin){
       			case 100:
+            console.log(this._islogin)
       			if(res.data.data.type == 1){
       				this.$router.replace({ name : 'promoters_index',query:{time:new Date().getTime()}});
       			}else{
@@ -73,6 +112,7 @@ export default {
       			break;
 
       			case 200:
+            console.log(this._islogin)
       				this.$router.replace({ name : 'hospital_sourceManagement',query:{time:new Date().getTime()}});
       				this.account.clinicId= res.data.data.clinic.clinicId;
       				this.account.hospitalId= res.data.data.hospital.hospitalId;
@@ -82,6 +122,7 @@ export default {
       			break;
 
       			case 300:
+            console.log(this._islogin)
       				// this.$router.replace({ name : '',query:{time:new Date().getTime()}});
       				this.$toast.fail('正在开发中')
       				// Dialog({ message: '正在开发中，敬请期待' });
@@ -120,31 +161,68 @@ export default {
 .chooseTheType{
   width: 100%;
   height: 100%;
-  background-color: #F5F5F5;
+  background-color: #FFFFFF;
 }
-.options{
-  height: 20%;
-  width: 100%;
-  margin-bottom: 5%;
-  text-align: center;
+
+.nav{
+  height: 1.27rem;
   position: relative;
+  margin-bottom: .45rem;
+}
+.nav>p{
+  position: absolute;
+  bottom: 0;
+  left: .3rem;
+  font-size: .16rem;
+  color: #666666;
+}
+.nav>h3{
+  position: absolute;
+  bottom: .34rem;
+  left: .3rem;
+  font-size: .2rem;
   font-weight: bolder;
 }
-.options:nth-child(2n-1){
-  background-color: #2B77EF;
-  color: white;
+.options{
+  width: 84%;
+  height: .9rem;
+  margin: 0rem auto .2rem;
+  border: 4px solid #E2E2E2;
+  border-radius: .15rem;
+  position: relative;
+}
+.options:first-child{
+  margin-top: .45rem;
+}
+.options:hover{
+  color: #ED2828;
+  border: 4px solid #ED2828;
+}
+.options>img{
+  width: 100%;
+  height: 100%;
+
+}
+.options>h3{
+  z-index: 999;
+  position: absolute;
+  left: 48.4%;
+  top: .19rem;
+  font-size: .19rem;
 }
 .options>span{
-  width: 50%;
-  height: .2rem;
-  line-height: .2rem;
-  font-size: .18rem;
-  text-align: center;
+  z-index: 999;
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
+  left: 48.4%;
+  top: .5rem;
+  font-size: .15rem;
+}
+.nextPage{
+  text-align: center;
+  margin-top: .45rem;
+}
+.nextPage>img{
+  width:.65rem;
+  height: .65rem;
 }
 </style>

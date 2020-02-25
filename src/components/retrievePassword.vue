@@ -2,9 +2,10 @@
   <div class="retrievePassword">
 	<div class="navWarp" :style="{'padding-top': height+'px'}">
 		<a @click="goBackFn" id="navback">
-			<img src="../assets/image/shape@2x.png" alt="">
+			<img src="../assets/image/shape@3x.png" alt="">
 		</a>
 		<span>修改密码</span>
+    <p>修改后的新密码将替换原密码</p>
 	</div>
 	<div class="center" v-model="retrieve">
 		<ul>
@@ -103,7 +104,7 @@ export default {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 
-  }, 
+  },
   mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#2B77EF");
@@ -207,9 +208,9 @@ export default {
 .navWarp{
 	width:100%;
 	height:22%;
-	color: #FFFFFF;
+	/* color: #FFFFFF; */
 	/* font-size: .2rem; */
-	background-image:url('../assets/image/BJ-change@2x.png');
+	/* background-image:url('../assets/image/BJ-change@2x.png'); */
 	background-size:100% 100%;
 	position: relative;
 }
@@ -220,23 +221,31 @@ export default {
 }
 .navWarp span{
 	position: absolute;
-	bottom: .15rem;
+	bottom: .33rem;
 	left: .38rem;
 	/* display: block; */
   font-size: .2rem;
+  font-weight: bolder;
+}
+.navWarp p{
+  position: absolute;
+  bottom: 0rem;
+  left: .38rem;
+  font-size: .16rem;
+  color: #666666;
 }
 .center{
 	width:82%;
 	margin: 0 auto;
 }
-.center button{
+.center>button{
 	width: 100%;
 	height: .45rem;
 	border: none;
 	color: #FFFFFF;
 	border-radius: 45px;
 	font-size: .16rem;
-	background-color: #2B77EF;
+	background-image: linear-gradient(to left, #F75178, #ED2828);
 }
 .center ul{
 	margin: .8rem 0;
@@ -275,7 +284,7 @@ export default {
 	width: 50%;border-radius: 45px 0 0 45px;
 }
 .center ul li:nth-child(2) button{
-	color: #FFA900;
+	color: #2B77EF;
 	border: none;
 	margin: .11rem auto;
 	height: .21rem;
@@ -287,7 +296,7 @@ export default {
 	position: relative;
 }
 >>>.van-count-down{
-    color:#FFA900;
+    color:#2B77EF;
     font-size: 14px;
     line-height: 20px;
 }
