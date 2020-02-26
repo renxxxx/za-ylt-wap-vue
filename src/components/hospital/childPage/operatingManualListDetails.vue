@@ -8,7 +8,23 @@
     <ul>
       <li v-for="(item,inx) in operatingManualListDetails" :key="inx">
         <div class="operatingCenter">
-          <img  v-if="_item" :src="_item" alt="" v-for="(_item,_inx) in item.image" :key="_inx">
+          <div v-for="(_item,_inx) in item.image" :key="_inx" style="display: inline;">
+            <router-link :to="{name:'pictureEnlargement',query:{inx:_inx,imgUrl:item.image,data:true}}">
+            	<!-- <img v-bind:src="item" alt=""> -->
+              <img  v-if="_item" :src="_item" alt="" >
+            </router-link>
+          </div>
+          <div v-for="(video,index) in item.video" key="index" style="display: inline;position: relative" @click="showVideoFn(video)" class="video">
+            <video class="ArcanaVideo" autoplay="autoplay" loop="loop">
+              <source type="video/mp4" :src="video">
+            </video>
+            <!-- <video :src="video" controls="controls" preload="auto"></video> -->
+          </div>
+          <div style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0,0,0,.7);" v-show="show">
+            <video  controls="controls" style="width: 100%;height: 100%;position: fixed;top: 0;left: 0;z-index: 9999;" autoplay="autoplay" loop="loop">
+              <source type="video/mp4" :src="nowVideo">
+            </video>
+          </div>
           <span v-if="item.content">{{item.content}}</span>
         </div>
         <div class="operatingTitle">
@@ -24,7 +40,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
@@ -34,7 +49,9 @@ export default {
   name: 'operatingManualListDetails',
   data () {
     return {
-      operatingManualListDetails : []
+      operatingManualListDetails : [],
+      show: false,
+      nowVideo: ''
     }
   },
   computed:{
@@ -42,7 +59,6 @@ export default {
 
   },
   created () {
-
   },
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -93,7 +109,16 @@ export default {
   methods: {
     //回退方法
     goBackFn(){
-    	this.$router.back()
+      if(this.show){
+        this.show = false
+      }else{
+        this.$router.back()
+      }
+    },
+    showVideoFn(video){
+      console.log('ss');
+      this.nowVideo = video
+      this.show = true
     },
     getdata(){
       console.log(this.$route.query.operatingManualSectionId)
@@ -106,6 +131,8 @@ export default {
             this.operatingManualListDetails.push(res.data.data.rows[i]);
             if(this.operatingManualListDetails[i].image)
             this.operatingManualListDetails[i].image = this.operatingManualListDetails[i].image.split(",");
+            if(this.operatingManualListDetails[i].video)
+            this.operatingManualListDetails[i].video = this.operatingManualListDetails[i].video.split(",");
             // console.log(img)
             // console.log(this.operatingManualListDetails[i].image)
           }
@@ -169,14 +196,18 @@ export default {
   border-bottom: 1px solid #D8D8D8;
   padding-top: .12rem;
 }
-.operatingCenter>img{
+.operatingCenter img{
   width: .39rem;
   height: .39rem;
   padding: 0rem 0rem .12rem .12rem;
 }
-.operatingCenter>span{
+.operatingCenter span{
   display: block;
   margin-bottom: .12rem;
+}
+.operatingCenter video{
+  width: .39rem;
+  height: .39rem;
 }
 .operatingTitle{
   width: 93.6%;
@@ -196,5 +227,8 @@ export default {
 .addImg img{
   width: .44rem;
   height: .44rem;
+}
+.video>video::-webkit-media-controls{
+  display:none !important;
 }
 </style>

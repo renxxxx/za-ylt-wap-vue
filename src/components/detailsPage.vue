@@ -61,9 +61,9 @@
 			<h3>发票照片</h3>
       <ul>
         <li v-for="(item,inx) in imgUrl" :key="inx" @click="enlargeFn(inx)">
-			<router-link :to="{name:'pictureEnlargement',query:{inx:inx,imgUrl:imgUrl,data:true}}">
-				<img v-bind:src="item" alt="">
-			</router-link>
+          <router-link :to="{name:'pictureEnlargement',query:{inx:inx,imgUrl:imgUrl,data:true}}">
+            <img v-bind:src="item" alt="">
+          </router-link>
           <img v-show="show" src="../assets/image/detele.png" alt="" @click="deteleFn(item)">
 		 <!-- <van-image-preview
 		    v-model="enlarge"
