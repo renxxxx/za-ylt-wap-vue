@@ -5,18 +5,14 @@
       <h3>{{this.$route.query.name}}</h3>
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
-    <div style="margin-top: .2rem;">
+   <div style="margin-top: .2rem;">
       <div v-for="(item,inx) in operatingManualList" :key="inx" @click="nextPageFn(item)">
-        <!-- <router-link :to="{name : 'hospital_operatingManualList',query:{operatingManualId:item.operatingManualId}}"> -->
           <van-cell is-link>
-            <!-- 使用 title 插槽来自定义标题 -->
             <template>
               <span class="custom-title">{{item.name}}</span>
             </template>
           </van-cell>
-        <!-- </router-link> -->
       </div>
-
     </div>
     <!-- <van-collapse v-model="activeNames">
        <van-collapse-item :title="this.$route.query.name" name="1">
@@ -50,17 +46,21 @@ export default {
       activeNames: ['1'],
       operatingManualList : [],
       num:0,
-      yesNum:0
+      yesNum:0,
     }
   },
   computed:{
-
   },
+  // beforeRouteUpdate(to,from,next){
+  //   this.operatingManualList = [];
+  //   console.log(this.$route.query.name)
+  //   this.getData()
+  //   next();
+  // },
   beforeRouteLeave(to, from, next) {
     //debugger;
   this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
   if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-  	 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
                 if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
@@ -96,13 +96,13 @@ export default {
     });
   },
   created () {
-
   },
   mounted () {
     if(window.plus){
     	//plus.navigator.setStatusBarBackground("#ffffff");
     	plus.navigator.setStatusBarStyle("dark")
     }
+
     this.getData()
   },
   methods: {
@@ -111,13 +111,20 @@ export default {
     	this.$router.back(-1)
     },
     nextPageFn(item){
+      console.dir(item.lowerCount)
       if(item.lowerCount){
-        // console.dir(item)
-        this.$router.push({name:'hospital_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId}})
+        console.dir(item.operatingManualSectionId)
+
+        this.$router.push({name:'hospital_operatingManualListFive',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId}})
+      }else{
+        this.$router.push({name:'hospital_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId}})
       }
     },
     getData(){
-      this.$axios.get('/hospital/operating-manual/operating-manual-sections?'+qs.stringify({operatingManualId:this.$route.query.operatingManualId}))
+      this.$axios.get('/hospital/operating-manual/operating-manual-sections?'
+        +qs.stringify({"operatingManualId":this.$route.query.operatingManualId})+'&'
+        +qs.stringify({"upperId":this.$route.query.operatingManualSectionId})
+        )
       .then(res => {
         if(!res.data.codeMsg){
           for(let i in res.data.data.rows){
@@ -136,7 +143,7 @@ export default {
           //  // console.dir(this.operatingManual[i]._data)
           // }
         }else{
-          this.$toast.fail(_res.data.codeMsg)
+          this.$toast.fail(res.data.codeMsg)
         }
       })
       .catch((err)=>{

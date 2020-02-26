@@ -67,22 +67,17 @@ export default {
   methods: {
     choseFn(stata){
       this.stata = stata;
-      console.log(this.stata)
     },
     submit(){
-      console.log(this.stata)
       if(this.stata){
         switch(this.stata){
           case '1':
-          console.log(this.stata)
           this.submitFn('/hospital/login-refresh',100)
           break;
           case '2':
-          console.log(this.stata)
           this.submitFn('/clinic/login-refresh',200);
           break;
           case '3':
-          console.log(this.stata)
           this.submitFn('/manager/login-refresh',300)
           break;
         }
@@ -92,14 +87,12 @@ export default {
 
     },
     submitFn(_postRefresh,_isLogin){
-      console.log(this.isLogin)
       this.$axios.post(_postRefresh)
         .then( res =>{
       		this.isLogin = _isLogin;
       		localStorage.setItem("isLogin",_isLogin);
       		switch(_isLogin){
       			case 100:
-            console.log(this._islogin)
       			if(res.data.data.type == 1){
       				this.$router.replace({ name : 'promoters_index',query:{time:new Date().getTime()}});
       			}else{
@@ -112,7 +105,6 @@ export default {
       			break;
 
       			case 200:
-            console.log(this._islogin)
       				this.$router.replace({ name : 'hospital_sourceManagement',query:{time:new Date().getTime()}});
       				this.account.clinicId= res.data.data.clinic.clinicId;
       				this.account.hospitalId= res.data.data.hospital.hospitalId;
@@ -122,7 +114,6 @@ export default {
       			break;
 
       			case 300:
-            console.log(this._islogin)
       				// this.$router.replace({ name : '',query:{time:new Date().getTime()}});
       				this.$toast.fail('正在开发中')
       				// Dialog({ message: '正在开发中，敬请期待' });
@@ -135,7 +126,6 @@ export default {
       		}
       	})
       	.catch((err)=>{
-          // console.log(err)
           this.$toast.fail(err);
       	})
     },

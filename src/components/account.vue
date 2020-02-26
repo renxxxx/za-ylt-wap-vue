@@ -7,14 +7,14 @@
       <div class="content">
       	<div class="inputBox">
       		<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
-      		<input type="text"  v-model="account.name" name='name' placeholder="请输入手机号" >
-          <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('name')" v-if="account.name">
+      		<input type="text"  v-model="submitAccount.name" name='name' placeholder="请输入手机号" >
+          <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('name')" v-if="submitAccount.name">
       	</div>
       	<div class="inputBox">
       		<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-      		<input type="password"  v-model="account.password" name='password' placeholder="请输入密码" autocomplete id='pwd1'>
-          <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd1')" v-if="account.password">
-          <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('password')" v-if="account.password">
+      		<input type="password"  v-model="submitAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd1'>
+          <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd1')" v-if="submitAccount.password">
+          <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('password')" v-if="submitAccount.password">
       	</div>
       	<div class="checkBox">
       		<input type="checkbox"
@@ -51,7 +51,7 @@ export default {
   data () {
     return {
     checked: true,
-		account:{
+		submitAccount:{
 			name: '',
 			password: ''
 		},
@@ -131,15 +131,32 @@ export default {
 			}
   },
   computed:{
+    account:{
+    	get: function() {
+    		console.log(this.$store)
+    	    return this.$store.state.account
+    	},
+    	set: function (newValue) {
+    		this.$store.state.account = newValue;
+    	},
+    },
+    isLogin: {
+      get: function() {
+        return this.$store.state.isLogin
+      },
+      set: function (newValue) {
+        this.$store.state.isLogin = newValue;
+      },
+    },
   },
   methods:{
     emptyAccountFn(value){
       if(value == 'name'){
-        this.account.name = '';
+        this.submitAccount.name = '';
 
       }else{
 
-      this.account.password = '';
+      this.submitAccount.password = '';
       }
     },
     numFN(_ref){
@@ -159,26 +176,41 @@ export default {
     	 if(this.checked == true){
         console.log(this.checked)
         this.isLoginData = []
-        debugger;
         await this.submintGetData('/hospital/login','hospital')
-        debugger;
         await this.submintGetData('/clinic/login','clinic')
-        debugger;
         await this.submintGetData('/manager/login','manager')
-        debugger;
-       await this.nextPageFn()
+        let accountType = this.isLoginData.filter((n)=>n.code == true);
+        if(accountType.length == 1){
+          console.log('只有一个端口')
+          switch(accountType[0]._name){
+            case 'hospital':
+            console.log('这是医院端');
+            this.refreshFn('/hospital/login-refresh',100)
+            break;
+            case 'clinic':
+            console.log('这是门诊端');
+            this.refreshFn('/clinic/login-refresh',200);
+            break;
+            case 'manager':
+            console.log('这是运营端');
+            this.refreshFn('/manager/login-refresh',300)
+            break;
+          }
+        }else{
+          await this.nextPageFn()
+        }
+        console.dir(this.isLoginData)
+
     	}else{
         this.$toast.fail('请勾选用户协议');
     	}
 
     },
     nextPageFn(){
-      let ss = this.isLoginData.filter((n)=>n.code == false);
-      console.log(ss)
       if(this.isLoginData[0].code|| this.isLoginData[1].code || this.isLoginData[2].code){
-          this.$router.replace({ name : 'chooseTheType',query:{time:new Date().getTime(),phone:this.account.name}});
+          this.$router.replace({ name : 'chooseTheType',query:{time:new Date().getTime(),phone:this.submitAccount.name}});
         }else{
-           let fail = this.isLoginData.filter((n)=>n.code == false);
+          let fail = this.isLoginData.filter((n)=>n.code == false);
           this.$toast.fail(fail[0].codeMsg);
         }
     },
@@ -186,19 +218,19 @@ export default {
     	// console.log(state)
       debugger
     	await this.$axios.post(_postUrl,qs.stringify({
-    			account : this.account.name,
-    			password : this.account.password
+    			account : this.submitAccount.name,
+    			password : this.submitAccount.password
     		}))
     		.then( res =>{
           if(res.data.code == 0){
             this.isLoginData.push({
-              _ame:_name,
+              _name:_name,
               code : true,
               codeMsg:res.data.codeMsg
             })
           }else{
             this.isLoginData.push({
-              _ame:_name,
+              _name:_name,
               code : false,
               codeMsg:res.data.codeMsg
             })
@@ -212,6 +244,49 @@ export default {
     changeFn(_value){
       // console.log(_value.target.checked)
     	this.checked = _value.target.checked;
+    },
+    refreshFn(_postRefresh,_isLogin){
+      this.$axios.post(_postRefresh)
+        .then( res =>{
+      		this.isLogin = _isLogin;
+      		localStorage.setItem("isLogin",_isLogin);
+      		switch(_isLogin){
+      			case 100:
+      			if(res.data.data.type == 1){
+      				this.$router.replace({ name : 'promoters_index',query:{time:new Date().getTime()}});
+      			}else{
+      				this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
+      			}
+      			this.account.hospitalId= res.data.data.hospital.hospitalId;
+      			// console.log(this.account.hospitalId)
+      			this.account.data = {};
+      			this.account.data = res.data;
+      			break;
+
+      			case 200:
+      				this.$router.replace({ name : 'hospital_sourceManagement',query:{time:new Date().getTime()}});
+      				this.account.clinicId= res.data.data.clinic.clinicId;
+      				this.account.hospitalId= res.data.data.hospital.hospitalId;
+      				// console.log(this.account.hospitalId)
+      				this.account.data = {};
+      				this.account.data = res.data;
+      			break;
+
+      			case 300:
+      				// this.$router.replace({ name : '',query:{time:new Date().getTime()}});
+      				this.$toast.fail('正在开发中')
+      				// Dialog({ message: '正在开发中，敬请期待' });
+      				// this.account.clinicId= res.data.data.clinic.clinicId;
+      				// this.account.hospitalId= res.data.data.hospital.hospitalId;
+      				// console.log(this.account.hospitalId)
+      				// this.account.data = {};
+      				// this.account.data = res.data;
+      			break;
+      		}
+      	})
+      	.catch((err)=>{
+          this.$toast.fail(err);
+      	})
     },
   }
 }

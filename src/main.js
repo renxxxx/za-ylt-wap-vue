@@ -18,7 +18,13 @@ import 'vue-hash-calendar/lib/vue-hash-calendar.css'
 import VueScroller from 'vue-scroller'
 import qs from 'qs';
 import h5p from '../build/h5p.js'
-debugger
+
+import Router from 'vue-router'
+const routerPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+return routerPush.call(this, location).catch(error=> error)
+}
+
 Vue.prototype.$version = '2001141559-5f99806'
 Vue.config.productionTip = false
 Vue.prototype.$version = '2001141559-5f99806'
@@ -139,7 +145,7 @@ import {
 	Picker,
   Collapse,
   CollapseItem,
-  Step, Steps
+  Step, Steps,
 } from 'vant';
 Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab).use(Tabs).use(Checkbox).use(Stepper)
 	.use(CheckboxGroup).use(Dialog).use(Popup).use(RadioGroup).use(Radio).use(Cell).use(CellGroup).use(PullRefresh)
