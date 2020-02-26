@@ -15,15 +15,13 @@
             </router-link>
           </div>
           <div v-for="(video,index) in item.video" key="index" style="display: inline;position: relative" @click="showVideoFn(video)" class="video">
-            <video class="ArcanaVideo" autoplay="autoplay" loop="loop">
+            <video class="ArcanaVideo" autoplay="autoplay">
               <source type="video/mp4" :src="video">
             </video>
             <!-- <video :src="video" controls="controls" preload="auto"></video> -->
           </div>
           <div style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0,0,0,.7);" v-show="show">
-            <video  controls="controls" style="width: 100%;height: 100%;position: fixed;top: 0;left: 0;z-index: 9999;" autoplay="autoplay" loop="loop">
-              <source type="video/mp4" :src="nowVideo">
-            </video>
+            <video :src="nowVideo" controls="controls" style="width: 100%;height: 100%;position: fixed;top: 0;left: 0;z-index: 9999;" preload="auto"></video>
           </div>
           <span v-if="item.content">{{item.content}}</span>
         </div>
@@ -40,6 +38,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
@@ -95,6 +94,7 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
+    debugger
       next(vm => {
       document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
     });
