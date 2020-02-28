@@ -793,7 +793,7 @@ const router = new Router({
 })
 router.beforeEach((to,from,next) => {
 	//TODO 保存当前路由
-	if(to.name != 'landingPage')
+	if(to.name != 'account')
 	 	localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
 	next()
 })
