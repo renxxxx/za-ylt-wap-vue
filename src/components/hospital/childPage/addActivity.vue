@@ -303,5 +303,6 @@ export default {
 	margin: 0 4.27%;
 	padding : .12rem 4%;
 	margin-top: .12rem;
+  border: 1px solid #D8D8D8;
 }
 </style>

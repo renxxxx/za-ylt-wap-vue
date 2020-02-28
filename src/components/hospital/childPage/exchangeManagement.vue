@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>兑换管理</h3>
 			</div>
-			<router-link :to="{name : 'hospital_exchangeManagementList',query:{time:new Date().getTime()}}">
+			<router-link :to="{name : 'hospital_exchangeManagementList'}">
 				<div class="right">
 					<img src="../../../assets/image/liebiao@3x.png" alt="">
 				</div>
@@ -16,7 +16,7 @@
 		<div class="zhangwei"></div>
 		<div class="exchangeTitle" :style="{'padding-top':$store.state.topHeight}">
 			<h3>已有商品</h3>
-			<router-link :to="{name : 'hospital_exchangeManagementAdd',query:{time:new Date().getTime()}}">
+			<router-link :to="{name : 'hospital_exchangeManagementAdd'}">
 				<div class="add">
 					<span>新增</span>
 					<img src="../../../assets/image/xinzeng@2x.png" alt="">
@@ -80,7 +80,7 @@ export default {
 	created(){
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
+		//this.height = parseInt(topHeight.join())
 		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
@@ -118,17 +118,15 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
 		this.getdata();
 	},
 	methods: {

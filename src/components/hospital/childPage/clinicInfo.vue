@@ -178,7 +178,8 @@ export default {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 
-  }, mounted() {
+  },
+  mounted() {
      console.log(this.$router.apps[0]._route.name)
 		// console.log(this.$route.query.item)
 		this.$route.query.item? this.clinicFn() : ""
