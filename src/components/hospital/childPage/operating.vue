@@ -13,7 +13,7 @@
           <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
       </li>
       </router-link>
-      <router-link :to="{name:'hospital_operatingManual'}">
+      <router-link :to="{name:'hospital_operatingManual',query:{time:new Date().getTime()}}">
         <li>
           <h4>运营手册</h4>
           <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">

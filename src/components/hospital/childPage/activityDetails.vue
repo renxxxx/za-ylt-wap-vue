@@ -8,9 +8,9 @@
 				<h3>活动详情</h3>
 			</div>
 			<div class="right">
-				<img src="../../../assets/image/share@3x.png" @click="share" alt="">	
+				<img src="../../../assets/image/share@3x.png" @click="share" alt="">
 			</div>
-		</div> 
+		</div>
 		<div class="zhangwei"></div>
 		<div class="activeList" :model='active' :style="{'padding-top':$store.state.topHeight}">
 			<img v-lazy="active.cover" alt="">
@@ -45,7 +45,7 @@
 					<span>活动说明</span>
 					<!-- <input type="text" v-model='active.content' readonly="readonly"> -->
 					<div class="tabelContent">
-						<p>{{active.content}}</p>
+						<p style="white-space:pre-line;">{{active.content}}</p>
 					</div>
 				</li>
 			</ul>
@@ -68,12 +68,12 @@ export default {
 	  ...mapGetters(['account']),
 	},
 	components:{
-		
+
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
+		//this.height = parseInt(topHeight.join())
 		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
@@ -115,13 +115,13 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
+
 		this.$axios.post('/c2/activity/item',qs.stringify({
 			itemId : this.$route.query.itemId,
 		}))
@@ -129,11 +129,12 @@ export default {
 			this.active = _d.data.data
 			if(_d.data.data.startTime != '' && _d.data.data.endTime){
 				var moment = require('moment');
-				this.active.time = moment(_d.data.data.startTime).format('YYYY-MM-DD HH:mm') + ' - ' +moment(_d.data.data.endTime).format('YYYY-MM-DD HH:mm') 
+				this.active.time = moment(_d.data.data.startTime).format('YYYY-MM-DD HH:mm') + ' - ' +moment(_d.data.data.endTime).format('YYYY-MM-DD HH:mm')
 				// console.log(this.active.time)
 			}
 			this.$axios.get('/other/bigtxt/'+_d.data.data.contentBtId+'/'+_d.data.data.contentBtId)
 			.then(_d => {
+        _d.data = _d.data.replace(/(\r\n|\n|\r)/gm, "\n");
 				this.$set(this.active,'content',_d.data)
 				// console.log(_d.data)
 			})
@@ -149,10 +150,10 @@ export default {
 	},
 	methods: {
 		share(){
-			 
+
 			let vue = this
 			this.$h5p.shareWeb(location.href,this.active.cover,this.active.title,this.active.brief||'',function(){
-				 
+
 				vue.$axios.post('/c2/share')
 			});
 		},
@@ -160,7 +161,7 @@ export default {
 		goBackFn(){
 			this.$router.back(-1)
 		},
-		
+
 	},
 }
 </script>

@@ -11,7 +11,7 @@
 					<router-link :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 4,time:new Date().getTime()}}">
 						<div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
 							<p>{{items.content}}</p>
-							<div class="article_leftTime">
+							<div class="article_leftTime" :style="{width:items.img?'60.1%':'100%'}">
 								<img src="../../../assets/image/time@2x.png" alt="">
 								<span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
 							</div>

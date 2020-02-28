@@ -108,8 +108,22 @@ import hospital_operatingManual from '@/components/hospital/childPage/operatingM
 
 // 医院端运营中心的运营手册的历史记录
 import hospital_operatingDate from '@/components/hospital/childPage/operatingDate.vue'
-// 医院端运营中心的运营手册下一级列表页面
+// 医院端运营中心的运营手册下一级章节页面
 import hospital_operatingManualList from '@/components/hospital/childPage/operatingManualList.vue'
+// 医院端运营中心的运营手册下一级章节页的子章节面
+import hospital_operatingManualListTwo from '@/components/hospital/childPage/operatingManualListTwo.vue'
+
+// 医院端运营中心的运营手册下一级章节页的子章节面二
+import  hospital_operatingManualListThree from '@/components/hospital/childPage/operatingManualListThree.vue'
+// 医院端运营中心的运营手册下一级章节页的子章节面三
+import  hospital_operatingManualListFour from '@/components/hospital/childPage/operatingManualListFour.vue'
+// 医院端运营中心的运营手册下一级章节页的子章节面四
+import  hospital_operatingManualListFive from '@/components/hospital/childPage/operatingManualListFive.vue'
+// 医院端运营中心的运营手册下一级章节页的子章节面五
+import  hospital_operatingManualListSix from '@/components/hospital/childPage/operatingManualListSix.vue'
+// 医院端运营中心的运营手册下一级章节页的子章节面五
+import  hospital_operatingManualListSeven from '@/components/hospital/childPage/operatingManualListTwo.vue'
+
 // 医院端运营中心的运营手册下一级列表页面内容详情页面
 import hospital_operatingManualListDetails from '@/components/hospital/childPage/operatingManualListDetails.vue'
 // 医院端运营中心的运营手册下一级列表页面内容详情添加页面
@@ -276,12 +290,57 @@ const router = new Router({
     	meta: {auth:true},
     },
     {
-    	// 医院端运营中心的运营手册下一级列表页面
+    	// 医院端运营中心的运营手册下一级章节页面
     	path: '/hospital_operatingManualList',
     	name: 'hospital_operatingManualList',
     	component: hospital_operatingManualList,
     	meta: {auth:true},
     },
+
+    {
+    	// 医院端运营中心的运营手册下一级章节页的子章节面
+    	path: '/hospital_operatingManualListTwo',
+    	name: 'hospital_operatingManualListTwo',
+    	component: hospital_operatingManualListTwo,
+    	meta: {auth:true},
+    },
+
+    {
+    	// 医院端运营中心的运营手册下一级章节页的子章节面二
+    	path: '/hospital_operatingManualListThree',
+    	name: 'hospital_operatingManualListThree',
+    	component: hospital_operatingManualListThree,
+    	meta: {auth:true},
+    },
+    {
+    	// 医院端运营中心的运营手册下一级章节页的子章节面三
+    	path: '/hospital_operatingManualListFour',
+    	name: 'hospital_operatingManualListFour',
+    	component: hospital_operatingManualListFour,
+    	meta: {auth:true},
+    },
+    {
+    	// 医院端运营中心的运营手册下一级章节页的子章节面四
+    	path: '/hospital_operatingManualListFive',
+    	name: 'hospital_operatingManualListFive',
+    	component: hospital_operatingManualListFive,
+    	meta: {auth:true},
+    },
+    {
+    	// 医院端运营中心的运营手册下一级章节页的子章节面五
+    	path: '/hospital_operatingManualListSix',
+    	name: 'hospital_operatingManualListSix',
+    	component: hospital_operatingManualListSix,
+    	meta: {auth:true},
+    },
+    {
+    	// 医院端运营中心的运营手册下一级章节页的子章节面五
+    	path: '/hospital_operatingManualListSeven',
+    	name: 'hospital_operatingManualListSeven',
+    	component: hospital_operatingManualListSeven,
+    	meta: {auth:true},
+    },
+
     {
     	// 医院端运营中心的运营手册下一级列表页面内容详情页面
     	path: '/hospital_operatingManualListDetails',
@@ -726,6 +785,11 @@ const router = new Router({
 			component: retrievePassword,
 		},
 	],
+  // scrollBehavior (to, from, savedPosition) {
+  //   console.log(savedPosition)
+  //     // return 期望滚动到哪个的位置
+  //     // return { x: 300, y: 300 }
+  //   }
 })
 router.beforeEach((to,from,next) => {
 	//TODO 保存当前路由
@@ -736,10 +800,8 @@ router.beforeEach((to,from,next) => {
 router.afterEach((to, from) => {
 		if(to.name!='hospital_index' && to.name!='hospital_sourceManagement' && to.name!='outpatient_index' && to.name != 'promoters_index' &&
 		to.name!='landingPage' && to.name != 'retrievePassword' && to.name != 'account' && to.name != 'chooseTheType'){
-			debugger
 			Store.state.returnHomePageData = true;
 		}else{
-		debugger
 		Store.state.returnHomePageData = false;
 		if(Store.state.isLogin == 100  && to.name == 'hospital_sourceManagement'){
 			Store.state.returnHomePageData = true;

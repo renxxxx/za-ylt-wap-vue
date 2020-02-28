@@ -36,10 +36,10 @@ export default {
 		...mapGetters(['account'])
 	},
 	components:{
-		
+
 	},
 	created () {
-		
+
 	},
 	props:['show'],
   beforeRouteLeave(to, from, next) {
@@ -80,13 +80,13 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
+
 		this.$axios.post('/clientend2/clinicend/pointexchange/hots',qs.stringify({
 			clinicId : this.account.clinicId,
 			pn : 1,
@@ -107,7 +107,7 @@ export default {
 		})
 	},
 	methods: {
-		
+
 	},
 }
 </script>
@@ -168,8 +168,10 @@ export default {
 	color: #FF951B;
 }
 .productsExchange ul li button{
-	width: .7rem;
+	width: .8rem;
 	height: .21rem;
+  line-height: .21rem;
+  padding: 0;
 	color: #2B77EF;
 	border: 1px solid #2B77EF;
 	background-color: #FFFFFF;

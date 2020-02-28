@@ -8,23 +8,8 @@
       </router-link>
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
-    <div style="margin-top: .2rem;">
-      <div v-for="(item,inx) in operatingManual" :key="inx">
-        <router-link :to="{name : 'hospital_operatingManualList',query:{name:item.name,operatingManualId:item.operatingManualId,time:new Date().getTime()}}">
-          <van-cell is-link>
-            <!-- 使用 title 插槽来自定义标题 -->
-            <template>
-              <span class="custom-title">{{item.name}}</span>
-            </template>
-          </van-cell>
-        </router-link>
-      </div>
-
-    </div>
-
-    <!-- <van-collapse v-model="activeNames"> -->
-
-       <!-- <van-collapse-item :name="inx" v-for="(item,inx) in operatingManual" :key="inx">
+    <van-collapse v-model="activeNames">
+       <van-collapse-item :name="inx" v-for="(item,inx) in operatingManual" :key="inx">
          <div slot="title" class="title">
            <span>{{item.name}}</span>
            <p><span>{{yesNum[inx]}}</span>/{{num[inx]}}</p>
@@ -37,8 +22,8 @@
              </div>
            </router-link>
          </div>
-       </van-collapse-item> -->
-    <!-- </van-collapse> -->
+       </van-collapse-item>
+    </van-collapse>
   </div>
 </template>
 
@@ -121,28 +106,29 @@ export default {
         if(!res.data.codeMsg){
             for(let i in res.data.data.rows){
             this.operatingManual.push(res.data.data.rows[i])
-            // this.$axios.get('/hospital/operating-manual/operating-manual-sections?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
-            // .then(_res => {
-            //   if(!_res.data.codeMsg){
-            //     this.operatingManual[i]._data=[]
-            //      let num = 0;
-            //     for(let _i in _res.data.data.rows){
-            //       if(_res.data.data.rows[_i].done){
-            //         ++num
-            //       }
-            //       // console.log(num)
-            //         this.yesNum.push(num)
-            //     // console.log(_res.data.data.rows[_i])
-            //       this.operatingManual[i]._data.push(_res.data.data.rows[_i])
-            //      // console.dir(this.operatingManual[i]._data)
-            //     }
-            //   }else{
-            //     this.$toast.fail(_res.data.codeMsg)
-            //   }
-            // })
-            // .catch((err)=>{
-            // 	console.log(err);
-            // })
+            this.$axios.get('/hospital/operating-manual/operating-manual-sections?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
+            .then(_res => {
+              if(!_res.data.codeMsg){
+                this.operatingManual[i]._data=[]
+
+                 let num = 0;
+                for(let _i in _res.data.data.rows){
+                  if(_res.data.data.rows[_i].done){
+                    ++num
+                  }
+                  // console.log(num)
+                    this.yesNum.push(num)
+                // console.log(_res.data.data.rows[_i])
+                  this.operatingManual[i]._data.push(_res.data.data.rows[_i])
+                 // console.dir(this.operatingManual[i]._data)
+                }
+              }else{
+                this.$toast.fail(_res.data.codeMsg)
+              }
+            })
+            .catch((err)=>{
+            	console.log(err);
+            })
             this.$axios.get('/hospital/operating-manual/operating-manual-sections-sum?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
             .then(res => {
               console.dir(res)

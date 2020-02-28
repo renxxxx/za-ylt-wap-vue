@@ -193,7 +193,7 @@ export default {
 }
 .clinic_search{
 	float:left;
-	width: 78.3%;
+	width: 74.3%;
 	position: relative;
 }
 .clinic_search input{
@@ -226,7 +226,7 @@ export default {
 	border-radius: .15rem;
 	border: none;
 	height: .28rem;
-	width: .45rem;
+	width: .6rem;
 }
 
 .clinic_information{

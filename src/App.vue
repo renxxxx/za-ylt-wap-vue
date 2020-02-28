@@ -1,7 +1,7 @@
 <template>
   <div id="app" v-cloak ref='appRef' v-on:touchstart="bodyTouchStart" v-on:touchmove="bodyTouchMove" v-on:touchend="bodyTouchEnd">
     <!-- <transition :name="direction"> -->
-      <keep-alive include="home">
+      <keep-alive>
         <router-view v-if="isRouterAlive" class="appView"></router-view>
       </keep-alive>
     <!-- </transition> -->
@@ -39,7 +39,7 @@ export default {
       touchLeft: swidth*2/5,
       touchStartPoint: 0,
       distance: 0,backBtn: null,
-      
+
       // 滑动距离长度
       sliderLength : [],
     };
@@ -84,7 +84,7 @@ export default {
 
   },
   computed:{
-    ...mapGetters(['returnHomePageData'])
+    ...mapGetters(['returnHomePageData','includedComponents'])
 	},
   mounted() {
     // let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
@@ -95,7 +95,6 @@ export default {
     $route(to,from){
         // console.log(to);
         // console.log(from)
-        console.log(this.$router.app._route.name)
         if(!to.query.time || !from.query.time || to.query.transition=='def')
            this.direction = "";
         else if(to.query.time > from.query.time)
@@ -113,6 +112,7 @@ export default {
     }
  },
   created() {
+    // console.log(this.$route.fullPath)
     let vm = this
     let isLogin = localStorage.getItem("isLogin");
     localStorage.removeItem("isLogin");
@@ -304,7 +304,7 @@ export default {
           }
         }
       this.sliderLength= []
-    }     
+    }
   }
 }
 </script>
@@ -323,7 +323,7 @@ img {
 }
 
 img[lazy="loading"]{
-   
+
     object-fit:scale-down!important;
  }
 

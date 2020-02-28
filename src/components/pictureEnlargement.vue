@@ -5,7 +5,7 @@
 			:images="imgUrl"
 			:start-position='photoNum'
 			@change="onChange"
-			lazy-load = true			
+			lazy-load = true
 		>
 		@close="backFn"
 		  <template v-slot:index>第{{ photoPage+1 }}页</template>
@@ -30,10 +30,10 @@ export default {
 		}
 	},
 	computed:{
-	  
+
 	},
 	components:{
-		
+
 	},
 	created () {
 		this.imgUrl = this.$route.query.imgUrl;
@@ -74,6 +74,13 @@ export default {
 			}
 		next();
 	},
+  //进入该页面时，用之前保存的滚动位置赋值
+  beforeRouteEnter(to, from, next) {
+    debugger
+      next(vm => {
+      document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
+    });
+  },
 	mounted () {
 		let _this = this
 		ImagePreview({

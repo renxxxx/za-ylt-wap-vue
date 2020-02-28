@@ -43,16 +43,15 @@ export default {
 		...mapGetters(['account']),
 	},
 	components:{
-		
+
 	},
 	beforeCreate(){
-		
+
 	},
 	created(){
-		var heightRexg = /^[0-9]*/g
-		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
-		//console.log(this.height)
+    let myDate = new Date();
+    this.caseInfo.alterTime = myDate.toLocaleDateString()
+		// console.log(this.caseInfo.alterTime)
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -93,7 +92,7 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   },mounted(){
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");

@@ -175,6 +175,11 @@ export default {
 			  }))
         .then(res =>{
       	// this.imageUpload.push({name:file.name,url:res.data.data.url})
+        if(res.data.codeMsg){
+          this.$toast.fail(res.data.codeMsg)
+        }else{
+          this.$toast.success('操作成功')
+        }
       	this.imageUpload = res.data.data.url
       	console.log(this.imageUpload)
       	this.show = false;
