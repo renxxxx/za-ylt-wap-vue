@@ -89,7 +89,7 @@ export default {
 	  routerNav
   },
   created () {
-		
+
   },
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -130,14 +130,14 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 	  if(window.plus){
 		//plus.navigator.setStatusBarBackground("#ffffff");
 		plus.navigator.setStatusBarStyle("dark")
 	  }
-	  
-	 
+
+
 	this.userFn();
 	this.coverImg = this.account.data.data.clinic.cover;
 	this.images.push(this.account.data.data.clinic.license)
@@ -162,41 +162,41 @@ export default {
 		}else{
 			this.coverImg = cover
 		}
-		
+
 		if(license == '' || license == undefined || license == null){
 			// console.log("license为空")
 		}else{
-				
+
 		}
-		
+
 		// console.log(this.account.data.data.cover)
 		// console.log(this.account.data.data.license)
 	 },
 	//退出方法
 	exitFn(){
-		
+
 		this.$store.state.isLogin = 0
 		this.isLogin = 0;
-		this.account = {
-			name:'',
-			password:'',
-			user:{
-				realname:'',
-				tel: undefined,
-				remark:"",				//备注
-				idcardNo:undefined, 	//身份证号
-			},
-			clinicId: '',			//门诊id
-			hospitalId: '',			//医院Id
-			patientId : '',			//医院端门诊主页的门诊详情页id
-			data:{},
-		},
-		console.log(this.isLogin);
+		// this.account = {
+		// 	name:'',
+		// 	password:'',
+		// 	user:{
+		// 		realname:'',
+		// 		tel: undefined,
+		// 		remark:"",				//备注
+		// 		idcardNo:undefined, 	//身份证号
+		// 	},
+		// 	clinicId: '',			//门诊id
+		// 	hospitalId: '',			//医院Id
+		// 	patientId : '',			//医院端门诊主页的门诊详情页id
+		// 	data:{},
+		// },
+		// console.log(this.isLogin);
 		this.$axios.post('/hospital/logout');
 
 		localStorage.clear();
 
-		
+
 		if(window.plus){
 			  	plus.webview.currentWebview().clear()
 				//plus.webview.currentWebview().loadURL(aa)
@@ -298,11 +298,13 @@ export default {
 	font-size: .13rem;
 }
 .top_right img{
-	position: absolute;
-	top: .01rem;
-	left: .56rem;
 	width: .08rem;
+	position: absolute;
+	left: .56rem;
 	height: .13rem;
+  bottom: 0rem;
+	top: 0rem;
+  margin: auto 0rem;
 }
 
 .user_center{

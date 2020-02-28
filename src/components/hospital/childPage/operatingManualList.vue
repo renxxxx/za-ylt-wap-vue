@@ -113,7 +113,9 @@ export default {
     nextPageFn(item){
       if(item.lowerCount){
         // console.dir(item)
-        this.$router.push({name:'hospital_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId}})
+        this.$router.push({name:'hospital_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
+      }else{
+        this.$router.push({name:'hospital_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
       }
     },
     getData(){

@@ -296,7 +296,7 @@ const router = new Router({
     	component: hospital_operatingManualList,
     	meta: {auth:true},
     },
-    
+
     {
     	// 医院端运营中心的运营手册下一级章节页的子章节面
     	path: '/hospital_operatingManualListTwo',
@@ -304,7 +304,7 @@ const router = new Router({
     	component: hospital_operatingManualListTwo,
     	meta: {auth:true},
     },
-    
+
     {
     	// 医院端运营中心的运营手册下一级章节页的子章节面二
     	path: '/hospital_operatingManualListThree',
@@ -340,7 +340,7 @@ const router = new Router({
     	component: hospital_operatingManualListSeven,
     	meta: {auth:true},
     },
-    
+
     {
     	// 医院端运营中心的运营手册下一级列表页面内容详情页面
     	path: '/hospital_operatingManualListDetails',
@@ -785,6 +785,11 @@ const router = new Router({
 			component: retrievePassword,
 		},
 	],
+  // scrollBehavior (to, from, savedPosition) {
+  //   console.log(savedPosition)
+  //     // return 期望滚动到哪个的位置
+  //     // return { x: 300, y: 300 }
+  //   }
 })
 router.beforeEach((to,from,next) => {
 	//TODO 保存当前路由
@@ -793,13 +798,10 @@ router.beforeEach((to,from,next) => {
 	next()
 })
 router.afterEach((to, from) => {
-
 		if(to.name!='hospital_index' && to.name!='hospital_sourceManagement' && to.name!='outpatient_index' && to.name != 'promoters_index' &&
 		to.name!='landingPage' && to.name != 'retrievePassword' && to.name != 'account' && to.name != 'chooseTheType'){
-			debugger
 			Store.state.returnHomePageData = true;
 		}else{
-		debugger
 		Store.state.returnHomePageData = false;
 		if(Store.state.isLogin == 100  && to.name == 'hospital_sourceManagement'){
 			Store.state.returnHomePageData = true;

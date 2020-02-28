@@ -12,7 +12,7 @@
       	</div>
       	<div class="inputBox">
       		<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-      		<input type="password"  v-model="submitAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd1'>
+      		<input type="password" class="lastInput" v-model="submitAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd1'>
           <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd1')" v-if="submitAccount.password">
           <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('password')" v-if="submitAccount.password">
       	</div>
@@ -28,7 +28,7 @@
       			</router-link>
       		</p>
       	</div>
-      	<button class="submitClass" type="submit" value="医院登录" @click="submit()">登陆</button>
+      	<button class="submitClass" type="submit" value="医院登录" @click="submit()">登录</button>
       	<div class="passwordReset">
       		<router-link  :to="{name : 'retrievePassword',query:{time:new Date().getTime()}}">
       			<div class="forget">
@@ -381,13 +381,19 @@ export default {
   margin: auto 0;
 }
 .inputBox input{
-	width: 85%;
+	width: 68%;
 	height: .45rem;
 	border-radius: .25rem;
 	border: 1px solid #E5E5E5;
 	padding-left: 15%;
 	/* background: #F5F5F5; */
   font-size: .17rem;
+  padding-right: 15%;
+}
+.lastInput{
+  width: 63%!important;
+  padding-right: 20%!important;
+  text-align: left;
 }
 >>>.van-hairline--top-bottom{
 	display: block;

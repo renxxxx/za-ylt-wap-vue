@@ -304,11 +304,14 @@ export default {
 	position: relative;
 }
 .top_right img{
-	position: absolute;
-	top: .01rem;
-	/* left: .56rem; */
+
 	width: .08rem;
 	height: .13rem;
+  position: absolute;
+  height: .13rem;
+  bottom: 0rem;
+  top: 0rem;
+  margin: auto 0rem;
 }
 .top_right span{
   margin-right: .1rem;
