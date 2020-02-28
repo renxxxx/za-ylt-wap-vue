@@ -19,12 +19,6 @@ import VueScroller from 'vue-scroller'
 import qs from 'qs';
 import h5p from '../build/h5p.js'
 
-import Router from 'vue-router'
-const routerPush = Router.prototype.push
-Router.prototype.push = function push(location) {
-return routerPush.call(this, location).catch(error=> error)
-}
-
 Vue.prototype.$version = '2001141559-5f99806'
 Vue.config.productionTip = false
 Vue.prototype.$version = '2001141559-5f99806'

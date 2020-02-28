@@ -47,7 +47,7 @@ export default {
 	created(){
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
+		//this.height = parseInt(topHeight.join())
 		//console.log(this.height)
 	},
   beforeRouteLeave(to, from, next) {
@@ -89,7 +89,7 @@ export default {
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
@@ -156,6 +156,8 @@ export default {
 				cover : '',
 				show : true,
 			  }
+        // history.replaceState({name:'hospital_exchangeManagement'})
+      // this.$router.push({name:'hospital_exchangeManagement',quer:{time:new Date().getTime()}})
 			this.$router.go(-2)
 		}
 	},

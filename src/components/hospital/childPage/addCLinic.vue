@@ -25,9 +25,12 @@
 						</li>
 						<li>
 							<span>推广人</span>
-							<van-dropdown-menu>
+              <router-link :to="{name:'list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item}}">
+                <span>{{addClinic.promoter}}</span>
+              </router-link>
+							<!-- <van-dropdown-menu>
 								<van-dropdown-item  v-model="value" :options="option" active-color='#2B77EF' @change="changeFn"/>
-							</van-dropdown-menu>
+							</van-dropdown-menu> -->
 						</li>
 						<li>
 							<span>分配账号</span>
@@ -114,7 +117,8 @@ export default {
 				license : '',
 				pwdConfirm: '',    //确认密码
 				readonly : '',
-				clinicPromoterId : ''
+				clinicPromoterId : '',
+        promoter:'请选择'
 			},
 			// 上传图片弹窗显示
 			show: false,
@@ -134,7 +138,6 @@ export default {
 		//console.log(this.height)
 	},
 	beforeRouteLeave(to, from, next) {
-     ;
     this.scrollTop =
 	  document.documentElement.scrollTop || document.body.scrollTop;
 	  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
@@ -166,47 +169,48 @@ export default {
             this.$destroy();
 		}
 	next();
-	
+
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
      document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
     });
-  }, mounted() {
+  },
+  mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-
-		this.$axios.get('/hospital/def/hospital-operator-users?')
-		.then(res => {
-			if(!res.data.codeMsg){
-				// console.log(res.data.data.rows)
-				this.option.push({
-					'clinicPromoterId' : '',
-					'text' : '请选择',
-					'value' : '000',
-				})
-				for(let i in res.data.data.rows){
-					this.option.push({
-						'clinicPromoterId' : res.data.data.rows[i].hospitalUserId,
-						'text' : res.data.data.rows[i].name,
-						'value' : '00'+(i+1),
-					})
-				}
-				this.addClinic.clinicPromoterId = this.option[0].clinicPromoterId
-				// console.log(this.promotersList)
-			}
-		})
-		.catch((err)=>{
-			console.log(err);
-		})
+    this.$route.query.promoterValue? this.addClinic.promoter = this.$route.query.promoterValue : this.addClinic.promoter = '请选择'
+		// this.$axios.get('/hospital/def/hospital-operator-users?')
+		// .then(res => {
+		// 	if(!res.data.codeMsg){
+		// 		// console.log(res.data.data.rows)
+		// 		this.option.push({
+		// 			'clinicPromoterId' : '',
+		// 			'text' : '请选择',
+		// 			'value' : '000',
+		// 		})
+		// 		for(let i in res.data.data.rows){
+		// 			this.option.push({
+		// 				'clinicPromoterId' : res.data.data.rows[i].hospitalUserId,
+		// 				'text' : res.data.data.rows[i].name,
+		// 				'value' : '00'+(i+1),
+		// 			})
+		// 		}
+		// 		this.addClinic.clinicPromoterId = this.option[0].clinicPromoterId
+		// 		// console.log(this.promotersList)
+		// 	}
+		// })
+		// .catch((err)=>{
+		// 	console.log(err);
+		// })
 	},
 	methods: {
 		// 返回键
 		goBackFn(){
-			this.$router.back(-1)
+			this.$router.go(-1)
 		},
 		// 显示上传图片选择弹窗
 		showFn(){
@@ -249,7 +253,7 @@ export default {
 			this.$axios.post('/hospital/super-admin/hospital-clinic-add',qs.stringify({
 				hospitalClinicId : this.account.hospitalId,
 				name :  this.addClinic.name,        //医院名称
-				hospitalUserId : this.addClinic.clinicPromoterId,	//推广人id
+				hospitalUserId : this.$route.query.promoterId,	//推广人id
 				cover: '',
 				license : this.imageUpload,         //营业执照
 				address : this.addClinic.address,   //门诊地址
@@ -355,8 +359,11 @@ export default {
 	width: 100%;
 	position: relative;
 }
-.Fill li span{
+.Fill li span:last-child{
 	height: .21rem;width: .6rem;
+  float: right;
+      text-align: right;
+      color: #2B77EF;
 }
 .Fill li input{
 	border: none;

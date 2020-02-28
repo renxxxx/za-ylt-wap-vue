@@ -7,13 +7,13 @@
       <div class="content">
       	<div class="inputBox">
       		<img class="telephoneImg" src="../assets/image/iphone@2x.png" alt="">
-      		<input type="text"  v-model="submitAccount.name" name='name' placeholder="请输入手机号" >
-          <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('name')" v-if="submitAccount.name">
+      		<input type="text"  v-model="submitAccount.name" name='name' placeholder="请输入手机号" @keyup.enter="ceshi">
+          <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('name')" v-if="submitAccount.name" >
       	</div>
       	<div class="inputBox">
       		<img  class="passwordImg" src="../assets/image/mima@2x.png" alt="">
-      		<input type="password" class="lastInput" v-model="submitAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd1'>
-          <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd1')" v-if="submitAccount.password">
+      		<input type="password" class="lastInput" v-model="submitAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd1' @keyup.enter="ceshi">
+          <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd1')" v-if="submitAccount.password" >
           <img src="../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('password')" v-if="submitAccount.password">
       	</div>
       	<div class="checkBox">
@@ -53,7 +53,9 @@ export default {
     checked: true,
 		submitAccount:{
 			name: '',
-			password: ''
+			password: '',
+      nameStata: false,
+      passwordStata: false,
 		},
 		data:1,
     pwdImg : require('../assets/image/close-eye@2x.png'),
@@ -110,8 +112,12 @@ export default {
 	});
 
   },
+  created(){
+    
+  },
   mounted() {
-
+    // console.dir(this.submitAccount);
+    // console.dir(this.$router);
 	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#2B77EF");
@@ -288,6 +294,19 @@ export default {
           this.$toast.fail(err);
       	})
     },
+    ceshi(){
+      if(this.submitAccount.name){
+        // this.submitAccount.nameStata = true
+      }else{
+        this.submitAccount.nameStata = false
+      }
+      if(this.submitAccount.password){
+        // this.submitAccount.passwordStata = true
+      }else{
+        this.submitAccount.passwordStata = false
+      }
+      console.dir(this.submitAccount)
+    }
   }
 }
 </script>
@@ -301,7 +320,8 @@ export default {
 .nav{
 	width: 100%;
 	height: 2.07rem;
-	background: #2B77EF;position: relative;
+	/* background: #2B77EF; */
+  position: relative;
   position: relative;
   margin-bottom: .47rem;
 }
