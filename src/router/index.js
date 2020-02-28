@@ -792,12 +792,14 @@ const router = new Router({
   //   }
 })
 router.beforeEach((to,from,next) => {
+	debugger
 	//TODO 保存当前路由
 	if(to.name != 'landingPage')
 	 	localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
 	next()
 })
 router.afterEach((to, from) => {
+	debugger
 		if(to.name!='hospital_index' && to.name!='hospital_sourceManagement' && to.name!='outpatient_index' && to.name != 'promoters_index' &&
 		to.name!='landingPage' && to.name != 'retrievePassword' && to.name != 'account' && to.name != 'chooseTheType'){
 			Store.state.returnHomePageData = true;

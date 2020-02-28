@@ -18,8 +18,8 @@ import 'vue-hash-calendar/lib/vue-hash-calendar.css'
 import VueScroller from 'vue-scroller'
 import qs from 'qs';
 import h5p from '../build/h5p.js'
-
-Vue.prototype.$version = '2001141559-5f99806'
+debugger
+Vue.prototype.$version = '2002281437-07c1e22'
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.moment = moment;
@@ -160,7 +160,7 @@ Toast.setDefaultOptions({
 // window.vm = new Vue({
 //     router
 // });
-
+debugger
 new Vue({
 	el: '#app',
 	router,
@@ -170,3 +170,4 @@ new Vue({
 	},
 	template:'<App/>'
 })
+debugger

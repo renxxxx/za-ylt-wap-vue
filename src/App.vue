@@ -44,8 +44,11 @@ export default {
       sliderLength : [],
     };
   },
-  beforeCreate() {},
+  beforeCreate() {
+    debugger
+  },
   beforeRouteLeave(to, from, next) {
+    debugger
 	this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || this.$refs.appRef.scrollTop
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -78,6 +81,7 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
+    debugger
     next(vm => {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
@@ -87,6 +91,7 @@ export default {
     ...mapGetters(['returnHomePageData','includedComponents'])
 	},
   mounted() {
+    debugger
     // let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
     // console.log(document.documentElement.clientHeight)
     window.addEventListener("scroll", this.handleScroll, true);
