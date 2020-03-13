@@ -1,3 +1,4 @@
+
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import './assets/rem'
@@ -10,24 +11,17 @@ import axios from 'axios'
 import store from './store'
 import jquery from 'jquery'
 import moment from 'moment'
-import iscroll from 'iscroll'
-// 在入口文件中（main.js），导入组件库
-import vueHashCalendar from 'vue-hash-calendar'
-// 引入组件CSS样式
-import 'vue-hash-calendar/lib/vue-hash-calendar.css'
-import VueScroller from 'vue-scroller'
 import qs from 'qs';
 import h5p from '../build/h5p.js'
 
-Vue.prototype.$version = '2001141559-5f99806'
 Vue.config.productionTip = false
+Vue.prototype.$version = '2001141559-5f99806'
 Vue.prototype.$axios = axios
 Vue.prototype.moment = moment;
 Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
 Vue.prototype.$jquery = jquery
-Vue.prototype.$iscroll = iscroll
 
 if(navigator.userAgent.toLowerCase().indexOf('html5plus') != -1)
 	store.state.topHeight = "24px"
@@ -42,7 +36,7 @@ const overIphonex = () => {
 	};
 	store.state.bottomHeight = overIphonex()?"34px":"0px"
 
-  function plusReady() {
+function plusReady() {
 	let currentWebview = plus.webview.currentWebview();
 	currentWebview.setStyle({scrollIndicator:"none"})
 
@@ -77,14 +71,13 @@ const overIphonex = () => {
 		history.back()
 	});
 }
-
+// var NjsHello = plus.navigator.setStatusBarStyle("dark")
 
 if (window.plus) {
 	plusReady();
 } else {
 	document.addEventListener('plusready', plusReady, false);
 }
-
 Vue.directive('focus', {
 	// 当被绑定的元素插入到 DOM 中时……
 	inserted: function(el, attr) {
@@ -139,11 +132,11 @@ import {
   Collapse,
   CollapseItem,
   Step, Steps,
-  Field 
+  Field
 } from 'vant';
 Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab).use(Tabs).use(Checkbox).use(Stepper)
 	.use(CheckboxGroup).use(Dialog).use(Popup).use(RadioGroup).use(Radio).use(Cell).use(CellGroup).use(PullRefresh)
-	.use(Area).use(Overlay).use(vueHashCalendar).use(DatetimePicker).use(VueScroller).use(Notify).use(CountDown).use(List)
+	.use(Area).use(Overlay).use(DatetimePicker).use(Notify).use(CountDown).use(List)
 	.use(Uploader).use(DropdownMenu).use(DropdownItem).use(Swipe).use(SwipeItem).use(Lazyload, {
 		loading:require('./assets/image/loading.gif'),
 		error:require('./assets/image/loading-error.png'),
@@ -156,17 +149,10 @@ Toast.setDefaultOptions({
 	duration: 800
 });
 /* eslint-disable no-new */
-
-// window.vm = new Vue({
-//     router
-// });
-
 new Vue({
-	el: '#app',
-	router,
-	store,
-	components: {
-		App
-	},
-	template:'<App/>'
+  el: '#app',
+  router,
+  store,
+  components: { App },
+  template: '<App/>'
 })

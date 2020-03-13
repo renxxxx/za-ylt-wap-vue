@@ -56,3 +56,6 @@ span{list-style: none}
   word-break: break-all;
   word-wrap: break-word;
 }
+img{
+  object-fit: cover;
+}

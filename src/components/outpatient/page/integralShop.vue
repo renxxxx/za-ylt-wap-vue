@@ -47,7 +47,7 @@ export default {
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
-	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
+	this.scrollTop =document.getElementById('outpatient').scrollTop ||document.getElementById('outpatient').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -82,7 +82,7 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
+	 document.getElementById('outpatient').scrollTop=document.getElementById('outpatient').pageYOffset=vm.scrollTop;
 	});
 	
   }, mounted() {

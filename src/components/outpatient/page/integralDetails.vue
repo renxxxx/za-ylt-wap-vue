@@ -14,13 +14,15 @@
       <img src="../../../assets/image/lishi.png" alt="">
       <span>积分使用明细</span>
     </div>
-    <ul>
-      <li v-for="(item,inx) in integralDetails" :key="inx">
-        <h4>{{item.note}}</h4>
-        <p>{{moment(item.addTime).format('YYYY-MM-DD hh:mm')}}</p>
-        <span>{{item.amount}}</span>
-      </li>
-    </ul>
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <ul>
+        <li v-for="(item,inx) in integralDetails" :key="inx">
+          <h4>{{item.note}}</h4>
+          <p>{{moment(item.addTime).format('YYYY-MM-DD hh:mm')}}</p>
+          <span>{{item.amount}}</span>
+        </li>
+      </ul>
+    </van-list>
   </div>
 </template>
 
@@ -33,7 +35,10 @@ export default {
   name: 'integralDetails',
   data () {
     return {
-		integralDetails : [],
+      integralDetails : [],
+      loading: false,
+      finished: false,
+      page: 0,
     }
   },
   computed:{
@@ -42,12 +47,12 @@ export default {
   created(){
   	var heightRexg = /^[0-9]*/g
   	//var topHeight = this.topHeight.match(heightRexg)
-  	//this.height = parseInt(topHeight.join()) 
+  	//this.height = parseInt(topHeight.join())
   	//console.log(this.height)
   },
   beforeRouteLeave(to, from, next) {
     //debugger;
-	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
+	this.scrollTop =document.getElementById('outpatient').scrollTop ||document.getElementById('outpatient').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -82,36 +87,50 @@ export default {
   beforeRouteEnter(to, from, next) {
      ;
     next(vm => {
-	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
+	 document.getElementById('outpatient').scrollTop=document.getElementById('outpatient').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
-    this.$axios.post('/clientend2/clinicend/pointexchange/exchangepointdetails',qs.stringify({
-    	clinicId : this.account.clinicId,
-    	pn : 1,
-    	ps : 99
-    }))
-    .then(res => {
-    	if(res.data.codeMsg == null || res.data.codeMsg == '' || res.data.codeMsg == undefined){
-    		for(let i in res.data.data.items){
-    			this.integralDetails.push(res.data.data.items[i]);
-    		}
-    	}else{
-    		this.$toast.fail(res.data.codeMsg)
-    	}
-    })
-    .catch((err)=>{
-    	//Dialog({ message: err});;
-    })
+
+
   },
   methods: {
     goBackFn(){
       this.$router.back(-1);
+    },
+    onLoad(){
+      ++this.page;
+      // console.log(this.page)
+      this.getdata();
+    },
+    getdata(){
+      this.$axios.post('/clientend2/clinicend/pointexchange/exchangepointdetails',qs.stringify({
+      	clinicId : this.account.clinicId,
+      	pn: this.page,
+      	ps: 10
+      }))
+      .then(res => {
+      	if(!res.data.codeMsg){
+          if(res.data.data.items.length != 0){
+            for(let i in res.data.data.items){
+              this.integralDetails.push(res.data.data.items[i]);
+            }
+            this.loading = false;
+          }else {
+            this.loading = false;
+            this.finished = true;
+          }
+      	}else{
+      		this.$toast.fail(res.data.codeMsg)
+      	}
+      })
+      .catch((err)=>{
+      	//Dialog({ message: err});;
+      })
     }
   },
 }

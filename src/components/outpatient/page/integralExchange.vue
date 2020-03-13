@@ -40,7 +40,7 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import integralExchangeList from '../functionPage/integralExchangeList.vue'
+import integralExchangeList from '../function/integralExchangeList.vue'
 export default {
 	name: 'integralExchange',
 	data () {
@@ -86,7 +86,7 @@ export default {
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
-	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
+	this.scrollTop =document.getElementById('outpatient').scrollTop ||document.getElementById('outpatient').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -120,7 +120,7 @@ export default {
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
-	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
+	 document.getElementById('outpatient').scrollTop=document.getElementById('outpatient').pageYOffset=vm.scrollTop;
 	});
 
   }, mounted() {
