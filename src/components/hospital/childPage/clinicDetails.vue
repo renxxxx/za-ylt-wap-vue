@@ -16,7 +16,7 @@
 
 		<div class="zhangwei"></div>
 		<div class="detailsTime" :style="{'top': (parseInt($store.state.topHeight.replace('px',''))+47)+'px'}">
-			<span>{{clinicDetails.alterTime}}</span>
+			<span>{{moment(clinicDetails.alterTime).format('YYYY-MM-DD hh:mm')}}</span>
 		</div>
 		<div class="statistics" :style="{'padding-top':$store.state.topHeight}">
 			<van-circle v-model="num" :rate="num" :speed="100" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'

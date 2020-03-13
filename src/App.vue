@@ -112,8 +112,10 @@ export default {
     }
  },
   created() {
+    //判断是否有登陆状态，如果有重新获取下数据
     // console.log(this.$route.fullPath)
-    let vm = this
+    let vm = this;
+    
     let isLogin = localStorage.getItem("isLogin");
     localStorage.removeItem("isLogin");
     this.$store.state.isLogin = 0;
@@ -148,6 +150,7 @@ export default {
                   res.data.hospital.hospitalId;
                 vm.$store.state.account.data = {};
                 vm.$store.state.account.data = res;
+
                 break;
 
               case 200:

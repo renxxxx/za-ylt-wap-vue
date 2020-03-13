@@ -94,12 +94,15 @@ export default {
   methods: {
     // 返回上一级
     goBackFn(){
-    	this.$router.back(-1)
+    	this.$router.back()
     },
     subimtFn(_promoter){
       console.log(_promoter)
       this.nowPromoter = _promoter.name;
-      this.$router.replace({name:this.$route.query.path,query:{promoterValue:_promoter.name,item:this.$route.query.item,promoterId:_promoter.hospitalUserId}})
+      this.$router.back();
+      localStorage.setItem('list_promoterValue',_promoter.name);
+      localStorage.setItem('list_promoterId',_promoter.hospitalUserId)
+      // this.$router.replace({name:this.$route.query.path,query:{promoterValue:_promoter.name,item:this.$route.query.item,promoterId:_promoter.hospitalUserId}})
     },
     searchFn(_kw){
       console.log(_kw);

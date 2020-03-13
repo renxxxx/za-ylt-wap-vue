@@ -263,6 +263,7 @@ export default {
 	line-height: .425rem;
 	color: #999999;
 	border-bottom: 1px solid #EEEEEE;
+  font-size: .135rem;
 }
 .List ul li:nth-child(2){
 	width: 100%;

@@ -122,7 +122,7 @@ import  hospital_operatingManualListFive from '@/components/hospital/childPage/o
 // 医院端运营中心的运营手册下一级章节页的子章节面五
 import  hospital_operatingManualListSix from '@/components/hospital/childPage/operatingManualListSix.vue'
 // 医院端运营中心的运营手册下一级章节页的子章节面五
-import  hospital_operatingManualListSeven from '@/components/hospital/childPage/operatingManualListTwo.vue'
+import  hospital_operatingManualListSeven from '@/components/hospital/childPage/operatingManualListSeven.vue'
 
 // 医院端运营中心的运营手册下一级列表页面内容详情页面
 import hospital_operatingManualListDetails from '@/components/hospital/childPage/operatingManualListDetails.vue'

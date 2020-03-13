@@ -25,8 +25,8 @@
 						</li>
 						<li>
 							<span>推广人</span>
-              <router-link :to="{name:'list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item}}">
-                <span>{{addClinic.promoter}}</span>
+              <router-link :to="{name:'list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item,time:new Date().getTime()}}">
+                <span class="line-1">{{addClinic.promoter}}</span>
               </router-link>
 							<!-- <van-dropdown-menu>
 								<van-dropdown-item  v-model="value" :options="option" active-color='#2B77EF' @change="changeFn"/>
@@ -34,7 +34,7 @@
 						</li>
 						<li>
 							<span>分配账号</span>
-							<input type="text" maxlength="11" v-model="addClinic.phone"  placeholder="请填写">
+							<input type="number" v-model="addClinic.phone"  placeholder="请填写">
 						</li>
 						<li>
 							<span>分配密码</span>
@@ -50,7 +50,7 @@
 						</li>
 						<li>
 							<span>联系方式</span>
-							<input type="text"  maxlength="11" v-model="addClinic.contactTel" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+							<input type="number"  v-model="addClinic.contactTel" placeholder="请填写">
 						</li>
 						<li>
 							<span>门诊地址</span>
@@ -118,7 +118,8 @@ export default {
 				pwdConfirm: '',    //确认密码
 				readonly : '',
 				clinicPromoterId : '',
-        promoter:'请选择'
+        promoter:'请选择',
+        hospitalUserId : ''
 			},
 			// 上传图片弹窗显示
 			show: false,
@@ -171,18 +172,29 @@ export default {
 	next();
 
   },
+  activated(){
+    // console.log(localStorage.getItem('list_promoterValue'));
+    // console.log(this)
+    this.addClinic.promoter = localStorage.getItem('list_promoterValue')
+    this.addClinic.hospitalUserId = localStorage.getItem('list_promoterId')
+    localStorage.removeItem('list_promoterValue')
+    localStorage.removeItem('list_promoterId')
+  },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
      document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
     });
+
+
+
   },
   mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-    this.$route.query.promoterValue? this.addClinic.promoter = this.$route.query.promoterValue : this.addClinic.promoter = '请选择'
+    // this.$route.query.promoterValue? this.addClinic.promoter = this.$route.query.promoterValue : this.addClinic.promoter = '请选择'
 		// this.$axios.get('/hospital/def/hospital-operator-users?')
 		// .then(res => {
 		// 	if(!res.data.codeMsg){
@@ -206,6 +218,7 @@ export default {
 		// .catch((err)=>{
 		// 	console.log(err);
 		// })
+
 	},
 	methods: {
 		// 返回键
@@ -360,10 +373,19 @@ export default {
 	position: relative;
 }
 .Fill li span:last-child{
-	height: .21rem;width: .6rem;
+	height: .21rem;
+  width:2rem;
   float: right;
-      text-align: right;
-      color: #2B77EF;
+  text-align: right;
+  color: #2B77EF;
+  /* display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+  word-wrap: break-word; */
+
+
 }
 .Fill li input{
 	border: none;
@@ -471,13 +493,13 @@ export default {
 .upload{
 	opacity: 0;
 	width: 100%!important;
-	height: .44rem!important;
+	/* height: .44rem!important; */
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
-
+  height: .71rem;
 }
 .add{
 	display: block;

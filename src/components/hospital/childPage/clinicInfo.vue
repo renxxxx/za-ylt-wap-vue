@@ -28,7 +28,7 @@
 							<!-- <van-dropdown-menu>
 								<van-dropdown-item v-model="value" :options="option" active-color='#2B77EF' @change="changeFn"/>
 							</van-dropdown-menu> -->
-              <router-link :to="{name:'list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item}}">
+              <router-link :to="{name:'list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item,time:new Date().getTime()}}">
                 <span>{{addClinic.promoter}}</span>
               </router-link>
 						</li>
@@ -98,6 +98,7 @@ import qs from 'qs';
 import { Dialog } from 'vant'
 import clinic_content from '../functionPage/clinic_content.vue'
 import { Toast } from 'vant'
+import Vue from 'vue'
 export default {
 	name: 'search',
 	data () {
@@ -178,6 +179,20 @@ export default {
 	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
 	});
 
+  },
+  activated(){
+    // console.log(localStorage.getItem('list_promoterValue'));
+    // console.log(this)
+    if(localStorage.getItem('list_promoterValue') || localStorage.getItem('list_promoterId')){
+      delete this.addClinic.promoter;
+      Vue.set(this.addClinic,'promoter',localStorage.getItem('list_promoterValue'));
+      Vue.set(this.addClinic,'hospitalUserId',localStorage.getItem('list_promoterId'));
+    }
+      // this.addClinic.hospitalUserId = localStorage.getItem('list_promoterId');
+    // Vue.set(this.addClinic,'promoter',localStorage.getItem('list_promoterValue'))
+    // this.addClinic.promoter = localStorage.getItem('list_promoterValue')
+    // this.addClinic.hospitalUserId = localStorage.getItem('list_promoterId');
+    // console.dir(this.addClinic)
   },
   mounted() {
      console.log(this.$router.apps[0]._route.name)
@@ -265,14 +280,14 @@ export default {
 		saveFn(){
 			console.log(this.addClinic)
 			this.$axios.post('/hospital/super-admin/hospital-clinic-alter',qs.stringify({
-				hospitalClinicId :  this.$route.query.item, 
+				hospitalClinicId :  this.$route.query.item,
 				name :  this.addClinic.name,
 				license : this.imageUpload,								//营业执照
 				address : this.addClinic.address, 						//门诊地址
 				headman : this.addClinic.headmanName, 					//负责人姓名
 				tel : this.addClinic.contactTel,						//负责人电话
 				remark : this.addClinic.remark, 						//备注
-				hospitalUserId : this.$route.query.promoterId,		//推广人id
+				hospitalUserId : this.addClinic.hospitalUserId,		//推广人id
 				clinicUserPhone : this.addClinic.phone, 				//分配账号
 				clinicUserPassword : this.addClinic.pwd,				//分配账号密码
 				clinicUserPasswordConfirm : this.addClinic.pwdConfirm,  //确认密码
@@ -481,7 +496,8 @@ export default {
 .upload{
 	opacity: 0;
 	width: 100%!important;
-	height: .44rem!important;
+	/* height: .44rem!important; */
+  height: .71rem;
 	position: absolute;
 	top: 0;
 	bottom: 0;
