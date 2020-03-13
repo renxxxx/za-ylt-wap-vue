@@ -328,7 +328,6 @@ img {
 }
 
 img[lazy="loading"]{
-
     object-fit:scale-down!important;
  }
 
