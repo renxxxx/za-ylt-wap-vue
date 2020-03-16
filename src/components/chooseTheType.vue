@@ -5,17 +5,17 @@
       <p>请选择进入</p>
     </div>
 
-		<div class="options" @click="choseFn('1')" v-if="showValue.hospitalUser">
+		<div class="options" @click="choseFn('1')">
       <img src="../assets/image/yy.png" alt="">
       <h3>Hospital</h3>
       <span>医院端</span>
     </div>
-    <div class="options" @click="choseFn('2')" v-if="showValue.clinicUser">
+    <div class="options" @click="choseFn('2')">
       <img src="../assets/image/mz.png" alt="">
       <h3>Outpatient</h3>
       <span>门诊端</span>
     </div>
-    <div class="options" @click="choseFn('3')" v-if="showValue.managerUser">
+    <div class="options" @click="choseFn('3')">
       <img src="../assets/image/yying.png" alt="">
       <h3>Operation</h3>
       <span>运营端</span>
@@ -35,7 +35,7 @@ export default {
   name: '',
   data () {
     return {
-      showValue:{},
+      // showValue:{},
       stata:undefined,
     }
   },
@@ -62,7 +62,7 @@ export default {
 
   },
   mounted () {
-    this.getData();
+
   },
   methods: {
     choseFn(stata){
@@ -72,13 +72,16 @@ export default {
       if(this.stata){
         switch(this.stata){
           case '1':
-          this.submitFn('/hospital/login-refresh',100)
+          this.$router.replace({ name : 'hospital',query:{time:new Date().getTime()}});
+          // this.submitFn('/hospital/login-refresh',100)
           break;
           case '2':
-          this.submitFn('/clinic/login-refresh',200);
+          this.$router.replace({ name : 'outpatient',query:{time:new Date().getTime()}});
+          // this.submitFn('/clinic/login-refresh',200);
           break;
           case '3':
-          this.submitFn('/manager/login-refresh',300)
+            this.$toast.fail('正在开发中')
+          // this.submitFn('/manager/login-refresh',300)
           break;
         }
       }else{
@@ -86,62 +89,6 @@ export default {
       }
 
     },
-    submitFn(_postRefresh,_isLogin){
-      this.$axios.post(_postRefresh)
-        .then( res =>{
-      		this.isLogin = _isLogin;
-      		localStorage.setItem("isLogin",_isLogin);
-      		switch(_isLogin){
-      			case 100:
-      			if(res.data.data.type == 1){
-      				this.$router.replace({ name : 'promoters_index',query:{time:new Date().getTime()}});
-      			}else{
-      				this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
-      			}
-      			this.account.hospitalId= res.data.data.hospital.hospitalId;
-      			// console.log(this.account.hospitalId)
-      			this.account.data = {};
-      			this.account.data = res.data;
-      			break;
-
-      			case 200:
-      				this.$router.replace({ name : 'hospital_sourceManagement',query:{time:new Date().getTime()}});
-      				this.account.clinicId= res.data.data.clinic.clinicId;
-      				this.account.hospitalId= res.data.data.hospital.hospitalId;
-      				// console.log(this.account.hospitalId)
-      				this.account.data = {};
-      				this.account.data = res.data;
-      			break;
-
-      			case 300:
-      				// this.$router.replace({ name : '',query:{time:new Date().getTime()}});
-      				this.$toast.fail('正在开发中')
-      				// Dialog({ message: '正在开发中，敬请期待' });
-      				// this.account.clinicId= res.data.data.clinic.clinicId;
-      				// this.account.hospitalId= res.data.data.hospital.hospitalId;
-      				// console.log(this.account.hospitalId)
-      				// this.account.data = {};
-      				// this.account.data = res.data;
-      			break;
-      		}
-      	})
-      	.catch((err)=>{
-          this.$toast.fail(err);
-      	})
-    },
-    getData(){
-      this.$axios.get('/phone-in-which?'+qs.stringify({phone:this.$route.query.phone}))
-      .then(res => {
-        this.showValue = {
-          hospitalUser: res.data.data.hospitalUser,
-          clinicUser: res.data.data.clinicUser,
-          managerUser: res.data.data.managerUser,
-        }
-      })
-      .catch((err)=>{
-      	console.log(err);
-      })
-    }
   },
 }
 </script>

@@ -7,8 +7,8 @@
 			<div class="centerTitle">
 				<h3>兑换列表</h3>
 			</div>
-		</div> 
-		<div class="zhangwei" :style="{'height':(height+60)+'px'}"></div>
+		</div>
+		<div class="zhangwei" :style="{'height':($store.state.topHeight+60)+'px'}"></div>
 		<integralExchangeList></integralExchangeList>
 	</div>
 </template>
@@ -17,31 +17,26 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import integralExchangeList from '../functionPage/integralExchangeList.vue'
+import integralExchangeList from '../function/integralExchangeList.vue'
 export default {
 	name: 'ExchangeList',
 	data () {
 		return {
-			
+
 		}
 	},
 	computed:{
-	  
+
 	},
 	components:{
 		integralExchangeList
 	},
 	created(){
-		var heightRexg = /^[0-9]*/g
-		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
-		//console.log(this.height)
+
 	},
   beforeRouteLeave(to, from, next) {
-    //debugger;
-	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
+	this.scrollTop =document.getElementById('outpatient').scrollTop ||document.getElementById('outpatient').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
                 if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
@@ -72,18 +67,17 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-     ;
     next(vm => {
-	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
+	 document.getElementById('outpatient').scrollTop=document.getElementById('outpatient').pageYOffset=vm.scrollTop;
 	});
-	
+
   }, mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
-	
+
+
 	},
 	methods: {
 		goBackFn(){
@@ -108,7 +102,7 @@ export default {
 	position: fixed;
 	top:0;
 	z-index: 9999;
-}	
+}
 .zhangwei{
 	width: 100%;
 	/* height: .47rem; */
@@ -138,7 +132,7 @@ export default {
 	font-size: .16rem;
 	font-weight: bolder;
 }
-.right{	
+.right{
 	width: 22%;
 	height: .47rem;
 	line-height: .47rem;
