@@ -2,10 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
-import axios from 'axios'
-import qs from 'qs';
-import router from '../router'
-import { Toast } from 'vant';
+
 
 const state={
   hospitalEntrance:{
