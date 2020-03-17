@@ -39,7 +39,7 @@
       		</router-link>
           <router-link  :to="{name : 'chooseTheType',query:{time:new Date().getTime()}}">
           	<div class="returnTypePage">
-          		<span>选择端口</span>
+          		<span>选择入口</span>
           	</div>
           </router-link>
       	</div>
@@ -79,7 +79,7 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    //debugger;
+    debugger;
 	this.scrollTop =document.getElementById('hospital').scrollTop ||document.getElementById('hospital').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
@@ -119,9 +119,18 @@ export default {
 
   },
   mounted() {
+    debugger
+    let thisVue = this;
 		if(window.plus){
       plus.navigator.setStatusBarStyle("light")
-		}
+    }
+    
+     if(this.$store.state.hospitalEntrance.loginRefresh())
+      this.$toast({message:'已登录',onClose:function(){
+        thisVue.$router.replace({ path : '/hospital/hospital_index',query:{time:new Date().getTime()}});
+      }})
+
+    
 		// let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
 		//  if(this.$store.state.isLogin == 100){
 		// 	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
@@ -133,6 +142,9 @@ export default {
 		// 	this.$router.replace({ name : 'chooseTheType',query:{time:new Date().getTime()}})
 		// 	this.$router.push(lastRoute)
 		// }
+  },
+  activated(){
+    debugger
   },
   computed:{
     account:{

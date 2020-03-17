@@ -5,8 +5,31 @@ Vue.use(Vuex)
 import axios from 'axios'
 import qs from 'qs';
 import router from '../router'
+import { Toast } from 'vant';
 
 const state={
+  hospitalEntrance:{
+    loginRefresh:function(){
+      debugger
+      let login;
+      Vue.prototype.$jquery.ajax({
+        url:'/hospital/login-refresh',
+        type:'post',
+        async:false,
+        success:function(res){
+          if(res.code == 0){
+            login=res.data
+          }
+        }
+      })
+      return login;
+    },
+  },
+  outpatientEntrance:{
+    login:function(){
+
+    },
+  },
   //账号
   isLogin:0,
   account:{

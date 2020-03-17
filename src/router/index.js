@@ -120,10 +120,9 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     {
-      path: '/',
+      path: '/chooseTheType',
       name: 'chooseTheType',
       component: chooseTheType,
-      alias:'/chooseTheType'
     },
     {
       path: '/sharePage',
@@ -135,10 +134,10 @@ const router = new Router({
       name: 'hospital',
       component: hospital,
       meta: {auth:true},
-      redirect:'hospitalLogin',
+      redirect:'/hospital/hospital_index',
       children:[
         {
-          path: '/hospitalLogin',
+          path: 'hospitalLogin',
           name: 'hospitalLogin',
           component: hospitalLogin,
           meta: {auth:true},
@@ -147,7 +146,7 @@ const router = new Router({
           path: 'hospital_index',
           name: 'hospital_index',
           component: hospital_index,
-          meta: {auth:true},
+          meta: {auth:true,tabbar:true},
         },
         {
           path: 'hospital_urlPage',
@@ -165,19 +164,19 @@ const router = new Router({
           path: 'hospital_clinic',
           name: 'hospital_clinic',
           component: hospital_clinic,
-          meta: {auth:true},
+          meta: {auth:true,tabbar:true,lastRouter:true},
         },
         {
           path: 'hospital_gene',
           name: 'hospital_gene',
           component: hospital_gene,
-          meta: {auth:true},
+          meta: {auth:true,tabbar:true},
         },
         {
           path: 'hospital_user',
           name: 'hospital_user',
           component: hospital_user,
-          meta: {auth:true},
+          meta: {auth:true,tabbar:true},
         },
         {
           path: 'hospital_clinicSearch',
@@ -195,7 +194,7 @@ const router = new Router({
           path: 'hospital_clinicDetails',
           name: 'hospital_clinicDetails',
           component: hospital_clinicDetails,
-          meta: {auth:true},
+          meta: {auth:true,lastRouter:true},
         },
         {
           path: 'hospital_clinicInfo',
@@ -732,49 +731,81 @@ const router = new Router({
   ]
 })
 router.afterEach((to,from) => {
-  //判断是否显示端口底部菜单按钮
-  console.log('hahahhah')
-  if(Store.state.isLogin || to.name == 'sharePage'){
-    if(to.name == 'hospital_index'|| to.name == 'hospital_clinic' || to.name == 'hospital_gene' || to.name == 'hospital_user'
-      || to.name == 'outpatient_index' || to.name == 'outpatient_hospital' || to.name == 'outpatient_gene' || to.name == 'outpatient_user'){
-      Store.state.bottomShow = true;
+  debugger
+  Store.state.bottomShow = !!to.meta.tabbar;
+  if(!!to.meta.lastRouter)
+    localStorage.setItem('lastRouter',JSON.stringify({path:to.path,name:to.name,query:to.query}))
+
+
+  if(to.path=='/'){
+    let entrance = localStorage.getItem('entrance')
+    if(entrance){
+      switch(entrance){
+        case '1':
+          router.replace({ path : '/hospital/hospital_index',query:{time:new Date().getTime()}});
+        return
+        // this.submitFn('/hospital/login-refresh',100)
+        break;
+        case '2':
+          router.replace({ path : '/outpatient/outpatient_index',query:{time:new Date().getTime()}});
+        return
+        // this.submitFn('/clinic/login-refresh',200);
+        break;
+        default:
+          router.replace({ path : '/chooseTheType',query:{time:new Date().getTime()}});
+          return
+        // this.submitFn('/manager/login-refresh',300)
+        break;
+      }
     }else{
-      Store.state.bottomShow = false;
-    }
-    //判断是否显示医院端返回首页和顶部按钮
-    // console.log(to.name)
-    if(to.name == 'hospital_addCLinic' || to.name == 'hospital_clinicInfo' || to.name == 'hospitalLogin'
-    || to.name == 'hospital_pictureEnlargement' || to.name == 'hospital_operatingManualListDetails' ||
-    to.name == 'hospital_index' || to.name == 'promoters_index' || to.name == 'promoters_clinicInfo' ||
-    to.name == 'promoters_addClinic'){
-      Store.state.hospitalReturnHomePage = false;
-    }else{
-      Store.state.hospitalReturnHomePage = true;
-    }
-    //判断推广人端是否显示端口底部菜单按钮
-    if(to.name == 'promoters_index' || to.name == 'promoters_cilnic' || to.name == 'promoters_user'){
-      Store.state.childBottomShow = true;
-    }else{
-      Store.state.childBottomShow = false;
-    }
-    //判断门诊端返回首页按钮
-    if(to.name == 'outpatient_index' || to.name == 'outpatientLogin'){
-      Store.state.outpatientReturnHomePage = false;
-    }else{
-      Store.state.outpatientReturnHomePage = true;
-    }
-  }else{
-    // console.log(to.path.indexOf("hospital") != -1)
-    if(to.path.indexOf("hospital") != -1 || to.path.indexOf("promoters") != -1){
-      router.replace({name:'hospitalLogin'});
-      Store.state.hospitalReturnHomePage = false;
-    }else if( to.path.indexOf("outpatient") != -1 ){
-      router.replace({name:'outpatientLogin'});
-      Store.state.outpatientReturnHomePage = false;
+      router.replace({ path : '/chooseTheType',query:{time:new Date().getTime()}});
+      return
     }
   }
+    
 
-
+  //判断是否显示端口底部菜单按钮
+  //console.log('hahahhah')
+  //if(Store.state.isLogin || to.name == 'sharePage'){
+    // if(to.name == 'hospital_index'|| to.name == 'hospital_clinic' || to.name == 'hospital_gene' || to.name == 'hospital_user'
+    //   || to.name == 'outpatient_index' || to.name == 'outpatient_hospital' || to.name == 'outpatient_gene' || to.name == 'outpatient_user'){
+    //   Store.state.bottomShow = true;
+    // }else{
+    //   Store.state.bottomShow = false;
+    // }
+    // //判断是否显示医院端返回首页和顶部按钮
+    // // console.log(to.name)
+    // if(to.name == 'hospital_addCLinic' || to.name == 'hospital_clinicInfo' || to.name == 'hospitalLogin'
+    // || to.name == 'hospital_pictureEnlargement' || to.name == 'hospital_operatingManualListDetails' ||
+    // to.name == 'hospital_index' || to.name == 'promoters_index' || to.name == 'promoters_clinicInfo' ||
+    // to.name == 'promoters_addClinic'){
+    //   Store.state.hospitalReturnHomePage = false;
+    // }else{
+    //   Store.state.hospitalReturnHomePage = true;
+    // }
+    // //判断推广人端是否显示端口底部菜单按钮
+    // if(to.name == 'promoters_index' || to.name == 'promoters_cilnic' || to.name == 'promoters_user'){
+    //   Store.state.childBottomShow = true;
+    // }else{
+    //   Store.state.childBottomShow = false;
+    // }
+    // //判断门诊端返回首页按钮
+    // if(to.name == 'outpatient_index' || to.name == 'outpatientLogin'){
+    //   Store.state.outpatientReturnHomePage = false;
+    // }else{
+    //   Store.state.outpatientReturnHomePage = true;
+    // }
+ // }else{
+    // console.log(to.path.indexOf("hospital") != -1)
+    // if(to.path.indexOf("hospital") != -1 || to.path.indexOf("promoters") != -1){
+    //   router.replace({name:'hospitalLogin'});
+    //   Store.state.hospitalReturnHomePage = false;
+    // }else if( to.path.indexOf("outpatient") != -1 ){
+    //   router.replace({name:'outpatientLogin'});
+    //   Store.state.outpatientReturnHomePage = false;
+    // }
+ // }
+  
 // 		{
 // 			//推广人端首页主页面
 // 			path: '/promoters_index',
@@ -909,7 +940,7 @@ router.afterEach((to,from) => {
 //     	alias:'/account'
 //     },
 //     {
-//     	//选择端口页面
+//     	//选择入口页面
 //     	path: '/chooseTheType',
 //     	name: 'chooseTheType',
 //     	meta: {auth:true},

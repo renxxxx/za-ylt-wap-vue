@@ -70,13 +70,14 @@ export default {
     },
     submit(){
       if(this.stata){
+        localStorage.setItem('entrance',this.stata)
         switch(this.stata){
           case '1':
-          this.$router.replace({ name : 'hospital',query:{time:new Date().getTime()}});
+          this.$router.replace({ path : '/hospital',query:{time:new Date().getTime()}});
           // this.submitFn('/hospital/login-refresh',100)
           break;
           case '2':
-          this.$router.replace({ name : 'outpatient',query:{time:new Date().getTime()}});
+          this.$router.replace({ path : '/outpatient',query:{time:new Date().getTime()}});
           // this.submitFn('/clinic/login-refresh',200);
           break;
           case '3':
@@ -85,7 +86,7 @@ export default {
           break;
         }
       }else{
-        this.$toast.fail('请选择端口')
+        this.$toast.fail('请选择入口')
       }
 
     },

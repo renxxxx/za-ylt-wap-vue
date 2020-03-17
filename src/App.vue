@@ -162,18 +162,18 @@ export default {
       debugger
        if(this.$store.state.isLogin == 100){
         if(vm.$store.state.account.data.data.type == 1){
-          this.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
-          this.$router.replace(lastRoute)
+          //this.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
+          //this.$router.replace(lastRoute)
         }else{
-          this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
-          this.$router.replace(lastRoute)
+          //this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
+          //this.$router.replace(lastRoute)
         }
       }else  if(this.$store.state.isLogin == 200){
       	this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}})
-      	this.$router.replace(lastRoute)
+      	//this.$router.replace(lastRoute)
       }else  if(this.$store.state.isLogin == 300){
       	this.$router.replace({ name : 'chooseTheType',query:{time:new Date().getTime()}})
-      	this.$router.replace(lastRoute)
+      	//this.$router.replace(lastRoute)
       }
     }
     function getdata(_postRefresh, _isLogin) {

@@ -130,7 +130,7 @@ export default {
   watch:{
     $route(to,from){
       // console.log('sss')
-      localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
+      //localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
     }
   },
   methods:{

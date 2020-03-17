@@ -125,6 +125,9 @@ export default {
   computed: {
     ...mapGetters(["account", "isLogin"])
   },
+  beforeCreate(){
+    
+  },
   created() {
 
   },
@@ -167,13 +170,36 @@ export default {
 	});
 
   },
+  beforeMount(){
+    debugger
+    
+  },
   mounted() {
+    debugger
+    let thisVue = this;
     if (window.plus) {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
     }
     this.initData();
+
+    let lastRouter = localStorage.getItem('lastRouter')
+    if(lastRouter){
+      this.$router.push(JSON.parse(lastRouter));
+      localStorage.removeItem('lastRouter')
+      return
+    }
+    if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+      this.$toast({message:'请登录',onClose:function(){
+        thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:new Date().getTime()}});
+      }})
   },
+  activated(){
+    debugger
+  },
+  deactivated(){
+    debugger
+    },
   methods: {
     afterPullDown() {
       //下拉刷新

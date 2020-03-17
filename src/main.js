@@ -148,7 +148,8 @@ Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab
 	.use(GridItem).use(SwipeCell).use(Circle).use(Toast).use(ImagePreview).use(Progress).use(Picker).use(Collapse).use(CollapseItem);
 //配置全局时间
 Toast.setDefaultOptions({
-	duration: 800
+	duration: 1500,
+	forbidClick: true
 });
 /* eslint-disable no-new */
 

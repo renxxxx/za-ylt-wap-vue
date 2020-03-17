@@ -39,7 +39,7 @@
       		</router-link>
           <router-link  :to="{name : 'chooseTheType',query:{time:new Date().getTime()}}">
           	<div class="returnTypePage">
-          		<span>选择端口</span>
+          		<span>选择入口</span>
           	</div>
           </router-link>
       	</div>
