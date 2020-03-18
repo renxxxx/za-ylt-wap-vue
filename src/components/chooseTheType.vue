@@ -62,7 +62,17 @@ export default {
 
   },
   mounted () {
-
+let entrance = localStorage.getItem('entrance')
+      switch(entrance){
+        case '1':
+          this.$router.replace({ path : '/hospital/hospital_index',query:{time:new Date().getTime()}});
+        return
+        break;
+        case '2':
+          this.$router.replace({ path : '/outpatient/outpatient_index',query:{time:new Date().getTime()}});
+        return
+        break;
+      }
   },
   methods: {
     choseFn(stata){

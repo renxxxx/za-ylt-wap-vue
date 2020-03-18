@@ -125,6 +125,7 @@ export default {
   computed: {
     ...mapGetters(["account", "isLogin"])
   },
+
   beforeCreate(){
     
   },
@@ -134,6 +135,8 @@ export default {
   beforeRouteLeave(to, from, next) {
 	this.scrollTop =document.getElementById('hospital').scrollTop ||document.getElementById('hospital').pageYOffset
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+    console.log('to'+JSON.stringify({path:to.path,name:to.name,query:to.query}))
+    console.log('from'+JSON.stringify({path:from.path,name:from.name,query:from.query}))
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
@@ -165,9 +168,18 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
-    next(vm => {
+     next(vm => {
 	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
+  });
+  
+         let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
+         let lastRouter = localStorage.getItem('lastRouter')
+         console.log('fromRoute'+fromRoute)
+         console.log('lastRouter'+lastRouter)
+         if(fromRoute == lastRouter){
+          localStorage.removeItem('lastRouter')
+         }
+   
 
   },
   beforeMount(){
@@ -181,18 +193,20 @@ export default {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
     }
-    this.initData();
+    
 
     let lastRouter = localStorage.getItem('lastRouter')
-    if(lastRouter){
-      this.$router.push(JSON.parse(lastRouter));
-      localStorage.removeItem('lastRouter')
-      return
-    }
+        if(lastRouter){
+          this.$router.push(JSON.parse(lastRouter));
+          return
+        }
+
     if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
       this.$toast({message:'请登录',onClose:function(){
         thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:new Date().getTime()}});
       }})
+
+      this.initData();
   },
   activated(){
     debugger
@@ -285,7 +299,7 @@ export default {
     },
     getdata(_data) {
       this.$axios.post("/c2/article/items",qs.stringify({
-            hospitalId: this.account.hospitalId,
+            hospitalId: this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
             pn: this.page,
             ps: 10
           })

@@ -120,9 +120,16 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     {
+      path: '/',
+      name: 'chooseTheType',
+      component: chooseTheType,
+      meta: {unkeepLastRoute:true},
+    },
+    {
       path: '/chooseTheType',
       name: 'chooseTheType',
       component: chooseTheType,
+      meta: {unkeepLastRoute:true},
     },
     {
       path: '/sharePage',
@@ -140,13 +147,13 @@ const router = new Router({
           path: 'hospitalLogin',
           name: 'hospitalLogin',
           component: hospitalLogin,
-          meta: {auth:true},
+          meta: {auth:true,unkeepLastRoute:true},
         },
         {
           path: 'hospital_index',
           name: 'hospital_index',
           component: hospital_index,
-          meta: {auth:true,tabbar:true},
+          meta: {auth:true,tabbar:true,unkeepLastRoute:true},
         },
         {
           path: 'hospital_urlPage',
@@ -733,36 +740,11 @@ const router = new Router({
 router.afterEach((to,from) => {
   debugger
   Store.state.bottomShow = !!to.meta.tabbar;
-  if(!!to.meta.lastRouter)
+  if(!to.meta.unkeepLastRoute)
     localStorage.setItem('lastRouter',JSON.stringify({path:to.path,name:to.name,query:to.query}))
-
-
-  if(to.path=='/'){
-    let entrance = localStorage.getItem('entrance')
-    if(entrance){
-      switch(entrance){
-        case '1':
-          router.replace({ path : '/hospital/hospital_index',query:{time:new Date().getTime()}});
-        return
-        // this.submitFn('/hospital/login-refresh',100)
-        break;
-        case '2':
-          router.replace({ path : '/outpatient/outpatient_index',query:{time:new Date().getTime()}});
-        return
-        // this.submitFn('/clinic/login-refresh',200);
-        break;
-        default:
-          router.replace({ path : '/chooseTheType',query:{time:new Date().getTime()}});
-          return
-        // this.submitFn('/manager/login-refresh',300)
-        break;
-      }
-    }else{
-      router.replace({ path : '/chooseTheType',query:{time:new Date().getTime()}});
-      return
-    }
-  }
+  
     
+
 
   //判断是否显示端口底部菜单按钮
   //console.log('hahahhah')
