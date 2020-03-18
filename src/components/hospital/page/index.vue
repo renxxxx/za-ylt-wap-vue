@@ -203,7 +203,7 @@ export default {
 
     if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
       this.$toast({message:'请登录',onClose:function(){
-        thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:new Date().getTime()}});
+        thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
       }})
 
       this.initData();
