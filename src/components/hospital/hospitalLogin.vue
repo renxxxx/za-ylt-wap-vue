@@ -13,7 +13,7 @@
       	</div>
       	<div class="inputBox">
       		<img  class="passwordImg" src="../../assets/image/mima@2x.png" alt="">
-      		<input type="password" class="lastInput" v-model="submitAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd1' @keyup.enter="ceshi">
+      		<input type="password" class="lastInput" v-model="submitAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd1' @keyup.enter="submit">
           <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd1')" v-if="submitAccount.password" >
           <img src="../../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('password')" v-if="submitAccount.password">
       	</div>
@@ -79,7 +79,9 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     debugger;
-	this.scrollTop =document.getElementById('hospital').scrollTop ||document.getElementById('hospital').pageYOffset
+	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
+this.scrollTop = scrollTop?scrollTop :0;
+console.log(this.scrollTop)
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -197,6 +199,7 @@ export default {
       }
     },
     submit(){
+      let thisVue = this
     	 if(this.checked == true){
         this.$axios.post('/hospital/login',qs.stringify({
         		account : this.submitAccount.name,
@@ -205,14 +208,15 @@ export default {
         	.then( res =>{
             // console.log(res.data.code)
             if(res.data.code == 0){
-				this.$store.state.hospitalEntrance.loginRefresh()
-				console.dir(this.$store.state.hospitalEntrance.loginRefresh())
-				debugger;
-				if(this.$store.state.hospitalEntrance.loginRefresh().type == 1){
-					this.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
-				}else{
-					this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
-				}
+        debugger;
+        this.$toast({"message":'登录成功',onClose(){
+          if(thisVue.$store.state.hospitalEntrance.loginRefresh().type == 1){
+                    thisVue.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
+                  }else{
+                    thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
+                  }
+        }})
+				
               // this.$axios.post('/hospital/login-refresh')
               // 	.then( res =>{
               //     if(res.data.code == 0){

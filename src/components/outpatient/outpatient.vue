@@ -1,5 +1,5 @@
 <template>
-  <div id="outpatient" :class="[bottomShow? 'hospitalBottom':'']" ref='outpatientRef'>
+  <div id="outpatient"  ref='outpatientRef'>
     <keep-alive>
       <router-view class="appView"/>
     </keep-alive>
@@ -145,7 +145,8 @@ export default {
   methods:{
     // 滑动一定距离出现返回顶部按钮
     handleScroll() {
-
+if(!this.$refs.outpatientRef)
+        return
       let scrollTop =
         this.$refs.outpatientRef.scrollTop ||
         this.$refs.outpatientRef.pageYOffset;
@@ -160,7 +161,7 @@ export default {
           ((scrollTop + windowHeight) / this.$refs.outpatientRef.scrollHeight) * 100
         ) / 100;
       // console.log(scrollTop)
-      if (data && scrollTop > 300) {
+      if (data && scrollTop > 800) {
         this.outpatientReturnTopPage = true;
         this.$refs.returnTopRef.style.opacity = 1;
         this.$refs.returnHomePageRef.style.bottom = '1.5rem';

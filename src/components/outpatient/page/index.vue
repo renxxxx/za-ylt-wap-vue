@@ -119,9 +119,13 @@ export default {
   created(){
   },
   beforeRouteLeave(to, from, next) {
-	this.scrollTop =document.getElementById('outpatient').scrollTop ||document.getElementById('outpatient').pageYOffset
-	debugger;
-	console.log("clinic"+this.scrollTop)
+	  	debugger;
+	// this.scrollTop =document.getElementById('outpatient').scrollTop ||document.getElementById('outpatient').pageYOffset
+	// console.log("clinic"+this.scrollTop)
+	let scrollTop = this.scrollTop =document.getElementById('outpatient').scrollTop;
+this.scrollTop = scrollTop?scrollTop :0;
+console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
@@ -153,7 +157,9 @@ export default {
   },
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
+	  debugger
     next(vm => {
+		debugger
       document.getElementById('outpatient').scrollTop=document.getElementById('outpatient').pageYOffset=vm.scrollTop;
     });
 	let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
@@ -177,11 +183,15 @@ export default {
 	      this.$router.push(JSON.parse(lastRoute));
 	      return
 	    }
-	if(this.$route.meta.auth && !this.$store.state.outpatientEntrance.loginRefresh())
+	
+	this.getNum();
+  },
+  activated(){
+	  let thisVue =this
+	  if(this.$route.meta.auth && !this.$store.state.outpatientEntrance.loginRefresh())
 		this.$toast({message:'请登录',onClose:function(){
 		  thisVue.$router.replace({ path : '/outpatientLogin',query:{time:1}});
 		}})
-	this.getNum();
   },
   computed:{
 		show: {

@@ -13,7 +13,7 @@
       	</div>
       	<div class="inputBox">
       		<img  class="passwordImg" src="../../assets/image/mima@2x.png" alt="">
-      		<input type="password" class="lastInput" v-model="submitAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd1' @keyup.enter="ceshi">
+      		<input type="password" class="lastInput" v-model="submitAccount.password" name='password' placeholder="请输入密码" autocomplete id='pwd1' @keyup.enter="submit">
           <img :src='pwdImg' alt="" class="openImg" @click="numFN('pwd1')" v-if="submitAccount.password" >
           <img src="../../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn('password')" v-if="submitAccount.password">
       	</div>
@@ -185,6 +185,7 @@ export default {
       }
     },
     submit(){
+      let thisVue = this
     	 if(this.checked == true){
         this.$axios.post('/clinic/login',qs.stringify({
         		account : this.submitAccount.name,
@@ -192,24 +193,11 @@ export default {
         	}))
         	.then( res =>{
             if(res.data.code == 0){
-						this.$store.state.outpatientEntrance.loginRefresh()
-						this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
-              // this.$axios.post('/clinic/login-refresh')
-              // 	.then( res =>{
-              //     if(res.data.code == 0){
-              //       this.isLogin = 200;
-              //       localStorage.setItem("isLogin",this.isLogin);
-              //       this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
-              //       this.account.hospitalId= res.data.data.hospital.hospitalId;
-              //       // console.log(this.account.hospitalId)
-              //       this.account.data = {};
-              //       this.account.data = res.data;
-              //     }
-              // 	})
-              // 	.catch((err)=>{
-              // 		console.log(err)
-              // 		this.$toast.fail(err);
-              // 	})
+             this.$toast({"message":'登录成功',onClose(){
+               						thisVue.$store.state.outpatientEntrance.loginRefresh()
+                     thisVue.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
+
+        }})
 
             }else{
               this.$toast(res.data.codeMsg);

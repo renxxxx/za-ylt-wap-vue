@@ -136,6 +136,8 @@ export default {
   methods:{
     // 滑动一定距离出现返回顶部按钮
     handleScroll() {
+      if(!this.$refs.hospitalRef)
+        return
 	debugger
       let scrollTop =
         this.$refs.hospitalRef.scrollTop ||

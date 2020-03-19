@@ -1,6 +1,5 @@
 <template>
-    <div class="hospital">
-      <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" style="height:100%;overflow: auto;">
+      <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
           <div class="navWarp" :style="{'padding-top': $store.state.topHeight}">
             <div class="navTitle">
               <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
@@ -97,7 +96,6 @@
           <div style="height: .55rem;"></div>
       </van-pull-refresh>
       <!-- <bottomNav></bottomNav> -->
-    </div>
 </template>
 
 <script>
@@ -134,10 +132,11 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
 		debugger
-		console.log('1to'+JSON.stringify({path:to.path,name:to.name,query:to.query}))
-		console.log('from'+JSON.stringify({path:from.path,name:from.name,query:from.query}))
-	this.scrollTop =document.getElementById('hospital').scrollTop ||document.getElementById('hospital').pageYOffset
-	// console.log(document.getElementById('hospital').pageYOffset)
+	
+  let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
+this.scrollTop = scrollTop?scrollTop :0;
+console.log(this.scrollTop)
+	
 	
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
   
@@ -174,6 +173,7 @@ export default {
   beforeRouteEnter(to, from, next) {
 	  debugger;
      next(vm => {
+       debugger
 	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
   });
   

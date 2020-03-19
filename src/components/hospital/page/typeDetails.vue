@@ -90,7 +90,9 @@ export default {
 
 	},
   beforeRouteLeave(to, from, next) {
-	this.scrollTop =document.getElementById('hospital').scrollTop ||document.getElementById('hospital').pageYOffset
+	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
+this.scrollTop = scrollTop?scrollTop :0;
+console.log(this.scrollTop)
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
             if (this.$vnode && this.$vnode.data.keepAlive)
             {

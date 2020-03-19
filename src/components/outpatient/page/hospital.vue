@@ -101,8 +101,10 @@ export default {
 
   },
   beforeRouteLeave(to, from, next) {
-    //debugger;
-	this.scrollTop =document.getElementById('outpatient').scrollTop ||document.getElementById('outpatient').pageYOffset
+	debugger;
+	let scrollTop = this.scrollTop =document.getElementById('outpatient').scrollTop;
+this.scrollTop = scrollTop?scrollTop :0;
+console.log(this.scrollTop)
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -136,6 +138,7 @@ export default {
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
+		debugger
 	 document.getElementById('outpatient').scrollTop=document.getElementById('outpatient').pageYOffset=vm.scrollTop;
 	});
 
