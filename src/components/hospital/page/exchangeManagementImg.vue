@@ -101,7 +101,7 @@ export default {
 		//回退方法
 		goBackFn(){
 			this.$router.go(-1)
-			// this.$router.push({ name : 'hospital_exchangeManagementAdd',query : {item : this.commodity}});
+			// this.$router.push({ path : '/hospital/hospital_exchangeManagementAdd',query : {item : this.commodity}});
 			// exchangeManagementAdd
 		},
 		//添加图片
@@ -149,7 +149,7 @@ export default {
 		successFn(){
 			Toast.success('操作成功');
 			  this.exchangeAdd = {
-				name : '',
+				path : '/hospital/',
 				payExchangepoint : 0,
 				stock : 0,
 				intro : '',

@@ -1,7 +1,7 @@
 <template>
 	<div class="hospital">
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-      <router-link :to="{name : 'outpatient_articleSearch'}">
+      <router-link :to="{path : '/outpatient/outpatient_articleSearch'}">
         <div class="hospital_search">
         	<input type="text" placeholder="搜索文章">
         	<img src="../../../assets/image/sousuo@2x.png" alt="">
@@ -11,7 +11,7 @@
 			<div class="clinic_buttton">
 				<button>搜索</button>
 			</div>
-			<router-link :to="{name : 'outpatient_clinicMessage',query:{time:new Date().getTime()}}">
+			<router-link :to="{path : '/outpatient/outpatient_clinicMessage',query:{time:new Date().getTime()}}">
 				<div class="hospital_information">
 					<img src="../../../assets/image/xiaoxi@2x.png" alt="">
 					<div class="num" v-if="this.account.data.data.newMessageCount? true:false">
@@ -24,25 +24,25 @@
 		<div class="shared">
 			<!-- <h3>共享医连体</h3> -->
 			<ul>
-				<router-link :to="{name : 'outpatient_hospitalImage',query:{time:new Date().getTime()}}">
+				<router-link :to="{path : '/outpatient/outpatient_hospitalImage',query:{time:new Date().getTime()}}">
 					<li>
 						<img src="../../../assets/image/yiyuanxingxiang@2x.png" alt="">
 						<span>医院形象</span>
 					</li>
 				</router-link>
-				<router-link :to="{name : 'outpatient_case',query:{time:new Date().getTime()}}">
+				<router-link :to="{path : '/outpatient/outpatient_case',query:{time:new Date().getTime()}}">
 					<li>
 						<img src="../../../assets/image/youzhianli@2x.png" alt="">
 						<span>优质案例</span>
 					</li>
 				</router-link>
-				<router-link :to="{name : 'outpatient_expertsIntroduction',query:{time:new Date().getTime()}}">
+				<router-link :to="{path : '/outpatient/outpatient_expertsIntroduction',query:{time:new Date().getTime()}}">
 					<li>
 						<img src="../../../assets/image/zhuanjia@2x.png" alt="">
 						<span>专家介绍</span>
 					</li>
 				</router-link>
-				<router-link :to="{name : 'outpatient_activityReleased',query:{time:new Date().getTime()}}">
+				<router-link :to="{path : '/outpatient/outpatient_activityReleased',query:{time:new Date().getTime()}}">
 					<li>
 						<img src="../../../assets/image/huodongfabu@2x.png" alt="">
 						<span>最新活动</span>
@@ -58,7 +58,7 @@
 			<ul :model="article">
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @check="onLoad">
 					<li v-for="(items,inx) in article" :key="inx">
-						<router-link :to="{name : 'outpatient_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}">
+						<router-link :to="{path : '/outpatient/outpatient_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}">
 							<div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
 								<p>{{items.content}}</p>
 								<div class="article_leftTime">

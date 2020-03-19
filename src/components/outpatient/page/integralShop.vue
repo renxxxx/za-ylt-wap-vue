@@ -14,7 +14,7 @@
 			<h4>{{shopDetails.name}}</h4>
 			<p>{{shopDetails.intro}}</p>
 		</div>
-		<router-link :to="{name : 'outpatient_integralShopDetails',query:{commodityId:commodityId,time:new Date().getTime()}}">
+		<router-link :to="{path : '/outpatient/outpatient_integralShopDetails',query:{commodityId:commodityId,time:new Date().getTime()}}">
 			<div class="settlement">
 				<button>总计:&nbsp;&nbsp;<span>{{shopDetails.payExchangepoint}}</span>积分</button>
 				<button>立即兑换</button>

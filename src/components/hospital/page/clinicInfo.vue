@@ -107,11 +107,11 @@ export default {
 			// option: [],
 			// 添加列表绑定数据
 			addClinic:{
-				name : '',
+				path : '/hospital/',
 				phone : '',
 				pwd : '',
 				pwdConfirm : '',
-				headmanName : '',
+				headmanpath : '/hospital/',
 				contactTel : '',
 				address : '',
 				remark : '',

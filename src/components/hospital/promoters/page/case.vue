@@ -10,7 +10,7 @@
         <ul>
           <li v-for="(items,inx) in article" :key="inx">
             <router-link
-              :to="{name : 'promoters_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
+              :to="{path : '/promoters/promoters_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
             >
               <div class="article_left">
                 <p>{{items.content}}</p>

@@ -4,7 +4,7 @@
 			<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 			<ul>
 				<li v-for="(item,inx) in  items" :key="inx">
-					<router-link :to="{name : 'hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+					<router-link :to="{path : '/hospital/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 						<div class="style">
 							<div class="contentTitle">
 								<img :src="item.img" alt="">
@@ -138,23 +138,23 @@ export default {
 		},
 		search(){
 			debugger
-			// let clinicId = '';
-			// this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
-			// this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
-			// this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':'',
+			let clinicId = '';
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
+			this.$route.name == 'hospital_sourceManagement'?	clinicId='':'',
+			this.$route.name == 'outpatient_search'?	clinicId='':'',
 			Object.assign(this.$data, this.$options.data());
 			this.getNextPage()
 		},
 		getData(){
 			debugger
-			// let clinicId = '';
-			// this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
-			// this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
-			// this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':''
+			let clinicId = '';
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
+			this.$route.name == 'hospital_sourceManagement'?	clinicId='':'',
+			this.$route.name == 'outpatient_search'?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
 				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
-				// clinicId : clinicId,
+				clinicId : clinicId,
 				pn : this.page,
 				ps : 10,
 			}))

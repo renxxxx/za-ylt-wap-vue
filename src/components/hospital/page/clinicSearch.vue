@@ -19,7 +19,7 @@
 					<h3>合作门诊 {{clinic.num}}</h3>
 				</div>
 				<div class="titleRight">
-					<router-link :to="{name : 'hospital_addCLinic',query:{time:new Date().getTime()}}">
+					<router-link :to="{path : '/hospital/hospital_addCLinic',query:{time:new Date().getTime()}}">
 						<span>新增</span>
 						<img src="../../../assets/image/xinzeng@2x.png" alt="">
 					</router-link>

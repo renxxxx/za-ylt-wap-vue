@@ -460,7 +460,7 @@ const router = new Router({
               path: '/promoters_index',
               name: 'promoters_index',
               component: promoters_index,
-              meta: {auth:true},
+              meta: {auth:true,bottom:true},
             },
             {
               path: 'promoters_clinicSearch',
@@ -520,13 +520,13 @@ const router = new Router({
               path: 'promoters_cilnic',
               name: 'promoters_cilnic',
               component: promoters_cilnic,
-              meta: {auth:true},
+              meta: {auth:true,bottom:true},
             },
             {
               path: 'promoters_user',
               name: 'promoters_user',
               component: promoters_user,
-              meta: {auth:true},
+              meta: {auth:true,bottom:true},
             },
             {
               path: 'promoters_case',
@@ -740,6 +740,7 @@ const router = new Router({
 router.afterEach((to,from) => {
   debugger
   Store.state.bottomShow = !!to.meta.tabbar;
+  Store.state.childBottomShow = !!to.meta.bottom
   if(!to.meta.unkeepLastRoute)
     localStorage.setItem('lastRouter',JSON.stringify({path:to.path,name:to.name,query:to.query}))
   

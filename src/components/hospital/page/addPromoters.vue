@@ -45,7 +45,7 @@ export default {
 	data () {
 		return {
 			addPromoters:{
-				name : '',
+				path : '/hospital/',
 				phone : '',
 				password : '',
 				passwordConfirm : '',

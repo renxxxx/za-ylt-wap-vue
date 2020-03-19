@@ -9,7 +9,7 @@
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <ul>
           <li v-for="(items,inx) in article" :key="inx">
-            <router-link :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 4,time:new Date().getTime()}}">
+            <router-link :to="{path : '/hospital/hospital_caseDetails' ,query : {itemId : items.itemId,data: 4,time:new Date().getTime()}}">
               <div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
                 <p>{{items.content}}</p>
                 <div class="article_leftTime">

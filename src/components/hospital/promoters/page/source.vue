@@ -35,7 +35,7 @@
 					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="nextPageFn">
 						<ul class="list">
 							<li v-for="(item,inx) in  items" :key="inx">
-								<router-link :to="{name : 'promoters_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+								<router-link :to="{path : '/promoters/promoters_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 									<div class="style">
 										<div class="contentTitle">
 											<img :src="item.img" alt="">
@@ -62,7 +62,7 @@
 					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="yesNextPageFn">
 						<ul class="list">
 							<li v-for="(item,inx) in  yesItems" :key="inx">
-								<router-link :to="{name : 'promoters_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+								<router-link :to="{path : '/promoters/promoters_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 									<div class="style">
 										<div class="contentTitle">
 											<img :src="item.img" alt="">
@@ -89,7 +89,7 @@
 					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="noNextPageFn">
 						<ul class="list">
 							<li v-for="(item,inx) in  noItems" :key="inx">
-								<router-link :to="{name : 'promoters_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+								<router-link :to="{path : '/promoters/promoters_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 									<div class="style">
 										<div class="contentTitle">
 											<img :src="item.img" alt="">

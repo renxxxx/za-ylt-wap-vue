@@ -24,13 +24,13 @@
 		</van-image-preview>
 		<div class="user_center"  :style="{'padding-top': (parseInt($store.state.topHeight.replace('px',''))+140)+'px'}">
 			<ul>
-				<router-link :to="{name : 'hospital_taskManagement',query:{time:new Date().getTime()}}">
+				<router-link :to="{path : '/hospital/hospital_taskManagement',query:{time:new Date().getTime()}}">
 					<li>
 						<span>任务管理</span>
 						<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
-				<router-link :to="{name : 'hospital_exchangeManagement',query:{time:new Date().getTime()}}">
+				<router-link :to="{path : '/hospital/hospital_exchangeManagement',query:{time:new Date().getTime()}}">
 					<li>
 						<span>兑换管理</span>
 						<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -44,7 +44,7 @@
 					<span>集采积分</span>
 					<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
 				</li>
-				<router-link :to="{name : 'hospital_promoters',query:{time:new Date().getTime()}}">
+				<router-link :to="{path : '/hospital/hospital_promoters',query:{time:new Date().getTime()}}">
 					<li>
 						<span>推广人员管理</span>
 						<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -151,31 +151,15 @@ export default {
 		//退出方法
 		exitFn(){
 			this.$axios.post('/hospital/logout')
-			this.$store.state.isLogin = 0
-			this.isLogin = 0;
-			this.account = {
-				name:'',
-				password:'',
-				user:{
-					realname:'',
-					tel: undefined,
-					remark:"",				//备注
-					idcardNo:undefined, 	//身份证号
-				},
-				clinicId: '',			//门诊id
-				hospitalId: '',			//医院Id
-				patientId : '',			//医院端门诊主页的门诊详情页id
-				data:{},
-			},
-			console.log(this.isLogin);
+			debugger
 			localStorage.clear();
-		if(window.plus){
-			  	plus.webview.currentWebview().clear()
+			if(window.plus){
+				plus.webview.currentWebview().clear()
 				//plus.webview.currentWebview().loadURL(aa)
-		}
-    // console.log(location)
-		// location.href='/#/hospitalLogin'
-    location.href=location.pathname
+			}
+			
+			location.href=location.pathname
+			debugger
 		},
 		noLinkFn(){
 			this.$toast.setDefaultOptions({ duration: 1000 });

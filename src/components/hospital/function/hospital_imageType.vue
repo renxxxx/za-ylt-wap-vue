@@ -2,7 +2,7 @@
 	<div class="imageType">
 		<ul>
 			<li v-for="(item,inx) in type" :key='inx'>
-				<router-link :to="{name : 'hospital_typeDetails' ,query : {item : item.itemId,time:new Date().getTime()}}">
+				<router-link :to="{path : '/hospital/hospital_typeDetails' ,query : {item : item.itemId,time:new Date().getTime()}}">
 					<img :src="item.url" alt="">
 					<span>{{item.name}}</span>
 				</router-link>
@@ -75,7 +75,7 @@ export default {
 		}
 		
 	this.$axios.post('/c2/office/items',qs.stringify({
-			hospitalId : this.account.hospitalId,
+			hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 	}))
 	.then(_d => {
 		for(let i in _d.data.data.items){

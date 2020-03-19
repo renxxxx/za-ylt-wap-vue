@@ -30,12 +30,12 @@ export default {
 		hospitalImage:{
 			address : '',
 			cover : '',
-			headmanName : '',
+			headmanpath : '/hospital/',
 			intro : '',
-			name : '',
+			path : '/hospital/',
 			tel : '',
 		},
-		componentName : 'hospital_imageAbout',
+		componentpath : '/hospital/hospital_imageAbout',
     }
   },
   computed:{
@@ -133,9 +133,9 @@ export default {
 	goBackFn(){
 		this.$router.back(-1)
     // if(this.isLogin == 100){
-    //   this.$router.push({ name : 'hospital_clinic',query:{time:new Date().getTime()}});
+    //   this.$router.push({ path : '/hospital/hospital_clinic',query:{time:new Date().getTime()}});
     // }else{
-    //   this.$router.push({ name : 'outpatient_hospital',query:{time:new Date().getTime()}});
+    //   this.$router.push({ path : '/hospital/outpatient_hospital',query:{time:new Date().getTime()}});
     // }
 	},
 	  // 组件切换

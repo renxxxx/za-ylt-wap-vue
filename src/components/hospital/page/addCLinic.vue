@@ -104,10 +104,10 @@ export default {
 			option: [],
 			// 添加列表绑定数据
 			addClinic:{
-				name : '',        //医院名称
+				path : '/hospital/',        //医院名称
 				phone : '',       //分配账号
 				pwd : '',         //分配账号密码
-				headmanName : '', //负责人姓名
+				headmanpath : '/hospital/', //负责人姓名
 				contactTel : '',  //负责人电话
 				address : '',     //门诊地址
 				remark : '',      //备注

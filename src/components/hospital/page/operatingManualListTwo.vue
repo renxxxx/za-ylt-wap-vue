@@ -21,7 +21,7 @@
            <p><span>{{yesNum}}</span>/{{num}}</p>
          </div>
          <div v-for="(_item,inx) in operatingManualList" :key="inx">
-           <router-link :to="{name : 'hospital_operatingManualListDetails',query:{name:_item.name ,operatingManualId:_item.operatingManualId,operatingManualSectionId:_item.operatingManualSectionId}}">
+           <router-link :to="{path : '/hospital/hospital_operatingManualListDetails',query:{name:_item.name ,operatingManualId:_item.operatingManualId,operatingManualSectionId:_item.operatingManualSectionId}}">
              <div  class="manualList">
                <span :class="[_item.done? '':'doColor']">{{_item.name}}</span>
                <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">

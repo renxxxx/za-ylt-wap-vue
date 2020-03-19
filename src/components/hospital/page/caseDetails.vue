@@ -33,8 +33,8 @@ export default {
 				addTime : '',
 				alterTime : '',
 				cover : '',
-				hosptialName : '',
-				name : '',
+				hosptialpath : '/hospital/',
+				path : '/hospital/',
 				content:''
 			}
 		}

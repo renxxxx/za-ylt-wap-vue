@@ -98,7 +98,7 @@ export default {
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)
-			// this.$router.push({ name : 'hospital_exchangeManagementAdd',query : {item : this.commodity}});
+			// this.$router.push({ path : '/hospital/hospital_exchangeManagementAdd',query : {item : this.commodity}});
 			// exchangeManagementAdd
 		},
 		//添加图片

@@ -199,26 +199,33 @@ export default {
         	.then( res =>{
             // console.log(res.data.code)
             if(res.data.code == 0){
-              this.$axios.post('/hospital/login-refresh')
-              	.then( res =>{
-                  if(res.data.code == 0){
-                    this.isLogin = 100;
-                    localStorage.setItem("isLogin",this.isLogin);
-                    if(res.data.data.type == 1){
-                    	this.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
-                    }else{
-                    	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
-                    }
-                    this.account.hospitalId= res.data.data.hospital.hospitalId;
-                    // console.log(this.account.hospitalId)
-                    this.account.data = {};
-                    this.account.data = res.data;
-                  }
-              	})
-              	.catch((err)=>{
-              		console.log(err)
-              		this.$toast.fail(err);
-              	})
+				this.$store.state.hospitalEntrance.loginRefresh()
+				console.dir(this.$store.state.hospitalEntrance.loginRefresh())
+				if(this.$store.state.hospitalEntrance.loginRefresh().type == 1){
+					this.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
+				}else{
+					this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
+				}
+              // this.$axios.post('/hospital/login-refresh')
+              // 	.then( res =>{
+              //     if(res.data.code == 0){
+              //       this.isLogin = 100;
+              //       localStorage.setItem("isLogin",this.isLogin);
+              //       if(res.data.data.type == 1){
+              //       	this.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
+              //       }else{
+              //       	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
+              //       }
+              //       this.account.hospitalId= res.data.data.hospital.hospitalId;
+              //       // console.log(this.account.hospitalId)
+              //       this.account.data = {};
+              //       this.account.data = res.data;
+              //     }
+              // 	})
+              // 	.catch((err)=>{
+              // 		console.log(err)
+              // 		this.$toast.fail(err);
+              // 	})
             }else{
               this.$toast.fail(res.data.codeMsg);
             }

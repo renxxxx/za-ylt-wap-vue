@@ -66,7 +66,7 @@
 	  <van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="nextPageFn">
 		<ul class="clinicList" :style="{'padding-top':$store.state.topHeight}">
 				<li v-for="(item,inx) in noItems" :key="inx">
-					<router-link :to="{name : 'outpatient_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+					<router-link :to="{path : '/outpatient/outpatient_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 						<div class="content_left">
 							<span>{{item.realname}}</span>
 						</div>
