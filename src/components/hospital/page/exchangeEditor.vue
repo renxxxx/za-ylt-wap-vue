@@ -50,7 +50,7 @@ export default {
 	data () {
 		return {
 			exchangeEditor:{
-				name : '',
+				path : '/hospital/',
 				payExchangepoint : '',
 				stock : '',
 				intro : '',
@@ -137,7 +137,7 @@ export default {
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1);
-			// this.$router.back({ name : 'hospital_exchangeManagement'});
+			// this.$router.back({ path : '/hospital/hospital_exchangeManagement'});
 		},
 		nextFn(){
 			if(this.exchangeEditor.name != ''){
@@ -145,7 +145,7 @@ export default {
 					if(this.exchangeEditor.stock != ''){
 						if(this.exchangeEditor.intro != ''){
 							console.log(this.exchangeEditor)
-							this.$router.push({ name : 'hospital_exchangeEditorImg',query : {exchangeEditor : JSON.stringify(this.exchangeEditor),time:new Date().getTime()}});
+							this.$router.push({ path : '/hospital/hospital_exchangeEditorImg',query : {exchangeEditor : JSON.stringify(this.exchangeEditor),time:new Date().getTime()}});
 						}else{
 							Toast.fail('请填写简介');
 						}

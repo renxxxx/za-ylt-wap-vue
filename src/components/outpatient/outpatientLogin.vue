@@ -24,20 +24,20 @@
       		    @change="changeFn"/>
       		<p>&nbsp;&nbsp;我已经阅读并同意
       		<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
-      			<router-link :to="{name : 'hospital_urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
+      			<router-link :to="{path : '/outpatient/hospital_urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
       			《应用服务条款》
       			</router-link>
       		</p>
       	</div>
       	<button class="submitClass" type="submit" value="医院登录" @click="submit()">登录</button>
       	<div class="passwordReset">
-      		<router-link  :to="{name : 'hospital_retrievePassword',query:{time:new Date().getTime()}}">
+      		<router-link  :to="{path : '/outpatient/hospital_retrievePassword',query:{time:new Date().getTime()}}">
       			<div class="forget">
       				<span>忘记密码</span>
       				<img src="../../assets/image/wenhao@2x.png" alt="">
       			</div>
       		</router-link>
-          <router-link  :to="{name : 'chooseTheType',query:{time:new Date().getTime()}}">
+          <router-link  :to="{path : '/outpatient/chooseTheType',query:{time:new Date().getTime()}}">
           	<div class="returnTypePage">
           		<span>选择入口</span>
           	</div>

@@ -4,7 +4,7 @@
 			<ul>
 				<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 					<li v-for="(items,inx) in content" :key="inx">
-						<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : items.hospitalClinicId,time:new Date().getTime()}}">
+						<router-link :to="{path : '/hospital/hospital_clinicDetails' ,query :  {clinicId : items.hospitalClinicId,time:new Date().getTime()}}">
 							<div class="contentLi">
 								<h4>{{items.name}}</h4>
 								<span>推广人: {{items.hospitalUserName}}</span>

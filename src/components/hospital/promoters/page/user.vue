@@ -10,8 +10,8 @@
 					<span>已认证</span>
 				</div>
 				<div class="top_center">
-					<h3>{{this.account.data.data.name}}</h3>
-					<p>账号：{{this.account.data.data.phone}}</p>
+					<h3>{{this.$store.state.hospitalEntrance.loginRefresh().name}}</h3>
+					<p>账号：{{this.$store.state.hospitalEntrance.loginRefresh().phone}}</p>
 				</div>
 			</div>
 		</div>
@@ -125,8 +125,8 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		this.userFn();
-		this.coverImg = this.account.data.data.hospital.cover;
-		this.images.push(this.account.data.data.hospital.license)
+		this.coverImg = this.$store.state.hospitalEntrance.loginRefresh().hospital.cover;
+		this.images.push(this.$store.state.hospitalEntrance.loginRefresh().hospital.license)
 	},
 	methods: {
 		onChange(index) {
@@ -140,9 +140,9 @@ export default {
 			// console.log("hahha")
 			// console.log(this.account);
 			//用户头像值
-			let cover = this.account.data.data.hospital.cover;
+			let cover = this.$store.state.hospitalEntrance.loginRefresh().hospital.cover;
 			// 是否认证值
-			let license = this.account.data.data.license
+			let license = this.$store.state.hospitalEntrance.loginRefresh().license
 			if(cover == '' || cover == undefined || cover == null){
 				// console.log("cover为空")
 			}else{
@@ -155,8 +155,8 @@ export default {
 
 			}
 
-			// console.log(this.account.data.data.cover)
-			// console.log(this.account.data.data.license)
+			// console.log(this.$store.state.hospitalEntrance.loginRefresh().cover)
+			// console.log(this.$store.state.hospitalEntrance.loginRefresh().license)
 		 },
 		//退出方法
 		exitFn(){

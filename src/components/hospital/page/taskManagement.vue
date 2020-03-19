@@ -15,7 +15,7 @@
 			<ul>
 				<li v-for="(item,inx) in task.one" :key='inx'>
 					<input type="checkbox" class="input_check" :checked="item.checked" @change="change($event,item,inx)"/>
-					<router-link :to="{name : 'hospital_taskManagementDetails' ,query : {item : JSON.stringify(item),show : false,time:new Date().getTime()}}">
+					<router-link :to="{path : '/hospital/hospital_taskManagementDetails' ,query : {item : JSON.stringify(item),show : false,time:new Date().getTime()}}">
 						<span>{{item.name}}</span>
 					</router-link>
 				</li>
@@ -24,7 +24,7 @@
 			<ul>
 				<li v-for="(item,inx) in task.no" :key='inx'>
 					<input type="checkbox" class="input_check" :checked="item.checked" @change="change($event,item,inx)"/>
-					<router-link :to="{name : 'hospital_taskManagementDetails' ,query : {item : JSON.stringify(item),show : true,time:new Date().getTime()}}">
+					<router-link :to="{path : '/hospital/hospital_taskManagementDetails' ,query : {item : JSON.stringify(item),show : true,time:new Date().getTime()}}">
 						<span>{{item.name}}</span>
 					</router-link>
 				</li>
@@ -112,7 +112,7 @@ export default {
 			// this.task.no = [];
 			// this.task.one = []
 			this.$axios.post('/c2/task/tasks',qs.stringify({
-				hospitalId : this.account.hospitalId,
+				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 			}))
 			.then(res => {
 				for(let i in res.data.data.items){
@@ -219,10 +219,10 @@ export default {
 				// 	case true:
 				// 	if(_item.oneTimeIs == 1){
 				// 		this.task.one[inx].checked = _value.target.checked
-				// 		this.$router.push({ name : 'hospital_taskManagementDetails',query : {item : JSON.stringify(_item),show : false,time:new Date().getTime()}});
+				// 		this.$router.push({ path : '/hospital/hospital_taskManagementDetails',query : {item : JSON.stringify(_item),show : false,time:new Date().getTime()}});
 				// 	}else{
 				// 		this.task.no[inx].checked = _value.target.checked;
-				// 		this.$router.push({ name : 'hospital_taskManagementDetails',query : {item : JSON.stringify(_item),show : false,time:new Date().getTime()}});
+				// 		this.$router.push({ path : '/hospital/hospital_taskManagementDetails',query : {item : JSON.stringify(_item),show : false,time:new Date().getTime()}});
 				// 	};
 				// 	break;
 				// 	case false:

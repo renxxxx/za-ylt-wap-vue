@@ -13,7 +13,7 @@
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <ul :style="{'padding-top':$store.state.topHeight}">
         <li v-for="(item,inx) in promotersList" :key="inx">
-          <router-link :to="{name : 'hospital_promotersDetails',query:{hospitalUserId: item.hospitalUserId,time:new Date().getTime()}}">
+          <router-link :to="{path : '/hospital/hospital_promotersDetails',query:{hospitalUserId: item.hospitalUserId,time:new Date().getTime()}}">
             <div class="list">
               <img src="../../../assets/image/ren@2x.png" alt="">
               <h4>{{item.name}}</h4>

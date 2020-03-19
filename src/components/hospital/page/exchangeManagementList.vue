@@ -14,7 +14,7 @@
 			<ul :style="{'padding-top':$store.state.topHeight}">
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
 					<li v-for="(item,inx) in exchangeList" :key='inx' class='List'>
-						<router-link :to="{name : 'hospital_exchangeDetails' ,query : {item : item,time:new Date().getTime()}}">
+						<router-link :to="{path : '/hospital/hospital_exchangeDetails' ,query : {item : item,time:new Date().getTime()}}">
 							<ul>
 								<li>
 									<span>订单编号：{{item.orderId}}</span>

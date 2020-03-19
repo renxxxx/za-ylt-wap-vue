@@ -78,7 +78,7 @@
 		<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
 		<ul>
 			<li v-for="(item,inx) in promotersList" :key='inx'>
-				<router-link :to="{name : 'hospital_clinicDetails' ,query :  {clinicId : item.hospitalClinicId}}">
+				<router-link :to="{path : '/hospital/hospital_clinicDetails' ,query :  {clinicId : item.hospitalClinicId}}">
 					<div class="promotersList">
 						<h4>{{item.name}}</h4>
 						<img src="../../../assets/image/zhuanyi@2x.png" alt="" @click.prevent="transferPromotersShowFn(item)">

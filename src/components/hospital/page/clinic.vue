@@ -4,15 +4,15 @@
 			<div class="navWarp">
 				<div class="topNav"  :style="{'padding-top':$store.state.topHeight}">
 					<div class="hospital_search">
-						<router-link :to="{name : 'hospital_clinicSearch',query:{time:new Date().getTime()}}">
+						<router-link :to="{path : '/hospital/hospital_clinicSearch',query:{time:new Date().getTime()}}">
 							<input type="text" placeholder="搜索门诊">
 							<img src="../../../assets/image/sousuo@2x.png" alt="">
 						</router-link>
 					</div>
-					<router-link :to="{name : 'hospital_clinicMessage',query:{time:new Date().getTime()}}">
+					<router-link :to="{path : '/hospital/hospital_clinicMessage',query:{time:new Date().getTime()}}">
 						<div class="hospital_information">
 							<img src="../../../assets/image/xiaoxi@2x.png" alt="">
-							<div class="num" v-if=" this.$store.state.hospitalEntrance.loginRefresh().unlookedMessageCount">
+							<div class="num" v-if=" this.$store.state.hospitalEntrance.loginRefresh().unlookedMessageCount == 0? false:true">
 								<span>{{this.$store.state.hospitalEntrance.loginRefresh().unlookedMessageCount}}</span> 
 							</div>
 						</div>
@@ -20,25 +20,25 @@
 				</div>
 				<div class="shared">
 					<ul>
-						<router-link :to="{name : 'hospital_hospitalImage',query:{time:new Date().getTime()}}">
+						<router-link :to="{path : '/hospital/hospital_hospitalImage',query:{time:new Date().getTime()}}">
 							<li>
 								<img src="../../../assets/image/yiyuanxingxiang@2x.png" alt=""/>
 								<span>医院形象</span>
 							</li>
 						</router-link>
-						<router-link  :to="{name : 'hospital_case',query:{time:new Date().getTime()}}">
+						<router-link  :to="{path : '/hospital/hospital_case',query:{time:new Date().getTime()}}">
 							<li>
 								<img src="../../../assets/image/youzhianli@2x.png" alt=""/>
 								<span>优质案例</span>
 							</li>
 						</router-link>
-						<router-link :to="{name : 'hospital_expertsIntroduction',query:{time:new Date().getTime()}}">
+						<router-link :to="{path : '/hospital/hospital_expertsIntroduction',query:{time:new Date().getTime()}}">
 							<li>
 								<img src="../../../assets/image/zhuanjia@2x.png" alt=""/>
 								<span>专家介绍</span>
 							</li>
 						</router-link>
-						<router-link :to="{name : 'hospital_activityReleased',query:{time:new Date().getTime()}}">
+						<router-link :to="{path : '/hospital/hospital_activityReleased',query:{time:new Date().getTime()}}">
 							<li>
 								<img src="../../../assets/image/huodongfabu@2x.png" alt=""/>
 								<span>最新活动</span>
@@ -49,7 +49,7 @@
 				<div class="statisticalTitle" v-model="clinic">
 					<h3>合作门诊</h3>
 					<div class="statisticalAdd">
-						<router-link :to="{name : 'hospital_addCLinic',query:{time:new Date().getTime()}}">
+						<router-link :to="{path : '/hospital/hospital_addCLinic',query:{time:new Date().getTime()}}">
 							<span>新增</span>
 							<img src="../../../assets/image/xinzeng@2x.png" alt="">
 						</router-link>

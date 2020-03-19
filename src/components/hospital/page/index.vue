@@ -18,49 +18,49 @@
           <div class="typeList">
             <ul>
               <li>
-                <router-link :to="{name : 'hospital_clinicSearch',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/hospital_clinicSearch',query:{time:new Date().getTime()}}">
                   <img src="../../../assets/image/qudaomenzhen@2x.png" alt />
                   <span>渠道门诊</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{name : 'hospital_sourceManagement',query:{time:new Date().getTime()}}" >
+                <router-link :to="{path : '/hospital/hospital_sourceManagement',query:{time:new Date().getTime()}}" >
                   <img src="../../../assets/image/bingyuanguanli@2x.png" alt />
                   <span>病员管理</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{name : 'hospital_collect',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/hospital_collect',query:{time:new Date().getTime()}}">
                   <img src="../../../assets/image/qixiejicai@2x.png" alt />
                   <span>器械集采</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{name : 'hospital_operating',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/hospital_operating',query:{time:new Date().getTime()}}">
                   <img src="../../../assets/image/yunyingzhongxin@2x.png" alt />
                   <span>运营中心</span>
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{name : '',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/',query:{time:new Date().getTime()}}">
                   <img src="../../../assets/image/jiyinjiance@2x.png" alt />
                   <span>基因检测</span>
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{name : '',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/',query:{time:new Date().getTime()}}">
                   <img src="../../../assets/image/yiliaoziyuan@2x.png" alt />
                   <span>医疗资源</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{name : 'hospital_activityReleased',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/hospital_activityReleased',query:{time:new Date().getTime()}}">
                   <img src="../../../assets/image/yiyuanhuodong@2x.png" alt />
                   <span>医院活动</span>
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{name : '',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/',query:{time:new Date().getTime()}}">
                   <img src="../../../assets/image/qita@2x.png" alt />
                   <span>其他项目</span>
                 </router-link>
@@ -77,7 +77,7 @@
               <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
                 <li v-for="(items,inx) in article" :key="inx">
                   <router-link
-                    :to="{name : 'hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
+                    :to="{path : '/hospital/hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
                   >
                     <div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
                       <p>{{items.content}}</p>
@@ -123,7 +123,7 @@ export default {
     // bottomNav
   },
   computed: {
-    ...mapGetters(["account", "isLogin"])
+    // ...mapGetters(["account", "isLogin"])
   },
 
   beforeCreate(){
@@ -200,7 +200,9 @@ export default {
           this.$router.push(JSON.parse(lastRouter));
           return
         }
-
+		debugger;
+		console.log(this.$store.state.hospitalEntrance.loginRefresh())
+		console.log(!this.$store.state.hospitalEntrance.loginRefresh())
     if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
       this.$toast({message:'请登录',onClose:function(){
         thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
@@ -209,7 +211,7 @@ export default {
       this.initData();
   },
   activated(){
-    debugger
+    
   },
   deactivated(){
     debugger

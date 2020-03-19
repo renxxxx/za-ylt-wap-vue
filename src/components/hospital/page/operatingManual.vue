@@ -10,7 +10,7 @@
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
     <div style="margin-top: .2rem;">
       <div v-for="(item,inx) in operatingManual" :key="inx">
-        <router-link :to="{name : 'hospital_operatingManualList',query:{name:item.name,operatingManualId:item.operatingManualId,time:new Date().getTime()}}">
+        <router-link :to="{path : '/hospital/hospital_operatingManualList',query:{name:item.name,operatingManualId:item.operatingManualId,time:new Date().getTime()}}">
           <van-cell is-link>
             <!-- 使用 title 插槽来自定义标题 -->
             <template>
@@ -30,7 +30,7 @@
            <p><span>{{yesNum[inx]}}</span>/{{num[inx]}}</p>
          </div>
          <div v-for="(_item,inx) in item._data" :key="inx">
-           <router-link :to="{name : 'hospital_operatingManualList',query:{name:_item.name,operatingManualId:item.operatingManualId,operatingManualSectionId : _item.operatingManualSectionId}}">
+           <router-link :to="{path : '/hospital/hospital_operatingManualList',query:{name:_item.name,operatingManualId:item.operatingManualId,operatingManualSectionId : _item.operatingManualSectionId}}">
              <div  class="manualList">
                <span :class="[_item.done? '':'doColor']">{{_item.name}}</span>
                <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">

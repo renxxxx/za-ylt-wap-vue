@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import qs from "qs";
 Vue.use(Vuex)
 
 
@@ -7,23 +8,28 @@ Vue.use(Vuex)
 const state={
   hospitalEntrance:{
     loginRefresh:function(){
-      debugger
-      let login;
-      Vue.prototype.$jquery.ajax({
-        url:'/hospital/login-refresh',
-        type:'post',
-        async:false,
-        success:function(res){
-          if(res.code == 0){
-            login=res.data
-          }
-        }
-      })
+		let login;
+		if(localStorage.getItem("hospitalData")){
+			login =qs.parse(localStorage.getItem("hospitalData")) 
+		}else{
+			Vue.prototype.$jquery.ajax({
+			  url:'/hospital/login-refresh',
+			  type:'post',
+			  async:false,
+			  success:function(res){
+			    if(res.code == 0){
+					login=res.data
+					localStorage.setItem("hospitalData", qs.stringify(res.data))
+			    }
+			  }
+			})
+		}
+     
       return login;
     },
   },
   outpatientEntrance:{
-    login:function(){
+    loginRefresh:function(){
 
     },
   },

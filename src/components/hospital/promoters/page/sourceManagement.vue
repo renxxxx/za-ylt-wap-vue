@@ -32,7 +32,7 @@
 						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="nextPageFn">
 							<ul class="list" :style="{'padding-top':(parseInt($store.state.topHeight.replace('px',''))+12)+'px'}">
 								<li v-for="(item,inx) in  items" :key="inx">
-									<router-link :to="{name : 'hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+									<router-link :to="{path : '/promoters/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 										<div class="style">
 											<div class="contentTitle">
 												<img :src="item.img" alt="">
@@ -56,7 +56,7 @@
 						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="yesNextPageFn">
 							<ul class="list" :style="{'padding-top':(parseInt($store.state.topHeight.replace('px',''))+12)+'px'}">
 								<li v-for="(item,inx) in  yesItems" :key="inx">
-									<router-link :to="{name : 'hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+									<router-link :to="{path : '/promoters/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 										<div class="style">
 											<div class="contentTitle">
 												<img :src="item.img" alt="">
@@ -79,7 +79,7 @@
 						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="noNextPageFn">
 							<ul class="list" :style="{'padding-top':(parseInt($store.state.topHeight.replace('px',''))+12)+'px'}">
 								<li v-for="(item,inx) in  noItems" :key="inx">
-									<router-link :to="{name : 'hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+									<router-link :to="{path : '/promoters/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 										<div class="style">
 											<div class="contentTitle">
 												<img :src="item.img" alt="">
@@ -230,8 +230,8 @@ export default {
 	// 获取下一页的方法
 	getData(data,page){
 		this.$axios.post('/c2/patient/items',qs.stringify({
-				hospitalId : this.account.data.data.hospital.hospitalId,
-				hospitalUserId : this.account.data.data.hospitalUserId,
+				hospitalId: this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+				hospitalUserId : this.$store.state.hospitalEntrance.loginRefresh().hospitalUserId,
 				status: data,
 				pn : page,
 				ps : 10,
@@ -307,8 +307,8 @@ export default {
 		debugger;
 		var num ='';
 		await this.$axios.post('/c2/patient/items',qs.stringify({
-				hospitalId : this.account.data.data.hospital.hospitalId,
-				hospitalUserId : this.account.data.data.hospitalUserId,
+				hospitalId: this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+				hospitalUserId : this.$store.state.hospitalEntrance.loginRefresh().hospitalUserId,
 				status: data,
 				pn : 1,
 				ps : 10,

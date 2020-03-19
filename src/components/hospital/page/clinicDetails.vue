@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>{{this.clinicDetails.name}}</h3>
 			</div>
-			<router-link :to="{name : 'hospital_clinicInfo' ,query : {item : clinicDetails.clinicId,time:new Date().getTime()}}">
+			<router-link :to="{path : '/hospital/hospital_clinicInfo' ,query : {item : clinicDetails.clinicId,time:new Date().getTime()}}">
 				<div class="right">
 					<img src="../../../assets/image/Preview@2x.png" alt="">
 				</div>

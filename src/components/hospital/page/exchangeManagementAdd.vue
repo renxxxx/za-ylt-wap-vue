@@ -52,7 +52,7 @@ export default {
 		return {
 			// 医院端兑换管理的新增和商品修改信息参数
 			exchangeAdd:{
-				name : '',
+				path : '/hospital/',
 				payExchangepoint : '',
 				stock : '',
 				intro : '',
@@ -123,7 +123,7 @@ export default {
 		//回退方法
 		goBackFn(){
 			this.exchangeAdd = {
-				name : '',
+				path : '/hospital/',
 				payExchangepoint : 0,
 				stock : 0,
 				intro : '',
@@ -131,14 +131,14 @@ export default {
 				show : true,
 			}
 			this.$router.back(-1);
-			// this.$router.back({ name : 'hospital_exchangeManagement'});
+			// this.$router.back({ path : '/hospital/hospital_exchangeManagement'});
 		},
 		nextFn(){
 			if(this.exchangeAdd.name != ''){
 				if(this.exchangeAdd.payExchangepoint != ''){
 					if(this.exchangeAdd.stock != ''){
 						if(this.exchangeAdd.intro != ''){
-							this.$router.push({ name : 'hospital_exchangeManagementImg',query : {exchangeAdd : JSON.stringify(this.exchangeAdd),time:new Date().getTime()}});
+							this.$router.push({ path : '/hospital/hospital_exchangeManagementImg',query : {exchangeAdd : JSON.stringify(this.exchangeAdd),time:new Date().getTime()}});
 						}else{
 							Toast.fail('请填写简介');
 						}

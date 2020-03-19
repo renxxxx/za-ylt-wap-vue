@@ -5,10 +5,10 @@
 		</div>
 		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
 		<div class="typeNav">
-			<router-link :to="{name : 'promoters_clinicSearch',query:{time:new Date().getTime()}}">
+			<router-link :to="{path : '/promoters/promoters_clinicSearch',query:{time:new Date().getTime()}}">
 				<img src="../../../../assets/image/qudaomenzhen@2.png" alt="">
 			</router-link>
-			<router-link :to="{name : 'promoters_sourceManagement',query:{time:new Date().getTime()}}">
+			<router-link :to="{path : '/promoters/promoters_sourceManagement',query:{time:new Date().getTime()}}">
 				<img src="../../../../assets/image/bingyuanguanli@2.png" alt="">
 			</router-link>
 		</div>
@@ -18,7 +18,7 @@
 		    <h3>运营文章</h3>
 			<div class="articleDetails">
 				<router-link
-				  :to="{name : 'promoters_case'}"
+				  :to="{path : '/promoters/promoters_case'}"
 				>
 				<span>查看更多</span>
 				<img src="../../../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -28,7 +28,7 @@
 		  <ul>
 		      <li v-for="(items,inx) in article" :key="inx">
 		        <router-link
-		          :to="{name : 'promoters_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
+		          :to="{path : '/promoters/promoters_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
 		        >
 		          <div class="article_left">
 		            <p>{{items.content}}</p>
@@ -49,14 +49,14 @@
 		    <img src="../../../../assets/image/huodong@2x.png" alt />
 		    <h3>推广活动</h3>
 			<div class="articleDetails">
-				<router-link :to="{name : 'promoters_activityReleased'}">
+				<router-link :to="{path : '/promoters/promoters_activityReleased'}">
 				<span>查看更多</span>
 				<img src="../../../../assets/image/Chevron Copy 2@2x.png" alt="">
 				</router-link>
 			</div>
 		  </div>
 		  <div class="activeList">
-        <router-link :to="{name : 'promoters_activityDetails',query:{itemId:qualityCase[0].itemId,time:new Date().getTime()}}">
+        <router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:qualityCase[0].itemId,time:new Date().getTime()}}">
           <img :src="qualityCase[0].img" alt="">
           <div class="activeTitle">
             <h4>{{qualityCase[0].content}}</h4>
@@ -66,7 +66,7 @@
 		  </div>
 		  <ul style="">
 		      <li v-for="(items,num) in qualityCase" :key="num">
-		        <router-link :to="{name : 'promoters_activityDetails',query:{itemId:items.itemId,time:new Date().getTime()}}">
+		        <router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:items.itemId,time:new Date().getTime()}}">
 		          <div class="article_left">
 		            <p>{{items.content}}</p>
 		            <div class="article_leftTime">
@@ -154,7 +154,7 @@ export default {
 	methods: {
 		getdata(_data) {
 		  this.$axios.post("/c2/article/items",qs.stringify({
-		        hospitalId: this.account.hospitalId,
+		        hospitalId: this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 		        pn: 1,
 		        ps: 3
 		      })
@@ -178,7 +178,7 @@ export default {
 		      console.log(err);
 		    });
 			this.$axios.post('/c2/activity/items',qs.stringify({
-				hospitalId : this.account.hospitalId,
+				hospitalId: this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 				pn : 1,
 				ps : 3
 			}))
