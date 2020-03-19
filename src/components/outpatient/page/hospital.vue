@@ -14,8 +14,8 @@
 			<router-link :to="{path : '/outpatient/outpatient_clinicMessage',query:{time:new Date().getTime()}}">
 				<div class="hospital_information">
 					<img src="../../../assets/image/xiaoxi@2x.png" alt="">
-					<div class="num" v-if="this.account.data.data.newMessageCount? true:false">
-						<span>{{this.account.data.data.newMessageCount}}</span>
+					<div class="num" v-if="this.$store.state.outpatientEntrance.loginRefresh().newMessageCount == 0? true:false">
+						<span>{{this.$store.state.outpatientEntrance.loginRefresh().newMessageCount}}</span>
 					</div>
 				</div> 
 			</router-link>
@@ -93,7 +93,6 @@ export default {
     }
   },
   computed:{
-	  ...mapGetters(['account']),
   },
   components:{
 
@@ -150,7 +149,7 @@ export default {
   methods: {
 	  getdata(_data){
 	  	this.$axios.post('/c2/article/items',qs.stringify({
-	  		hospitalId : this.account.hospitalId,
+	  		hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
 	  		pn : this.page,
 	  		ps : 10
 	  	}))

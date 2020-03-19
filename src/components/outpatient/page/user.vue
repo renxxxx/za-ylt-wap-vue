@@ -10,9 +10,9 @@
 					<span>已认证</span>
 				</div>
 				<div class="top_center">
-					<h3>{{this.account.data.data.clinic.name}}</h3>
-					<p>账号：{{this.account.data.data.phone}}</p>
-					<p>医院：{{this.account.data.data.hospital.name}}</p>
+					<h3>{{this.$store.state.outpatientEntrance.loginRefresh().clinic.name}}</h3>
+					<p>账号：{{this.$store.state.outpatientEntrance.loginRefresh().phone}}</p>
+					<p>医院：{{this.$store.state.outpatientEntrance.loginRefresh().hospital.name}}</p>
 				</div>
 				<div class="top_right" @click="showImgFn">
 					<span>营业执照</span>
@@ -137,8 +137,8 @@ export default {
 
 
 	this.userFn();
-	this.coverImg = this.account.data.data.clinic.cover;
-	this.images.push(this.account.data.data.clinic.license)
+	this.coverImg = this.$store.state.outpatientEntrance.loginRefresh().clinic.cover;
+	this.images.push(this.$store.state.outpatientEntrance.loginRefresh().clinic.license)
   },
   methods: {
 	onChange(index) {
@@ -152,9 +152,9 @@ export default {
 		// console.log("hahha")
 		// console.log(this.account);
 		//用户头像值
-		let cover = this.account.data.data.cover;
+		let cover = this.$store.state.outpatientEntrance.loginRefresh().cover;
 		// 是否认证值
-		let license = this.account.data.data.license
+		let license = this.$store.state.outpatientEntrance.loginRefresh().license
 		if(cover == '' || cover == undefined || cover == null){
 			// console.log("cover为空")
 		}else{
@@ -190,7 +190,7 @@ export default {
 		// 	data:{},
 		// },
 		// console.log(this.isLogin);
-		this.$axios.post('/hospital/logout');
+		this.$axios.get('/hospital/logout');
 
 		localStorage.clear();
 

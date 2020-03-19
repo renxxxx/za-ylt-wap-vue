@@ -37,9 +37,9 @@
       				<img src="../../assets/image/wenhao@2x.png" alt="">
       			</div>
       		</router-link>
-          <router-link  :to="{path : '/outpatient/chooseTheType',query:{time:new Date().getTime()}}">
+          <router-link  :to="{path : '/',query:{time:new Date().getTime()}}">
           	<div class="returnTypePage">
-          		<span>选择入口</span>
+          		<span @click="clear">选择入口</span>
           	</div>
           </router-link>
       	</div>
@@ -122,17 +122,21 @@ export default {
 		if(window.plus){
       plus.navigator.setStatusBarStyle("light")
 		}
-		let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
-		 if(this.$store.state.isLogin == 100){
-			this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
-			this.$router.push(lastRoute)
-		}else  if(this.$store.state.isLogin == 200){
-			this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}})
-			this.$router.push(lastRoute)
-		}else  if(this.$store.state.isLogin == 300){
-			this.$router.replace({ name : 'chooseTheType',query:{time:new Date().getTime()}})
-			this.$router.push(lastRoute)
-		}
+		if(this.$store.state.hospitalEntrance.loginRefresh())
+		 this.$toast({message:'已登录',onClose:function(){
+		   thisVue.$router.replace({ path : '/outpatient/outpatient_index',query:{time:new Date().getTime()}});
+		 }})
+		// let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
+		//  if(this.$store.state.isLogin == 100){
+		// 	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
+		// 	this.$router.push(lastRoute)
+		// }else  if(this.$store.state.isLogin == 200){
+		// 	this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}})
+		// 	this.$router.push(lastRoute)
+		// }else  if(this.$store.state.isLogin == 300){
+		// 	this.$router.replace({ name : 'chooseTheType',query:{time:new Date().getTime()}})
+		// 	this.$router.push(lastRoute)
+		// }
   },
   computed:{
     account:{
@@ -154,6 +158,9 @@ export default {
     },
   },
   methods:{
+	clear(){
+		localStorage.clear('entrance')
+	},
     emptyAccountFn(value){
       if(value == 'name'){
         this.submitAccount.name = '';
@@ -184,22 +191,24 @@ export default {
         	}))
         	.then( res =>{
             if(res.data.code == 0){
-              this.$axios.post('/clinic/login-refresh')
-              	.then( res =>{
-                  if(res.data.code == 0){
-                    this.isLogin = 200;
-                    localStorage.setItem("isLogin",this.isLogin);
-                    this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
-                    this.account.hospitalId= res.data.data.hospital.hospitalId;
-                    // console.log(this.account.hospitalId)
-                    this.account.data = {};
-                    this.account.data = res.data;
-                  }
-              	})
-              	.catch((err)=>{
-              		console.log(err)
-              		this.$toast.fail(err);
-              	})
+				this.$store.state.outpatientEntrance.loginRefresh()
+				this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
+              // this.$axios.post('/clinic/login-refresh')
+              // 	.then( res =>{
+              //     if(res.data.code == 0){
+              //       this.isLogin = 200;
+              //       localStorage.setItem("isLogin",this.isLogin);
+              //       this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
+              //       this.account.hospitalId= res.data.data.hospital.hospitalId;
+              //       // console.log(this.account.hospitalId)
+              //       this.account.data = {};
+              //       this.account.data = res.data;
+              //     }
+              // 	})
+              // 	.catch((err)=>{
+              // 		console.log(err)
+              // 		this.$toast.fail(err);
+              // 	})
             }else{
               this.$toast.fail(res.data.codeMsg);
             }

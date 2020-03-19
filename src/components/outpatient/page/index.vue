@@ -33,15 +33,15 @@
 									<ul class="Fill">
 										<li>
 											<span>病患姓名</span>
-											<input type="text" v-model="account.user.realname"  placeholder="请填写" >
+											<input type="text" v-model="account.realname"  placeholder="请填写" >
 										</li>
 										<li>
 											<span>联系电话</span>
-											<input type="text" v-model="account.user.tel" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+											<input type="text" v-model="account.tel" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
 										</li>
 										<li>
 											<span>身份证号</span>
-											<input type="text" v-model="account.user.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')" placeholder="请填写">
+											<input type="text" v-model="account.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')" placeholder="请填写">
 										</li>
 									</ul>
 								</div>
@@ -51,7 +51,7 @@
 									<ul class="Fill">
 										<li>
 											<span>备注</span>
-											<input type="text" v-model="account.user.remark"  placeholder="请填写" >
+											<input type="text" v-model="account.remark"  placeholder="请填写" >
 										</li>
 									</ul>
 								</div>
@@ -90,6 +90,12 @@ export default {
     return {
 		name: 'index',
 		selectValue : [],
+		account:{
+			realname:'',
+			tel:'',
+			idcardNo:'',
+			remark:''
+		},
 		//导航栏切换标题
 		list:{
 			keywords : '',			//搜索框的关键字value
@@ -179,7 +185,7 @@ export default {
 			this.$store.state.showTime = newValue;
 			},
 		},
-		...mapGetters(['Time','account','isLogin']),
+		...mapGetters(['Time']),
   },
   //注册组件
   components:{
@@ -214,10 +220,10 @@ export default {
 	getNum(){
 		let clinicId = '';
 		this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.account.clinicId;
-		this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+		// this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
-			hospitalId : this.account.hospitalId,
+			hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
 			clinicId : clinicId,
 			status :1,
 			pn : 1,
@@ -232,7 +238,7 @@ export default {
 		})
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
-			hospitalId : this.account.hospitalId,
+			hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
 			clinicId : clinicId,
 			status :4,
 			pn : 1,
@@ -251,13 +257,13 @@ export default {
 	},
   hospitalSubmit(){
     this.$axios.post('/c2/patient/itemadd',qs.stringify({
-    		clinicId : this.account.data.data.clinic.clinicId,
-    		hospitalId : this.account.data.data.hospital.hospitalId,
-    		password : this.account.user.password,
-    		realname : this.account.user.realname,
-    		tel	:  this.account.user.tel,
-    		remark : this.account.user.remark,
-    		idcardNo : this.account.user.idcardNo
+			clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinic.clinicId,
+			hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
+    		password : this.account.password,
+    		realname : this.account.realname,
+    		tel	:  this.account.tel,
+    		remark : this.account.remark,
+    		idcardNo : this.account.idcardNo
     	}))
     	.then( res =>{
     		console.log(res);

@@ -37,9 +37,9 @@
       				<img src="../../assets/image/wenhao@2x.png" alt="">
       			</div>
       		</router-link>
-          <router-link  :to="{name : 'chooseTheType',query:{time:new Date().getTime()}}">
+          <router-link  :to="{path : '/',query:{time:new Date().getTime()}}">
           	<div class="returnTypePage">
-          		<span>选择入口</span>
+          		<span @click="clear">选择入口</span>
           	</div>
           </router-link>
       	</div>
@@ -127,7 +127,7 @@ export default {
     
      if(this.$store.state.hospitalEntrance.loginRefresh())
       this.$toast({message:'已登录',onClose:function(){
-        thisVue.$router.replace({ path : '/hospital/hospital_index',query:{time:new Date().getTime()}});
+        thisVue.$router.replace({ path : '/hospital_index',query:{time:new Date().getTime()}});
       }})
 
     
@@ -166,6 +166,9 @@ export default {
     },
   },
   methods:{
+	clear(){
+		localStorage.clear('entrance')
+	},
     emptyAccountFn(value){
       if(value == 'name'){
         this.submitAccount.name = '';
@@ -176,8 +179,8 @@ export default {
       }
     },
     numFN(_ref){
-      console.log(_ref)
-      console.log(document.getElementById(_ref).type)
+      // console.log(_ref)
+      // console.log(document.getElementById(_ref).type)
       if(document.getElementById(_ref).type == 'password'){
         document.getElementById(_ref).setAttribute('type','text')
         this.pwdImg = require('../../assets/image/open-eye@2x.png')

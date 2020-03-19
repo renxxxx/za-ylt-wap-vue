@@ -150,7 +150,7 @@ export default {
 		},
 		//退出方法
 		exitFn(){
-			this.$axios.post('/hospital/logout')
+			this.$axios.get('/hospital/logout')
 			debugger
 			localStorage.clear();
 			if(window.plus){

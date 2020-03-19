@@ -125,12 +125,12 @@ const router = new Router({
       component: chooseTheType,
       meta: {unkeepLastRoute:true},
     },
-    {
-      path: '/chooseTheType',
-      name: 'chooseTheType',
-      component: chooseTheType,
-      meta: {unkeepLastRoute:true},
-    },
+    // {
+    //   path: '/chooseTheType',
+    //   name: 'chooseTheType',
+    //   component: chooseTheType,
+    //   meta: {unkeepLastRoute:true},
+    // },
     {
       path: '/sharePage',
       name: 'sharePage',
@@ -460,7 +460,7 @@ const router = new Router({
               path: '/promoters_index',
               name: 'promoters_index',
               component: promoters_index,
-              meta: {auth:true,bottom:true},
+              meta: {auth:true,bottom:true,unkeepLastRoute:true},
             },
             {
               path: 'promoters_clinicSearch',
@@ -574,7 +574,7 @@ const router = new Router({
           path: 'outpatient_index',
           name: 'outpatient_index',
           component: outpatient_index,
-          meta: {auth:true},
+          meta: {auth:true,unkeepLastRoute:true,tabbar:true},
         },
         {
           path: 'outpatient_pathogenicSearch',
@@ -592,7 +592,7 @@ const router = new Router({
           path: 'outpatient_hospital',
           name: 'outpatient_hospital',
           component: outpatient_hospital,
-          meta: {auth:true},
+          meta: {auth:true,tabbar:true},
         },
         {
           path: 'outpatient_hospitalImage',
@@ -658,13 +658,13 @@ const router = new Router({
           path: 'outpatient_gene',
           name: 'outpatient_gene',
           component: outpatient_gene,
-          meta: {auth:true},
+          meta: {auth:true,tabbar:true},
         },
         {
           path: 'outpatient_user',
           name: 'outpatient_user',
           component: outpatient_user,
-          meta: {auth:true},
+          meta: {auth:true,tabbar:true},
         },
         {
           path: 'outpatient_taskCenter',
@@ -740,7 +740,8 @@ const router = new Router({
 router.afterEach((to,from) => {
   debugger
   Store.state.bottomShow = !!to.meta.tabbar;
-  Store.state.childBottomShow = !!to.meta.bottom
+  Store.state.childBottomShow = !!to.meta.bottom;
+  // Store.state.bottomShow = !!to.meta.bottomShow;
   if(!to.meta.unkeepLastRoute)
     localStorage.setItem('lastRouter',JSON.stringify({path:to.path,name:to.name,query:to.query}))
   

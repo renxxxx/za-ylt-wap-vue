@@ -12,7 +12,7 @@
     <span>顶部</span>
   </div>
   <van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.bottomHeight}" v-if="bottomShow">
-  	<van-tabbar-item replace :to="{name : 'hospital_index',query:{time:new Date().getTime(),transition:'def'}}">
+  	<van-tabbar-item replace :to="{path : '/hospital/hospital_index',query:{time:new Date().getTime(),transition:'def'}}">
   	    <span>首页</span>
   	    <img
   			slot="icon"
@@ -20,7 +20,7 @@
   			:src="props.active ? index.inactive : index.active"
   	    />
   	</van-tabbar-item>
-  	<van-tabbar-item replace :to="{name : 'hospital_clinic',query:{time:new Date().getTime(),transition:'def'}}">
+  	<van-tabbar-item replace :to="{path:'/hospital/hospital_clinic',query:{time:new Date().getTime(),transition:'def'}}">
   	    <img
   			slot="icon"
   			slot-scope="props"
@@ -28,7 +28,7 @@
   	    >
   	    <span>门诊</span>
   	</van-tabbar-item>
-  	<van-tabbar-item replace :to="{name : 'hospital_gene',query:{time:new Date().getTime(),transition:'def'}}">
+  	<van-tabbar-item replace :to="{path:'/hospital/hospital_gene',query:{time:new Date().getTime(),transition:'def'}}">
   	    <span>基因</span>
   	    <img
   			slot="icon"
@@ -36,7 +36,7 @@
   			:src="props.active ? gene.inactive : gene.active"
   	    >
   	</van-tabbar-item>
-  	<van-tabbar-item replace :to="{name : 'hospital_user',query:{time:new Date().getTime(),transition:'def'}}">
+  	<van-tabbar-item replace :to="{path:'/hospital/hospital_user',query:{time:new Date().getTime(),transition:'def'}}">
   	    <span>我的</span>
   	    <img
   			slot="icon"
@@ -183,11 +183,11 @@ export default {
     },
     // 返回首页按钮触发事件
     returnHomePageFn(){
-      console.log(this.account.data.data.type)
-      if(this.account.data.data.type == 1){
-        this.$router.replace({name:'promoters_index',query:{time:new Date().getTime(),transition:'def'}});
+      console.log(this.$store.state.hospitalEntrance.loginRefresh().type)
+      if(this.$store.state.hospitalEntrance.loginRefresh().type == 1){
+        this.$router.replace({path:'/hospital/hospital_index',query:{time:new Date().getTime(),transition:'def'}});
       }else{
-        this.$router.replace({name:'hospital_index',query:{time:new Date().getTime(),transition:'def'}});
+        this.$router.replace({path:'/promoters_index',query:{time:new Date().getTime(),transition:'def'}});
       }
     },
   },
