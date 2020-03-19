@@ -171,7 +171,7 @@ const router = new Router({
           path: 'hospital_clinic',
           name: 'hospital_clinic',
           component: hospital_clinic,
-          meta: {auth:true,tabbar:true,lastRouter:true},
+          meta: {auth:true,tabbar:true},
         },
         {
           path: 'hospital_gene',
@@ -201,7 +201,7 @@ const router = new Router({
           path: 'hospital_clinicDetails',
           name: 'hospital_clinicDetails',
           component: hospital_clinicDetails,
-          meta: {auth:true,lastRouter:true},
+          meta: {auth:true},
         },
         {
           path: 'hospital_clinicInfo',
@@ -742,7 +742,7 @@ router.afterEach((to,from) => {
   Store.state.bottomShow = !!to.meta.tabbar;
   Store.state.childBottomShow = !!to.meta.bottom
   if(!to.meta.unkeepLastRoute)
-    localStorage.setItem('lastRouter',JSON.stringify({path:to.path,name:to.name,query:to.query}))
+    localStorage.setItem('lastRoute',JSON.stringify({path:to.path,name:to.name,query:to.query}))
   
     
 

@@ -173,11 +173,11 @@ export default {
   });
   
          let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
-         let lastRouter = localStorage.getItem('lastRouter')
+         let lastRoute = localStorage.getItem('lastRoute')
          console.log('fromRoute'+fromRoute)
-         console.log('lastRouter'+lastRouter)
-         if(fromRoute == lastRouter){
-          localStorage.removeItem('lastRouter')
+         console.log('lastRoute'+lastRoute)
+         if(fromRoute == lastRoute){
+          localStorage.removeItem('lastRoute')
          }
    
 
@@ -195,18 +195,13 @@ export default {
     }
     
 
-    let lastRouter = localStorage.getItem('lastRouter')
-        if(lastRouter){
-          this.$router.push(JSON.parse(lastRouter));
+    let lastRoute = localStorage.getItem('lastRoute')
+        if(lastRoute){
+          this.$router.push(JSON.parse(lastRoute));
           return
         }
 		debugger;
-		console.log(this.$store.state.hospitalEntrance.loginRefresh())
-		console.log(!this.$store.state.hospitalEntrance.loginRefresh())
-    if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
-      this.$toast({message:'请登录',onClose:function(){
-        thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
-      }})
+    
 
       this.initData();
   },
@@ -225,6 +220,12 @@ export default {
       }, 500);
     },
     initData() {
+      let thisVue = this
+      if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+      this.$toast({message:'请登录',onClose:function(){
+        thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+      }})
+
       Object.assign(this.$data, this.$options.data());
       //轮播图图片路径请求
       this.$axios

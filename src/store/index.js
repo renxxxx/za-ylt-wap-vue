@@ -9,21 +9,17 @@ const state={
   hospitalEntrance:{
     loginRefresh:function(){
 		let login;
-		if(localStorage.getItem("hospitalData")){
-			login =qs.parse(localStorage.getItem("hospitalData")) 
-		}else{
+
 			Vue.prototype.$jquery.ajax({
 			  url:'/hospital/login-refresh',
-			  type:'post',
+			  type:'get',
 			  async:false,
 			  success:function(res){
 			    if(res.code == 0){
 					login=res.data
-					localStorage.setItem("hospitalData", qs.stringify(res.data))
 			    }
 			  }
 			})
-		}
      
       return login;
     },
