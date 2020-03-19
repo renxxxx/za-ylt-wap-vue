@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Store from '../store'
 import Router from 'vue-router'
+
 import chooseTheType from '@/components/chooseTheType.vue'
 import sharePage from '@/components/sharePage.vue'
+import Page404 from '@/components/404Page.vue'
 
 //医院端
 import hospital from '@/components/hospital/hospital.vue'
@@ -85,6 +87,9 @@ import promoters_activityDetails from '@/components/hospital/promoters/page/acti
 //门诊端
 import outpatient from '@/components/outpatient/outpatient.vue'
 import outpatientLogin from '@/components/outpatient/outpatientLogin.vue'
+import outpatient_retrievePassword from '@/components/outpatient/retrievePassword.vue'
+import outpatient_urlPage from '@/components/outpatient/urlPage.vue'
+
 //门诊端主页
 import outpatient_index from '@/components/outpatient/page/index.vue'
 import outpatient_hospital from '@/components/outpatient/page/hospital.vue'
@@ -115,6 +120,7 @@ import outpatient_shopAddressAdd from '@/components/outpatient/page/shopAddressA
 import outpatient_pictureEnlargement from '@/components/outpatient/page/pictureEnlargement.vue'
 import outpatient_articleSearch from '@/components/outpatient/page/articleSearch.vue'
 
+
 Vue.use(Router)
 
 const router = new Router({
@@ -135,7 +141,14 @@ const router = new Router({
       path: '/sharePage',
       name: 'sharePage',
       component: sharePage,
+	  meta: {unkeepLastRoute:true},
     },
+	{
+		path: '*',
+		name: 'error',
+		component: Page404,
+		meta: {unkeepLastRoute:true},
+	},
     {
       path: '/hospital',
       name: 'hospital',
@@ -147,31 +160,31 @@ const router = new Router({
           path: 'hospitalLogin',
           name: 'hospitalLogin',
           component: hospitalLogin,
-          meta: {auth:true,unkeepLastRoute:true},
+          meta: {auth:true,unkeepLastRoute:true,indexHide:true},
         },
         {
           path: 'hospital_index',
           name: 'hospital_index',
           component: hospital_index,
-          meta: {auth:true,tabbar:true,unkeepLastRoute:true},
+          meta: {auth:true,tabbar:true,unkeepLastRoute:true,indexHide:true},
         },
         {
           path: 'hospital_urlPage',
           name: 'hospital_urlPage',
           component: hospital_urlPage,
-          meta: {auth:true},
+          meta: {auth:true,indexHide:true,unkeepLastRoute:true},
         },
         {
           path: 'hospital_retrievePassword',
           name: 'hospital_retrievePassword',
           component: hospital_retrievePassword,
-          meta: {auth:true},
+          meta: {auth:true,indexHide:true,unkeepLastRoute:true},
         },
         {
           path: 'hospital_clinic',
           name: 'hospital_clinic',
           component: hospital_clinic,
-          meta: {auth:true,tabbar:true,lastRouter:true},
+          meta: {auth:true,tabbar:true},
         },
         {
           path: 'hospital_gene',
@@ -201,7 +214,7 @@ const router = new Router({
           path: 'hospital_clinicDetails',
           name: 'hospital_clinicDetails',
           component: hospital_clinicDetails,
-          meta: {auth:true,lastRouter:true},
+          meta: {auth:true},
         },
         {
           path: 'hospital_clinicInfo',
@@ -460,7 +473,7 @@ const router = new Router({
               path: '/promoters_index',
               name: 'promoters_index',
               component: promoters_index,
-              meta: {auth:true,bottom:true,unkeepLastRoute:true},
+              meta: {auth:true,bottom:true,unkeepLastRoute:true,indexHide:true},
             },
             {
               path: 'promoters_clinicSearch',
@@ -562,20 +575,33 @@ const router = new Router({
       name: 'outpatient',
       component: outpatient,
       meta: {auth:true},
-      redirect:'/outpatientLogin',
+      redirect:'/outpatient/outpatient_index',
       children:[
         {
           path: '/outpatientLogin',
           name: 'outpatientLogin',
           component: outpatientLogin,
-          meta: {auth:true},
+          meta: {auth:true,indexHide:true,unkeepLastRoute:true},
         },
+		
         {
           path: 'outpatient_index',
           name: 'outpatient_index',
           component: outpatient_index,
-          meta: {auth:true,unkeepLastRoute:true,tabbar:true},
+          meta: {auth:true,unkeepLastRoute:true,tabbar:true,indexHide:true},
         },
+		{
+			path: '/outpatient_retrievePassword',
+			name: 'outpatient_retrievePassword',
+			component: outpatient_retrievePassword,
+			meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+		},
+		{
+			path: '/outpatient_urlPage',
+			name: 'outpatient_urlPage',
+			component: outpatient_urlPage,
+			meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+		},
         {
           path: 'outpatient_pathogenicSearch',
           name: 'outpatient_pathogenicSearch',
@@ -741,10 +767,13 @@ router.afterEach((to,from) => {
   debugger
   Store.state.bottomShow = !!to.meta.tabbar;
   Store.state.childBottomShow = !!to.meta.bottom;
+  Store.state.hospitalReturnHomePage = !to.meta.indexHide
+  Store.state.outpatientReturnHomePage = !to.meta.indexHide
   // Store.state.bottomShow = !!to.meta.bottomShow;
-  if(!to.meta.unkeepLastRoute)
-    localStorage.setItem('lastRouter',JSON.stringify({path:to.path,name:to.name,query:to.query}))
-  
+  if(!to.meta.unkeepLastRoute){
+	  debugger;
+    localStorage.setItem('lastRoute',JSON.stringify({path:to.path,name:to.name,query:to.query}))
+  }
     
 
 

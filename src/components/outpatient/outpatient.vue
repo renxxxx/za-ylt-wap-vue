@@ -3,11 +3,11 @@
     <keep-alive>
       <router-view class="appView"/>
     </keep-alive>
-    <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-if="outpatientReturnHomePage">
+    <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-show="outpatientReturnHomePage">
       <img src="../../assets/image/returnHome.png" alt />
       <span>首页</span>
     </div>
-    <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-if="outpatientReturnTopPage">
+    <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="outpatientReturnTopPage">
       <img src="../../assets/image/returnTop.png" alt />
       <span>顶部</span>
     </div>
@@ -122,11 +122,11 @@ export default {
   created(){
 
   },
-  watch:{
-    $route(to,from){
-      localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
-    }
-  },
+  // watch:{
+    // $route(to,from){
+    //   localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
+    // }
+  // },
   mounted(){
     window.addEventListener("scroll", this.handleScroll, true);
   },

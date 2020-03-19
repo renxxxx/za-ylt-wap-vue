@@ -24,24 +24,23 @@
       		    @change="changeFn"/>
       		<p>&nbsp;&nbsp;我已经阅读并同意
       		<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
-      			<router-link :to="{name : 'hospital_urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
+      			<router-link :to="{path : '/hospital/hospital_urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
       			《应用服务条款》
       			</router-link>
       		</p>
       	</div>
       	<button class="submitClass" type="submit" value="医院登录" @click="submit()">登录</button>
       	<div class="passwordReset">
-      		<router-link  :to="{name : 'hospital_retrievePassword',query:{time:new Date().getTime()}}">
+      		<router-link  :to="{path : '/hospital/hospital_retrievePassword',query:{time:new Date().getTime()}}">
       			<div class="forget">
       				<span>忘记密码</span>
       				<img src="../../assets/image/wenhao@2x.png" alt="">
       			</div>
       		</router-link>
-          <router-link  :to="{path : '/',query:{time:new Date().getTime()}}">
-          	<div class="returnTypePage">
-          		<span @click="clear">选择入口</span>
+			
+          	<div @click="chooseEntrance" class="returnTypePage">
+          		<span style="color: #2B77EF;">选择入口</span>
           	</div>
-          </router-link>
       	</div>
 
       </div>
@@ -127,7 +126,7 @@ export default {
     
      if(this.$store.state.hospitalEntrance.loginRefresh())
       this.$toast({message:'已登录',onClose:function(){
-        thisVue.$router.replace({ path : '/hospital_index',query:{time:new Date().getTime()}});
+        thisVue.$router.replace({ path : '/hospital/hospital_index',query:{time:new Date().getTime()}});
       }})
 
     
@@ -166,9 +165,15 @@ export default {
     },
   },
   methods:{
+
 	clear(){
 		localStorage.clear('entrance')
 	},
+    chooseEntrance(){
+      localStorage.removeItem('entrance');
+	  debugger
+      this.$router.push({path:'/',query:{time:new Date().getTime()}})
+    },
     emptyAccountFn(value){
       if(value == 'name'){
         this.submitAccount.name = '';
@@ -202,6 +207,7 @@ export default {
             if(res.data.code == 0){
 				this.$store.state.hospitalEntrance.loginRefresh()
 				console.dir(this.$store.state.hospitalEntrance.loginRefresh())
+				debugger;
 				if(this.$store.state.hospitalEntrance.loginRefresh().type == 1){
 					this.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
 				}else{

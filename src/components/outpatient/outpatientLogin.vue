@@ -24,14 +24,14 @@
       		    @change="changeFn"/>
       		<p>&nbsp;&nbsp;我已经阅读并同意
       		<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
-      			<router-link :to="{path : '/outpatient/hospital_urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
+      			<router-link :to="{path : '/outpatient_urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
       			《应用服务条款》
       			</router-link>
       		</p>
       	</div>
       	<button class="submitClass" type="submit" value="医院登录" @click="submit()">登录</button>
       	<div class="passwordReset">
-      		<router-link  :to="{path : '/outpatient/hospital_retrievePassword',query:{time:new Date().getTime()}}">
+      		<router-link  :to="{path : 'outpatient_retrievePassword',query:{time:new Date().getTime()}}">
       			<div class="forget">
       				<span>忘记密码</span>
       				<img src="../../assets/image/wenhao@2x.png" alt="">
@@ -39,7 +39,7 @@
       		</router-link>
           <router-link  :to="{path : '/',query:{time:new Date().getTime()}}">
           	<div class="returnTypePage">
-          		<span @click="clear">选择入口</span>
+          		<span @click="chooseEntrance" style="color: #2B77EF;">选择入口</span>
           	</div>
           </router-link>
       	</div>
@@ -118,11 +118,11 @@ export default {
 
   },
   mounted() {
-
+	let thisVue = this;
 		if(window.plus){
       plus.navigator.setStatusBarStyle("light")
 		}
-		if(this.$store.state.hospitalEntrance.loginRefresh())
+		if(this.$store.state.outpatientEntrance.loginRefresh())
 		 this.$toast({message:'已登录',onClose:function(){
 		   thisVue.$router.replace({ path : '/outpatient/outpatient_index',query:{time:new Date().getTime()}});
 		 }})
@@ -158,9 +158,10 @@ export default {
     },
   },
   methods:{
-	clear(){
-		localStorage.clear('entrance')
-	},
+		chooseEntrance(){
+			localStorage.removeItem('entrance');
+			this.$router.push({path:'/',query:{time:new Date().getTime()}})
+		},
     emptyAccountFn(value){
       if(value == 'name'){
         this.submitAccount.name = '';
@@ -191,8 +192,8 @@ export default {
         	}))
         	.then( res =>{
             if(res.data.code == 0){
-				this.$store.state.outpatientEntrance.loginRefresh()
-				this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
+						this.$store.state.outpatientEntrance.loginRefresh()
+						this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
               // this.$axios.post('/clinic/login-refresh')
               // 	.then( res =>{
               //     if(res.data.code == 0){

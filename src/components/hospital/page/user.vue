@@ -150,16 +150,18 @@ export default {
 		},
 		//退出方法
 		exitFn(){
-			this.$axios.get('/hospital/logout')
-			debugger
-			localStorage.clear();
-			if(window.plus){
-				plus.webview.currentWebview().clear()
-				//plus.webview.currentWebview().loadURL(aa)
-			}
+			let thisVue=this
+			this.$axios.post('/hospital/logout').then(function(){
+				localStorage.removeItem('lastRoute')
+				// localStorage.clear()
+				thisVue.$router.push({path:"/hospital/hospitalLogin",query:{time:new Date().getTime()}})
+			})
+			// if(window.plus){
+			// 	plus.webview.currentWebview().clear()
+			// 	//plus.webview.currentWebview().loadURL(aa)
+			// }
+			// location.href=location.pathname
 			
-			location.href=location.pathname
-			debugger
 		},
 		noLinkFn(){
 			this.$toast.setDefaultOptions({ duration: 1000 });

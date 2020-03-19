@@ -160,32 +160,19 @@ export default {
 		 },
 		//退出方法
 		exitFn(){
-			this.$store.state.isLogin = 0
-			this.isLogin = 0;
-			this.account = {
-				name:'',
-				password:'',
-				user:{
-					realname:'',
-					tel: undefined,
-					remark:"",				//备注
-					idcardNo:undefined, 	//身份证号
-				},
-				clinicId: '',			//门诊id
-				hospitalId: '',			//医院Id
-				patientId : '',			//医院端门诊主页的门诊详情页id
-				data:{},
-			},
-			console.log(this.isLogin);
-			this.$axios.post('/hospital/logout');
-			if(window.plus){
-					plus.webview.currentWebview().clear()
-					plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/account')
-			}
-      console.log(location)
-			// this.$router.push('/account')
+			// this.$axios.post('/hospital/logout');
+			// if(window.plus){
+			// 		plus.webview.currentWebview().clear()
+			// 		plus.webview.currentWebview().loadURL(location.href.substr(0,location.href.indexOf('#'))+'#/account')
+			// }
 			localStorage.clear();
-      location.href=location.pathname
+			let thisVue=this
+			this.$axios.post('/hospital/logout').then(function(){
+				localStorage.removeItem('lastRoute')
+				// localStorage.clear()
+				thisVue.$router.push({path:"/hospital/hospitalLogin",query:{time:new Date().getTime()}})
+			})
+			// location.href=location.pathname
 			// location.reload()
 		}
 	},

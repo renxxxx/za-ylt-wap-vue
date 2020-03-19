@@ -95,6 +95,8 @@ export default {
   beforeRouteLeave(to, from, next) {
     debugger;
 	this.scrollTop =document.getElementById('hospital').scrollTop ||document.getElementById('hospital').pageYOffset
+	console.log('sourceManagementthis.scrollTop'+this.scrollTop)
+	
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)

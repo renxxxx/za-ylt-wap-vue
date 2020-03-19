@@ -3,11 +3,11 @@
 	<keep-alive>
 		<router-view class="appView"/>
 	</keep-alive>
-  <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-if="hospitalReturnHomePage">
+  <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-show="hospitalReturnHomePage">
     <img src="../../assets/image/returnHome.png" alt />
     <span>首页</span>
   </div>
-  <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-if="hospitalReturnTopPage">
+  <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="hospitalReturnTopPage">
     <img src="../../assets/image/returnTop.png" alt />
     <span>顶部</span>
   </div>
@@ -136,6 +136,7 @@ export default {
   methods:{
     // 滑动一定距离出现返回顶部按钮
     handleScroll() {
+	debugger
       let scrollTop =
         this.$refs.hospitalRef.scrollTop ||
         this.$refs.hospitalRef.pageYOffset;
@@ -163,6 +164,7 @@ export default {
     },
     // 返回列表顶部按钮
     returnTopFn() {
+		debugger
       var scrollTop =
         this.$refs.hospitalRef.scrollTop ||
         this.$refs.hospitalRef.scrollTop ||
@@ -185,9 +187,9 @@ export default {
     returnHomePageFn(){
       console.log(this.$store.state.hospitalEntrance.loginRefresh().type)
       if(this.$store.state.hospitalEntrance.loginRefresh().type == 1){
-        this.$router.replace({path:'/hospital/hospital_index',query:{time:new Date().getTime(),transition:'def'}});
-      }else{
         this.$router.replace({path:'/promoters_index',query:{time:new Date().getTime(),transition:'def'}});
+      }else{
+        this.$router.replace({path:'/hospital/hospital_index',query:{time:new Date().getTime(),transition:'def'}});
       }
     },
   },

@@ -120,6 +120,8 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
 	this.scrollTop =document.getElementById('outpatient').scrollTop ||document.getElementById('outpatient').pageYOffset
+	debugger;
+	console.log("clinic"+this.scrollTop)
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
@@ -154,16 +156,31 @@ export default {
     next(vm => {
       document.getElementById('outpatient').scrollTop=document.getElementById('outpatient').pageYOffset=vm.scrollTop;
     });
+	let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
+	let lastRoute = localStorage.getItem('lastRoute')
+	console.log('fromRoute'+fromRoute)
+	console.log('lastRoute'+lastRoute)
+	if(fromRoute == lastRoute){
+	 localStorage.removeItem('lastRoute')
+	}
   },
   destroyed(){
-	  console.log('destroyed')
   },
   mounted(){
-	  debugger
+	let thisVue =this
     if(window.plus){
     	//plus.navigator.setStatusBarBackground("#2B77EF");
     	plus.navigator.setStatusBarStyle("dark")
     }
+	let lastRoute = localStorage.getItem('lastRoute')
+	    if(lastRoute){
+	      this.$router.push(JSON.parse(lastRoute));
+	      return
+	    }
+	if(this.$route.meta.auth && !this.$store.state.outpatientEntrance.loginRefresh())
+		this.$toast({message:'请登录',onClose:function(){
+		  thisVue.$router.replace({ path : '/outpatientLogin',query:{time:1}});
+		}})
 	this.getNum();
   },
   computed:{

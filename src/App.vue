@@ -248,6 +248,7 @@ img[lazy="error"]{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
+  position: relative;
 }
 
 </style>
