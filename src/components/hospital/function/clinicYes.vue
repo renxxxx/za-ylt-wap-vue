@@ -130,22 +130,22 @@ export default {
 		search(){
 			debugger
 			let clinicId = '';
-			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
-			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
-			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':'',
+			// this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
+			// this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+			// this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':'',
 			Object.assign(this.$data, this.$options.data());
 			this.getNextPage()
 		},
 		getData(){
 			debugger
 			let clinicId = '';
-			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
-			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
-			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':''
+			// this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.account.clinicId;
+			// this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+			// this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
-				hospitalId : this.account.hospitalId,
-				clinicId : clinicId,
+				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+				// clinicId : clinicId,
 				status :4,
 				pn : this.page,
 				ps : 10,
@@ -153,31 +153,17 @@ export default {
 			.then(_d => {
 				if(_d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
-						switch(this.isLogin){
-							case 100:
-							this.items.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								img :require( "../../../assets/image/blue@2x.png"),
-								button : "已就诊",
-								buttonColor : "buttonColor",
-								span : "已就诊"
-							});
-							break;
-							case 200:
-							this.items.push({
-								clinicName : _d.data.data.items[nums].clinicName,
-								itemId : _d.data.data.items[nums].itemId,
-								pushTime : _d.data.data.items[nums].pushTime,
-								realname : _d.data.data.items[nums].realname,
-								status : _d.data.data.items[nums].status,
-								img :require( "../../../assets/image/yijiuzhen@2x.png"),
-								span : "已就诊"
-							});
-						}
+						this.items.push({
+							clinicName : _d.data.data.items[nums].clinicName,
+							itemId : _d.data.data.items[nums].itemId,
+							pushTime : _d.data.data.items[nums].pushTime,
+							realname : _d.data.data.items[nums].realname,
+							status : _d.data.data.items[nums].status,
+							img :require( "../../../assets/image/blue@2x.png"),
+							button : "已就诊",
+							buttonColor : "buttonColor",
+							span : "已就诊"
+						});
 					}
 					// 加载状态结束
 					this.loading = false;

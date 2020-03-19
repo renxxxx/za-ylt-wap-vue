@@ -208,11 +208,11 @@ export default {
 	getNum(){
 		debugger
 		let clinicId = '';
-		this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.account.clinicId;
-		this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+		// this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.account.clinicId;
+		// this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
-			hospitalId : this.account.hospitalId,
+			hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 			clinicId : clinicId,
 			status :1,
 			pn : 1,
@@ -228,7 +228,7 @@ export default {
 		})
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
-			hospitalId : this.account.hospitalId,
+			hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 			clinicId : clinicId,
 			status :4,
 			pn : 1,

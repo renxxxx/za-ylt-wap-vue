@@ -10,8 +10,8 @@
 					<span>已认证</span>
 				</div>
 				<div class="top_center">
-					<h3>{{this.account.data.data.hospital.name}}</h3>
-					<p>账号：{{this.account.data.data.phone}}</p>
+					<h3>{{this.$store.state.hospitalEntrance.loginRefresh().hospital.name}}</h3>
+					<p>账号：{{this.$store.state.hospitalEntrance.loginRefresh().phone}}</p>
 				</div>
 				<div class="top_right" @click="showImgFn">
 					<span>营业执照</span>
@@ -134,9 +134,10 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-
-		this.coverImg = this.account.data.data.hospital.cover;
-		this.images.push(this.account.data.data.hospital.license)
+		if(this.$store.state.hospitalEntrance.loginRefresh()){
+			this.coverImg = this.$store.state.hospitalEntrance.loginRefresh().hospital.cover
+			this.images.push(this.$store.state.hospitalEntrance.loginRefresh().hospital.license)
+		}
 		// console.log(this.account.data.data.hospital.cover)
 	},
 	methods: {

@@ -12,8 +12,8 @@
 					<router-link :to="{name : 'hospital_clinicMessage',query:{time:new Date().getTime()}}">
 						<div class="hospital_information">
 							<img src="../../../assets/image/xiaoxi@2x.png" alt="">
-							<div class="num" v-if="this.account.data.data.newMessageCount? true:false">
-								<!-- <span>{{this.account.data.data.newMessageCount}}</span> -->
+							<div class="num" v-if=" this.$store.state.hospitalEntrance.loginRefresh().unlookedMessageCount">
+								<span>{{this.$store.state.hospitalEntrance.loginRefresh().unlookedMessageCount}}</span> 
 							</div>
 						</div>
 					</router-link>
@@ -80,7 +80,6 @@ export default {
 		}
 	},
 	computed:{
-	  ...mapGetters(['account'])
 	},
 	components:{
 		clinicContent
