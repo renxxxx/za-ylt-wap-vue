@@ -165,7 +165,7 @@ export default {
 		},
 		noLinkFn(){
 			this.$toast.setDefaultOptions({ duration: 1000 });
-			this.$toast.fail('暂未开通');
+			this.$toast('暂未开通');
 		}
 	},
 }

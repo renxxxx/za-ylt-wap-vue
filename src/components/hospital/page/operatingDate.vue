@@ -280,7 +280,7 @@ export default {
             // console.dir(_dataValue)
           }
         }else{
-          this.$toast.fail(res.data.codeMsg)
+          this.$toast(res.data.codeMsg)
         }
 
         if(res.data.data.rows.length){

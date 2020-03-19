@@ -238,7 +238,7 @@ export default {
         .then(res => {
           for (let i in res.data.data.rows) {
             // console.log(res.data.data.rows[i])
-            res.data.codeMsg ? this.$toast.fail(res.data.codeMsg) : "";
+            res.data.codeMsg ? this.$toast(res.data.codeMsg) : "";
             switch (res.data.data.rows[i].type) {
               case 0:
                 this.images.push({
@@ -342,7 +342,7 @@ export default {
     },
     noLinkFn() {
       this.$toast.setDefaultOptions({ duration: 1000 });
-      this.$toast.fail("暂未开通");
+      this.$toast("暂未开通");
     }
   }
 };

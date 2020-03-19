@@ -141,7 +141,7 @@ export default {
 					this.contentArr.push(res.data.data.items[i].title);
 				}
 			}else{
-				this.$toast.fail(res.data.codeMsg)
+				this.$toast(res.data.codeMsg)
 			}
 		})
 		.catch((err)=>{

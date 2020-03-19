@@ -118,7 +118,7 @@ export default {
 			itemId : this.$route.query.itemId
 		})).then(res  =>{
 			if(res.data.codeMsg){
-				this.$toast.fail(res.data.codeMsg)
+				this.$toast(res.data.codeMsg)
 			}else{
 				this.exchangeEditor = {
 					name :res.data.data.name,
@@ -170,7 +170,7 @@ export default {
 		// 		payExchangepoint : this.exchangeEditor.payExchangepoint,
 		// 	})).then(res =>{
 		// 		// console.log(res.data.codeMsg)
-		// 		res.data.codeMsg?	this.$toast.fail({duration: 1000,message: res.data.codeMsg}):this.$toast.success({duration: 1000,message: '操作成功'})
+		// 		res.data.codeMsg?	this.$toast({duration: 1000,message: res.data.codeMsg}):this.$toast.success({duration: 1000,message: '操作成功'})
 		// 	}).catch(err =>{
 		// 		console.log(err)
 		// 	})

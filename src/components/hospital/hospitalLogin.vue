@@ -231,15 +231,15 @@ export default {
               // 	})
               // 	.catch((err)=>{
               // 		console.log(err)
-              // 		this.$toast.fail(err);
+              // 		this.$toast(err);
               // 	})
             }else{
-              this.$toast.fail(res.data.codeMsg);
+              this.$toast(res.data.codeMsg);
             }
         	})
         	.catch((err)=>{
         		console.log(err)
-        		this.$toast.fail(err);
+        		this.$toast(err);
         	})
         }
     },

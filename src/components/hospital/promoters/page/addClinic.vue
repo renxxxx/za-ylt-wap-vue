@@ -221,7 +221,7 @@ export default {
 			}))
 			.then(res => {
 				if(res.data.codeMsg){
-					this.$toast.fail(res.data.codeMsg)
+					this.$toast(res.data.codeMsg)
 				}else{
 					this.$toast.success('操作成功');
 					this.$router.back(-1)

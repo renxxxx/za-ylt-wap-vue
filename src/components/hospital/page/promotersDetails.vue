@@ -219,7 +219,7 @@ export default {
 		this.$axios.get('/hospital/def/hospital-operator-user/'+this.$route.query.hospitalUserId)
 		.then(res => {
 			if(res.data.codeMsg){
-				this.$toast.fail(res.data.codeMsg)
+				this.$toast(res.data.codeMsg)
 			}else{
 				this.promoters = {name: res.data.data.name,phone: res.data.data.phone,cover: res.data.data.cover},
 				this.modify.name = res.data.data.name;
@@ -231,7 +231,7 @@ export default {
 		})
 		this.$axios.get('/hospital/super-admin/hospital-clinics-sum?'+qs.stringify({hospitalUserId:this.$route.query.hospitalUserId}))
 		.then(res => {
-			res.data.codeMsg?	this.$toast.fail(res.data.codeMsg) : this.clinicNum = res.data.data.rowCount;
+			res.data.codeMsg?	this.$toast(res.data.codeMsg) : this.clinicNum = res.data.data.rowCount;
 		})
 		.catch((err)=>{
 			console.log(err);
@@ -288,7 +288,7 @@ export default {
 					this.$toast.success('操作成功');
 					this.showModify = false;
 				}else{
-					this.$toast.fail(res.data.codeMsg);
+					this.$toast(res.data.codeMsg);
 				}
 			})
 			.catch((err)=>{
@@ -308,7 +308,7 @@ export default {
 					this.$toast.success('操作成功');
 					this.$router.back(-1)
 				}else{
-					this.$toast.fail(res.data.codeMsg);
+					this.$toast(res.data.codeMsg);
 				}
 			})
 			.catch((err)=>{
@@ -388,7 +388,7 @@ export default {
 						this.$toast.success('操作成功');
 						this.$router.back(-1)
 					}else{
-						this.$toast.fail(res.data.codeMsg);
+						this.$toast(res.data.codeMsg);
 					}
 				})
 				.catch((err)=>{
@@ -412,7 +412,7 @@ export default {
 					this.$toast.success('操作成功');
 					this.$router.back(-1)
 				}else{
-					this.$toast.fail(res.data.codeMsg);
+					this.$toast(res.data.codeMsg);
 				}
 			})
 			.catch((err)=>{
@@ -446,7 +446,7 @@ export default {
 					this.$toast.success('操作成功');
 					this.$router.back(-1)
 				}else{
-					this.$toast.fail(res.data.codeMsg);
+					this.$toast(res.data.codeMsg);
 				}
 			})
 			.catch((err)=>{

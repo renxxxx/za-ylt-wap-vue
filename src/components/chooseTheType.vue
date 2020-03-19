@@ -91,12 +91,12 @@ let entrance = localStorage.getItem('entrance')
           // this.submitFn('/clinic/login-refresh',200);
           break;
           case '3':
-            this.$toast.fail('正在开发中')
+            this.$toast('正在开发中')
           // this.submitFn('/manager/login-refresh',300)
           break;
         }
       }else{
-        this.$toast.fail('请选择入口')
+        this.$toast('请选择入口')
       }
 
     },

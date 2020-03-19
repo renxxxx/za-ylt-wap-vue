@@ -134,7 +134,7 @@ export default {
 					this.$toast.success('操作成功')
 				}else{
 					if(res.data.codeMsg){
-						this.$toast.fail(res.data.codeMsg)
+						this.$toast(res.data.codeMsg)
 					}
 				}
 		 	})

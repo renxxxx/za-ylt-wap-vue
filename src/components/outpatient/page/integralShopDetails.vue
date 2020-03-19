@@ -122,7 +122,7 @@ export default {
 		},
 		tipsFn(value){
 			if(value > this.shopDetails.stock){
-				this.$toast.fail({
+				this.$toast({
 					 duration: 1000, 
 					  message: '库存不足',
 				});
@@ -140,7 +140,7 @@ export default {
 			}))
 			.then(res => {
 				console.log(res.data.codeMsg)
-				res.data.codeMsg? this.$toast.fail(res.data.codeMsg):this.$toast.success('操作成功')
+				res.data.codeMsg? this.$toast(res.data.codeMsg):this.$toast.success('操作成功')
 			})
 			.catch((err)=>{
 				//Dialog({ message: err});;
@@ -163,7 +163,7 @@ export default {
 					};
 					this.shopDetails.cover = res.data.data.cover.split(',')
 				}else{
-					this.$toast.fail(res.data.codeMsg)
+					this.$toast(res.data.codeMsg)
 				}
 			})
 			.catch((err)=>{
@@ -178,7 +178,7 @@ export default {
 				if(res.data.code == 0 && res.data.data.items && res.data.data.items.length>0){
 					this.address = res.data.data.items[0];
 				}else{
-					this.$toast.fail(res.data.codeMsg)
+					this.$toast(res.data.codeMsg)
 				}	
 			})
 			.catch((err)=>{
