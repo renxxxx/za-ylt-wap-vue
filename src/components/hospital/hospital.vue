@@ -1,5 +1,5 @@
 <template>
-  <div id="hospital" ref='hospitalRef'>
+  <div id="hospital" ref='hospitalRef' :style="{'margin-bottom':bottomShow?'.55rem':'' }">
 	<keep-alive>
 		<router-view class="appView"/>
 	</keep-alive>
@@ -209,9 +209,7 @@ export default {
   overflow: scroll;
 
 }
-.hospitalBottom{
-  margin-bottom: .55rem;
-}
+
 .appView {
      /* position: absolute; */
      width: 100%;
