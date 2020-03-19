@@ -37,11 +37,9 @@
       				<img src="../../assets/image/wenhao@2x.png" alt="">
       			</div>
       		</router-link>
-          <router-link  :to="{name : 'chooseTheType',query:{time:new Date().getTime()}}">
-          	<div class="returnTypePage">
+          	<div @click="chooseEntrance" class="returnTypePage">
           		<span>选择入口</span>
           	</div>
-          </router-link>
       	</div>
 
       </div>
@@ -166,6 +164,10 @@ export default {
     },
   },
   methods:{
+    chooseEntrance(){
+      localStorage.removeItem('entrance');
+      this.$router.push({path:'/chooseTheType',query:{time:new Date().getTime()}})
+    },
     emptyAccountFn(value){
       if(value == 'name'){
         this.submitAccount.name = '';
