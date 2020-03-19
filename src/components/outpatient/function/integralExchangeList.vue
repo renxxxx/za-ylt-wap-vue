@@ -118,7 +118,7 @@ export default {
             this.finished = true;
           }
       	}else{
-      		this.$toast.fail(res.data.codeMsg)
+      		this.$toast(res.data.codeMsg)
       	}
       })
       .catch((err)=>{

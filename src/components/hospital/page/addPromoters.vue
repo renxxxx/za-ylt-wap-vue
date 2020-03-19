@@ -126,7 +126,7 @@ export default {
 				cover : this.addPromoters.cover,
 			}))
 			.then(res => {
-				res.data.codeMsg? this.$toast.fail(res.data.codeMsg):this.$toast.success('操作成功')
+				res.data.codeMsg? this.$toast(res.data.codeMsg):this.$toast.success('操作成功')
 			})
 			.catch((err)=>{
 				console.log(err);

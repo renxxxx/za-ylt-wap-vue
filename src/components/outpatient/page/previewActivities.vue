@@ -112,7 +112,7 @@ export default {
 				endTime : this.activity.endTime? this.activity.endTime+(24*60*60*1000):this.activity.endTime,
 			}))
 			.then(res => {
-				res.data.codeMsg? this.$toast.fail(res.data.codeMsg):this.$toast.success('操作成功')
+				res.data.codeMsg? this.$toast(res.data.codeMsg):this.$toast.success('操作成功')
 				console.log(this.activity)
 				//window.location.href='#/hospital_activityReleased';
 				this.$router.go(-2)

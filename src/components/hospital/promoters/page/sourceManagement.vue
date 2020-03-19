@@ -370,7 +370,7 @@ export default {
 		}))
 		.then(res =>{
 			if(res.data.codeMsg){
-				this.$toast.fail({duration: 1000,message: res.data.codeMsg})
+				this.$toast({duration: 1000,message: res.data.codeMsg})
 			}else{
 				this.$toast.success({duration: 1000,message: '操作成功'})
 				if(_item.status == 1){

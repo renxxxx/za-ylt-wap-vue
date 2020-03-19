@@ -220,7 +220,7 @@ export default {
             this.test='无数据'
           }
         }else{
-          this.$toast.fail(res.data.codeMsg)
+          this.$toast(res.data.codeMsg)
         }
     	})
     	.catch((err)=>{
@@ -248,7 +248,7 @@ export default {
       		console.log(err)
       	})
        }else{
-      	this.$toast.fail({ message: '请上传视频' });
+      	this.$toast({ message: '请上传视频' });
       	return false;
       }
     },
@@ -271,7 +271,7 @@ export default {
     			console.log(err)
     		})
     	 }else{
-    		this.$toast.fail({ message: '请选择图片' });
+    		this.$toast({ message: '请选择图片' });
 
     		return false;
     	}
@@ -294,7 +294,7 @@ export default {
         .then(res =>{
       	// this.imageUpload.push({name:file.name,url:res.data.data.url})
         if(res.data.codeMsg){
-          this.$toast.fail(res.data.codeMsg)
+          this.$toast(res.data.codeMsg)
         }else{
           this.$toast.success('操作成功');
           this.text = '';

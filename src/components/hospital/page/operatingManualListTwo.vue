@@ -143,7 +143,7 @@ export default {
           //  // console.dir(this.operatingManual[i]._data)
           // }
         }else{
-          this.$toast.fail(res.data.codeMsg)
+          this.$toast(res.data.codeMsg)
         }
       })
       .catch((err)=>{
@@ -172,7 +172,7 @@ export default {
     //         // console.log(num)
     //           this.yesNum = num
     //     }else{
-    //       this.$toast.fail(res.data.codeMsg)
+    //       this.$toast(res.data.codeMsg)
     //     }
     // 	})
     // 	.catch((err)=>{
@@ -188,7 +188,7 @@ export default {
     //       this.num = res.data.data.rowCount
     //       console.dir(res)
     //     }else{
-    //       this.$toast.fail(res.data.codeMsg)
+    //       this.$toast(res.data.codeMsg)
     //     }
     //   })
     //   .catch((err)=>{

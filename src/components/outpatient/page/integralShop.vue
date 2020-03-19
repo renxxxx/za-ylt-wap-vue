@@ -115,7 +115,7 @@ export default {
 					};
 					this.shopDetails.cover = res.data.data.cover.split(',')
 				}else{
-					this.$toast.fail(res.data.codeMsg)
+					this.$toast(res.data.codeMsg)
 				}
 			})
 			.catch((err)=>{

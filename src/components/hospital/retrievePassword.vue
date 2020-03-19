@@ -132,7 +132,7 @@ export default {
 			}))
 		.then( _d => {
 			console.log(_d)
-			_d.data.codeMsg? this.$toast.fail(_d.data.codeMsg):this.$toast.success('操作成功');
+			_d.data.codeMsg? this.$toast(_d.data.codeMsg):this.$toast.success('操作成功');
 			if(_d.data.code == 0){
 				setTimeout(()=>{
 					this.$router.back(-1);
@@ -155,7 +155,7 @@ export default {
 			}))
 			.then(_d => {
         if(_d.data.codeMsg){
-          this.$toast.fail(_d.data.codeMsg)
+          this.$toast(_d.data.codeMsg)
           this.showYan = true;
           this.showTime = false;
         }else{
