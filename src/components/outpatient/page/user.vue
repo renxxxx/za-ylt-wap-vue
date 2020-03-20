@@ -150,7 +150,7 @@ export default {
 	},
 	userFn(){
 		// console.log("hahha")
-		// console.log(this.account);
+		// console.log(this.$store.state.outpatientEntrance.loginRefresh());
 		//用户头像值
 		let cover = this.$store.state.outpatientEntrance.loginRefresh().cover;
 		// 是否认证值
@@ -167,8 +167,8 @@ export default {
 
 		}
 
-		// console.log(this.account.data.data.cover)
-		// console.log(this.account.data.data.license)
+		// console.log(this.$store.state.outpatientEntrance.loginRefresh().data.data.cover)
+		// console.log(this.$store.state.outpatientEntrance.loginRefresh().data.data.license)
 	 },
 	//退出方法
 	exitFn(){

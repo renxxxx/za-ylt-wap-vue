@@ -206,7 +206,7 @@ export default {
 		saveFn(){
 			console.log(this.addClinic)
 			this.$axios.post('/hospital/operator/hospital-clinic-add',qs.stringify({
-				hospitalClinicId : this.account.hospitalId,
+				hospitalClinicId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 				name :  this.addClinic.name,        //医院名称
 				hospitalUserId : this.addClinic.clinicPromoterId,	//推广人id
 				cover: '',

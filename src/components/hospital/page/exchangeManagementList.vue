@@ -128,7 +128,7 @@ console.log(this.scrollTop)
 		},
 		getdata(){
 			this.$axios.post('/clientend2/hospitalend/exchangemanage/orders',qs.stringify({
-				hospitalId : this.account.hospitalId,
+				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 				pn : 1,
 				ps : 10,
 			}))
@@ -159,7 +159,7 @@ console.log(this.scrollTop)
 		},
 		nextdata(){
 			this.$axios.post('/clientend2/hospitalend/exchangemanage/orders',qs.stringify({
-				hospitalId : this.account.hospitalId,
+				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 				pn : this.page,
 				ps : 10,
 			}))

@@ -123,7 +123,7 @@ console.log(this.scrollTop)
 		},
 		getData(){
       this.$axios.post('/c2/patient/items',qs.stringify({
-      	hospitalId : this.account.hospitalId,
+      	hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
         pn: this.page,
         ps: 10
       }))

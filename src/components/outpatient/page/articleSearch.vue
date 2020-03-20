@@ -103,7 +103,7 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
     this.getdata({
-    	hospitalId : this.account.hospitalId,
+    	hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospitalId,
     	pn : this.page,
     	ps : 10
     })
@@ -142,7 +142,7 @@ export default {
 	  onLoad(){
       this.page++;
 	  	this.getdata({
-	  		hospitalId : this.account.hospitalId,
+	  		hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospitalId,
 	  		pn : this.page,
 	  		ps : 10
 	  	})
@@ -151,7 +151,7 @@ export default {
       this.article = [];
       this.getdata({
         kw : this.kw,
-	  		hospitalId : this.account.hospitalId,
+	  		hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospitalId,
 	  	})
     }
   },

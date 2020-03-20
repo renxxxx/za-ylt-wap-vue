@@ -132,7 +132,7 @@ console.log(this.scrollTop)
 		submitFn(){
 			if(this.imgUrl != ''){
 				this.$axios.post('/c2/commodity/itemadd',qs.stringify({
-					hospitalId : this.account.hospitalId,
+					hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 					name : this.exchangeAdd.name,
 					cover : this.exchangeAdd.cover,
 					intro : this.exchangeAdd.intro,

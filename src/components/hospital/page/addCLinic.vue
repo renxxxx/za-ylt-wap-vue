@@ -232,7 +232,7 @@ export default {
 		saveFn(){
 			console.log(this.addClinic)
 			this.$axios.post('/hospital/super-admin/hospital-clinic-add',qs.stringify({
-				hospitalClinicId : this.account.hospitalId,
+				hospitalClinicId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 				name :  this.addClinic.name,        //医院名称
 				hospitalUserId : this.$route.query.promoterId,	//推广人id
 				cover: '',

@@ -116,7 +116,7 @@ console.log(this.scrollTop)
   }, mounted() {
 		
 		this.$axios.post('/c2/commodity/item',qs.stringify({
-			hospitalId : this.account.hospitalId,
+			hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 			itemId : this.$route.query.itemId
 		})).then(res  =>{
 			if(res.data.codeMsg){
@@ -163,7 +163,7 @@ console.log(this.scrollTop)
 		},
 		// modifyFn(){
 		// 	this.$axios.post('/c2/commodity/itemalter',qs.stringify({
-		// 		hospitalId : this.account.hospitalId,
+		// 		hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 		// 		itemId : this.$route.query.item.itemId,
 		// 		name : this.exchangeEditor.name,
 		// 		cover : this.exchangeEditor.cover,

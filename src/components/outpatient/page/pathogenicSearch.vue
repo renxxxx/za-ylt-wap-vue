@@ -349,11 +349,11 @@ export default {
     },
 	// 获取下一页的方法
 	getData(data,page){
-		console.log(this.account)
+		console.log(this.$store.state.outpatientEntrance.loginRefresh())
 		let clinicId = '';
 		this.$axios.post('/c2/patient/items',qs.stringify({
-				hospitalId : this.account.hospitalId,
-				clinicId : this.account.clinicId,
+				hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospitalId,
+				clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
 				kw: this.keywords,
 				status: data,
 				pn : page,

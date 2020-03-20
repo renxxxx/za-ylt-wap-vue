@@ -212,7 +212,7 @@ console.log(this.scrollTop)
 	getNum(){
 		debugger
 		let clinicId = '';
-		// this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.account.clinicId;
+		// this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.$store.state.hospitalEntrance.loginRefresh().clinicId;
 		// this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,

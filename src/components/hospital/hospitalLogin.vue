@@ -227,10 +227,10 @@ console.log(this.scrollTop)
               //       }else{
               //       	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
               //       }
-              //       this.account.hospitalId= res.data.data.hospital.hospitalId;
-              //       // console.log(this.account.hospitalId)
-              //       this.account.data = {};
-              //       this.account.data = res.data;
+              //       this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId= res.data.data.hospital.hospitalId;
+              //       // console.log(this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId)
+              //       this.$store.state.hospitalEntrance.loginRefresh().data = {};
+              //       this.$store.state.hospitalEntrance.loginRefresh().data = res.data;
               //     }
               // 	})
               // 	.catch((err)=>{

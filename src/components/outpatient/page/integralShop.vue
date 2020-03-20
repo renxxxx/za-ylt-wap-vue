@@ -100,7 +100,7 @@ export default {
 		getdata(){
 			this.commodityId = this.$route.query.commodityId
 			this.$axios.post('/clientend2/clinicend/pointexchange/commoditydetail',qs.stringify({
-				clinicId : this.account.clinicId,
+				clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
 				commodityId : this.commodityId,
 			}))
 			.then(res => {
