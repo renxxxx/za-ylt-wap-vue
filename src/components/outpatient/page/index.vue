@@ -294,7 +294,7 @@ console.log(this.scrollTop)
     	}))
     	.then( res =>{
     		console.log(res);
-    		console.log(this.$store.state.outpatientEntrance.loginRefresh())
+    		console.log(this.account)
     		// console.log(res)
     		if(res.data.codeMsg){
     			Dialog({ message: res.data.codeMsg  });
