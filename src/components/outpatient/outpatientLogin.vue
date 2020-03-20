@@ -120,7 +120,7 @@ export default {
   mounted() {
 	let thisVue = this;
 		if(window.plus){
-      plus.navigator.setStatusBarStyle("light")
+      plus.navigator.setStatusBarStyle("dark")
 		}
 		if(this.$store.state.outpatientEntrance.loginRefresh())
 		 this.$toast({message:'已登录',onClose:function(){

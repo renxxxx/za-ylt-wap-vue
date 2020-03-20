@@ -123,7 +123,7 @@ console.log(this.scrollTop)
     debugger
     let thisVue = this;
 		if(window.plus){
-      plus.navigator.setStatusBarStyle("light")
+      plus.navigator.setStatusBarStyle("dark")
     }
     
      if(this.$store.state.hospitalEntrance.loginRefresh())

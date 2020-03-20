@@ -84,6 +84,9 @@ export default {
 	components:{
 		clinicContent
 	},
+	beforeCreate(){
+		
+	},
 	created(){
 
 	},
@@ -153,6 +156,9 @@ console.log(this.scrollTop)
 		  this.$refs.clinic.initData();
 		}
 	},
+	activated(){
+	},
+	deactivated(){}
 }
 </script>
 

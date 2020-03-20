@@ -29,6 +29,8 @@ if(navigator.userAgent.toLowerCase().indexOf('html5plus') != -1)
 	store.state.topHeight = "24px"
 else
 	store.state.topHeight = "0px"
+
+
  
 const overIphonex = () => {
 	if (typeof window !== 'undefined' && window) {
@@ -44,14 +46,17 @@ function plusReady() {
 
 	let isImmersedStatusbar = plus.navigator.isImmersedStatusbar();
 	// 检测是否支持沉浸式 支持沉浸式状态栏则返回true
-
+	console.log('isImmersedStatusbar: '+isImmersedStatusbar)
 	let _statusbarHeight = "24"; // 设置默认值
 	if (isImmersedStatusbar) {
 		_statusbarHeight = plus.navigator.getStatusbarHeight(); // 获取系统状态栏高度
+		console.log('_statusbarHeight: '+_statusbarHeight)
+
 	}
+
 		store.state.topHeight=_statusbarHeight+'px'
 	//plus.navigator.setStatusBarBackground("#ffffff");
-	plus.navigator.setStatusBarStyle("dark")
+	//plus.navigator.setStatusBarStyle("dark")
 	function location(position) {
 		axios.defaults.headers.common['latitude'] = position.coords.latitude
 		axios.defaults.headers.common['longitude'] = position.coords.longitude

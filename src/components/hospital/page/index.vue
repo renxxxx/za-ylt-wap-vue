@@ -211,7 +211,6 @@ console.log(this.scrollTop)
       this.initData();
   },
   activated(){
-    
   },
   deactivated(){
     debugger
