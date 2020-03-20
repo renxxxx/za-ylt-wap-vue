@@ -39,7 +39,6 @@ const overIphonex = () => {
 	return false;
 	};
 	store.state.bottomHeight = overIphonex()?"34px":"0px"
-	alert(store.state.bottomHeight)
 function plusReady() {
 	let currentWebview = plus.webview.currentWebview();
 	currentWebview.setStyle({scrollIndicator:"none"})
