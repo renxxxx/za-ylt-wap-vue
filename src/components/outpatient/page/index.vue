@@ -286,15 +286,15 @@ console.log(this.scrollTop)
     this.$axios.post('/c2/patient/itemadd',qs.stringify({
 			clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinic.clinicId,
 			hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
-    		password : this.$store.state.outpatientEntrance.loginRefresh().password,
-    		realname : this.$store.state.outpatientEntrance.loginRefresh().realname,
-    		tel	:  this.$store.state.outpatientEntrance.loginRefresh().tel,
-    		remark : this.$store.state.outpatientEntrance.loginRefresh().remark,
-    		idcardNo : this.$store.state.outpatientEntrance.loginRefresh().idcardNo
+    		password : this.account.password,
+    		realname : this.account.realname,
+    		tel	:  this.account.tel,
+    		remark : this.account.remark,
+    		idcardNo : this.account.idcardNo
     	}))
     	.then( res =>{
     		console.log(res);
-    		console.log(this.$store.state.outpatientEntrance.loginRefresh())
+    		console.log(this.account)
     		// console.log(res)
     		if(res.data.codeMsg){
     			Dialog({ message: res.data.codeMsg  });
