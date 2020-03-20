@@ -222,15 +222,15 @@ export default {
     },
     //键盘输入值时触发
     inputNow(_keywordsCode) {
-    	let status = this.Time.postState;
     	this.items = [];
     	this.finished = true;
+		this.page = 0;
     	if(!this.keywords){
     		this.finished = false;
-    		this.page = 1;
-    		this.getData(status,this.page);
+    		
+    		this.nextPageFn(status,this.page);
     	}else{
-    		this.getData(status,'');
+    		this.nextPageFn(status,'');
     	}
     },
     goBackFn() {
@@ -238,11 +238,10 @@ export default {
     },
     // 筛选确定
     screeningSubmit(){
-    	this.getData();
 		this.show = false;
 		this.items = [];
-		this.finished = true;
-		console.log(this.items)
+		this.page = 0;
+    	this.nextPageFn();
     },
     // 筛选重置
     screeningResult(){
@@ -349,12 +348,12 @@ export default {
     	console.log(_value)
     },
 	// 获取下一页的方法
-	getData(data,page){
+	getData(page){
 		this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId: this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 				hospitalUserId : this.$store.state.hospitalEntrance.loginRefresh().hospitalUserId,
 				kw: this.keywords,
-				status: data,
+				status: this.Time.postState,
 				pn : page,
 				ps : 10,
 				pushTimeStart : this.Time.pushStart,
@@ -376,18 +375,6 @@ export default {
 								button : "确认就诊",
 								span : "未就诊"
 							});
-							if(data){
-								this.noItems.push({
-									clinicName : res.data.data.items[nums].clinicName,
-									itemId : res.data.data.items[nums].itemId,
-									pushTime : res.data.data.items[nums].pushTime,
-									realname : res.data.data.items[nums].realname,
-									status : res.data.data.items[nums].status,
-									img : require("../../../../assets/image/orange@2x.png"),
-									button : "确认就诊",
-									span : "未就诊"
-								});
-							}
 						}else if(res.data.data.items[nums].status == 4){
 							this.items.push({
 								clinicName : res.data.data.items[nums].clinicName,
@@ -400,19 +387,6 @@ export default {
 								buttonColor : "buttonColor",
 								span : "已就诊"
 							});
-							if(data){
-								this.yesItems.push({
-									clinicName : res.data.data.items[nums].clinicName,
-									itemId : res.data.data.items[nums].itemId,
-									pushTime : res.data.data.items[nums].pushTime,
-									realname : res.data.data.items[nums].realname,
-									status : res.data.data.items[nums].status,
-									img :require( "../../../../assets/image/blue@2x.png"),
-									button : "已就诊",
-									buttonColor : "buttonColor",
-									span : "已就诊"
-								});
-							}
 						}
 					}
 					// 加载状态结束
@@ -431,7 +405,7 @@ export default {
 	nextPageFn(){
 		debugger;
 		this.page++;
-		this.getData('',this.page);
+		this.getData(this.page);
 	},
   }
 };

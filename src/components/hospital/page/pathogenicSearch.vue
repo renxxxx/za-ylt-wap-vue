@@ -64,7 +64,7 @@
 		</van-popup>
       </div>
 	  <van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="nextPageFn">
-	  	<ul class="list" v-if="isLogin == 100? true:false" :style="{'padding-top':$store.state.topHeight}">
+	  	<ul class="list" :style="{'padding-top':$store.state.topHeight}">
 	  		<li v-for="(item,inx) in  items" :key="inx">
 	  			<router-link :to="{path : '/hospital/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 	  				<div class="style">
@@ -175,7 +175,7 @@ export default {
     //debugger;
     let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+// console.log(this.scrollTop)
     if (!to.query.time || !from.query.time || to.query.time < from.query.time) {
       //debugger;
       if (this.$vnode && this.$vnode.data.keepAlive) {
@@ -240,7 +240,7 @@ console.log(this.scrollTop)
       setTimeout(() => {
         this.pullingDown = false;
         this.initData();
-        this.getData()
+        this.nextPageFn()
       }, 500);
     },
     initData() {
@@ -254,16 +254,15 @@ console.log(this.scrollTop)
     },
     //键盘输入值时触发
     inputNow(_keywordsCode) {
-      let status = this.Time.postState;
+      // let status = this.Time.postState;
       this.items = [];
       this.noItems = [];
-      this.finished = true;
+	   this.page = 0;
+      // this.finished = true;
       if(!this.keywords){
-        this.finished = false;
-        this.page = 1;
-        this.getData(status,this.page);
+        this.nextPageFn();
       }else{
-        this.getData(status,'');
+        this.nextPageFn();
       }
     },
     goBackFn() {
@@ -271,12 +270,13 @@ console.log(this.scrollTop)
     },
     // 筛选确定
     screeningSubmit(){
-    	this.getData();
+		debugger;
       this.show = false;
       this.items = [];
-      this.noItems = [];
-      this.finished = true;
-      console.log(this.items)
+	  this.page = 0;
+      // this.noItems = [];
+      this.finished = false;
+      this.nextPageFn();
     },
     // 筛选重置
     screeningResult(){
@@ -383,14 +383,15 @@ console.log(this.scrollTop)
     	console.log(_value)
     },
     // 获取下一页的方法
-    getData(data,page){
-      console.log(this.$store.state.hospitalEntrance.loginRefresh())
+    getData(page){
+		debugger;
+      
       let clinicId = '';
       this.$axios.post('/c2/patient/items',qs.stringify({
           hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
           clinicId : this.$store.state.hospitalEntrance.loginRefresh().clinicId,
           kw: this.keywords,
-          status: data,
+          status: this.Time.postState,
           pn : page,
           ps : 10,
           pushTimeStart : this.Time.pushStart,
@@ -412,16 +413,6 @@ console.log(this.scrollTop)
                   button : "确认就诊",
                   span : "未就诊"
                 });
-                this.noItems.push({
-                  clinicName : res.data.data.items[nums].clinicName,
-                  itemId : res.data.data.items[nums].itemId,
-                  pushTime : res.data.data.items[nums].pushTime,
-                  realname : res.data.data.items[nums].realname,
-                  status : res.data.data.items[nums].status,
-                  img : require("../../../assets/image/weijiuzhen@2x.png"),
-                  button : "确认就诊",
-                  span : "未就诊"
-                  });
               }else if(res.data.data.items[nums].status == 4){
                 this.items.push({
                   clinicName : res.data.data.items[nums].clinicName,
@@ -434,28 +425,22 @@ console.log(this.scrollTop)
                   buttonColor : "buttonColor",
                   span : "已就诊"
                 });
-                this.noItems.push({
-                  clinicName : res.data.data.items[nums].clinicName,
-                  itemId : res.data.data.items[nums].itemId,
-                  pushTime : res.data.data.items[nums].pushTime,
-                  realname : res.data.data.items[nums].realname,
-                  status : res.data.data.items[nums].status,
-                  img :require( "../../../assets/image/yijiuzhen@2x.png"),
-                  button : "已就诊",
-                  span : "已就诊"
-                });
               }
             }
             // 加载状态结束
             this.loading = false;
+			console.dir(this.items)
           }else{
             this.loading = false;
             this.test='没有更多了'
             this.finished = true;
           }
-          if(this.items.length == 0 && this.noItems.length == 0){
+		  
+          if(this.items.length == 0){
+			  console.log(this.items.length)
             this.test='无数据'
           }
+		  
         })
         .catch((err)=>{
           console.log(err);
@@ -466,7 +451,7 @@ console.log(this.scrollTop)
     nextPageFn(){
       debugger;
       this.page++;
-      this.getData('',this.page);
+      this.getData(this.page);
     },
     closeTimeFn(){
       this.hospitalReturnHomePage = true;

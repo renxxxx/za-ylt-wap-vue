@@ -222,13 +222,12 @@ export default {
 		let status = this.Time.postState;
 		this.items = [];
 		this.noItems = [];
+		this.page = 0;
 		this.finished = true;
 		if(!this.keywords){
-			this.finished = false;
-			this.page = 1;
-			this.getData(status,this.page);
+			this.nextPageFn();
 		}else{
-			this.getData(status,'');
+			this.nextPageFn();
 		}
     },
     goBackFn() {
@@ -236,11 +235,13 @@ export default {
     },
     // 筛选确定
     screeningSubmit(){
-    	this.getData();
+    	
 		this.show = false;
 		this.items = [];
 		this.noItems = [];
-		this.finished = true;
+		this.page = 0;
+		// this.finished = true;
+		this.nextPageFn();
 		console.log(this.items)
     },
     // 筛选重置
@@ -348,14 +349,14 @@ export default {
     	console.log(_value)
     },
 	// 获取下一页的方法
-	getData(data,page){
+	getData(page){
 		console.log(this.$store.state.outpatientEntrance.loginRefresh())
 		let clinicId = '';
 		this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospitalId,
 				clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
 				kw: this.keywords,
-				status: data,
+				status: this.Time.postState,
 				pn : page,
 				ps : 10,
 				pushTimeStart : this.Time.pushStart,
@@ -431,7 +432,7 @@ export default {
 	nextPageFn(){
 		debugger;
 		this.page++;
-		this.getData('',this.page);
+		this.getData(this.page);
 	},
   }
 };
