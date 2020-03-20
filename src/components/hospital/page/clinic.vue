@@ -145,13 +145,12 @@ console.log(this.scrollTop)
 			//下拉刷新
 		  setTimeout(() => {
 			this.pullingDown = false;
-			// this.initData();
+			 this.initData();
 		  }, 500);
 		},
 		initData() {
 		  Object.assign(this.$data, this.$options.data());
 		  this.$refs.clinic.initData();
-
 		}
 	},
 }
