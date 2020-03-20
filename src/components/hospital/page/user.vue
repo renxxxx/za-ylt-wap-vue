@@ -140,7 +140,7 @@ console.log(this.scrollTop)
 			this.coverImg = this.$store.state.hospitalEntrance.loginRefresh().hospital.cover
 			this.images.push(this.$store.state.hospitalEntrance.loginRefresh().hospital.license)
 		}
-		// console.log(this.account.data.data.hospital.cover)
+		// console.log(this.$store.state.hospitalEntrance.loginRefresh().data.data.hospital.cover)
 	},
 	methods: {
 		onChange(index) {

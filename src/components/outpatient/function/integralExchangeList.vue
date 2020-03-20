@@ -102,7 +102,7 @@ export default {
     },
     getdata(){
       this.$axios.post('/clientend2/clinicend/pointexchange/hots',qs.stringify({
-      	clinicId : this.account.clinicId,
+      	clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
       	pn: this.page,
       	ps: 10
       }))

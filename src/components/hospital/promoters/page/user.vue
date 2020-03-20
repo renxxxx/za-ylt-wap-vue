@@ -138,7 +138,7 @@ export default {
 		},
 		userFn(){
 			// console.log("hahha")
-			// console.log(this.account);
+			// console.log(this.$store.state.hospitalEntrance.loginRefresh());
 			//用户头像值
 			let cover = this.$store.state.hospitalEntrance.loginRefresh().hospital.cover;
 			// 是否认证值

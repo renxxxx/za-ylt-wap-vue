@@ -194,7 +194,7 @@ console.log(this.scrollTop)
 			debugger
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
-				hospitalId : this.account.hospitalId,
+				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 				clinicId : this.list.clinicId,
 				status :1,
 				pn : 1,
@@ -210,7 +210,7 @@ console.log(this.scrollTop)
 			})
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
-				hospitalId : this.account.hospitalId,
+				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 				clinicId : this.list.clinicId,
 				status :4,
 				pn : 1,

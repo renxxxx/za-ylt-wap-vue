@@ -195,7 +195,7 @@ console.log(this.scrollTop)
 			if(_item.checked){
 				debugger
 				this.$axios.post('/c2/task/taskunissue',qs.stringify({
-					hospitalId : this.account.hospitalId,
+					hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 					taskId : _item.taskId
 				}))
 				.then(res =>{
@@ -209,7 +209,7 @@ console.log(this.scrollTop)
 			}else{
 				debugger
 				this.$axios.post('/c2/task/taskissue',qs.stringify({
-					hospitalId : this.account.hospitalId,
+					hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 					taskId : _item.taskId,
 				})).then(res =>{
 					res.data.codeMsg? this.$toast(res.data.codeMsg): this.$toast.success('操作成功')
