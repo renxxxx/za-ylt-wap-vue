@@ -131,7 +131,6 @@ export default {
 
   },
   beforeRouteLeave(to, from, next) {
-		debugger
 	
   let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;

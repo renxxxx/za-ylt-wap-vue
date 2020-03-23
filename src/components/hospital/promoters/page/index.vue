@@ -109,7 +109,6 @@ export default {
 	},
 	beforeRouteLeave(to, from, next) {
 		this.scrollTop =document.getElementById('promoters').scrollTop ||document.getElementById('promoters').pageYOffset
-
 		if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 	          if (this.$vnode && this.$vnode.data.keepAlive)
 	          {

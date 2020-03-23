@@ -143,10 +143,10 @@ console.log(this.scrollTop)
 			})
 		},
 		searchFn(e){
-      this.promotersList = [];
-      this.getData({
-        kw:this.searchInputValue
-      });
+		  this.promotersList = [];
+		  this.getData({
+			kw:this.searchInputValue
+		  });
 			// this.$axios.get('/hospital/admin/hospital-users?'+qs.stringify({kw:this.searchInputValue}))
 			// .then(res => {
 			// 	this.promotersList = []
