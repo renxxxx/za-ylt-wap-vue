@@ -15,7 +15,7 @@ import qs from 'qs';
 import h5p from '../build/h5p.js'
  
 debugger    
-Vue.prototype.$version = '2003230940-f0ec57f'
+Vue.prototype.$version = '2003231519-63e7132'
 Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios
