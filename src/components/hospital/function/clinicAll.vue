@@ -271,6 +271,7 @@ console.log(this.scrollTop)
 	background-color: #2B77EF;
 	border: none;
 	border-radius: .14rem;
+	font-size: .14rem;
 }
 .buttonColor{
     color: #333333!important;

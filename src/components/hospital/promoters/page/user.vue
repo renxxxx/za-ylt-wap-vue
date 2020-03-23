@@ -170,7 +170,10 @@ export default {
 			this.$axios.post('/hospital/logout').then(function(){
 				localStorage.removeItem('lastRoute')
 				// localStorage.clear()
-				thisVue.$router.push({path:"/hospital/hospitalLogin",query:{time:new Date().getTime()}})
+				thisVue.$toast.success("操作成功")
+				setTimeout(()=>{
+					thisVue.$router.push({path:"/hospital/hospitalLogin",query:{time:new Date().getTime()}})
+				},1500)
 			})
 			// location.href=location.pathname
 			// location.reload()

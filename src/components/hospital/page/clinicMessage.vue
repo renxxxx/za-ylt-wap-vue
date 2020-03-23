@@ -15,7 +15,7 @@
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <ul>
           <li v-for="(item,inx) in clinicMessage" :key='inx'>
-            <router-link :to="{path : '/hospital/details' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+            <router-link :to="{path : '/hospital/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
               <div class="triangle_border_up">
                 <span></span>
               </div>

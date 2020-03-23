@@ -1,7 +1,7 @@
 <template>
-  <div id="hospital" ref='hospitalRef' :style="{'margin-bottom':bottomShow?'.55rem':'' }">
-	<keep-alive>
-		<router-view class="appView"/>
+  <div id="hospital" ref='hospitalRef' :style="{'margin-bottom':bottomShow?'.55rem':'' }" @touchstart='touchStartFn' @touchend='touchEndFn'>
+	<keep-alive   >
+		<router-view class="appView" />
 	</keep-alive>
   <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-show="hospitalReturnHomePage">
     <img src="../../assets/image/returnHome.png" alt />
@@ -71,6 +71,8 @@ export default {
           active: require('../../assets/image/wode@2x.png'),
           inactive: require('../../assets/image/wode-blue@2x.png')
       },
+	  startLength:0,
+	  overLength:0
     }
   },
   props:['name'],
@@ -134,11 +136,22 @@ export default {
     }
   },
   methods:{
+	touchStartFn(_value){
+		this.startLength = _value.changedTouches[0].screenX
+		console.log('touchStartFn'+_value.changedTouches[0].screenX)
+	},
+	touchEndFn(_value){
+		this.overLength = _value.changedTouches[0].screenX;
+		if((this.overLength-this.startLength)>100){
+			this.$router.back()
+		}
+		// console.log(this.overLength-this.startLength)
+		// console.dir(_value)
+	},
     // 滑动一定距离出现返回顶部按钮
     handleScroll() {
       if(!this.$refs.hospitalRef)
         return
-	debugger
       let scrollTop =
         this.$refs.hospitalRef.scrollTop ||
         this.$refs.hospitalRef.pageYOffset;

@@ -198,6 +198,7 @@ console.log(this.scrollTop)
 	border: none;
 	height: .28rem;
 	width: .5rem;
+	font-size: .14rem;
 }
 
 .clinic_information{

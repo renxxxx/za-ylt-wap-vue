@@ -768,7 +768,7 @@ export default {
 	border: none;
 	border-radius: .14rem;
 	color: #FFFFFF;
-	font-size: .125rem;
+	font-size: .14rem;
 }
 .buttonColor{
     color: #333333!important;

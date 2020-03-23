@@ -7,12 +7,12 @@
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
     <ul>
       <!-- <li v-for="(items,inx) in 4" :key='inx'> -->
-      <router-link :to="{name:'hospital_pushTheManagement'}">
-      <li>
+      <!-- <router-link :to="{name:'hospital_pushTheManagement'}"> -->
+      <li @click="data">
           <h4>发布推送</h4>
           <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
       </li>
-      </router-link>
+      <!-- </router-link> -->
       <router-link :to="{name:'hospital_operatingManual',query:{time:new Date().getTime()}}">
         <li>
           <h4>运营手册</h4>
@@ -93,6 +93,9 @@ console.log(this.scrollTop)
     goBackFn(){
     	this.$router.back(-1)
     },
+	data(){
+		this.$toast("暂未开通");
+	}
   },
 }
 </script>

@@ -51,6 +51,7 @@ import  hospital_clinicMessage from '@/components/hospital/page/clinicMessage.vu
 import  hospital_taskManagement from '@/components/hospital/page/taskManagement.vue'
 import  hospital_taskManagementDetails from '@/components/hospital/page/taskManagementDetails.vue'
 import  hospital_exchangeManagement from '@/components/hospital/page/exchangeManagement.vue'
+import  hospital_exchangeDetails from '@/components/hospital/page/exchangeDetails.vue'
 import  hospital_exchangeManagementList from '@/components/hospital/page/exchangeManagementList.vue'
 import  hospital_exchangeManagementAdd from '@/components/hospital/page/exchangeManagementAdd.vue'
 import  hospital_exchangeManagementImg from '@/components/hospital/page/exchangeManagementImg.vue'
@@ -396,6 +397,12 @@ const router = new Router({
           component: hospital_exchangeManagement,
           meta: {auth:true},
         },
+		{
+		  path: 'hospital_exchangeDetails',
+		  name: 'hospital_exchangeDetails',
+		  component: hospital_exchangeDetails,
+		  meta: {auth:true},
+		},
         {
           path: 'hospital_exchangeManagementList',
           name: 'hospital_exchangeManagementList',

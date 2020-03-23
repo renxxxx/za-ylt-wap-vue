@@ -1,5 +1,5 @@
 <template>
-  <div id="outpatient"  ref='outpatientRef'>
+  <div id="outpatient"  ref='outpatientRef'  @touchstart='touchStartFn' @touchend='touchEndFn'>
     <keep-alive>
       <router-view class="appView"/>
     </keep-alive>
@@ -77,7 +77,9 @@ export default {
   			require('../../assets/image/Hospital@2x.png'),
   			require('../../assets/image/jiyin-gray@2x.png'),
   			require('../../assets/image/wode@2x.png')],
-  	dataValue : ''
+  	dataValue : '',
+		startLength:0,
+		overLength:0
   }
   },
   props:['name'],
@@ -143,6 +145,16 @@ export default {
     ...mapGetters(['bottomShow','outpatientReturnHomePage'])
   },
   methods:{
+		touchStartFn(_value){
+			this.startLength = _value.changedTouches[0].screenX
+			console.log('touchStartFn'+_value.changedTouches[0].screenX)
+		},
+		touchEndFn(_value){
+			this.overLength = _value.changedTouches[0].screenX;
+			if((this.overLength-this.startLength)>100){
+				this.$router.back()
+			}
+		},
     // 滑动一定距离出现返回顶部按钮
     handleScroll() {
 if(!this.$refs.outpatientRef)
