@@ -1,9 +1,14 @@
 <template>
 	<div class="operating">
-    <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-    	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
-    	<h3>优质案例</h3>
-    </div>
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+			<div class="leftImg" @click="goBackFn"  id="navback">
+				<img src="../../../assets/image/shape@3x.png" alt="" id="navback" :style="{'padding-top':$store.state.topHeight}">
+			</div>
+			<div class="centerTitle">
+				<h3>优质案例</h3>
+			</div>
+			<div class="right"></div>
+		</div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
     <ul>
       <!-- <li v-for="(items,inx) in 4" :key='inx'> -->
@@ -110,26 +115,42 @@ console.log(this.scrollTop)
 	width: 100%;
 	height: .47rem;
 	line-height: .47rem;
-	text-align: center;
+	background-color: #FFFFFF;
 	position: fixed;
 	top:0;
-	z-index: 999;
-	background-color: #FFFFFF;
+	z-index: 9999;
 }
 .zhangwei{
 	width: 100%;
 	height: .47rem;
 }
-.topNav img{
+.leftImg{
+	width: 10%;
+	height: .47rem;
+	float:left;
+}
+.leftImg img{
 	width: .09rem;
 	height: .15rem;
-	position: absolute;
-	left: .16rem;
-	top:.16rem;
+	line-height: .47rem;
+	padding-left: .16rem;
 }
-.topNav h3{
+.centerTitle{
+	width: 80%;
+	text-align: center;
+	height: .47rem;
+	line-height: .47rem;
+	float:left;
+}
+.centerTitle h3{
 	font-size: .16rem;
-	font-weight: bold;
+	font-weight: bolder;
+}
+.right{
+	width: 10%;
+	height: .47rem;
+	line-height: .47rem;
+	float:left;
 }
 .operating>ul{
   width: 100%;

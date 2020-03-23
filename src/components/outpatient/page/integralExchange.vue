@@ -1,4 +1,5 @@
 <template>
+	<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 	<div class="integralExchange">
 		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
@@ -34,6 +35,7 @@
 		<div :style="{'height':(parseInt($store.state.topHeight.replace('px',''))+228)+'px'}"></div>
 		<integralExchangeList :show = 'show' :style="{'padding-top':$store.state.topHeight}"></integralExchangeList>
 	</div>
+	</van-pull-refresh>
 </template>
 
 <script>
@@ -52,7 +54,8 @@ export default {
 			num: 0,
 			// 消息的计时器
 			flowHeading : undefined,
-			show : true
+			show : true,
+			pullingDown: false,
 		}
 	},
 	computed:{
@@ -128,41 +131,54 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-
-		// 从接口获取消息
-		this.$axios.post('/clientend2/clinicend/pointexchange/msgs',qs.stringify({
-			clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
-			pn : 1,
-			ps : 10
-		}))
-		.then(res => {
-			if(res.data.codeMsg == '' || res.data.codeMsg == null || res.data.codeMsg == undefined){
-				for(let i in res.data.data.items){
-					this.contentArr.push(res.data.data.items[i].title);
-				}
-			}else{
-				this.$toast(res.data.codeMsg)
-			}
-		})
-		.catch((err)=>{
-			//Dialog({ message: err});;
-		})
-		this.$axios.post('/clientend2/clinicend/pointexchange/main',qs.stringify({
-			clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
-			pn : 1,
-			ps : 10
-		}))
-		.then(res => {
-			this.integral = res.data.data.exchangePoint
-		})
-		.catch((err)=>{
-			//Dialog({ message: err});;
-		})
+		this.getData();
 	},
 	methods: {
 		goBackFn(){
 			this.$router.back(-1);
-		}
+		},
+		getData(){
+			// 从接口获取消息
+			this.$axios.post('/clientend2/clinicend/pointexchange/msgs',qs.stringify({
+				clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
+				pn : 1,
+				ps : 10
+			}))
+			.then(res => {
+				if(res.data.codeMsg == '' || res.data.codeMsg == null || res.data.codeMsg == undefined){
+					for(let i in res.data.data.items){
+						this.contentArr.push(res.data.data.items[i].title);
+					}
+				}else{
+					this.$toast(res.data.codeMsg)
+				}
+			})
+			.catch((err)=>{
+				//Dialog({ message: err});;
+			})
+			this.$axios.post('/clientend2/clinicend/pointexchange/main',qs.stringify({
+				clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
+				pn : 1,
+				ps : 10
+			}))
+			.then(res => {
+				this.integral = res.data.data.exchangePoint
+			})
+			.catch((err)=>{
+				//Dialog({ message: err});;
+			})
+		},
+		initData() {
+			Object.assign(this.$data, this.$options.data());
+			this.getData();
+		},
+		afterPullDown() {
+		  //下拉刷新
+			setTimeout(() => {
+				this.pullingDown = false;
+				this.initData();
+			}, 500);
+		},
 	},
 }
 </script>

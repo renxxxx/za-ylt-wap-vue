@@ -5,10 +5,10 @@
      	<img src="../../../assets/image/shape@3x.png" alt="">
      </div>
 			<div class="hospital_search">
-				<input type="text" v-model="kw" placeholder="搜索文章" @keyup.enter="searchFn">
+				<input type="search" v-model="kw" placeholder="搜索文章" @keyup.enter="searchFn">
 				<img src="../../../assets/image/sousuo@2x.png" alt="">
 			</div>
-			<div class="clinic_buttton">
+			<div class="clinic_buttton" @click="searchFn">
 				<button>搜索</button>
 			</div>
 		</div>
@@ -103,7 +103,7 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
     this.getdata({
-    	hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospitalId,
+    	hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
     	pn : this.page,
     	ps : 10
     })
@@ -142,7 +142,7 @@ export default {
 	  onLoad(){
       this.page++;
 	  	this.getdata({
-	  		hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospitalId,
+	  		hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
 	  		pn : this.page,
 	  		ps : 10
 	  	})
@@ -151,7 +151,7 @@ export default {
       this.article = [];
       this.getdata({
         kw : this.kw,
-	  		hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospitalId,
+	  		hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
 	  	})
     }
   },
@@ -191,11 +191,14 @@ export default {
 .hospital_search input{
 	margin: .08rem 0rem 0rem 0rem;
 	height:.34rem;
-	width: 83%;
+	width: 93%;
 	border: none;
 	border-radius: .33rem;
 	padding-left: 11.6%;
 	background-color: rgba(0, 0, 0, 0.05);
+}
+.hospital_search input[type=search]::-webkit-search-cancel-button{
+  padding-right: 5%;
 }
 .hospital_search img{
 	width: .14rem;

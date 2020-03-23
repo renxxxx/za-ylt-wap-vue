@@ -229,6 +229,7 @@ export default {
 	border-radius: .5rem  0rem 0rem  .5rem ;
 	color: #FFFFFF;
 	background-color: #459AE9;
+	font-size: .14rem;
 }
 .centerOnce,.centerDate{
 	width: 100%;
