@@ -246,12 +246,12 @@ console.log(this.scrollTop)
 	},
 	getNum(){
 		let clinicId = '';
-		this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.$store.state.outpatientEntrance.loginRefresh().clinicId;
-		// this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+		// this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.$store.state.outpatientEntrance.loginRefresh().clinicId;
+		this.$route.name == 'outpatient_index'?	clinicId='':'',
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
 			hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
-			clinicId : clinicId,
+			clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinic.clinicId,
 			status :1,
 			pn : 1,
 			ps : 10
@@ -266,7 +266,7 @@ console.log(this.scrollTop)
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
 			hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
-			clinicId : clinicId,
+			clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinic.clinicId,
 			status :4,
 			pn : 1,
 			ps : 10

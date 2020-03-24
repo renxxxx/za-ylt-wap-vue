@@ -156,7 +156,7 @@ console.log(this.scrollTop)
 			this.$axios.post('/hospital/logout').then(function(){
 				localStorage.removeItem('lastRoute')
 				// localStorage.clear()
-				thisVue.$toast.success("操作成功")
+				thisVue.$toast("操作成功")
 				setTimeout(()=>{
 					thisVue.$router.push({path:"/hospital/hospitalLogin",query:{time:new Date().getTime()}})
 				},1500)

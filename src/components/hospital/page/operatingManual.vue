@@ -1,12 +1,18 @@
 <template>
 	<div class="operatingManual">
-    <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-    	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn" :style="{'padding-top':$store.state.topHeight}">
-    	<h3>运营成功手册架构</h3>
-      <router-link :to="{name:'hospital_operatingDate'}">
-        <img src="../../../assets/image/jilu@2x.png" alt="" :style="{'padding-top':$store.state.topHeight}">
-      </router-link>
-    </div>
+		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+			<div class="leftImg" @click="goBackFn"  id="navback">
+				<img src="../../../assets/image/shape@3x.png" alt="" id="navback" :style="{'padding-top':$store.state.topHeight}">
+			</div>
+			<div class="centerTitle">
+				<h3>运营成功手册架构</h3>
+			</div>
+			<div class="right">
+				<router-link :to="{name:'hospital_operatingDate'}">
+				  <img src="../../../assets/image/jilu@2x.png" alt="" :style="{'padding-top':$store.state.topHeight}">
+				</router-link>
+			</div>
+		</div>
     <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
     <div style="margin-top: .2rem;">
       <div v-for="(item,inx) in operatingManual" :key="inx">
@@ -181,34 +187,52 @@ console.log(this.scrollTop)
   width: 100%;
   background-color: #F5F5F5;
 }
+.operating{
+  width: 100%;
+  background-color: #F5F5F5;
+}
 .topNav{
 	width: 100%;
 	height: .47rem;
 	line-height: .47rem;
-	text-align: center;
+	background-color: #FFFFFF;
 	position: fixed;
 	top:0;
-	z-index: 999;
-	background-color: #FFFFFF;
+	z-index: 9999;
 }
 .zhangwei{
 	width: 100%;
 	height: .47rem;
 }
-.topNav>img:first-child{
+.leftImg{
+	width: 10%;
+	height: .47rem;
+	float:left;
+}
+.leftImg img{
 	width: .09rem;
 	height: .15rem;
-	position: absolute;
-	left: .16rem;
-	top:0;
-  bottom: 0;
-  margin: auto 0rem;
+	line-height: .47rem;
+	padding-left: .16rem;
 }
-.topNav h3{
+.centerTitle{
+	width: 80%;
+	text-align: center;
+	height: .47rem;
+	line-height: .47rem;
+	float:left;
+}
+.centerTitle h3{
 	font-size: .16rem;
-	font-weight: bold;
+	font-weight: bolder;
 }
-.topNav a img{
+.right{
+	width: 10%;
+	height: .47rem;
+	line-height: .47rem;
+	float:left;
+}
+.right img{
   width: .2rem;
   height: .18rem;
   position: absolute;
