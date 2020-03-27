@@ -154,11 +154,22 @@ Toast.setDefaultOptions({
 });
 /* eslint-disable no-new */
 
-new Vue({
-  el: '#app',
-  router,
-  store,
-  components: { App },
-  template: '<App/>'
-})
+
+debugger
+var sss = setInterval(function(){
+	debugger
+	if(navigator.userAgent.toLowerCase().indexOf('html5plus') > -1){
+		if(!puls)
+			return;
+	}
+	clearInterval(sss)
+
+	new Vue({
+		el: '#app',
+		router,
+		store,
+		components: { App },
+		template: '<App/>'
+	  })
+},500)
 debugger
