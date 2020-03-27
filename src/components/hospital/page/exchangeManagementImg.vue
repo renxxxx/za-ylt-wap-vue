@@ -1,6 +1,6 @@
 <template>
 	<div class="exchangeAddImg">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="addImg" v-model="exchangeAdd" :style="{'padding-top':$store.state.topHeight}">
+		<div class="addImg" v-model="exchangeAdd" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="addImgButton" v-show="imgUrl? false : true">
 				<img src="../../../assets/image/append@2x.png" alt="">
 				<span>请添加照片</span>

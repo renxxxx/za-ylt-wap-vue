@@ -1,6 +1,6 @@
 <template>
 	<div class="integralDetails">
-    <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+    <div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
     	<div class="leftImg" @click="goBackFn"  id="navback">
     		<img src="../../../assets/image/shape@3x.png" alt="">
     	</div>
@@ -10,7 +10,7 @@
     	<div class="right"></div>
     </div>
 		<div class="zhangwei"></div>
-    <div class="detailsTitle" :style="{'padding-top':$store.state.topHeight}">
+    <div class="detailsTitle" :style="{'padding-top':$store.state.paddingTop}">
       <img src="../../../assets/image/lishi.png" alt="">
       <span>积分使用明细</span>
     </div>

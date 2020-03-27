@@ -1,10 +1,10 @@
 <template>
 	<div class="list">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.paddingTop}">
 			<h3>{{name}}</h3>
 		</div>
-		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
     <van-search v-model="keywords" placeholder="请输入搜索关键词" @search="searchFn"/>
     <span>当前: {{nowPromoter}}</span>
     <ul>

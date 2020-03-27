@@ -1,7 +1,7 @@
 <template>
   <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
     <div class="_search" >
-      <div class="top_search" :style="{'padding-top':$store.state.topHeight}">
+      <div class="top_search" :style="{'padding-top':$store.state.paddingTop}">
         <div class="search_return">
           <a @click="goBackFn"  id="navback">
             <img src="../../../assets/image/shape@3x.png" alt />
@@ -64,7 +64,7 @@
 		</van-popup>
       </div>
 	  <van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="nextPageFn">
-		<ul class="clinicList" :style="{'padding-top':$store.state.topHeight}">
+		<ul class="clinicList" :style="{'padding-top':$store.state.paddingTop}">
 				<li v-for="(item,inx) in noItems" :key="inx">
 					<router-link :to="{path : '/outpatient/outpatient_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 						<div class="content_left">
@@ -79,7 +79,7 @@
 				</li>
 			</ul>
 	  </van-list>
-      <!-- <clinicAll ref="all" :list="list" :style="{'padding-top':$store.state.topHeight}"></clinicAll> -->
+      <!-- <clinicAll ref="all" :list="list" :style="{'padding-top':$store.state.paddingTop}"></clinicAll> -->
     </div>
   </van-pull-refresh>
 </template>

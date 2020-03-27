@@ -1,6 +1,6 @@
 <template>
 	<div class="user">
-		<div class="user_top" :style="{'padding-top':$store.state.topHeight}">
+		<div class="user_top" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="user_set" v-show='false'>
 				<img src="../../../assets/image/set up@2x.png" alt="" />
 			</div>
@@ -22,7 +22,7 @@
 		<van-image-preview v-model="show" :images="images" @change="onChange" >
 		  <!-- <template v-slot:index>第{{ index }}页</template> -->
 		</van-image-preview>
-		<div class="user_center"  :style="{'padding-top': (parseInt($store.state.topHeight.replace('px',''))+140)+'px'}">
+		<div class="user_center"  :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+140)+'px'}">
 			<ul>
 				<router-link :to="{path : '/hospital/hospital_taskManagement',query:{time:new Date().getTime()}}">
 					<li>
@@ -141,8 +141,16 @@ console.log(this.scrollTop)
 			this.images.push(this.$store.state.hospitalEntrance.loginRefresh().hospital.license)
 		}
 		// console.log(this.$store.state.hospitalEntrance.loginRefresh().data.data.hospital.cover)
+		this.initData();
 	},
 	methods: {
+		initData(){
+			let thisVue = this
+			if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+			}})
+		},
 		onChange(index) {
 		    this.index = index;
 		},

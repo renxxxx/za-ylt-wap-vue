@@ -1,15 +1,15 @@
 <template>
 	<div class="operatingManualList">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
-				<img src="../../../assets/image/shape@3x.png" alt="" id="navback" :style="{'padding-top':$store.state.topHeight}">
+				<img src="../../../assets/image/shape@3x.png" alt="" id="navback" :style="{'padding-top':$store.state.paddingTop}">
 			</div>
 			<div class="centerTitle">
 				<h3>{{this.$route.query.name}}</h3>
 			</div>
 			<div class="right"></div>
 		</div>
-    <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+    <div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
 	<div style="margin-top: .2rem;">
       <div v-for="(item,inx) in operatingManualList" :key="inx" @click="nextPageFn(item)">
           <van-cell is-link>

@@ -1,10 +1,10 @@
 <template>
 	<div class="caseDetails" >
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<img src="../assets/image/shape@3x.png" alt="" @click="goBackFn"  id="navback">
 			<img src="../assets/image/share@3x.png" @click="share" alt="">
 		</div>
-		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
 		<div class="banner" v-show="!!caseInfo.cover">
 			<img v-lazy="caseInfo.cover"  alt="">
 		</div>

@@ -1,19 +1,19 @@
 <template>
 	<div class="operatingManual">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
-				<img src="../../../assets/image/shape@3x.png" alt="" id="navback" :style="{'padding-top':$store.state.topHeight}">
+				<img src="../../../assets/image/shape@3x.png" alt="" id="navback" :style="{'padding-top':$store.state.paddingTop}">
 			</div>
 			<div class="centerTitle">
 				<h3>运营成功手册架构</h3>
 			</div>
 			<div class="right">
 				<router-link :to="{name:'hospital_operatingDate'}">
-				  <img src="../../../assets/image/jilu@2x.png" alt="" :style="{'padding-top':$store.state.topHeight}">
+				  <img src="../../../assets/image/jilu@2x.png" alt="" :style="{'padding-top':$store.state.paddingTop}">
 				</router-link>
 			</div>
 		</div>
-    <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+    <div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
     <div style="margin-top: .2rem;">
       <div v-for="(item,inx) in operatingManual" :key="inx">
         <router-link :to="{path : '/hospital/hospital_operatingManualList',query:{name:item.name,operatingManualId:item.operatingManualId,time:new Date().getTime()}}">

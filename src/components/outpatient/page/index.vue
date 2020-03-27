@@ -3,7 +3,7 @@
 		<div class="index">
 			<div class="navWarp">
 				<!-- 搜索及其筛选 -->
-				<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.topHeight}">
+				<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.paddingTop}">
 				<router-link :to="{name:'outpatient_pathogenicSearch',query:{focus : true,time:new Date().getTime()}}">
 					<div class="indexSearch clinicSearchStyle">
 						<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
@@ -23,7 +23,7 @@
 				</router-link>
 				</div>
 				<!-- 就诊情况 -->
-				<div class="typeNav" :style="{'padding-top': (parseInt($store.state.topHeight.replace('px',''))+32)+'px'}">
+				<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+32)+'px'}">
 					<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
 						<van-tab title="新增病员">
 							<div class="newAdd">
@@ -184,14 +184,10 @@ console.log(this.scrollTop)
 	      return
 	    }
 	
-	this.getNum();
+	this.initData();
   },
   activated(){
-	  let thisVue =this
-	  if(this.$route.meta.auth && !this.$store.state.outpatientEntrance.loginRefresh())
-		this.$toast({message:'请登录',onClose:function(){
-		  thisVue.$router.replace({ path : '/outpatientLogin',query:{time:1}});
-		}})
+	  
   },
   computed:{
 		show: {
@@ -228,6 +224,12 @@ console.log(this.scrollTop)
     },
     initData() {
 		debugger
+		let thisVue = this
+			if(this.$route.meta.auth && !this.$store.state.outpatientEntrance.loginRefresh())
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/outpatientLogin',query:{time:1}});
+			}})
+			
       Object.assign(this.$data, this.$options.data());
 	  this.getNum();
        this.$refs.all.initData();

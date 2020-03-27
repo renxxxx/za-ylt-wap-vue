@@ -1,10 +1,10 @@
 <template>
 	<div class="operatingManualListDetails">
-    <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-    	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
+    <div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+    	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.paddingTop}">
       <h3>{{this.$route.query.name}}</h3>
     </div>
-    <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+    <div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
     <van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
     <ul>
       <li v-for="(item,inx) in operatingManualListDetails" :key="inx">

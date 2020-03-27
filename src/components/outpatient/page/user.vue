@@ -136,11 +136,20 @@ export default {
 	  }
 
 
-	this.userFn();
-	this.coverImg = this.$store.state.outpatientEntrance.loginRefresh().clinic.cover;
-	this.images.push(this.$store.state.outpatientEntrance.loginRefresh().clinic.license)
+		this.initData()
   },
   methods: {
+	  initData(){
+		let thisVue = this
+			if(this.$route.meta.auth && !this.$store.state.outpatientEntrance.loginRefresh())
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/outpatientLogin',query:{time:1}});
+			}})
+
+			this.userFn();
+			this.coverImg = this.$store.state.outpatientEntrance.loginRefresh().clinic.cover;
+			this.images.push(this.$store.state.outpatientEntrance.loginRefresh().clinic.license)
+	  },
 	onChange(index) {
 	    this.index = index;
 	},

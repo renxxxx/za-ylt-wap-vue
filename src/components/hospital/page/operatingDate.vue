@@ -1,10 +1,10 @@
 <template>
 	<div class="operatingDate">
-    <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-    	<img src="../../../assets/image/shape@2x.png" alt=""  @click="goBackFn" :style="{'padding-top':$store.state.topHeight}">
+    <div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+    	<img src="../../../assets/image/shape@2x.png" alt=""  @click="goBackFn" :style="{'padding-top':$store.state.paddingTop}">
     	<h3>{{nowYear}}年</h3>
     </div>
-    <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+    <div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
     <van-swipe :show-indicators='false' ref="Swipe" @change="changeFn" :initial-swipe='indedxOf'>
       <div v-for="year in data">
         <van-swipe-item>

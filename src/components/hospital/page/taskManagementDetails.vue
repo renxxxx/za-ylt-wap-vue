@@ -1,6 +1,6 @@
 <template>
 	<div class="taskDetails">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -10,7 +10,7 @@
 			<div class="right"></div>
 		</div>
 		<div class="zhangwei"></div>
-		<ul :style="{'padding-top':$store.state.topHeight}">
+		<ul :style="{'padding-top':$store.state.paddingTop}">
 			<li>
 				<span>名称</span>
 				<span>{{taskSubmitValue.name}}</span>

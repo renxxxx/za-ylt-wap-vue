@@ -1,6 +1,6 @@
 <template>
 	<div class="addClinic">
-		<div class="navWarp" :style="{'padding-top':$store.state.topHeight}">
+		<div class="navWarp" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftNav" @click="goBackFn"  id="navback">
 				<img src="../../../../assets/image/back-white@2x.png" alt="">
 			</div>
@@ -10,7 +10,7 @@
 			<div class="rightNav"></div>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="content" :style="{'padding-top':$store.state.topHeight}">
+		<div class="content" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="newAdd">
 				<div class="newAddTitle">
 					<img src="../../../../assets/image/bitian@2x.png" alt="">

@@ -3,7 +3,7 @@
     <keep-alive>
       <router-view class="appView"  />
     </keep-alive>
-    <van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.bottomHeight}" v-if="childBottomShow">
+    <van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.paddingBottom}" v-if="childBottomShow">
       <!-- <router-link :to="{path : '/promoters/hospital_sourceManagement'}"> -->
       <van-tabbar-item replace :to="{path : '/promoters_index',query:{time:new Date().getTime(),transition:'def'}}">
           <span>首页</span>
@@ -101,7 +101,7 @@ export default {
   },
    created(){
   	var heightRexg = /^[0-9]*/g
-  	var bottomHeight = this.$store.state.bottomHeight.match(heightRexg)
+  	var bottomHeight = this.$store.state.paddingBottom.match(heightRexg)
   	this.height = parseInt(bottomHeight.join())
   },
   computed:{

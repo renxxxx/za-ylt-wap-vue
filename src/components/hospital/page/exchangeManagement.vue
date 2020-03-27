@@ -1,6 +1,6 @@
 <template>
 	<div class="exchange">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -14,7 +14,7 @@
 			</router-link>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="exchangeTitle" :style="{'padding-top':$store.state.topHeight}">
+		<div class="exchangeTitle" :style="{'padding-top':$store.state.paddingTop}">
 			<h3>已有商品</h3>
 			<router-link :to="{path : '/hospital/hospital_exchangeManagementAdd'}">
 				<div class="add">

@@ -1,11 +1,11 @@
 <template>
 	<div class="case">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-			<img src="../../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+			<img src="../../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.paddingTop}">
 			<h3>运营文章</h3>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="article" :style="{'padding-top':$store.state.topHeight}">
+		<div class="article" :style="{'padding-top':$store.state.paddingTop}">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <ul>
           <li v-for="(items,inx) in article" :key="inx">
@@ -101,8 +101,17 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 
+		this.initData();
 	},
 	methods: {
+	initData(){
+		let thisVue=this;
+			if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+		this.$toast({message:'请登录',onClose:function(){
+		  thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+		}})
+
+	},
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)
@@ -113,6 +122,8 @@ export default {
       this.getData();
     },
     getData(){
+		
+
       this.$axios.post('/c2/article/items',qs.stringify({
       	hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
       	pn: this.page,

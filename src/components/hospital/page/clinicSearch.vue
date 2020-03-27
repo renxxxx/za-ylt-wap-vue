@@ -1,6 +1,6 @@
 <template>
 	<div class="search_clinic">
-		<div class="navWarp" :style="{'padding-top':$store.state.topHeight}">
+		<div class="navWarp" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="topNav">
 				<div class="clinic_information" @click="goBackFn"  id="navback">
 					<img src="../../../assets/image/shape@3x.png" alt="">
@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		<div style="height:1.1rem"></div>
-		<clinicContent ref='content' :clinic = 'clinic' :style="{'padding-top':$store.state.topHeight}"></clinicContent>
+		<clinicContent ref='content' :clinic = 'clinic' :style="{'padding-top':$store.state.paddingTop}"></clinicContent>
 
 
 	</div>

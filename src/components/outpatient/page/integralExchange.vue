@@ -1,7 +1,7 @@
 <template>
 	<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 	<div class="integralExchange">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@2x.png" alt="">
 			</div>
@@ -20,7 +20,7 @@
 				</router-link>
 			</div>
 		</div>
-		<div class="flowHeading" id ="flowHeading" :style="{'top':(parseInt($store.state.topHeight.replace('px',''))+176)+'px'}">
+		<div class="flowHeading" id ="flowHeading" :style="{'top':(parseInt($store.state.paddingTop.replace('px',''))+176)+'px'}">
 		    <ul class="rollScreen_list" :style = {transform:transform}  :class="{rollScreen_list_unanim:num===0}">
 				<li class="rollScreen_once" v-for="(item,index) in contentArr" :key='index'>
 					<img src="../../../assets/image/horn@2x.png" alt="">
@@ -32,8 +32,8 @@
 				</li>
 		    </ul>
 		</div>
-		<div :style="{'height':(parseInt($store.state.topHeight.replace('px',''))+228)+'px'}"></div>
-		<integralExchangeList :show = 'show' :style="{'padding-top':$store.state.topHeight}"></integralExchangeList>
+		<div :style="{'height':(parseInt($store.state.paddingTop.replace('px',''))+228)+'px'}"></div>
+		<integralExchangeList :show = 'show' :style="{'padding-top':$store.state.paddingTop}"></integralExchangeList>
 	</div>
 	</van-pull-refresh>
 </template>

@@ -1,6 +1,6 @@
 <template>
 	<div class="ExchangeList">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -8,7 +8,7 @@
 				<h3>兑换列表</h3>
 			</div>
 		</div>
-		<div class="zhangwei" :style="{'height':($store.state.topHeight+60)+'px'}"></div>
+		<div class="zhangwei" :style="{'height':($store.state.paddingTop+60)+'px'}"></div>
 		<integralExchangeList></integralExchangeList>
 	</div>
 </template>

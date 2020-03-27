@@ -1,6 +1,6 @@
 <template>
 	<div class="promotersSearch" ref='promotersSearchRef'>
-		<div class="nav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="nav" :style="{'padding-top':$store.state.paddingTop}">
 			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn"  id="navback">
 			<div class="topNav">
 				<img src="" alt="">
@@ -11,7 +11,7 @@
 		</div>
 		<div class="zhangwei"></div>
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <ul :style="{'padding-top':$store.state.topHeight}">
+      <ul :style="{'padding-top':$store.state.paddingTop}">
         <li v-for="(item,inx) in promotersList" :key="inx">
           <router-link :to="{path : '/hospital/hospital_promotersDetails',query:{hospitalUserId: item.hospitalUserId,time:new Date().getTime()}}">
             <div class="list">

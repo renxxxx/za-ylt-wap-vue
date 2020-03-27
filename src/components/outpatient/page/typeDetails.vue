@@ -1,10 +1,10 @@
 <template>
 	<div class="typeDetails">
-		<div class="topNav"  :style="{'padding-top':$store.state.topHeight}">
-			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback"  :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav"  :style="{'padding-top':$store.state.paddingTop}">
+			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback"  :style="{'padding-top':$store.state.paddingTop}">
 			<h3>{{this.about.name}}</h3>
 		</div>
-		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
 		<div class="typeTItle" v-show="!this.doctor||this.doctor.length==0? false:true">
 			<h4 class="xia">科室医生</h4>
 			<ul ref='scrollId'>

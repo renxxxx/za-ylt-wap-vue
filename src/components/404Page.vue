@@ -38,6 +38,21 @@
 </template>
 
 <script>
+export default {
+	name: 'urlPage',
+	data () {
+		return {
+
+		}
+  },
+  method:{
+ toRoot(){
+        	localStorage.removeItem('entrance');
+			    this.$router.push({path:'/',query:{time:new Date().getTime()}})
+      }
+  },
+  
+}
 </script>
 
 <style scoped>

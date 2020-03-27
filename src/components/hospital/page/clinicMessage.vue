@@ -1,6 +1,6 @@
 <template>
 	<div class="message">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -10,7 +10,7 @@
 			<div class="right">
 			</div>
 		</div>
-		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
 		<div class="content">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <ul>

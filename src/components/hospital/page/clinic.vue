@@ -1,8 +1,8 @@
 <template>
-	<div class="hospital" :style="{'padding-top':$store.state.topHeight}">
+	<div class="hospital" :style="{'padding-top':$store.state.paddingTop}">
 		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 			<div class="navWarp">
-				<div class="topNav"  :style="{'padding-top':$store.state.topHeight}">
+				<div class="topNav"  :style="{'padding-top':$store.state.paddingTop}">
 					<div class="hospital_search">
 						<router-link :to="{path : '/hospital/hospital_clinicSearch',query:{time:new Date().getTime()}}">
 							<input type="text" placeholder="搜索门诊">
@@ -152,6 +152,12 @@ console.log(this.scrollTop)
 		  }, 500);
 		},
 		initData() {
+			let thisVue = this
+			if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+			}})
+
 		  Object.assign(this.$data, this.$options.data());
 		  this.$refs.clinic.initData();
 		}

@@ -1,6 +1,6 @@
 <template>
       <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
-          <div class="navWarp" :style="{'padding-top': $store.state.topHeight}">
+          <div class="navWarp" :style="{'padding-top': $store.state.paddingTop}">
             <div class="navTitle">
               <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
             </div>
@@ -205,9 +205,7 @@ console.log(this.scrollTop)
           return
         }
 		debugger;
-    
-
-      this.initData();
+    this.initData();
   },
   activated(){
   },

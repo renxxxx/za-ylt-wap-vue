@@ -62,7 +62,7 @@ export default {
 
   },
   mounted () {
-let entrance = localStorage.getItem('entrance')
+      let entrance = localStorage.getItem('entrance')
       switch(entrance){
         case '1':
           this.$router.replace({ path : '/hospital/hospital_index',query:{time:new Date().getTime()}});

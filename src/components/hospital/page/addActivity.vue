@@ -1,6 +1,6 @@
 <template>
 	<div class="addAcivity" >
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="left" @click="goBackFn"  id="navback">
 				<span>取消</span>
 			</div>
@@ -14,7 +14,7 @@
 			</router-link>
 
 		</div>
-		<div class="addImg" :style="{'padding-top': (parseInt($store.state.topHeight.replace('px',''))+47)+'px'}">
+		<div class="addImg" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+47)+'px'}">
 			<img :src="activity.cover" alt="">
 			<div class="addImgTitle">
 				<img src="../../../assets/image/replace@2x.png" alt="">

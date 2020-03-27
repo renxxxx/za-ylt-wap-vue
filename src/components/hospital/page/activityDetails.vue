@@ -1,6 +1,6 @@
 <template>
 	<div class="activityDetails">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="activeList" :model='active' :style="{'padding-top':$store.state.topHeight}">
+		<div class="activeList" :model='active' :style="{'padding-top':$store.state.paddingTop}">
 			<img v-lazy="active.cover" alt="">
 			<div class="activeTitle">
 				<h4>{{active.title}}</h4>

@@ -1,10 +1,10 @@
 <template>
   <div class="pushTheManagement">
-    <div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-    	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
+    <div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+    	<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.paddingTop}">
     	<h3>推送管理</h3>
     </div>
-    <div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+    <div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
     <div class="addPush">
       <span>+</span>
       <h5>新建推送</h5>

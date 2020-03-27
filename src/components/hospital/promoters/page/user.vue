@@ -124,11 +124,19 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		this.userFn();
-		this.coverImg = this.$store.state.hospitalEntrance.loginRefresh().hospital.cover;
-		this.images.push(this.$store.state.hospitalEntrance.loginRefresh().hospital.license)
+		this.initData();
 	},
 	methods: {
+		initData(){
+			  let thisVue = this
+      if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+      this.$toast({message:'请登录',onClose:function(){
+        thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+	  }})
+	  this.userFn();
+		this.coverImg = this.$store.state.hospitalEntrance.loginRefresh().hospital.cover;
+		this.images.push(this.$store.state.hospitalEntrance.loginRefresh().hospital.license)
+		},
 		onChange(index) {
 			this.index = index;
 		},

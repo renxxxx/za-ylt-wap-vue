@@ -1,12 +1,12 @@
 <template>
 	<div class="images">
-		<div class="nav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="nav" :style="{'padding-top':$store.state.paddingTop}">
 			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn"  id="navback">
 			<h3>医院详情</h3>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="topNav" ref='img' :style="{'padding-top':$store.state.topHeight}"></div>
-		<div class="content" :style="{'margin-top': -(55-parseInt($store.state.topHeight.replace('px','')))+'px'}">
+		<div class="topNav" ref='img' :style="{'padding-top':$store.state.paddingTop}"></div>
+		<div class="content" :style="{'margin-top': -(55-parseInt($store.state.paddingTop.replace('px','')))+'px'}">
 			<div class="contentTitle">
 				<h3 @click="switchFn('about')" ref='about' class="xiahuaxian">医院介绍</h3>
 				<h3 @click="switchFn('type')" ref='type'>特色科室</h3>

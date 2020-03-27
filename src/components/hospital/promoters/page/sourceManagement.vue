@@ -3,7 +3,7 @@
   <div class="index">
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
-			<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.topHeight}">
+			<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.paddingTop}">
 				<div class="indexReturn" @click="goBackFn"  id="navback">
 					<img src="../../../../assets/image/back-white@2x.png" alt="">
 				</div>
@@ -26,11 +26,11 @@
 			</router-link>
 			</div>
 			<!-- 就诊情况 -->
-			<div class="typeNav" :style="{ 'padding-top':(parseInt($store.state.topHeight.replace('px',''))+32)+'px'}">
+			<div class="typeNav" :style="{ 'padding-top':(parseInt($store.state.paddingTop.replace('px',''))+32)+'px'}">
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' @change="tabFn">
 					<van-tab :title="'全部'+itemsNum">
 						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="nextPageFn">
-							<ul class="list" :style="{'padding-top':(parseInt($store.state.topHeight.replace('px',''))+12)+'px'}">
+							<ul class="list" :style="{'padding-top':(parseInt($store.state.paddingTop.replace('px',''))+12)+'px'}">
 								<li v-for="(item,inx) in  items" :key="inx">
 									<router-link :to="{path : '/promoters/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 										<div class="style">
@@ -54,7 +54,7 @@
 					<van-tab :title="'已就诊'+yesItemsNum">
 					
 						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="yesNextPageFn">
-							<ul class="list" :style="{'padding-top':(parseInt($store.state.topHeight.replace('px',''))+12)+'px'}">
+							<ul class="list" :style="{'padding-top':(parseInt($store.state.paddingTop.replace('px',''))+12)+'px'}">
 								<li v-for="(item,inx) in  yesItems" :key="inx">
 									<router-link :to="{path : '/promoters/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 										<div class="style">
@@ -77,7 +77,7 @@
 					</van-tab>
 					<van-tab :title="'未就诊'+noItemsNum">
 						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="noNextPageFn">
-							<ul class="list" :style="{'padding-top':(parseInt($store.state.topHeight.replace('px',''))+12)+'px'}">
+							<ul class="list" :style="{'padding-top':(parseInt($store.state.paddingTop.replace('px',''))+12)+'px'}">
 								<li v-for="(item,inx) in  noItems" :key="inx">
 									<router-link :to="{path : '/promoters/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 										<div class="style">

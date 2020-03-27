@@ -1,11 +1,11 @@
 <template>
 	<div class="case">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
-			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.paddingTop}">
 			<h3>优质案例</h3>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="article" :style="{'padding-top':$store.state.topHeight}">
+		<div class="article" :style="{'padding-top':$store.state.paddingTop}">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <ul>
           <li v-for="(items,inx) in article" :key="inx">

@@ -1,6 +1,6 @@
 <template>
 	<div class="clinicDetails">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -15,10 +15,10 @@
 		</div>
 
 		<div class="zhangwei"></div>
-		<div class="detailsTime" :style="{'top': (parseInt($store.state.topHeight.replace('px',''))+47)+'px'}">
+		<div class="detailsTime" :style="{'top': (parseInt($store.state.paddingTop.replace('px',''))+47)+'px'}">
 			<span>{{moment(clinicDetails.alterTime).format('YYYY-MM-DD hh:mm')}}</span>
 		</div>
-		<div class="statistics" :style="{'padding-top':$store.state.topHeight}">
+		<div class="statistics" :style="{'padding-top':$store.state.paddingTop}">
 			<van-circle v-model="num" :rate="num" :speed="100" :stroke-width="120" layer-color="#FF951B" color = '#2B77EF'
 			  size="1.15rem" :text="String(list.yesNum + list.noNum)" />
 			<div class="statisticsText">

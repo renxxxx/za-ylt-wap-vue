@@ -1,9 +1,9 @@
 <template>
 	<div class="index">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<h3>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</h3>
 		</div>
-		<div class="zhangwei" :style="{'padding-top':$store.state.topHeight}"></div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
 		<div class="typeNav">
 			<router-link :to="{path : '/promoters/promoters_clinicSearch',query:{time:new Date().getTime()}}">
 				<img src="../../../../assets/image/qudaomenzhen@2.png" alt="">
@@ -155,19 +155,23 @@ export default {
 		// console.log('destroyed')
 	},
 	mounted () {
-		this.getdata();
 		let lastRoute = localStorage.getItem('lastRoute')
 		    if(lastRoute){
 		      this.$router.push(JSON.parse(lastRoute));
 		      return
 		    }
-		if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+		
+		this.initData();
+
+	},
+	methods: {
+		initData(_data) {
+			let thisVue=this;
+			if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
 		this.$toast({message:'请登录',onClose:function(){
 		  thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
 		}})
-	},
-	methods: {
-		getdata(_data) {
+
 		  this.$axios.post("/c2/article/items",qs.stringify({
 		        hospitalId: this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 		        pn: 1,

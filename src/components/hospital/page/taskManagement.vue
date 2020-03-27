@@ -1,6 +1,6 @@
 <template>
 	<div class="task">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -10,7 +10,7 @@
 			<div class="right"></div>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="taskList" :style="{'padding-top':$store.state.topHeight}">
+		<div class="taskList" :style="{'padding-top':$store.state.paddingTop}">
 			<h3>首次收益</h3>
 			<ul>
 				<li v-for="(item,inx) in task.one" :key='inx'>

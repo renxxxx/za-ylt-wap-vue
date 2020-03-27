@@ -11,7 +11,7 @@
     <img src="../../assets/image/returnTop.png" alt />
     <span>顶部</span>
   </div>
-  <van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.bottomHeight}" v-if="bottomShow">
+  <van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.paddingBottom}" v-if="bottomShow">
   	<van-tabbar-item replace :to="{path : '/hospital/hospital_index',query:{time:new Date().getTime(),transition:'def'}}">
   	    <span>首页</span>
   	    <img

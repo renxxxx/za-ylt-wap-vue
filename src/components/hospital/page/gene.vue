@@ -1,6 +1,6 @@
 <template>
-	<div class="gene" :style="{'padding-top':$store.state.topHeight}">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+	<div class="gene" :style="{'padding-top':$store.state.paddingTop}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="nav_left">
 				<img src="../../../assets/image/scanning@2x.png" alt="">
 			</div>
@@ -155,9 +155,16 @@ console.log(this.scrollTop)
 			plus.navigator.setStatusBarStyle("dark")
 		}
 
-
+		this.initData()
 	},
 	methods: {
+		initData(){
+			let thisVue = this
+			if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+			}})
+		},
 		// 基因状态菜单选择返回值
 		menuFn(_value){
 			let _geneData =  this.option.find( n => n.value == _value);

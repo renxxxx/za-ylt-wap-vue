@@ -1,6 +1,6 @@
 <template>
 	<div class="hospital">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
       <router-link :to="{path : '/outpatient/outpatient_articleSearch'}">
         <div class="hospital_search">
         	<input type="text" placeholder="搜索文章">
@@ -147,10 +147,16 @@ console.log(this.scrollTop)
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-	this.getdata()
+	this.initData()
   },
   methods: {
-	  getdata(_data){
+	  initData(_data){
+		 	let thisVue = this
+			if(this.$route.meta.auth && !this.$store.state.outpatientEntrance.loginRefresh())
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/outpatientLogin',query:{time:1}});
+			}})
+
 	  	this.$axios.post('/c2/article/items',qs.stringify({
 	  		hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
 	  		pn : this.page,

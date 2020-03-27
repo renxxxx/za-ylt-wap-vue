@@ -1,6 +1,6 @@
 <template>
 	<div class="exchangeList">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
@@ -11,7 +11,7 @@
 		</div>
 		<div class="zhangwei"></div>
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh" > -->
-			<ul :style="{'padding-top':$store.state.topHeight}">
+			<ul :style="{'padding-top':$store.state.paddingTop}">
 				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="onLoad">
 					<li v-for="(item,inx) in exchangeList" :key='inx' class='List'>
 						<router-link :to="{path : '/hospital/hospital_exchangeDetails' ,query : {item : item}}">

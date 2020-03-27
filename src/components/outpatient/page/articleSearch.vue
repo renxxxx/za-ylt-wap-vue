@@ -1,6 +1,6 @@
 <template>
 	<div class="hospital">
-		<div class="topNav" :style="{'padding-top':$store.state.topHeight}">
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
      <div class="leftImg" @click="goBackFn">
      	<img src="../../../assets/image/shape@3x.png" alt="">
      </div>
