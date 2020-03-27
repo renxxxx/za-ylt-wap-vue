@@ -24,7 +24,7 @@ Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
 Vue.prototype.$jquery = jquery
-
+ 
 
 if(navigator.userAgent.toLowerCase().indexOf('html5plus') > -1)
 	store.state.paddingTop = "24px"
