@@ -76,7 +76,7 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
 	beforeRouteLeave(to, from, next) {
 		this.scrollTop =document.getElementById('promoters').scrollTop ||document.getElementById('promoters').pageYOffset
@@ -120,7 +120,7 @@ export default {
 	},
 	methods: {
 		submitFn(){
-			// console.log(this.$store.state.hospitalEntrance.loginRefresh())
+			// 
 		this.$axios.post('/c2/patient/itemadd',qs.stringify({
 				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().data.data.hospital.hospitalId,
 				clinicId: this.$route.query.clinicId,
@@ -139,7 +139,7 @@ export default {
 				}
 		 	})
 		 	.catch((err)=>{
-		 		console.log(err)
+		 		
 		 		//Dialog({ message: '加载失败!'});
 		 	})
 		},

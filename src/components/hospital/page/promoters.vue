@@ -62,7 +62,7 @@ export default {
   beforeRouteLeave(to, from, next) {
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
@@ -123,10 +123,10 @@ console.log(this.scrollTop)
             }
             if(this.promotersList.length<10){
             	let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-            	// console.log(this.$refs.promotersRef.style.height)
+            	// 
             	this.$refs.promotersRef.style.height = windowHeight+ 'px'
             }
-            // console.log(this.promotersList)
+            // 
             this.loading = false;
           }else {
             this.loading = false;
@@ -137,7 +137,7 @@ console.log(this.scrollTop)
         }
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 		}
 	},

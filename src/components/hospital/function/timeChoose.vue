@@ -73,7 +73,7 @@ export default {
 	  ...mapGetters(['account','isLogin']),
     show: {
         get: function() {
-        // console.log(this.$store)
+        // 
             return this.$store.state.show
         },
         set: function (newValue) {
@@ -82,7 +82,7 @@ export default {
     },
     showTime: {
         get: function() {
-        // console.log(this.$store)
+        // 
             return this.$store.state.showTime
         },
         set: function (newValue) {
@@ -101,7 +101,7 @@ export default {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -151,7 +151,7 @@ if(window.plus){
 		},
 		// 筛选重置
 		screeningResult(){
-			// console.log(this.labelDocument);
+			// 
 			for(let _a=0 ;_a < 6; _a++){
 				document.getElementById(this.labelDocument[_a]).style.backgroundColor = "#EEEEEE"; 
 			}
@@ -160,15 +160,15 @@ if(window.plus){
 			Vue.set(this.Time,'confirmOver',undefined);
 			Vue.set(this.Time,'pushStart',undefined);
 			Vue.set(this.Time,'pushOver',undefined);
-			console.log(this.Time);
+			
 			// this.list.clinicAll = [];
 			this.getData()
-			// console.log(typeof this.labelDocument)
+			// 
 		},
 		//选择框样式
 		labelLabelFn(_vlaue,_this){
-			// console.log(typeof _vlaue);
-			// console.log(typeof _this);
+			// 
+			// 
 			let buttonStyle = document.getElementById(this.labelDocument[_vlaue]);
 			switch(_vlaue){
 				case 0:
@@ -179,7 +179,7 @@ if(window.plus){
 				this.Time.noLook = "";
 				this.Time.look = '未就诊';
 				this.Time.postState = 1;
-				// console.log(this.dateStata);
+				// 
 
 				break;
 				case 1:
@@ -190,7 +190,7 @@ if(window.plus){
 				this.Time.noLook = "";
 				this.Time.noLook = '已就诊';
 				this.Time.postState = 4;
-				// console.log(this.dateStata);
+				// 
 				break;
 
 				case 2:
@@ -203,14 +203,14 @@ if(window.plus){
 
 				case 3:
 				_this.target.style.backgroundColor = "#FFE1BE";
-				// console.log(this.dateStata);
+				// 
 				this.Time.confirmOver = this.time;
 				this.showTime = true;
 				break;
 
 				case 4:
 				_this.target.style.backgroundColor = "#FFE1BE";
-				// console.log(this.dateStata);
+				// 
 				this.Time.pushStart = this.time;
 				this.showTime = true;
 				break;
@@ -218,7 +218,7 @@ if(window.plus){
 				case 5:
 				_this.target.style.backgroundColor = "#FFE1BE";
 				this.dateStata=_vlaue;
-				// console.log(this.dateStata);
+				// 
 				this.showTime = true;
 				this.Time.pushOver = this.time;
 				break;
@@ -226,7 +226,7 @@ if(window.plus){
 		},
 		//关闭半遮罩
 		closeFn(){
-			// console.log(dialog)
+			// 
 			this.showTime = false;
 		},
 		// 确定选择的日期
@@ -235,8 +235,8 @@ if(window.plus){
 			// this.time = _value
 			let time = moment(_value).format('YYYY-MM-DD HH:mm:ss')
 			this.time = new Date(time).getTime();
-			// console.log(this.time)
-			// console.log(this.calendarTime)
+			// 
+			// 
 			switch (this.dateStata){
 				case 2:
 				this.Time.confirmStart = '';
@@ -255,12 +255,12 @@ if(window.plus){
 				this.Time.pushOver = this.time;
 				break;
 			}
-			// console.log(this.Time)
-			// console.log(mutations.labelLabelFn._vlaue)
+			// 
+			// 
 		},
 		//取消选择的日期
 		cancel(_value){
-			console.log(_value)
+			
 		},
 		getData(){
 			debugger
@@ -277,11 +277,11 @@ if(window.plus){
 				hospitalConfirmTimeEnd : this.Time.confirmOver? this.Time.confirmOver+(24*60*60*1000):this.Time.confirmOver,
 			  }))
 			  .then(_d => {
-				// console.log(_d.data.data.items)
+				// 
 				this.show = false;
 				if(_d.data.data.items.length>0){
 					for (let nums in _d.data.data.items) {
-						// console.log(_d.data.data.items[nums])
+						// 
 						if(_d.data.data.items[nums].status == 1){
 							this.list.clinicAll.push({
 								clinicName : _d.data.data.items[nums].clinicName,
@@ -293,9 +293,9 @@ if(window.plus){
 								button : "确认就诊",
 								span : "未就诊"
 							});
-							// console.log(this.list)
+							// 
 						}else if(_d.data.data.items[nums].status == 4){
-							// console.log(_d.data.data.ite ms[nums].status )
+							// 
 							this.list.clinicAll.push({
 								clinicName : _d.data.data.items[nums].clinicName,
 								itemId : _d.data.data.items[nums].itemId,
@@ -309,11 +309,11 @@ if(window.plus){
 							});
 						}
 					}
-				console.log(this.list.clinicAll)
+				
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		}

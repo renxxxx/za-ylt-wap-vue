@@ -89,12 +89,12 @@ export default {
 
 		num: {
 			get: function() {
-				// console.log(this.$store)
+				// 
 				return this.list.yesNum /(this.list.yesNum + this.list.noNum)*100;
 			},
 			set: function (newValue) {
 				// 图形数据加载后v-model返回的修改值,暂时项目不需要
-				// console.log(newValue)
+				// 
 			},
 		}
 	},
@@ -107,7 +107,7 @@ export default {
   beforeRouteLeave(to, from, next) {
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
@@ -160,7 +160,7 @@ console.log(this.scrollTop)
 		// 列表来回切换组件
 		menuFn(){
 			// let _geneData =  this.option.find( n => n.value == this.value);
-			// console.log('ss')
+			// 
 			switch(this.value){
 				case 0:
 				this.componentName = 'clinicAll';
@@ -183,10 +183,10 @@ console.log(this.scrollTop)
 				this.clinicDetails = _d.data.data;
 				this.clinicDetails.clinicId = this.list.clinicId;
         this.clinicDetails.alterTime = moment(this.clinicDetails.alterTime).format('YYYY-MM-DD HH:mm')
-				console.log(this.clinicDetails)
+				
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: err});;
 			})
 		},
@@ -202,10 +202,10 @@ console.log(this.scrollTop)
 			}))
 			.then(_d => {
 				this.list.noNum = _d.data.data.sum.totalCount;
-				// console.log(this.list.noNum)
+				// 
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: err});;
 			})
 			this.$axios.post('/c2/patient/items',qs.stringify({
@@ -218,14 +218,14 @@ console.log(this.scrollTop)
 			}))
 			.then(_d => {
 				this.list.yesNum = _d.data.data.sum.totalCount;
-				// console.log(this.list.yesNum)
+				// 
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: err});;
 			});
 			this.list.allNum = this.list.noNum + this.list.yesNum;
-			// console.log(this.list.allNum)
+			// 
 		},
 	},
 }

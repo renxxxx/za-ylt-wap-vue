@@ -105,9 +105,9 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		console.log(this.$route.query)
+		
 		let querAddress = JSON.parse(this.$route.query.address)
-		console.log(querAddress)
+		
 		this.address = {
 			name : querAddress.name,
 			tel : querAddress.tel,
@@ -115,14 +115,14 @@ export default {
 			detailedAddress : querAddress.address,
 			receiverId : querAddress.receiverId
 		}
-		console.log(this.address)
+		
 	},
 	methods: {
 		goBackFn(){
 			this.$router.back(-1);
 		},
 		submitFn(){
-			console.log(this.address)
+			
 			this.$axios.post('/clientend2/clinicend/pointexchange/receiveralter',qs.stringify({
 				clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
 				receiverId : this.address.receiverId,

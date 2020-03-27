@@ -73,7 +73,7 @@ export default {
 		...mapGetters(['account','showTime']),
 		showTime: {
 		    get: function() {
-				// console.log(this.$store)
+				// 
 		        return this.$store.state.showTime
 		    },
 		    set: function (newValue) {
@@ -88,7 +88,7 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		// var topHeight = this.topHeight.match(heightRexg)
 		// this.height = parseInt(topHeight.join())
-		// console.log(this.height)
+		// 
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -144,7 +144,7 @@ export default {
 		// 添加上传的图片
 		addImg(_fileLIst){
 			var file = _fileLIst.target.files[0]
-			// console.log(e)
+			// 
 			if(file.type.indexOf('image') > -1){
 				let formData = new FormData();
 				formData.append('file', file)
@@ -152,10 +152,10 @@ export default {
 				}}).then(res =>{
 					// this.imageUpload.push({name:file.name,url:res.data.data.url})
 					this.activity.cover = res.data.data.url
-					// console.log(this.imageUpload)
+					// 
 					this.show = false;
 				}).catch(err =>{
-					console.log(err)
+					
 				})
 			 }else{
 				Dialog({ message: '请选择图片' });
@@ -177,12 +177,12 @@ export default {
 		},
 		//关闭半遮罩
 		closeFn(){
-			// console.log(dialog)
+			// 
 			this.showTime = false;
 		},
 		//取消选择的日期
 		cancel(_value){
-			console.log(_value)
+			
 		},
 	},
 }

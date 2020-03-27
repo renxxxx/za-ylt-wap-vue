@@ -137,7 +137,7 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -181,7 +181,7 @@ export default {
   }
   ,destroyed(){
 	  debugger
-	  console.log('destroyed')
+	  
   }
   , mounted() {
 		if(window.plus){
@@ -208,7 +208,7 @@ export default {
 				sickness: res.data.data.sickness	//病例
 			};
 			// 如果信息中有发票图片,就显示
-			// console.log(this.detail)
+			// 
 			if(res.data.data.invoices){
 				res.data.data.invoices = res.data.data.invoices.split(",");
 				for (let i in res.data.data.invoices){
@@ -224,29 +224,29 @@ export default {
 		  this.show = false;
 			}
 			//判断时间是否为空
-			// console.log(this.detail.pushTime)
+			// 
 			if(res.data.data.hospitalConfirmTime){
-				// console.log(this.detail.hospitalConfirmTime)
+				// 
 				this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('YYYY-MM-DD HH:mm');
 			}
 			if(res.data.data.pushTime){
-		  // console.log(res.data.data.pushTime)
+		  // 
 				this.detail.pushTime = moment(res.data.data.pushTime).format('YYYY-MM-DD HH:mm');
 			}
 		}).catch(err =>{
-			console.log(err)
+			
 		})
 	},
 	methods: {
 
 		enlargeFn(_value){
 			this.photoNum = _value;
-			console.log(this.photoNum)
+			
 			this.enlarge = true;
 		},
 		onChange(_value){
 			this.photoPage = _value;
-			console.log(this.imgUrl)
+			
 		},
 		// 返回上一级
 		goBackFn(){
@@ -256,10 +256,10 @@ export default {
 		modifyFn(){
 			this.modify.num++;
 			if(this.modify.num % 2 != 0){
-				// console.log(this.modify.num)
+				// 
 				this.modify.value = '保存';
 				this.modify.img = require('../../../assets/image/save@2x.png');
-		  // console.log(this.modify.value)
+		  // 
 				this.modify.data = true;
 				for(let i =1; i<6; i++){
 					let _id = 'readId' + i;
@@ -269,7 +269,7 @@ export default {
 			}else{
 		  this.modify.value = '编辑';
 		  this.modify.img = require('../../../assets/image/editor.png');
-		  // console.log(this.modify.value);
+		  // 
 				let _imgAddress = [];
 		  if(this.imgUrl.length == 1){
 			_imgAddress[0] = this.imgUrl[0]
@@ -278,9 +278,9 @@ export default {
 				_imgAddress[i] = this.imgUrl[i]
 			}
 		  }
-		  // console.log(_imgAddress)
+		  // 
 				_imgAddress =  _imgAddress.join(",");
-				// console.log(_imgAddress)
+				// 
 				this.$axios.post('/c2/patient/itemalter',qs.stringify({
 					realname : this.detail.realname,
 					patientId : this.detail.patientId,
@@ -294,11 +294,11 @@ export default {
 			  this.show = false
 			}
 				}).catch(err =>{
-					console.log(err)
+					
 				})
 				for(let i =1; i<6; i++){
 					let _id = 'readId' + i;
-					// console.log(_id)
+					// 
 					this.modify.readonly = true;
 				}
 			}
@@ -306,20 +306,20 @@ export default {
 		 // 上传图片触发方法
 		addImg(_fileLIst){
 			var file = _fileLIst.target.files[0]
-			// console.log(e)
+			// 
 			if(file.type.indexOf('image') > -1){
 				let formData = new FormData();
 				formData.append('file', file)
 				this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
 				}}).then(res =>{
 			if(!res.data.codeMsg){
-			  // console.log(res.data.codeMsg)
+			  // 
 			  this.imgUrl.push(res.data.data.url)
-			  // console.log(this)
+			  // 
 			}
 
 				}).catch(err =>{
-					console.log(err)
+					
 				})
 			 }else{
 				Dialog({ message: '请选择图片' });
@@ -327,10 +327,10 @@ export default {
 			}
 		},
 	  deteleFn(_img){
-		// console.log(this.imgUrl)
+		// 
 		let deleteImg =  this.imgUrl.filter( n => n != _img);
 		this.imgUrl = deleteImg;
-		// console.log(this.imgUrl)
+		// 
 	  }
 	},
 }

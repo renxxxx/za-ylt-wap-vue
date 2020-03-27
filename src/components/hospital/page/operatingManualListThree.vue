@@ -58,7 +58,7 @@ export default {
   },
   // beforeRouteUpdate(to,from,next){
   //   this.operatingManualList = [];
-  //   console.log(this.$route.query.name)
+  //   
   //   this.getData()
   //   next();
   // },
@@ -66,7 +66,7 @@ export default {
     //debugger;
   let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
   if(!to.query.time || !from.query.time || to.query.time < from.query.time){
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
@@ -143,7 +143,7 @@ console.log(this.scrollTop)
         }
       })
       .catch((err)=>{
-      	console.log(err);
+      	
       })
     }
   },

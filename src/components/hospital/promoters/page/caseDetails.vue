@@ -52,7 +52,7 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -99,7 +99,7 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		// console.log(this.$route.query.data)
+		// 
 		let postUrl = '';
 		if(this.$route.query.data ==1){
 			let postUrl ='/c2/article/item';
@@ -108,13 +108,13 @@ export default {
 			let postUrl ='/c2/project/item'
 			this.getData(postUrl)
 		}
-		// console.log(_d.data.data)
+		// 
 	},
 	methods: {
 		share(){
 		 let shareUrl= location.href.replace('/promoters/promoters_caseDetails',"/sharePage")
-		  console.log(shareUrl)
-		  // console.log(location.href)
+		  
+		  // 
 		 	let vue = this
 		 	this.$h5p.shareWeb(shareUrl,this.caseInfo.cover,this.caseInfo.name,'',function(){
 		 		vue.$axios.post('/c2/share')
@@ -126,7 +126,7 @@ export default {
 		},
 		getData(url){
 			// let query = JSON.stringify(this.$route.query)
-			// console.log(this.$route.query)
+			// 
 			this.$axios.post(url,qs.stringify({
 				itemId : this.$route.query.itemId,
 			}))
@@ -139,19 +139,19 @@ export default {
 					name : _d.data.data.title?_d.data.data.title:_d.data.data.name,
 					contentBtId : _d.data.data.contentBtId
 				}
-				// console.log(this.caseInfo.contentBtId)
+				// 
 				this.$axios.get('/other/bigtxt/'+this.caseInfo.contentBtId+'/'+this.caseInfo.contentBtId)
 				.then(_d => {
-					// console.log(_d.data)
+					// 
 					this.$set(this.caseInfo,'content',_d.data)
 				})
 				.catch((err)=>{
-					console.log(err);
+					
 					//Dialog({ message: err});;
 				})
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: err});;
 			})
 		}

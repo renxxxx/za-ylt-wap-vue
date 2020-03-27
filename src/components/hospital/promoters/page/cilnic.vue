@@ -71,7 +71,7 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
 	debugger;
@@ -116,7 +116,7 @@ export default {
   },
   destroyed(){
 	  debugger
-	  console.log('destroyed')
+	  
   },
   mounted() {
 	  debugger
@@ -154,7 +154,7 @@ export default {
 		  	this.clinic.num = res.data.data.rowCount;
 		  })
 		  .catch((err)=>{
-		  	console.log(err);
+		  	
 		  })
 		  this.getNextPage();
 		},
@@ -171,7 +171,7 @@ export default {
 						if(res.data.data.rows[i]){
 							this.content.push(res.data.data.rows[i])
 						}
-						// console.log(this.content)
+						// 
 					}
 				// 加载状态结束
 				this.loading = false;
@@ -183,7 +183,7 @@ export default {
 
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 		},
 	},

@@ -61,7 +61,7 @@ export default {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -108,7 +108,7 @@ console.log(this.scrollTop)
 				this.clinic.num = res.data.data.rowCount;
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 	},
 	methods: {
@@ -117,13 +117,13 @@ console.log(this.scrollTop)
 		},
 		//获取数据
 		getdata(){
-			// console.log(this.Time)
+			// 
 		this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({kw:this.keywords}))
 			.then(_d => {
 				this.$refs.content.content = _d.data.data.rows
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		},

@@ -65,7 +65,7 @@ export default {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -118,7 +118,7 @@ console.log(this.scrollTop)
 		},
 		onLoad(){
 		  ++this.page;
-		  // console.log(this.page)
+		  // 
 		  this.getData();
 		},
 		getData(){
@@ -130,7 +130,7 @@ console.log(this.scrollTop)
       .then(_d => {
         if(_d.data.data.items.length != 0){
           for(let i in _d.data.data.items){
-          	// console.log(res.data.data.items[i])
+          	// 
           	if(_d.data.data.items[i]){
           		this.clinicMessage.push(_d.data.data.items[i])
           	}
@@ -142,7 +142,7 @@ console.log(this.scrollTop)
         }
       })
       .catch((err)=>{
-      	console.log(err);
+      	
       	//Dialog({ message: err});;
       })
     }

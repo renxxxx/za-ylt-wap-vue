@@ -90,14 +90,14 @@ export default {
 	var heightRexg = /^[0-9]*/g
 	//var topHeight = this.topHeight.match(heightRexg)
 	//this.height = parseInt(topHeight.join())
-	// //console.log(this.height)
+	// //
   },
   beforeRouteLeave(to, from, next) {
     debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
-	console.log('sourceManagementthis.scrollTop'+this.scrollTop)
+
+	
 	
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
@@ -138,7 +138,7 @@ console.log(this.scrollTop)
   }
   ,destroyed(){
 	  debugger
-	  console.log('destroyed')
+	  
   },
   mounted(){
 	  debugger
@@ -151,7 +151,7 @@ console.log(this.scrollTop)
   computed:{
 		show: {
 			get: function() {
-			console.log(this.$store)
+			
 				return this.$store.state.show
 			},
 			set: function (newValue) {
@@ -160,7 +160,7 @@ console.log(this.scrollTop)
 		},
 		showTime: {
 			get: function() {
-			// console.log(this.$store)
+			// 
 				return this.$store.state.showTime
 			},
 			set: function (newValue) {
@@ -169,7 +169,7 @@ console.log(this.scrollTop)
 		},
     hospitalReturnHomePage: {
     	get: function() {
-    	// console.log(this.$store)
+    	// 
     		return this.$store.state.hospitalReturnHomePage
     	},
     	set: function (newValue) {
@@ -224,10 +224,10 @@ console.log(this.scrollTop)
 		}))
 		.then(_d => {
 			this.list.noNum = _d.data.data.sum.totalCount;
-			// console.log(this.list.noNum)
+			// 
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 			// //Dialog({ message: err});;
 		})
 		this.$axios.post('/c2/patient/items',qs.stringify({
@@ -240,14 +240,14 @@ console.log(this.scrollTop)
 		}))
 		.then(_d => {
 			this.list.yesNum = _d.data.data.sum.totalCount;
-			// console.log(this.list.yesNum)
+			// 
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 			// //Dialog({ message: err});;
 		});
 
-		// console.log(this.list.allNum)
+		// 
 	},
 	...mapActions(['labelLabelFn','dateConfirm','closeFn','screeningSubmit','screeningResult','confirm','cancel','hospitalSubmit'])
   },

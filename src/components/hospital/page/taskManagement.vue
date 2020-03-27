@@ -60,13 +60,13 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join()) 
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -120,7 +120,7 @@ console.log(this.scrollTop)
 				for(let i in res.data.data.items){
 					if(res.data.data.items[i].oneTimeIs  == 1){
             if(res.data.data.items[i].issueIs){
-              // console.log(res.data.data.items[i].issueIs)
+              // 
               this.task.one.push({
               	name : res.data.data.items[i].name,
               	taskId : res.data.data.items[i].taskId,
@@ -176,7 +176,7 @@ console.log(this.scrollTop)
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		}
@@ -190,8 +190,8 @@ console.log(this.scrollTop)
 
 		change(_value,_item,inx){
 			debugger
-			console.log(_item.checked)
-			console.log(_value.target.checked)
+			
+			
 			if(_item.checked){
 				debugger
 				this.$axios.post('/c2/task/taskunissue',qs.stringify({
@@ -202,7 +202,7 @@ console.log(this.scrollTop)
 					this.$toast.success('操作成功')
 				})
 				.catch((err)=>{
-					console.log(err);
+					
 					//Dialog({ message: '加载失败!'});
 				})
 				
@@ -215,7 +215,7 @@ console.log(this.scrollTop)
 					res.data.codeMsg? this.$toast(res.data.codeMsg): this.$toast.success('操作成功')
 					
 				}).catch(err =>{
-					console.log(err)
+					
 				})
 				// switch(_value.target.checked){
 				// 	case true:

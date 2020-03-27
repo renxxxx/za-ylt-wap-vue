@@ -134,7 +134,7 @@ export default {
 	
   let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	
 	
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
@@ -178,8 +178,8 @@ console.log(this.scrollTop)
   
          let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
          let lastRoute = localStorage.getItem('lastRoute')
-         console.log('fromRoute'+fromRoute)
-         console.log('lastRoute'+lastRoute)
+         
+         
          if(fromRoute == lastRoute){
           localStorage.removeItem('lastRoute')
          }
@@ -233,7 +233,7 @@ console.log(this.scrollTop)
         .get("/hospital/hospital-ads")
         .then(res => {
           for (let i in res.data.data.rows) {
-            // console.log(res.data.data.rows[i])
+            // 
             res.data.codeMsg ? this.$toast(res.data.codeMsg) : "";
             switch (res.data.data.rows[i].type) {
               case 0:
@@ -292,10 +292,10 @@ console.log(this.scrollTop)
                 break;
             }
           }
-          // console.log(this.images.cover)
+          // 
         })
         .catch(err => {
-          // console.log(err);
+          // 
           // Dialog({ message: '加载失败!' });
         });
       //文章请求
@@ -328,12 +328,12 @@ console.log(this.scrollTop)
           }
         })
         .catch(err => {
-          console.log(err);
+          
         });
     },
     onLoad() {
       ++this.page;
-      console.log(this.page)
+      
       this.getdata();
     },
     noLinkFn() {

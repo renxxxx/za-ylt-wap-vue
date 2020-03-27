@@ -120,7 +120,7 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
 	beforeRouteLeave(to, from, next) {
     this.scrollTop =
@@ -179,11 +179,11 @@ export default {
 		// 关闭上传图片选择弹窗
 		closeFn() {
 		      this.show = false;
-			  console.log(this.show)
+			  
 		},
 		addImg(_fileLIst){
 			var file = _fileLIst.target.files[0]
-			// console.log(e)
+			// 
 			if(file.type.indexOf('image') > -1){
 				let formData = new FormData();
 				formData.append('file', file)
@@ -191,10 +191,10 @@ export default {
 				}}).then(res =>{
 					// this.imageUpload.push({name:file.name,url:res.data.data.url})
 					this.imageUpload = res.data.data.url
-					console.log(this.imageUpload)
+					
 					this.show = false;
 				}).catch(err =>{
-					console.log(err)
+					
 				})
 			 }else{
 				Dialog({ message: '请选择图片' });
@@ -204,7 +204,7 @@ export default {
 		},
 		// 保存方法
 		saveFn(){
-			console.log(this.addClinic)
+			
 			this.$axios.post('/hospital/operator/hospital-clinic-add',qs.stringify({
 				hospitalClinicId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 				name :  this.addClinic.name,        //医院名称
@@ -228,7 +228,7 @@ export default {
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		},

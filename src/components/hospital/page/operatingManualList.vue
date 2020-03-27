@@ -65,7 +65,7 @@ export default {
     //debugger;
   let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
   if(!to.query.time || !from.query.time || to.query.time < from.query.time){
   	 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -138,9 +138,9 @@ console.log(this.scrollTop)
           //   if(_res.data.data.rows[_i].done){
           //     ++num
           //   }
-          //   // console.log(num)
+          //   // 
           //     this.yesNum.push(num)
-          // // console.log(_res.data.data.rows[_i])
+          // // 
           //   this.operatingManual[i]._data.push(_res.data.data.rows[_i])
           //  // console.dir(this.operatingManual[i]._data)
           // }
@@ -149,11 +149,11 @@ console.log(this.scrollTop)
         }
       })
       .catch((err)=>{
-      	console.log(err);
+      	
       })
     }
     // async getdata(){
-    //   console.log(this.$route.query.operatingManualSectionId)
+    //   
     // 	await this.$axios.get('/hospital/operating-manual/operating-manual-sections?'
     //   +qs.stringify({"operatingManualId":this.$route.query.operatingManualId})+'&'
     //   +qs.stringify({"upperId":this.$route.query.operatingManualSectionId})
@@ -171,14 +171,14 @@ console.log(this.scrollTop)
     //           ++num
     //         }
     //       }
-    //         // console.log(num)
+    //         // 
     //           this.yesNum = num
     //     }else{
     //       this.$toast(res.data.codeMsg)
     //     }
     // 	})
     // 	.catch((err)=>{
-    // 		console.log(err);
+    // 		
     // 	})
     //   await this.$axios.get('/hospital/operating-manual/operating-manual-sections-sum?'
     //   +qs.stringify({operatingManualId:this.$route.query.operatingManualId})+'&'
@@ -194,7 +194,7 @@ console.log(this.scrollTop)
     //     }
     //   })
     //   .catch((err)=>{
-    //   	console.log(err);
+    //   	
     //   })
     // },
   },

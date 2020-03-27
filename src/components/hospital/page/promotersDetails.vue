@@ -155,7 +155,7 @@ export default {
 	computed:{
 	  hospitalReturnHomePage: {
 	  	get: function() {
-	  	// console.log(this.$store)
+	  	// 
 	  		return this.$store.state.hospitalReturnHomePage
 	  	},
 	  	set: function (newValue) {
@@ -170,13 +170,13 @@ export default {
 		var heightRexg = /^[0-9]*/g;
 		//var topHeight = this.topHeight.match(heightRexg);
 		//this.height = parseInt(topHeight.join()) ;
-		// //console.log(this.height);
+		// //
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -216,7 +216,7 @@ console.log(this.scrollTop)
 
   },
 	mounted(){
-		console.log(this.$route.query.hospitalUserId)
+		
 		// 获取推广人信息
 		this.$axios.get('/hospital/def/hospital-operator-user/'+this.$route.query.hospitalUserId)
 		.then(res => {
@@ -229,20 +229,20 @@ console.log(this.scrollTop)
 			}
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 		})
 		this.$axios.get('/hospital/super-admin/hospital-clinics-sum?'+qs.stringify({hospitalUserId:this.$route.query.hospitalUserId}))
 		.then(res => {
 			res.data.codeMsg?	this.$toast(res.data.codeMsg) : this.clinicNum = res.data.data.rowCount;
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 		})
 		// 加载dom节点后,获取推广人列表请求
 		this.$axios.get('/hospital/def/hospital-operator-users?')
 		.then(res => {
 			if(!res.data.codeMsg){
-				// console.log(res.data.data.rows)
+				// 
 				for(let i in res.data.data.rows){
 					this.option.push({
 						'clinicPromoterId' : res.data.data.rows[i].hospitalUserId,
@@ -250,11 +250,11 @@ console.log(this.scrollTop)
 						'value' : '00'+i,
 					})
 				}
-				console.log(this.promotersList)
+				
 			}
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 		})
 	},
 	methods: {
@@ -270,7 +270,7 @@ console.log(this.scrollTop)
 		modifyFn(){
 			this.showModify = true;
       this.hospitalReturnHomePage = false;
-			console.log(this.showModify)
+			
 		},
 		choicePromoterFn(){
 			this.choicePromoterAllShow = true;
@@ -294,7 +294,7 @@ console.log(this.scrollTop)
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 		},
 		// 显示删除推广人弹窗
@@ -314,7 +314,7 @@ console.log(this.scrollTop)
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 		},
 		// 下拉加载被推广的医院
@@ -326,7 +326,7 @@ console.log(this.scrollTop)
 						if(res.data.data.rows[i]){
 							this.promotersList.push(res.data.data.rows[i])
 						}
-						// console.log(this.content)
+						// 
 					}
 
 				this.page++;
@@ -338,13 +338,13 @@ console.log(this.scrollTop)
 				}
 				if(this.promotersList.length<7){
 					let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-					// console.log(this.$refs.promotersDetailsRef.style.height)
+					// 
 					this.$refs.promotersDetailsRef.style.height = windowHeight+ 'px'
 				}
 				// this.clinic.num = res.data.data.sum.totalCount;
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 		},
 		// 显示推广人选择弹窗
@@ -360,7 +360,7 @@ console.log(this.scrollTop)
 		onConfirm(_value){
 			debugger
 			let promoter= this.option.find((n)=>n.value == _value.value);
-			console.log(promoter)
+			
 			this.modify={
 				name:promoter.text	,
 				id : promoter.clinicPromoterId,
@@ -368,7 +368,7 @@ console.log(this.scrollTop)
 				show:false,	//最后确认弹窗显示值
 			}
 			this.modify.name = promoter.text
-			// console.log(promoter)
+			// 
 			this.choicePromoterAllShow = false
 			// this.modify.showAll = true;
 		},
@@ -394,12 +394,12 @@ console.log(this.scrollTop)
 					}
 				})
 				.catch((err)=>{
-					console.log(err);
+					
 				})
 			}).catch(() => {
 			  // on cancel
 			});
-			console.log(this.modify.showAll)
+			
 		},
 		//转移推广人
 		modifyPromoterAllFn(){
@@ -418,7 +418,7 @@ console.log(this.scrollTop)
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 		},
 		modifyPromoterNoAllFn(){
@@ -429,7 +429,7 @@ console.log(this.scrollTop)
 
 		// 显示推广人选择弹窗
 		transferPromotersShowFn(item){
-			console.log(item)
+			
 			this.modifyPromotersShow = true;
       this.hospitalReturnHomePage = false;
 		},
@@ -452,7 +452,7 @@ console.log(this.scrollTop)
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 		}
 	},

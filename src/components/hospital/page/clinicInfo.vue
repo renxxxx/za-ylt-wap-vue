@@ -136,13 +136,13 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -181,8 +181,8 @@ console.log(this.scrollTop)
 
   },
   activated(){
-    // console.log(localStorage.getItem('list_promoterValue'));
-    // console.log(this)
+    // 
+    // 
     // this.addClinic.promoter = localStorage.getItem('list_promoterValue')
     // this.addClinic.hospitalUserId = localStorage.getItem('list_promoterId');
     if(localStorage.getItem('list_promoterValue') || localStorage.getItem('list_promoterId')){
@@ -192,8 +192,8 @@ console.log(this.scrollTop)
     }
   },
   mounted() {
-     console.log(this.$router.apps[0]._route.name)
-		// console.log(this.$route.query.item)
+     
+		// 
 		this.$route.query.item? this.clinicFn() : ""
 	},
 	methods: {
@@ -215,21 +215,21 @@ console.log(this.scrollTop)
         // if(_d.data.data.hospitalUserName){
 
         // }
-		// console.log(this.addClinic)
+		// 
       	this.imageUpload = _d.data.data.license
 		// this.$axios.get('/hospital/def/hospital-operator-users?'+qs.stringify({hospitalUserId:this.addClinic.hospitalUserId}))
 		// .then(res => {
-		// 	// console.log(res.data.data.rows[0].name)
+		// 	// 
 		// 	// this.promoter= this.option.find((n)=>n.text == res.data.data.rows[0].name)
 		// 	this.value = promoter
-		// 	// console.log(promoter)
+		// 	// 
 		// })
 		// .catch((err)=>{
-		// 	console.log(err);
+		// 	
 		// })
       })
       .catch((err)=>{
-      	console.log(err);
+      	
       	//Dialog({ message: err});;
       })
     },
@@ -244,17 +244,17 @@ console.log(this.scrollTop)
 		// 关闭上传图片选择弹窗
 		closeFn() {
 		      this.show = false;
-			  console.log(this.show)
+			  
 		},
 		// changeFn(id){
 		// 	debugger
 		// 	let promoter= this.option.find((n)=>n.value == id)
 		// 		this.addClinic.clinicPromoterId = promoter.clinicPromoterId
-		// 	console.log(this.addClinic.clinicPromoterId )
+		// 	
 		// },
 		addImg(_fileLIst){
 			var file = _fileLIst.target.files[0]
-			// console.log(e)
+			// 
 			if(file.type.indexOf('image') > -1){
 				let formData = new FormData();
 				formData.append('file', file)
@@ -262,10 +262,10 @@ console.log(this.scrollTop)
 				}}).then(res =>{
 					// this.imageUpload.push({name:file.name,url:res.data.data.url})
 					this.imageUpload = res.data.data.url
-					console.log(this.imageUpload)
+					
 					this.show = false;
 				}).catch(err =>{
-					console.log(err)
+					
 				})
 			 }else{
 				Dialog({ message: '请选择图片' });
@@ -275,7 +275,7 @@ console.log(this.scrollTop)
 		},
 		// 保存方法
 		saveFn(){
-			console.log(this.addClinic)
+			
 			this.$axios.post('/hospital/super-admin/hospital-clinic-alter',qs.stringify({
 				hospitalClinicId :  this.$route.query.item,
 				name :  this.addClinic.name,
@@ -290,12 +290,12 @@ console.log(this.scrollTop)
 				clinicUserPasswordConfirm : this.addClinic.pwdConfirm,  //确认密码
 			}))
 			.then(res => {
-				// console.log(typeof res.data.codeMsg)
+				// 
 				res.data.codeMsg? Toast.fail(res.data.codeMsg) : this.successFn();
 
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		},

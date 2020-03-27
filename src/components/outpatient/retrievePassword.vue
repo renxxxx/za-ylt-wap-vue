@@ -119,7 +119,7 @@ export default {
 	finished(e){
 		this.retrieve.data = true;
 		 this.$refs.countDown.reset();
-		console.log(this.retrieve.data);
+		
 		this.showYan = true;
 		this.showTime = false;
 	},
@@ -131,7 +131,7 @@ export default {
 				newpwd : this.retrieve.newpwd
 			}))
 		.then( _d => {
-			console.log(_d)
+			
 			_d.data.codeMsg? this.$toast.fail(_d.data.codeMsg):this.$toast.success('操作成功');
 			if(_d.data.code == 0){
 				setTimeout(()=>{
@@ -140,16 +140,16 @@ export default {
 			}
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 			//Dialog({ message: '加载失败!'});
 		})
 	},
 	//获取验证码
 	getSmsvcode(){
-		// console.log(this.retrieve.telephone);
-		// console.log(this.retrieve.data);
+		// 
+		// 
 		if(this.retrieve.telephone != '' && this.retrieve.data == true){
-			console.log(this.retrieve.data)
+			
 			this.$axios.post('/sendsmsvcode',qs.stringify({
 				phone : this.retrieve.telephone,
 			}))
@@ -164,11 +164,11 @@ export default {
           this.$refs.countDown.start();
           this.retrieve.data = false;
         }
-				// console.log(this.retrieve.data);
+				// 
 			})
 			.catch((err)=>{
-				console.log(err)
-				// console.log(this.retrieve.data);
+				
+				// 
 				//Dialog({ message: '加载失败!'});
 			})
 
@@ -180,7 +180,7 @@ export default {
 	},
 	// 提交重设信息
 	retrieveSubmit(){
-		console.log(this.whichClient)
+		
 		switch(this.whichClient){
 			case 100:
 			this.getdata('/hospital/set-pwd-by-phone');

@@ -104,7 +104,7 @@ export default {
 	debugger;
 	let scrollTop = this.scrollTop =document.getElementById('outpatient').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -165,7 +165,7 @@ console.log(this.scrollTop)
 	  	.then(res => {
 	  		if(res.data.data.items.length != 0){
 	  			for(let i in res.data.data.items){
-	  			// console.log(res.data.data.items[i])
+	  			// 
 	  			if(res.data.data.items[i]){
 	  				this.article.push({
 	  					content:res.data.data.items[i].title,
@@ -194,7 +194,7 @@ console.log(this.scrollTop)
 	  		}
 	  	})
 	  	.catch((err)=>{
-	  		console.log(err);
+	  		
 	  		//Dialog({ message: '加载失败!'});
 	  	})
 	  },

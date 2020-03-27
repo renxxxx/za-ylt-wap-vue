@@ -39,13 +39,13 @@ export default {
 		this.imgUrl = this.$route.query.imgUrl;
 		this.inx = this.$route.query.inx;
 		this.enlarge = this.$route.query.data;
-		// console.log(this.$router)
+		// 
 	},
 	beforeRouteLeave(to, from, next) {
 	  //debugger;
 		let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 		if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 			 debugger
 	          if (this.$vnode && this.$vnode.data.keepAlive)
@@ -100,16 +100,16 @@ console.log(this.scrollTop)
 
 		// 	//this.enlarge = false;
 		// 	this.$router.back()
-		// 	console.log('关闭')
+		// 	
 		// },
 		// enlargeFn(_value){
 		// 	this.photoNum = _value;
-		// 	console.log(this.photoNum)
+		// 	
 		// 	this.enlarge = true;
 		// },
 		// onChange(_value){
 		// 	this.photoPage = _value;
-		// 	console.log(this.imgUrl)
+		// 	
 		// },
 	},
 }

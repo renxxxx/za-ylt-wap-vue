@@ -89,7 +89,7 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		this.activity = JSON.parse(this.$route.query.activity)
-		console.log(this.$route.query.activity)
+		
 	},
 	methods: {
 		//回退方法
@@ -113,12 +113,12 @@ export default {
 			}))
 			.then(res => {
 				res.data.codeMsg? this.$toast(res.data.codeMsg):this.$toast.success('操作成功')
-				console.log(this.activity)
+				
 				//window.location.href='#/hospital_activityReleased';
 				this.$router.go(-2)
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		},

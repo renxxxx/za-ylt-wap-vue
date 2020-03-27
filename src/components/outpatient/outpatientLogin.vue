@@ -141,7 +141,7 @@ export default {
   computed:{
     account:{
     	get: function() {
-    		console.log(this.$store)
+    		
     	    return this.$store.state.account
     	},
     	set: function (newValue) {
@@ -172,8 +172,8 @@ export default {
       }
     },
     numFN(_ref){
-      console.log(_ref)
-      console.log(document.getElementById(_ref).type)
+      
+      
       if(document.getElementById(_ref).type == 'password'){
         document.getElementById(_ref).setAttribute('type','text')
         this.pwdImg = require('../../assets/image/open-eye@2x.png')
@@ -204,13 +204,13 @@ export default {
             }
         	})
         	.catch((err)=>{
-        		console.log(err)
+        		
         		this.$toast(err);
         	})
         }
     },
     changeFn(_value){
-      // console.log(_value.target.checked)
+      // 
     	this.checked = _value.target.checked;
     },
   }

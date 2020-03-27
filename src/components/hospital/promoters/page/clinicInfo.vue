@@ -111,7 +111,7 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -170,11 +170,11 @@ export default {
             remark : _d.data.data.remark,
 			hospitalUserName : _d.data.data.hospitalUserName,
           },
-		// console.log(this.addClinic)
+		// 
       	this.imageUpload = _d.data.data.license
       })
       .catch((err)=>{
-      	console.log(err);
+      	
       	//Dialog({ message: err});;
       })
     },
@@ -189,13 +189,13 @@ export default {
 		// 关闭上传图片选择弹窗
 		closeFn() {
 		      this.show = false;
-			  console.log(this.show)
+			  
 		},
 		changeFn(id){
 			debugger
 			let promoter= this.option.find((n)=>n.value == id)
 				this.addClinic.clinicPromoterId = promoter.clinicPromoterId
-			console.log(this.addClinic.clinicPromoterId )
+			
 		},
 	}
 }

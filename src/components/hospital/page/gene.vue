@@ -105,13 +105,13 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -168,7 +168,7 @@ console.log(this.scrollTop)
 		// 基因状态菜单选择返回值
 		menuFn(_value){
 			let _geneData =  this.option.find( n => n.value == _value);
-			console.log(_geneData.text);
+			
 		}
 	},
 }

@@ -108,7 +108,7 @@ export default {
 		},
 		//显示内容
 		showContent(inx){
-			// console.log(inx)
+			// 
 			this.clickNum++;
 			if(this.clickNum % 2 == 0){
 				this.$refs.showP[inx].style.webkitLineClamp = '9'
@@ -120,7 +120,7 @@ export default {
 		},
     onLoad(){
       ++this.page;
-      // console.log(this.page)
+      // 
       this.getdata();
     },
     getdata(){
@@ -145,12 +145,12 @@ export default {
             this.loading = false;
             this.finished = true;
           }
-      	// console.log(this.doctor)
+      	// 
       	// this.$refs.scrollId.style.width = 50 * _d.data.data.items.length +'%'
-      	// console.log(this.$refs.scrollId)
+      	// 
       })
       .catch((err)=>{
-      	console.log(err);
+      	
       	//Dialog({ message: err});;
       })
     }

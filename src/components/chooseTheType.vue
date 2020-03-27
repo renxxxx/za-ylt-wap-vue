@@ -42,7 +42,7 @@ export default {
   computed:{
     account:{
     	get: function() {
-    		console.log(this.$store)
+    		
     	    return this.$store.state.account
     	},
     	set: function (newValue) {

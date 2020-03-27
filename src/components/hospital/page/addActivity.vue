@@ -73,7 +73,7 @@ export default {
 		...mapGetters(['account','showTime']),
 		showTime: {
 		    get: function() {
-				// console.log(this.$store)
+				// 
 		        return this.$store.state.showTime
 		    },
 		    set: function (newValue) {
@@ -88,13 +88,13 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		// var topHeight = this.topHeight.match(heightRexg)
 		// this.height = parseInt(topHeight.join())
-		// console.log(this.height)
+		// 
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -146,7 +146,7 @@ console.log(this.scrollTop)
 		// 添加上传的图片
 		addImg(_fileLIst){
 			var file = _fileLIst.target.files[0]
-			// console.log(e)
+			// 
 			if(file.type.indexOf('image') > -1){
 				let formData = new FormData();
 				formData.append('file', file)
@@ -154,10 +154,10 @@ console.log(this.scrollTop)
 				}}).then(res =>{
 					// this.imageUpload.push({name:file.name,url:res.data.data.url})
 					this.activity.cover = res.data.data.url
-					// console.log(this.imageUpload)
+					// 
 					this.show = false;
 				}).catch(err =>{
-					console.log(err)
+					
 				})
 			 }else{
 				Dialog({ message: '请选择图片' });
@@ -179,12 +179,12 @@ console.log(this.scrollTop)
 		},
 		//关闭半遮罩
 		closeFn(){
-			// console.log(dialog)
+			// 
 			this.showTime = false;
 		},
 		//取消选择的日期
 		cancel(_value){
-			console.log(_value)
+			
 		},
 	},
 }

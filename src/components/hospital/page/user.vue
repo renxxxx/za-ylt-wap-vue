@@ -80,7 +80,7 @@ export default {
 		// ...mapGetters(['account'])
 		account: {
 		    get: function() {
-				// console.log(this.$store)
+				// 
 		        return this.$store.state.account
 		    },
 		    set: function (newValue) {
@@ -95,7 +95,7 @@ export default {
   beforeRouteLeave(to, from, next) {
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
@@ -140,7 +140,7 @@ console.log(this.scrollTop)
 			this.coverImg = this.$store.state.hospitalEntrance.loginRefresh().hospital.cover
 			this.images.push(this.$store.state.hospitalEntrance.loginRefresh().hospital.license)
 		}
-		// console.log(this.$store.state.hospitalEntrance.loginRefresh().data.data.hospital.cover)
+		// 
 		this.initData();
 	},
 	methods: {
@@ -156,7 +156,7 @@ console.log(this.scrollTop)
 		},
 		showImgFn(){
 			this.show = true;
-			console.log(this.show)
+			
 		},
 		//退出方法
 		exitFn(){

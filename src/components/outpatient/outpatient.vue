@@ -135,7 +135,7 @@ export default {
   computed:{
     outpatientReturnTopPage: {
       get: function() {
-        // console.log(this.$store)
+        // 
         return this.$store.state.outpatientReturnTopPage;
       },
       set: function(newValue) {
@@ -147,7 +147,7 @@ export default {
   methods:{
 		touchStartFn(_value){
 			this.startLength = _value.changedTouches[0].screenX
-			console.log('touchStartFn'+_value.changedTouches[0].screenX)
+			
 		},
 		touchEndFn(_value){
 			this.overLength = _value.changedTouches[0].screenX;
@@ -167,12 +167,12 @@ if(!this.$refs.outpatientRef)
       let data =
         this.$refs.outpatientRef.scrollHeight >
         (window.innerHeight || document.documentElement.clientHeight);
-      // console.log( document.documentElement.scrollTop)
+      // 
       let opacityValue =
         Math.round(
           ((scrollTop + windowHeight) / this.$refs.outpatientRef.scrollHeight) * 100
         ) / 100;
-      // console.log(scrollTop)
+      // 
       if (data && scrollTop > 800) {
         this.outpatientReturnTopPage = true;
         this.$refs.returnTopRef.style.opacity = 1;

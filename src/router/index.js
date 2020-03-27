@@ -785,7 +785,7 @@ router.afterEach((to,from) => {
 
 
   //判断是否显示端口底部菜单按钮
-  //console.log('hahahhah')
+  //
   //if(Store.state.isLogin || to.name == 'sharePage'){
     // if(to.name == 'hospital_index'|| to.name == 'hospital_clinic' || to.name == 'hospital_gene' || to.name == 'hospital_user'
     //   || to.name == 'outpatient_index' || to.name == 'outpatient_hospital' || to.name == 'outpatient_gene' || to.name == 'outpatient_user'){
@@ -794,7 +794,7 @@ router.afterEach((to,from) => {
     //   Store.state.bottomShow = false;
     // }
     // //判断是否显示医院端返回首页和顶部按钮
-    // // console.log(to.name)
+    // // 
     // if(to.name == 'hospital_addCLinic' || to.name == 'hospital_clinicInfo' || to.name == 'hospitalLogin'
     // || to.name == 'hospital_pictureEnlargement' || to.name == 'hospital_operatingManualListDetails' ||
     // to.name == 'hospital_index' || to.name == 'promoters_index' || to.name == 'promoters_clinicInfo' ||
@@ -816,7 +816,7 @@ router.afterEach((to,from) => {
     //   Store.state.outpatientReturnHomePage = true;
     // }
  // }else{
-    // console.log(to.path.indexOf("hospital") != -1)
+    // 
     // if(to.path.indexOf("hospital") != -1 || to.path.indexOf("promoters") != -1){
     //   router.replace({name:'hospitalLogin'});
     //   Store.state.hospitalReturnHomePage = false;
@@ -975,7 +975,7 @@ router.afterEach((to,from) => {
 // 		},
 // 	],
 //   // scrollBehavior (to, from, savedPosition) {
-//   //   console.log(savedPosition)
+//   //   
 //   //     // return 期望滚动到哪个的位置
 //   //     // return { x: 300, y: 300 }
 //   //   }

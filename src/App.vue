@@ -79,7 +79,7 @@ export default {
   // mounted() {
   //   debugger
   //   // let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
-  //   // console.log(document.documentElement.clientHeight)
+  //   // 
   //   window.addEventListener("scroll", this.handleScroll, true);
   // },
 
@@ -133,7 +133,7 @@ export default {
 
   // },
   // // created() {
-  //   // console.log(this.$route.fullPath)
+  //   // 
     
   //   let vm = this
   //   let isLogin = localStorage.getItem("isLogin");
@@ -157,7 +157,7 @@ export default {
   //         break;
   //     }
   //     let lastRoute = JSON.parse(localStorage.getItem('lastRoute'));
-	 //  console.log(lastRoute)
+	 //  
   //     // localStorage.removeItem("lastRoute");
   //     debugger
   //      if(this.$store.state.isLogin == 100){

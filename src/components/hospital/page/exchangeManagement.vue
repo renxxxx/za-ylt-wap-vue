@@ -71,7 +71,7 @@ export default {
 		...mapGetters(['account']),
     exchangeAdd: {
         get: function() {
-    		// console.log(this.$store)
+    		// 
             return this.$store.state.exchangeAdd
         },
         set: function (newValue) {
@@ -89,7 +89,7 @@ export default {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -150,12 +150,12 @@ console.log(this.scrollTop)
 			})).then(res =>{
 				this.getdata();
 			}).catch(err =>{
-				console.log(err)
+				
 			})
 		},
     onLoad(){
       ++this.page;
-      // console.log(this.page)
+      // 
       this.getdata();
     },
 		getdata(){
@@ -184,9 +184,9 @@ console.log(this.scrollTop)
             this.loading = false;
             this.finished = true;
           }
-				// console.log(this.commodity)
+				// 
 			}).catch(err =>{
-				console.log(err)
+				
 			})
 		}
 	},

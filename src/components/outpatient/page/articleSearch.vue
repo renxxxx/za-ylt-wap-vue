@@ -117,7 +117,7 @@ export default {
 	  	.then(res => {
 	  		if(res.data.data.items.length != 0){
 	  			for(let i in res.data.data.items){
-	  			// console.log(res.data.data.items[i])
+	  			// 
 	  			if(res.data.data.items[i]){
 	  				this.article.push({
 	  					content:res.data.data.items[i].title,
@@ -136,7 +136,7 @@ export default {
 	  		}
 	  	})
 	  	.catch((err)=>{
-	  		console.log(err);
+	  		
 	  	})
 	  },
 	  onLoad(){

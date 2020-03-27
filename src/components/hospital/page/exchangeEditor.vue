@@ -69,13 +69,13 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join()) 
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -132,7 +132,7 @@ console.log(this.scrollTop)
 				}
 			}
 		}).catch(err =>{
-			console.log(err)
+			
 		})
 	},
 	methods: {
@@ -146,7 +146,7 @@ console.log(this.scrollTop)
 				if(this.exchangeEditor.payExchangepoint != ''){
 					if(this.exchangeEditor.stock != ''){
 						if(this.exchangeEditor.intro != ''){
-							console.log(this.exchangeEditor)
+							
 							this.$router.push({ path : '/hospital/hospital_exchangeEditorImg',query : {exchangeEditor : JSON.stringify(this.exchangeEditor),time:new Date().getTime()}});
 						}else{
 							Toast.fail('请填写简介');
@@ -171,10 +171,10 @@ console.log(this.scrollTop)
 		// 		stock: this.exchangeEditor.stock,
 		// 		payExchangepoint : this.exchangeEditor.payExchangepoint,
 		// 	})).then(res =>{
-		// 		// console.log(res.data.codeMsg)
+		// 		// 
 		// 		res.data.codeMsg?	this.$toast({duration: 1000,message: res.data.codeMsg}):this.$toast.success({duration: 1000,message: '操作成功'})
 		// 	}).catch(err =>{
-		// 		console.log(err)
+		// 		
 		// 	})
 		// }
 	},

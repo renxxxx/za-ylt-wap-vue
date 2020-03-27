@@ -107,7 +107,7 @@ export default {
     //debugger;
   let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
   if(!to.query.time || !from.query.time || to.query.time < from.query.time){
   	 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -151,7 +151,7 @@ console.log(this.scrollTop)
     	plus.navigator.setStatusBarStyle("dark")
     }
     this.getdata();
-    // console.log(this.$store.state.)
+    // 
   },
   methods: {
     //回退方法
@@ -167,7 +167,7 @@ console.log(this.scrollTop)
     	 this.getdata()
     },
     showVideoFn(video){
-      console.log('ss');
+      
       this.nowVideo = video
       this.show = true
     },
@@ -184,19 +184,19 @@ console.log(this.scrollTop)
           if(res.data.data.rows.length != 0){
             for(let i in res.data.data.rows){
               if(res.data.data.rows[i].image){
-                // console.log(res.data.data.rows[i])
+                // 
                 res.data.data.rows[i].image = res.data.data.rows[i].image.split(",");
               }
               if(res.data.data.rows[i].video){
-                // console.log(res.data.data.rows[i].video)
+                // 
                 res.data.data.rows[i].video = res.data.data.rows[i].video.split(",");
               }
               if(res.data.data.rows[i].audio){
-                // console.log(res.data.data.rows[i].audio)
+                // 
                 res.data.data.rows[i].audio = res.data.data.rows[i].audio.split(",");
               }
               if(res.data.data.rows[i].content){
-                // console.log(res.data.data.rows[i].audio)
+                // 
                 res.data.data.rows[i].content = res.data.data.rows[i].content.replace(/(\r\n|\n|\r)/gm, "\n");
               }
               this.operatingManualListDetails.push({
@@ -226,14 +226,14 @@ console.log(this.scrollTop)
         }
     	})
     	.catch((err)=>{
-    		console.log(err);
+    		
     	})
     },
     //上传视频至服务器，获取到服务器的地址，并提交到当前章节
     addVideoFn(_fileLIst){
       var file = _fileLIst.target.files[0]
 
-      // console.log(file)
+      // 
       if(file.type.indexOf('video/mp4') > -1){
       	let formData = new FormData();
       	formData.append('file', file)
@@ -241,13 +241,13 @@ console.log(this.scrollTop)
       	this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
       	}})
         .then(res =>{
-          // console.log(res)
+          // 
           let videoUrl = ''
           videoUrl = res.data.data.url
           this.saveFn('',videoUrl,'')
-      		// console.log(this.operating.video)
+      		// 
       	}).catch(err =>{
-      		console.log(err)
+      		
       	})
        }else{
       	this.$toast({ message: '请上传视频' });
@@ -257,7 +257,7 @@ console.log(this.scrollTop)
     //上传图片至服务器，获取到服务器的地址，并提交到当前章节
     addImg(_fileLIst){
     	var file = _fileLIst.target.files[0]
-    	// console.log(e)
+    	// 
     	if(file.type.indexOf('image') > -1){
     		let formData = new FormData();
     		formData.append('file', file)
@@ -268,9 +268,9 @@ console.log(this.scrollTop)
           let imgUrl = ''
     			imgUrl = res.data.data.url
           this.saveFn(imgUrl,'','')
-    			// console.log(this.operating.img)
+    			// 
     		}).catch(err =>{
-    			console.log(err)
+    			
     		})
     	 }else{
     		this.$toast({ message: '请选择图片' });
@@ -284,7 +284,7 @@ console.log(this.scrollTop)
     },
     //保存方法
     saveFn(_img,_video,_content){
-      console.log(_img)
+      
       // let img = _img.join;
       // let video = _video.join(",");
       this.$axios.post('/hospital/operating-manual/operating-manual-section-track-add?',qs.stringify({
@@ -305,10 +305,10 @@ console.log(this.scrollTop)
           this.getdata();
         }
       	this.imageUpload = res.data.data.url
-      	console.log(this.imageUpload)
+      	
       	this.show = false;
       }).catch(err =>{
-      	console.log(err)
+      	
       })
     },
   },

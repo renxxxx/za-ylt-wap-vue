@@ -145,14 +145,14 @@ export default {
 		});
 		let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
 		let lastRoute = localStorage.getItem('lastRoute')
-		console.log('fromRoute'+fromRoute)
-		console.log('lastRoute'+lastRoute)
+		
+		
 		if(fromRoute == lastRoute){
 		 localStorage.removeItem('lastRoute')
 		}
 	},
 	destroyed(){
-		// console.log('destroyed')
+		// 
 	},
 	mounted () {
 		let lastRoute = localStorage.getItem('lastRoute')
@@ -181,7 +181,7 @@ export default {
 		    .then(res => {
 		      if (res.data.data.items.length != 0) {
 		        for (let i in res.data.data.items) {
-		          // console.log(res.data.data.items[i])
+		          // 
 		          if (res.data.data.items[i]) {
 		            this.article.push({
 		              content: res.data.data.items[i].title,
@@ -194,7 +194,7 @@ export default {
 		      }
 		    })
 		    .catch(err => {
-		      console.log(err);
+		      
 		    });
 			this.$axios.post('/c2/activity/items',qs.stringify({
 				hospitalId: this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
@@ -204,7 +204,7 @@ export default {
 			.then(res => {
 				if(res.data.data.items.length != 0){
 					for(let i in res.data.data.items){
-						// console.log(res.data.data.items[i])
+						// 
 						if(res.data.data.items[i]){
 							this.qualityCase.push({
 								content:res.data.data.items[i].title,
@@ -219,7 +219,7 @@ export default {
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		},

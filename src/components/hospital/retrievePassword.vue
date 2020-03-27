@@ -68,7 +68,7 @@ export default {
   beforeRouteLeave(to, from, next) {
     let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -121,7 +121,7 @@ console.log(this.scrollTop)
 	finished(e){
 		this.retrieve.data = true;
 		 this.$refs.countDown.reset();
-		console.log(this.retrieve.data);
+		
 		this.showYan = true;
 		this.showTime = false;
 	},
@@ -133,7 +133,7 @@ console.log(this.scrollTop)
 				newpwd : this.retrieve.newpwd
 			}))
 		.then( _d => {
-			console.log(_d)
+			
 			_d.data.codeMsg? this.$toast(_d.data.codeMsg):this.$toast.success('操作成功');
 			if(_d.data.code == 0){
 				setTimeout(()=>{
@@ -142,16 +142,16 @@ console.log(this.scrollTop)
 			}
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 			//Dialog({ message: '加载失败!'});
 		})
 	},
 	//获取验证码
 	getSmsvcode(){
-		// console.log(this.retrieve.telephone);
-		// console.log(this.retrieve.data);
+		// 
+		// 
 		if(this.retrieve.telephone != '' && this.retrieve.data == true){
-			console.log(this.retrieve.data)
+			
 			this.$axios.post('/sendsmsvcode',qs.stringify({
 				phone : this.retrieve.telephone,
 			}))
@@ -166,11 +166,11 @@ console.log(this.scrollTop)
           this.$refs.countDown.start();
           this.retrieve.data = false;
         }
-				// console.log(this.retrieve.data);
+				// 
 			})
 			.catch((err)=>{
-				console.log(err)
-				// console.log(this.retrieve.data);
+				
+				// 
 				//Dialog({ message: '加载失败!'});
 			})
 
@@ -182,7 +182,7 @@ console.log(this.scrollTop)
 	},
 	// 提交重设信息
 	retrieveSubmit(){
-		console.log(this.whichClient)
+		
 		switch(this.whichClient){
 			case 100:
 			this.getdata('/hospital/set-pwd-by-phone');

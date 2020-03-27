@@ -54,13 +54,13 @@ export default {
 		var heightRexg = /^[0-9]*/g;
 		//var topHeight = this.topHeight.match(heightRexg);
 		//this.height = parseInt(topHeight.join()) ;
-		// //console.log(this.height);
+		// //
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -125,10 +125,10 @@ console.log(this.scrollTop)
             }
             if(this.promotersList.length<10){
             	let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-            	// console.log(this.$refs.promotersSearchRef.style.height)
+            	// 
             	this.$refs.promotersSearchRef.style.height = windowHeight+ 'px'
             }
-            // console.log(this.promotersList)
+            // 
             this.loading = false;
           }else {
             this.loading = false;
@@ -139,7 +139,7 @@ console.log(this.scrollTop)
         }
       })
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 		},
 		searchFn(e){
@@ -156,14 +156,14 @@ console.log(this.scrollTop)
 			// 		}
 			// 		if(this.promotersList.length<10){
 			// 			let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-			// 			console.log(this.$refs.promotersSearchRef.style.height)
+			// 			
 			// 			this.$refs.promotersSearchRef.style.height = windowHeight+ 'px'
 			// 		}
-			// 		console.log(this.promotersList)
+			// 		
 			// 	}
 			// })
 			// .catch((err)=>{
-			// 	console.log(err);
+			// 	
 			// })
 		}
 	},

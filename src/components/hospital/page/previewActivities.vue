@@ -47,7 +47,7 @@ export default {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -90,7 +90,7 @@ console.log(this.scrollTop)
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		this.activity = JSON.parse(this.$route.query.activity)
-		console.log(this.$route.query.activity)
+		
 	},
 	methods: {
 		//回退方法
@@ -114,12 +114,12 @@ console.log(this.scrollTop)
 			}))
 			.then(res => {
 				res.data.codeMsg? this.$toast(res.data.codeMsg):this.$toast.success('操作成功')
-				console.log(this.activity)
+				
 				//window.location.href='#/hospital_activityReleased';
 				this.$router.go(-2)
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		},

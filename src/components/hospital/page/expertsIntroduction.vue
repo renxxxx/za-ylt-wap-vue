@@ -57,13 +57,13 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -116,7 +116,7 @@ console.log(this.scrollTop)
 		},
 		//显示内容
 		showContent(inx){
-			// console.log(inx)
+			// 
 			this.clickNum++;
 			if(this.clickNum % 2 == 0){
 				this.$refs.showP[inx].style.webkitLineClamp = '9'
@@ -128,7 +128,7 @@ console.log(this.scrollTop)
 		},
     onLoad(){
       ++this.page;
-      // console.log(this.page)
+      // 
       this.getData();
     },
     getData(){
@@ -154,12 +154,12 @@ console.log(this.scrollTop)
               this.finished = true;
             }
 
-      	// console.log(this.doctor)
+      	// 
       	// this.$refs.scrollId.style.width = 50 * _d.data.data.items.length +'%'
-      	// console.log(this.$refs.scrollId)
+      	// 
       })
       .catch((err)=>{
-      	console.log(err);
+      	
       	//Dialog({ message: err});;
       })
     }

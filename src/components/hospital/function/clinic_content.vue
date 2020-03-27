@@ -47,7 +47,7 @@ export default {
   beforeRouteLeave(to, from, next) {
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
@@ -84,7 +84,7 @@ console.log(this.scrollTop)
 	});
 
   }, mounted() {
-	  console.log(this.show)
+	  
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
@@ -94,7 +94,7 @@ console.log(this.scrollTop)
 		  	this.clinicNum = res.data.data.rowCount;
 		  })
 		  .catch((err)=>{
-		  	console.log(err);
+		  	
 		  })
 	},
 	methods: {
@@ -106,7 +106,7 @@ console.log(this.scrollTop)
        	this.clinicNum = res.data.data.rowCount;
        })
        .catch((err)=>{
-       	console.log(err);
+       	
        })
 		},
 		getdata(){
@@ -117,7 +117,7 @@ console.log(this.scrollTop)
 						if(res.data.data.rows[i]){
 							this.content.push(res.data.data.rows[i])
 						}
-						// console.log(this.content)
+						// 
 					}
 				// 加载状态结束
 				this.loading = false;
@@ -126,14 +126,14 @@ console.log(this.scrollTop)
           this.test='没有更多了'
 					this.finished = true;
 				}
-        console.log(this.content.length)
+        
         if(this.content.length == 0){
           this.test='无数据'
         }
 				// this.clinic.num = res.data.data.sum.totalCount;
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 
 		},

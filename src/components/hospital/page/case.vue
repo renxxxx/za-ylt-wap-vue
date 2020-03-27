@@ -52,13 +52,13 @@ export default {
 		// var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -108,7 +108,7 @@ console.log(this.scrollTop)
 		},
     onLoad(){
       ++this.page;
-      // console.log(this.page)
+      // 
       this.getData();
     },
     getData(){
@@ -120,7 +120,7 @@ console.log(this.scrollTop)
       .then(res => {
       	if(res.data.data.items.length != 0){
       		for(let i in res.data.data.items){
-      			// console.log(res.data.data.items[i])
+      			// 
       			if(res.data.data.items[i]){
       				this.article.push({
       					content:res.data.data.items[i].name,
@@ -137,7 +137,7 @@ console.log(this.scrollTop)
           }
       })
       .catch((err)=>{
-      	console.log(err);
+      	
       	//Dialog({ message: '加载失败!'});
       })
     }

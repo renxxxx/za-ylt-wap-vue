@@ -127,13 +127,13 @@ export default {
 				this.getdata();
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		},
     onLoad(){
       ++this.page;
-      // console.log(this.page)
+      // 
       this.getdata();
     },
 		getdata(){
@@ -143,11 +143,11 @@ export default {
 				ps: 10
 			}))
 			.then(res => {
-				// console.log(res.data.data.items.length)
+				// 
 				if(res.data.data.items.length != 0){
 					for(let i in res.data.data.items){
 						this.active.push(res.data.data.items[i])
-						// console.log(res.data.data.items[i])
+						// 
 					}
           this.loading = false;
 				}else {
@@ -156,7 +156,7 @@ export default {
         }
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		}

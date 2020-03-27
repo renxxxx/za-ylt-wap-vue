@@ -116,7 +116,7 @@ export default {
 		},
 		onLoad(){
 		  ++this.page;
-		  // console.log(this.page)
+		  // 
 		  this.getdata();
 		},
 		getdata(){
@@ -137,7 +137,7 @@ export default {
       	  }
       })
       .catch((err)=>{
-      	console.log(err);
+      	
       	//Dialog({ message: err});;
       })
     }

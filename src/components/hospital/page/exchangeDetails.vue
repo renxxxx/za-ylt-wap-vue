@@ -58,7 +58,7 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join()) 
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -106,7 +106,7 @@ export default {
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		
-		console.log(this.$route.query.item.orderId);
+		
 		this.$axios.post('/clientend2/hospitalend/exchangemanage/orderinfo',qs.stringify({
 			orderId : this.$route.query.item.orderId,
 		}))
@@ -123,7 +123,7 @@ export default {
 		},
 		successFn(res){
 			this.exchangeDetails = res.data.data;
-			console.log(this.exchangeDetails)
+			
 		}
 	},
 }

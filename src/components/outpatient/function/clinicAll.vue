@@ -97,7 +97,7 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		console.log(this.$route.name)
+		
 
 	},
 	methods:{
@@ -111,14 +111,14 @@ export default {
 				}else{
 					this.$toast.success({duration: 1000,message: '操作成功'})
 					if(_item.status == 1){
-						console.log(_button.target)
+						
 						_button.target.style.cssText="color:#333333; background-color:#EEEEEE;"
 						_button.target.innerHTML = '已就诊';
 					}
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 		},
 		sort(){
@@ -191,7 +191,7 @@ export default {
         }
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: err});;
 			});
 

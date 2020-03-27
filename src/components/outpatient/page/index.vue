@@ -121,10 +121,10 @@ export default {
   beforeRouteLeave(to, from, next) {
 	  	debugger;
 	// this.scrollTop =document.getElementById('outpatient').scrollTop ||document.getElementById('outpatient').pageYOffset
-	// console.log("clinic"+this.scrollTop)
+	// 
 	let scrollTop = this.scrollTop =document.getElementById('outpatient').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -164,8 +164,8 @@ console.log(this.scrollTop)
     });
 	let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
 	let lastRoute = localStorage.getItem('lastRoute')
-	console.log('fromRoute'+fromRoute)
-	console.log('lastRoute'+lastRoute)
+	
+	
 	if(fromRoute == lastRoute){
 	 localStorage.removeItem('lastRoute')
 	}
@@ -192,7 +192,7 @@ console.log(this.scrollTop)
   computed:{
 		show: {
 			get: function() {
-			console.log(this.$store)
+			
 				return this.$store.state.show
 			},
 			set: function (newValue) {
@@ -201,7 +201,7 @@ console.log(this.scrollTop)
 		},
 		showTime: {
 			get: function() {
-			// console.log(this.$store)
+			// 
 				return this.$store.state.showTime
 			},
 			set: function (newValue) {
@@ -244,7 +244,7 @@ console.log(this.scrollTop)
 	//显示筛选弹窗
 	showPopup() {
 	   this.show = true;
-	   // console.log(this.show)
+	   // 
 	},
 	getNum(){
 		let clinicId = '';
@@ -260,10 +260,10 @@ console.log(this.scrollTop)
 		}))
 		.then(_d => {
 			this.list.noNum = _d.data.data.sum.totalCount;
-			// console.log(this.list.noNum)
+			// 
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 		})
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
@@ -275,14 +275,14 @@ console.log(this.scrollTop)
 		}))
 		.then(_d => {
 			this.list.yesNum = _d.data.data.sum.totalCount;
-			// console.log(this.list.yesNum)
+			// 
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 			// //Dialog({ message: err});;
 		});
 
-		// console.log(this.list.allNum)
+		// 
 	},
   hospitalSubmit(){
     this.$axios.post('/c2/patient/itemadd',qs.stringify({
@@ -295,9 +295,9 @@ console.log(this.scrollTop)
     		idcardNo :  this.account.idcardNo
     	}))
     	.then( res =>{
-    		console.log(res);
-    		console.log(this.account)
-    		// console.log(res)
+    		
+    		
+    		// 
     		if(res.data.codeMsg){
     			Dialog({ message: res.data.codeMsg  });
     		}else if(res.data.code == 0){
@@ -308,7 +308,7 @@ console.log(this.scrollTop)
     		}
     	})
     	.catch((err)=>{
-    		console.log(err)
+    		
     		//Dialog({ message: '加载失败!'});
     	})
   }

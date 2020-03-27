@@ -105,7 +105,7 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -166,7 +166,7 @@ export default {
 		// 基因状态菜单选择返回值
 		menuFn(_value){
 			let _geneData =  this.option.find( n => n.value == _value);
-			console.log(_geneData.text);
+			
 		}
 	},
 }

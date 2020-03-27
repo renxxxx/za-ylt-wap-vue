@@ -64,13 +64,13 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -124,7 +124,7 @@ console.log(this.scrollTop)
 			for (let nums in _d.data.data.items) {
 				this.exchangeList.push( _d.data.data.items[nums] );
 			}
-			console.log(this.exchangeList)
+			
 		},
 		getdata(){
 			this.$axios.post('/clientend2/hospitalend/exchangemanage/orders',qs.stringify({
@@ -138,7 +138,7 @@ console.log(this.scrollTop)
 				this.loading = false;
 				this.exchangeList =[];
 				this.page = 2;
-				console.log( _d.data.data.items.length)
+				
 				if( _d.data.data.items.length == 0){
 					this.isLoading = false;
 					// 加载状态结束
@@ -146,14 +146,14 @@ console.log(this.scrollTop)
 					this.finished = true;
 				}else{
 					_d.data.codeMsg? Toast.success(_d.data.codeMsg) : this.successFn(_d);
-					// console.log(_d.data.data.sum.totalCount)
+					// 
 					this.isLoading = false;
 					// 加载状态结束
 					this.loading = false;
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: err});;
 			})
 		},
@@ -183,7 +183,7 @@ console.log(this.scrollTop)
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		},

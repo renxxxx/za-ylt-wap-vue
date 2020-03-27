@@ -36,12 +36,12 @@ export default {
 			var heightRexg = /^[0-9]*/g
 			//var topHeight = this.topHeight.match(heightRexg)
 			//this.height = parseInt(topHeight.join())
-			//console.log(this.height)
+			//
 		},
 	beforeRouteLeave(to, from, next) {
     let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 		if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 			 debugger
 	          if (this.$vnode && this.$vnode.data.keepAlive)
@@ -84,14 +84,14 @@ console.log(this.scrollTop)
 			//plus.navigator.setStatusBarBackground("#2B77EF");
 			plus.navigator.setStatusBarStyle("dark")
   		}
-		console.log(this.$route.query.url)
+		
 		this.$axios.get(this.$route.query.url)
 		.then((res)=>{
-			// console.log(res)
+			// 
 			this.$refs.urlPageRef.innerHTML = res.data
 		})
 		.catch((e)=>{
-			console.log(e)
+			
 		})
 	},
 	methods: {

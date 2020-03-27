@@ -48,13 +48,13 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -109,7 +109,7 @@ console.log(this.scrollTop)
 		//添加图片
 		addImg(_fileLIst){
 			var file = _fileLIst.target.files[0]
-			// console.log(e)
+			// 
 			if(file.type.indexOf('image') > -1){
 				let formData = new FormData();
 				formData.append('file', file)
@@ -120,9 +120,9 @@ console.log(this.scrollTop)
 					this.imgUrl = res.data.data.url
 					this.exchangeAdd.cover = this.imgUrl;
 					this.exchangeAdd.show = false;
-					console.log(this.exchangeAdd)
+					
 				}).catch(err =>{
-					console.log(err)
+					
 				})
 			 }else{
 				Dialog({ message: '请选择图片' });
@@ -140,9 +140,9 @@ console.log(this.scrollTop)
 					payExchangepoint : this.exchangeAdd.payExchangepoint,
 				})).then(res  =>{
 					res.data.codeMsg? Toast.fail(res.data.codeMsg) : this.successFn();
-          console.log(this.exchangeAdd)
+          
 				}).catch(err =>{
-					console.log(err)
+					
 				})
 			}else{
 				Toast.fail('请先添加图片');

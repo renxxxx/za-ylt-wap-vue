@@ -48,7 +48,7 @@ export default {
   	var heightRexg = /^[0-9]*/g
   	//var topHeight = this.topHeight.match(heightRexg)
   	//this.height = parseInt(topHeight.join())
-  	//console.log(this.height)
+  	//
   },
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -104,7 +104,7 @@ export default {
     },
     onLoad(){
       ++this.page;
-      // console.log(this.page)
+      // 
       this.getdata();
     },
     getdata(){

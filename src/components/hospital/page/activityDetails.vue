@@ -74,13 +74,13 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -132,21 +132,21 @@ console.log(this.scrollTop)
 			if(_d.data.data.startTime != '' && _d.data.data.endTime){
 				var moment = require('moment');
 				this.active.time = moment(_d.data.data.startTime).format('YYYY-MM-DD HH:mm') + ' - ' +moment(_d.data.data.endTime).format('YYYY-MM-DD HH:mm')
-				// console.log(this.active.time)
+				// 
 			}
 			this.$axios.get('/other/bigtxt/'+_d.data.data.contentBtId+'/'+_d.data.data.contentBtId)
 			.then(_d => {
         _d.data = _d.data.replace(/(\r\n|\n|\r)/gm, "\n");
 				this.$set(this.active,'content',_d.data)
-				// console.log(_d.data)
+				// 
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: err});;
 			})
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 			//Dialog({ message: err});;
 		})
 	},

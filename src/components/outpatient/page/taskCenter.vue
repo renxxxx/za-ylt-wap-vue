@@ -82,7 +82,7 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join()) 
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -138,7 +138,7 @@ export default {
 				for(let i in res.data.data.rows){
 					if(res.data.data.rows[i].oneTimeIs == 1){
 						this.task.once.push(res.data.data.rows[i]);
-						// console.log(tahis.task.once)
+						// 
 					}else{
 						this.task.daily.push(res.data.data.rows[i])
 					}

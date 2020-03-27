@@ -117,7 +117,7 @@ export default {
   computed:{
     hospitalReturnTopPage: {
       get: function() {
-        // console.log(this.$store)
+        // 
         return this.$store.state.hospitalReturnTopPage;
       },
       set: function(newValue) {
@@ -131,21 +131,21 @@ export default {
   },
   watch:{
     $route(to,from){
-      // console.log('sss')
+      // 
       //localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
     }
   },
   methods:{
 	touchStartFn(_value){
 		this.startLength = _value.changedTouches[0].screenX
-		console.log('touchStartFn'+_value.changedTouches[0].screenX)
+		
 	},
 	touchEndFn(_value){
 		this.overLength = _value.changedTouches[0].screenX;
 		if((this.overLength-this.startLength)>100){
 			this.$router.back()
 		}
-		// console.log(this.overLength-this.startLength)
+		// 
 		// console.dir(_value)
 	},
     // 滑动一定距离出现返回顶部按钮
@@ -160,12 +160,12 @@ export default {
       let data =
         this.$refs.hospitalRef.scrollHeight >
         (window.innerHeight || document.documentElement.clientHeight);
-      // console.log( document.documentElement.scrollTop)
+      // 
       let opacityValue =
         Math.round(
           ((scrollTop + windowHeight) / this.$refs.hospitalRef.scrollHeight) * 100
         ) / 100;
-      // console.log(scrollTop)
+      // 
       if (data && scrollTop > 800) {
         this.hospitalReturnTopPage = true;
         this.$refs.returnTopRef.style.opacity = 1;
@@ -200,7 +200,7 @@ export default {
     },
     // 返回首页按钮触发事件
     returnHomePageFn(){
-      console.log(this.$store.state.hospitalEntrance.loginRefresh().type)
+      
       if(this.$store.state.hospitalEntrance.loginRefresh().type == 1){
         this.$router.replace({path:'/promoters_index',query:{time:new Date().getTime(),transition:'def'}});
       }else{

@@ -56,7 +56,7 @@ export default {
 		...mapGetters(['account']),
 		isLogin: {
 			get: function() {
-				// console.log(this.$store)
+				// 
 				return this.$store.state.isLogin
 			},
 			set: function (newValue) {
@@ -65,7 +65,7 @@ export default {
 		},
 		account: {
 			get: function() {
-				// console.log(this.$store)
+				// 
 				return this.$store.state.account
 			},
 			set: function (newValue) {
@@ -142,29 +142,29 @@ export default {
 		},
 		showImgFn(){
 			this.show = true;
-			console.log(this.show)
+			
 		},
 		userFn(){
-			// console.log("hahha")
-			// console.log(this.$store.state.hospitalEntrance.loginRefresh());
+			// 
+			// 
 			//用户头像值
 			let cover = this.$store.state.hospitalEntrance.loginRefresh().hospital.cover;
 			// 是否认证值
 			let license = this.$store.state.hospitalEntrance.loginRefresh().license
 			if(cover == '' || cover == undefined || cover == null){
-				// console.log("cover为空")
+				// 
 			}else{
 				this.coverImg = cover
 			}
 
 			if(license == '' || license == undefined || license == null){
-				// console.log("license为空")
+				// 
 			}else{
 
 			}
 
-			// console.log(this.$store.state.hospitalEntrance.loginRefresh().cover)
-			// console.log(this.$store.state.hospitalEntrance.loginRefresh().license)
+			// 
+			// 
 		 },
 		//退出方法
 		exitFn(){

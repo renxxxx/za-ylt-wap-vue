@@ -124,7 +124,7 @@ export default {
     ...mapGetters(["showTime", "detail", "account",'isLogin']),
     show: {
       get: function() {
-        // console.log(this.$store)
+        // 
         return this.$store.state.show;
       },
       set: function(newValue) {
@@ -133,7 +133,7 @@ export default {
     },
     showTime: {
       get: function() {
-        // console.log(this.$store)
+        // 
         return this.$store.state.showTime;
       },
       set: function(newValue) {
@@ -198,7 +198,7 @@ export default {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
     }
-	// console.log( this.$refs.refersh.$el);
+	// 
     this.initData();
   },
   methods: {
@@ -242,7 +242,7 @@ export default {
 		this.page = 0;
 		// this.finished = true;
 		this.nextPageFn();
-		console.log(this.items)
+		
     },
     // 筛选重置
     screeningResult(){
@@ -250,8 +250,8 @@ export default {
     },
     //选择框样式
     labelLabelFn(_vlaue,_this){
-    	// console.log(typeof _vlaue);
-    	// console.log(typeof _this);
+    	// 
+    	// 
     	let buttonStyle = document.getElementById(this.labelDocument[_vlaue]);
     	switch(_vlaue){
     		case 0:
@@ -263,7 +263,7 @@ export default {
     		this.Time.look = '未就诊';
     		this.Time.postState = 1;
 			this.dateStata=_vlaue;
-    		// console.log(this.dateStata);
+    		// 
 
     		break;
     		case 1:
@@ -275,7 +275,7 @@ export default {
     		this.Time.noLook = '已就诊';
     		this.Time.postState = 4;
 			this.dateStata=_vlaue;
-    		// console.log(this.dateStata);
+    		// 
     		break;
 
     		case 2:
@@ -289,7 +289,7 @@ export default {
 
     		case 3:
     		_this.target.style.backgroundColor = "#FFE1BE";
-    		// console.log(this.dateStata);
+    		// 
 			this.dateStata=_vlaue;
     		this.Time.confirmOver = this.time;
     		this.showTime = true;
@@ -297,7 +297,7 @@ export default {
 
     		case 4:
     		_this.target.style.backgroundColor = "#FFE1BE";
-    		// console.log(this.dateStata);
+    		// 
 			this.dateStata=_vlaue;
     		this.Time.pushStart = this.time;
     		this.showTime = true;
@@ -306,7 +306,7 @@ export default {
     		case 5:
     		_this.target.style.backgroundColor = "#FFE1BE";
     		this.dateStata=_vlaue;
-    		// console.log(this.dateStata);
+    		// 
     		this.showTime = true;
     		this.Time.pushOver = this.time;
     		break;
@@ -314,7 +314,7 @@ export default {
     },
     //关闭半遮罩
     closeFn(){
-    	// console.log(dialog)
+    	// 
     	this.showTime = false;
     },
     // 确定选择的日期
@@ -323,8 +323,8 @@ export default {
     	// this.time = _value
     	let time = moment(_value).format('YYYY-MM-DD HH:mm:ss')
     	this.time = new Date(time).getTime();
-    	// console.log(this.time)
-    	// console.log(this.calendarTime)
+    	// 
+    	// 
     	switch (this.dateStata){
     		case 2:
     		this.Time.confirmStart = '';
@@ -346,11 +346,11 @@ export default {
     },
     //取消选择的日期
     cancel(_value){
-    	console.log(_value)
+    	
     },
 	// 获取下一页的方法
 	getData(page){
-		console.log(this.$store.state.outpatientEntrance.loginRefresh())
+		
 		let clinicId = '';
 		this.$axios.post('/c2/patient/items',qs.stringify({
 				hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospitalId,
@@ -424,7 +424,7 @@ export default {
         }
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: err});;
 			});
 	},

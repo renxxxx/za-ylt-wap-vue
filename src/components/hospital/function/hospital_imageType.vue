@@ -33,7 +33,7 @@ export default {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -89,7 +89,7 @@ console.log(this.scrollTop)
 		}
 	})
 	.catch((err)=>{
-		console.log(err);
+		
 		//Dialog({ message: err});;
 	})
   },

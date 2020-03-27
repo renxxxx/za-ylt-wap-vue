@@ -72,7 +72,7 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -133,7 +133,7 @@ export default {
 		  	this.clinic.num = res.data.data.rowCount;
 		  })
 		  .catch((err)=>{
-		  	console.log(err);
+		  	
 		  })
 		  this.getNextPage();
 		},
@@ -143,7 +143,7 @@ export default {
 		},
 		//获取数据
 		getdata(){
-			// console.log(this.Time)
+			// 
 			debugger
 			this.$axios.get('/hospital/operator/hospital-clinics?'+qs.stringify({kw:this.keywords})+'&'+qs.stringify({pn:this.page})+'&'+qs.stringify({ps:10}))
 			.then(res => {
@@ -152,7 +152,7 @@ export default {
 						if(res.data.data.rows[i]){
 							this.content.push(res.data.data.rows[i])
 						}
-						// console.log(this.content)
+						// 
 					}
 				// 加载状态结束
 				this.loading = false;
@@ -162,7 +162,7 @@ export default {
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 		},
 		//键盘输入值时触发

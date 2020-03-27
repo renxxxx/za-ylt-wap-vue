@@ -133,7 +133,7 @@ export default {
 	var heightRexg = /^[0-9]*/g
 	//var topHeight = this.topHeight.match(heightRexg)
 	//this.height = parseInt(topHeight.join())
-	// //console.log(this.height)
+	// //
   },
   beforeRouteLeave(to, from, next) {
     debugger;
@@ -215,8 +215,8 @@ export default {
 		this.getNum(1).then((v)=>{
 			this.noItemsNum = v
 		})
-		// console.log(this.getNum(""))
-		// console.log(this.itemsNum)
+		// 
+		// 
 	},
 	// 返回上上一级目录
 	goBackFn(){
@@ -225,7 +225,7 @@ export default {
 	//显示筛选弹窗
 	showPopup() {
 	   this.show = true;
-	   // console.log(this.show)
+	   // 
 	},
 	// 获取下一页的方法
 	getData(data,page){
@@ -297,7 +297,7 @@ export default {
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: err});;
 			});
 	},
@@ -317,10 +317,10 @@ export default {
 				num = res.data.data.sum.totalCount;
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: err});;
 			});
-		console.log(num)
+		
 		return num;
 	},
 	// 全部病原列表的下一页
@@ -341,7 +341,7 @@ export default {
 	},
 	// 菜单切换的清空值
 	tabFn(_value){
-		console.log(_value)
+		
 		switch(_value){
 			case 0:
 			debugger
@@ -374,14 +374,14 @@ export default {
 			}else{
 				this.$toast.success({duration: 1000,message: '操作成功'})
 				if(_item.status == 1){
-					console.log(_button.target)
+					
 					_button.target.style.cssText="color:#333333; background-color:#EEEEEE;"
 					_button.target.innerHTML = '已就诊';
 				}
 			}
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 		})
 	}
 	

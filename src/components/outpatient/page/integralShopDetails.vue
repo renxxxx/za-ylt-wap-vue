@@ -127,7 +127,7 @@ export default {
 					  message: '库存不足',
 				});
 				this.value = this.shopDetails.stock;
-				console.log(this.value)
+				
 			}else{
 				this.value = value;
 			}
@@ -139,7 +139,7 @@ export default {
 				})
 			}))
 			.then(res => {
-				console.log(res.data.codeMsg)
+				
 				res.data.codeMsg? this.$toast(res.data.codeMsg):this.$toast.success('操作成功')
 			})
 			.catch((err)=>{

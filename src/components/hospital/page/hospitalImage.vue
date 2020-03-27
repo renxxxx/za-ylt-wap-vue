@@ -50,13 +50,13 @@ export default {
   	var heightRexg = /^[0-9]*/g
   	//var topHeight = this.topHeight.match(heightRexg)
   	//this.height = parseInt(topHeight.join()) 
-  	//console.log(this.height)
+  	//
   },
   beforeRouteLeave(to, from, next) {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -100,9 +100,9 @@ console.log(this.scrollTop)
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		
-	console.log(this.$router.currentRoute.query.components)
+	
 
-	// console.log(this.$router.currentRoute.query.components)
+	// 
 	// this.$router.currentRoute.query.components? this.backFN(): this.componentName = 'hospital_imageAbout'
 	this.$axios.post('/c2/hospital/item',qs.stringify({
 		itemId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
@@ -119,14 +119,14 @@ console.log(this.scrollTop)
 		let imgUrl = '';
 		this.hospitalImage.cover? imgUrl = this.hospitalImage.cover : imgUrl = ''
 		// imgUrl = this.hospitalImage.cover;
-		// console.log(imgUrl)
+		// 
 		if(imgUrl != ''){
 			this.$refs.img.style['background-image']='url('+imgUrl+')';
 		}
-		// console.log(this.hospitalImage)
+		// 
 	})
 	.catch((err)=>{
-		console.log(err);
+		
 		//Dialog({ message: '加载失败!'});
 	})
   },
@@ -149,7 +149,7 @@ console.log(this.scrollTop)
 			this.$refs.type.style.color='#666666'
 			this.$refs.about.classList.add('xiahuaxian');
 			this.$refs.type.classList.remove('xiahuaxian');
-			console.log(this.$refs.about)
+			
 		}else{
 			this.$refs.about.style.color='#666666'
 			this.$refs.type.style.color='#2B77EF'

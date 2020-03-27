@@ -70,7 +70,7 @@ export default {
   beforeRouteLeave(to, from, next) {
   let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
   if(!to.query.time || !from.query.time || to.query.time < from.query.time){
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
@@ -133,7 +133,7 @@ console.log(this.scrollTop)
           })
           for(let num = 1;num<7;num++){
             if(this.nowMonth == num){
-              // console.log('sss')
+              // 
               if(this.nowMonth>6){
                 this.data[this.nowYear-1950].maxMounth.push({
                   num: num+6,
@@ -154,7 +154,7 @@ console.log(this.scrollTop)
                 })
               }
             }else{
-              console.log(num)
+              
               this.data[this.nowYear-1950].minMounth.push({
                 num: num,
                 color:'noColor'
@@ -191,11 +191,11 @@ console.log(this.scrollTop)
       // }
       // if(this.nowMonth>6){
       //   this.$refs.Swipe.next();
-      //   console.log(this.data[this.nowYear-1950])
+      //   
       //   this.data[this.nowYear-1950].maxMounth[this.nowMonth-7].color = 'color'
       //   // this.maxMounth[this.nowMonth-7].color = 'color'
       // }else{
-      //   console.log(this.data[this.nowYear-1950])
+      //   
       //   this.data[this.nowYear-1950].minMounth[this.nowMonth-1].color = 'color'
       //   // this.minMounth[this.nowMonth-1].color = 'color'
       // }
@@ -241,7 +241,7 @@ console.log(this.scrollTop)
 
     },
     mouthFn(year,mounth){
-      console.log(year,mounth)
+      
       this.data=[];
       for(let i = 1950;i<=2100;i++){
         this.data.push({
@@ -293,13 +293,13 @@ console.log(this.scrollTop)
             value:[]
           })
           console.dir(_dataValue[0]);
-          console.log(this.dataValue)
+          
           this.dataValue[num].time = _dataValue[0].addTime.split(' ');
-          console.log(this.dataValue[num].time[0])
+          
           for(let i = 0;i<_dataValue.length;i++){
             let _time = _dataValue[i].addTime.split(' ');
             if(this.dataValue[num].time[0] == _time[0]){
-              console.log(_time)
+              
               this.dataValue[num].value.push(_dataValue[i])
             }else{
               ++num;
@@ -314,12 +314,12 @@ console.log(this.scrollTop)
             }
           }
         }
-          console.log(this.dataValue)
+          
 
         // console.dir(this.dataValue)
       })
       .catch((err)=>{
-      	console.log(err);
+      	
       })
     },
     zhuanHuanFn(year,mounth){

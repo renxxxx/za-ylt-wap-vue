@@ -97,7 +97,7 @@ export default {
 	methods: {
     onLoad(){
       ++this.page;
-      // console.log(this.page)
+      // 
       this.getdata();
     },
     getdata(){

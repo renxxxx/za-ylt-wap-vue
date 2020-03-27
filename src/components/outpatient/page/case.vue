@@ -52,7 +52,7 @@ export default {
 		// var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
@@ -107,7 +107,7 @@ export default {
 		},
     onLoad(){
       ++this.page;
-      // console.log(this.page)
+      // 
       this.getdata();
     },
     getdata(){
@@ -120,7 +120,7 @@ export default {
         // console.dir(res.data.data.items)
       	if(res.data.data.items.length != 0){
       		for(let i in res.data.data.items){
-      			// console.log(res.data.data.items[i])
+      			// 
       			if(res.data.data.items[i]){
       				this.article.push({
       					content:res.data.data.items[i].name,
@@ -138,7 +138,7 @@ export default {
           }
       })
       .catch((err)=>{
-      	console.log(err);
+      	
       	//Dialog({ message: '加载失败!'});
       })
     }

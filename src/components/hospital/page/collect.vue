@@ -71,7 +71,7 @@ export default {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -115,16 +115,16 @@ if(window.plus){
 			plus.navigator.setStatusBarStyle("dark")
 		}
 	document.addEventListener('scroll',this.scrollToTop)
-	// window.addEventListener('scroll', console.log('s'))
+	// window.addEventListener('scroll', 
 	this.$axios.post('/c/procurement/entpg')
 	.then(_d => {
 		for(let _i in  _d.data.data.ads){
 			this.images.push( _d.data.data.ads[_i].cover)
-			// console.log(this.images)
+			// 
 		}
 	})
 	.catch((err)=>{
-		console.log(err);
+		
 		//Dialog({ message: '加载失败!'});
 	})
 	
@@ -137,11 +137,11 @@ if(window.plus){
 			 this.$router.back(-1)
 	},
 	scrollToTop (e) {
-		console.log(this.$refs.orderBox.scrollTop)
+		
  
 	        // let _this = this
 	        // let read = _this.$el.querySelector('#topNav')
-	        console.log(13213)
+	        
 			this.$refs.Box.scrollTop = 0 ;
 
 		  

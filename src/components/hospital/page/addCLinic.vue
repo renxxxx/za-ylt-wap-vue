@@ -133,7 +133,7 @@ export default {
 		var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
-		//console.log(this.height)
+		//
 	},
 	beforeRouteLeave(to, from, next) {
     this.scrollTop =
@@ -169,8 +169,8 @@ export default {
 
   },
   activated(){
-    // console.log(localStorage.getItem('list_promoterValue'));
-    // console.log(this)
+    // 
+    // 
     this.addClinic.promoter = localStorage.getItem('list_promoterValue')
     this.addClinic.hospitalUserId = localStorage.getItem('list_promoterId')
     localStorage.removeItem('list_promoterValue')
@@ -203,7 +203,7 @@ export default {
 		// 关闭上传图片选择弹窗
 		closeFn() {
 		      this.show = false;
-			  console.log(this.show)
+			  
 		},
 		changeFn(id){
 			let promoter= this.option.find((n)=>n.value == id)
@@ -211,17 +211,17 @@ export default {
 		},
 		addImg(_fileLIst){
 			var file = _fileLIst.target.files[0]
-			// console.log(e)
+			// 
 			if(file.type.indexOf('image') > -1){
 				let formData = new FormData();
 				formData.append('file', file)
 				this.$axios.post('/other/fileupload?cover&duration',formData,{headers: {'Content-Type': 'multipart/form-data'
 				}}).then(res =>{
 					this.imageUpload = res.data.data.url
-					console.log(this.imageUpload)
+					
 					this.show = false;
 				}).catch(err =>{
-					console.log(err)
+					
 				})
 			 }else{
 				Dialog({ message: '请选择图片' });
@@ -230,7 +230,7 @@ export default {
 		},
 		// 保存方法
 		saveFn(){
-			console.log(this.addClinic)
+			
 			this.$axios.post('/hospital/super-admin/hospital-clinic-add',qs.stringify({
 				hospitalClinicId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
 				name :  this.addClinic.name,        //医院名称
@@ -254,7 +254,7 @@ export default {
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 		},
 	}

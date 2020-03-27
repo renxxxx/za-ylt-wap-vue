@@ -81,7 +81,7 @@ export default {
     debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -150,7 +150,7 @@ console.log(this.scrollTop)
   computed:{
     account:{
     	get: function() {
-    		console.log(this.$store)
+    		
     	    return this.$store.state.account
     	},
     	set: function (newValue) {
@@ -186,8 +186,8 @@ console.log(this.scrollTop)
       }
     },
     numFN(_ref){
-      // console.log(_ref)
-      // console.log(document.getElementById(_ref).type)
+      // 
+      // 
       if(document.getElementById(_ref).type == 'password'){
         document.getElementById(_ref).setAttribute('type','text')
         this.pwdImg = require('../../assets/image/open-eye@2x.png')
@@ -206,7 +206,7 @@ console.log(this.scrollTop)
         		password : this.submitAccount.password
         	}))
         	.then( res =>{
-            // console.log(res.data.code)
+            // 
             if(res.data.code == 0){
         debugger;
         this.$toast({"message":'登录成功',onClose(){
@@ -228,13 +228,13 @@ console.log(this.scrollTop)
               //       	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
               //       }
               //       this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId= res.data.data.hospital.hospitalId;
-              //       // console.log(this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId)
+              //       // 
               //       this.$store.state.hospitalEntrance.loginRefresh().data = {};
               //       this.$store.state.hospitalEntrance.loginRefresh().data = res.data;
               //     }
               // 	})
               // 	.catch((err)=>{
-              // 		console.log(err)
+              // 		
               // 		this.$toast(err);
               // 	})
             }else{
@@ -242,13 +242,13 @@ console.log(this.scrollTop)
             }
         	})
         	.catch((err)=>{
-        		console.log(err)
+        		
         		this.$toast(err);
         	})
         }
     },
     changeFn(_value){
-      // console.log(_value.target.checked)
+      // 
     	this.checked = _value.target.checked;
     },
   }

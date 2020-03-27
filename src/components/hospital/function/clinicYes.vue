@@ -61,7 +61,7 @@ export default {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -105,7 +105,7 @@ console.log(this.scrollTop)
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		console.log(this.$route.name)
+		
 
 	},
 	methods:{
@@ -119,14 +119,14 @@ console.log(this.scrollTop)
 				}else{
 					this.$toast.success({duration: 1000,message: '操作成功'})
 					if(_item.status == 1){
-						console.log(_button.target)
+						
 						_button.target.style.cssText="color:#333333; background-color:#EEEEEE;"
 						_button.target.innerHTML = '已就诊';
 					}
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 			})
 		},
 		search(){
@@ -179,7 +179,7 @@ console.log(this.scrollTop)
         }
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: err});;
 			});
 

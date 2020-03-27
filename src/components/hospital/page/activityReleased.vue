@@ -66,7 +66,7 @@ export default {
     //debugger;
 	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
-console.log(this.scrollTop)
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -123,7 +123,7 @@ console.log(this.scrollTop)
           i--;
         }
       }
-      console.log(_item)
+      
 			this.$axios.post('/c2/activity/itemdel',qs.stringify({
 				itemId : _item.itemId,
 			}))
@@ -131,13 +131,13 @@ console.log(this.scrollTop)
 				this.getdata();
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		},
     onLoad(){
       ++this.page;
-      // console.log(this.page)
+      // 
       this.getdata();
     },
 		getdata(){
@@ -147,11 +147,11 @@ console.log(this.scrollTop)
 				ps: 10
 			}))
 			.then(res => {
-				// console.log(res.data.data.items.length)
+				// 
 				if(res.data.data.items.length != 0){
 					for(let i in res.data.data.items){
 						this.active.push(res.data.data.items[i])
-						// console.log(res.data.data.items[i])
+						// 
 					}
           this.loading = false;
 				}else {
@@ -160,7 +160,7 @@ console.log(this.scrollTop)
           }
 			})
 			.catch((err)=>{
-				console.log(err);
+				
 				//Dialog({ message: '加载失败!'});
 			})
 		}

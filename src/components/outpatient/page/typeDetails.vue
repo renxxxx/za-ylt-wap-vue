@@ -139,21 +139,21 @@ export default {
 		}))
 		.then(_d => {
 			this.about = _d.data.data;
-			// console.log()
+			// 
 			if(this.about.image!=null){
 				this.about.image = _d.data.data.image.split(',');
-				console.log(_d.data.data.shiYingZheng)
+				
 			}
 			if(_d.data.data.shiYingZheng == null){
 
 			}else{
 				debugger
 				this.about.shiYingZheng = _d.data.data.shiYingZheng.split(',');
-				console.log(this.about.shiYingZheng)
+				
 			}
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 			//Dialog({ message: err});;
 		})
 		this.$axios.post('/c2/doctor/items',qs.stringify({
@@ -172,10 +172,10 @@ export default {
 			}
 
 			this.$refs.scrollId.style.width = 50 * _d.data.data.items.length +'%'
-			// console.log(this.$refs.scrollId)
+			// 
 		})
 		.catch((err)=>{
-			console.log(err);
+			
 			//Dialog({ message: err});;
 		})
 	},
@@ -189,7 +189,7 @@ export default {
 		doctorAboutFn(_about){
 			this.show = true;
 			this.doctorAbout = _about;
-			// console.log(this.doctorAbout)
+			// 
 		}
 	},
 }
