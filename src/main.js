@@ -13,8 +13,8 @@ import jquery from 'jquery'
 import moment from 'moment'
 import qs from 'qs';
 import h5p from '../build/h5p.js'
- 
-debugger      
+  
+debugger        
 Vue.prototype.$version = '2003271407-2cfdac6'
 Vue.config.productionTip = false
 

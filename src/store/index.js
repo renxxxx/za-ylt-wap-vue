@@ -7,20 +7,32 @@ Vue.use(Vuex)
 
 const state={
   hospitalEntrance:{
+    loginCheck(){
+      let logined = 1;
+      Vue.prototype.$jquery.ajax({
+			  url:'/hospital/login-check',
+			  type:'get',
+			  async:false,
+			  success:function(res){
+			    if(res.code == 0){
+					  logined=res.data.logined
+			    }
+			  }
+      })
+      return logined;
+    },
     loginRefresh:function(){
-		let login;
-
+		let login = {};
 			Vue.prototype.$jquery.ajax({
 			  url:'/hospital/login-refresh',
 			  type:'get',
 			  async:false,
 			  success:function(res){
 			    if(res.code == 0){
-					login=res.data
+					  login=res.data
 			    }
 			  }
 			})
-     
       return login;
     },
   },
