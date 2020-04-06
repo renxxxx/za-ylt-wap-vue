@@ -10,9 +10,9 @@
 					<span>已认证</span>
 				</div>
 				<div class="top_center">
-					<h3>{{this.$store.state.outpatientEntrance.loginRefresh().clinic.name}}</h3>
-					<p>账号：{{this.$store.state.outpatientEntrance.loginRefresh().phone}}</p>
-					<p>医院：{{this.$store.state.outpatientEntrance.loginRefresh().hospital.name}}</p>
+					<h3>{{this.$store.state.outpatient.login.clinic.name}}</h3>
+					<p>账号：{{this.$store.state.outpatient.login.phone}}</p>
+					<p>医院：{{this.$store.state.outpatient.login.hospital.name}}</p>
 				</div>
 				<div class="top_right" @click="showImgFn">
 					<span>营业执照</span>
@@ -141,14 +141,14 @@ export default {
   methods: {
 	  initData(){
 		let thisVue = this
-			if(this.$route.meta.auth && !this.$store.state.outpatientEntrance.loginRefresh())
+			if(this.$route.meta.auth && !this.$store.state.outpatient.login)
 			this.$toast({message:'请登录',onClose:function(){
 				thisVue.$router.replace({ path : '/outpatientLogin',query:{time:1}});
 			}})
 
 			this.userFn();
-			this.coverImg = this.$store.state.outpatientEntrance.loginRefresh().clinic.cover;
-			this.images.push(this.$store.state.outpatientEntrance.loginRefresh().clinic.license)
+			this.coverImg = this.$store.state.outpatient.login.clinic.cover;
+			this.images.push(this.$store.state.outpatient.login.clinic.license)
 	  },
 	onChange(index) {
 	    this.index = index;
@@ -161,9 +161,9 @@ export default {
 		// 
 		// 
 		//用户头像值
-		let cover = this.$store.state.outpatientEntrance.loginRefresh().cover;
+		let cover = this.$store.state.outpatient.login.cover;
 		// 是否认证值
-		let license = this.$store.state.outpatientEntrance.loginRefresh().license
+		let license = this.$store.state.outpatient.login.license
 		if(cover == '' || cover == undefined || cover == null){
 			// 
 		}else{

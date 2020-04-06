@@ -14,8 +14,8 @@
 			<router-link :to="{path : '/outpatient/outpatient_clinicMessage',query:{time:new Date().getTime()}}">
 				<div class="hospital_information">
 					<img src="../../../assets/image/xiaoxi@2x.png" alt="">
-					<div class="num" v-if="this.$store.state.outpatientEntrance.loginRefresh().newMessageCount == 0? true:false">
-						<span>{{this.$store.state.outpatientEntrance.loginRefresh().newMessageCount}}</span>
+					<div class="num" v-if="this.$store.state.outpatient.login.newMessageCount == 0? true:false">
+						<span>{{this.$store.state.outpatient.login.newMessageCount}}</span>
 					</div>
 				</div> 
 			</router-link>
@@ -152,13 +152,13 @@ this.scrollTop = scrollTop?scrollTop :0;
   methods: {
 	  initData(_data){
 		 	let thisVue = this
-			if(this.$route.meta.auth && !this.$store.state.outpatientEntrance.loginRefresh())
+			if(this.$route.meta.auth && !this.$store.state.outpatient.login)
 			this.$toast({message:'请登录',onClose:function(){
 				thisVue.$router.replace({ path : '/outpatientLogin',query:{time:1}});
 			}})
 
 	  	this.$axios.post('/c2/article/items',qs.stringify({
-	  		hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
+	  		hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
 	  		pn : this.page,
 	  		ps : 10
 	  	}))

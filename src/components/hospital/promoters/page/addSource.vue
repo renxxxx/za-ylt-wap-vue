@@ -122,7 +122,7 @@ export default {
 		submitFn(){
 			// 
 		this.$axios.post('/c2/patient/itemadd',qs.stringify({
-				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().data.data.hospital.hospitalId,
+				hospitalId : this.$store.state.hospital.login.data.data.hospital.hospitalId,
 				clinicId: this.$route.query.clinicId,
 		 		realname : this.source.name,
 		 		tel	:  this.source.tel,

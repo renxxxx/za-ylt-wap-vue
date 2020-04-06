@@ -126,10 +126,30 @@ this.scrollTop = scrollTop?scrollTop :0;
       plus.navigator.setStatusBarStyle("dark")
     }
     
-     if(this.$store.state.hospitalEntrance.loginRefresh())
-      this.$toast({message:'已登录',onClose:function(){
-        thisVue.$router.replace({ path : '/hospital/hospital_index',query:{time:new Date().getTime()}});
-      }})
+       if(!this.cookieOn()){
+       this.$alert('您的浏览器限制了第三方Cookie, 这将影响您正常登录, 您可以更改浏览器的隐私设置, 解除限制后重试.', '提示', {
+          confirmButtonText: '确定',
+          
+        });
+    }
+
+     thisVue.$jquery.ajax({
+                  url:'/hospital/login-refresh',
+                  type:'get',
+                  async:false,
+                  success:function(res){
+                    if(res.code == 0){
+                      thisVue.$store.state.hospital.login=res.data
+                      thisVue.$toast({"message":'已登录',onClose(){
+                          if(thisVue.$store.state.hospital.login.type == 1){
+                              thisVue.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
+                            }else{
+                              thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
+                            }
+                        }})
+                    }
+                  }
+                })
 
     
 		// let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
@@ -209,13 +229,25 @@ this.scrollTop = scrollTop?scrollTop :0;
             // 
             if(res.data.code == 0){
         debugger;
-        this.$toast({"message":'登录成功',onClose(){
-          if(thisVue.$store.state.hospitalEntrance.loginRefresh().type == 1){
-                    thisVue.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
-                  }else{
-                    thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
+         thisVue.$jquery.ajax({
+                  url:'/hospital/login-refresh',
+                  type:'get',
+                  async:false,
+                  success:function(res){
+                    if(res.code == 0){
+                      thisVue.$store.state.hospital.login=res.data
+                       thisVue.$toast({"message":'登录成功',onClose(){
+                          if(thisVue.$store.state.hospital.login.type == 1){
+                              thisVue.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
+                            }else{
+                              thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
+                            }
+                        }})
+                    }
                   }
-        }})
+                })
+
+       
 				
               // this.$axios.post('/hospital/login-refresh')
               // 	.then( res =>{
@@ -227,10 +259,10 @@ this.scrollTop = scrollTop?scrollTop :0;
               //       }else{
               //       	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
               //       }
-              //       this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId= res.data.data.hospital.hospitalId;
+              //       this.$store.state.hospital.login.hospital.hospitalId= res.data.data.hospital.hospitalId;
               //       // 
-              //       this.$store.state.hospitalEntrance.loginRefresh().data = {};
-              //       this.$store.state.hospitalEntrance.loginRefresh().data = res.data;
+              //       this.$store.state.hospital.login.data = {};
+              //       this.$store.state.hospital.login.data = res.data;
               //     }
               // 	})
               // 	.catch((err)=>{

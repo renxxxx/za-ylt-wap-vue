@@ -132,7 +132,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 		search(){
 			debugger
 			let clinicId = '';
-			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.$store.state.hospitalEntrance.loginRefresh().clinicId;
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.$store.state.hospital.login.clinicId;
 			this.$route.name == 'hospital_sourceManagement'?	clinicId='':'',
 			this.$route.name == 'outpatient_search'?	clinicId='':'',
 			Object.assign(this.$data, this.$options.data());
@@ -141,12 +141,12 @@ this.scrollTop = scrollTop?scrollTop :0;
 		getData(){
 			debugger
 			let clinicId = '';
-			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.$store.state.hospitalEntrance.loginRefresh().clinicId;
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.$store.state.hospital.login.clinicId;
 			this.$route.name == 'hospital_sourceManagement'?	clinicId='':'',
 			this.$route.name == 'outpatient_search'?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
-				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+				hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 				clinicId : clinicId,
 				status :4,
 				pn : this.page,

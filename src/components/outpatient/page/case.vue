@@ -112,7 +112,7 @@ export default {
     },
     getdata(){
       this.$axios.post('/c2/project/items',qs.stringify({
-      	hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
+      	hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
       	pn: this.page,
       	ps: 10
       }))

@@ -225,7 +225,7 @@ this.scrollTop = scrollTop?scrollTop :0;
     initData() {
 		debugger
 		let thisVue = this
-			if(this.$route.meta.auth && !this.$store.state.outpatientEntrance.loginRefresh())
+			if(this.$route.meta.auth && !this.$store.state.outpatient.login)
 			this.$toast({message:'请登录',onClose:function(){
 				thisVue.$router.replace({ path : '/outpatientLogin',query:{time:1}});
 			}})
@@ -248,12 +248,12 @@ this.scrollTop = scrollTop?scrollTop :0;
 	},
 	getNum(){
 		let clinicId = '';
-		// this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.$store.state.outpatientEntrance.loginRefresh().clinicId;
+		// this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.$store.state.outpatient.login.clinicId;
 		this.$route.name == 'outpatient_index'?	clinicId='':'',
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
-			hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
-			clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinic.clinicId,
+			hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
+			clinicId : this.$store.state.outpatient.login.clinic.clinicId,
 			status :1,
 			pn : 1,
 			ps : 10
@@ -267,8 +267,8 @@ this.scrollTop = scrollTop?scrollTop :0;
 		})
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
-			hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
-			clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinic.clinicId,
+			hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
+			clinicId : this.$store.state.outpatient.login.clinic.clinicId,
 			status :4,
 			pn : 1,
 			ps : 10
@@ -286,8 +286,8 @@ this.scrollTop = scrollTop?scrollTop :0;
 	},
   hospitalSubmit(){
     this.$axios.post('/c2/patient/itemadd',qs.stringify({
-			clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinic.clinicId,
-			hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
+			clinicId : this.$store.state.outpatient.login.clinic.clinicId,
+			hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
     		password : this.account.password,
     		realname : this.account.realname,
     		tel	:   this.account.tel,

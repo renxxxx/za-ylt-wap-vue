@@ -109,7 +109,7 @@ export default {
     },
     getdata(){
       this.$axios.post('/clientend2/clinicend/pointexchange/exchangepointdetails',qs.stringify({
-      	clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
+      	clinicId : this.$store.state.outpatient.login.clinicId,
       	pn: this.page,
       	ps: 10
       }))

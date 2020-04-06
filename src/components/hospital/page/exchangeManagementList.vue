@@ -128,7 +128,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 		},
 		getdata(){
 			this.$axios.post('/clientend2/hospitalend/exchangemanage/orders',qs.stringify({
-				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+				hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 				pn : 1,
 				ps : 10,
 			}))
@@ -159,7 +159,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 		},
 		nextdata(){
 			this.$axios.post('/clientend2/hospitalend/exchangemanage/orders',qs.stringify({
-				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+				hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 				pn : this.page,
 				ps : 10,
 			}))

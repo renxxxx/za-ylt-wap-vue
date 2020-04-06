@@ -148,7 +148,7 @@ export default {
 		},
 		getdata(){
 			this.$axios.post('/clientend2/clinicend/pointexchange/commoditydetail',qs.stringify({
-				clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
+				clinicId : this.$store.state.outpatient.login.clinicId,
 				commodityId : this.$route.query.commodityId,
 			}))
 			.then(res => {
@@ -170,7 +170,7 @@ export default {
 				//Dialog({ message: err});;
 			})
 			this.$axios.post('/clientend2/clinicend/pointexchange/receivers',qs.stringify({
-				clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
+				clinicId : this.$store.state.outpatient.login.clinicId,
 				pn : 1,
 				ps : 99
 			}))

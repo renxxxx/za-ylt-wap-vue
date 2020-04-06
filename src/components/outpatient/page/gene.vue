@@ -158,7 +158,7 @@ export default {
 	methods: {
 		initData(){
 				let thisVue = this
-			if(this.$route.meta.auth && !this.$store.state.outpatientEntrance.loginRefresh())
+			if(this.$route.meta.auth && !this.$store.state.outpatient.login)
 			this.$toast({message:'请登录',onClose:function(){
 				thisVue.$router.replace({ path : '/outpatientLogin',query:{time:1}});
 			}})

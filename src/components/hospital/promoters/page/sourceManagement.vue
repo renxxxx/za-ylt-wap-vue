@@ -230,8 +230,8 @@ export default {
 	// 获取下一页的方法
 	getData(data,page){
 		this.$axios.post('/c2/patient/items',qs.stringify({
-				hospitalId: this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
-				hospitalUserId : this.$store.state.hospitalEntrance.loginRefresh().hospitalUserId,
+				hospitalId: this.$store.state.hospital.login.hospital.hospitalId,
+				hospitalUserId : this.$store.state.hospital.login.hospitalUserId,
 				status: data,
 				pn : page,
 				ps : 10,
@@ -307,8 +307,8 @@ export default {
 		debugger;
 		var num ='';
 		await this.$axios.post('/c2/patient/items',qs.stringify({
-				hospitalId: this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
-				hospitalUserId : this.$store.state.hospitalEntrance.loginRefresh().hospitalUserId,
+				hospitalId: this.$store.state.hospital.login.hospital.hospitalId,
+				hospitalUserId : this.$store.state.hospital.login.hospitalUserId,
 				status: data,
 				pn : 1,
 				ps : 10,

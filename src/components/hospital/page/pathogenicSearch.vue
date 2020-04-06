@@ -388,8 +388,8 @@ this.scrollTop = scrollTop?scrollTop :0;
       
       let clinicId = '';
       this.$axios.post('/c2/patient/items',qs.stringify({
-          hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
-          clinicId : this.$store.state.hospitalEntrance.loginRefresh().clinicId,
+          hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
+          clinicId : this.$store.state.hospital.login.clinicId,
           kw: this.keywords,
           status: this.Time.postState,
           pn : page,

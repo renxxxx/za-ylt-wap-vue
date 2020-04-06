@@ -124,7 +124,7 @@ export default {
 		submitFn(){
 			
 			this.$axios.post('/clientend2/clinicend/pointexchange/receiveradd',qs.stringify({
-				clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
+				clinicId : this.$store.state.outpatient.login.clinicId,
 				receiverId : this.address.receiverId,
 				name : this.address.name,
 				tel : this.address.tel,

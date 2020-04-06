@@ -222,7 +222,7 @@ this.scrollTop = scrollTop?scrollTop :0;
     },
     initData() {
       let thisVue = this
-      if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+      if(this.$route.meta.auth && !this.$store.state.hospital.login)
       this.$toast({message:'请登录',onClose:function(){
         thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
       }})
@@ -303,7 +303,7 @@ this.scrollTop = scrollTop?scrollTop :0;
     },
     getdata(_data) {
       this.$axios.post("/c2/article/items",qs.stringify({
-            hospitalId: this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+            hospitalId: this.$store.state.hospital.login.hospital.hospitalId,
             pn: this.page,
             ps: 10
           })

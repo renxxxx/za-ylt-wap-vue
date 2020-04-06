@@ -10,8 +10,8 @@
 					<span>已认证</span>
 				</div>
 				<div class="top_center">
-					<h3>{{this.$store.state.hospitalEntrance.loginRefresh().name}}</h3>
-					<p>账号：{{this.$store.state.hospitalEntrance.loginRefresh().phone}}</p>
+					<h3>{{this.$store.state.hospital.login.name}}</h3>
+					<p>账号：{{this.$store.state.hospital.login.phone}}</p>
 				</div>
 			</div>
 		</div>
@@ -129,13 +129,13 @@ export default {
 	methods: {
 		initData(){
 			  let thisVue = this
-      if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+      if(this.$route.meta.auth && !this.$store.state.hospital.login)
       this.$toast({message:'请登录',onClose:function(){
         thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
 	  }})
 	  this.userFn();
-		this.coverImg = this.$store.state.hospitalEntrance.loginRefresh().hospital.cover;
-		this.images.push(this.$store.state.hospitalEntrance.loginRefresh().hospital.license)
+		this.coverImg = this.$store.state.hospital.login.hospital.cover;
+		this.images.push(this.$store.state.hospital.login.hospital.license)
 		},
 		onChange(index) {
 			this.index = index;
@@ -148,9 +148,9 @@ export default {
 			// 
 			// 
 			//用户头像值
-			let cover = this.$store.state.hospitalEntrance.loginRefresh().hospital.cover;
+			let cover = this.$store.state.hospital.login.hospital.cover;
 			// 是否认证值
-			let license = this.$store.state.hospitalEntrance.loginRefresh().license
+			let license = this.$store.state.hospital.login.license
 			if(cover == '' || cover == undefined || cover == null){
 				// 
 			}else{

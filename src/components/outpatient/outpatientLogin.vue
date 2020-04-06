@@ -139,10 +139,10 @@ export default {
                   async:false,
                   success:function(res){
                     if(res.code == 0){
-                      thisVue.$store.state.hospital.login=res.data
-                         thisVue.$dialog.confirm({
-                            message: '您的浏览器限制了第三方Cookie, 这将影响您正常登录, 您可以更改浏览器的隐私设置, 解除限制后重试.'
-                          })
+                      thisVue.$store.state.outpatient.login=res.data
+                      thisVue.$toast({"message":'已登录',onClose(){
+                          thisVue.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
+                        }})
                     }
                   }
                 })
@@ -221,29 +221,23 @@ export default {
                   async:false,
                   success:function(res){
                     if(res.code == 0){
-                      thisVue.$store.state.hospital.login=res.data
-                       this.$toast({"message":'登录成功',onClose(){
-               						thisVue.$store.state.outpatientEntrance.loginRefresh()
-                     thisVue.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
-
+                      thisVue.$store.state.outpatient.login=res.data
+                       thisVue.$toast({"message":'登录成功',onClose(){
+                          thisVue.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
                         }})
                     }
                   }
                 })
-            
-
             }else{
               this.$toast(res.data.codeMsg);
             }
         	})
         	.catch((err)=>{
-        		
         		this.$toast(err);
         	})
         }
     },
     changeFn(_value){
-      // 
     	this.checked = _value.target.checked;
     },
   }

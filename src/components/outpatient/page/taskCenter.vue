@@ -131,7 +131,7 @@ export default {
 		}
 		
 		this.$axios.post('/clientend2/clinicend/taskcenter/tasks',qs.stringify({
-			clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
+			clinicId : this.$store.state.outpatient.login.clinicId,
 		}))
 		.then(res => {
 			if(res.data.codeMsg == '' || res.data.codeMsg == null || res.data.codeMsg == undefined){

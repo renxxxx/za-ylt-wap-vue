@@ -127,7 +127,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 		submitFn(){
 			if(this.exchangeAdd.cover != ''){
 				this.$axios.post('/c2/commodity/itemalter',qs.stringify({
-					hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+					hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 					itemId : this.exchangeAdd.itemId,
 					name : this.exchangeAdd.name,
 					cover : this.exchangeAdd.cover,

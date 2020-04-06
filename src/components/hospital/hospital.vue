@@ -126,6 +126,19 @@ export default {
     },
     ...mapGetters(['bottomShow','hospitalReturnHomePage','account','isLogin'])
   },
+  created(){
+      let thisVue = this
+        this.$jquery.ajax({
+			  url:'/hospital/login-refresh',
+			  type:'get',
+			  async:false,
+			  success:function(res){
+			    if(res.code == 0){
+					  thisVue.$store.state.hospital.login=res.data
+			    }
+			  }
+      })
+  },
   mounted(){
     window.addEventListener("scroll", this.handleScroll, true);
   },
@@ -201,7 +214,7 @@ export default {
     // 返回首页按钮触发事件
     returnHomePageFn(){
       
-      if(this.$store.state.hospitalEntrance.loginRefresh().type == 1){
+      if(this.$store.state.hospital.login.type == 1){
         this.$router.replace({path:'/promoters_index',query:{time:new Date().getTime(),transition:'def'}});
       }else{
         this.$router.replace({path:'/hospital/hospital_index',query:{time:new Date().getTime(),transition:'def'}});

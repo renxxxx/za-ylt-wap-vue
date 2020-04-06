@@ -129,7 +129,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 			
 		submitFn(){
 			this.$axios.post('/c2/task/taskissue',qs.stringify({
-				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+				hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 				taskId : this.taskSubmitValue.taskId,
 				exchangePoint : this.taskSubmitValue.exchangePoint,
 				exchangePointUpperPerDay : this.taskSubmitValue.exchangePointUpperPerDay,

@@ -10,8 +10,8 @@
 					<span>已认证</span>
 				</div>
 				<div class="top_center">
-					<h3>{{this.$store.state.hospitalEntrance.loginRefresh().hospital.name}}</h3>
-					<p>账号：{{this.$store.state.hospitalEntrance.loginRefresh().phone}}</p>
+					<h3>{{this.$store.state.hospital.login.hospital.name}}</h3>
+					<p>账号：{{this.$store.state.hospital.login.phone}}</p>
 				</div>
 				<div class="top_right" @click="showImgFn">
 					<span>营业执照</span>
@@ -136,9 +136,9 @@ this.scrollTop = scrollTop?scrollTop :0;
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		if(this.$store.state.hospitalEntrance.loginRefresh()){
-			this.coverImg = this.$store.state.hospitalEntrance.loginRefresh().hospital.cover
-			this.images.push(this.$store.state.hospitalEntrance.loginRefresh().hospital.license)
+		if(this.$store.state.hospital.login){
+			this.coverImg = this.$store.state.hospital.login.hospital.cover
+			this.images.push(this.$store.state.hospital.login.hospital.license)
 		}
 		// 
 		this.initData();
@@ -146,7 +146,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 	methods: {
 		initData(){
 			let thisVue = this
-			if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+			if(this.$route.meta.auth && !this.$store.state.hospital.login)
 			this.$toast({message:'请登录',onClose:function(){
 				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
 			}})

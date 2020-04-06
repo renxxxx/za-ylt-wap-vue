@@ -12,8 +12,8 @@
 					<router-link :to="{path : '/hospital/hospital_clinicMessage',query:{time:new Date().getTime()}}">
 						<div class="hospital_information">
 							<img src="../../../assets/image/xiaoxi@2x.png" alt="">
-							<div class="num" v-if=" this.$store.state.hospitalEntrance.loginRefresh().unlookedMessageCount == 0? false:true">
-								<span>{{this.$store.state.hospitalEntrance.loginRefresh().unlookedMessageCount}}</span> 
+							<div class="num" v-if=" this.$store.state.hospital.login.unlookedMessageCount == 0? false:true">
+								<span>{{this.$store.state.hospital.login.unlookedMessageCount}}</span> 
 							</div>
 						</div>
 					</router-link>
@@ -153,7 +153,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 		},
 		initData() {
 			let thisVue = this
-			if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+			if(this.$route.meta.auth && !this.$store.state.hospital.login)
 			this.$toast({message:'请登录',onClose:function(){
 				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
 			}})

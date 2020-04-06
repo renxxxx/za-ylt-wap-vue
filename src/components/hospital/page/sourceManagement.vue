@@ -212,11 +212,11 @@ this.scrollTop = scrollTop?scrollTop :0;
 	getNum(){
 		debugger
 		let clinicId = '';
-		// this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.$store.state.hospitalEntrance.loginRefresh().clinicId;
+		// this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.$store.state.hospital.login.clinicId;
 		// this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
-			hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+			hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 			clinicId : clinicId,
 			status :1,
 			pn : 1,
@@ -232,7 +232,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 		})
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
-			hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+			hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 			clinicId : clinicId,
 			status :4,
 			pn : 1,

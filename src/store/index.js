@@ -9,52 +9,6 @@ const state={
   hospital:{login:null},
   outpatient:{login:null},
   
-  hospitalEntrance:{
-    loginCheck(){
-      let logined = 1;
-      Vue.prototype.$jquery.ajax({
-			  url:'/hospital/login-check',
-			  type:'get',
-			  async:false,
-			  success:function(res){
-			    if(res.code == 0){
-					  logined=res.data.logined
-			    }
-			  }
-      })
-      return logined;
-    },
-    loginRefresh:function(){
-		let login = {};
-			Vue.prototype.$jquery.ajax({
-			  url:'/hospital/login-refresh',
-			  type:'get',
-			  async:false,
-			  success:function(res){
-			    if(res.code == 0){
-					  login=res.data
-			    }
-			  }
-			})
-      return login;
-    },
-  },
-  outpatientEntrance:{
-    loginRefresh:function(){
-    	let login;
-    	Vue.prototype.$jquery.ajax({
-    	  url:'/clinic/login-refresh',
-    	  type:'get',
-    	  async:false,
-    	  success:function(res){
-    	    if(res.code == 0){
-    			login=res.data
-    	    }
-    	  }
-    	})
-      return login;
-    },
-  },
   //账号
   isLogin:0,
   account:{

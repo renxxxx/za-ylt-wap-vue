@@ -102,7 +102,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 			this.activity.endTime = new Date(this.activity.endTime).getTime();
 			this.activity.startTime = new Date(this.activity.startTime).getTime();
 			this.$axios.post('/c2/activity/itemadd',qs.stringify({
-				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+				hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 				title : this.activity.title,
 				brief : this.activity.brief,
 				cover : this.activity.cover,

@@ -116,7 +116,7 @@ this.scrollTop = scrollTop?scrollTop :0;
   }, mounted() {
 		
 		this.$axios.post('/c2/commodity/item',qs.stringify({
-			hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+			hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 			itemId : this.$route.query.itemId
 		})).then(res  =>{
 			if(res.data.codeMsg){
@@ -163,7 +163,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 		},
 		// modifyFn(){
 		// 	this.$axios.post('/c2/commodity/itemalter',qs.stringify({
-		// 		hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+		// 		hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 		// 		itemId : this.$route.query.item.itemId,
 		// 		name : this.exchangeEditor.name,
 		// 		cover : this.exchangeEditor.cover,

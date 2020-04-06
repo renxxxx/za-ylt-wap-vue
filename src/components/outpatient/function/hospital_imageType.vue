@@ -75,7 +75,7 @@ export default {
 		}
 		
 	this.$axios.post('/c2/office/items',qs.stringify({
-			hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
+			hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
 	}))
 	.then(_d => {
 		for(let i in _d.data.data.items){

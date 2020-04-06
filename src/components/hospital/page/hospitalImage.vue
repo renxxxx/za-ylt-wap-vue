@@ -105,7 +105,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 	// 
 	// this.$router.currentRoute.query.components? this.backFN(): this.componentName = 'hospital_imageAbout'
 	this.$axios.post('/c2/hospital/item',qs.stringify({
-		itemId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+		itemId : this.$store.state.hospital.login.hospital.hospitalId,
 	}))
 	.then(_d => {
 		this.hospitalImage = {

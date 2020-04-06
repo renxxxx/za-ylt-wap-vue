@@ -133,7 +133,7 @@ this.scrollTop = scrollTop?scrollTop :0;
     },
     getData(){
       this.$axios.post('/c2/doctor/items',qs.stringify({
-      	hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+      	hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
         pn: this.page,
         ps: 10
       }))

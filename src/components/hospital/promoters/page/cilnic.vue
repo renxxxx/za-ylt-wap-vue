@@ -141,7 +141,7 @@ export default {
 			debugger
 
 			let thisVue=this;
-			if(this.$route.meta.auth && !this.$store.state.hospitalEntrance.loginRefresh())
+			if(this.$route.meta.auth && !this.$store.state.hospital.login)
 		this.$toast({message:'请登录',onClose:function(){
 		  thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
 		}})

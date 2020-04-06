@@ -266,10 +266,10 @@ if(window.plus){
 			debugger
 			let clinicId = '';
 			this.list.clinicAll = []
-			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.$store.state.hospitalEntrance.loginRefresh().clinicId;
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.$store.state.hospital.login.clinicId;
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				clinicId : clinicId,
-				hospitalId :  this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+				hospitalId :  this.$store.state.hospital.login.hospital.hospitalId,
 				status : this.Time.postState,
 				pushTimeStart : this.Time.pushStart,
 				pushTimeEnd : this.Time.pushOver? this.Time.pushOver+(24*60*60*1000):this.Time.pushOver,

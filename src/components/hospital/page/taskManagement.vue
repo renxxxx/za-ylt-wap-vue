@@ -114,7 +114,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 			// this.task.no = [];
 			// this.task.one = []
 			this.$axios.post('/c2/task/tasks',qs.stringify({
-				hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+				hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 			}))
 			.then(res => {
 				for(let i in res.data.data.items){
@@ -195,7 +195,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 			if(_item.checked){
 				debugger
 				this.$axios.post('/c2/task/taskunissue',qs.stringify({
-					hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+					hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 					taskId : _item.taskId
 				}))
 				.then(res =>{
@@ -209,7 +209,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 			}else{
 				debugger
 				this.$axios.post('/c2/task/taskissue',qs.stringify({
-					hospitalId : this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
+					hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 					taskId : _item.taskId,
 				})).then(res =>{
 					res.data.codeMsg? this.$toast(res.data.codeMsg): this.$toast.success('操作成功')

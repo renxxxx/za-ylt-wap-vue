@@ -353,8 +353,8 @@ export default {
 		
 		let clinicId = '';
 		this.$axios.post('/c2/patient/items',qs.stringify({
-				hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospitalId,
-				clinicId : this.$store.state.outpatientEntrance.loginRefresh().clinicId,
+				hospitalId : this.$store.state.outpatient.login.hospitalId,
+				clinicId : this.$store.state.outpatient.login.clinicId,
 				kw: this.keywords,
 				status: this.Time.postState,
 				pn : page,

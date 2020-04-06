@@ -350,8 +350,8 @@ export default {
 	// 获取下一页的方法
 	getData(page){
 		this.$axios.post('/c2/patient/items',qs.stringify({
-				hospitalId: this.$store.state.hospitalEntrance.loginRefresh().hospital.hospitalId,
-				hospitalUserId : this.$store.state.hospitalEntrance.loginRefresh().hospitalUserId,
+				hospitalId: this.$store.state.hospital.login.hospital.hospitalId,
+				hospitalUserId : this.$store.state.hospital.login.hospitalUserId,
 				kw: this.keywords,
 				status: this.Time.postState,
 				pn : page,

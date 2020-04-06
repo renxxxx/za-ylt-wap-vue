@@ -125,7 +125,7 @@ export default {
 		search(){
 			debugger
 			let clinicId = '';
-			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.$store.state.outpatientEntrance.loginRefresh().clinic.clinicId;
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.$store.state.outpatient.login.clinic.clinicId;
 			this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
 			this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':'',
 			Object.assign(this.$data, this.$options.data());
@@ -134,12 +134,12 @@ export default {
 		getData(){
 			debugger
 			let clinicId = '';
-			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.$store.state.outpatientEntrance.loginRefresh().clinic.clinicId;
+			this.list.clinicId? clinicId = this.list.clinicId: clinicId = this.$store.state.outpatient.login.clinic.clinicId;
 			// this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
 			// this.$route.name == 'outpatient_search'&&this.isLogin == 100?	clinicId='':''
 			this.$axios.post('/c2/patient/items',qs.stringify({
 				kw : this.list.keywords,
-				hospitalId : this.$store.state.outpatientEntrance.loginRefresh().hospital.hospitalId,
+				hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
 				clinicId : clinicId,
 				status :4,
 				pn : this.page,
