@@ -94,6 +94,14 @@ export default {
              this.direction = "";
      }
   },
+  created(){
+    
+    if(!this.cookieOn()){
+        this.$dialog.confirm({
+              message: '您的浏览器限制了第三方Cookie, 这将影响您正常登录, 您可以更改浏览器的隐私设置, 解除限制后重试.'
+            })
+    }
+  }
   // beforeRouteLeave(to, from, next) {
   // this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || this.$refs.appRef.scrollTop
   // if(!to.query.time || !from.query.time || to.query.time < from.query.time){

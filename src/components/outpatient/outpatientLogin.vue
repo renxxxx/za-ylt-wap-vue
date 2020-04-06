@@ -117,15 +117,37 @@ export default {
     });
 
   },
+  activated(){
+    
+  },
   mounted() {
 	let thisVue = this;
 		if(window.plus){
       plus.navigator.setStatusBarStyle("dark")
-		}
-		if(this.$store.state.outpatientEntrance.loginRefresh())
-		 this.$toast({message:'已登录',onClose:function(){
-		   thisVue.$router.replace({ path : '/outpatient/outpatient_index',query:{time:new Date().getTime()}});
-		 }})
+    }
+  
+  if(!this.cookieOn()){
+       this.$alert('您的浏览器限制了第三方Cookie, 这将影响您正常登录, 您可以更改浏览器的隐私设置, 解除限制后重试.', '提示', {
+          confirmButtonText: '确定',
+          
+        });
+    }
+
+     thisVue.$jquery.ajax({
+                  url:'/clinic/login-refresh',
+                  type:'get',
+                  async:false,
+                  success:function(res){
+                    if(res.code == 0){
+                      thisVue.$store.state.hospital.login=res.data
+                         thisVue.$dialog.confirm({
+                            message: '您的浏览器限制了第三方Cookie, 这将影响您正常登录, 您可以更改浏览器的隐私设置, 解除限制后重试.'
+                          })
+                    }
+                  }
+                })
+
+		
 		// let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
 		//  if(this.$store.state.isLogin == 100){
 		// 	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
@@ -193,11 +215,22 @@ export default {
         	}))
         	.then( res =>{
             if(res.data.code == 0){
-             this.$toast({"message":'登录成功',onClose(){
+                  thisVue.$jquery.ajax({
+                  url:'/clinic/login-refresh',
+                  type:'get',
+                  async:false,
+                  success:function(res){
+                    if(res.code == 0){
+                      thisVue.$store.state.hospital.login=res.data
+                       this.$toast({"message":'登录成功',onClose(){
                						thisVue.$store.state.outpatientEntrance.loginRefresh()
                      thisVue.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
 
-        }})
+                        }})
+                    }
+                  }
+                })
+            
 
             }else{
               this.$toast(res.data.codeMsg);

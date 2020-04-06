@@ -10,12 +10,14 @@ import 'vant/lib/index.css'
 import axios from 'axios'
 import store from './store'
 import jquery from 'jquery'
+import cookies from 'js-cookie'
 import moment from 'moment'
 import qs from 'qs';
 import h5p from '../build/h5p.js'
   
 debugger        
 Vue.prototype.$version = '2003271407-2cfdac6'
+Vue.prototype.$versionBrief = '修复了已知BUG, 优化了用户体验.'
 Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios
@@ -24,8 +26,20 @@ Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
 Vue.prototype.$jquery = jquery
+Vue.prototype.$cookies = cookies
  
- 
+Vue.prototype.cookieOn=function() {
+	debugger
+	var result = false;
+	if (navigator.cookiesEnabled) 
+	  return true;
+	  cookies.set('tc', 'yes', { path: "/"});
+	if (cookies.get('tc') && cookies.get('tc').indexOf('yes') > -1) 
+	  result = true;
+	  cookies.set('tc', '', { expires: -1 });
+	return result;
+  }
+  
 if(navigator.userAgent.toLowerCase().indexOf('html5plus') > -1)
 	store.state.paddingTop = "24px"
 else

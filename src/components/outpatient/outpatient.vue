@@ -122,7 +122,17 @@ export default {
 
   },
   created(){
-
+      let thisVue = this
+        this.$jquery.ajax({
+			  url:'/clinic/login-refresh',
+			  type:'get',
+			  async:false,
+			  success:function(res){
+			    if(res.code == 0){
+					  thisVue.$store.state.hospital.login=res.data
+			    }
+			  }
+      })
   },
   // watch:{
     // $route(to,from){

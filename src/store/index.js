@@ -6,6 +6,9 @@ Vue.use(Vuex)
 
 
 const state={
+  hospital:{login:null},
+  outpatient:{login:null},
+  
   hospitalEntrance:{
     loginCheck(){
       let logined = 1;
