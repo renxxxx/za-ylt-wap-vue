@@ -1,7 +1,7 @@
 <template>
   <div class="landing">
 		<div class="nav">
-        <span>— 门诊端 —</span>
+        <span>— 运营端 —</span>
 				<img src="../../assets/image/beijing.png" alt="">
 		</div>
     <div class="typeNav" type="line" border="false">
@@ -24,25 +24,25 @@
       		    @change="changeFn"/>
       		<p>&nbsp;&nbsp;我已经阅读并同意
       		<!-- <a href="/oss/page/user-protocol.html">&nbsp;&nbsp;&lt;&lt;用户协议与隐私政策&gt;&gt;</a> -->
-      			<router-link :to="{path : '/outpatient_urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
+      			<router-link :to="{path : '/operating/operating_urlPage' ,query:{url : '/oss/page/user-protocol.html',name : '用户协议'}}">
       			《应用服务条款》
       			</router-link>
       		</p>
       	</div>
-      	<button class="submitClass" type="submit" value="门诊登录" @click="submit()">登录</button>
+      	<button class="submitClass" type="submit" value="医院登录" @click="submit()">登录</button>
       	<div class="passwordReset">
-      		<router-link  :to="{path : 'outpatient_retrievePassword',query:{time:new Date().getTime()}}">
+      		<router-link  :to="{path : '/operating/operating_retrievePassword',query:{time:new Date().getTime()}}">
       			<div class="forget">
       				<span>忘记密码</span>
       				<img src="../../assets/image/wenhao@2x.png" alt="">
       			</div>
       		</router-link>
-          <router-link  :to="{path : '/',query:{time:new Date().getTime()}}">
-          	<div class="returnTypePage">
-          		<span @click="chooseEntrance" style="color: #2B77EF;">选择入口</span>
+			
+          	<div @click="chooseEntrance" class="returnTypePage">
+          		<span style="color: #2B77EF;">选择入口</span>
           	</div>
-          </router-link>
       	</div>
+
       </div>
     </div>
   </div>
@@ -78,8 +78,10 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    //debugger;
-	this.scrollTop =document.getElementById('outpatient').scrollTop ||document.getElementById('outpatient').pageYOffset
+    debugger;
+	let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
+this.scrollTop = scrollTop?scrollTop :0;
+
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
 		 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
@@ -113,20 +115,18 @@ export default {
   // 进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      document.getElementById('outpatient').scrollTop=document.getElementById('outpatient').pageYOffset=vm.scrollTop;
+      document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
     });
 
   },
-  activated(){
-    
-  },
   mounted() {
-	let thisVue = this;
+    debugger
+    let thisVue = this;
 		if(window.plus){
       plus.navigator.setStatusBarStyle("dark")
     }
-  
-  if(!this.cookieOn()){
+    
+       if(!this.cookieOn()){
        this.$alert('您的浏览器限制了第三方Cookie, 这将影响您正常登录, 您可以更改浏览器的隐私设置, 解除限制后重试.', '提示', {
           confirmButtonText: '确定',
           
@@ -134,20 +134,20 @@ export default {
     }
 
      thisVue.$jquery.ajax({
-                  url:'/clinic/login-refresh',
-                  type:'get',
+                  url:'/manager/login-refresh',
+                  type:'post',
                   async:false,
                   success:function(res){
                     if(res.code == 0){
-                      thisVue.$store.state.outpatient.login=res.data
+                      thisVue.$store.state.operating.login=res.data
                       thisVue.$toast({"message":'已登录',onClose(){
-                          thisVue.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
+                          thisVue.$router.replace({ path : '/operating/operating_index',query:{time:new Date().getTime()}});
                         }})
                     }
                   }
                 })
 
-		
+    
 		// let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
 		//  if(this.$store.state.isLogin == 100){
 		// 	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
@@ -159,6 +159,9 @@ export default {
 		// 	this.$router.replace({ name : 'chooseTheType',query:{time:new Date().getTime()}})
 		// 	this.$router.push(lastRoute)
 		// }
+  },
+  activated(){
+    debugger
   },
   computed:{
     account:{
@@ -180,10 +183,15 @@ export default {
     },
   },
   methods:{
-		chooseEntrance(){
-			localStorage.removeItem('entrance');
-			this.$router.push({path:'/',query:{time:new Date().getTime()}})
-		},
+
+	clear(){
+		localStorage.clear('entrance')
+	},
+    chooseEntrance(){
+      localStorage.removeItem('entrance');
+	  debugger
+      this.$router.push({path:'/',query:{time:new Date().getTime()}})
+    },
     emptyAccountFn(value){
       if(value == 'name'){
         this.submitAccount.name = '';
@@ -194,8 +202,8 @@ export default {
       }
     },
     numFN(_ref){
-      
-      
+      // 
+      // 
       if(document.getElementById(_ref).type == 'password'){
         document.getElementById(_ref).setAttribute('type','text')
         this.pwdImg = require('../../assets/image/open-eye@2x.png')
@@ -209,21 +217,22 @@ export default {
     submit(){
       let thisVue = this
     	 if(this.checked == true){
-        this.$axios.post('/clinic/login',qs.stringify({
+        this.$axios.post('/manager/login',qs.stringify({
         		account : this.submitAccount.name,
         		password : this.submitAccount.password
         	}))
         	.then( res =>{
+            // 
             if(res.data.code == 0){
-                  thisVue.$jquery.ajax({
-                  url:'/clinic/login-refresh',
-                  type:'get',
+         thisVue.$jquery.ajax({
+                  url:'/manager/login-refresh',
+                  type:'post',
                   async:false,
                   success:function(res){
                     if(res.code == 0){
-                      thisVue.$store.state.outpatient.login=res.data
+                      thisVue.$store.state.operating.login=res.data
                        thisVue.$toast({"message":'登录成功',onClose(){
-                          thisVue.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
+                           thisVue.$router.replace({ path : '/operating/operating_index',query:{time:new Date().getTime()}});
                         }})
                     }
                   }
@@ -233,11 +242,13 @@ export default {
             }
         	})
         	.catch((err)=>{
+        		
         		this.$toast(err);
         	})
         }
     },
     changeFn(_value){
+      // 
     	this.checked = _value.target.checked;
     },
   }
@@ -468,6 +479,7 @@ export default {
 	float: left;
   position: relative;
   text-align: left;
+  /* display: inline; */
 }
 .forget span{
   /* width: .8rem; */

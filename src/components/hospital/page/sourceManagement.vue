@@ -258,6 +258,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 	width: 100%;
   height: 100%;
 	background-color: #F5F5F5;
+	/* position: fixed; */
 }
 .navWarp{
 	/* background-color: #FFFFFF; */

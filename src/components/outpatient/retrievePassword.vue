@@ -180,20 +180,7 @@ export default {
 	},
 	// 提交重设信息
 	retrieveSubmit(){
-		
-		switch(this.whichClient){
-			case 100:
-			this.getdata('/hospital/set-pwd-by-phone');
-			break;
-
-			case 200:
-			this.getdata('/clinic/set-pwd-by-phone');
-			break;
-
-			case 300:
-			this.getdata('/manager/set-pwd-by-phone');
-			break;
-		}
+		this.getdata('/clinic/set-pwd-by-phone');
 	}
   },
 }

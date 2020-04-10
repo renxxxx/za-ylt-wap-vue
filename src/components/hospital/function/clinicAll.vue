@@ -222,7 +222,9 @@ this.scrollTop = scrollTop?scrollTop :0;
 <style scoped>
 .all{
 	width: 100%;
-	/* height:100%; */
+	/* position: fixed;
+	height: calc(100% - .7rem);
+	overflow: scroll; */
 }
 .all li{
 	height:.84rem;
@@ -256,7 +258,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 	display: block;
 }
 .contnet_left span:last-child{
-	margin-top: .04rem;
+	/* margin-top: .04rem; */
 }
 .content_right{
 	float: right;

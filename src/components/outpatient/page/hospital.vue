@@ -209,6 +209,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 <style scoped>
 .hospital{
 	width: 100%;
+	background: #fff;
 }
 .topNav{
 	width: 100%;

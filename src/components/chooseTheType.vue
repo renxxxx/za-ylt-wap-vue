@@ -91,7 +91,7 @@ export default {
           // this.submitFn('/clinic/login-refresh',200);
           break;
           case '3':
-            this.$toast('正在开发中')
+            this.$router.replace({ path : '/operating',query:{time:new Date().getTime()}})
           // this.submitFn('/manager/login-refresh',300)
           break;
         }

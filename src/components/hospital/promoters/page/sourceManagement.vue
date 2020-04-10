@@ -511,7 +511,7 @@ export default {
 	border-radius: .14rem;
 }
 .contentTitle{
-	padding: .09rem 0rem .07rem .1rem;
+	/* padding: .09rem 0rem .07rem .1rem; */
 }
 .contentTitle img{
 	width: .17rem;
@@ -529,7 +529,7 @@ export default {
 	display: block;
 }
 .contnet_left span:last-child{
-	margin-top: .04rem;
+	/* margin-top: .04rem; */
 }
 .content_right{
 	float: right;

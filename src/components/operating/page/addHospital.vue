@@ -5,7 +5,7 @@
 				<img src="../../../assets/image/back-white@2x.png" alt="">
 			</div>
 			<div class="centerNav">
-				<span>门诊详情页</span>
+				<span>新增医院</span>
 			</div>
 			<div class="rightNav" @click="saveFn">
 				<span>保存</span>
@@ -20,18 +20,15 @@
 					<h3>必填项</h3>
 					<ul class="Fill">
 						<li>
-							<span>门诊名称</span>
+							<span>医院名称</span>
 							<input type="text" v-model="addClinic.name"  placeholder="请填写">
 						</li>
-						<li>
+						<!-- <li>
 							<span>推广人</span>
-							<!-- <van-dropdown-menu>
-								<van-dropdown-item v-model="value" :options="option" active-color='#2B77EF' @change="changeFn"/>
-							</van-dropdown-menu> -->
-              <router-link :to="{name:'hospital_list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item,time:new Date().getTime()}}">
-                <span>{{addClinic.promoter}}</span>
-              </router-link>
-						</li>
+							<router-link :to="{name:'hospital_list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item,time:new Date().getTime()}}">
+								<span>{{addClinic.promoter}}</span>
+							</router-link>
+						</li> -->
 						<li>
 							<span>分配账号</span>
 							<input type="text" maxlength="11" v-model="addClinic.phone"  placeholder="请填写">
@@ -40,10 +37,10 @@
 							<span>分配密码</span>
 							<input type="password" v-model="addClinic.pwd " placeholder="请填写">
 						</li>
-						<li>
+						<!-- <li>
 							<span>确认密码</span>
 							<input type="password" v-model="addClinic.pwdConfirm " placeholder="请填写">
-						</li>
+						</li> -->
 						<li>
 							<span>负责人</span>
 							<input type="text"  v-model="addClinic.headmanName"  placeholder="请填写">
@@ -53,7 +50,7 @@
 							<input type="text"  maxlength="11" v-model="addClinic.contactTel" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
 						</li>
 						<li>
-							<span>门诊地址</span>
+							<span>医院地址</span>
 							<input type="text" v-model="addClinic.address" placeholder="请填写">
 						</li>
 					</ul>
@@ -140,7 +137,7 @@ export default {
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
+	let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
 
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
@@ -176,66 +173,18 @@ this.scrollTop = scrollTop?scrollTop :0;
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
+	 document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
 	});
 
   },
   activated(){
-    // 
-    // 
-    // this.addClinic.promoter = localStorage.getItem('list_promoterValue')
-    // this.addClinic.hospitalUserId = localStorage.getItem('list_promoterId');
-    if(localStorage.getItem('list_promoterValue') || localStorage.getItem('list_promoterId')){
-      delete this.addClinic.promoter;
-      Vue.set(this.addClinic,'promoter',localStorage.getItem('list_promoterValue'));
-      Vue.set(this.addClinic,'hospitalUserId',localStorage.getItem('list_promoterId'));
-    }
   },
   mounted() {
-     
-		// 
-		this.$route.query.item? this.clinicFn() : ""
 	},
 	methods: {
-    clinicFn(){
-      this.$axios.get('/hospital/super-admin/hospital-clinic/'+this.$route.query.item)
-      .then(_d => {
-          this.addClinic = {
-            name : _d.data.data.name,
-            phone : _d.data.data.clinicUserPhone,
-            pwd :'',
-            headmanName : _d.data.data.headman,
-            contactTel : _d.data.data.tel,
-            address : _d.data.data.address,
-            remark : _d.data.data.remark,
-            hospitalUserId : _d.data.data.hospitalUserId,
-          },
-          _d.data.data.hospitalUserName? this.addClinic.promoter = _d.data.data.hospitalUserName: ''
-          this.$route.query.promoterValue? this.addClinic.promoter = this.$route.query.promoterValue:''
-        // if(_d.data.data.hospitalUserName){
-
-        // }
-		// 
-      	this.imageUpload = _d.data.data.license
-		// this.$axios.get('/hospital/def/hospital-operator-users?'+qs.stringify({hospitalUserId:this.addClinic.hospitalUserId}))
-		// .then(res => {
-		// 	// 
-		// 	// this.promoter= this.option.find((n)=>n.text == res.data.data.rows[0].name)
-		// 	this.value = promoter
-		// 	// 
-		// })
-		// .catch((err)=>{
-		// 	
-		// })
-      })
-      .catch((err)=>{
-      	
-      	//Dialog({ message: err});;
-      })
-    },
 		// 返回键
 		goBackFn(){
-			this.$router.back(-1)
+			this.$router.back()
 		},
 		// 显示上传图片选择弹窗
 		showFn(){
@@ -276,18 +225,18 @@ this.scrollTop = scrollTop?scrollTop :0;
 		// 保存方法
 		saveFn(){
 			
-			this.$axios.post('/hospital/super-admin/hospital-clinic-alter',qs.stringify({
-				hospitalClinicId :  this.$route.query.item,
+			this.$axios.post('/clientend2/manageend/hospitaladd',qs.stringify({
+				// hospitalClinicId :  this.$rou/te.query.item,
 				name :  this.addClinic.name,
 				license : this.imageUpload,								//营业执照
 				address : this.addClinic.address, 						//门诊地址
-				headman : this.addClinic.headmanName, 					//负责人姓名
+				headmanName : this.addClinic.headmanName, 					//负责人姓名
 				tel : this.addClinic.contactTel,						//负责人电话
 				remark : this.addClinic.remark, 						//备注
 				hospitalUserId : this.addClinic.hospitalUserId,		//推广人id
-				clinicUserPhone : this.addClinic.phone, 				//分配账号
-				clinicUserPassword : this.addClinic.pwd,				//分配账号密码
-				clinicUserPasswordConfirm : this.addClinic.pwdConfirm,  //确认密码
+				phone : this.addClinic.phone, 				//分配账号
+				pwd : this.addClinic.pwd,				//分配账号密码
+				// clinicUserPasswordConfirm : this.addClinic.pwdConfirm,  //确认密码
 			}))
 			.then(res => {
 				// 

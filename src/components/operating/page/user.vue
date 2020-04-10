@@ -6,59 +6,33 @@
 			</div>
 			<div class="user_message">
 				<div class="top_left">
-					<img :src="coverImg? coverImg: require('../../../assets/image/logo@2x.png')" alt="">
-					<span>已认证</span>
+					<img :src="coverImg? dd: require('../../../assets/image/logo@2x.png')" alt="">
+					<!-- <span>已认证</span> -->
 				</div>
 				<div class="top_center">
-					<h3>{{this.$store.state.hospital.login.hospital.name}}</h3>
-					<p>账号：{{this.$store.state.hospital.login.phone}}</p>
+					<h3>{{this.$store.state.operating.login.name}}</h3>
+					<p>账号：{{this.$store.state.operating.login.phone}}</p>
 				</div>
-				<div class="top_right" @click="showImgFn">
+				<!-- <div class="top_right" @click="showImgFn">
 					<span>营业执照</span>
 					<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-				</div>
+				</div> -->
 			</div>
 		</div>
-		<van-image-preview v-model="show" :images="images" @change="onChange" >
+		<!-- <van-image-preview v-model="show" :images="images" @change="onChange" > -->
 		  <!-- <template v-slot:index>第{{ index }}页</template> -->
 		</van-image-preview>
 		<div class="user_center"  :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+140)+'px'}">
 			<ul>
-				<router-link :to="{path : '/hospital/hospital_taskManagement',query:{time:new Date().getTime()}}">
-					<li>
-						<span>任务管理</span>
-						<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-					</li>
-				</router-link>
-				<router-link :to="{path : '/hospital/hospital_exchangeManagement',query:{time:new Date().getTime()}}">
-					<li>
-						<span>兑换管理</span>
-						<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-					</li>
-				</router-link>
-				<li @click="noLinkFn">
-					<span>集采订单</span>
+				<li @click="exitFn">
+					<span>退出登录</span>
 					<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
 				</li>
-				<li @click="noLinkFn">
-					<span>集采积分</span>
-					<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-				</li>
-				<router-link :to="{path : '/hospital/hospital_promoters',query:{time:new Date().getTime()}}">
-					<li>
-						<span>推广人员管理</span>
-						<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-					</li>
-				</router-link>
-					<li @click="exitFn">
-						<span>退出登录</span>
-						<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
-					</li>
 
 			</ul>
 		</div>
 		<span>版本：{{this.$version.split('-')[0]}}</span>
-    <div style="height: .55rem;"></div>
+    <!-- <div style="height: .55rem;"></div> -->
 	</div>
 </template>
 
@@ -93,7 +67,7 @@ export default {
 	created(){
 	},
   beforeRouteLeave(to, from, next) {
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
+	let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
 
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
@@ -128,7 +102,7 @@ this.scrollTop = scrollTop?scrollTop :0;
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
+	 document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
 	});
 
   }, mounted() {
@@ -136,9 +110,9 @@ this.scrollTop = scrollTop?scrollTop :0;
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		if(this.$store.state.hospital.login){
-			this.coverImg = this.$store.state.hospital.login.hospital.cover
-			this.images.push(this.$store.state.hospital.login.hospital.license)
+		if(this.$store.state.operating.login){
+			this.coverImg = this.$store.state.operating.login.cover
+			// this.images.push(this.$store.state.operating.login.hospital.license)
 		}
 		// 
 		this.initData();
@@ -146,27 +120,27 @@ this.scrollTop = scrollTop?scrollTop :0;
 	methods: {
 		initData(){
 			let thisVue = this
-			if(this.$route.meta.auth && !this.$store.state.hospital.login)
+			if(this.$route.meta.auth && !this.$store.state.operating.login)
 			this.$toast({message:'请登录',onClose:function(){
-				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+				thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
 			}})
 		},
 		onChange(index) {
 		    this.index = index;
 		},
-		showImgFn(){
-			this.show = true;
+		// showImgFn(){
+		// 	this.show = true;
 			
-		},
+		// },
 		//退出方法
 		exitFn(){
 			let thisVue=this
-			this.$axios.post('/hospital/logout').then(function(){
+			this.$axios.post('/manager/logout').then(function(){
 				localStorage.removeItem('lastRoute')
 				// localStorage.clear()
 				thisVue.$toast("操作成功")
 				setTimeout(()=>{
-					thisVue.$router.push({path:"/hospital/hospitalLogin",query:{time:new Date().getTime()}})
+					thisVue.$router.push({path:"/operating/operatingLogin",query:{time:new Date().getTime()}})
 				},1500)
 			})
 			// if(window.plus){
@@ -283,10 +257,9 @@ this.scrollTop = scrollTop?scrollTop :0;
 }
 .user_center{
 	width: 100%;
-	padding-top: 1.6rem;
 	position: fixed;
 	height: calc(100% - 1.9rem);
-	
+	padding-top: 1.6rem;
 }
 .user_center ul{
 	height: 100%;

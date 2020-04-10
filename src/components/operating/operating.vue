@@ -1,26 +1,26 @@
 <template>
-  <div id="hospital" ref='hospitalRef' :style="{'margin-bottom':bottomShow?'.55rem':'' }" @touchstart='touchStartFn' @touchend='touchEndFn'>
+  <div id="operating" ref='operatingRef' @touchstart='touchStartFn' @touchend='touchEndFn'>
 	<keep-alive   >
-		<router-view class="appView" id="appViewHospital"/>
+		<router-view class="appView" />
 	</keep-alive>
-  <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-show="hospitalReturnHomePage">
+  <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-show="operatingReturnHomePage">
     <img src="../../assets/image/returnHome.png" alt />
     <span>首页</span>
   </div>
-  <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="hospitalReturnTopPage">
+  <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="operatingReturnTopPage">
     <img src="../../assets/image/returnTop.png" alt />
     <span>顶部</span>
   </div>
   <van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.paddingBottom}" v-if="bottomShow">
-  	<van-tabbar-item replace :to="{path : '/hospital/hospital_index',query:{time:new Date().getTime(),transition:'def'}}">
-  	    <span>首页</span>
+  	<van-tabbar-item replace :to="{path : '/operating/operating_index',query:{time:new Date().getTime(),transition:'def'}}">
+  	    <span>医院</span>
   	    <img
   			slot="icon"
   			slot-scope="props"
   			:src="props.active ? index.inactive : index.active"
   	    />
   	</van-tabbar-item>
-  	<van-tabbar-item replace :to="{path:'/hospital/hospital_clinic',query:{time:new Date().getTime(),transition:'def'}}">
+  	<van-tabbar-item replace :to="{path:'/operating/operating_clinic',query:{time:new Date().getTime(),transition:'def'}}">
   	    <img
   			slot="icon"
   			slot-scope="props"
@@ -28,15 +28,7 @@
   	    >
   	    <span>门诊</span>
   	</van-tabbar-item>
-  	<van-tabbar-item replace :to="{path:'/hospital/hospital_gene',query:{time:new Date().getTime(),transition:'def'}}">
-  	    <span>基因</span>
-  	    <img
-  			slot="icon"
-  			slot-scope="props"
-  			:src="props.active ? gene.inactive : gene.active"
-  	    >
-  	</van-tabbar-item>
-  	<van-tabbar-item replace :to="{path:'/hospital/hospital_user',query:{time:new Date().getTime(),transition:'def'}}">
+  	<van-tabbar-item replace :to="{path:'/operating/operating_user',query:{time:new Date().getTime(),transition:'def'}}">
   	    <span>我的</span>
   	    <img
   			slot="icon"
@@ -51,7 +43,7 @@
 <script>
 import {mapActions,mapGetters} from 'vuex'
 export default {
-  name: 'hospital',
+  name: 'operating',
   data(){
   	return{
       active: 0,
@@ -60,24 +52,20 @@ export default {
           inactive: require('../../assets/image/shouye-blue@2x.png')
       },
       hospital:{
-          active: require('../../assets/image/menzhen@2x.png'),
-          inactive: require('../../assets/image/menzhen-blue@2x.png')
-      },
-      gene:{
-          active: require('../../assets/image/jiyin-gray@2x.png'),
-          inactive: require('../../assets/image/jiyin-blue@2x.png')
+          active: require('../../assets/image/Hospital@2x.png'),
+          inactive: require('../../assets/image/Hospital-blue@2x.png')
       },
       my:{
           active: require('../../assets/image/wode@2x.png'),
           inactive: require('../../assets/image/wode-blue@2x.png')
       },
 	  startLength:0,
-	  overLength:0,
+	  overLength:0
     }
   },
   props:['name'],
   beforeRouteLeave(to, from, next) {
-  this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || this.$refs.hospitalRef.scrollTop
+  this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || this.$refs.operatingRef.scrollTop
   if(!to.query.time || !from.query.time || to.query.time < from.query.time){
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
@@ -110,27 +98,27 @@ export default {
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
-   document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
+   document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
   });
   
   },
   computed:{
-    hospitalReturnTopPage: {
+    operatingReturnTopPage: {
       get: function() {
         // 
-        return this.$store.state.hospitalReturnTopPage;
+        return this.$store.state.operatingReturnTopPage;
       },
       set: function(newValue) {
-        this.$store.state.hospitalReturnTopPage = newValue;
+        this.$store.state.operatingReturnTopPage = newValue;
       }
     },
-    ...mapGetters(['bottomShow','hospitalReturnHomePage','account','isLogin'])
+    ...mapGetters(['bottomShow','operatingReturnHomePage'])
   },
   created(){
       let thisVue = this
         this.$jquery.ajax({
-			  url:'/hospital/login-refresh',
-			  type:'get',
+			  url:'/manager/login-refresh',
+			  type:'post',
 			  async:false,
 			  success:function(res){
 			    if(res.code == 0){
@@ -143,11 +131,15 @@ export default {
     window.addEventListener("scroll", this.handleScroll, true);
   },
   watch:{
-
+    $route(to,from){
+      // 
+      //localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
+    }
   },
   methods:{
 	touchStartFn(_value){
 		this.startLength = _value.changedTouches[0].screenX
+		
 	},
 	touchEndFn(_value){
 		this.overLength = _value.changedTouches[0].screenX;
@@ -159,69 +151,64 @@ export default {
 	},
     // 滑动一定距离出现返回顶部按钮
     handleScroll() {
-      if(!this.$refs.hospitalRef)
+      if(!this.$refs.operatingRef)
         return
       let scrollTop =
-        this.$refs.hospitalRef.scrollTop ||
-        this.$refs.hospitalRef.pageYOffset;
+        this.$refs.operatingRef.scrollTop ||
+        this.$refs.operatingRef.pageYOffset;
       let windowHeight =
-        document.documentElement.clientHeight || this.$refs.hospitalRef.clientHeight;
+        document.documentElement.clientHeight || this.$refs.operatingRef.clientHeight;
       let data =
-        this.$refs.hospitalRef.scrollHeight >
+        this.$refs.operatingRef.scrollHeight >
         (window.innerHeight || document.documentElement.clientHeight);
       // 
       let opacityValue =
         Math.round(
-          ((scrollTop + windowHeight) / this.$refs.hospitalRef.scrollHeight) * 100
+          ((scrollTop + windowHeight) / this.$refs.operatingRef.scrollHeight) * 100
         ) / 100;
       // 
       if (data && scrollTop > 800) {
-        this.hospitalReturnTopPage = true;
+        this.operatingReturnTopPage = true;
         this.$refs.returnTopRef.style.opacity = 1;
         this.$refs.returnHomePageRef.style.bottom = '1.5rem';
       } else {
         debugger
         this.$refs.returnTopRef.style.opacity = 0;
         this.$refs.returnHomePageRef.style.bottom = '1rem';
-        this.hospitalReturnTopPage = false;
+        this.operatingReturnTopPage = false;
       }
     },
     // 返回列表顶部按钮
     returnTopFn() {
 		debugger
       var scrollTop =
-        this.$refs.hospitalRef.scrollTop ||
-        this.$refs.hospitalRef.scrollTop ||
-        this.$refs.hospitalRef.pageYOffset;
+        this.$refs.operatingRef.scrollTop ||
+        this.$refs.operatingRef.scrollTop ||
+        this.$refs.operatingRef.pageYOffset;
       let windowHeight =
-        document.documentElement.clientHeight || this.$refs.hospitalRef.clientHeight;
+        document.documentElement.clientHeight || this.$refs.operatingRef.clientHeight;
       for (let i = 0; i < (scrollTop + windowHeight); i++) {
         var clearReturn = setTimeout(() => {
-          this.$refs.hospitalRef.scrollTop--;
+          this.$refs.operatingRef.scrollTop--;
           window.pageYOffset--;
-          this.$refs.hospitalRef.scroll--;
+          this.$refs.operatingRef.scroll--;
           document.documentElement.scrollTop--;
         }, 5);
       }
       this.$refs.returnHomePageRef.style.bottom = '.6rem';
       this.$refs.returnTopRef.style.opacity = 0;
-      this.hospitalReturnTopPage = false;
+      this.operatingReturnTopPage = false;
     },
     // 返回首页按钮触发事件
     returnHomePageFn(){
-      
-      if(this.$store.state.hospital.login.type == 1){
-        this.$router.replace({path:'/promoters_index',query:{time:new Date().getTime(),transition:'def'}});
-      }else{
-        this.$router.replace({path:'/hospital/hospital_index',query:{time:new Date().getTime(),transition:'def'}});
-      }
+      this.$router.replace({path:'/operating/operating_index',query:{time:new Date().getTime(),transition:'def'}});
     },
   },
 }
 </script>
 
 <style>
-#hospital {
+#operating {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -235,7 +222,7 @@ export default {
 .appView {
      /* position: absolute; */
      width: 100%;
-     /* background: #fff; */
+     background: #fff;
      min-height: 100vh;
      transition: transform 0.24s ease-out;
  }

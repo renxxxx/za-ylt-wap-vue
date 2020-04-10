@@ -121,6 +121,20 @@ import outpatient_shopAddressAdd from '@/components/outpatient/page/shopAddressA
 import outpatient_pictureEnlargement from '@/components/outpatient/page/pictureEnlargement.vue'
 import outpatient_articleSearch from '@/components/outpatient/page/articleSearch.vue'
 
+//运营端
+import operating from '@/components/operating/operating.vue'
+import operatingLogin from '@/components/operating/operatingLogin.vue'
+import operating_urlPage from '@/components/operating/urlPage.vue'
+import operating_retrievePassword from '@/components/operating/retrievePassword.vue'
+
+//运营端主页
+import operating_index from '@/components/operating/page/index.vue'
+import operating_user from '@/components/operating/page/user.vue'
+import operating_clinic from '@/components/operating/page/clinic.vue'
+import operating_addHospital from '@/components/operating/page/addHospital.vue'
+import operating_hospiatlAllSearch from '@/components/operating/page/hospiatlAllSearch.vue'
+
+//运营端页面
 
 Vue.use(Router)
 
@@ -597,18 +611,18 @@ const router = new Router({
           component: outpatient_index,
           meta: {auth:true,unkeepLastRoute:true,tabbar:true,indexHide:true},
         },
-		{
-			path: '/outpatient_retrievePassword',
-			name: 'outpatient_retrievePassword',
-			component: outpatient_retrievePassword,
-			meta: {auth:true,unkeepLastRoute:true,indexHide:true},
-		},
-		{
-			path: '/outpatient_urlPage',
-			name: 'outpatient_urlPage',
-			component: outpatient_urlPage,
-			meta: {auth:true,unkeepLastRoute:true,indexHide:true},
-		},
+				{
+					path: '/outpatient_retrievePassword',
+					name: 'outpatient_retrievePassword',
+					component: outpatient_retrievePassword,
+					meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+				},
+				{
+					path: '/outpatient_urlPage',
+					name: 'outpatient_urlPage',
+					component: outpatient_urlPage,
+					meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+				},
         {
           path: 'outpatient_pathogenicSearch',
           name: 'outpatient_pathogenicSearch',
@@ -768,6 +782,65 @@ const router = new Router({
         
       ]
     },
+	{
+		path: '/operating',
+		name: 'operating',
+		component: operating,
+		meta: {auth:true},
+		redirect:'/operating/operating_index',
+		children:[
+			{
+			  path: 'operatingLogin',
+			  name: 'operatingLogin',
+			  component: operatingLogin,
+			  meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+			},
+			{
+			  path: 'operating_urlPage',
+			  name: 'operating_urlPage',
+			  component: operating_urlPage,
+			  meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+			},
+			{
+			  path: 'operating_retrievePassword',
+			  name: 'operating_retrievePassword',
+			  component: operating_retrievePassword,
+			  meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+			},
+			
+			{
+			  path: 'operating_index',
+			  name: 'operating_index',
+			  component: operating_index,
+			  meta: {auth:true,tabbar:true,unkeepLastRoute:true,indexHide:true},
+			},
+			{
+			  path: 'operating_user',
+			  name: 'operating_user',
+			  component: operating_user,
+			  meta: {auth:true,tabbar:true},
+			},
+			{
+			  path: 'operating_clinic',
+			  name: 'operating_clinic',
+			  component: operating_clinic,
+			  meta: {auth:true,tabbar:true},
+			},
+			{
+			  path: 'operating_addHospital',
+			  name: 'operating_addHospital',
+			  component: operating_addHospital,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_hospiatlAllSearch',
+			  name: 'operating_hospiatlAllSearch',
+			  component: operating_hospiatlAllSearch,
+			  meta: {auth:true},
+			},
+			
+		]
+	}		
   ]
 })
 router.afterEach((to,from) => {
@@ -776,227 +849,13 @@ router.afterEach((to,from) => {
   Store.state.childBottomShow = !!to.meta.bottom;
   Store.state.hospitalReturnHomePage = !to.meta.indexHide
   Store.state.outpatientReturnHomePage = !to.meta.indexHide
+  Store.state.operatingReturnHomePage = !to.meta.indexHide
+  
   // Store.state.bottomShow = !!to.meta.bottomShow;
   if(!to.meta.unkeepLastRoute){
 	  debugger;
     localStorage.setItem('lastRoute',JSON.stringify({path:to.path,name:to.name,query:to.query}))
   }
     
-
-
-  //判断是否显示端口底部菜单按钮
-  //
-  //if(Store.state.isLogin || to.name == 'sharePage'){
-    // if(to.name == 'hospital_index'|| to.name == 'hospital_clinic' || to.name == 'hospital_gene' || to.name == 'hospital_user'
-    //   || to.name == 'outpatient_index' || to.name == 'outpatient_hospital' || to.name == 'outpatient_gene' || to.name == 'outpatient_user'){
-    //   Store.state.bottomShow = true;
-    // }else{
-    //   Store.state.bottomShow = false;
-    // }
-    // //判断是否显示医院端返回首页和顶部按钮
-    // // 
-    // if(to.name == 'hospital_addCLinic' || to.name == 'hospital_clinicInfo' || to.name == 'hospitalLogin'
-    // || to.name == 'hospital_pictureEnlargement' || to.name == 'hospital_operatingManualListDetails' ||
-    // to.name == 'hospital_index' || to.name == 'promoters_index' || to.name == 'promoters_clinicInfo' ||
-    // to.name == 'promoters_addClinic'){
-    //   Store.state.hospitalReturnHomePage = false;
-    // }else{
-    //   Store.state.hospitalReturnHomePage = true;
-    // }
-    // //判断推广人端是否显示端口底部菜单按钮
-    // if(to.name == 'promoters_index' || to.name == 'promoters_cilnic' || to.name == 'promoters_user'){
-    //   Store.state.childBottomShow = true;
-    // }else{
-    //   Store.state.childBottomShow = false;
-    // }
-    // //判断门诊端返回首页按钮
-    // if(to.name == 'outpatient_index' || to.name == 'outpatientLogin'){
-    //   Store.state.outpatientReturnHomePage = false;
-    // }else{
-    //   Store.state.outpatientReturnHomePage = true;
-    // }
- // }else{
-    // 
-    // if(to.path.indexOf("hospital") != -1 || to.path.indexOf("promoters") != -1){
-    //   router.replace({name:'hospitalLogin'});
-    //   Store.state.hospitalReturnHomePage = false;
-    // }else if( to.path.indexOf("outpatient") != -1 ){
-    //   router.replace({name:'outpatientLogin'});
-    //   Store.state.outpatientReturnHomePage = false;
-    // }
- // }
-  
-// 		{
-// 			//推广人端首页主页面
-// 			path: '/promoters_index',
-// 			name: 'promoters_index',
-// 			component: promoters_index,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			//推广人端门诊主页面
-// 			path: '/promoters_cilnic',
-// 			name: 'promoters_cilnic',
-// 			component: promoters_cilnic,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			//推广人端用户主页面
-// 			path: '/promoters_user',
-// 			name: 'promoters_user',
-// 			component: promoters_user,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			// 推广人用户搜索主页
-// 			path: '/promoters_clinicSearch',
-// 			name: 'promoters_clinicSearch',
-// 			component: promoters_clinicSearch,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			// 推广人新增门诊页
-// 			path: '/promoters_addClinic',
-// 			name: 'promoters_addClinic',
-// 			component: promoters_addClinic,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			// 推广人病源管理页
-// 			path: '/promoters_source',
-// 			name: 'promoters_source',
-// 			component: promoters_source,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			// 推广人门诊详情页
-// 			path: '/promoters_clinicInfo',
-// 			name: 'promoters_clinicInfo',
-// 			component: promoters_clinicInfo,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			// 推广人门诊病原新增页
-// 			path: '/promoters_addSource',
-// 			name: 'promoters_addSource',
-// 			component: promoters_addSource,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			// 推广人门诊案例列表页
-// 			path: '/promoters_case',
-// 			name: 'promoters_case',
-// 			component: promoters_case,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			// 推广人门诊案例页
-// 			path: '/promoters_caseDetails',
-// 			name: 'promoters_caseDetails',
-// 			component: promoters_caseDetails,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			// 推广人门诊推广活动页面
-// 			path: '/promoters_activityReleased',
-// 			name: 'promoters_activityReleased',
-// 			component: promoters_activityReleased,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			// 推广人门诊推广活动页面
-// 			path: '/promoters_activityDetails',
-// 			name: 'promoters_activityDetails',
-// 			component: promoters_activityDetails,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			// 推广人门诊推广人详情页面
-// 			path: '/promoters_promotersDetails',
-// 			name: 'promoters_promotersDetails',
-// 			component: promoters_promotersDetails,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			// 推广人病原管理页面
-// 			path: '/promoters_sourceManagement',
-// 			name: 'promoters_sourceManagement',
-// 			component: promoters_sourceManagement,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			// 推广人病原管理搜索页面
-// 			path: '/promoters_sourceSearch',
-// 			name: 'promoters_sourceSearch',
-// 			component: promoters_sourceSearch,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			//详情页
-// 			path: '/details',
-// 			name: 'details',
-// 			component: details,
-// 			meta: {auth:true},
-// 		},
-// 		{
-// 			//用户协议
-// 			path: '/urlPage',
-// 			name: 'urlPage',
-// 			component: urlPage,
-// 			meta: {auth:true},
-// 		},
-// 		// {
-// 		// 	// 登陆主页
-// 		// 	path: '/',
-// 		// 	name: 'landingPage',
-// 		// 	component: landingPage,
-// 		// 	alias:'/landingPage'
-// 		// },
-//     {
-//     	// 登陆主页
-//     	path: '/',
-//     	name: 'account',
-//     	component: account,
-//     	alias:'/account'
-//     },
-//     {
-//     	//选择入口页面
-//     	path: '/chooseTheType',
-//     	name: 'chooseTheType',
-//     	meta: {auth:true},
-//     	component: chooseTheType,
-//     },
-// 		{
-// 			//找回密码页面
-// 			path: '/retrievePassword',
-// 			name: 'retrievePassword',
-// 			meta: {auth:true},
-// 			component: retrievePassword,
-// 		},
-// 	],
-//   // scrollBehavior (to, from, savedPosition) {
-//   //   
-//   //     // return 期望滚动到哪个的位置
-//   //     // return { x: 300, y: 300 }
-//   //   }
-// })
-// router.beforeEach((to,from,next) => {
-// 	debugger
-// 	//TODO 保存当前路由
-// 	if(to.name != 'account')
-// 	 	localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
-// 	next()
-// })
-// router.afterEach((to, from) => {
-// 	debugger
-// 		if(to.name!='hospital_index' && to.name!='hospital_sourceManagement' && to.name!='outpatient_index' && to.name != 'promoters_index' &&
-// 		to.name!='landingPage' && to.name != 'retrievePassword' && to.name != 'account' && to.name != 'chooseTheType'){
-// 			Store.state.returnHomePageData = true;
-// 		}else{
-// 		Store.state.returnHomePageData = false;
-// 		if(Store.state.isLogin == 100  && to.name == 'hospital_sourceManagement'){
-// 			Store.state.returnHomePageData = true;
-// 		}
-// 	}
 })
 export default router
