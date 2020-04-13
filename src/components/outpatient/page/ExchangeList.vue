@@ -8,7 +8,7 @@
 				<h3>兑换列表</h3>
 			</div>
 		</div>
-		<div class="zhangwei" :style="{'height':($store.state.paddingTop+60)+'px'}"></div>
+		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
 		<integralExchangeList></integralExchangeList>
 	</div>
 </template>
@@ -105,7 +105,7 @@ export default {
 }
 .zhangwei{
 	width: 100%;
-	/* height: .47rem; */
+	height: .47rem;
 }
 .leftImg{
 	width: 22%;

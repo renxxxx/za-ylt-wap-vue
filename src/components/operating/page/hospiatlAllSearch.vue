@@ -6,7 +6,7 @@
 			</div>
 			<div class="search">
 				<img src="../../../assets/image/sousuo@2x.png" alt="">
-				<input type="search" v-model="kw" @keydown.enter="searcFn">
+				<input type="search" v-model="kw" @keydown.enter="searcFn" v-focus='true'>
 			</div>
 			<button @click="searcFn">搜索</button>
 		</div>

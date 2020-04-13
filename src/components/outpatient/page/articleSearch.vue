@@ -5,7 +5,7 @@
      	<img src="../../../assets/image/shape@3x.png" alt="">
      </div>
 			<div class="hospital_search">
-				<input type="search" v-model="kw" placeholder="搜索文章" @keyup.enter="searchFn">
+				<input type="search" v-model="kw" placeholder="搜索文章" @keyup.enter="searchFn" v-focus='true'>
 				<img src="../../../assets/image/sousuo@2x.png" alt="">
 			</div>
 			<div class="clinic_buttton" @click="searchFn">

@@ -2,7 +2,7 @@
 	<div class="operatingManual">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
-				<img src="../../../assets/image/shape@3x.png" alt="" id="navback" :style="{'padding-top':$store.state.paddingTop}">
+				<img src="../../../assets/image/shape@3x.png" alt="" id="navback" >
 			</div>
 			<div class="centerTitle">
 				<h3>运营成功手册架构</h3>

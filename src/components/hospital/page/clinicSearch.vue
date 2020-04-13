@@ -7,7 +7,7 @@
 				</div>
 				<div class="clinic_search">
 					<img src="../../../assets/image/sousuo@2x.png" alt="">
-					<input type="search" placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
+					<input type="search" v-focus='true' placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
           <!-- <img src="../../../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn()" v-if="keywords"> -->
 				</div>
 				<div class="clinic_buttton" @click="inputNow">
