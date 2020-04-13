@@ -39,7 +39,7 @@
       		</router-link>
           <router-link  :to="{path : '/',query:{time:new Date().getTime()}}">
           	<div class="returnTypePage">
-          		<span @click="chooseEntrance" style="color: #2B77EF;">选择入口</span>
+          		<span @click="chooseEntrance" style="color: #2B77EF;">选择端口</span>
           	</div>
           </router-link>
       	</div>

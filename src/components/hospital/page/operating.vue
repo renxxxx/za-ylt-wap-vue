@@ -167,6 +167,9 @@ this.scrollTop = scrollTop?scrollTop :0;
   color: #333333;
   position: relative;
 }
+.operating>ul li:last-child{
+	border: none;
+}
 .operating>ul li h4{
   display: inline-block;
   font-weight: bold;

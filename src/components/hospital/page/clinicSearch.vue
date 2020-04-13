@@ -188,17 +188,17 @@ this.scrollTop = scrollTop?scrollTop :0;
 }
 .clinic_buttton{
 	float: right;
-	margin-top: .14rem;
+	margin-top: .12rem;
 	margin-right: .16rem;
 }
 .clinic_buttton button{
-	color: #FFFFFF;
-	background-color: #2B77EF;
-	border-radius: .15rem;
-	border: none;
-	height: .28rem;
-	width: .5rem;
-	font-size: .14rem;
+	color: #ffffff;
+	    background-color: #2b77ef;
+	    border-radius: 0.15rem;
+	    border: none;
+	    height: 0.28rem;
+	    width: 0.5rem;
+	    font-size: 0.12rem;
 }
 
 .clinic_information{

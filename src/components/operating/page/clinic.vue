@@ -12,7 +12,9 @@
 			</div>
 			<div class="topNav_Title">
 				<h4>合作医院<span>473</span></h4>
-				<div class="addHospital">新增医院<img src="../../../assets/image/right@2x.png" alt=""></div>
+				<router-link :to="{path:''}">
+					<div class="addHospital">新增医院<img src="../../../assets/image/right@2x.png" alt=""></div>
+				</router-link>
 			</div>
 		</div>
 		<div style="width: 100%;height: 1rem;" :style="{'padding-top':$store.state.paddingTop}"></div>

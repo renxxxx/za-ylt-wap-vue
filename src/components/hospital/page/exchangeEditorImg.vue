@@ -208,6 +208,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 	border: none;
 	border-radius: .03rem;
 	margin-right: .22rem;
+	font-size: .14rem;
 }
 .buttonColorNow{
 	color: #999999;

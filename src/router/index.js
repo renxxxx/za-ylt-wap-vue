@@ -133,7 +133,7 @@ import operating_user from '@/components/operating/page/user.vue'
 import operating_clinic from '@/components/operating/page/clinic.vue'
 import operating_addHospital from '@/components/operating/page/addHospital.vue'
 import operating_hospiatlAllSearch from '@/components/operating/page/hospiatlAllSearch.vue'
-
+import operating_indexDetails from '@/components/operating/page/indexDetails.vue'
 //运营端页面
 
 Vue.use(Router)
@@ -836,6 +836,12 @@ const router = new Router({
 			  path: 'operating_hospiatlAllSearch',
 			  name: 'operating_hospiatlAllSearch',
 			  component: operating_hospiatlAllSearch,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_indexDetails',
+			  name: 'operating_indexDetails',
+			  component: operating_indexDetails,
 			  meta: {auth:true},
 			},
 			
