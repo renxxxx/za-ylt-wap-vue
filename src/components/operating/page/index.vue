@@ -175,17 +175,19 @@ export default {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
     }
-    
+    if(this.$route.meta.auth && !this.$store.state.operating.login){
+    	this.$toast({message:'请登录',onClose:function(){
+			debugger
+    		thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
+    	}})
+    }
     let lastRoute = localStorage.getItem('lastRoute')
         if(lastRoute){
           this.$router.push(JSON.parse(lastRoute));
           return
         }
-	if(this.$route.meta.auth && !this.$store.state.operating.login)
-	this.$toast({message:'请登录',onClose:function(){
-			  debugger
-	  thisVue.$router.push({path:"/operating/operatingLogin",query:{time:new Date().getTime()}})
-	}})
+	
+		
   },
   activated(){
   },

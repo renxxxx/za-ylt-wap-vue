@@ -120,10 +120,10 @@ this.scrollTop = scrollTop?scrollTop :0;
 	methods: {
 		initData(){
 			let thisVue = this
-			if(this.$route.meta.auth && !this.$store.state.operating.login)
-			this.$toast({message:'请登录',onClose:function(){
-				thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
-			}})
+			// if(this.$route.meta.auth && !this.$store.state.operating.login)
+			// this.$toast({message:'请登录',onClose:function(){
+			// 	thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
+			// }})
 		},
 		onChange(index) {
 		    this.index = index;

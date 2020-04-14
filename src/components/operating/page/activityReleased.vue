@@ -10,7 +10,7 @@
 			<div class="right"></div>
 		</div>
 		<div class="zhangwei"></div>
-		<router-link :to="{name:'hospital_addActivity'}">
+		<router-link :to="{path:'/operating/operating_addActivity',query:{hospitalId: this.$route.query.hospitalId}}">
 			<div class="addActive" :style="{'padding-top':$store.state.paddingTop}">
 				<span>+</span>
 				<span>新建活动</span>
@@ -19,7 +19,7 @@
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <van-swipe-cell v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
         <van-cell :border="false" >
-          <router-link :to="{path : '/hospital/hospital_activityDetails',query:{itemId:item.itemId,time:new Date().getTime()}}">
+          <router-link :to="{path : '/operating/operating_activityDetails',query:{itemId:item.itemId,time:new Date().getTime()}}">
             <div class="activeList">
               <img v-lazy="item.cover" alt="">
               <div class="activeTitle">
@@ -64,7 +64,7 @@ export default {
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
+	let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
 
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
@@ -100,7 +100,7 @@ this.scrollTop = scrollTop?scrollTop :0;
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
+	 document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
 	});
 
   }, mounted() {
@@ -142,7 +142,7 @@ this.scrollTop = scrollTop?scrollTop :0;
     },
 		getdata(){
 			this.$axios.post('/c2/activity/items',qs.stringify({
-				hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
+				hospitalId: this.$route.query.hospitalId,
 				pn: this.page,
 				ps: 10
 			}))

@@ -5,6 +5,11 @@
               <!-- <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span> -->
 			  <div class="navTitle_backImg" @click="backFn">
 				<img src="../../../assets/image/back-white@2x.png" alt="">
+			  </div>
+			  <div class="navTitle_center">
+				  <span>共享医联体</span>
+			  </div>
+			  <div class="navTitle_rightImg">
 				  
 			  </div>
             </div>
@@ -21,49 +26,49 @@
           <div class="typeList">
             <ul>
               <li>
-                <router-link :to="{path : '/hospital/hospital_clinicSearch',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/operating/operating_clinicSearch',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
                   <img src="../../../assets/image/qudaomenzhen@2x.png" alt />
                   <span>渠道门诊</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{path : '/hospital/hospital_sourceManagement',query:{time:new Date().getTime()}}" >
+                <router-link :to="{path : '/operating/operating_sourceManagement',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}" >
                   <img src="../../../assets/image/bingyuanguanli@2x.png" alt />
                   <span>病员管理</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{path : '/hospital/hospital_collect',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/operating/operating_collect',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
                   <img src="../../../assets/image/qixiejicai@2x.png" alt />
                   <span>器械集采</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{path : '/hospital/hospital_operating',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/operating/operating_operating',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
                   <img src="../../../assets/image/yunyingzhongxin@2x.png" alt />
                   <span>运营中心</span>
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{path : '/hospital/',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/operating/',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
                   <img src="../../../assets/image/jiyinjiance@2x.png" alt />
                   <span>基因检测</span>
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{path : '/hospital/',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
                   <img src="../../../assets/image/yiliaoziyuan@2x.png" alt />
                   <span>医疗资源</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{path : '/hospital/hospital_activityReleased',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/operating/operating_activityReleased',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
                   <img src="../../../assets/image/yiyuanhuodong@2x.png" alt />
                   <span>医院活动</span>
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{path : '/hospital/',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
                   <img src="../../../assets/image/qita@2x.png" alt />
                   <span>其他项目</span>
                 </router-link>
@@ -80,7 +85,7 @@
               <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
                 <li v-for="(items,inx) in article" :key="inx">
                   <router-link
-                    :to="{path : '/hospital/hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
+                    :to="{path : '/operating/operating_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
                   >
                     <div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
                       <p>{{items.content}}</p>
@@ -213,79 +218,73 @@ this.scrollTop = scrollTop?scrollTop :0;
     },
     initData() {
       let thisVue = this
-      // if(this.$route.meta.auth && !this.$store.state.operating.login)
-      // this.$toast({message:'请登录',onClose:function(){
-      //   thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
-      // }})
-
       Object.assign(this.$data, this.$options.data());
-      //轮播图图片路径请求
-      this.$axios
-        .post("/manager/hospitalMaincarouselList",qs.stringify({
+				//轮播图图片路径请求
+		this.$axios.post("/manager/hospitalMaincarouselList",qs.stringify({
 			hospitalId: this.$route.query.hospitalId
 		}))
         .then(res => {
-          for (let i in res.data.data.rows) {
+          for (let i in res.data.data.items) {
             // 
             res.data.codeMsg ? this.$toast(res.data.codeMsg) : "";
-            switch (res.data.data.rows[i].type) {
+            switch (res.data.data.items[i].jump) {
               case 0:
                 this.images.push({
-                  cover: res.data.data.rows[i].cover,
+                  cover: res.data.data.items[i].cover,
                   url: ""
                 });
                 break;
               case 1:
                 this.images.push({
-                  cover: res.data.data.rows[i].cover,
-                  url: res.data.data.rows[i].type1Url
+                  cover: res.data.data.items[i].cover,
+                  url: res.data.data.items[i].type1Url
                 });
                 break;
               case 2:
                 this.images.push({
-                  cover: res.data.data.rows[i].cover,
+                  cover: res.data.data.items[i].cover,
                   url: "hospital_caseDetails"
                 });
                 break;
               case 3:
                 this.images.push({
-                  cover: res.data.data.rows[i].cover,
+                  cover: res.data.data.items[i].cover,
                   url: ""
                 });
                 break;
               case 4:
                 this.images.push({
-                  cover: res.data.data.rows[i].cover,
+                  cover: res.data.data.items[i].cover,
                   url: ""
                 });
                 break;
               case 5:
                 this.images.push({
-                  cover: res.data.data.rows[i].cover,
+                  cover: res.data.data.items[i].cover,
                   url: ""
                 });
                 break;
               case 6:
                 this.images.push({
-                  cover: res.data.data.rows[i].cover,
+                  cover: res.data.data.items[i].cover,
                   url: "hospital_hospitalImage"
                 });
                 break;
               case 7:
                 this.images.push({
-                  cover: res.data.data.rows[i].cover,
+                  cover: res.data.data.items[i].cover,
                   url: "hospital_expertsIntroduction"
                 });
                 break;
               case 8:
                 this.images.push({
-                  cover: res.data.data.rows[i].cover,
+                  cover: res.data.data.items[i].cover,
                   url: ""
                 });
                 break;
             }
           }
-          // 
+          console.log(this.images)
         })
         .catch(err => {
           // 
@@ -295,8 +294,8 @@ this.scrollTop = scrollTop?scrollTop :0;
       this.getdata();
     },
     getdata(_data) {
-      this.$axios.post("/manager/hospitalMaincarouselList'",qs.stringify({
-            hospitalId: this.$store.state.hospital.login.hospital.hospitalId,
+      this.$axios.post("/c2/article/items",qs.stringify({
+            hospitalId: this.$route.query.hospitalId,
             pn: this.page,
             ps: 10
           })
@@ -353,21 +352,43 @@ this.scrollTop = scrollTop?scrollTop :0;
 }
 .navTitle {
   /* width: .88rem; */
-  height: 0.5rem;
-  line-height: 0.5rem;
+  height: 0.3rem;
+  line-height: 0.3rem;
   color: #686666;
   font-size: 0.14rem;
   /* font-weight: bolder; */
   /* text-align: center; */
   margin: 0 auto;
+  position: relative;
 }
 .navTitle_backImg{
 	width: 10%;
+	float: left;
+	height: 100%;
+	line-height: 100%;
 }
 .navTitle_backImg>img{
 	width: .09rem;
 	height: .15rem;
-	margin-left: .15rem;
+	/* margin-left: .15rem; */
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: .15rem;
+	margin: auto 0;
+}
+.navTitle_center{
+	display: inline-block;
+	float: left;
+	width: 80%;
+	height: 0.3rem;
+	line-height: 0.3rem;
+	text-align: center;
+	color: #FFFFFF;
+	font-size: .16rem;
+}
+.navTitle_center{
+	
 }
 .slider {
   width: 95.7%;
