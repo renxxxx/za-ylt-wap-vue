@@ -183,7 +183,7 @@ export default {
 	exitFn(){
 		let thisVue=this
 		this.$axios.post('/clinic/logout').then(function(){
-			localStorage.removeItem('lastRoute');
+			// localStorage.removeItem('lastRoute');
 			// localStorage.clear()
 			thisVue.$toast("操作成功")
 			setTimeout(()=>{

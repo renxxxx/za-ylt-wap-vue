@@ -1,8 +1,14 @@
 <template>
   <div id="hospital" ref='hospitalRef' :style="{'margin-bottom':bottomShow?'.55rem':'' }" @touchstart='touchStartFn' @touchend='touchEndFn'>
-	<keep-alive   >
-		<router-view class="appView" id="appViewHospital"/>
-	</keep-alive>
+	<!-- <keep-alive   >
+		<router-view class="appView" />
+	</keep-alive> -->
+
+  <keep-alive>
+    <router-view v-if="$route.meta.keepAlive" class="appView"></router-view>
+  </keep-alive>
+  <router-view v-if="!$route.meta.keepAlive" class="appView"></router-view>
+
   <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-show="hospitalReturnHomePage">
     <img src="../../assets/image/returnHome.png" alt />
     <span>首页</span>

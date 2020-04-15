@@ -804,26 +804,26 @@ const router = new Router({
 			  path: 'operatingLogin',
 			  name: 'operatingLogin',
 			  component: operatingLogin,
-			  meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+			  meta: {auth:true,indexHide:true},
 			},
 			{
 			  path: 'operating_urlPage',
 			  name: 'operating_urlPage',
 			  component: operating_urlPage,
-			  meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+			  meta: {auth:true,indexHide:true},
 			},
 			{
 			  path: 'operating_retrievePassword',
 			  name: 'operating_retrievePassword',
 			  component: operating_retrievePassword,
-			  meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+			  meta: {auth:true,indexHide:true},
 			},
 			
 			{
 			  path: 'operating_index',
 			  name: 'operating_index',
 			  component: operating_index,
-			  meta: {auth:true,tabbar:true,unkeepLastRoute:true,indexHide:true},
+			  meta: {auth:true,tabbar:true,indexHide:true},
 			},
 			{
 			  path: 'operating_user',
@@ -935,11 +935,7 @@ router.afterEach((to,from) => {
   Store.state.outpatientReturnHomePage = !to.meta.indexHide
   Store.state.operatingReturnHomePage = !to.meta.indexHide
   
-  // Store.state.bottomShow = !!to.meta.bottomShow;
-  // if(!to.meta.unkeepLastRoute){
-	//   debugger;
-  //   localStorage.setItem('lastRoute',JSON.stringify({path:to.path,name:to.name,query:to.query}))
-  // }
+
     
 })
 export default router

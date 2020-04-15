@@ -152,13 +152,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 	 document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
   });
   
-         let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
-         let lastRoute = localStorage.getItem('lastRoute')
-         
-         
-         if(fromRoute == lastRoute){
-          localStorage.removeItem('lastRoute')
-         }
+    
    
 
   },
@@ -174,11 +168,7 @@ this.scrollTop = scrollTop?scrollTop :0;
       plus.navigator.setStatusBarStyle("dark");
     }
     
-    let lastRoute = localStorage.getItem('lastRoute')
-        if(lastRoute){
-          this.$router.push(JSON.parse(lastRoute));
-          return
-        }
+ 
     this.initData();
   },
   activated(){

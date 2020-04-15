@@ -175,15 +175,6 @@ this.scrollTop = scrollTop?scrollTop :0;
        debugger
 	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
   });
-  
-         let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
-         let lastRoute = localStorage.getItem('lastRoute')
-         
-         
-         if(fromRoute == lastRoute){
-          localStorage.removeItem('lastRoute')
-         }
-   
 
   },
   beforeMount(){
@@ -199,12 +190,7 @@ this.scrollTop = scrollTop?scrollTop :0;
     }
     
 
-    let lastRoute = localStorage.getItem('lastRoute')
-        if(lastRoute){
-          this.$router.push(JSON.parse(lastRoute));
-          return
-        }
-		debugger;
+  
     this.initData();
   },
   activated(){

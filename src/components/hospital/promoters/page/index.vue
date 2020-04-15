@@ -143,23 +143,13 @@ export default {
 	  next(vm => {
 		 document.getElementById('promoters').scrollTop=document.getElementById('promoters').pageYOffset=vm.scrollTop;
 		});
-		let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
-		let lastRoute = localStorage.getItem('lastRoute')
-		
-		
-		if(fromRoute == lastRoute){
-		 localStorage.removeItem('lastRoute')
-		}
+	
 	},
 	destroyed(){
 		// 
 	},
 	mounted () {
-		let lastRoute = localStorage.getItem('lastRoute')
-		    if(lastRoute){
-		      this.$router.push(JSON.parse(lastRoute));
-		      return
-		    }
+		
 		
 		this.initData();
 
