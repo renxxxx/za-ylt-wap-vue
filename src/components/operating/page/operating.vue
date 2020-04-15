@@ -45,7 +45,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     //debugger;
-  let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
+  let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
 
   if(!to.query.time || !from.query.time || to.query.time < from.query.time){
@@ -81,7 +81,7 @@ this.scrollTop = scrollTop?scrollTop :0;
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
       next(vm => {
-      document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
+      document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
     });
   },
   created () {

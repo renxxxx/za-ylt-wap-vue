@@ -19,10 +19,10 @@
 					<h3>合作门诊 {{clinic.num}}</h3>
 				</div>
 				<div class="titleRight">
-					<router-link :to="{path : '/hospital/hospital_addCLinic',query:{time:new Date().getTime()}}">
+					<!-- <router-link :to="{path : '/hospital/hospital_addCLinic',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
 						<span>新增</span>
 						<img src="../../../assets/image/xinzeng@2x.png" alt="">
-					</router-link>
+					</router-link> -->
 				</div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@ export default {
 	},
   beforeRouteLeave(to, from, next) {
     //debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
+	let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
 
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
@@ -95,7 +95,7 @@ this.scrollTop = scrollTop?scrollTop :0;
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
+	 document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
 	});
 
   }, mounted() {
@@ -103,13 +103,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		};
-		this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
-			.then(res => {
-				this.clinic.num = res.data.data.rowCount;
-			})
-			.catch((err)=>{
-				
-			})
+		this.getdata()
 	},
 	methods: {
 		goBackFn(){
@@ -118,9 +112,10 @@ this.scrollTop = scrollTop?scrollTop :0;
 		//获取数据
 		getdata(){
 			// 
-		this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({kw:this.keywords}))
+		this.$axios.get('/c2/clinic/items?'+qs.stringify({kw:this.keywords,hospitalId: this.$route.query.hospitalId}))
 			.then(_d => {
-				this.$refs.content.content = _d.data.data.rows
+				this.clinic.num = _d.data.data.sum.totalCount;
+				this.$refs.content.content = _d.data.data.items
 			})
 			.catch((err)=>{
 				

@@ -149,9 +149,10 @@ this.scrollTop = scrollTop?scrollTop :0;
 <style scoped>
 .content{
 	width: 100%;
-	position: fixed;
-	height: calc(100% - 2.5rem);
-	overflow: scroll;
+	/* position: fixed; */
+	/* height: calc(100% - 2.5rem); */
+	height: 100%;
+	/* overflow: scroll; */
 }
 .content>span{
 	width: 94.6%;

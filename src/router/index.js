@@ -131,10 +131,21 @@ import operating_retrievePassword from '@/components/operating/retrievePassword.
 import operating_index from '@/components/operating/page/index.vue'
 import operating_user from '@/components/operating/page/user.vue'
 import operating_clinic from '@/components/operating/page/clinic.vue'
-import operating_addHospital from '@/components/operating/page/addHospital.vue'
-import operating_hospiatlAllSearch from '@/components/operating/page/hospiatlAllSearch.vue'
-
 //运营端页面
+import operating_addHospital from '@/components/operating/page/addHospital.vue'
+import operating_indexDetails from '@/components/operating/page/indexDetails.vue'
+import operating_hospiatlAllSearch from '@/components/operating/page/hospiatlAllSearch.vue'
+import operating_clinicSearch from '@/components/operating/page/clinicSearch.vue'
+import operating_sourceManagement from '@/components/operating/page/sourceManagement.vue'
+import operating_pathogenicSearch from '@/components/operating/page/pathogenicSearch.vue'
+import operating_activityDetails from '@/components/operating/page/activityDetails.vue'
+import operating_activityReleased from '@/components/operating/page/activityReleased.vue'
+import operating_addActivity from '@/components/operating/page/addActivity.vue'
+import operating_previewActivities from '@/components/operating/page/previewActivities.vue'
+import operating_caseDetails from '@/components/operating/page/caseDetails.vue'
+import operating_collect from '@/components/operating/page/collect.vue'
+import operating_operating from '@/components/operating/page/operating.vue'
+import operating_clinicDetails from '@/components/operating/page/clinicDetails.vue'
 
 Vue.use(Router)
 
@@ -836,6 +847,79 @@ const router = new Router({
 			  path: 'operating_hospiatlAllSearch',
 			  name: 'operating_hospiatlAllSearch',
 			  component: operating_hospiatlAllSearch,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_clinicSearch',
+			  name: 'operating_clinicSearch',
+			  component: operating_clinicSearch,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_sourceManagement',
+			  name: 'operating_sourceManagement',
+			  component: operating_sourceManagement,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_pathogenicSearch',
+			  name: 'operating_pathogenicSearch',
+			  component: operating_pathogenicSearch,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_activityDetails',
+			  name: 'operating_activityDetails',
+			  component: operating_activityDetails,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_activityReleased',
+			  name: 'operating_activityReleased',
+			  component: operating_activityReleased,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_addActivity',
+			  name: 'operating_addActivity',
+			  component: operating_addActivity,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_previewActivities',
+			  name: 'operating_previewActivities',
+			  component: operating_previewActivities,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_caseDetails',
+			  name: 'operating_caseDetails',
+			  component: operating_caseDetails,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_collect',
+			  name: 'operating_collect',
+			  component: operating_collect,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_operating',
+			  name: 'operating_operating',
+			  component: operating_operating,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_clinicDetails',
+			  name: 'operating_clinicDetails',
+			  component: operating_clinicDetails,
+			  meta: {auth:true},
+			},
+			
+			{
+			  path: 'operating_indexDetails',
+			  name: 'operating_indexDetails',
+			  component: operating_indexDetails,
 			  meta: {auth:true},
 			},
 			

@@ -7,13 +7,13 @@
 				<div class="indexReturn" @click="goBackFn"  id="navback">
 					<img src="../../../assets/image/back-white@2x.png" alt="">
 				</div>
-				<router-link :to="{name:'hospital_pathogenicSearch',query:{focus : true,time:new Date().getTime()}}">
+				<router-link :to="{path:'/operating/operating_pathogenicSearch',query:{hospitalId: this.$route.query.hospitalId,focus : true,time:new Date().getTime()}}">
           <div class="indexSearch ">
               <input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
               <img src="../../../assets/image/sousuo@2x.png" alt="">
           </div>
 				</router-link>
-        <router-link :to="{name:'hospital_pathogenicSearch',query:{time:new Date().getTime()}}">
+        <router-link :to="{path:'/operating/operating_pathogenicSearchoperating_pathogenicSearch',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
           <div class="clinic_buttton">
             <button>搜索</button>
           </div>
@@ -30,17 +30,17 @@
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
 					<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'>
 						<keep-alive>
-							<clinicAll ref='all' :list = 'list'></clinicAll>
+							<clinicAll ref='all' :list = 'list' :hospitalId = "this.$route.query.hospitalId"></clinicAll>
 						</keep-alive>
 					</van-tab>
 					<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
 						<keep-alive>
-							<clinicNo ref='no' :list = 'list'></clinicNo>
+							<clinicNo ref='no' :list = 'list' :hospitalId = "this.$route.query.hospitalId"></clinicNo>
 						</keep-alive>
 					</van-tab>
 					<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
 						<keep-alive>
-							<clinicYes ref='yes' :list = 'list'></clinicYes>
+							<clinicYes ref='yes' :list = 'list' :hospitalId = "this.$route.query.hospitalId"></clinicYes>
 						</keep-alive>
 					</van-tab>
 				</van-tabs>
@@ -86,15 +86,11 @@ export default {
     }
   },
   created(){
-	  debugger
-	var heightRexg = /^[0-9]*/g
-	//var topHeight = this.topHeight.match(heightRexg)
-	//this.height = parseInt(topHeight.join())
-	// //
+	
   },
   beforeRouteLeave(to, from, next) {
     debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
+	let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
 
 	
@@ -132,7 +128,7 @@ this.scrollTop = scrollTop?scrollTop :0;
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
-		document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
+		document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
 	});
 
   }
@@ -141,6 +137,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 	  
   },
   mounted(){
+	  console.dir(this.$route.query)
 	  debugger
     if(window.plus){
     	//plus.navigator.setStatusBarBackground("#2B77EF");
@@ -201,23 +198,19 @@ this.scrollTop = scrollTop?scrollTop :0;
     },
 	//回退方法
 	goBackFn(){
-		this.$router.back(-1)
+		this.$router.back()
 	},
 	//显示筛选弹窗
 	showPopup() {
 	  this.show = true;
-    this.$router.push({name:'hospital_pathogenicSearch',query:{time:new Date().getTime(),show:false}})
+		this.$router.push({path:'/operating/operating_pathogenicSearch',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime(),show:false}})
 
 	},
 	getNum(){
-		debugger
-		let clinicId = '';
-		// this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.$store.state.hospital.login.clinicId;
-		// this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
+		
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
-			hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
-			clinicId : clinicId,
+			hospitalId: this.$route.query.hospitalId,
 			status :1,
 			pn : 1,
 			ps : 10
@@ -232,8 +225,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 		})
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
-			hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
-			clinicId : clinicId,
+			hospitalId: this.$route.query.hospitalId,
 			status :4,
 			pn : 1,
 			ps : 10

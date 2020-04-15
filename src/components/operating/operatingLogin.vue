@@ -39,7 +39,7 @@
       		</router-link>
 			
           	<div @click="chooseEntrance" class="returnTypePage">
-          		<span style="color: #2B77EF;">选择入口</span>
+          		<span style="color: #2B77EF;">选择端口</span>
           	</div>
       	</div>
 

@@ -1,14 +1,14 @@
 <template>
 	<div class="content">
-		<span v-if="show? true:false">已找到 {{clinicNum}} 条数据</span>
+		<!-- <span>已找到 {{clinicNum}} 条数据</span> -->
 			<ul>
 				<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 					<li v-for="(items,inx) in content" :key="inx">
-						<router-link :to="{path : '/hospital/hospital_clinicDetails' ,query :  {clinicId : items.hospitalClinicId,time:new Date().getTime()}}">
+						<router-link :to="{path : '/operating/operating_clinicDetails' ,query :  {clinicId : items.itemId,time:new Date().getTime()}}">
 							<div class="contentLi">
 								<h4>{{items.name}}</h4>
-								<span>推广人: {{items.hospitalUserName}}</span>
-								<input type="text" v-model="items.patientCount" readonly="readonly">
+								<span>推广人: {{items.clinicPromoterName}}</span>
+								<input type="text" v-model="items.pushCount" readonly="readonly">
 							</div>
 						</router-link>
 					</li>
@@ -45,7 +45,7 @@ export default {
 
 	},
   beforeRouteLeave(to, from, next) {
-	let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
+	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
 
 	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
@@ -80,7 +80,7 @@ this.scrollTop = scrollTop?scrollTop :0;
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
     next(vm => {
-	 document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
+	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
 	});
 
   }, mounted() {
@@ -101,22 +101,16 @@ this.scrollTop = scrollTop?scrollTop :0;
 		initData() {
 		  Object.assign(this.$data, this.$options.data());
 		  this.getNextPage();
-      this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
-       .then(res => {
-       	this.clinicNum = res.data.data.rowCount;
-       })
-       .catch((err)=>{
-       	
-       })
 		},
 		getdata(){
-			this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({pn:this.page})+'&'+qs.stringify({ps:10}))
+			this.$axios.get('/c2/clinic/items?'+qs.stringify({pn:this.page,hospitalId: this.$route.query.hospitalId,ps:10}))
 			.then(res => {
-				if(res.data.data.rows.length != 0){
-					for(let i in res.data.data.rows){
-						if(res.data.data.rows[i]){
-							this.content.push(res.data.data.rows[i])
+				if(res.data.data.items.length != 0){
+					for(let i in res.data.data.items){
+						if(res.data.data.items[i]){
+							this.content.push(res.data.data.items[i])
 						}
+						this.clinicNum = res.data.data.sum.totalCount
 						// 
 					}
 				// 加载状态结束
@@ -149,9 +143,10 @@ this.scrollTop = scrollTop?scrollTop :0;
 <style scoped>
 .content{
 	width: 100%;
-	position: fixed;
-	height: calc(100% - 2.5rem);
-	overflow: scroll;
+	/* position: fixed; */
+	/* height: calc(100% - 2.5rem); */
+	height: 100%;
+	/* overflow: scroll; */
 }
 .content>span{
 	width: 94.6%;

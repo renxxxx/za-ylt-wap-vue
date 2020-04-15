@@ -58,7 +58,7 @@
 			</div>
 			<div style="height:2rem"></div>
 			<clinicContent  ref="clinic" :show = 'show'></clinicContent>
-      <div style="height: .55rem;"></div>
+			<!-- <div style="height: .55rem;"></div> -->
 		</van-pull-refresh>
 	</div>
 </template>

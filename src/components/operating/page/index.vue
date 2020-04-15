@@ -55,18 +55,20 @@
 		</van-popup>
 		<div class="hospitalContent">
 		<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
-			<div class="hospitalList" v-for="(item,inx) in hospitalList" :key="inx">
-				<div class="hospitalContent_title">
-					<img :src="item.cover" alt="">
-					<h5>{{item.hospitalName}}</h5>
-					<img :src="item.img" alt="">
+			<router-link :to="{path:'/operating/operating_indexDetails',query:{hospitalId:item.hospitalId}}"  v-for="(item,inx) in hospitalList" :key="inx">
+				<div class="hospitalList">
+					<div class="hospitalContent_title">
+						<img :src="item.cover" alt="">
+						<h5>{{item.hospitalName}}</h5>
+						<img :src="item.img" alt="">
+					</div>
+					<div class="hospitalContent_message">
+						<p>创建时间：{{moment(item.time).format('YYYY-MM-DD HH-MM')}}</p>
+						<p>门诊数：{{item.clinicCount}}</p>
+						<p>病源数：{{item.patientCount}}</p>
+					</div>
 				</div>
-				<div class="hospitalContent_message">
-					<p>创建时间：{{moment(item.time).format('YYYY-MM-DD HH-MM')}}</p>
-					<p>门诊数：{{item.clinicCount}}</p>
-					<p>病源数：{{item.patientCount}}</p>
-				</div>
-			</div>
+			</router-link>
 		</van-list>
 		</div>
 		<div style="height: .55rem;"></div>
@@ -173,12 +175,19 @@ export default {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
     }
-    
+    if(this.$route.meta.auth && !this.$store.state.operating.login){
+    	this.$toast({message:'请登录',onClose:function(){
+			debugger
+    		thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
+    	}})
+    }
     let lastRoute = localStorage.getItem('lastRoute')
         if(lastRoute){
           this.$router.push(JSON.parse(lastRoute));
           return
         }
+	
+		
   },
   activated(){
   },
