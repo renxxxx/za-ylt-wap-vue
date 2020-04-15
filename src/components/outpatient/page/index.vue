@@ -162,13 +162,13 @@ this.scrollTop = scrollTop?scrollTop :0;
 		debugger
       document.getElementById('outpatient').scrollTop=document.getElementById('outpatient').pageYOffset=vm.scrollTop;
     });
-	let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
-	let lastRoute = localStorage.getItem('lastRoute')
+	// let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
+	// let lastRoute = localStorage.getItem('lastRoute')
 	
 	
-	if(fromRoute == lastRoute){
-	 localStorage.removeItem('lastRoute')
-	}
+	// if(fromRoute == lastRoute){
+	//  localStorage.removeItem('lastRoute')
+	// }
   },
   destroyed(){
   },
@@ -178,11 +178,11 @@ this.scrollTop = scrollTop?scrollTop :0;
     	//plus.navigator.setStatusBarBackground("#2B77EF");
     	plus.navigator.setStatusBarStyle("dark")
     }
-	let lastRoute = localStorage.getItem('lastRoute')
-	    if(lastRoute){
-	      this.$router.push(JSON.parse(lastRoute));
-	      return
-	    }
+	// let lastRoute = localStorage.getItem('lastRoute')
+	//     if(lastRoute){
+	//       this.$router.push(JSON.parse(lastRoute));
+	//       return
+	//     }
 	
 	this.initData();
   },

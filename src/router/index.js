@@ -130,25 +130,25 @@ const router = new Router({
       path: '/',
       name: 'chooseTheType',
       component: chooseTheType,
-      meta: {unkeepLastRoute:true},
+      meta: {},
     },
     // {
     //   path: '/chooseTheType',
     //   name: 'chooseTheType',
     //   component: chooseTheType,
-    //   meta: {unkeepLastRoute:true},
+    //   meta: {},
     // },
     {
       path: '/sharePage',
       name: 'sharePage',
       component: sharePage,
-	  meta: {unkeepLastRoute:true},
+	  meta: {},
     },
 	{
 		path: '*',
 		name: 'error',
 		component: Page404,
-		meta: {unkeepLastRoute:true},
+		meta: {},
 	},
     {
       path: '/hospital',
@@ -161,25 +161,25 @@ const router = new Router({
           path: 'hospitalLogin',
           name: 'hospitalLogin',
           component: hospitalLogin,
-          meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+          meta: {auth:true,indexHide:true},
         },
         {
           path: 'hospital_index',
           name: 'hospital_index',
           component: hospital_index,
-          meta: {auth:true,tabbar:true,unkeepLastRoute:true,indexHide:true},
+          meta: {auth:true,tabbar:true,indexHide:true},
         },
         {
           path: 'hospital_urlPage',
           name: 'hospital_urlPage',
           component: hospital_urlPage,
-          meta: {auth:true,indexHide:true,unkeepLastRoute:true},
+          meta: {auth:true,indexHide:true,},
         },
         {
           path: 'hospital_retrievePassword',
           name: 'hospital_retrievePassword',
           component: hospital_retrievePassword,
-          meta: {auth:true,indexHide:true,unkeepLastRoute:true},
+          meta: {auth:true,indexHide:true,},
         },
         {
           path: 'hospital_clinic',
@@ -480,7 +480,7 @@ const router = new Router({
               path: '/promoters_index',
               name: 'promoters_index',
               component: promoters_index,
-              meta: {auth:true,bottom:true,unkeepLastRoute:true,indexHide:true},
+              meta: {auth:true,bottom:true,indexHide:true},
             },
             {
               path: 'promoters_clinicSearch',
@@ -588,26 +588,26 @@ const router = new Router({
           path: '/outpatientLogin',
           name: 'outpatientLogin',
           component: outpatientLogin,
-          meta: {auth:true,indexHide:true,unkeepLastRoute:true},
+          meta: {auth:true,indexHide:true,},
         },
 		
         {
           path: 'outpatient_index',
           name: 'outpatient_index',
           component: outpatient_index,
-          meta: {auth:true,unkeepLastRoute:true,tabbar:true,indexHide:true},
+          meta: {auth:true,tabbar:true,indexHide:true},
         },
 		{
 			path: '/outpatient_retrievePassword',
 			name: 'outpatient_retrievePassword',
 			component: outpatient_retrievePassword,
-			meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+			meta: {auth:true,indexHide:true},
 		},
 		{
 			path: '/outpatient_urlPage',
 			name: 'outpatient_urlPage',
 			component: outpatient_urlPage,
-			meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+			meta: {auth:true,indexHide:true},
 		},
         {
           path: 'outpatient_pathogenicSearch',
@@ -777,10 +777,10 @@ router.afterEach((to,from) => {
   Store.state.hospitalReturnHomePage = !to.meta.indexHide
   Store.state.outpatientReturnHomePage = !to.meta.indexHide
   // Store.state.bottomShow = !!to.meta.bottomShow;
-  if(!to.meta.unkeepLastRoute){
-	  debugger;
-    localStorage.setItem('lastRoute',JSON.stringify({path:to.path,name:to.name,query:to.query}))
-  }
+  // if(!to.meta.unkeepLastRoute){
+	//   debugger;
+  //   localStorage.setItem('lastRoute',JSON.stringify({path:to.path,name:to.name,query:to.query}))
+  // }
     
 
 
