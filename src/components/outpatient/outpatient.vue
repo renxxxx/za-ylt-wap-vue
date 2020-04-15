@@ -79,7 +79,9 @@ export default {
   			require('../../assets/image/wode@2x.png')],
   	dataValue : '',
 		startLength:0,
-		overLength:0
+		overLength:0,
+		startLengthY:0,
+		overLengthY:0,
   }
   },
   props:['name'],
@@ -156,12 +158,13 @@ export default {
   },
   methods:{
 		touchStartFn(_value){
+			this.startLengthY = _value.changedTouches[0].screenY;
 			this.startLength = _value.changedTouches[0].screenX
-			
 		},
 		touchEndFn(_value){
 			this.overLength = _value.changedTouches[0].screenX;
-			if((this.overLength-this.startLength)>100){
+			this.overLengthY = _value.changedTouches[0].screenY
+			if((this.overLength-this.startLength)>100 && (this.startLengthY - this.overLengthY) < 150){
 				this.$router.back()
 			}
 		},

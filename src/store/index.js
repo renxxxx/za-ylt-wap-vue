@@ -8,7 +8,7 @@ Vue.use(Vuex)
 const state={
   hospital:{login:null},
   outpatient:{login:null},
-  
+  operating:{login:null},
   //账号
   isLogin:0,
   account:{
@@ -40,6 +40,11 @@ const state={
   outpatientReturnHomePage : true,
   //门诊端返回顶部按钮显示
   outpatientReturnTopPage : false,
+  //运营端返回首页按钮显示
+  operatingReturnHomePage : true,
+  //运营端返回顶部按钮显示
+  operatingReturnTopPage:false,
+  
 }
 const getters={
   //账号登录
@@ -64,6 +69,10 @@ const getters={
   outpatientReturnHomePage : state => state.outpatientReturnHomePage,
   //门诊端返回顶部按钮显示
   outpatientReturnTopPage : state => state.outpatientReturnTopPage,
+  //运营端返回首页按钮显示
+  operatingReturnHomePage  : state => state.operatingReturnHomePage,
+  //运营端返回顶部按钮显示
+  operatingReturnTopPage : state => state.operatingReturnTopPage,
 }
 const actions={}
 const mutations={}

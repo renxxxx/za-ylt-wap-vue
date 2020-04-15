@@ -283,8 +283,10 @@ this.scrollTop = scrollTop?scrollTop :0;
 }
 .user_center{
 	width: 100%;
-
 	padding-top: 1.6rem;
+	position: fixed;
+	height: calc(100% - 1.9rem);
+	
 }
 .user_center ul{
 	height: 100%;

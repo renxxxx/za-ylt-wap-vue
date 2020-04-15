@@ -10,7 +10,7 @@
 			<div class="right"></div>
 		</div>
 		<div class="zhangwei"></div>
-		<router-link :to="{name:'hospital_addActivity'}" v-show="isLogin== 100? true : false" >
+		<router-link :to="{name:'hospital_addActivity'}">
 			<div class="addActive" :style="{'padding-top':$store.state.paddingTop}">
 				<span>+</span>
 				<span>新建活动</span>

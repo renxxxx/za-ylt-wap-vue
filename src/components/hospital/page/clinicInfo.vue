@@ -327,7 +327,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 }
 .leftNav{
 	float: left;
-	width: 17.6%;
+	width: 19.6%;
 	height: .48rem;
 	line-height: .48rem;
 }
@@ -338,7 +338,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 }
 .centerNav{
 	float: left;
-	width: 64.8%;
+	width: 60.8%;
 	height: .48rem;
 	line-height: .48rem;
 	text-align: center;
@@ -349,7 +349,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 }
 .rightNav{
 	float: left;
-	width: 17.6%;
+	width: 19.6%;
 	height: .48rem;
 	line-height: .48rem;
 }

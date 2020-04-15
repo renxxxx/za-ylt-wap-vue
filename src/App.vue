@@ -257,6 +257,7 @@ img[lazy="error"]{
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   position: relative;
+	/* background-color: #F5F5F5; */
 }
 
 </style>

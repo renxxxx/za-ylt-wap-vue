@@ -1,6 +1,6 @@
 <template>
 	<div class="chooseTheType">
-    <div class="nav">
+    <div class="nav" :style="{'padding-top':$store.state.paddingTop}">
       <h3>您有以下端口</h3>
       <p>请选择进入</p>
     </div>
@@ -91,7 +91,7 @@ export default {
           // this.submitFn('/clinic/login-refresh',200);
           break;
           case '3':
-            this.$toast('正在开发中')
+            this.$router.replace({ path : '/operating',query:{time:new Date().getTime()}})
           // this.submitFn('/manager/login-refresh',300)
           break;
         }
@@ -128,14 +128,14 @@ export default {
   position: absolute;
   bottom: .34rem;
   left: .3rem;
-  font-size: .2rem;
+  font-size: .22rem;
   font-weight: bolder;
 }
 .options{
   width: 84%;
   height: .9rem;
   margin: 0rem auto .2rem;
-  border: 4px solid #E2E2E2;
+  border: 2px solid #E2E2E2;
   border-radius: .15rem;
   position: relative;
 }
@@ -144,7 +144,7 @@ export default {
 }
 .options:hover{
   color: #ED2828;
-  border: 4px solid #ED2828;
+  border: 2px solid #ED2828;
 }
 .options>img{
   width: 100%;

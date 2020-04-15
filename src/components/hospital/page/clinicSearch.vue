@@ -7,7 +7,7 @@
 				</div>
 				<div class="clinic_search">
 					<img src="../../../assets/image/sousuo@2x.png" alt="">
-					<input type="search" placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
+					<input type="search" v-focus='true' placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
           <!-- <img src="../../../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn()" v-if="keywords"> -->
 				</div>
 				<div class="clinic_buttton" @click="inputNow">
@@ -188,17 +188,17 @@ this.scrollTop = scrollTop?scrollTop :0;
 }
 .clinic_buttton{
 	float: right;
-	margin-top: .14rem;
+	margin-top: .12rem;
 	margin-right: .16rem;
 }
 .clinic_buttton button{
-	color: #FFFFFF;
-	background-color: #2B77EF;
-	border-radius: .15rem;
-	border: none;
-	height: .28rem;
-	width: .5rem;
-	font-size: .14rem;
+	color: #ffffff;
+	    background-color: #2b77ef;
+	    border-radius: 0.15rem;
+	    border: none;
+	    height: 0.28rem;
+	    width: 0.5rem;
+	    font-size: 0.12rem;
 }
 
 .clinic_information{

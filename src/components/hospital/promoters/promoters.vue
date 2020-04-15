@@ -130,7 +130,7 @@ export default {
 .appView {
      /* position: absolute; */
      width: 100%;
-     background: #fff;
+     /* background: #fff; */
      min-height: 100vh;
      transition: transform 0.24s ease-out;
  }

@@ -26,7 +26,7 @@
         <!-- </router-link> -->
 			</div>
 			<!-- 就诊情况 -->
-			<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+32)+'px'}">
+			<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+39)+'px'}">
 				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
 					<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'>
 						<keep-alive>
@@ -258,6 +258,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 	width: 100%;
   height: 100%;
 	background-color: #F5F5F5;
+	/* position: fixed; */
 }
 .navWarp{
 	/* background-color: #FFFFFF; */
@@ -265,7 +266,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 	height: 100%;
 }
 .topNav{
-	height: .8rem;
+	height: .85rem;
 	line-height:.335rem;
 	width: 100%;
 	padding-top: 0.1rem;

@@ -224,6 +224,7 @@ this.scrollTop = scrollTop?scrollTop :0;
       let thisVue = this
       if(this.$route.meta.auth && !this.$store.state.hospital.login)
       this.$toast({message:'请登录',onClose:function(){
+		  debugger
         thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
       }})
 

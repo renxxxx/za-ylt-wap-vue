@@ -1,6 +1,6 @@
 <template>
 	<div class="integralShopDetails">
-		<div class="topNav" >
+		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>

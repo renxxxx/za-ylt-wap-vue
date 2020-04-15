@@ -1,7 +1,7 @@
 <template>
   <div id="hospital" ref='hospitalRef' :style="{'margin-bottom':bottomShow?'.55rem':'' }" @touchstart='touchStartFn' @touchend='touchEndFn'>
 	<keep-alive   >
-		<router-view class="appView" />
+		<router-view class="appView" id="appViewHospital"/>
 	</keep-alive>
   <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-show="hospitalReturnHomePage">
     <img src="../../assets/image/returnHome.png" alt />
@@ -72,7 +72,9 @@ export default {
           inactive: require('../../assets/image/wode-blue@2x.png')
       },
 	  startLength:0,
-	  overLength:0
+	  overLength:0,
+	  startLengthY:0,
+	  overLengthY:0,
     }
   },
   props:['name'],
@@ -143,23 +145,19 @@ export default {
     window.addEventListener("scroll", this.handleScroll, true);
   },
   watch:{
-    $route(to,from){
-      // 
-      //localStorage.setItem('lastRoute',JSON.stringify({name:to.name,query:to.query,params:to.params}))
-    }
+
   },
   methods:{
 	touchStartFn(_value){
+		this.startLengthY = _value.changedTouches[0].screenY;
 		this.startLength = _value.changedTouches[0].screenX
-		
 	},
 	touchEndFn(_value){
 		this.overLength = _value.changedTouches[0].screenX;
-		if((this.overLength-this.startLength)>100){
+		this.overLengthY = _value.changedTouches[0].screenY
+		if((this.overLength-this.startLength)>100 && (this.startLengthY - this.overLengthY) < 150){
 			this.$router.back()
 		}
-		// 
-		// console.dir(_value)
 	},
     // 滑动一定距离出现返回顶部按钮
     handleScroll() {
@@ -239,7 +237,7 @@ export default {
 .appView {
      /* position: absolute; */
      width: 100%;
-     background: #fff;
+     /* background: #fff; */
      min-height: 100vh;
      transition: transform 0.24s ease-out;
  }

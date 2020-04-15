@@ -609,6 +609,14 @@ this.scrollTop = scrollTop?scrollTop :0;
 	color: #FFFFFF;
 	font-size: 	.14rem;
 }
+.newAdd{
+	position: fixed;
+	height: calc(100% - 1.3rem);
+	width: 91.4%;
+	left: 0;
+	right: 0;
+	margin: 0rem auto;
+}
 .newAddTitle{
 	width: 91.4%;
 	margin-top: 2.9%;
@@ -644,7 +652,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 	border: none;
 	float:right;
 	text-align: right;
-	background-color: #F5F5F5;
+	/* background-color: #F5F5F5; */
 }
 .bottom{
 	margin-top: .2rem;

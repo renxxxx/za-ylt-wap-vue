@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="144px" height="50px" viewBox="0 0 144 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>weirenzheng</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="50%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#1DC6DA" offset="0%"></stop>
+            <stop stop-color="#05DEF9" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Health-Tab-Copy-58" transform="translate(-590.000000, -562.000000)">
+            <g id="weirenzheng" transform="translate(590.000000, 562.000000)">
+                <path d="M21,0 L144,0 L144,42 L138.07466,42 L134.822937,42 L21,42 C9.40202025,42 1.42034288e-15,32.5979797 0,21 L0,21 C-1.42034288e-15,9.40202025 9.40202025,2.13051432e-15 21,0 Z" id="Rectangle-20-Copy" fill="url(#linearGradient-1)"></path>
+                <text id="未认证" font-family="PingFangSC-Medium, PingFang SC" font-size="22" font-weight="400" fill="#FFFFFF">
+                    <tspan x="39" y="29">未认证</tspan>
+                </text>
+                <polygon id="Rectangle-22-Copy" fill="#139DAD" points="136 42 144 42 136 50"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

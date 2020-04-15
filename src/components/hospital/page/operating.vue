@@ -2,7 +2,7 @@
 	<div class="operating">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
-				<img src="../../../assets/image/shape@3x.png" alt="" id="navback" :style="{'padding-top':$store.state.paddingTop}">
+				<img src="../../../assets/image/shape@3x.png" alt="" id="navback" >
 			</div>
 			<div class="centerTitle">
 				<h3>优质案例</h3>
@@ -166,6 +166,9 @@ this.scrollTop = scrollTop?scrollTop :0;
   font-size: .15rem;
   color: #333333;
   position: relative;
+}
+.operating>ul li:last-child{
+	border: none;
 }
 .operating>ul li h4{
   display: inline-block;

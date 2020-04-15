@@ -29,7 +29,7 @@
       			</router-link>
       		</p>
       	</div>
-      	<button class="submitClass" type="submit" value="医院登录" @click="submit()">登录</button>
+      	<button class="submitClass" type="submit" value="门诊登录" @click="submit()">登录</button>
       	<div class="passwordReset">
       		<router-link  :to="{path : 'outpatient_retrievePassword',query:{time:new Date().getTime()}}">
       			<div class="forget">
@@ -39,7 +39,7 @@
       		</router-link>
           <router-link  :to="{path : '/',query:{time:new Date().getTime()}}">
           	<div class="returnTypePage">
-          		<span @click="chooseEntrance" style="color: #2B77EF;">选择入口</span>
+          		<span @click="chooseEntrance" style="color: #2B77EF;">选择端口</span>
           	</div>
           </router-link>
       	</div>
