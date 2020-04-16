@@ -104,14 +104,7 @@ export default {
 	created(){
 		
 	},
-  beforeRouteLeave(to, from, next) {
-
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-   
-
-  }, mounted() {
+  mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")

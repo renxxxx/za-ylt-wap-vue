@@ -57,14 +57,7 @@ export default {
 	created () {
 		debugger
 	},
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-   
-  }, mounted() {
+   mounted() {
 	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");

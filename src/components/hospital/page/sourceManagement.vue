@@ -92,14 +92,7 @@ export default {
 	//this.height = parseInt(topHeight.join())
 	// //
   },
-  beforeRouteLeave(to, from, next) {
-    debugger;
-
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-   
-  }
+  
   ,destroyed(){
 	  debugger
 	  
