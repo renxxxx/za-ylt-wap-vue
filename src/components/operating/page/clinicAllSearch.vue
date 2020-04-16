@@ -3,10 +3,13 @@
 		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="topNav_search">
-				<router-link :to="{path:'/operating/operating_clinicAllSearch'}">
+				<div class="topNav_searchBack" @click="backFn">
+					<img src="../../../assets/image/shape@3x.png" alt="">
+				</div>
+				<div class="topNav_searchinput">
 					<img src="../../../assets/image/sousuo@2x.png" alt="">
-					<input type="search">
-				</router-link>
+					<input type="search" v-model="kw" @keydown.enter="searchFn">
+				</div>
 				<div class="shaixuan" @click="shaixuanFn">
 					<span>筛选</span>
 					<img src="../../../assets/image/shaixuan.svg" alt="">
@@ -92,7 +95,8 @@ export default {
 	  			content : [],
 	  			page:0,
 	  			clinicNum : 0,
-	  test:''
+	  test:'',
+	  kw:'',
     };
   },
   components: {
@@ -189,10 +193,20 @@ this.scrollTop = scrollTop?scrollTop :0;
     debugger
     },
   methods: {
+	backFn(){
+		this.$router.back()
+	},
+	searchFn(){
+		this.page = 0;
+		this.content = [];
+		this.clinicNum = 0;
+		this.finished = false;
+		this.getNextPage()
+	},
 	getdata(){
 		this.$axios.get('/c2/clinic/items?'+qs.stringify({
 			pn:this.page,
-			// hospitalId: this.$store.state.operating.login,
+			kw:this.kw,
 			ps:10,
 			sorts:this.sorts,
 			orders:this.orders,
@@ -337,13 +351,28 @@ this.scrollTop = scrollTop?scrollTop :0;
 	top: 0;
 }
 .topNav_search{
+	margin-top: .08rem;
+}
+.topNav_searchBack{
+	width: 7%;
+	float: left;
+}
+.topNav_searchBack>img{
+	width: .09rem;
+	    height: .15rem;
+}
+.topNav_search{
 	width: 100%;
 	height: .335rem;
 	line-height: .335rem;
-	position: relative;
-	margin-top: .08rem;
+	
 }
-.topNav_search>a>img{
+.topNav_searchinput{
+	width: 80%;
+	float: left;
+position: relative;
+}
+.topNav_searchinput>img{
 	width: .13rem;
 	height: .145rem;
 	position: absolute;
@@ -352,8 +381,8 @@ this.scrollTop = scrollTop?scrollTop :0;
 	bottom: 0rem;
 	margin: auto 0rem;
 }
-.topNav_search>a>input{
-	width: 82%;
+.topNav_searchinput>input{
+	width: 95%;
 	height: .335rem;
 	background-color: #FFFFFF;
 	border-radius: .17rem;
@@ -361,6 +390,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 	padding: .06rem .1rem .06rem .39rem;
 }
 .shaixuan{
+	width: 13%;
 	height: 35px;
 	/* line-height: 100%; */
 	float: right;

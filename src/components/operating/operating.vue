@@ -253,7 +253,7 @@ export default {
   /* line-height: .4rem; */
   text-align: center;
   border-radius: 50%;
-  background-color: #ffffff;
+  background-color: rgba(255,255,255,.8);
   border: 1px solid #bfbebe;
 }
 
@@ -283,7 +283,7 @@ export default {
   /* line-height: .4rem; */
   text-align: center;
   border-radius: 50%;
-  background-color: #ffffff;
+  background-color: rgba(255,255,255,.8);
   border: 1px solid #bfbebe;
 }
 .returnTop img {

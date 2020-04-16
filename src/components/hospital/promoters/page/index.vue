@@ -1,7 +1,7 @@
 <template>
-	<div class="index">
+	<div class="index" id="promotersIndex">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
-			<h3>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</h3>
+			<h3>—&nbsp;&nbsp;推广人端&nbsp;&nbsp;—</h3>
 		</div>
 		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
 		<div class="typeNav">
@@ -145,8 +145,6 @@ export default {
 		});
 		let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
 		let lastRoute = localStorage.getItem('lastRoute')
-		
-		
 		if(fromRoute == lastRoute){
 		 localStorage.removeItem('lastRoute')
 		}

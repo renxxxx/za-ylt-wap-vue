@@ -23,13 +23,13 @@
 			<li>
 				<span>单个积分</span>
 				<p>
-					<input type="text" v-model="exchangeAdd.payExchangepoint"> 分
+					<input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" v-model="exchangeAdd.payExchangepoint"> 分
 				</p>
 			</li>
 			<li>
 				<span>总数量</span>
 				<p>
-					<input type="text" oninput="value=value.replace(/[^\d]/g,'')"  v-model="exchangeAdd.stock"> 个
+					<input type="number"  onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  v-model="exchangeAdd.stock"> 个
 				</p>
 			</li>
 			<li>

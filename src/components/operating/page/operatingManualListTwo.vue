@@ -52,6 +52,7 @@ export default {
       operatingManualList : [],
       num:0,
       yesNum:0,
+	  query:{}
     }
   },
   computed:{
@@ -64,7 +65,7 @@ export default {
   // },
   beforeRouteLeave(to, from, next) {
     //debugger;
-  let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
+  let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
 
   if(!to.query.time || !from.query.time || to.query.time < from.query.time){
@@ -99,7 +100,7 @@ this.scrollTop = scrollTop?scrollTop :0;
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
       next(vm => {
-      document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
+      document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
     });
   },
   created () {
@@ -109,27 +110,27 @@ this.scrollTop = scrollTop?scrollTop :0;
     	//plus.navigator.setStatusBarBackground("#ffffff");
     	plus.navigator.setStatusBarStyle("dark")
     }
-		// console.log(this.$route.query)
-		// console.log(JSON.parse(this.$route.query))
+	this.query = qs.parse(this.$route.query)
     this.getData()
   },
   methods: {
     //回退方法
     goBackFn(){
-    	this.$router.back()
+    	this.$router.back(-1)
     },
     nextPageFn(item){
       console.dir(item.lowerCount)
       if(item.lowerCount){
         console.dir(item.operatingManualSectionId)
 
-        this.$router.push({path: '/hospital/hospital_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
+        this.$router.push({path:'/operating/operating_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
       }else{
-        this.$router.push({name:'hospital_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
+        this.$router.push({path:'/operating/operating_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
       }
     },
     getData(){
-      this.$axios.get('/hospital/operating-manual/operating-manual-sections?'
+		console.dir(this.$route.query)
+      this.$axios.get('/manager/operating-manual-sections?'
         +qs.stringify({"operatingManualId":this.$route.query.operatingManualId})+'&'
         +qs.stringify({"upperId":this.$route.query.operatingManualSectionId})
         )

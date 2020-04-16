@@ -222,12 +222,14 @@ this.scrollTop = scrollTop?scrollTop :0;
     },
     initData() {
       let thisVue = this
-      if(this.$route.meta.auth && !this.$store.state.hospital.login)
-      this.$toast({message:'请登录',onClose:function(){
-		  debugger
-        thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
-      }})
-
+      if(this.$route.meta.auth && !this.$store.state.hospital.login){
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+			}})
+		}
+		if(thisVue.$store.state.hospital.login.type == 1){
+			thisVue.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
+		}
       Object.assign(this.$data, this.$options.data());
       //轮播图图片路径请求
       this.$axios

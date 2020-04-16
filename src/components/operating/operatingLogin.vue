@@ -138,6 +138,10 @@ this.scrollTop = scrollTop?scrollTop :0;
                   type:'post',
                   async:false,
                   success:function(res){
+					if(res.codeMsg){
+						console.log('s')
+						thisVue.$toast(res.codeMsg)
+					}
                     if(res.code == 0){
                       thisVue.$store.state.operating.login=res.data
                       thisVue.$toast({"message":'已登录',onClose(){
@@ -229,6 +233,10 @@ this.scrollTop = scrollTop?scrollTop :0;
                   type:'post',
                   async:false,
                   success:function(res){
+					if(res.codeMsg){
+						console.log('s')
+						thisVue.$toast(res.codeMsg)
+					}
                     if(res.code == 0){
                       thisVue.$store.state.operating.login=res.data
                        thisVue.$toast({"message":'登录成功',onClose(){

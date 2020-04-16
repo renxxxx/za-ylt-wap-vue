@@ -6,12 +6,12 @@
 			</div>
 			<div class="user_message">
 				<div class="top_left">
-					<img :src="coverImg? dd: require('../../../assets/image/logo@2x.png')" alt="">
+					<img :src="coverImg? coverImg: require('../../../assets/image/logo@2x.png')" alt="">
 					<!-- <span>已认证</span> -->
 				</div>
 				<div class="top_center">
-					<h3>{{this.$store.state.operating.login.name}}</h3>
-					<p>账号：{{this.$store.state.operating.login.phone}}</p>
+					<h3>{{this.$store.state.operating.login? this.$store.state.operating.login.name:''}}</h3>
+					<p>账号：{{this.$store.state.operating.login? this.$store.state.operating.login.phone:''}}</p>
 				</div>
 				<!-- <div class="top_right" @click="showImgFn">
 					<span>营业执照</span>

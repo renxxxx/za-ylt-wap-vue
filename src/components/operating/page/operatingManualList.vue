@@ -2,7 +2,7 @@
 	<div class="operatingManualList">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
-				<img src="../../../assets/image/shape@3x.png" alt="" id="navback">
+				<img src="../../../assets/image/shape@3x.png" alt="" id="navback" >
 			</div>
 			<div class="centerTitle">
 				<h3>{{this.$route.query.name}}</h3>
@@ -10,14 +10,18 @@
 			<div class="right"></div>
 		</div>
     <div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
-   <div style="margin-top: .2rem;">
+    <div style="margin-top: .2rem;">
       <div v-for="(item,inx) in operatingManualList" :key="inx" @click="nextPageFn(item)">
+        <!-- <router-link :to="{path : '/hospital/hospital_operatingManualList',query:{operatingManualId:item.operatingManualId}}"> -->
           <van-cell is-link>
+            <!-- 使用 title 插槽来自定义标题 -->
             <template>
               <span class="custom-title">{{item.name}}</span>
             </template>
           </van-cell>
+        <!-- </router-link> -->
       </div>
+
     </div>
     <!-- <van-collapse v-model="activeNames">
        <van-collapse-item :title="this.$route.query.name" name="1">
@@ -52,22 +56,19 @@ export default {
       operatingManualList : [],
       num:0,
       yesNum:0,
+	  query:{}
     }
   },
   computed:{
+
   },
-  // beforeRouteUpdate(to,from,next){
-  //   this.operatingManualList = [];
-  //   
-  //   this.getData()
-  //   next();
-  // },
   beforeRouteLeave(to, from, next) {
     //debugger;
-  let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
+  let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
 this.scrollTop = scrollTop?scrollTop :0;
 
   if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+  	 debugger
             if (this.$vnode && this.$vnode.data.keepAlive)
             {
                 if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
@@ -99,40 +100,37 @@ this.scrollTop = scrollTop?scrollTop :0;
   //进入该页面时，用之前保存的滚动位置赋值
   beforeRouteEnter(to, from, next) {
       next(vm => {
-      document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
+      document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
     });
   },
   created () {
+
   },
   mounted () {
     if(window.plus){
     	//plus.navigator.setStatusBarBackground("#ffffff");
     	plus.navigator.setStatusBarStyle("dark")
     }
-		// console.log(this.$route.query)
-		// console.log(JSON.parse(this.$route.query))
+		// this.query = JSON.parse(this.$route.query)
+		
     this.getData()
   },
   methods: {
     //回退方法
     goBackFn(){
-    	this.$router.back()
+    	this.$router.back(-1)
     },
     nextPageFn(item){
-      console.dir(item.lowerCount)
       if(item.lowerCount){
-        console.dir(item.operatingManualSectionId)
-
-        this.$router.push({path: '/hospital/hospital_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
+        // console.dir(item)
+        this.$router.push({path:'/operating/operating_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
       }else{
-        this.$router.push({name:'hospital_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
+        this.$router.push({path:'/operating/operating_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
       }
     },
     getData(){
-      this.$axios.get('/hospital/operating-manual/operating-manual-sections?'
-        +qs.stringify({"operatingManualId":this.$route.query.operatingManualId})+'&'
-        +qs.stringify({"upperId":this.$route.query.operatingManualSectionId})
-        )
+      this.$axios.get('/manager/operating-manual-sections?'+qs.stringify({
+		  operatingManualId:this.$route.query.operatingManualId}))
       .then(res => {
         if(!res.data.codeMsg){
           for(let i in res.data.data.rows){
@@ -151,7 +149,7 @@ this.scrollTop = scrollTop?scrollTop :0;
           //  // console.dir(this.operatingManual[i]._data)
           // }
         }else{
-          this.$toast(res.data.codeMsg)
+          this.$toast(_res.data.codeMsg)
         }
       })
       .catch((err)=>{
@@ -210,6 +208,10 @@ this.scrollTop = scrollTop?scrollTop :0;
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .operatingManualList{
+  width: 100%;
+  background-color: #F5F5F5;
+}
+.operating{
   width: 100%;
   background-color: #F5F5F5;
 }

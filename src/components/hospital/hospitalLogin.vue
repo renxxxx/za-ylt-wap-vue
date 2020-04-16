@@ -138,6 +138,10 @@ this.scrollTop = scrollTop?scrollTop :0;
                   type:'get',
                   async:false,
                   success:function(res){
+					if(res.codeMsg){
+						console.log('s')
+						thisVue.$toast(res.codeMsg)
+					}
                     if(res.code == 0){
                       thisVue.$store.state.hospital.login=res.data
                       thisVue.$toast({"message":'已登录',onClose(){
@@ -234,14 +238,14 @@ this.scrollTop = scrollTop?scrollTop :0;
                   type:'get',
                   async:false,
                   success:function(res){
+					if(res.codeMsg){
+						console.log('s')
+						thisVue.$toast(res.codeMsg)
+					}
                     if(res.code == 0){
                       thisVue.$store.state.hospital.login=res.data
                        thisVue.$toast({"message":'登录成功',onClose(){
-                          if(thisVue.$store.state.hospital.login.type == 1){
-                              thisVue.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
-                            }else{
-                              thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
-                            }
+							thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
                         }})
                     }
                   }

@@ -1,7 +1,7 @@
 <template>
-  <div id="promoters" :class="[childBottomShow? 'hospitalBottom':'']" ref="promotersRef">
+  <div :class="[childBottomShow? 'hospitalBottom':'']" ref="promotersRef">
     <keep-alive>
-      <router-view class="appView"  />
+      <router-view class="appView" id="promoters" />
     </keep-alive>
     <van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.paddingBottom}" v-if="childBottomShow">
       <!-- <router-link :to="{path : '/promoters/hospital_sourceManagement'}"> -->

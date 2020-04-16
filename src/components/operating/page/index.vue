@@ -175,21 +175,25 @@ export default {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
     }
-    if(this.$route.meta.auth && !this.$store.state.operating.login){
-    	this.$toast({message:'请登录',onClose:function(){
-			debugger
-    		thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
-    	}})
-    }
+   //  if(this.$route.meta.auth && !this.$store.state.operating.login){
+   //  	this.$toast({message:'请登录',onClose:function(){
+			// debugger
+			// console.log('sss')
+   //  		thisVue.$router.replace({path:"/operating/operatingLogin",query:{time:new Date().getTime()}})
+   //  	}})
+   //  }
     let lastRoute = localStorage.getItem('lastRoute')
-        if(lastRoute){
+        if(lastRoute&&this.$route.meta.auth && !this.$store.state.operating.login){
           this.$router.push(JSON.parse(lastRoute));
           return
         }
-	
-		
+	console.log('这是mounted')
+	this.initData();
+	// this.getNextPage();
   },
   activated(){
+	  // this.initData();
+	  this.getNextPage();
   },
   deactivated(){
     debugger
@@ -283,14 +287,14 @@ export default {
     initData() {
       let thisVue = this;
 	  console.log(this.$store.state.operating.login)
-      if(this.$route.meta.auth && !this.$store.state.operating.login)
-      this.$toast({message:'请登录',onClose:function(){
-		  debugger
-        thisVue.$router.push({path:"/operating/operatingLogin",query:{time:new Date().getTime()}})
-      }})
-
+      if(this.$route.meta.auth && !this.$store.state.operating.login){
+		  this.$toast('请登录')
+		  let exit = setTimeout(()=>{
+			  thisVue.$router.replace({path:"/operating/operatingLogin",query:{time:new Date().getTime()}})
+			  clearTimeout(exit)
+		  },1500)
+	  }
       Object.assign(this.$data, this.$options.data());
-      
       this.getNextPage();
     },
 	getAllData(_data) {

@@ -139,7 +139,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 					stock: this.exchangeAdd.stock,
 					payExchangepoint : this.exchangeAdd.payExchangepoint,
 				})).then(res  =>{
-					res.data.codeMsg? Toast.fail(res.data.codeMsg) : this.successFn();
+					res.data.code? Toast.fail(res.data.codeMsg) : this.successFn();
           
 				}).catch(err =>{
 					
