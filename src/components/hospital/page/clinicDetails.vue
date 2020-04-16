@@ -58,6 +58,7 @@ export default {
 	data () {
 		return {
 			// 就诊状态选项值
+			clinicId:null,
 			value: 0,
 			option: [
 			    { text: '全部', value: 0 },
@@ -104,14 +105,20 @@ export default {
 	created(){
 		
 	},
+	activited(){
+		if(this.clinicId!=this.$route.query.clinicId){
+			this.clinicId=this.$route.query.clinicId
+			this.$route.query.clinicId?  this.ItemIdFn() : this.list.clinicId = '';
+			this.getNum();
+		}
+	},
   mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		// this.ItemIdFn();
-		this.$route.query.clinicId?  this.ItemIdFn() : this.list.clinicId = '';
-		this.getNum();
+		
 	},
 	methods: {
 		//回退方法

@@ -1,4 +1,4 @@
-hospital_detailsPage<template>
+<template>
 	<div class="all">
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh"> -->
 			<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">

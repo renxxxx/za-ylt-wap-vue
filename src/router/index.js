@@ -935,7 +935,5 @@ router.afterEach((to,from) => {
   Store.state.outpatientReturnHomePage = !to.meta.indexHide
   Store.state.operatingReturnHomePage = !to.meta.indexHide
   
-
-    
 })
 export default router

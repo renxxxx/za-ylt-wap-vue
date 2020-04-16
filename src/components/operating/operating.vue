@@ -1,8 +1,8 @@
 <template>
   <div id="operating" ref='operatingRef' @touchstart='touchStartFn' @touchend='touchEndFn'>
-	<keep-alive   >
-		<router-view class="appView" />
-	</keep-alive>
+    <keep-alive>
+    <router-view  class="appView"></router-view>
+  </keep-alive>
   <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-show="operatingReturnHomePage">
     <img src="../../assets/image/returnHome.png" alt />
     <span>首页</span>

@@ -4,7 +4,7 @@
 			<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 			<ul>
 				<li v-for="(item,inx) in  items" :key="inx">
-					<router-link :to="{path : '/hospital/hospital_detailsPage' ,meta:{keepAlive:false},query : {patientId : item.itemId,time:new Date().getTime()}}">
+					<router-link :to="{path : '/hospital/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
 						<div class="style">
 							<div class="contentTitle">
 								<img :src="item.img" alt="">

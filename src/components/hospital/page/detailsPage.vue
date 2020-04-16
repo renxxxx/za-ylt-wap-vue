@@ -99,6 +99,7 @@ export default {
 	name: 'gene',
 	data () {
 		return {
+
 			//预浏览发票图img片地址
 		imgUrl:[],
 		show : true,
@@ -142,14 +143,11 @@ export default {
  destroyed(){
 	  debugger
 	  
-  }
-  , mounted() {
-		if(window.plus){
-				//plus.navigator.setStatusBarBackground("#ffffff");
-				plus.navigator.setStatusBarStyle("dark")
-			}
-
-		this.$axios.post('/c2/patient/item',qs.stringify({
+  },
+  activated(){
+	  if(this.detail.patientId != this.$route.query.patientId){
+			this.detail.patientId=this.$route.query.patientId
+			this.$axios.post('/c2/patient/item',qs.stringify({
 			patientId : this.$route.query.patientId,
 		})).then(res =>{
 			this.detail = {
@@ -196,6 +194,17 @@ export default {
 		}).catch(err =>{
 			
 		})
+	  }
+	  
+	  
+  }
+  , mounted() {
+		if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+
+		
 	},
 	methods: {
 

@@ -170,7 +170,7 @@ export default {
   },
   created() {
 
-  }
+  },
   mounted() {
     if (window.plus) {
       plus.navigator.setStatusBarStyle("dark");
