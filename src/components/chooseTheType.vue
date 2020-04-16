@@ -62,17 +62,13 @@ export default {
 
   },
   mounted () {
-      let entrance = localStorage.getItem('entrance')
-      switch(entrance){
-        case '1':
-          this.$router.replace({ path : '/hospital/hospital_index',query:{time:new Date().getTime()}});
-        return
-        break;
-        case '2':
-          this.$router.replace({ path : '/outpatient/outpatient_index',query:{time:new Date().getTime()}});
-        return
-        break;
-      }
+    let thisVue = this;
+    if(thisVue.$store.state.hospital.login)
+          this.$router.replace({ path : '/hospital',query:{time:new Date().getTime()}});
+    else if(thisVue.$store.state.outpatient.login)
+          this.$router.replace({ path : '/outpatient',query:{time:new Date().getTime()}});
+    else if(thisVue.$store.state.operating.login)
+        this.$router.replace({ path : '/operating',query:{time:new Date().getTime()}});
   },
   methods: {
     choseFn(stata){

@@ -61,44 +61,7 @@ export default {
   }
   },
   props:['name'],
-  beforeRouteLeave(to, from, next) {
-  this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || this.$refs.promotersRef.scrollTop
-  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-  		}
-            this.$destroy();
-  	}
-  next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-   document.getElementById('promoters').scrollTop=document.getElementById('promoters').pageYOffset=vm.scrollTop;
-  });
   
-  },
    created(){
   	var heightRexg = /^[0-9]*/g
   	var bottomHeight = this.$store.state.paddingBottom.match(heightRexg)

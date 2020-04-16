@@ -1,6 +1,4 @@
-
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+debugger
 import './assets/rem'
 import './assets/rest.css'
 import Vue from 'vue'
@@ -12,14 +10,12 @@ import store from './store'
 import jquery from 'jquery'
 import cookies from 'js-cookie'
 import moment from 'moment'
+moment.locale('zh-cn');
 import qs from 'qs';
 import h5p from '../build/h5p.js'
-  
-debugger        
 Vue.prototype.$version = '2003271407-2cfdac6'
 Vue.prototype.$versionBrief = '修复了已知BUG, 优化了用户体验.'
 Vue.config.productionTip = false
-
 Vue.prototype.$axios = axios
 Vue.prototype.moment = moment;
 Vue.prototype.$store = store
@@ -27,7 +23,67 @@ Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
 Vue.prototype.$jquery = jquery
 Vue.prototype.$cookies = cookies
- 
+import {
+	Image,
+	Row,
+	Col,
+	Search,
+	Tabbar,
+	TabbarItem,
+	Tab,
+	Tabs,
+	Checkbox,
+	CheckboxGroup,
+	Dialog,
+	Popup,
+	RadioGroup,
+	Radio,
+	Cell,
+	CellGroup,
+	PullRefresh,
+	Area,
+	Overlay,
+	DatetimePicker,
+	Notify,
+	CountDown,
+	List,
+	Uploader,
+	DropdownMenu,
+	DropdownItem,
+	Swipe,
+	SwipeItem,
+	Lazyload,
+	ActionSheet,
+	Grid,
+	GridItem,
+	SwipeCell,
+	Circle,
+	Toast,
+	ImagePreview,
+	Progress,
+	Stepper,
+	Picker,
+  Collapse,
+  CollapseItem,
+  Step, Steps,
+  Field
+} from 'vant';
+Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab).use(Tabs).use(Checkbox).use(Stepper)
+	.use(CheckboxGroup).use(Dialog).use(Popup).use(RadioGroup).use(Radio).use(Cell).use(CellGroup).use(PullRefresh)
+	.use(Area).use(Overlay).use(DatetimePicker).use(Notify).use(CountDown).use(List)
+	.use(Uploader).use(DropdownMenu).use(DropdownItem).use(Swipe).use(SwipeItem).use(Lazyload, {
+		loading:require('./assets/image/loading.gif'),
+		error:require('./assets/image/loading-error.png'),
+		attempt:1,
+		preload:1.3,
+	  }).use(ActionSheet).use(Grid).use(Step).use(Steps).use(Field)
+	.use(GridItem).use(SwipeCell).use(Circle).use(Toast).use(ImagePreview).use(Progress).use(Picker).use(Collapse).use(CollapseItem);
+//配置全局时间
+Toast.setDefaultOptions({
+	duration: 1500,
+	forbidClick: true
+});
+
 Vue.prototype.cookieOn=function() {
 	debugger
 	var result = false;
@@ -115,68 +171,6 @@ Vue.directive('focus', {
 	}
 })
 
-moment.locale('zh-cn');
-
-import {
-	Image,
-	Row,
-	Col,
-	Search,
-	Tabbar,
-	TabbarItem,
-	Tab,
-	Tabs,
-	Checkbox,
-	CheckboxGroup,
-	Dialog,
-	Popup,
-	RadioGroup,
-	Radio,
-	Cell,
-	CellGroup,
-	PullRefresh,
-	Area,
-	Overlay,
-	DatetimePicker,
-	Notify,
-	CountDown,
-	List,
-	Uploader,
-	DropdownMenu,
-	DropdownItem,
-	Swipe,
-	SwipeItem,
-	Lazyload,
-	ActionSheet,
-	Grid,
-	GridItem,
-	SwipeCell,
-	Circle,
-	Toast,
-	ImagePreview,
-	Progress,
-	Stepper,
-	Picker,
-  Collapse,
-  CollapseItem,
-  Step, Steps,
-  Field
-} from 'vant';
-Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab).use(Tabs).use(Checkbox).use(Stepper)
-	.use(CheckboxGroup).use(Dialog).use(Popup).use(RadioGroup).use(Radio).use(Cell).use(CellGroup).use(PullRefresh)
-	.use(Area).use(Overlay).use(DatetimePicker).use(Notify).use(CountDown).use(List)
-	.use(Uploader).use(DropdownMenu).use(DropdownItem).use(Swipe).use(SwipeItem).use(Lazyload, {
-		loading:require('./assets/image/loading.gif'),
-		error:require('./assets/image/loading-error.png'),
-		attempt:1,
-		preload:1.3,
-	  }).use(ActionSheet).use(Grid).use(Step).use(Steps).use(Field)
-	.use(GridItem).use(SwipeCell).use(Circle).use(Toast).use(ImagePreview).use(Progress).use(Picker).use(Collapse).use(CollapseItem);
-//配置全局时间
-Toast.setDefaultOptions({
-	duration: 1500,
-	forbidClick: true
-});
 /* eslint-disable no-new */
 
 
