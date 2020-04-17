@@ -28,7 +28,7 @@
 							<!-- <van-dropdown-menu>
 								<van-dropdown-item v-model="value" :options="option" active-color='#2B77EF' @change="changeFn"/>
 							</van-dropdown-menu> -->
-              <router-link :to="{name:'hospital_list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item,time:new Date().getTime()}}">
+              <router-link :to="{name:'hospital_list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item,}}">
                 <span>{{addClinic.promoter}}</span>
               </router-link>
 						</li>
@@ -124,7 +124,7 @@ export default {
 			// 上传图片弹窗显示
 			show: false,
 			imageUpload:'',
-
+			query:''
 		}
 	},
 	computed:{
@@ -138,63 +138,25 @@ export default {
 		//this.height = parseInt(topHeight.join())
 		//
 	},
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
-
-  },
-  activated(){
-    // 
-    // 
-    // this.addClinic.promoter = localStorage.getItem('list_promoterValue')
-    // this.addClinic.hospitalUserId = localStorage.getItem('list_promoterId');
-    if(localStorage.getItem('list_promoterValue') || localStorage.getItem('list_promoterId')){
-      delete this.addClinic.promoter;
-      Vue.set(this.addClinic,'promoter',localStorage.getItem('list_promoterValue'));
-      Vue.set(this.addClinic,'hospitalUserId',localStorage.getItem('list_promoterId'));
-    }
+  activated() {
+  	if(this.query != JSON.stringify(this.$route.query)){
+  		this.query = JSON.stringify(this.$route.query);
+  		if(window.plus){
+  			//plus.navigator.setStatusBarBackground("#ffffff");
+  			plus.navigator.setStatusBarStyle("dark")
+  		}
+  		if(localStorage.getItem('list_promoterValue') || localStorage.getItem('list_promoterId')){
+  		  delete this.addClinic.promoter;
+  		  Vue.set(this.addClinic,'promoter',localStorage.getItem('list_promoterValue'));
+  		  Vue.set(this.addClinic,'hospitalUserId',localStorage.getItem('list_promoterId'));
+  		}
+		this.$route.query.item? this.clinicFn() : ""
+  	}
   },
   mounted() {
      
 		// 
-		this.$route.query.item? this.clinicFn() : ""
+		
 	},
 	methods: {
     clinicFn(){

@@ -21,7 +21,7 @@
 			<ul>
 				<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 					<li v-for="(items,inx) in content" :key="inx">
-						<router-link :to="{path : '/operating/operating_clinicDetails' ,query :  {clinicId : items.itemId,clinicName:items.name,time:new Date().getTime()}}">
+						<router-link :to="{path : '/operating/operating_clinicDetails' ,query :  {clinicId : items.itemId,clinicName:items.name,}}">
 							<div class="contentLi">
 								<h4>{{items.name}}</h4>
 								<span>推广人: {{items.clinicPromoterName}}</span>
@@ -108,62 +108,6 @@ export default {
   created() {
 
   },
-  beforeRouteLeave(to, from, next) {
-	
-  let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	
-	
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-  
-		 
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-	  debugger;
-     next(vm => {
-       debugger
-	 document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
-  });
-  
-         let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
-         let lastRoute = localStorage.getItem('lastRoute')
-         
-         
-         if(fromRoute == lastRoute){
-          localStorage.removeItem('lastRoute')
-         }
-   
-
-  },
   beforeMount(){
     debugger
     
@@ -176,11 +120,7 @@ this.scrollTop = scrollTop?scrollTop :0;
       plus.navigator.setStatusBarStyle("dark");
     }
     
-    let lastRoute = localStorage.getItem('lastRoute')
-        if(lastRoute){
-          this.$router.push(JSON.parse(lastRoute));
-          return
-        }
+ 
     this.initData();
   },
   activated(){

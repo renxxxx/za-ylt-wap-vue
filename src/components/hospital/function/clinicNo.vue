@@ -4,7 +4,7 @@
 			<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 			<ul>
 				<li v-for="(item,inx) in  items" :key="inx">
-					<router-link :to="{path : '/hospital/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+					<router-link :to="{path : '/hospital/hospital_detailsPage',query : {patientId : item.itemId,}}">
 						<div class="style">
 							<div class="contentTitle">
 								<img :src="item.img" alt="">
@@ -44,7 +44,8 @@ export default {
 			yesNum: 0,
 			clinicId:'',
 			items:[],
-      test:''
+      test:'',
+	  query:''
 		}
 	},
 	computed:{
@@ -57,56 +58,23 @@ export default {
 	created () {
 		debugger
 	},
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-     ;
-    next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
-
-  }, mounted() {
-	  debugger
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+ mounted() {
+	 //  debugger
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 		
 
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
 	},
 	methods:{
 		submitFn(_item,_button){
@@ -116,7 +84,8 @@ this.scrollTop = scrollTop?scrollTop :0;
 			.then(res =>{
 				if(res.data.codeMsg){
 					this.$toast({duration: 1000,message: res.data.codeMsg})
-				}else{
+				}
+				if(res.data.code == 0 ){
 					this.$toast.success({duration: 1000,message: '操作成功'})
 					if(_item.status == 1){
 						

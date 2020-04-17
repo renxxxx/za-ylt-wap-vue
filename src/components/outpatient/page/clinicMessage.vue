@@ -15,7 +15,7 @@
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <ul>
           <li v-for="(item,inx) in clinicMessage" :key='inx'>
-            <router-link :to="{path : '/outpatient/outpatient_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+            <router-link :to="{path : '/outpatient/outpatient_detailsPage' ,query : {patientId : item.itemId,}}">
               <div class="triangle_border_up">
                 <span></span>
               </div>
@@ -61,47 +61,7 @@ export default {
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
 	},
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-	this.scrollTop =document.getElementById('outpatient').scrollTop ||document.getElementById('outpatient').pageYOffset
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-     ;
-    next(vm => {
-	 document.getElementById('outpatient').scrollTop=document.getElementById('outpatient').pageYOffset=vm.scrollTop;
-	});
-
-  }, mounted() {
+ mounted() {
 	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");

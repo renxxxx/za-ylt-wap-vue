@@ -150,6 +150,7 @@ export default {
 			},
 			//单个的
 			modifyPromotersShow	: false	,//修改推广人弹窗显示
+			query:''
 		}
 	},
 	computed:{
@@ -172,90 +173,99 @@ export default {
 		//this.height = parseInt(topHeight.join()) ;
 		// //
 	},
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-     ;
-    next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
-
-  },
+  
 	mounted(){
-		
+		console.log('mounted')
 		// 获取推广人信息
-		this.$axios.get('/hospital/def/hospital-operator-user/'+this.$route.query.hospitalUserId)
-		.then(res => {
-			if(res.data.codeMsg){
-				this.$toast(res.data.codeMsg)
-			}else{
-				this.promoters = {name: res.data.data.name,phone: res.data.data.phone,cover: res.data.data.cover},
-				this.modify.name = res.data.data.name;
-				this.modify.id = res.data.data.hospitalUserId;
-			}
-		})
-		.catch((err)=>{
+		// this.$axios.get('/hospital/def/hospital-operator-user/'+this.$route.query.hospitalUserId)
+		// .then(res => {
+		// 	if(res.data.codeMsg){
+		// 		this.$toast(res.data.codeMsg)
+		// 	}else{
+		// 		this.promoters = {name: res.data.data.name,phone: res.data.data.phone,cover: res.data.data.cover},
+		// 		this.modify.name = res.data.data.name;
+		// 		this.modify.id = res.data.data.hospitalUserId;
+		// 	}
+		// })
+		// .catch((err)=>{
 			
-		})
-		this.$axios.get('/hospital/super-admin/hospital-clinics-sum?'+qs.stringify({hospitalUserId:this.$route.query.hospitalUserId}))
-		.then(res => {
-			res.data.codeMsg?	this.$toast(res.data.codeMsg) : this.clinicNum = res.data.data.rowCount;
-		})
-		.catch((err)=>{
+		// })
+		// this.$axios.get('/hospital/super-admin/hospital-clinics-sum?'+qs.stringify({hospitalUserId:this.$route.query.hospitalUserId}))
+		// .then(res => {
+		// 	res.data.codeMsg?	this.$toast(res.data.codeMsg) : this.clinicNum = res.data.data.rowCount;
+		// })
+		// .catch((err)=>{
 			
-		})
-		// 加载dom节点后,获取推广人列表请求
-		this.$axios.get('/hospital/def/hospital-operator-users?')
-		.then(res => {
-			if(!res.data.codeMsg){
-				// 
-				for(let i in res.data.data.rows){
-					this.option.push({
-						'clinicPromoterId' : res.data.data.rows[i].hospitalUserId,
-						'text' : res.data.data.rows[i].name,
-						'value' : '00'+i,
-					})
-				}
+		// })
+		// // 加载dom节点后,获取推广人列表请求
+		// this.$axios.get('/hospital/def/hospital-operator-users?')
+		// .then(res => {
+		// 	if(!res.data.codeMsg){
+		// 		// 
+		// 		for(let i in res.data.data.rows){
+		// 			this.option.push({
+		// 				'clinicPromoterId' : res.data.data.rows[i].hospitalUserId,
+		// 				'text' : res.data.data.rows[i].name,
+		// 				'value' : '00'+i,
+		// 			})
+		// 		}
 				
-			}
-		})
-		.catch((err)=>{
+		// 	}
+		// })
+		// .catch((err)=>{
 			
-		})
+		// })
+	},
+	activated() {
+		console.log('activated')
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+
+			Object.assign(this.$data, this.$options.data());
+			this.$axios.get('/hospital/def/hospital-operator-user/'+this.$route.query.hospitalUserId)
+			.then(res => {
+				if(res.data.codeMsg){
+					this.$toast(res.data.codeMsg)
+				}else{
+					this.promoters = {name: res.data.data.name,phone: res.data.data.phone,cover: res.data.data.cover},
+					this.modify.name = res.data.data.name;
+					this.modify.id = res.data.data.hospitalUserId;
+				}
+			})
+			.catch((err)=>{
+				
+			})
+			this.$axios.get('/hospital/super-admin/hospital-clinics-sum?'+qs.stringify({hospitalUserId:this.$route.query.hospitalUserId}))
+			.then(res => {
+				res.data.codeMsg?	this.$toast(res.data.codeMsg) : this.clinicNum = res.data.data.rowCount;
+			})
+			.catch((err)=>{
+				
+			})
+			// 加载dom节点后,获取推广人列表请求
+			this.$axios.get('/hospital/def/hospital-operator-users?')
+			.then(res => {
+				if(!res.data.codeMsg){
+					// 
+					for(let i in res.data.data.rows){
+						this.option.push({
+							'clinicPromoterId' : res.data.data.rows[i].hospitalUserId,
+							'text' : res.data.data.rows[i].name,
+							'value' : '00'+i,
+						})
+					}
+					
+				}
+			})
+			.catch((err)=>{
+				
+			})
+			// this.onLoad();
+		}
 	},
 	methods: {
 		cancel(){

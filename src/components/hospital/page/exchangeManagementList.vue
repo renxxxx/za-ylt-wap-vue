@@ -1,5 +1,6 @@
 <template>
 	<div class="exchangeList">
+		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
@@ -32,7 +33,7 @@
 					</li>
 				</van-list>
 			</ul>
-		<!-- </van-pull-refresh> -->
+		</van-pull-refresh>
 	</div>
 </template>
 
@@ -46,12 +47,14 @@ export default {
 	data () {
 		return {
 			exchangeList:[],
-			page : 2,
+			page : 0,
 			loading: false,
 			// 加载状态结束
 			finished: false,
 			//显示下拉加载
 			isLoading: false,
+			query:{},
+			pullingDown:false,
 		}
 	},
 	computed:{
@@ -66,57 +69,42 @@ export default {
 		//this.height = parseInt(topHeight.join())
 		//
 	},
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
+  mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
+		// this.getdata()
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
 			}
-            this.$destroy();
+			this.onLoad()
 		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-     ;
-    next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
-
-  }, mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-
-		this.getdata()
 	},
 	methods: {
+		afterPullDown() {
+			//下拉刷新
+		  setTimeout(() => {
+			this.pullingDown = false;
+			 this.initData();
+		  }, 500);
+		},
+		initData() {
+			let thisVue = this
+			if(this.$route.meta.auth && !this.$store.state.hospital.login)
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+			}})
+
+		  Object.assign(this.$data, this.$options.data());
+		  this.onLoad();
+		},
 		goBackFn(){
 			this.$router.back(-1)
 		},
@@ -164,7 +152,6 @@ this.scrollTop = scrollTop?scrollTop :0;
 				ps : 10,
 			}))
 			.then(_d => {
-				this.page++;
 				if(_d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
 						this.exchangeList.push( _d.data.data.items[nums] );
@@ -188,6 +175,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 			})
 		},
 		onLoad(){
+			++this.page;
 			this.nextdata()
 		},
 		refresh(){
@@ -299,6 +287,6 @@ this.scrollTop = scrollTop?scrollTop :0;
     overflow: hidden;
     -webkit-user-select: none;
     user-select: none;
-	padding-top: .5rem;
+	/* padding-top: .5rem; */
 }
 </style>

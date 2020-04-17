@@ -123,9 +123,9 @@ this.scrollTop = scrollTop?scrollTop :0;
       if(item.lowerCount){
         console.dir(item.operatingManualSectionId)
 
-        this.$router.push({path:'/operating/operating_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
+        this.$router.push({path:'/operating/operating_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,}})
       }else{
-        this.$router.push({path:'/operating/operating_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
+        this.$router.push({path:'/operating/operating_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,}})
       }
     },
     getData(){

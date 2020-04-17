@@ -1,35 +1,35 @@
 <template>
 	<div class="search_clinic">
-		<div class="navWarp" :style="{'padding-top':$store.state.paddingTop}">
-			<div class="topNav">
-				<div class="clinic_information" @click="goBackFn"  id="navback">
-					<img src="../../../assets/image/shape@3x.png" alt="">
+		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+			<div class="navWarp" :style="{'padding-top':$store.state.paddingTop}">
+				<div class="topNav">
+					<div class="clinic_information" @click="goBackFn"  id="navback">
+						<img src="../../../assets/image/shape@3x.png" alt="">
+					</div>
+					<div class="clinic_search">
+						<img src="../../../assets/image/sousuo@2x.png" alt="">
+						<input type="search" v-focus='true' placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
+			<!-- <img src="../../../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn()" v-if="keywords"> -->
+					</div>
+					<div class="clinic_buttton" @click="inputNow">
+						<button>搜索</button>
+					</div>
 				</div>
-				<div class="clinic_search">
-					<img src="../../../assets/image/sousuo@2x.png" alt="">
-					<input type="search" v-focus='true' placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
-          <!-- <img src="../../../assets/image/X Copy@2x.png" alt="" class="closeImg" @click="emptyAccountFn()" v-if="keywords"> -->
-				</div>
-				<div class="clinic_buttton" @click="inputNow">
-					<button>搜索</button>
+				<div class="listTitle">
+					<div class="titleleft">
+						<h3>合作门诊 {{clinic.num}}</h3>
+					</div>
+					<div class="titleRight">
+						<router-link :to="{path : '/hospital/hospital_addCLinic',query:{}}">
+							<span>新增</span>
+							<img src="../../../assets/image/xinzeng@2x.png" alt="">
+						</router-link>
+					</div>
 				</div>
 			</div>
-			<div class="listTitle">
-				<div class="titleleft">
-					<h3>合作门诊 {{clinic.num}}</h3>
-				</div>
-				<div class="titleRight">
-					<router-link :to="{path : '/hospital/hospital_addCLinic',query:{time:new Date().getTime()}}">
-						<span>新增</span>
-						<img src="../../../assets/image/xinzeng@2x.png" alt="">
-					</router-link>
-				</div>
-			</div>
-		</div>
-		<div style="height:1.1rem"></div>
-		<clinicContent ref='content' :clinic = 'clinic' :style="{'padding-top':$store.state.paddingTop}"></clinicContent>
-
-
+			<div style="height:1.1rem"></div>
+			<clinicContent ref='content' :clinic = 'clinic' :style="{'padding-top':$store.state.paddingTop}"></clinicContent>
+		</van-pull-refresh>
 	</div>
 </template>
 
@@ -47,6 +47,8 @@ export default {
 			clinic : {
 				num : 0
 			},
+			query:'',
+			pullingDown:false,
 		}
 	},
 	computed:{
@@ -57,61 +59,52 @@ export default {
 	},
 	created(){
 	},
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
-
-  }, mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		};
-		this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
-			.then(res => {
-				this.clinic.num = res.data.data.rowCount;
-			})
-			.catch((err)=>{
+  mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// };
+		// this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+		// 	.then(res => {
+		// 		this.clinic.num = res.data.data.rowCount;
+		// 	})
+		// 	.catch((err)=>{
 				
-			})
+		// 	})
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+				.then(res => {
+					this.clinic.num = res.data.data.rowCount;
+				})
+				.catch((err)=>{
+					
+				})
+		}
 	},
 	methods: {
+		afterPullDown() {
+			//下拉刷新
+		  setTimeout(() => {
+			this.pullingDown = false;
+			 this.initData();
+		  }, 500);
+		},
+		initData() {
+			let thisVue = this
+			if(this.$route.meta.auth && !this.$store.state.hospital.login)
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+			}})
+		  Object.assign(this.$data, this.$options.data());
+		  this.$refs.content.initData();
+		},
 		goBackFn(){
 			this.$router.back(-1)
 		},
@@ -252,7 +245,7 @@ this.scrollTop = scrollTop?scrollTop :0;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin-top: .98rem!important;
+    /* margin-top: .98rem!important; */
 }
 .content{
     width: 100%;

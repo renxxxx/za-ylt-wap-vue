@@ -31,7 +31,7 @@
       	</div>
       	<button class="submitClass" type="submit" value="医院登录" @click="submit()">登录</button>
       	<div class="passwordReset">
-      		<router-link  :to="{path : '/operating/operating_retrievePassword',query:{time:new Date().getTime()}}">
+      		<router-link  :to="{path : '/operating/operating_retrievePassword',query:{}}">
       			<div class="forget">
       				<span>忘记密码</span>
       				<img src="../../assets/image/wenhao@2x.png" alt="">
@@ -77,48 +77,7 @@ export default {
         }
     }
   },
-  beforeRouteLeave(to, from, next) {
-    debugger;
-	let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  // 进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
-    });
-
-  },
+ 
   mounted() {
     debugger
     let thisVue = this;
@@ -145,7 +104,7 @@ this.scrollTop = scrollTop?scrollTop :0;
                     if(res.code == 0){
                       thisVue.$store.state.operating.login=res.data
                       thisVue.$toast({"message":'已登录',onClose(){
-                          thisVue.$router.replace({ path : '/operating/operating_index',query:{time:new Date().getTime()}});
+                          thisVue.$router.replace({ path : '/operating',query:{}});
                         }})
                     }
                   }
@@ -154,13 +113,13 @@ this.scrollTop = scrollTop?scrollTop :0;
     
 		// let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
 		//  if(this.$store.state.isLogin == 100){
-		// 	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
+		// 	this.$router.replace({ name : 'hospital_index',query:{}})
 		// 	this.$router.push(lastRoute)
 		// }else  if(this.$store.state.isLogin == 200){
-		// 	this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}})
+		// 	this.$router.replace({ name : 'outpatient_index',query:{}})
 		// 	this.$router.push(lastRoute)
 		// }else  if(this.$store.state.isLogin == 300){
-		// 	this.$router.replace({ name : 'chooseTheType',query:{time:new Date().getTime()}})
+		// 	this.$router.replace({ name : 'chooseTheType',query:{}})
 		// 	this.$router.push(lastRoute)
 		// }
   },
@@ -194,7 +153,7 @@ this.scrollTop = scrollTop?scrollTop :0;
     chooseEntrance(){
       localStorage.removeItem('entrance');
 	  debugger
-      this.$router.push({path:'/',query:{time:new Date().getTime()}})
+      this.$router.push({path:'/',query:{}})
     },
     emptyAccountFn(value){
       if(value == 'name'){
@@ -240,7 +199,7 @@ this.scrollTop = scrollTop?scrollTop :0;
                     if(res.code == 0){
                       thisVue.$store.state.operating.login=res.data
                        thisVue.$toast({"message":'登录成功',onClose(){
-                           thisVue.$router.replace({ path : '/operating/operating_index',query:{time:new Date().getTime()}});
+                           thisVue.$router.replace({ path : '/operating/operating_index',query:{}});
                         }})
                     }
                   }

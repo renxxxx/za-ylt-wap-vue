@@ -114,56 +114,6 @@ export default {
   created() {
 
   },
-  beforeRouteLeave(to, from, next) {
-	let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
-	this.scrollTop = scrollTop?scrollTop :0;
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-		  debugger;
-		 next(vm => {
-		   debugger
-		 document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
-	  });
-  
-         let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
-         let lastRoute = localStorage.getItem('lastRoute')
-         
-         
-         if(fromRoute == lastRoute){
-          localStorage.removeItem('lastRoute')
-         }
-   
-
-  },
   beforeMount(){
     debugger
     
@@ -175,21 +125,12 @@ export default {
       //plus.navigator.setStatusBarBackground("#ffffff");
       plus.navigator.setStatusBarStyle("dark");
     }
-   //  if(this.$route.meta.auth && !this.$store.state.operating.login){
-   //  	this.$toast({message:'请登录',onClose:function(){
-			// debugger
-			// console.log('sss')
-   //  		thisVue.$router.replace({path:"/operating/operatingLogin",query:{time:new Date().getTime()}})
-   //  	}})
-   //  }
-    let lastRoute = localStorage.getItem('lastRoute')
-        if(lastRoute&&this.$route.meta.auth && !this.$store.state.operating.login){
-          this.$router.push(JSON.parse(lastRoute));
-          return
-        }
-	console.log('这是mounted')
-	this.initData();
-	// this.getNextPage();
+    if(this.$route.meta.auth && !this.$store.state.operating.login){
+    	this.$toast({message:'请登录',onClose:function(){
+			debugger
+    		thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
+    	}})
+    }
   },
   activated(){
 	  // this.initData();
@@ -290,7 +231,7 @@ export default {
       if(this.$route.meta.auth && !this.$store.state.operating.login){
 		  this.$toast('请登录')
 		  let exit = setTimeout(()=>{
-			  thisVue.$router.replace({path:"/operating/operatingLogin",query:{time:new Date().getTime()}})
+			  thisVue.$router.replace({path:"/operating/operatingLogin",query:{}})
 			  clearTimeout(exit)
 		  },1500)
 	  }

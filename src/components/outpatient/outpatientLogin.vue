@@ -31,13 +31,13 @@
       	</div>
       	<button class="submitClass" type="submit" value="门诊登录" @click="submit()">登录</button>
       	<div class="passwordReset">
-      		<router-link  :to="{path : 'outpatient_retrievePassword',query:{time:new Date().getTime()}}">
+      		<router-link  :to="{path : 'outpatient_retrievePassword',query:{}}">
       			<div class="forget">
       				<span>忘记密码</span>
       				<img src="../../assets/image/wenhao@2x.png" alt="">
       			</div>
       		</router-link>
-          <router-link  :to="{path : '/',query:{time:new Date().getTime()}}">
+          <router-link  :to="{path : '/',query:{}}">
           	<div class="returnTypePage">
           		<span @click="chooseEntrance" style="color: #2B77EF;">选择端口</span>
           	</div>
@@ -77,46 +77,7 @@ export default {
         }
     }
   },
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-	this.scrollTop =document.getElementById('outpatient').scrollTop ||document.getElementById('outpatient').pageYOffset
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  // 进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      document.getElementById('outpatient').scrollTop=document.getElementById('outpatient').pageYOffset=vm.scrollTop;
-    });
-
-  },
+ 
   activated(){
     
   },
@@ -145,7 +106,7 @@ export default {
                     if(res.code == 0){
                       thisVue.$store.state.outpatient.login=res.data
                       thisVue.$toast({"message":'已登录',onClose(){
-                          thisVue.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
+                          thisVue.$router.replace({ name : 'outpatient_index',query:{}});
                         }})
                     }
                   }
@@ -154,13 +115,13 @@ export default {
 		
 		// let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
 		//  if(this.$store.state.isLogin == 100){
-		// 	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
+		// 	this.$router.replace({ name : 'hospital_index',query:{}})
 		// 	this.$router.push(lastRoute)
 		// }else  if(this.$store.state.isLogin == 200){
-		// 	this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}})
+		// 	this.$router.replace({ name : 'outpatient_index',query:{}})
 		// 	this.$router.push(lastRoute)
 		// }else  if(this.$store.state.isLogin == 300){
-		// 	this.$router.replace({ name : 'chooseTheType',query:{time:new Date().getTime()}})
+		// 	this.$router.replace({ name : 'chooseTheType',query:{}})
 		// 	this.$router.push(lastRoute)
 		// }
   },
@@ -186,7 +147,7 @@ export default {
   methods:{
 		chooseEntrance(){
 			localStorage.removeItem('entrance');
-			this.$router.push({path:'/',query:{time:new Date().getTime()}})
+			this.$router.push({path:'/',query:{}})
 		},
     emptyAccountFn(value){
       if(value == 'name'){
@@ -231,7 +192,7 @@ export default {
                     if(res.code == 0){
                       thisVue.$store.state.outpatient.login=res.data
                        thisVue.$toast({"message":'登录成功',onClose(){
-                          thisVue.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}});
+                          thisVue.$router.replace({ name : 'outpatient_index',query:{}});
                         }})
                     }
                   }

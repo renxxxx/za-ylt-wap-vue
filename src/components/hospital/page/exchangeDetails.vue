@@ -5,7 +5,7 @@
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
-				<h3>专家介绍</h3>
+				<h3>兑换详情</h3>
 			</div>
 			<div class="right"></div>
 		</div> 
@@ -45,7 +45,8 @@ export default {
 	name: 'exchangeDetails',
 	data () {
 		return {
-			exchangeDetails:{}
+			exchangeDetails:{},
+			query:''
 		}
 	},
 	computed:{
@@ -60,62 +61,40 @@ export default {
 		//this.height = parseInt(topHeight.join()) 
 		//
 	},
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-	this.scrollTop =document.getElementById('app').scrollTop ||document.getElementById('app').pageYOffset
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
 			}
-            this.$destroy();
+			this.$axios.post('/clientend2/hospitalend/exchangemanage/orderinfo',qs.stringify({
+				orderId : this.$route.query.item.orderId,
+			}))
+			.then(res => {
+				res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn(res);
+			})
+			.catch((err)=>{
+				//Dialog({ message: err});;
+			})
 		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-     ;
-    next(vm => {
-	 document.getElementById('app').scrollTop=document.getElementById('app').pageYOffset=vm.scrollTop;
-	});
-	
-  }, mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+	},
+  mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 		
 		
-		this.$axios.post('/clientend2/hospitalend/exchangemanage/orderinfo',qs.stringify({
-			orderId : this.$route.query.item.orderId,
-		}))
-		.then(res => {
-			res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn(res);
-		})
-		.catch((err)=>{
-			//Dialog({ message: err});;
-		})
+		// this.$axios.post('/clientend2/hospitalend/exchangemanage/orderinfo',qs.stringify({
+		// 	orderId : this.$route.query.item.orderId,
+		// }))
+		// .then(res => {
+		// 	res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn(res);
+		// })
+		// .catch((err)=>{
+		// 	//Dialog({ message: err});;
+		// })
 	},
 	methods: {
 		goBackFn(){

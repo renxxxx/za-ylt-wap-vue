@@ -89,103 +89,119 @@ export default {
 	created(){
 
 	},
-  beforeRouteLeave(to, from, next) {
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
-
-  },
+  
 	mounted(){
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		let id = '';
-		this.$router.currentRoute.query.item? id = this.$router.currentRoute.query.item: ''
-		this.$axios.post('/c2/office/item',qs.stringify({
-			itemId : id,
-		}))
-		.then(_d => {
-			this.about = _d.data.data;
-			// 
-			if(this.about.image!=null){
-				this.about.image = _d.data.data.image.split(',');
+		// let id = '';
+		// this.$router.currentRoute.query.item? id = this.$router.currentRoute.query.item: ''
+		// this.$axios.post('/c2/office/item',qs.stringify({
+		// 	itemId : id,
+		// }))
+		// .then(_d => {
+		// 	this.about = _d.data.data;
+		// 	// 
+		// 	if(this.about.image!=null){
+		// 		this.about.image = _d.data.data.image.split(',');
 				
-			}
-			if(_d.data.data.shiYingZheng == null){
+		// 	}
+		// 	if(_d.data.data.shiYingZheng == null){
 
-			}else{
-				debugger
-				this.about.shiYingZheng = _d.data.data.shiYingZheng.split(',');
+		// 	}else{
+		// 		debugger
+		// 		this.about.shiYingZheng = _d.data.data.shiYingZheng.split(',');
 				
-			}
-		})
-		.catch((err)=>{
+		// 	}
+		// })
+		// .catch((err)=>{
 			
-			//Dialog({ message: err});;
-		})
-		this.$axios.post('/c2/doctor/items',qs.stringify({
-			officeId : id,
-			hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
-		}))
-		.then(_d => {
-			for(let i in _d.data.data.items){
-				this.doctor.push({
-					name : _d.data.data.items[i].name,
-					hosptialName : _d.data.data.items[i].hosptialName,
-					intro : _d.data.data.items[i].intro,
-					jobTitles : _d.data.data.items[i].jobTitles,
-					headimg : _d.data.data.items[i].headimg,
-				})
-			}
+		// 	//Dialog({ message: err});;
+		// })
+		// this.$axios.post('/c2/doctor/items',qs.stringify({
+		// 	officeId : id,
+		// 	hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
+		// }))
+		// .then(_d => {
+		// 	for(let i in _d.data.data.items){
+		// 		this.doctor.push({
+		// 			name : _d.data.data.items[i].name,
+		// 			hosptialName : _d.data.data.items[i].hosptialName,
+		// 			intro : _d.data.data.items[i].intro,
+		// 			jobTitles : _d.data.data.items[i].jobTitles,
+		// 			headimg : _d.data.data.items[i].headimg,
+		// 		})
+		// 	}
 
-			this.$refs.scrollId.style.width = 50 * _d.data.data.items.length +'%'
-			// 
-		})
-		.catch((err)=>{
+		// 	this.$refs.scrollId.style.width = 50 * _d.data.data.items.length +'%'
+		// 	// 
+		// })
+		// .catch((err)=>{
 			
-			//Dialog({ message: err});;
-		})
+		// 	//Dialog({ message: err});;
+		// })
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			let id = '';
+			this.$router.currentRoute.query.item? id = this.$router.currentRoute.query.item: ''
+			this.$axios.post('/c2/office/item',qs.stringify({
+				itemId : id,
+			}))
+			.then(_d => {
+				this.about = _d.data.data;
+				// 
+				if(this.about.image!=null){
+					this.about.image = _d.data.data.image.split(',');
+					
+				}
+				if(_d.data.data.shiYingZheng == null){
+			
+				}else{
+					debugger
+					this.about.shiYingZheng = _d.data.data.shiYingZheng.split(',');
+					
+				}
+			})
+			.catch((err)=>{
+				
+				//Dialog({ message: err});;
+			})
+			this.$axios.post('/c2/doctor/items',qs.stringify({
+				officeId : id,
+				hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
+			}))
+			.then(_d => {
+				for(let i in _d.data.data.items){
+					this.doctor.push({
+						name : _d.data.data.items[i].name,
+						hosptialName : _d.data.data.items[i].hosptialName,
+						intro : _d.data.data.items[i].intro,
+						jobTitles : _d.data.data.items[i].jobTitles,
+						headimg : _d.data.data.items[i].headimg,
+					})
+				}
+			
+				this.$refs.scrollId.style.width = 50 * _d.data.data.items.length +'%'
+				// 
+			})
+			.catch((err)=>{
+				
+				//Dialog({ message: err});;
+			})
+		}
 	},
 	methods: {
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)
-			// this.$router.push({ path : '/hospital/hospitalImage',query :{components : "hospital_imageType",time:new Date().getTime()}});
+			// this.$router.push({ path : '/hospital/hospitalImage',query :{components : "hospital_imageType",}});
 		},
 		//医生介绍
 		doctorAboutFn(_about){

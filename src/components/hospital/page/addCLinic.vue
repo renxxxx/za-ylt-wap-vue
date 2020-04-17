@@ -25,7 +25,7 @@
 						</li>
 						<li>
 							<span>推广人</span>
-              <router-link :to="{name:'hospital_list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item,time:new Date().getTime()}}">
+              <router-link :to="{name:'hospital_list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item,}}">
                 <span class="line-1">{{addClinic.promoter}}</span>
               </router-link>
 							<!-- <van-dropdown-menu>
@@ -120,7 +120,8 @@ export default {
 			},
 			// 上传图片弹窗显示
 			show: false,
-			imageUpload:''
+			imageUpload:'',
+			query:''
 		}
 	},
 	computed:{
@@ -135,61 +136,33 @@ export default {
 		//this.height = parseInt(topHeight.join())
 		//
 	},
-	beforeRouteLeave(to, from, next) {
-    this.scrollTop =
-	  document.documentElement.scrollTop || document.body.scrollTop;
-	  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-
-  },
+	
   activated(){
     // 
     // 
+	if(this.query != JSON.stringify(this.$route.query)){
+		this.query = JSON.stringify(this.$route.query);
+		if(window.plus){
+			//plus.navigator.setStatusBarBackground("#ffffff");
+			plus.navigator.setStatusBarStyle("dark")
+		}
+		
+	}
     this.addClinic.promoter = localStorage.getItem('list_promoterValue')
     this.addClinic.hospitalUserId = localStorage.getItem('list_promoterId')
     localStorage.removeItem('list_promoterValue')
     localStorage.removeItem('list_promoterId')
   },
   //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-     document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-    });
-
-
-
-  },
+ 	// beforeRouteEnter (to, from, next) {
+	// 	 console.log(from)
+	// 	 next();
+	//  },
   mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 	},
 	methods: {
 		// 返回键
@@ -229,8 +202,7 @@ export default {
 			}
 		},
 		// 保存方法
-		saveFn(){
-			
+		saveFn(){			
 			this.$axios.post('/hospital/super-admin/hospital-clinic-add',qs.stringify({
 				hospitalClinicId : this.$store.state.hospital.login.hospital.hospitalId,
 				name :  this.addClinic.name,        //医院名称
@@ -248,9 +220,13 @@ export default {
 			.then(res => {
 				if(res.data.codeMsg){
 					this.$toast(res.data.codeMsg)
-				}else{
+				}
+				if(res.data.code == 0){
+					Object.assign(this.$data, this.$options.data());
+					// localStorage.removeItem('list_promoterValue')
+					// localStorage.removeItem('list_promoterId')
 					this.$toast.success('操作成功');
-					this.$router.back(-1)
+					this.$router.back()
 				}
 			})
 			.catch((err)=>{
@@ -306,11 +282,15 @@ export default {
 	width: 17.6%;
 	height: .48rem;
 	line-height: .48rem;
+	position: relative;
 }
 .rightNav img{
 	width: .14rem;
 	height: .15rem;
-	margin: 0rem .16rem 0rem .05rem;
+	position: absolute;
+	top:0;
+	 bottom: 0;
+	margin: auto  .1rem auto .03rem;
 }
 .newAddTitle{
 	width: 91.4%;

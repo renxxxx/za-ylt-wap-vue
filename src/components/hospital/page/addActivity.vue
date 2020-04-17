@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>编辑活动</h3>
 			</div>
-			<router-link :to="{path : '/hospital/hospital_previewActivities',query:{activity:JSON.stringify(activity),time:new Date().getTime()}}">
+			<router-link :to="{path : '/hospital/hospital_previewActivities',query:{activity:JSON.stringify(activity),}}">
 				<div class="right">
 					<button>预览</button>
 				</div>
@@ -67,6 +67,7 @@ export default {
 				content : '',
 				cover : require('../../../assets/image/Group@2x.png')
 			  },
+				query:''
 		}
 	},
 	computed:{
@@ -84,59 +85,26 @@ export default {
 	components:{
 
 	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
+	},
 	created(){
 		var heightRexg = /^[0-9]*/g
 		// var topHeight = this.topHeight.match(heightRexg)
 		// this.height = parseInt(topHeight.join())
 		// 
 	},
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-     ;
-    next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
-
-  }, mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+   mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 	},
 	methods: {
 		//回退方法

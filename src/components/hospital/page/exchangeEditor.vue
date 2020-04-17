@@ -56,6 +56,7 @@ export default {
 				intro : '',
 				cover : '',
 				show : true,
+				query:''
 			}
 		}
 	},
@@ -71,69 +72,55 @@ export default {
 		//this.height = parseInt(topHeight.join()) 
 		//
 	},
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
 			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-     ;
-    next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
-	
-  }, mounted() {
-		
-		this.$axios.post('/c2/commodity/item',qs.stringify({
-			hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
-			itemId : this.$route.query.itemId
-		})).then(res  =>{
-			if(res.data.codeMsg){
-				this.$toast(res.data.codeMsg)
-			}else{
-				this.exchangeEditor = {
-					name :res.data.data.name,
-					payExchangepoint : res.data.data.payExchangepoint,
-					stock : res.data.data.stock,
-					intro : res.data.data.intro,
-					cover : res.data.data.cover,
-					itemId : this.$route.query.itemId,
+			this.$axios.post('/c2/commodity/item',qs.stringify({
+				hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
+				itemId : this.$route.query.itemId
+			})).then(res  =>{
+				if(res.data.codeMsg){
+					this.$toast(res.data.codeMsg)
+				}else{
+					this.exchangeEditor = {
+						name :res.data.data.name,
+						payExchangepoint : res.data.data.payExchangepoint,
+						stock : res.data.data.stock,
+						intro : res.data.data.intro,
+						cover : res.data.data.cover,
+						itemId : this.$route.query.itemId,
+					}
 				}
-			}
-		}).catch(err =>{
+			}).catch(err =>{
+				
+			})
+		}
+	},
+   mounted() {
+		
+		// this.$axios.post('/c2/commodity/item',qs.stringify({
+		// 	hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
+		// 	itemId : this.$route.query.itemId
+		// })).then(res  =>{
+		// 	if(res.data.codeMsg){
+		// 		this.$toast(res.data.codeMsg)
+		// 	}else{
+		// 		this.exchangeEditor = {
+		// 			name :res.data.data.name,
+		// 			payExchangepoint : res.data.data.payExchangepoint,
+		// 			stock : res.data.data.stock,
+		// 			intro : res.data.data.intro,
+		// 			cover : res.data.data.cover,
+		// 			itemId : this.$route.query.itemId,
+		// 		}
+		// 	}
+		// }).catch(err =>{
 			
-		})
+		// })
 	},
 	methods: {
 		//回退方法
@@ -147,7 +134,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 					if(this.exchangeEditor.stock != ''){
 						if(this.exchangeEditor.intro != ''){
 							
-							this.$router.push({ path : '/hospital/hospital_exchangeEditorImg',query : {exchangeEditor : JSON.stringify(this.exchangeEditor),time:new Date().getTime()}});
+							this.$router.push({ path : '/hospital/hospital_exchangeEditorImg',query : {exchangeEditor : JSON.stringify(this.exchangeEditor),}});
 						}else{
 							Toast.fail('请填写简介');
 						}

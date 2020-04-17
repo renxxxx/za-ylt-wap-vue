@@ -48,7 +48,7 @@ export default {
   method:{
  toRoot(){
         	localStorage.removeItem('entrance');
-			    this.$router.push({path:'/',query:{time:new Date().getTime()}})
+			    this.$router.push({path:'/',query:{}})
       }
   },
   

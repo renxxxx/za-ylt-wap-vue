@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>{{this.clinicDetails.name}}</h3>
 			</div>
-			<router-link :to="{path : '/hospital/hospital_clinicInfo' ,query : {item : clinicDetails.clinicId,time:new Date().getTime()}}">
+			<router-link :to="{path : '/hospital/hospital_clinicInfo' ,query : {item : clinicDetails.clinicId,}}">
 				<div class="right">
 					<img src="../../../assets/image/Preview@2x.png" alt="">
 				</div>
@@ -58,6 +58,7 @@ export default {
 	data () {
 		return {
 			// 就诊状态选项值
+			clinicId:null,
 			value: 0,
 			option: [
 			    { text: '全部', value: 0 },
@@ -82,6 +83,7 @@ export default {
 				clinicYes : [],
 				data: true,
 			},
+			query:''
 		}
 	},
 	computed:{
@@ -104,53 +106,32 @@ export default {
 	created(){
 		
 	},
-  beforeRouteLeave(to, from, next) {
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
+	async activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			Object.assign(this.$data, this.$options.data());
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
 			}
-            this.$destroy();
+			this.clinicId=this.$route.query.clinicId
+			await this.ItemIdFn()
+			await this.getNum();
+			// if(this.clinicId!=this.$route.query.clinicId){
+			// 	this.clinicId=this.$route.query.clinicId
+			// 	this.$route.query.clinicId?  this.ItemIdFn() : this.list.clinicId = '';
+			// 	this.getNum();
+			// }
+			await this.$refs.clinicAll.initData()
 		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
-
-  }, mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+	},
+  mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 		// this.ItemIdFn();
-		this.$route.query.clinicId?  this.ItemIdFn() : this.list.clinicId = '';
-		this.getNum();
+		
 	},
 	methods: {
 		//回退方法
@@ -164,12 +145,15 @@ this.scrollTop = scrollTop?scrollTop :0;
 			switch(this.value){
 				case 0:
 				this.componentName = 'clinicAll';
+				this.$refs.clinicAll.initData()
 				break;
 				case 1:
 				this.componentName = 'clinicNo';
+				this.$refs.clinicAll.initData()
 				break;
 				case 2:
 				this.componentName = 'clinicYes';
+				this.$refs.clinicAll.initData()
 				break;
 			}
 		},

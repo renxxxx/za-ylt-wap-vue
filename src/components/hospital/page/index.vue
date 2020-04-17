@@ -1,5 +1,6 @@
 <template>
-      <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
+  <div ref="refersh" id="hospitalIndex">
+    <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown"  >
           <div class="navWarp" :style="{'padding-top': $store.state.paddingTop}">
             <div class="navTitle">
               <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
@@ -17,49 +18,49 @@
           <div class="typeList">
             <ul>
               <li>
-                <router-link :to="{path : '/hospital/hospital_clinicSearch',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/hospital_clinicSearch',query:{}}">
                   <img src="../../../assets/image/qudaomenzhen@2x.png" alt />
                   <span>渠道门诊</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{path : '/hospital/hospital_sourceManagement',query:{time:new Date().getTime()}}" >
+                <router-link :to="{path : '/hospital/hospital_sourceManagement',query:{}}" >
                   <img src="../../../assets/image/bingyuanguanli@2x.png" alt />
                   <span>病员管理</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{path : '/hospital/hospital_collect',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/hospital_collect',query:{}}">
                   <img src="../../../assets/image/qixiejicai@2x.png" alt />
                   <span>器械集采</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{path : '/hospital/hospital_operating',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/hospital_operating',query:{}}">
                   <img src="../../../assets/image/yunyingzhongxin@2x.png" alt />
                   <span>运营中心</span>
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{path : '/hospital/',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/',query:{}}">
                   <img src="../../../assets/image/jiyinjiance@2x.png" alt />
                   <span>基因检测</span>
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{path : '/hospital/',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/',query:{}}">
                   <img src="../../../assets/image/yiliaoziyuan@2x.png" alt />
                   <span>医疗资源</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{path : '/hospital/hospital_activityReleased',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/hospital_activityReleased',query:{}}">
                   <img src="../../../assets/image/yiyuanhuodong@2x.png" alt />
                   <span>医院活动</span>
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{path : '/hospital/',query:{time:new Date().getTime()}}">
+                <router-link :to="{path : '/hospital/',query:{}}">
                   <img src="../../../assets/image/qita@2x.png" alt />
                   <span>其他项目</span>
                 </router-link>
@@ -76,7 +77,7 @@
               <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
                 <li v-for="(items,inx) in article" :key="inx">
                   <router-link
-                    :to="{path : '/hospital/hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
+                    :to="{path : '/hospital/hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,}}"
                   >
                     <div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
                       <p>{{items.content}}</p>
@@ -94,7 +95,12 @@
             </ul>
           </div>
           <div style="height: .55rem;"></div>
+          <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-if="hospitalReturnTopPage">
+            <img src="../../../assets/image/returnTop.png" alt />
+            <span>顶部</span>
+          </div>
       </van-pull-refresh>
+  </div>
       <!-- <bottomNav></bottomNav> -->
 </template>
 
@@ -114,13 +120,23 @@ export default {
       loading: false,
       finished: false,
       page: 1,
-      pullingDown: false
+      pullingDown: false,
+		query:''
     };
   },
   components: {
     // bottomNav
   },
   computed: {
+    hospitalReturnTopPage: {
+      get: function() {
+        // 
+        return this.$store.state.hospitalReturnTopPage;
+      },
+      set: function(newValue) {
+        this.$store.state.hospitalReturnTopPage = newValue;
+      }
+    },
     // ...mapGetters(["account", "isLogin"])
   },
 
@@ -130,94 +146,64 @@ export default {
   created() {
 
   },
-  beforeRouteLeave(to, from, next) {
-	
-  let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	
-	
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
   
-		 
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-	  debugger;
-     next(vm => {
-       debugger
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-  });
-  
-         let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
-         let lastRoute = localStorage.getItem('lastRoute')
-         
-         
-         if(fromRoute == lastRoute){
-          localStorage.removeItem('lastRoute')
-         }
-   
-
-  },
   beforeMount(){
     debugger
     
   },
   mounted() {
-    debugger
-    let thisVue = this;
-    if (window.plus) {
-      //plus.navigator.setStatusBarBackground("#ffffff");
-      plus.navigator.setStatusBarStyle("dark");
-    }
-    
-
-    let lastRoute = localStorage.getItem('lastRoute')
-        if(lastRoute){
-          this.$router.push(JSON.parse(lastRoute));
-          return
-        }
-		debugger;
-    this.initData();
+    // console.log('这是mounted')
   },
-  activated(){
-  },
+	activated() {
+    window.addEventListener("scroll", this.handleScroll, true);
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData();
+		}
+	},
   deactivated(){
     debugger
     },
   methods: {
+    // 滑动一定距离出现返回顶部按钮
+    handleScroll() {
+      if(!this.$refs.refersh)
+        return
+      let scrollTop =
+        this.$refs.refersh.scrollTop ||
+        this.$refs.refersh.pageYOffset;
+      let windowHeight =
+        document.documentElement.clientHeight || this.$refs.refersh.clientHeight;
+      let data =
+        this.$refs.refersh.scrollHeight >
+        (window.innerHeight || document.documentElement.clientHeight);
+      // 
+      let opacityValue =
+        Math.round(
+          ((scrollTop + windowHeight) / this.$refs.refersh.scrollHeight) * 100
+        ) / 100;
+      // 
+      if (data && scrollTop > 0) {
+        this.hospitalReturnTopPage = true;
+        this.$refs.returnTopRef.style.opacity = 1;
+        document.getElementById("returnHomePageId").style.bottom = '1.5rem';
+      } else {
+        debugger
+        this.$refs.returnTopRef.style.opacity = 0;
+        document.getElementById("returnHomePageId").style.bottom = '1rem';
+        this.hospitalReturnTopPage = false;
+      }
+    },
     afterPullDown() {
       //下拉刷新
       setTimeout(() => {
         this.pullingDown = false;
         this.initData();
+		
       }, 500);
     },
     initData() {
@@ -227,8 +213,10 @@ this.scrollTop = scrollTop?scrollTop :0;
 				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
 			}})
 		}
-		if(thisVue.$store.state.hospital.login.type == 1){
-			thisVue.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
+		if(thisVue.$store.state.hospital.login){
+			if(thisVue.$store.state.hospital.login.type == 1){
+				thisVue.$router.replace({ name : 'promoters',query:{}});
+			}
 		}
       Object.assign(this.$data, this.$options.data());
       //轮播图图片路径请求
@@ -348,9 +336,12 @@ this.scrollTop = scrollTop?scrollTop :0;
 </script>
 
 <style scoped>
-.hospital {
+#hospitalIndex {
   height: 100%;
   width: 100%;
+  	touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+  overflow: scroll;
 }
 .navWarp {
   height: 2.26rem;
@@ -383,7 +374,7 @@ this.scrollTop = scrollTop?scrollTop :0;
   height: 1.96rem;
   display: block;
 }
->>> .van-swipe {
+>>>.van-swipe {
   position: relative;
   overflow: hidden;
   -webkit-user-select: none;
@@ -391,7 +382,7 @@ this.scrollTop = scrollTop?scrollTop :0;
   /* box-shadow: darkgrey 0rem 0rem  .10rem 3px; */
   height: 100%;
 }
->>> .van-swipe__indicators {
+>>>.van-swipe__indicators {
   position: absolute;
   bottom: 29px;
   left: 50%;

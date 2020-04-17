@@ -4,7 +4,7 @@
 			<div class="navWarp">
 				<div class="topNav"  :style="{'padding-top':$store.state.paddingTop}">
 					<div class="hospital_search">
-						<router-link :to="{path : '/promoters/promoters_clinicSearch',query:{time:new Date().getTime()}}">
+						<router-link :to="{path : '/promoters/promoters_clinicSearch',query:{}}">
 							<input type="text" placeholder="搜索门诊">
 							<img src="../../../../assets/image/sousuo@2x.png" alt="">
 						</router-link>
@@ -13,7 +13,7 @@
 				<div class="statisticalTitle" v-model="clinic">
 					<h3>合作门诊 {{clinic.num}}</h3>
 					<div class="statisticalAdd">
-						<router-link :to="{path : '/promoters/promoters_addClinic',query:{time:new Date().getTime()}}">
+						<router-link :to="{path : '/promoters/promoters_addClinic',query:{}}">
 							<span>新增</span>
 							<img src="../../../../assets/image/xinzeng@2x.png" alt="">
 						</router-link>
@@ -25,7 +25,7 @@
 				<ul>
 					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
 						<li v-for="(items,inx) in content" :key="inx">
-							<router-link :to="{path : '/promoters/promoters_source' ,query :  {clinicId : items.hospitalClinicId,clinicName:items.name,clinicTime:items.alterTime,time:new Date().getTime()}}">
+							<router-link :to="{path : '/promoters/promoters_source' ,query :  {clinicId : items.hospitalClinicId,clinicName:items.name,clinicTime:items.alterTime,}}">
 								<div class="contentLi">
 									<h4>{{items.name}}</h4>
 									<span>推广人: {{items.hospitalUserName}}</span>
@@ -73,47 +73,7 @@ export default {
 		//this.height = parseInt(topHeight.join())
 		//
 	},
-  beforeRouteLeave(to, from, next) {
-	debugger;
-	this.scrollTop =document.getElementById('promoters').scrollTop ||document.getElementById('promoters').pageYOffset
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-     debugger;
-    next(vm => {
-	 document.getElementById('promoters').scrollTop=document.getElementById('promoters').pageYOffset=vm.scrollTop;
-	});
 
-  },
   destroyed(){
 	  debugger
 	  

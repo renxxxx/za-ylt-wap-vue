@@ -16,7 +16,7 @@
     <div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
     <div style="margin-top: .2rem;">
       <div v-for="(item,inx) in operatingManual" :key="inx">
-        <router-link :to="{path : '/operating/operating_operatingManualList',query:{name:item.name,operatingManualId:item.operatingManualId,time:new Date().getTime()}}">
+        <router-link :to="{path : '/operating/operating_operatingManualList',query:{name:item.name,operatingManualId:item.operatingManualId,}}">
           <van-cell is-link>
             <!-- 使用 title 插槽来自定义标题 -->
             <template>

@@ -1,8 +1,8 @@
 <template>
   <div id="operating" ref='operatingRef' @touchstart='touchStartFn' @touchend='touchEndFn'>
-	<keep-alive   >
-		<router-view class="appView" />
-	</keep-alive>
+    <keep-alive>
+    <router-view  class="appView"></router-view>
+  </keep-alive>
   <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-show="operatingReturnHomePage">
     <img src="../../assets/image/returnHome.png" alt />
     <span>首页</span>
@@ -12,7 +12,7 @@
     <span>顶部</span>
   </div>
   <van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.paddingBottom}" v-if="bottomShow">
-  	<van-tabbar-item replace :to="{path : '/operating/operating_index',query:{time:new Date().getTime(),transition:'def'}}">
+  	<van-tabbar-item replace :to="{path : '/operating/operating_index',query:{transition:'def'}}">
   	    <span>医院</span>
   	    <img
   			slot="icon"
@@ -20,7 +20,7 @@
   			:src="props.active ? index.inactive : index.active"
   	    />
   	</van-tabbar-item>
-  	<van-tabbar-item replace :to="{path:'/operating/operating_clinic',query:{time:new Date().getTime(),transition:'def'}}">
+  	<van-tabbar-item replace :to="{path:'/operating/operating_clinic',query:{transition:'def'}}">
   	    <img
   			slot="icon"
   			slot-scope="props"
@@ -28,7 +28,7 @@
   	    >
   	    <span>门诊</span>
   	</van-tabbar-item>
-  	<van-tabbar-item replace :to="{path:'/operating/operating_user',query:{time:new Date().getTime(),transition:'def'}}">
+  	<van-tabbar-item replace :to="{path:'/operating/operating_user',query:{transition:'def'}}">
   	    <span>我的</span>
   	    <img
   			slot="icon"
@@ -66,44 +66,7 @@ export default {
     }
   },
   props:['name'],
-  beforeRouteLeave(to, from, next) {
-  this.scrollTop =document.documentElement.scrollTop || window.pageYOffset || this.$refs.operatingRef.scrollTop
-  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-  		}
-            this.$destroy();
-  	}
-  next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-   document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
-  });
-  
-  },
+ 
   computed:{
     operatingReturnTopPage: {
       get: function() {
@@ -202,7 +165,7 @@ export default {
     },
     // 返回首页按钮触发事件
     returnHomePageFn(){
-      this.$router.replace({path:'/operating/operating_index',query:{time:new Date().getTime(),transition:'def'}});
+      this.$router.replace({path:'/operating/operating_index',query:{transition:'def'}});
     },
   },
 }

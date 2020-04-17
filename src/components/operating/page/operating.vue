@@ -18,7 +18,7 @@
           <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
       </li>
       <!-- </router-link> -->
-      <router-link :to="{path:'/operating/operating_operatingManual',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
+      <router-link :to="{path:'/operating/operating_operatingManual',query:{hospitalId: this.$route.query.hospitalId,}}">
         <li>
           <h4>运营手册</h4>
           <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -42,47 +42,6 @@ export default {
   },
   computed:{
 
-  },
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-  let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-  	 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-  		}
-            this.$destroy();
-  	}
-  next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-      next(vm => {
-      document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
-    });
   },
   created () {
 

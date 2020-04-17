@@ -24,13 +24,13 @@
 		</van-image-preview>
 		<div class="user_center"  :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+140)+'px'}">
 			<ul>
-				<router-link :to="{path : '/hospital/hospital_taskManagement',query:{time:new Date().getTime()}}">
+				<router-link :to="{path : '/hospital/hospital_taskManagement',query:{}}">
 					<li>
 						<span>任务管理</span>
 						<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
-				<router-link :to="{path : '/hospital/hospital_exchangeManagement',query:{time:new Date().getTime()}}">
+				<router-link :to="{path : '/hospital/hospital_exchangeManagement',query:{}}">
 					<li>
 						<span>兑换管理</span>
 						<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -44,7 +44,7 @@
 					<span>集采积分</span>
 					<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
 				</li>
-				<router-link :to="{path : '/hospital/hospital_promoters',query:{time:new Date().getTime()}}">
+				<router-link :to="{path : '/hospital/hospital_promoters',query:{}}">
 					<li>
 						<span>推广人员管理</span>
 						<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -92,56 +92,32 @@ export default {
 	},
 	created(){
 	},
-  beforeRouteLeave(to, from, next) {
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
-
-  }, mounted() {
+  mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		if(this.$store.state.hospital.login){
-			this.coverImg = this.$store.state.hospital.login.hospital.cover
-			this.images.push(this.$store.state.hospital.login.hospital.license)
+		// if(this.$store.state.hospital.login){
+		// 	this.coverImg = this.$store.state.hospital.login.hospital.cover
+		// 	this.images.push(this.$store.state.hospital.login.hospital.license)
+		// }
+		// // 
+		// this.initData();
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			if(this.$store.state.hospital.login){
+				this.coverImg = this.$store.state.hospital.login.hospital.cover
+				this.images.push(this.$store.state.hospital.login.hospital.license)
+			}
+			// 
+			this.initData();
 		}
-		// 
-		this.initData();
 	},
 	methods: {
 		initData(){
@@ -162,11 +138,12 @@ this.scrollTop = scrollTop?scrollTop :0;
 		exitFn(){
 			let thisVue=this
 			this.$axios.post('/hospital/logout').then(function(){
-				localStorage.removeItem('lastRoute')
+				// localStorage.removeItem('lastRoute')
 				// localStorage.clear()
 				thisVue.$toast("操作成功")
 				setTimeout(()=>{
-					thisVue.$router.push({path:"/hospital/hospitalLogin",query:{time:new Date().getTime()}})
+					// thisVue.$router.push({path:"/hospital/hospitalLogin",query:{}})
+					location.href=location.pathname
 				},1500)
 			})
 			// if(window.plus){

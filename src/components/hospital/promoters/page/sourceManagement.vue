@@ -7,18 +7,18 @@
 				<div class="indexReturn" @click="goBackFn"  id="navback">
 					<img src="../../../../assets/image/back-white@2x.png" alt="">
 				</div>
-				<router-link :to="{name:'promoters_sourceSearch',query:{focus : true,time:new Date().getTime()}}">
+				<router-link :to="{name:'promoters_sourceSearch',query:{focus : true,}}">
 			<div class="indexSearch">
 				<input type="text" placeholder="搜索病员" readonly="readonly">
 				<img src="../../../../assets/image/sousuo@2x.png" alt="">
 			</div>
 				</router-link>
-			<router-link :to="{name:'promoters_sourceSearch',query:{time:new Date().getTime()}}">
+			<router-link :to="{name:'promoters_sourceSearch',query:{}}">
 				<div class="clinic_buttton">
 					<button>搜索</button>
 				</div>
 			</router-link>
-			<router-link :to="{name:'promoters_sourceSearch',query:{time:new Date().getTime()}}">
+			<router-link :to="{name:'promoters_sourceSearch',query:{}}">
 				<div class="indexScreening" @click="showPopup">
 					<span>筛选 </span>
 					<img src="../../../../assets/image/screen@2x.png" alt="加载中" >
@@ -32,7 +32,7 @@
 						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="nextPageFn">
 							<ul class="list" :style="{'padding-top':(parseInt($store.state.paddingTop.replace('px',''))+12)+'px'}">
 								<li v-for="(item,inx) in  items" :key="inx">
-									<router-link :to="{path : '/promoters/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+									<router-link :to="{path : '/promoters/hospital_detailsPage' ,query : {patientId : item.itemId,}}">
 										<div class="style">
 											<div class="contentTitle">
 												<img :src="item.img" alt="">
@@ -56,7 +56,7 @@
 						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="yesNextPageFn">
 							<ul class="list" :style="{'padding-top':(parseInt($store.state.paddingTop.replace('px',''))+12)+'px'}">
 								<li v-for="(item,inx) in  yesItems" :key="inx">
-									<router-link :to="{path : '/promoters/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+									<router-link :to="{path : '/promoters/hospital_detailsPage' ,query : {patientId : item.itemId,}}">
 										<div class="style">
 											<div class="contentTitle">
 												<img :src="item.img" alt="">
@@ -79,7 +79,7 @@
 						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="noNextPageFn">
 							<ul class="list" :style="{'padding-top':(parseInt($store.state.paddingTop.replace('px',''))+12)+'px'}">
 								<li v-for="(item,inx) in  noItems" :key="inx">
-									<router-link :to="{path : '/promoters/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+									<router-link :to="{path : '/promoters/hospital_detailsPage' ,query : {patientId : item.itemId,}}">
 										<div class="style">
 											<div class="contentTitle">
 												<img :src="item.img" alt="">
@@ -135,46 +135,7 @@ export default {
 	//this.height = parseInt(topHeight.join())
 	// //
   },
-  beforeRouteLeave(to, from, next) {
-    debugger;
-	this.scrollTop =document.getElementById('promoters').scrollTop ||document.getElementById('promoters').pageYOffset
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-		document.getElementById('promoters').scrollTop=document.getElementById('promoters').pageYOffset=vm.scrollTop;
-	});
 
-  },
   mounted(){
     if(window.plus){
     	//plus.navigator.setStatusBarBackground("#2B77EF");
@@ -371,7 +332,8 @@ export default {
 		.then(res =>{
 			if(res.data.codeMsg){
 				this.$toast({duration: 1000,message: res.data.codeMsg})
-			}else{
+			}
+			if(res.data.code == 0 ){
 				this.$toast.success({duration: 1000,message: '操作成功'})
 				if(_item.status == 1){
 					

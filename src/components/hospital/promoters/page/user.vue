@@ -20,7 +20,7 @@
 		</van-image-preview>
 		<div class="user_center">
 			<ul>
-				<!-- <router-link :to="{name: 'promoters_promotersDetails',query:{time:new Date().getTime()}}">
+				<!-- <router-link :to="{name: 'promoters_promotersDetails',query:{}}">
 					<li>
 						<span>门诊列表	</span>
 						<img src="../../../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -79,46 +79,7 @@ export default {
 	created () {
 
 	},
-	beforeRouteLeave(to, from, next) {
-		//debugger;
-		this.scrollTop =document.getElementById('promoters').scrollTop ||document.getElementById('promoters').pageYOffset
-		if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-			 debugger
-				if (this.$vnode && this.$vnode.data.keepAlive)
-				{
-					if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-					{
-						if (this.$vnode.componentOptions)
-						{
-							var key = this.$vnode.key == null
-										? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-										: this.$vnode.key;
-							var cache = this.$vnode.parent.componentInstance.cache;
-							var keys  = this.$vnode.parent.componentInstance.keys;
-							if (cache[key])
-							{
-								if (keys.length) {
-									var index = keys.indexOf(key);
-									if (index > -1) {
-										keys.splice(index, 1);
-									}
-								}
-								delete cache[key];
-							}
-						}
-					}
-				}
-				this.$destroy();
-			}
-		next();
-	},
-	//进入该页面时，用之前保存的滚动位置赋值
-	beforeRouteEnter(to, from, next) {
-		next(vm => {
-		 document.getElementById('promoters').scrollTop=document.getElementById('promoters').pageYOffset=vm.scrollTop;
-		});
 
-	},
 	mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
@@ -176,11 +137,11 @@ export default {
 			localStorage.clear();
 			let thisVue=this
 			this.$axios.post('/hospital/logout').then(function(){
-				localStorage.removeItem('lastRoute')
+				// localStorage.removeItem('lastRoute')
 				// localStorage.clear()
 				thisVue.$toast("操作成功")
 				setTimeout(()=>{
-					thisVue.$router.push({path:"/hospital/hospitalLogin",query:{time:new Date().getTime()}})
+					thisVue.$router.push({path:"/hospital/hospitalLogin",query:{}})
 				},1500)
 			})
 			// location.href=location.pathname

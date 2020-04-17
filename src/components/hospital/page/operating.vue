@@ -18,7 +18,7 @@
           <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
       </li>
       <!-- </router-link> -->
-      <router-link :to="{name:'hospital_operatingManual',query:{time:new Date().getTime()}}">
+      <router-link :to="{name:'hospital_operatingManual',query:{}}">
         <li>
           <h4>运营手册</h4>
           <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -37,53 +37,13 @@ export default {
   name: 'operating',
   data () {
     return {
-
+		query:''
     }
   },
   computed:{
 
   },
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-  let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-  	 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-  		}
-            this.$destroy();
-  	}
-  next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-      next(vm => {
-      document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-    });
-  },
+ 
   created () {
 
   },
@@ -92,6 +52,15 @@ this.scrollTop = scrollTop?scrollTop :0;
     	//plus.navigator.setStatusBarBackground("#ffffff");
     	plus.navigator.setStatusBarStyle("dark")
     }
+  },
+  activated() {
+  	if(this.query != JSON.stringify(this.$route.query)){
+  		this.query = JSON.stringify(this.$route.query);
+  		if(window.plus){
+  			//plus.navigator.setStatusBarBackground("#ffffff");
+  			plus.navigator.setStatusBarStyle("dark")
+  		}
+  	}
   },
   methods: {
     //回退方法

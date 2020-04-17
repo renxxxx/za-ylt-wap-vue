@@ -161,7 +161,7 @@ const router = new Router({
       path: '/',
       name: 'chooseTheType',
       component: chooseTheType,
-      meta: {unkeepLastRoute:true},
+      meta: {},
     },
     {
       path: '/tihuan',
@@ -173,13 +173,13 @@ const router = new Router({
       path: '/sharePage',
       name: 'sharePage',
       component: sharePage,
-	  meta: {unkeepLastRoute:true},
+	  meta: {},
     },
 	{
 		path: '*',
 		name: 'error',
 		component: Page404,
-		meta: {unkeepLastRoute:true},
+		meta: {},
 	},
     {
       path: '/hospital',
@@ -192,25 +192,25 @@ const router = new Router({
           path: 'hospitalLogin',
           name: 'hospitalLogin',
           component: hospitalLogin,
-          meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+          meta: {auth:true,indexHide:true},
         },
         {
           path: 'hospital_index',
           name: 'hospital_index',
           component: hospital_index,
-          meta: {auth:true,tabbar:true,unkeepLastRoute:true,indexHide:true},
+          meta: {auth:true,tabbar:true,indexHide:true},
         },
         {
           path: 'hospital_urlPage',
           name: 'hospital_urlPage',
           component: hospital_urlPage,
-          meta: {auth:true,indexHide:true,unkeepLastRoute:true},
+          meta: {auth:true,indexHide:true,},
         },
         {
           path: 'hospital_retrievePassword',
           name: 'hospital_retrievePassword',
           component: hospital_retrievePassword,
-          meta: {auth:true,indexHide:true,unkeepLastRoute:true},
+          meta: {auth:true,indexHide:true,},
         },
         {
           path: 'hospital_clinic',
@@ -511,7 +511,7 @@ const router = new Router({
               path: '/promoters_index',
               name: 'promoters_index',
               component: promoters_index,
-              meta: {auth:true,bottom:true,unkeepLastRoute:true,indexHide:true},
+              meta: {auth:true,bottom:true,indexHide:true},
             },
             {
               path: 'promoters_clinicSearch',
@@ -619,27 +619,27 @@ const router = new Router({
           path: '/outpatientLogin',
           name: 'outpatientLogin',
           component: outpatientLogin,
-          meta: {auth:true,indexHide:true,unkeepLastRoute:true},
+          meta: {auth:true,indexHide:true,},
         },
 		
         {
           path: 'outpatient_index',
           name: 'outpatient_index',
           component: outpatient_index,
-          meta: {auth:true,unkeepLastRoute:true,tabbar:true,indexHide:true},
+          meta: {auth:true,tabbar:true,indexHide:true},
         },
-				{
-					path: '/outpatient_retrievePassword',
-					name: 'outpatient_retrievePassword',
-					component: outpatient_retrievePassword,
-					meta: {auth:true,unkeepLastRoute:true,indexHide:true},
-				},
-				{
-					path: '/outpatient_urlPage',
-					name: 'outpatient_urlPage',
-					component: outpatient_urlPage,
-					meta: {auth:true,unkeepLastRoute:true,indexHide:true},
-				},
+		{
+			path: '/outpatient_retrievePassword',
+			name: 'outpatient_retrievePassword',
+			component: outpatient_retrievePassword,
+			meta: {auth:true,indexHide:true},
+		},
+		{
+			path: '/outpatient_urlPage',
+			name: 'outpatient_urlPage',
+			component: outpatient_urlPage,
+			meta: {auth:true,indexHide:true},
+		},
         {
           path: 'outpatient_pathogenicSearch',
           name: 'outpatient_pathogenicSearch',
@@ -810,26 +810,26 @@ const router = new Router({
 			  path: 'operatingLogin',
 			  name: 'operatingLogin',
 			  component: operatingLogin,
-			  meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+			  meta: {auth:true,indexHide:true},
 			},
 			{
 			  path: 'operating_urlPage',
 			  name: 'operating_urlPage',
 			  component: operating_urlPage,
-			  meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+			  meta: {auth:true,indexHide:true},
 			},
 			{
 			  path: 'operating_retrievePassword',
 			  name: 'operating_retrievePassword',
 			  component: operating_retrievePassword,
-			  meta: {auth:true,unkeepLastRoute:true,indexHide:true},
+			  meta: {auth:true,indexHide:true},
 			},
 			
 			{
 			  path: 'operating_index',
 			  name: 'operating_index',
 			  component: operating_index,
-			  meta: {auth:true,tabbar:true,unkeepLastRoute:true,indexHide:true},
+			  meta: {auth:true,tabbar:true,indexHide:true},
 			},
 			{
 			  path: 'operating_user',
@@ -965,9 +965,13 @@ const router = new Router({
   ]
 })
 router.afterEach((to,from) => {
-	// console.dir(from)
-	// console.dir(to)
-  debugger
+  // console.log(from.name)
+  // console.dir(from.query)
+  // console.log(this.$vnode.parent.componentInstance.cache)
+  // console.log('---------')
+  // console.log(to.name)
+	// console.dir(to.query)
+  // debugger
   Store.state.bottomShow = !!to.meta.tabbar;
   Store.state.childBottomShow = !!to.meta.bottom;
   Store.state.hospitalReturnHomePage = !to.meta.indexHide
@@ -977,11 +981,6 @@ router.afterEach((to,from) => {
 	// next({path:'/tihuan',query:to.query})
 	router.replace({path:'/tihuan',query:{query:JSON.stringify(to.query),path:to.path}})
   }
-  // Store.state.bottomShow = !!to.meta.bottomShow;
-  if(!to.meta.unkeepLastRoute){
-	  debugger;
-    localStorage.setItem('lastRoute',JSON.stringify({path:to.path,name:to.name,query:to.query}))
-  }
-    
+
 })
 export default router

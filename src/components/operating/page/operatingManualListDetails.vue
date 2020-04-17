@@ -10,7 +10,7 @@
       <li v-for="(item,inx) in operatingManualListDetails" :key="inx">
         <div class="operatingCenter">
           <div v-for="(_item,_inx) in item.image" :key="_inx" style="display: inline;">
-            <router-link :to="{name:'hospital_pictureEnlargement',query:{inx:_inx,imgUrl:item.image,data:true,time:new Date().getTime()}}">
+            <router-link :to="{name:'hospital_pictureEnlargement',query:{inx:_inx,imgUrl:item.image,data:true,}}">
             	<!-- <img v-bind:src="item" alt=""> -->
               <img  v-if="_item" :src="_item" alt="" >
             </router-link>

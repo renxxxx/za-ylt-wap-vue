@@ -5,10 +5,10 @@
 		</div>
 		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
 		<div class="typeNav">
-			<router-link :to="{path : '/promoters/promoters_clinicSearch',query:{time:new Date().getTime()}}">
+			<router-link :to="{path : '/promoters/promoters_clinicSearch',query:{}}">
 				<img src="../../../../assets/image/qudaomenzhen@2.png" alt="">
 			</router-link>
-			<router-link :to="{path : '/promoters/promoters_sourceManagement',query:{time:new Date().getTime()}}">
+			<router-link :to="{path : '/promoters/promoters_sourceManagement',query:{}}">
 				<img src="../../../../assets/image/bingyuanguanli@2.png" alt="">
 			</router-link>
 		</div>
@@ -28,7 +28,7 @@
 		  <ul>
 		      <li v-for="(items,inx) in article" :key="inx">
 		        <router-link
-		          :to="{path : '/promoters/promoters_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
+		          :to="{path : '/promoters/promoters_caseDetails' ,query : {itemId : items.itemId,data: 1,}}"
 		        >
 		          <div class="article_left">
 		            <p>{{items.content}}</p>
@@ -56,7 +56,7 @@
 			</div>
 		  </div>
 		  <div class="activeList">
-        <router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:qualityCase[0].itemId,time:new Date().getTime()}}">
+        <router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:qualityCase[0].itemId,}}">
           <img :src="qualityCase[0].img" alt="">
           <div class="activeTitle">
             <h4>{{qualityCase[0].content}}</h4>
@@ -66,7 +66,7 @@
 		  </div>
 		  <ul style="">
 		      <li v-for="(items,num) in qualityCase" :key="num">
-		        <router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:items.itemId,time:new Date().getTime()}}">
+		        <router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:items.itemId,}}">
 		          <div class="article_left">
 		            <p>{{items.content}}</p>
 		            <div class="article_leftTime">
@@ -107,57 +107,11 @@ export default {
 	created(){
 
 	},
-	beforeRouteLeave(to, from, next) {
-		this.scrollTop =document.getElementById('promoters').scrollTop ||document.getElementById('promoters').pageYOffset
-		if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-	          if (this.$vnode && this.$vnode.data.keepAlive)
-	          {
-	              if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-	              {
-	                  if (this.$vnode.componentOptions)
-	                  {
-	                      var key = this.$vnode.key == null
-	                                  ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-	                                  : this.$vnode.key;
-	                      var cache = this.$vnode.parent.componentInstance.cache;
-	                      var keys  = this.$vnode.parent.componentInstance.keys;
-	                      if (cache[key])
-	                      {
-	                          if (keys.length) {
-	                              var index = keys.indexOf(key);
-	                              if (index > -1) {
-	                                  keys.splice(index, 1);
-	                              }
-	                          }
-	                          delete cache[key];
-	                      }
-	                  }
-	              }
-				}
-	          this.$destroy();
-			}
-		next();
-	},
-	//进入该页面时，用之前保存的滚动位置赋值
-	beforeRouteEnter(to, from, next) {
-	  next(vm => {
-		 document.getElementById('promoters').scrollTop=document.getElementById('promoters').pageYOffset=vm.scrollTop;
-		});
-		let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
-		let lastRoute = localStorage.getItem('lastRoute')
-		if(fromRoute == lastRoute){
-		 localStorage.removeItem('lastRoute')
-		}
-	},
 	destroyed(){
 		// 
 	},
 	mounted () {
-		let lastRoute = localStorage.getItem('lastRoute')
-		    if(lastRoute){
-		      this.$router.push(JSON.parse(lastRoute));
-		      return
-		    }
+		
 		
 		this.initData();
 

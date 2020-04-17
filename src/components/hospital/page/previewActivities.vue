@@ -30,7 +30,7 @@ export default {
 	data () {
 		return {
 			activity : {
-				
+			query:''
 			},
 		}
 	},
@@ -43,54 +43,23 @@ export default {
 	created () {
 		
 	},
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-	 document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
-	
-  }, mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-		this.activity = JSON.parse(this.$route.query.activity)
+  mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		// this.activity = JSON.parse(this.$route.query.activity)
 		
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.activity = JSON.parse(this.$route.query.activity)
+		}
 	},
 	methods: {
 		//回退方法
@@ -98,7 +67,8 @@ this.scrollTop = scrollTop?scrollTop :0;
 			this.$router.back(-1)
 		},
 		//发布活动
-		releaseFn(){		
+		releaseFn(){	
+			
 			this.activity.endTime = new Date(this.activity.endTime).getTime();
 			this.activity.startTime = new Date(this.activity.startTime).getTime();
 			this.$axios.post('/c2/activity/itemadd',qs.stringify({
@@ -113,10 +83,26 @@ this.scrollTop = scrollTop?scrollTop :0;
 				endTime : this.activity.endTime? this.activity.endTime+(24*60*60*1000):this.activity.endTime,
 			}))
 			.then(res => {
-				res.data.codeMsg? this.$toast(res.data.codeMsg):this.$toast.success('操作成功')
-				
+				if(res.data.codeMsg){
+					this.$toast(res.data.codeMsg)
+				}
+				if(res.data.code == 0){
+					this.$toast.success('操作成功')
+					console.log(this.$vnode.parent.componentInstance.cache)
+					let inx = []
+					for(let i  in  this.$vnode.parent.componentInstance.cache){
+						let a =/addAcivity/g.test(this.$vnode.parent.componentInstance.cache[i].tag)
+						if(a){inx.push(i)}
+					}
+					let  historyCache = this.$vnode.parent.componentInstance.cache;
+					for(let a=0;a<inx.length;a++){
+						console.log(inx[a])
+						delete historyCache[inx[a]]
+					}
+					this.$router.go(-2)
+				}
 				//window.location.href='#/hospital_activityReleased';
-				this.$router.go(-2)
+				
 			})
 			.catch((err)=>{
 				

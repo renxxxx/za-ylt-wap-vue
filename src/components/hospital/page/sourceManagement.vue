@@ -7,13 +7,13 @@
 				<div class="indexReturn" @click="goBackFn"  id="navback">
 					<img src="../../../assets/image/back-white@2x.png" alt="">
 				</div>
-				<router-link :to="{name:'hospital_pathogenicSearch',query:{focus : true,time:new Date().getTime()}}">
+				<router-link :to="{name:'hospital_pathogenicSearch',query:{focus : true,}}">
           <div class="indexSearch ">
               <input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
               <img src="../../../assets/image/sousuo@2x.png" alt="">
           </div>
 				</router-link>
-        <router-link :to="{name:'hospital_pathogenicSearch',query:{time:new Date().getTime()}}">
+        <router-link :to="{name:'hospital_pathogenicSearch',query:{}}">
           <div class="clinic_buttton">
             <button>搜索</button>
           </div>
@@ -83,6 +83,7 @@ export default {
 		},
 		height : undefined,
 		pullingDown: false,
+		query:""
     }
   },
   created(){
@@ -92,61 +93,28 @@ export default {
 	//this.height = parseInt(topHeight.join())
 	// //
   },
-  beforeRouteLeave(to, from, next) {
-    debugger;
-	let scrollTop = this.scrollTop =document.getElementById('hospital').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	
-	
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-		 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-		document.getElementById('hospital').scrollTop=document.getElementById('hospital').pageYOffset=vm.scrollTop;
-	});
-
-  }
-  ,destroyed(){
+  
+  destroyed(){
 	  debugger
 	  
   },
   mounted(){
-	  debugger
-    if(window.plus){
-    	//plus.navigator.setStatusBarBackground("#2B77EF");
-    	plus.navigator.setStatusBarStyle("dark")
-    }
-	this.getNum();
+	//   debugger
+ //    if(window.plus){
+ //    	//plus.navigator.setStatusBarBackground("#2B77EF");
+ //    	plus.navigator.setStatusBarStyle("dark")
+ //    }
+	// this.getNum();
+  },
+  activated() {
+  	if(this.query != JSON.stringify(this.$route.query)){
+  		this.query = JSON.stringify(this.$route.query);
+  		if(window.plus){
+  			//plus.navigator.setStatusBarBackground("#ffffff");
+  			plus.navigator.setStatusBarStyle("dark")
+  		}
+		this.getNum();
+  	}
   },
   computed:{
 		show: {
@@ -206,7 +174,7 @@ this.scrollTop = scrollTop?scrollTop :0;
 	//显示筛选弹窗
 	showPopup() {
 	  this.show = true;
-    this.$router.push({name:'hospital_pathogenicSearch',query:{time:new Date().getTime(),show:false}})
+    this.$router.push({name:'hospital_pathogenicSearch',query:{show:false}})
 
 	},
 	getNum(){
