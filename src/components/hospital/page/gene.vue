@@ -1,5 +1,6 @@
 <template>
-	<div class="gene" :style="{'padding-top':$store.state.paddingTop}">
+<topSolt>
+	<div class="gene" slot="returnTopSolt" :style="{'padding-top':$store.state.paddingTop}">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="nav_left">
 				<img src="../../../assets/image/scanning@2x.png" alt="">
@@ -77,12 +78,14 @@
 		</div>
     <div style="height: .55rem;"></div>
 	</div>
+	</topSolt>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'gene',
 	data () {
@@ -98,6 +101,7 @@ export default {
 		}
 	},
 	components:{
+		topSolt
 	},
 	computed:{
 

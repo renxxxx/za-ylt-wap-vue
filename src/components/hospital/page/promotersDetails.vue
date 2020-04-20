@@ -1,5 +1,6 @@
 <template>
-	<div class="promotersDetails" ref="promotersDetailsRef">
+<topSolt>
+	<div class="promotersDetails" ref="promotersDetailsRef" slot="returnTopSolt">
 		<div class="nav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="topNav">
 				<div class="leftImg" @click="returnFn" id="navback">
@@ -111,12 +112,14 @@
 		</div>
 		</van-list>
 	</div>
+	</topSolt>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'promotersDetails',
 	data () {
@@ -165,7 +168,7 @@ export default {
 	  },
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g;
@@ -359,8 +362,11 @@ export default {
 		},
 		// 显示推广人选择弹窗
 		transferPromotersShowAllFn(){
-			this.modifyPromotersAllShow = true;
-      this.hospitalReturnHomePage = false;
+			// console.log(this.clinicNum)
+			if(this.clinicNum){
+				this.modifyPromotersAllShow = true;
+     			this.hospitalReturnHomePage = false;
+			}
 		},
     //关闭推广人选择弹窗触发弹窗
     ReturnHomePageClose(){

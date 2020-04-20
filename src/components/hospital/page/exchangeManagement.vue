@@ -1,5 +1,6 @@
 <template>
-	<div class="exchange">
+<topSolt>
+	<div class="exchange" slot="returnTopSolt">
 		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 			<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 				<div class="leftImg" @click="goBackFn"  id="navback">
@@ -52,6 +53,7 @@
 		</van-list>
 	</van-pull-refresh>
 	</div>
+	</topSolt>
 </template>
 
 <script>
@@ -59,6 +61,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import {Dialog} from 'vant'
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'exchangeManagement',
 	data () {
@@ -84,7 +87,7 @@ export default {
     },
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 

@@ -1,5 +1,6 @@
 <template>
-	<div class="promoters" ref='promotersRef'>
+<topSolt>
+	<div class="promoters" ref='promotersRef' slot="returnTopSolt">
 		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 			<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 				<div class="leftImg" @click="goBackFn"  id="navback">
@@ -36,12 +37,14 @@
 		</van-list>
 	</van-pull-refresh>
 	</div>
+	</topSolt>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'promoters',
 	data () {
@@ -58,7 +61,7 @@ export default {
 
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 		

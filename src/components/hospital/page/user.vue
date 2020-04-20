@@ -241,7 +241,7 @@ export default {
 .top_right{
 	width: 19%;
 	float:left;
-	margin: .53rem .14rem .44rem 0rem;
+	margin: .53rem 0rem .44rem 0rem;
 	color: #999999;
 	position: relative;
 }

@@ -1,6 +1,7 @@
 <template>
-<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
-  <div class="index">
+<topSolt>
+	<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" slot="returnTopSolt" >
+  	<div class="index">
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
 			<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.paddingTop}">
@@ -26,29 +27,32 @@
         <!-- </router-link> -->
 			</div>
 			<!-- 就诊情况 -->
-			<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+39)+'px'}">
-				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
-					<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'>
-						<keep-alive>
-							<clinicAll ref='all' :list = 'list'></clinicAll>
-						</keep-alive>
-					</van-tab>
-					<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
-						<keep-alive>
-							<clinicNo ref='no' :list = 'list'></clinicNo>
-						</keep-alive>
-					</van-tab>
-					<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
-						<keep-alive>
-							<clinicYes ref='yes' :list = 'list'></clinicYes>
-						</keep-alive>
-					</van-tab>
-				</van-tabs>
-			</div>
+			
+				<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+39)+'px'}">
+					<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
+						<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'>
+							<keep-alive>
+								<clinicAll ref='all' :list = 'list'></clinicAll>
+							</keep-alive>
+						</van-tab>
+						<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
+							<keep-alive>
+								<clinicNo ref='no' :list = 'list'></clinicNo>
+							</keep-alive>
+						</van-tab>
+						<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
+							<keep-alive>
+								<clinicYes ref='yes' :list = 'list'></clinicYes>
+							</keep-alive>
+						</van-tab>
+					</van-tabs>
+				</div>
+			
 		</div>
 		<!-- <router v-if="isLogin == 200? true:false"></router> -->
   </div>
   </van-pull-refresh>
+  </topSolt>
 </template>
 <script>
 import axios from 'axios'
@@ -58,6 +62,7 @@ import { Dialog } from 'vant'
 import clinicAll from '../function/clinicAll.vue'
 import clinicYes from '../function/clinicYes.vue'
 import clinicNo from '../function/clinicNo.vue'
+import topSolt from "../function/topSolt.vue";
 // import router from '../../outpatient/functionPage/router.vue'
 export default {
   name: 'index',
@@ -149,7 +154,7 @@ export default {
   },
   //注册组件
   components:{
-	  clinicAll,clinicYes,clinicNo
+	  clinicAll,clinicYes,clinicNo,topSolt
   },
   methods:{
 	 afterPullDown() {

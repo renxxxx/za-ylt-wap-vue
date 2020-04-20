@@ -1,6 +1,7 @@
 <template>
 	<div class="search_clinic">
-		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+		<topSolt>
+		<van-pull-refresh v-model="pullingDown" slot="returnTopSolt" @refresh="afterPullDown" >
 			<div class="navWarp" :style="{'padding-top':$store.state.paddingTop}">
 				<div class="topNav">
 					<div class="clinic_information" @click="goBackFn"  id="navback">
@@ -30,6 +31,7 @@
 			<div style="height:1.1rem"></div>
 			<clinicContent ref='content' :clinic = 'clinic' :style="{'padding-top':$store.state.paddingTop}"></clinicContent>
 		</van-pull-refresh>
+		</topSolt>
 	</div>
 </template>
 
@@ -38,6 +40,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import clinicContent from '../function/clinic_content.vue'
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'search',
 	data () {
@@ -55,7 +58,8 @@ export default {
 		...mapGetters(['account'])
 	},
 	components:{
-		clinicContent
+		clinicContent,
+		topSolt
 	},
 	created(){
 	},
@@ -142,6 +146,7 @@ export default {
 <style scoped>
 .search_clinic{
 	width: 100%;
+	height: 100%;
 }
 .navWarp{
 	width: 100%;

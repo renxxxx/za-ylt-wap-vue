@@ -2,7 +2,9 @@
   <div id="hospital" ref='hospitalRef' :style="{'margin-bottom':bottomShow?'.55rem':'' }" @touchstart='touchStartFn' @touchend='touchEndFn'>
 
   <keep-alive>
-    <router-view  class="appView"></router-view>
+    <!-- <topSolt> -->
+      <router-view  class="appView"></router-view>
+    <!-- </topSolt> -->
   </keep-alive>
 
   <div class="returnHomePage" @click="returnHomePageFn" id="returnHomePageId" ref="returnHomePageRef" v-show="hospitalReturnHomePage">
@@ -51,7 +53,9 @@
 </template>
 
 <script>
-import {mapActions,mapGetters} from 'vuex'
+import {mapActions,mapGetters} from 'vuex';
+import topSolt from "./function/topSolt.vue";
+
 export default {
   name: 'hospital',
   data(){
@@ -106,6 +110,9 @@ export default {
 			  }
       })
   },
+  components: {
+    topSolt
+  },
   mounted(){
     window.addEventListener("scroll", this.handleScroll, true);
   },
@@ -154,26 +161,26 @@ export default {
     //   }
     // },
     // 返回列表顶部按钮
-    returnTopFn() {
-		debugger
-      var scrollTop =
-        this.$refs.hospitalRef.scrollTop ||
-        this.$refs.hospitalRef.scrollTop ||
-        this.$refs.hospitalRef.pageYOffset;
-      let windowHeight =
-        document.documentElement.clientHeight || this.$refs.hospitalRef.clientHeight;
-      for (let i = 0; i < (scrollTop + windowHeight); i++) {
-        var clearReturn = setTimeout(() => {
-          this.$refs.hospitalRef.scrollTop--;
-          window.pageYOffset--;
-          this.$refs.hospitalRef.scroll--;
-          document.documentElement.scrollTop--;
-        }, 5);
-      }
-      document.getElementById("returnHomePageId").style.bottom = '.6rem';
-      this.$refs.returnTopRef.style.opacity = 0;
-      this.hospitalReturnTopPage = false;
-    },
+    // returnTopFn() {
+		// debugger
+    //   var scrollTop =
+    //     this.$refs.hospitalRef.scrollTop ||
+    //     this.$refs.hospitalRef.scrollTop ||
+    //     this.$refs.hospitalRef.pageYOffset;
+    //   let windowHeight =
+    //     document.documentElement.clientHeight || this.$refs.hospitalRef.clientHeight;
+    //   for (let i = 0; i < (scrollTop + windowHeight); i++) {
+    //     var clearReturn = setTimeout(() => {
+    //       this.$refs.hospitalRef.scrollTop--;
+    //       window.pageYOffset--;
+    //       this.$refs.hospitalRef.scroll--;
+    //       document.documentElement.scrollTop--;
+    //     }, 5);
+    //   }
+    //   document.getElementById("returnHomePageId").style.bottom = '.6rem';
+    //   this.$refs.returnTopRef.style.opacity = 0;
+    //   this.hospitalReturnTopPage = false;
+    // },
     // 返回首页按钮触发事件
     returnHomePageFn(){
       
@@ -194,8 +201,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   /* overflow-y: scroll; */
-	touch-action: pan-y;
-	-webkit-overflow-scrolling: touch;
+	/* touch-action: pan-y; */
+	/* -webkit-overflow-scrolling: touch; */
   /* overflow: scroll; */
 
 }

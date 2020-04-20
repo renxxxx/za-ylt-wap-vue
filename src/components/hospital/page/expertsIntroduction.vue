@@ -1,5 +1,6 @@
 <template>
-	<div class="expertsIntroduction">
+<topSolt>
+	<div class="expertsIntroduction" slot="returnTopSolt">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
@@ -30,6 +31,7 @@
       </van-list>
 		</div>
 	</div>
+	</topSolt>
 </template>
 
 <script>
@@ -37,6 +39,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'expertsIntroduction',
 	data () {
@@ -49,6 +52,9 @@ export default {
       page: 0,
 	  query:''
 		}
+	},
+	components:{
+		topSolt
 	},
 	computed:{
 		...mapGetters(['account']),

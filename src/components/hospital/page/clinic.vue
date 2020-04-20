@@ -1,6 +1,8 @@
 <template>
+
 	<div class="hospital" :style="{'padding-top':$store.state.paddingTop}">
-		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+		<topSolt>
+		<van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown" >
 			<div class="navWarp">
 				<div class="topNav"  :style="{'padding-top':$store.state.paddingTop}">
 					<div class="hospital_search">
@@ -60,6 +62,7 @@
 			<clinicContent  ref="clinic" :show = 'show'></clinicContent>
 			<!-- <div style="height: .55rem;"></div> -->
 		</van-pull-refresh>
+		</topSolt>
 	</div>
 </template>
 
@@ -68,6 +71,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import clinicContent from '../function/clinic_content.vue'
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'clinic',
 	data() {
@@ -83,7 +87,7 @@ export default {
 	computed:{
 	},
 	components:{
-		clinicContent
+		clinicContent,topSolt
 	},
 	beforeCreate(){
 		
