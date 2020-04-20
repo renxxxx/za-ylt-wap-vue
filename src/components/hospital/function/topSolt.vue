@@ -5,6 +5,7 @@
         <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="hospitalReturnTopPage">
             <img src="../../../assets/image/returnTop.png" alt />
             <span>顶部</span>
+            
         </div>
     </div>
 </template>
