@@ -1,11 +1,11 @@
 <template>
-  <div id="promoters" :class="[childBottomShow? 'hospitalBottom':'']" ref="promotersRef">
+  <div :class="[childBottomShow? 'hospitalBottom':'']" ref="promotersRef">
     <keep-alive>
-      <router-view class="appView"  />
+      <router-view class="appView" id="promoters" />
     </keep-alive>
     <van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.paddingBottom}" v-if="childBottomShow">
       <!-- <router-link :to="{path : '/promoters/hospital_sourceManagement'}"> -->
-      <van-tabbar-item replace :to="{path : '/promoters_index',query:{time:new Date().getTime(),transition:'def'}}">
+      <van-tabbar-item replace :to="{path : '/promoters_index',query:{transition:'def'}}">
           <span>首页</span>
           <img
           slot="icon"
@@ -13,7 +13,7 @@
           :src="props.active ? index.inactive : index.active "
           />
       </van-tabbar-item>
-      <van-tabbar-item replace :to="{path : '/promoters/promoters_cilnic',query:{time:new Date().getTime(),transition:'def'}}">
+      <van-tabbar-item replace :to="{path : '/promoters/promoters_cilnic',query:{transition:'def'}}">
           <img
           slot="icon"
           slot-scope="props"
@@ -21,7 +21,7 @@
           >
           <span>门诊</span>
       </van-tabbar-item>
-      <van-tabbar-item replace :to="{path : '/promoters/promoters_user',query:{time:new Date().getTime(),transition:'def'}}">
+      <van-tabbar-item replace :to="{path : '/promoters/promoters_user',query:{transition:'def'}}">
           <span>我的</span>
           <img
           slot="icon"

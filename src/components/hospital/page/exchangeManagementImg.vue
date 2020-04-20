@@ -36,6 +36,7 @@ export default {
 			commodity : [],
 			imgUrl : '',
 			exchangeAdd : {},
+			query:''
 		}
 	},
 	computed:{
@@ -45,17 +46,27 @@ export default {
 
 	},
 	created(){
-		var heightRexg = /^[0-9]*/g
+		// var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join())
 		//
 	},
    mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		// this.exchangeAdd = JSON.parse(this.$route.query.exchangeAdd)
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.exchangeAdd = JSON.parse(this.$route.query.exchangeAdd)
 		}
-		this.exchangeAdd = JSON.parse(this.$route.query.exchangeAdd)
 	},
 	methods: {
 		//回退方法
@@ -97,8 +108,8 @@ export default {
 					stock: this.exchangeAdd.stock,
 					payExchangepoint : this.exchangeAdd.payExchangepoint,
 				})).then(res  =>{
-					res.data.codeMsg? Toast.fail(res.data.codeMsg) : this.successFn();
-          
+					res.data.code? Toast.fail(res.data.codeMsg) : this.successFn();
+					
 				}).catch(err =>{
 					
 				})
@@ -116,8 +127,20 @@ export default {
 				cover : '',
 				show : true,
 			  }
-        // history.replaceState({name:'hospital_exchangeManagement'})
-      // this.$router.push({name:'hospital_exchangeManagement',quer:{time:new Date().getTime()}})
+			let inx = []
+			// console.log(this.$vnode.parent.componentInstance.cache)
+			for(let i  in  this.$vnode.parent.componentInstance.cache){
+				let a =/exchangeAddImg/g.test(this.$vnode.parent.componentInstance.cache[i].tag)
+				let b= /exchangeAdd/g.test(this.$vnode.parent.componentInstance.cache[i].tag)
+				if(a||b){inx.push(i)}
+			}
+			let  historyCache = this.$vnode.parent.componentInstance.cache;
+			for(let a=0;a<inx.length;a++){
+				console.log(inx[a])
+				delete this.$vnode.parent.componentInstance.cache[inx[a]]
+			}
+			// console.log(inx)
+			// console.log(this.$vnode.parent.componentInstance.cache)
 			this.$router.go(-2)
 		}
 	},

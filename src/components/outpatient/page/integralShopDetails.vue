@@ -9,7 +9,7 @@
 			</div>
 			<div class="right"></div>
 		</div>
-		<router-link :to="{path : '/outpatient/outpatient_shopAddressAdd'  ,query : {address : JSON.stringify(address),time:new Date().getTime()}}">
+		<router-link :to="{path : '/outpatient/outpatient_shopAddressAdd'  ,query : {address : JSON.stringify(address),}}">
 			<div class="address" v-show="!address.receiverId">
 				<img src="../../../assets/image/dingweiweizhi@2x.png" alt="">
 				<div class="addressContent">
@@ -19,7 +19,7 @@
 				<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
 			</div>
 		</router-link>
-		<router-link :to="{path : '/outpatient/outpatient_shopAddress' ,query : {address : JSON.stringify(address),time:new Date().getTime()}}">
+		<router-link :to="{path : '/outpatient/outpatient_shopAddress' ,query : {address : JSON.stringify(address),}}">
 			<div class="address" v-show="!!address.receiverId">
 				<img src="../../../assets/image/exchangeAdress.png" alt="">
 				<div class="addressContent">

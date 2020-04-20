@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import chooseTheType from '@/components/chooseTheType.vue'
 import sharePage from '@/components/sharePage.vue'
 import Page404 from '@/components/404Page.vue'
+import tihuan from '@/components/tihuan.vue'
 
 //医院端
 import hospital from '@/components/hospital/hospital.vue'
@@ -144,8 +145,13 @@ import operating_addActivity from '@/components/operating/page/addActivity.vue'
 import operating_previewActivities from '@/components/operating/page/previewActivities.vue'
 import operating_caseDetails from '@/components/operating/page/caseDetails.vue'
 import operating_collect from '@/components/operating/page/collect.vue'
-import operating_operating from '@/components/operating/page/operating.vue'
 import operating_clinicDetails from '@/components/operating/page/clinicDetails.vue'
+import operating_operating from '@/components/operating/page/operating.vue'
+import operating_operatingManual from '@/components/operating/page/operatingManual.vue'
+import operating_operatingManualList from '@/components/operating/page/operatingManualList.vue'
+import operating_operatingManualListDetails from '@/components/operating/page/operatingManualListDetails.vue'
+import operating_operatingManualListTwo from '@/components/operating/page/operatingManualListTwo.vue'
+import operating_clinicAllSearch from '@/components/operating/page/clinicAllSearch.vue'
 
 Vue.use(Router)
 
@@ -157,12 +163,12 @@ const router = new Router({
       component: chooseTheType,
       meta: {},
     },
-    // {
-    //   path: '/chooseTheType',
-    //   name: 'chooseTheType',
-    //   component: chooseTheType,
-    //   meta: {},
-    // },
+    {
+      path: '/tihuan',
+      name: 'tihuan',
+      component: tihuan,
+      meta: {unkeepLastRoute:true},
+    },
     {
       path: '/sharePage',
       name: 'sharePage',
@@ -910,6 +916,37 @@ const router = new Router({
 			  meta: {auth:true},
 			},
 			{
+			  path: 'operating_operatingManual',
+			  name: 'operating_operatingManual',
+			  component: operating_operatingManual,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_operatingManualList',
+			  name: 'operating_operatingManualList',
+			  component: operating_operatingManualList,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_operatingManualListDetails',
+			  name: 'operating_operatingManualListDetails',
+			  component: operating_operatingManualListDetails,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_operatingManualListTwo',
+			  name: 'operating_operatingManualListTwo',
+			  component: operating_operatingManualListTwo,
+			  meta: {auth:true},
+			},
+			{
+			  path: 'operating_clinicAllSearch',
+			  name: 'operating_clinicAllSearch',
+			  component: operating_clinicAllSearch,
+			  meta: {auth:true},
+			},
+			
+			{
 			  path: 'operating_clinicDetails',
 			  name: 'operating_clinicDetails',
 			  component: operating_clinicDetails,
@@ -928,12 +965,22 @@ const router = new Router({
   ]
 })
 router.afterEach((to,from) => {
-  debugger
+  // console.log(from.name)
+  // console.dir(from.query)
+  // console.log(this.$vnode.parent.componentInstance.cache)
+  // console.log('---------')
+  // console.log(to.name)
+	// console.dir(to.query)
+  // debugger
   Store.state.bottomShow = !!to.meta.tabbar;
   Store.state.childBottomShow = !!to.meta.bottom;
   Store.state.hospitalReturnHomePage = !to.meta.indexHide
   Store.state.outpatientReturnHomePage = !to.meta.indexHide
   Store.state.operatingReturnHomePage = !to.meta.indexHide
-  
+  if(to.path == from.path){
+	// next({path:'/tihuan',query:to.query})
+	router.replace({path:'/tihuan',query:{query:JSON.stringify(to.query),path:to.path}})
+  }
+
 })
 export default router

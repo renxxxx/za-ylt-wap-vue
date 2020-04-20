@@ -27,6 +27,7 @@ export default {
 			photoNum : 0,
 			photoPage : 0,
 			inx: 0,
+			query:''
 		}
 	},
 	computed:{
@@ -43,15 +44,33 @@ export default {
 	},
 	
 	mounted () {
-		let _this = this
-		ImagePreview({
-			images: this.imgUrl,
-			asyncClose: false,
-			startPosition: this.$route.query.inx? this.$route.query.inx : 0,
-			onClose(){
-				_this.$router.back()
+		// let _this = this
+		// ImagePreview({
+		// 	images: this.imgUrl,
+		// 	asyncClose: false,
+		// 	startPosition: this.$route.query.inx? this.$route.query.inx : 0,
+		// 	onClose(){
+		// 		_this.$router.back()
+		// 	}
+		// });
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
 			}
-		});
+			let _this = this
+			ImagePreview({
+				images: this.imgUrl,
+				asyncClose: false,
+				startPosition: this.$route.query.inx? this.$route.query.inx : 0,
+				onClose(){
+					_this.$router.back()
+				}
+			});
+		}
 	},
 	methods: {
 		// backFn(){

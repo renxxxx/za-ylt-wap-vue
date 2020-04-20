@@ -58,6 +58,7 @@ export default {
   data () {
     return {
 		images: [],
+		query:""
     }
   },
   computed:{
@@ -88,7 +89,28 @@ if(window.plus){
 	
 	// this.navTopFn();
   },
-  
+  activated() {
+  	if(this.query != JSON.stringify(this.$route.query)){
+  		this.query = JSON.stringify(this.$route.query);
+  		if(window.plus){
+  			//plus.navigator.setStatusBarBackground("#ffffff");
+  			plus.navigator.setStatusBarStyle("dark")
+  		}
+  		document.addEventListener('scroll',this.scrollToTop)
+  		// window.addEventListener('scroll', 
+  		this.$axios.post('/c/procurement/entpg')
+  		.then(_d => {
+  			for(let _i in  _d.data.data.ads){
+  				this.images.push( _d.data.data.ads[_i].cover)
+  				// 
+  			}
+  		})
+  		.catch((err)=>{
+  			
+  			//Dialog({ message: '加载失败!'});
+  		})
+  	}
+  },
   methods: {
 	//回退方法
 	goBackFn(){

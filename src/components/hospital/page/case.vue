@@ -1,5 +1,6 @@
 <template>
-	<div class="case">
+<topSolt>
+	<div class="case" slot="returnTopSolt">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.paddingTop}">
 			<h3>优质案例</h3>
@@ -9,7 +10,7 @@
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <ul>
           <li v-for="(items,inx) in article" :key="inx">
-            <router-link :to="{path : '/hospital/hospital_caseDetails' ,query : {itemId : items.itemId,data: 4,time:new Date().getTime()}}">
+            <router-link :to="{path : '/hospital/hospital_caseDetails' ,query : {itemId : items.itemId,data: 4,}}">
               <div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
                 <p>{{items.content}}</p>
                 <div class="article_leftTime">
@@ -26,11 +27,13 @@
       </van-list>
 		</div>
 	</div>
+	</topSolt>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
+import topSolt from "../function/topSolt.vue";
 import qs from 'qs';
 export default {
 	name: 'case',
@@ -40,13 +43,14 @@ export default {
       loading: false,
       finished: false,
       page: 0,
+	  query:''
 		}
 	},
 	computed:{
 	  ...mapGetters(['account']),
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 		// var heightRexg = /^[0-9]*/g
@@ -55,9 +59,18 @@ export default {
 		//
 	},
   mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
 		}
 	},
 	methods: {

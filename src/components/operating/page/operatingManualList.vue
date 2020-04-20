@@ -56,32 +56,65 @@ export default {
       operatingManualList : [],
       num:0,
       yesNum:0,
-			query:''
+	  query:{}
     }
   },
   computed:{
 
   },
+  beforeRouteLeave(to, from, next) {
+    //debugger;
+  let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
+this.scrollTop = scrollTop?scrollTop :0;
+
+  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+  	 debugger
+            if (this.$vnode && this.$vnode.data.keepAlive)
+            {
+                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
+                {
+                    if (this.$vnode.componentOptions)
+                    {
+                        var key = this.$vnode.key == null
+                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
+                                    : this.$vnode.key;
+                        var cache = this.$vnode.parent.componentInstance.cache;
+                        var keys  = this.$vnode.parent.componentInstance.keys;
+                        if (cache[key])
+                        {
+                            if (keys.length) {
+                                var index = keys.indexOf(key);
+                                if (index > -1) {
+                                    keys.splice(index, 1);
+                                }
+                            }
+                            delete cache[key];
+                        }
+                    }
+                }
+  		}
+            this.$destroy();
+  	}
+  next();
+  },
+  //进入该页面时，用之前保存的滚动位置赋值
+  beforeRouteEnter(to, from, next) {
+      next(vm => {
+      document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
+    });
+  },
   created () {
 
   },
   mounted () {
-    // if(window.plus){
-    // 	//plus.navigator.setStatusBarBackground("#ffffff");
-    // 	plus.navigator.setStatusBarStyle("dark")
-    // }
-    // this.getData()
+    if(window.plus){
+    	//plus.navigator.setStatusBarBackground("#ffffff");
+    	plus.navigator.setStatusBarStyle("dark")
+    }
+		// this.query = JSON.parse(this.$route.query)
+		
+    this.getData()
   },
-	activated() {
-		if(this.query != JSON.stringify(this.$route.query)){
-			this.query = JSON.stringify(this.$route.query);
-			if(window.plus){
-				//plus.navigator.setStatusBarBackground("#ffffff");
-				plus.navigator.setStatusBarStyle("dark")
-			}
-			this.getdata()
-		}
-	},
   methods: {
     //回退方法
     goBackFn(){
@@ -90,13 +123,14 @@ export default {
     nextPageFn(item){
       if(item.lowerCount){
         // console.dir(item)
-        this.$router.push({name:'hospital_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,}})
+        this.$router.push({path:'/operating/operating_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,}})
       }else{
-        this.$router.push({name:'hospital_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,}})
+        this.$router.push({path:'/operating/operating_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,}})
       }
     },
     getData(){
-      this.$axios.get('/hospital/operating-manual/operating-manual-sections?'+qs.stringify({operatingManualId:this.$route.query.operatingManualId}))
+      this.$axios.get('/manager/operating-manual-sections?'+qs.stringify({
+		  operatingManualId:this.$route.query.operatingManualId}))
       .then(res => {
         if(!res.data.codeMsg){
           for(let i in res.data.data.rows){

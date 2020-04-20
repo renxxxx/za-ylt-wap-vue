@@ -1,5 +1,6 @@
 <template>
-	<div class="message">
+<topSolt>
+	<div class="message" slot="returnTopSolt">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
@@ -15,7 +16,7 @@
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <ul>
           <li v-for="(item,inx) in clinicMessage" :key='inx'>
-            <router-link :to="{path : '/hospital/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+            <router-link :to="{path : '/hospital/hospital_detailsPage' ,query : {patientId : item.itemId,}}">
               <div class="triangle_border_up">
                 <span></span>
               </div>
@@ -33,6 +34,7 @@
       </van-list>
 		</div>
 	</div>
+	</topSolt>
 </template>
 
 <script>
@@ -40,6 +42,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'case',
 	data () {
@@ -48,13 +51,14 @@ export default {
 			loading: false,
 			finished: false,
 			page: 0,
+			query:''
 		}
 	},
 	computed:{
 	  ...mapGetters(['account']),
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
@@ -62,12 +66,20 @@ export default {
 		//this.height = parseInt(topHeight.join())
 	},
   mounted() {
-	  debugger
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
 	},
 	methods: {
 		//回退方法

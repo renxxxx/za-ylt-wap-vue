@@ -20,7 +20,7 @@
 		</van-image-preview>
 		<div class="user_center">
 			<ul>
-				<!-- <router-link :to="{name: 'promoters_promotersDetails',query:{time:new Date().getTime()}}">
+				<!-- <router-link :to="{name: 'promoters_promotersDetails',query:{}}">
 					<li>
 						<span>门诊列表	</span>
 						<img src="../../../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -141,7 +141,7 @@ export default {
 				// localStorage.clear()
 				thisVue.$toast("操作成功")
 				setTimeout(()=>{
-					thisVue.$router.push({path:"/hospital/hospitalLogin",query:{time:new Date().getTime()}})
+					thisVue.$router.push({path:"/hospital/hospitalLogin",query:{}})
 				},1500)
 			})
 			// location.href=location.pathname

@@ -34,7 +34,7 @@ export default {
   name: 'pushTheManagement',
   data () {
     return {
-
+		query:''
     }
   },
   computed:{
@@ -47,6 +47,15 @@ export default {
   },
   mounted () {
 
+  },
+  activated() {
+  	if(this.query != JSON.stringify(this.$route.query)){
+  		this.query = JSON.stringify(this.$route.query);
+  		if(window.plus){
+  			//plus.navigator.setStatusBarBackground("#ffffff");
+  			plus.navigator.setStatusBarStyle("dark")
+  		}
+  	}
   },
   methods: {
     //回退方法

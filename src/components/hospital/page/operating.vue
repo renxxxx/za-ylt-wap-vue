@@ -18,7 +18,7 @@
           <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
       </li>
       <!-- </router-link> -->
-      <router-link :to="{name:'hospital_operatingManual',query:{time:new Date().getTime()}}">
+      <router-link :to="{name:'hospital_operatingManual',query:{}}">
         <li>
           <h4>运营手册</h4>
           <img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -37,7 +37,7 @@ export default {
   name: 'operating',
   data () {
     return {
-
+		query:''
     }
   },
   computed:{
@@ -52,6 +52,15 @@ export default {
     	//plus.navigator.setStatusBarBackground("#ffffff");
     	plus.navigator.setStatusBarStyle("dark")
     }
+  },
+  activated() {
+  	if(this.query != JSON.stringify(this.$route.query)){
+  		this.query = JSON.stringify(this.$route.query);
+  		if(window.plus){
+  			//plus.navigator.setStatusBarBackground("#ffffff");
+  			plus.navigator.setStatusBarStyle("dark")
+  		}
+  	}
   },
   methods: {
     //回退方法

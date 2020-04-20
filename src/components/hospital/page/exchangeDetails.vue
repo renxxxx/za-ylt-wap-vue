@@ -5,7 +5,7 @@
 				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<div class="centerTitle">
-				<h3>专家介绍</h3>
+				<h3>兑换详情</h3>
 			</div>
 			<div class="right"></div>
 		</div> 
@@ -45,7 +45,8 @@ export default {
 	name: 'exchangeDetails',
 	data () {
 		return {
-			exchangeDetails:{}
+			exchangeDetails:{},
+			query:''
 		}
 	},
 	computed:{
@@ -60,22 +61,40 @@ export default {
 		//this.height = parseInt(topHeight.join()) 
 		//
 	},
-  mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.$axios.post('/clientend2/hospitalend/exchangemanage/orderinfo',qs.stringify({
+				orderId : this.$route.query.item.orderId,
+			}))
+			.then(res => {
+				res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn(res);
+			})
+			.catch((err)=>{
+				//Dialog({ message: err});;
+			})
 		}
+	},
+  mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 		
 		
-		this.$axios.post('/clientend2/hospitalend/exchangemanage/orderinfo',qs.stringify({
-			orderId : this.$route.query.item.orderId,
-		}))
-		.then(res => {
-			res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn(res);
-		})
-		.catch((err)=>{
-			//Dialog({ message: err});;
-		})
+		// this.$axios.post('/clientend2/hospitalend/exchangemanage/orderinfo',qs.stringify({
+		// 	orderId : this.$route.query.item.orderId,
+		// }))
+		// .then(res => {
+		// 	res.data.codeMsg? Toast.success(res.data.codeMsg) : this.successFn(res);
+		// })
+		// .catch((err)=>{
+		// 	//Dialog({ message: err});;
+		// })
 	},
 	methods: {
 		goBackFn(){

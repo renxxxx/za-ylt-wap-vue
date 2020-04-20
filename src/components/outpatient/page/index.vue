@@ -4,18 +4,18 @@
 			<div class="navWarp">
 				<!-- 搜索及其筛选 -->
 				<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.paddingTop}">
-				<router-link :to="{name:'outpatient_pathogenicSearch',query:{focus : true,time:new Date().getTime()}}">
+				<router-link :to="{name:'outpatient_pathogenicSearch',query:{focus : true,}}">
 					<div class="indexSearch clinicSearchStyle">
 						<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
 						<img src="../../../assets/image/sousuo@2x.png" alt="">
 					</div>
 				</router-link>
-				<router-link :to="{name:'outpatient_pathogenicSearch',query:{time:new Date().getTime()}}">
+				<router-link :to="{name:'outpatient_pathogenicSearch',query:{}}">
 				  <div class="clinic_buttton">
 					<button>搜索</button>
 				  </div>
 				</router-link>
-				<router-link :to="{name:'outpatient_pathogenicSearch',query:{time:new Date().getTime()}}">
+				<router-link :to="{name:'outpatient_pathogenicSearch',query:{}}">
 				  <div class="indexScreening" @click="showPopup">
 					<span>筛选</span>
 					<img src="../../../assets/image/screen@2x.png" alt="加载中" >

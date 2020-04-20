@@ -1,100 +1,103 @@
 <template>
-      <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
-          <div class="navWarp" :style="{'padding-top': $store.state.paddingTop}">
-            <div class="navTitle">
-              <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
+  <div ref="refersh" id="hospitalIndex">
+    <topSolt>
+      <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" slot="returnTopSolt" style="ovflow:hidden">
+            <div class="navWarp" :style="{'padding-top': $store.state.paddingTop}">
+              <div class="navTitle">
+                <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
+              </div>
+              <div class="slider">
+                <van-swipe>
+                  <van-swipe-item v-for="(image, index) in images" :key="index">
+                    <router-link :to="{name : image.url}">
+                      <img  v-lazy="image.cover" class="silder_img" />
+                    </router-link>
+                  </van-swipe-item>
+                </van-swipe>
+              </div>
             </div>
-            <div class="slider">
-              <van-swipe>
-                <van-swipe-item v-for="(image, index) in images" :key="index">
-                  <router-link :to="{name : image.url}">
-                    <img  v-lazy="image.cover" class="silder_img" />
-                  </router-link>
-                </van-swipe-item>
-              </van-swipe>
-            </div>
-          </div>
-          <div class="typeList">
-            <ul>
-              <li>
-                <router-link :to="{path : '/hospital/hospital_clinicSearch',query:{time:new Date().getTime()}}">
-                  <img src="../../../assets/image/qudaomenzhen@2x.png" alt />
-                  <span>渠道门诊</span>
-                </router-link>
-              </li>
-              <li>
-                <router-link :to="{path : '/hospital/hospital_sourceManagement',query:{time:new Date().getTime()}}" >
-                  <img src="../../../assets/image/bingyuanguanli@2x.png" alt />
-                  <span>病员管理</span>
-                </router-link>
-              </li>
-              <li>
-                <router-link :to="{path : '/hospital/hospital_collect',query:{time:new Date().getTime()}}">
-                  <img src="../../../assets/image/qixiejicai@2x.png" alt />
-                  <span>器械集采</span>
-                </router-link>
-              </li>
-              <li>
-                <router-link :to="{path : '/hospital/hospital_operating',query:{time:new Date().getTime()}}">
-                  <img src="../../../assets/image/yunyingzhongxin@2x.png" alt />
-                  <span>运营中心</span>
-                </router-link>
-              </li>
-              <li @click="noLinkFn">
-                <router-link :to="{path : '/hospital/',query:{time:new Date().getTime()}}">
-                  <img src="../../../assets/image/jiyinjiance@2x.png" alt />
-                  <span>基因检测</span>
-                </router-link>
-              </li>
-              <li @click="noLinkFn">
-                <router-link :to="{path : '/hospital/',query:{time:new Date().getTime()}}">
-                  <img src="../../../assets/image/yiliaoziyuan@2x.png" alt />
-                  <span>医疗资源</span>
-                </router-link>
-              </li>
-              <li>
-                <router-link :to="{path : '/hospital/hospital_activityReleased',query:{time:new Date().getTime()}}">
-                  <img src="../../../assets/image/yiyuanhuodong@2x.png" alt />
-                  <span>医院活动</span>
-                </router-link>
-              </li>
-              <li @click="noLinkFn">
-                <router-link :to="{path : '/hospital/',query:{time:new Date().getTime()}}">
-                  <img src="../../../assets/image/qita@2x.png" alt />
-                  <span>其他项目</span>
-                </router-link>
-              </li>
-            </ul>
-          </div>
-
-          <div class="article">
-            <div class="articleTitle">
-              <img src="../../../assets/image/Combined Shape@2x.png" alt />
-              <h3>运营精选</h3>
-            </div>
-            <ul :model="article">
-              <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-                <li v-for="(items,inx) in article" :key="inx">
-                  <router-link
-                    :to="{path : '/hospital/hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
-                  >
-                    <div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
-                      <p>{{items.content}}</p>
-                      <div class="article_leftTime">
-                        <img src="../../../assets/image/time@2x.png" alt />
-                        <span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
-                      </div>
-                    </div>
-                    <div v-if="items.img" class="article_right">
-                      <img   v-lazy="items.img" alt />
-                    </div>
+            <div class="typeList">
+              <ul>
+                <li>
+                  <router-link :to="{path : '/hospital/hospital_clinicSearch',query:{}}">
+                    <img src="../../../assets/image/qudaomenzhen@2x.png" alt />
+                    <span>渠道门诊</span>
                   </router-link>
                 </li>
-              </van-list>
-            </ul>
-          </div>
-          <div style="height: .55rem;"></div>
-      </van-pull-refresh>
+                <li>
+                  <router-link :to="{path : '/hospital/hospital_sourceManagement',query:{}}" >
+                    <img src="../../../assets/image/bingyuanguanli@2x.png" alt />
+                    <span>病员管理</span>
+                  </router-link>
+                </li>
+                <li>
+                  <router-link :to="{path : '/hospital/hospital_collect',query:{}}">
+                    <img src="../../../assets/image/qixiejicai@2x.png" alt />
+                    <span>器械集采</span>
+                  </router-link>
+                </li>
+                <li>
+                  <router-link :to="{path : '/hospital/hospital_operating',query:{}}">
+                    <img src="../../../assets/image/yunyingzhongxin@2x.png" alt />
+                    <span>运营中心</span>
+                  </router-link>
+                </li>
+                <li @click="noLinkFn">
+                  <router-link :to="{path : '/hospital/',query:{}}">
+                    <img src="../../../assets/image/jiyinjiance@2x.png" alt />
+                    <span>基因检测</span>
+                  </router-link>
+                </li>
+                <li @click="noLinkFn">
+                  <router-link :to="{path : '/hospital/',query:{}}">
+                    <img src="../../../assets/image/yiliaoziyuan@2x.png" alt />
+                    <span>医疗资源</span>
+                  </router-link>
+                </li>
+                <li>
+                  <router-link :to="{path : '/hospital/hospital_activityReleased',query:{}}">
+                    <img src="../../../assets/image/yiyuanhuodong@2x.png" alt />
+                    <span>医院活动</span>
+                  </router-link>
+                </li>
+                <li @click="noLinkFn">
+                  <router-link :to="{path : '/hospital/',query:{}}">
+                    <img src="../../../assets/image/qita@2x.png" alt />
+                    <span>其他项目</span>
+                  </router-link>
+                </li>
+              </ul>
+            </div>
+
+            <div class="article">
+              <div class="articleTitle">
+                <img src="../../../assets/image/Combined Shape@2x.png" alt />
+                <h3>运营精选</h3>
+              </div>
+              <ul :model="article">
+                <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+                  <li v-for="(items,inx) in article" :key="inx">
+                    <router-link :to="{path : '/hospital/hospital_caseDetails' ,query : {itemId : items.itemId,data: 1,}}">
+                      <div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
+                        <p>{{items.content}}</p>
+                        <div class="article_leftTime">
+                          <img src="../../../assets/image/time@2x.png" alt />
+                          <span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
+                        </div>
+                      </div>
+                      <div v-if="items.img" class="article_right">
+                        <img   v-lazy="items.img" alt />
+                      </div>
+                    </router-link>
+                  </li>
+                </van-list>
+              </ul>
+            </div>
+            <!-- <div style="height: .55rem;"></div> -->
+            
+        </van-pull-refresh>
+      </topSolt>
+  </div>
       <!-- <bottomNav></bottomNav> -->
 </template>
 
@@ -103,7 +106,7 @@ import axios from "axios";
 import { mapActions, mapGetters } from "vuex";
 import qs from "qs";
 import { Dialog } from "vant";
-// import bottomNav from "./functionPage/bottomNav.vue";
+import topSolt from "../function/topSolt.vue";
 // import moment from 'moment'
 export default {
   name: "gene",
@@ -114,13 +117,23 @@ export default {
       loading: false,
       finished: false,
       page: 1,
-      pullingDown: false
+      pullingDown: false,
+		query:''
     };
   },
   components: {
-    // bottomNav
+    topSolt
   },
   computed: {
+    hospitalReturnTopPage: {
+      get: function() {
+        // 
+        return this.$store.state.hospitalReturnTopPage;
+      },
+      set: function(newValue) {
+        this.$store.state.hospitalReturnTopPage = newValue;
+      }
+    },
     // ...mapGetters(["account", "isLogin"])
   },
 
@@ -132,43 +145,76 @@ export default {
   },
   
   beforeMount(){
-    debugger
     
-  },
-  mounted() {
-    debugger
-    let thisVue = this;
-    if (window.plus) {
-      //plus.navigator.setStatusBarBackground("#ffffff");
-      plus.navigator.setStatusBarStyle("dark");
-    }
     
-
-  
-    this.initData();
   },
   activated(){
    
   },
+	activated() {
+    // window.addEventListener("scroll", this.handleScroll, true);
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData();
+		}
+	},
   deactivated(){
     debugger
     },
   methods: {
+    // 滑动一定距离出现返回顶部按钮
+    // handleScroll() {
+    //   if(!this.$refs.refersh)
+    //     return
+    //   let scrollTop =
+    //     this.$refs.refersh.scrollTop ||
+    //     this.$refs.refersh.pageYOffset;
+    //   let windowHeight =
+    //     document.documentElement.clientHeight || this.$refs.refersh.clientHeight;
+    //   let data =
+    //     this.$refs.refersh.scrollHeight >
+    //     (window.innerHeight || document.documentElement.clientHeight);
+    //   // 
+    //   let opacityValue =
+    //     Math.round(
+    //       ((scrollTop + windowHeight) / this.$refs.refersh.scrollHeight) * 100
+    //     ) / 100;
+    //   // 
+    //   if (data && scrollTop > 0) {
+    //     this.hospitalReturnTopPage = true;
+    //     this.$refs.returnTopRef.style.opacity = 1;
+    //     document.getElementById("returnHomePageId").style.bottom = '1.5rem';
+    //   } else {
+    //     debugger
+    //     this.$refs.returnTopRef.style.opacity = 0;
+    //     document.getElementById("returnHomePageId").style.bottom = '1rem';
+    //     this.hospitalReturnTopPage = false;
+    //   }
+    // },
     afterPullDown() {
       //下拉刷新
       setTimeout(() => {
         this.pullingDown = false;
         this.initData();
+		
       }, 500);
     },
     initData() {
       let thisVue = this
-      if(this.$route.meta.auth && !this.$store.state.hospital.login)
-      this.$toast({message:'请登录',onClose:function(){
-		  debugger
-        thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
-      }})
-
+      if(this.$route.meta.auth && !this.$store.state.hospital.login){
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+			}})
+		}
+		if(thisVue.$store.state.hospital.login){
+			if(thisVue.$store.state.hospital.login.type == 1){
+				thisVue.$router.replace({ name : 'promoters',query:{}});
+			}
+		}
       Object.assign(this.$data, this.$options.data());
       //轮播图图片路径请求
       this.$axios
@@ -287,9 +333,14 @@ export default {
 </script>
 
 <style scoped>
-.hospital {
-  height: 100%;
+#hospitalIndex {
+  height: calc(100% - .5rem);
   width: 100%;
+  touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+  /* overflow: scroll; */
+  /* position: fixed; */
+  overflow: hidden;
 }
 .navWarp {
   height: 2.26rem;
@@ -322,7 +373,7 @@ export default {
   height: 1.96rem;
   display: block;
 }
->>> .van-swipe {
+>>>.van-swipe {
   position: relative;
   overflow: hidden;
   -webkit-user-select: none;
@@ -330,7 +381,7 @@ export default {
   /* box-shadow: darkgrey 0rem 0rem  .10rem 3px; */
   height: 100%;
 }
->>> .van-swipe__indicators {
+>>>.van-swipe__indicators {
   position: absolute;
   bottom: 29px;
   left: 50%;
@@ -353,6 +404,7 @@ export default {
   height: 1.7rem;
   margin-top: 0.12rem;
   margin-bottom: 0.15rem;
+  box-sizing: border-box;
 }
 .typeList ul {
   width: 89.93%;
@@ -402,6 +454,8 @@ li:nth-child(8) {
 .article ul {
   margin-top: 0.2rem;
   width: 100%;
+  margin-bottom: .5rem;
+  box-sizing: border-box;
 }
 .article ul li {
   width: 100%;

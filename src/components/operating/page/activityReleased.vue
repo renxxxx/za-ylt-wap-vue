@@ -19,7 +19,7 @@
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <van-swipe-cell v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
         <van-cell :border="false" >
-          <router-link :to="{path : '/operating/operating_activityDetails',query:{itemId:item.itemId,time:new Date().getTime()}}">
+          <router-link :to="{path : '/operating/operating_activityDetails',query:{itemId:item.itemId,}}">
             <div class="activeList">
               <img v-lazy="item.cover" alt="">
               <div class="activeTitle">

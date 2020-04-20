@@ -25,13 +25,13 @@
 		</van-image-preview>
 		<div class="user_center">
 			<ul>
-				<router-link :to="{name: 'outpatient_taskCenter',query:{time:new Date().getTime()}}">
+				<router-link :to="{name: 'outpatient_taskCenter',query:{}}">
 					<li>
 						<span>任务中心</span>
 						<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
 					</li>
 				</router-link>
-				<router-link :to="{name: 'outpatient_integralExchange',query:{time:new Date().getTime()}}">
+				<router-link :to="{name: 'outpatient_integralExchange',query:{}}">
 					<li>
 						<span>积分兑换</span>
 						<img src="../../../assets/image/Chevron Copy 2@2x.png" alt="">
@@ -147,7 +147,7 @@ export default {
 			// localStorage.clear()
 			thisVue.$toast("操作成功")
 			setTimeout(()=>{
-				thisVue.$router.push({path:"/outpatientLogin",query:{time:new Date().getTime()}})
+				thisVue.$router.push({path:"/outpatientLogin",query:{}})
 			},1500)
 		})
 	}

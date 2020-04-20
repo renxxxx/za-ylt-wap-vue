@@ -56,6 +56,7 @@ export default {
 				intro : '',
 				cover : '',
 				show : true,
+				query:''
 			}
 		}
 	},
@@ -71,27 +72,55 @@ export default {
 		//this.height = parseInt(topHeight.join()) 
 		//
 	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.$axios.post('/c2/commodity/item',qs.stringify({
+				hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
+				itemId : this.$route.query.itemId
+			})).then(res  =>{
+				if(res.data.codeMsg){
+					this.$toast(res.data.codeMsg)
+				}else{
+					this.exchangeEditor = {
+						name :res.data.data.name,
+						payExchangepoint : res.data.data.payExchangepoint,
+						stock : res.data.data.stock,
+						intro : res.data.data.intro,
+						cover : res.data.data.cover,
+						itemId : this.$route.query.itemId,
+					}
+				}
+			}).catch(err =>{
+				
+			})
+		}
+	},
    mounted() {
 		
-		this.$axios.post('/c2/commodity/item',qs.stringify({
-			hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
-			itemId : this.$route.query.itemId
-		})).then(res  =>{
-			if(res.data.codeMsg){
-				this.$toast(res.data.codeMsg)
-			}else{
-				this.exchangeEditor = {
-					name :res.data.data.name,
-					payExchangepoint : res.data.data.payExchangepoint,
-					stock : res.data.data.stock,
-					intro : res.data.data.intro,
-					cover : res.data.data.cover,
-					itemId : this.$route.query.itemId,
-				}
-			}
-		}).catch(err =>{
+		// this.$axios.post('/c2/commodity/item',qs.stringify({
+		// 	hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
+		// 	itemId : this.$route.query.itemId
+		// })).then(res  =>{
+		// 	if(res.data.codeMsg){
+		// 		this.$toast(res.data.codeMsg)
+		// 	}else{
+		// 		this.exchangeEditor = {
+		// 			name :res.data.data.name,
+		// 			payExchangepoint : res.data.data.payExchangepoint,
+		// 			stock : res.data.data.stock,
+		// 			intro : res.data.data.intro,
+		// 			cover : res.data.data.cover,
+		// 			itemId : this.$route.query.itemId,
+		// 		}
+		// 	}
+		// }).catch(err =>{
 			
-		})
+		// })
 	},
 	methods: {
 		//回退方法
@@ -105,7 +134,7 @@ export default {
 					if(this.exchangeEditor.stock != ''){
 						if(this.exchangeEditor.intro != ''){
 							
-							this.$router.push({ path : '/hospital/hospital_exchangeEditorImg',query : {exchangeEditor : JSON.stringify(this.exchangeEditor),time:new Date().getTime()}});
+							this.$router.push({ path : '/hospital/hospital_exchangeEditorImg',query : {exchangeEditor : JSON.stringify(this.exchangeEditor),}});
 						}else{
 							Toast.fail('请填写简介');
 						}

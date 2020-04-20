@@ -1,5 +1,6 @@
 <template>
-	<div class="caseDetails" >
+<topSolt>
+	<div class="caseDetails" slot="returnTopSolt">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<img src="../../../assets/image/shape@3x.png" alt="" @click="goBackFn"  id="navback">
 			<img src="../../../assets/image/share@3x.png" @click="share" alt="">
@@ -18,6 +19,7 @@
 			<p v-html="caseInfo.content"></p>
 		</div>
 	</div>
+	</topSolt>
 </template>
 
 <script>
@@ -25,6 +27,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import Dialog from 'vant';
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'caseDetails',
 	data () {
@@ -36,14 +39,15 @@ export default {
 				hosptialpath : '/hospital/',
 				path : '/hospital/',
 				content:''
-			}
+			},
+			query:''
 		}
 	},
 	computed:{
 		...mapGetters(['account']),
 	},
 	components:{
-
+		topSolt
 	},
 	beforeCreate(){
 
@@ -54,20 +58,27 @@ export default {
 		// 
 	},
  mounted(){
+		
+		// 
+	},
+	activated() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
 		// 
-		let postUrl = '';
-		if(this.$route.query.data ==1){
-			let postUrl ='/c2/article/item';
-			this.getData(postUrl)
-		}else{
-			let postUrl ='/c2/project/item'
-			this.getData(postUrl)
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query)
+			let postUrl = '';
+			if(this.$route.query.data ==1){
+				let postUrl ='/c2/article/item';
+				this.getData(postUrl)
+			}else{
+				let postUrl ='/c2/project/item'
+				this.getData(postUrl)
+			}
 		}
-		// 
+		
 	},
 	methods: {
 		share(){

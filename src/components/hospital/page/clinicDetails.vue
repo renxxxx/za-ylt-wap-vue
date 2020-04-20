@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>{{this.clinicDetails.name}}</h3>
 			</div>
-			<router-link :to="{path : '/hospital/hospital_clinicInfo' ,query : {item : clinicDetails.clinicId,time:new Date().getTime()}}">
+			<router-link :to="{path : '/hospital/hospital_clinicInfo' ,query : {item : clinicDetails.clinicId,}}">
 				<div class="right">
 					<img src="../../../assets/image/Preview@2x.png" alt="">
 				</div>
@@ -83,6 +83,7 @@ export default {
 				clinicYes : [],
 				data: true,
 			},
+			query:''
 		}
 	},
 	computed:{
@@ -105,18 +106,30 @@ export default {
 	created(){
 		
 	},
-	activited(){
-		if(this.clinicId!=this.$route.query.clinicId){
+	async activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			Object.assign(this.$data, this.$options.data());
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
 			this.clinicId=this.$route.query.clinicId
-			this.$route.query.clinicId?  this.ItemIdFn() : this.list.clinicId = '';
-			this.getNum();
+			await this.ItemIdFn()
+			await this.getNum();
+			// if(this.clinicId!=this.$route.query.clinicId){
+			// 	this.clinicId=this.$route.query.clinicId
+			// 	this.$route.query.clinicId?  this.ItemIdFn() : this.list.clinicId = '';
+			// 	this.getNum();
+			// }
+			await this.$refs.clinicAll.initData()
 		}
 	},
   mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 		// this.ItemIdFn();
 		
 	},
@@ -132,12 +145,15 @@ export default {
 			switch(this.value){
 				case 0:
 				this.componentName = 'clinicAll';
+				this.$refs.clinicAll.initData()
 				break;
 				case 1:
 				this.componentName = 'clinicNo';
+				this.$refs.clinicAll.initData()
 				break;
 				case 2:
 				this.componentName = 'clinicYes';
+				this.$refs.clinicAll.initData()
 				break;
 			}
 		},

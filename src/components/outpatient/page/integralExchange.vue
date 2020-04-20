@@ -12,10 +12,10 @@
 				<h2>{{integral}}</h2>
 			</div>
 			<div class="integralExchangeButton">
-				<router-link :to="{path : '/outpatient/outpatient_integralDetails',query:{time:new Date().getTime()}}">
+				<router-link :to="{path : '/outpatient/outpatient_integralDetails',query:{}}">
 				  <button>积分明细</button>
 				</router-link>
-				<router-link :to="{path : '/outpatient/outpatient_integralHistory',query:{time:new Date().getTime()}}">
+				<router-link :to="{path : '/outpatient/outpatient_integralHistory',query:{}}">
 				  <button>兑换记录</button>
 				</router-link>
 			</div>

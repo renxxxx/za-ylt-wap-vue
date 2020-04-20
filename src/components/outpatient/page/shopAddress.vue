@@ -172,7 +172,7 @@ export default {
 	display:-moz-inline-box;
 	display:inline-block;
 	color: #BBBBBB;
-	width: .55rem;
+	width: .65rem;
 }
 .content ul li input{
 	height: .38rem;

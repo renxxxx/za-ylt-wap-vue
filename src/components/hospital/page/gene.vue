@@ -1,5 +1,6 @@
 <template>
-	<div class="gene" :style="{'padding-top':$store.state.paddingTop}">
+<topSolt>
+	<div class="gene" slot="returnTopSolt" :style="{'padding-top':$store.state.paddingTop}">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="nav_left">
 				<img src="../../../assets/image/scanning@2x.png" alt="">
@@ -77,12 +78,14 @@
 		</div>
     <div style="height: .55rem;"></div>
 	</div>
+	</topSolt>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'gene',
 	data () {
@@ -93,10 +96,12 @@ export default {
 			    { text: '未采样本', value: 1 },
 			    { text: '已出报告', value: 2 },
 				{ text: '未出报告', value: 3 }
-			]
+			],
+			query:''
 		}
 	},
 	components:{
+		topSolt
 	},
 	computed:{
 
@@ -107,13 +112,23 @@ export default {
 		//this.height = parseInt(topHeight.join())
 		//
 	},
-  mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData()
 		}
+	},
+  mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 
-		this.initData()
+		// this.initData()
 	},
 	methods: {
 		initData(){

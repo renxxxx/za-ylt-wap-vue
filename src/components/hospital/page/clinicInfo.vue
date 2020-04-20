@@ -28,7 +28,7 @@
 							<!-- <van-dropdown-menu>
 								<van-dropdown-item v-model="value" :options="option" active-color='#2B77EF' @change="changeFn"/>
 							</van-dropdown-menu> -->
-              <router-link :to="{name:'hospital_list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item,time:new Date().getTime()}}">
+              <router-link :to="{name:'hospital_list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item,}}">
                 <span>{{addClinic.promoter}}</span>
               </router-link>
 						</li>
@@ -124,7 +124,7 @@ export default {
 			// 上传图片弹窗显示
 			show: false,
 			imageUpload:'',
-
+			query:''
 		}
 	},
 	computed:{
@@ -138,22 +138,25 @@ export default {
 		//this.height = parseInt(topHeight.join())
 		//
 	},
- 
-  activated(){
-    // 
-    // 
-    // this.addClinic.promoter = localStorage.getItem('list_promoterValue')
-    // this.addClinic.hospitalUserId = localStorage.getItem('list_promoterId');
-    if(localStorage.getItem('list_promoterValue') || localStorage.getItem('list_promoterId')){
-      delete this.addClinic.promoter;
-      Vue.set(this.addClinic,'promoter',localStorage.getItem('list_promoterValue'));
-      Vue.set(this.addClinic,'hospitalUserId',localStorage.getItem('list_promoterId'));
-    }
+  activated() {
+  	if(this.query != JSON.stringify(this.$route.query)){
+  		this.query = JSON.stringify(this.$route.query);
+  		if(window.plus){
+  			//plus.navigator.setStatusBarBackground("#ffffff");
+  			plus.navigator.setStatusBarStyle("dark")
+  		}
+  		if(localStorage.getItem('list_promoterValue') || localStorage.getItem('list_promoterId')){
+  		  delete this.addClinic.promoter;
+  		  Vue.set(this.addClinic,'promoter',localStorage.getItem('list_promoterValue'));
+  		  Vue.set(this.addClinic,'hospitalUserId',localStorage.getItem('list_promoterId'));
+  		}
+		this.$route.query.item? this.clinicFn() : ""
+  	}
   },
   mounted() {
      
 		// 
-		this.$route.query.item? this.clinicFn() : ""
+		
 	},
 	methods: {
     clinicFn(){

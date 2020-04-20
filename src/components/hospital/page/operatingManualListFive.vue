@@ -52,6 +52,7 @@ export default {
       operatingManualList : [],
       num:0,
       yesNum:0,
+			query:''
     }
   },
   computed:{
@@ -59,13 +60,23 @@ export default {
   created () {
   },
   mounted () {
-    if(window.plus){
-    	//plus.navigator.setStatusBarBackground("#ffffff");
-    	plus.navigator.setStatusBarStyle("dark")
-    }
+    // if(window.plus){
+    // 	//plus.navigator.setStatusBarBackground("#ffffff");
+    // 	plus.navigator.setStatusBarStyle("dark")
+    // }
 
-    this.getData()
+    // this.getData()
   },
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getData()
+		}
+	},
   methods: {
     //回退方法
     goBackFn(){
@@ -76,9 +87,9 @@ export default {
       if(item.lowerCount){
         console.dir(item.operatingManualSectionId)
 
-        this.$router.push({name:'hospital_operatingManualListSix',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
+        this.$router.push({name:'hospital_operatingManualListSix',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,}})
       }else{
-        this.$router.push({name:'hospital_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
+        this.$router.push({name:'hospital_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,}})
       }
     },
     getData(){

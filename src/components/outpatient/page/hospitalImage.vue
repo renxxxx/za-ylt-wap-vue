@@ -93,9 +93,9 @@ export default {
 	goBackFn(){
 		this.$router.back(-1)
     // if(this.isLogin == 100){
-    //   this.$router.push({ name : 'hospital_clinic',query:{time:new Date().getTime()}});
+    //   this.$router.push({ name : 'hospital_clinic',query:{}});
     // }else{
-    //   this.$router.push({ name : 'outpatient_hospital',query:{time:new Date().getTime()}});
+    //   this.$router.push({ name : 'outpatient_hospital',query:{}});
     // }
 	},
 	  // 组件切换

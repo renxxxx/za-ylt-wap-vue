@@ -53,7 +53,8 @@ export default {
 				exchangePoint : '',
 				exchangePointUpperPerDay : '',
 				intro : "",
-			}
+			},
+			query:''
 		}
 	},
 	computed:{
@@ -63,21 +64,33 @@ export default {
 		
 	},
 	created(){
-		var heightRexg = /^[0-9]*/g
+		// var heightRexg = /^[0-9]*/g
 		//var topHeight = this.topHeight.match(heightRexg)
 		//this.height = parseInt(topHeight.join()) 
 		//
 	},
    mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 		
-		this.show = this.$route.query.show;	
-		this.taskSubmitValue = JSON.parse(this.$route.query.item)
+		// this.show = this.$route.query.show;	
+		// this.taskSubmitValue = JSON.parse(this.$route.query.item)
 		// this.taskSubmitValue = this.$route.query.item
 		
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			Object.assign(this.$data, this.$options.data());
+			this.show = this.$route.query.show;
+			this.taskSubmitValue = JSON.parse(this.$route.query.item)
+		}
 	},
 	methods: {
 		// 返回上一级
