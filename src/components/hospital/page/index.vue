@@ -148,6 +148,7 @@ export default {
     this.initData();
   },
   activated(){
+   
   },
   deactivated(){
     debugger

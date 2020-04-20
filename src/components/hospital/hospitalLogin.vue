@@ -97,10 +97,13 @@ export default {
                   type:'get',
                   async:false,
                   success:function(res){
+                    debugger
                     if(res.code == 0){
                       thisVue.$store.state.hospital.login=res.data
                       thisVue.$toast({"message":'已登录',onClose(){
-                              thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
+                              thisVue.$router.replace({ name : 'hospital_index'});
+                                if(thisVue.$router.query.redirect)
+                                    thisVue.$router.push(this.$router.query.redirect)
                         }})
                     }
                   }
@@ -192,8 +195,9 @@ export default {
                     if(res.code == 0){
                       thisVue.$store.state.hospital.login=res.data
                        thisVue.$toast({"message":'登录成功',onClose(){
-                             thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
-
+                            // thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
+ if(thisVue.$route.query.redirect)
+                                    thisVue.$router.push(thisVue.$route.query.redirect)
                         }})
                     }
                   }

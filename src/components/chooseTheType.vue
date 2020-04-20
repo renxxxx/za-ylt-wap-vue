@@ -61,14 +61,18 @@ export default {
   created () {
 
   },
-  mounted () {
-    let thisVue = this;
+  activated(){
+
+     let thisVue = this;
     if(thisVue.$store.state.hospital.login)
           this.$router.replace({ path : '/hospital',query:{time:new Date().getTime()}});
     else if(thisVue.$store.state.outpatient.login)
           this.$router.replace({ path : '/outpatient',query:{time:new Date().getTime()}});
     else if(thisVue.$store.state.operating.login)
         this.$router.replace({ path : '/operating',query:{time:new Date().getTime()}});
+  },
+  mounted () {
+   
   },
   methods: {
     choseFn(stata){
