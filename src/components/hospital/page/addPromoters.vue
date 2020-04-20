@@ -50,7 +50,8 @@ export default {
 				password : '',
 				passwordConfirm : '',
 				cover : '',
-			}
+			},
+			query:''
 		}
 	},
 	computed:{
@@ -69,9 +70,18 @@ export default {
 		
 
 	mounted(){
-		let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
 		
-		this.$refs.addPromotersRef.style.height = windowHeight+ 'px'
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			this.$refs.addPromotersRef.style.height = windowHeight+ 'px'
+		}
 	},
 	methods: {
 		goBackFn(){

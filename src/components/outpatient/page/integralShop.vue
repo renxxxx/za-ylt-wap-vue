@@ -1,8 +1,8 @@
 <template>
 	<div class="integralShop">
 		<div class="slip">
-			<div class="return" @click="returnFn" id="navback">
-				<img src="../../../assets/image/shape@3x.png" alt="" :style="{'padding-top':$store.state.paddingTop}">
+			<div class="return" @click="returnFn" id="navback" :style="{'padding-top':$store.state.paddingTop}">
+				<img src="../../../assets/image/shape@3x.png" alt="">
 			</div>
 			<van-swipe >
 			  <van-swipe-item v-for="(image, index) in shopDetails.cover" :key="index" :height="375">
@@ -14,7 +14,7 @@
 			<h4>{{shopDetails.name}}</h4>
 			<p>{{shopDetails.intro}}</p>
 		</div>
-		<router-link :to="{path : '/outpatient/outpatient_integralShopDetails',query:{commodityId:commodityId,time:new Date().getTime()}}">
+		<router-link :to="{path : '/outpatient/outpatient_integralShopDetails',query:{commodityId:commodityId,}}">
 			<div class="settlement">
 				<button>总计:&nbsp;&nbsp;<span>{{shopDetails.payExchangepoint}}</span>积分</button>
 				<button>立即兑换</button>

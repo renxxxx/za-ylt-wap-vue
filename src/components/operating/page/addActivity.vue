@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>编辑活动</h3>
 			</div>
-			<router-link :to="{path : '/operating/operating_previewActivities',query:{hospitalId: this.$route.query.hospitalId,activity:JSON.stringify(activity),time:new Date().getTime()}}">
+			<router-link :to="{path : '/operating/operating_previewActivities',query:{hospitalId: this.$route.query.hospitalId,activity:JSON.stringify(activity),}}">
 				<div class="right">
 					<button>预览</button>
 				</div>

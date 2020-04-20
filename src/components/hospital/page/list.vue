@@ -35,7 +35,8 @@ export default {
       list:[],
       radio:'1',
       keywords: '',
-      nowPromoter : ''
+      nowPromoter : '',
+	  query:''
     }
   },
   computed:{
@@ -52,6 +53,17 @@ export default {
     }
     this.name = this.$route.query.name;
     this.nowPromoter = this.$route.query.nowValue
+  },
+  activated() {
+  	if(this.query != JSON.stringify(this.$route.query)){
+  		this.query = JSON.stringify(this.$route.query);
+  		if(window.plus){
+  			//plus.navigator.setStatusBarBackground("#ffffff");
+  			plus.navigator.setStatusBarStyle("dark")
+  		}
+  		this.name = this.$route.query.name;
+  		this.nowPromoter = this.$route.query.nowValue
+  	}
   },
   methods: {
     // 返回上一级

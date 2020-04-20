@@ -1,5 +1,6 @@
 <template>
-  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+<topSolt>
+  <van-pull-refresh v-model="pullingDown" slot="returnTopSolt" @refresh="afterPullDown" >
     <div class="_search" >
       <div class="top_search" :style="{'padding-top':$store.state.paddingTop}">
         <div class="search_return">
@@ -66,7 +67,7 @@
 	  <van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="nextPageFn">
 	  	<ul class="list" :style="{'padding-top':$store.state.paddingTop}">
 	  		<li v-for="(item,inx) in  items" :key="inx">
-	  			<router-link :to="{path : '/hospital/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+	  			<router-link :to="{path : '/hospital/hospital_detailsPage' ,query : {patientId : item.itemId,}}">
 	  				<div class="style">
 	  					<div class="contentTitle">
 	  						<img :src="item.img" alt="">
@@ -87,6 +88,7 @@
       <!-- <clinicAll ref="all" :list="list" :style="{'padding-top':$store.state.paddingTop}"></clinicAll> -->
     </div>
   </van-pull-refresh>
+  </topSolt>
 </template>
 
 <script>
@@ -96,6 +98,7 @@ import qs from "qs";
 import { Dialog } from "vant";
 import moment from 'moment'
 import Vue from 'vue'
+import topSolt from "../function/topSolt.vue";
 export default {
   name: "index_search",
   data() {
@@ -122,7 +125,8 @@ export default {
 	  finished: false,
 	  page:0,
 	  noItems:[],
-     test:''
+     test:'',
+		 query:''
     };
   },
   computed: {
@@ -166,30 +170,47 @@ export default {
 
   },
   components: {
-
+    topSolt
   },
   created() {
 
   },
  
   mounted() {
-    if (window.plus) {
-      //plus.navigator.setStatusBarBackground("#ffffff");
-      plus.navigator.setStatusBarStyle("dark");
-    }
-	// 
-    this.initData();
-    if(this.$route.query.show == 'false'){
-      this.hospitalReturnHomePage = false;
+    console.log('mounted')
+ //    if (window.plus) {
+ //      //plus.navigator.setStatusBarBackground("#ffffff");
+ //      plus.navigator.setStatusBarStyle("dark");
+ //    }
+	// // 
+ //    this.initData();
+ //    if(this.$route.query.show == 'false'){
+ //      this.hospitalReturnHomePage = false;
        
-    }else{
-      // this.hospitalReturnHomePage = this.$route.query.show
-    }
-    // console.dir(this.$route.query.show)
-    // 
-    // 
-    // this.$route.query.show? '':this.hospitalReturnHomePage = this.$route.query.show
+ //    }else{
+ //      // this.hospitalReturnHomePage = this.$route.query.show
+ //    }
+ //    // console.dir(this.$route.query.show)
+ //    // 
+ //    // 
+ //    // this.$route.query.show? '':this.hospitalReturnHomePage = this.$route.query.show
   },
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+      this.query = JSON.stringify(this.$route.query);
+          console.log('activated')
+
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData();
+			if(this.$route.query.show == 'false'){
+			  this.hospitalReturnHomePage = false;
+      }
+      this.nextPageFn();
+		}
+	},
   methods: {
     afterPullDown() {
       //下拉刷新

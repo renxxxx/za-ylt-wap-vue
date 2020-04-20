@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<h3>编辑活动</h3>
 			</div>
-			<router-link :to="{path : '/hospital/hospital_previewActivities',query:{activity:JSON.stringify(activity),time:new Date().getTime()}}">
+			<router-link :to="{path : '/hospital/hospital_previewActivities',query:{activity:JSON.stringify(activity),}}">
 				<div class="right">
 					<button>预览</button>
 				</div>
@@ -67,6 +67,7 @@ export default {
 				content : '',
 				cover : require('../../../assets/image/Group@2x.png')
 			  },
+				query:''
 		}
 	},
 	computed:{
@@ -84,6 +85,15 @@ export default {
 	components:{
 
 	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
+	},
 	created(){
 		var heightRexg = /^[0-9]*/g
 		// var topHeight = this.topHeight.match(heightRexg)
@@ -91,10 +101,10 @@ export default {
 		// 
 	},
    mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 	},
 	methods: {
 		//回退方法

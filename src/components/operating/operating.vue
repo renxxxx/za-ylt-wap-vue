@@ -12,7 +12,7 @@
     <span>顶部</span>
   </div>
   <van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.paddingBottom}" v-if="bottomShow">
-  	<van-tabbar-item replace :to="{path : '/operating/operating_index',query:{time:new Date().getTime(),transition:'def'}}">
+  	<van-tabbar-item replace :to="{path : '/operating/operating_index',query:{transition:'def'}}">
   	    <span>医院</span>
   	    <img
   			slot="icon"
@@ -20,7 +20,7 @@
   			:src="props.active ? index.inactive : index.active"
   	    />
   	</van-tabbar-item>
-  	<van-tabbar-item replace :to="{path:'/operating/operating_clinic',query:{time:new Date().getTime(),transition:'def'}}">
+  	<van-tabbar-item replace :to="{path:'/operating/operating_clinic',query:{transition:'def'}}">
   	    <img
   			slot="icon"
   			slot-scope="props"
@@ -28,7 +28,7 @@
   	    >
   	    <span>门诊</span>
   	</van-tabbar-item>
-  	<van-tabbar-item replace :to="{path:'/operating/operating_user',query:{time:new Date().getTime(),transition:'def'}}">
+  	<van-tabbar-item replace :to="{path:'/operating/operating_user',query:{transition:'def'}}">
   	    <span>我的</span>
   	    <img
   			slot="icon"
@@ -165,7 +165,7 @@ export default {
     },
     // 返回首页按钮触发事件
     returnHomePageFn(){
-      this.$router.replace({path:'/operating/operating_index',query:{time:new Date().getTime(),transition:'def'}});
+      this.$router.replace({path:'/operating/operating_index',query:{transition:'def'}});
     },
   },
 }
@@ -216,7 +216,7 @@ export default {
   /* line-height: .4rem; */
   text-align: center;
   border-radius: 50%;
-  background-color: #ffffff;
+  background-color: rgba(255,255,255,.8);
   border: 1px solid #bfbebe;
 }
 
@@ -246,7 +246,7 @@ export default {
   /* line-height: .4rem; */
   text-align: center;
   border-radius: 50%;
-  background-color: #ffffff;
+  background-color: rgba(255,255,255,.8);
   border: 1px solid #bfbebe;
 }
 .returnTop img {

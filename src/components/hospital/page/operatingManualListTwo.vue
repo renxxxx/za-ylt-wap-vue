@@ -52,6 +52,7 @@ export default {
       operatingManualList : [],
       num:0,
       yesNum:0,
+			query:''
     }
   },
   computed:{
@@ -60,26 +61,37 @@ export default {
   created () {
   },
   mounted () {
-    if(window.plus){
-    	//plus.navigator.setStatusBarBackground("#ffffff");
-    	plus.navigator.setStatusBarStyle("dark")
-    }
-
-    this.getData()
+  //   if(window.plus){
+  //   	//plus.navigator.setStatusBarBackground("#ffffff");
+  //   	plus.navigator.setStatusBarStyle("dark")
+  //   }
+		// // console.log(this.$route.query)
+		// // console.log(JSON.parse(this.$route.query))
+  //   this.getData()
   },
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getData()
+		}
+	},
   methods: {
     //回退方法
     goBackFn(){
-    	this.$router.back(-1)
+    	this.$router.back()
     },
     nextPageFn(item){
       console.dir(item.lowerCount)
       if(item.lowerCount){
         console.dir(item.operatingManualSectionId)
 
-        this.$router.push({name:'hospital_operatingManualListThree',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
+        this.$router.push({path: '/hospital/hospital_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,}})
       }else{
-        this.$router.push({name:'hospital_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,time:new Date().getTime()}})
+        this.$router.push({name:'hospital_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,}})
       }
     },
     getData(){

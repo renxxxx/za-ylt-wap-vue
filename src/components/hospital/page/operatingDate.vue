@@ -63,18 +63,29 @@ export default {
       data:[],
       dataValue:[],
       indedxOf:undefined,
+			query:''
     }
   },
   computed:{
   },
   
   mounted () {
-    if(window.plus){
-    	//plus.navigator.setStatusBarBackground("#ffffff");
-    	plus.navigator.setStatusBarStyle("dark")
-    }
-    this.riliFn()
+    // if(window.plus){
+    // 	//plus.navigator.setStatusBarBackground("#ffffff");
+    // 	plus.navigator.setStatusBarStyle("dark")
+    // }
+    // this.riliFn()
   },
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.riliFn()
+		}
+	},
   methods: {
     //回退方法
     goBackFn(){

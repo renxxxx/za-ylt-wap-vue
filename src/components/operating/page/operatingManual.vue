@@ -16,7 +16,7 @@
     <div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
     <div style="margin-top: .2rem;">
       <div v-for="(item,inx) in operatingManual" :key="inx">
-        <router-link :to="{path : '/hospital/hospital_operatingManualList',query:{name:item.name,operatingManualId:item.operatingManualId,}}">
+        <router-link :to="{path : '/operating/operating_operatingManualList',query:{name:item.name,operatingManualId:item.operatingManualId,}}">
           <van-cell is-link>
             <!-- 使用 title 插槽来自定义标题 -->
             <template>
@@ -60,34 +60,63 @@ export default {
       activeNames: ['0'],
       operatingManual : [],
       num:[],
-      yesNum:[],
-	  query:''
+      yesNum:[]
     }
   },
   computed:{
 
   },
-  
+  beforeRouteLeave(to, from, next) {
+    //debugger;
+  let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
+this.scrollTop = scrollTop?scrollTop :0;
+
+  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
+  	 debugger
+            if (this.$vnode && this.$vnode.data.keepAlive)
+            {
+                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
+                {
+                    if (this.$vnode.componentOptions)
+                    {
+                        var key = this.$vnode.key == null
+                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
+                                    : this.$vnode.key;
+                        var cache = this.$vnode.parent.componentInstance.cache;
+                        var keys  = this.$vnode.parent.componentInstance.keys;
+                        if (cache[key])
+                        {
+                            if (keys.length) {
+                                var index = keys.indexOf(key);
+                                if (index > -1) {
+                                    keys.splice(index, 1);
+                                }
+                            }
+                            delete cache[key];
+                        }
+                    }
+                }
+  		}
+            this.$destroy();
+  	}
+  next();
+  },
+  //进入该页面时，用之前保存的滚动位置赋值
+  beforeRouteEnter(to, from, next) {
+      next(vm => {
+      document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
+    });
+  },
   created () {
 
   },
   mounted () {
-    // if(window.plus){
-    // 	//plus.navigator.setStatusBarBackground("#ffffff");
-    // 	plus.navigator.setStatusBarStyle("dark")
-    // }
-    // this.getdata()
+    if(window.plus){
+    	//plus.navigator.setStatusBarBackground("#ffffff");
+    	plus.navigator.setStatusBarStyle("dark")
+    }
+    this.getdata()
   },
-	activated() {
-		if(this.query != JSON.stringify(this.$route.query)){
-			this.query = JSON.stringify(this.$route.query);
-			if(window.plus){
-				//plus.navigator.setStatusBarBackground("#ffffff");
-				plus.navigator.setStatusBarStyle("dark")
-			}
-			this.getdata()
-		}
-	},
   methods: {
     //回退方法
     goBackFn(){
@@ -95,34 +124,15 @@ export default {
     },
     async getdata(){
       debugger;
-    	await this.$axios.get('/hospital/operating-manual/operating-manuals?')
+    	await this.$axios.get('/manager/operating-manuals?'+qs.stringify({
+			hospitalId: this.$route.query.hospitalId
+		}))
     	.then(res => {
         if(!res.data.codeMsg){
             for(let i in res.data.data.rows){
             this.operatingManual.push(res.data.data.rows[i])
-            // this.$axios.get('/hospital/operating-manual/operating-manual-sections?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
-            // .then(_res => {
-            //   if(!_res.data.codeMsg){
-            //     this.operatingManual[i]._data=[]
-            //      let num = 0;
-            //     for(let _i in _res.data.data.rows){
-            //       if(_res.data.data.rows[_i].done){
-            //         ++num
-            //       }
-            //       // 
-            //         this.yesNum.push(num)
-            //     // 
-            //       this.operatingManual[i]._data.push(_res.data.data.rows[_i])
-            //      // console.dir(this.operatingManual[i]._data)
-            //     }
-            //   }else{
-            //     this.$toast(_res.data.codeMsg)
-            //   }
-            // })
-            // .catch((err)=>{
-            // 	
-            // })
-            this.$axios.get('/hospital/operating-manual/operating-manual-sections-sum?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
+			console.log(this.operatingManual)
+            this.$axios.get('/manager/operating-manuals-sum?'+qs.stringify({operatingManualId:res.data.data.rows[i].operatingManualId}))
             .then(res => {
               console.dir(res)
               if(!res.data.codeMsg){

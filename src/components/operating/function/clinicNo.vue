@@ -4,7 +4,7 @@
 			<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 			<ul>
 				<li v-for="(item,inx) in  items" :key="inx">
-					<router-link :to="{path : '/hospital/hospital_detailsPage' ,query : {patientId : item.itemId,time:new Date().getTime()}}">
+					<router-link :to="{path : '/hospital/hospital_detailsPage' ,query : {patientId : item.itemId,}}">
 						<div class="style">
 							<div class="contentTitle">
 								<img :src="item.img" alt="">
@@ -58,6 +58,7 @@ export default {
 		debugger
 	},
   mounted() {
+
 	  debugger
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
@@ -74,7 +75,8 @@ export default {
 			.then(res =>{
 				if(res.data.codeMsg){
 					this.$toast({duration: 1000,message: res.data.codeMsg})
-				}else{
+				}
+				if(res.data.code == 0 ){
 					this.$toast.success({duration: 1000,message: '操作成功'})
 					if(_item.status == 1){
 						
@@ -84,7 +86,6 @@ export default {
 				}
 			})
 			.catch((err)=>{
-				
 			})
 		},
 		search(){

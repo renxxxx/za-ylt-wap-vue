@@ -26,49 +26,49 @@
           <div class="typeList">
             <ul>
               <li>
-                <router-link :to="{path : '/operating/operating_clinicSearch',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
+                <router-link :to="{path : '/operating/operating_clinicSearch',query:{hospitalId: this.$route.query.hospitalId,}}">
                   <img src="../../../assets/image/qudaomenzhen@2x.png" alt />
                   <span>渠道门诊</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{path : '/operating/operating_sourceManagement',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}" >
+                <router-link :to="{path : '/operating/operating_sourceManagement',query:{hospitalId: this.$route.query.hospitalId,}}" >
                   <img src="../../../assets/image/bingyuanguanli@2x.png" alt />
                   <span>病员管理</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{path : '/operating/operating_collect',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
+                <router-link :to="{path : '/operating/operating_collect',query:{hospitalId: this.$route.query.hospitalId,}}">
                   <img src="../../../assets/image/qixiejicai@2x.png" alt />
                   <span>器械集采</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{path : '/operating/operating_operating',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
+                <router-link :to="{path : '/operating/operating_operating',query:{hospitalId: this.$route.query.hospitalId,}}">
                   <img src="../../../assets/image/yunyingzhongxin@2x.png" alt />
                   <span>运营中心</span>
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{path : '/operating/',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
+                <router-link :to="{path : '/operating/',query:{hospitalId: this.$route.query.hospitalId,}}">
                   <img src="../../../assets/image/jiyinjiance@2x.png" alt />
                   <span>基因检测</span>
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{path : '',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
+                <router-link :to="{path : '',query:{hospitalId: this.$route.query.hospitalId,}}">
                   <img src="../../../assets/image/yiliaoziyuan@2x.png" alt />
                   <span>医疗资源</span>
                 </router-link>
               </li>
               <li>
-                <router-link :to="{path : '/operating/operating_activityReleased',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
+                <router-link :to="{path : '/operating/operating_activityReleased',query:{hospitalId: this.$route.query.hospitalId,}}">
                   <img src="../../../assets/image/yiyuanhuodong@2x.png" alt />
                   <span>医院活动</span>
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{path : '',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
+                <router-link :to="{path : '',query:{hospitalId: this.$route.query.hospitalId,}}">
                   <img src="../../../assets/image/qita@2x.png" alt />
                   <span>其他项目</span>
                 </router-link>
@@ -85,7 +85,7 @@
               <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
                 <li v-for="(items,inx) in article" :key="inx">
                   <router-link
-                    :to="{path : '/operating/operating_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
+                    :to="{path : '/operating/operating_caseDetails' ,query : {itemId : items.itemId,data: 1,}}"
                   >
                     <div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
                       <p>{{items.content}}</p>
@@ -139,7 +139,6 @@ export default {
   created() {
 
   },
-
   beforeMount(){
     debugger
     

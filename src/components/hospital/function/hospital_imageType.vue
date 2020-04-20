@@ -2,7 +2,7 @@
 	<div class="imageType">
 		<ul>
 			<li v-for="(item,inx) in type" :key='inx'>
-				<router-link :to="{path : '/hospital/hospital_typeDetails' ,query : {item : item.itemId,time:new Date().getTime()}}">
+				<router-link :to="{path : '/hospital/hospital_typeDetails' ,query : {item : item.itemId,}}">
 					<img :src="item.url" alt="">
 					<span>{{item.name}}</span>
 				</router-link>
@@ -20,7 +20,9 @@ export default {
   name: 'hospital_About',
   data () {
     return {
-		type:[]
+		type:[],
+		query:'',
+		keepAlive:false
     }
   },
   computed:{
@@ -30,29 +32,61 @@ export default {
 		
   },
   mounted() {
+	  console.log('这是mounted')
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		
-	this.$axios.post('/c2/office/items',qs.stringify({
-			hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
-	}))
-	.then(_d => {
-		for(let i in _d.data.data.items){
-			this.type.push({
-				name: _d.data.data.items[i].name,
-				url : _d.data.data.items[i].cover,
-				itemId : _d.data.data.items[i].itemId,
+		if(!this.keepAlive){
+			this.$axios.post('/c2/office/items',qs.stringify({
+					hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
+			}))
+			.then(_d => {
+				for(let i in _d.data.data.items){
+					this.type.push({
+						name: _d.data.data.items[i].name,
+						url : _d.data.data.items[i].cover,
+						itemId : _d.data.data.items[i].itemId,
+					})
+				}
+			})
+			.catch((err)=>{
+				
+				//Dialog({ message: err});;
 			})
 		}
-	})
-	.catch((err)=>{
-		
-		//Dialog({ message: err});;
-	})
+	
   },
-  
+  activated() {
+	  console.log('z这是activated')
+	 
+  	if(this.query != JSON.stringify(this.$route.query)){
+  		this.query = JSON.stringify(this.$route.query);
+  		if(window.plus){
+  			//plus.navigator.setStatusBarBackground("#ffffff");
+  			plus.navigator.setStatusBarStyle("dark")
+  		}
+  		if(this.keepAlive){
+  			this.$axios.post('/c2/office/items',qs.stringify({
+  					hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
+  			}))
+  			.then(_d => {
+  				for(let i in _d.data.data.items){
+					this.keepAlive = true
+  					this.type.push({
+  						name: _d.data.data.items[i].name,
+  						url : _d.data.data.items[i].cover,
+  						itemId : _d.data.data.items[i].itemId,
+  					})
+  				}
+  			})
+  			.catch((err)=>{
+  				
+  				//Dialog({ message: err});;
+  			})
+  		}
+  	}
+  },
   methods: {
 	
   },

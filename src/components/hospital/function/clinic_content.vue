@@ -4,7 +4,7 @@
 			<ul>
 				<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 					<li v-for="(items,inx) in content" :key="inx">
-						<router-link :to="{path : '/hospital/hospital_clinicDetails' ,query :  {clinicId : items.hospitalClinicId,time:new Date().getTime()}}">
+						<router-link :to="{path : '/hospital/hospital_clinicDetails' ,query :  {clinicId : items.hospitalClinicId,}}">
 							<div class="contentLi">
 								<h4>{{items.name}}</h4>
 								<span>推广人: {{items.hospitalUserName}}</span>
@@ -32,7 +32,8 @@ export default {
 			content : [],
 			page:0,
 			clinicNum : 0,
-      test:''
+      test:'',
+	  query:''
 		}
 	},
 	props:['show'],
@@ -46,17 +47,33 @@ export default {
 	},
   mounted() {
 	  
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-		 this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
-		  .then(res => {
-		  	this.clinicNum = res.data.data.rowCount;
-		  })
-		  .catch((err)=>{
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		//  this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+		//   .then(res => {
+		//   	this.clinicNum = res.data.data.rowCount;
+		//   })
+		//   .catch((err)=>{
 		  	
-		  })
+		//   })
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+			 .then(res => {
+			 	this.clinicNum = res.data.data.rowCount;
+			 })
+			 .catch((err)=>{
+			 	
+			 })
+		}
 	},
 	methods: {
 		initData() {

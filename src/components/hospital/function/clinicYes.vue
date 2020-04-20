@@ -4,7 +4,7 @@
 			<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 			<ul>
 				<li v-for="(item,inx) in  items" :key="inx">
-					<router-link :to="{path : '/hospital/hospital_detailsPage',query : {patientId : item.itemId,time:new Date().getTime()}}">
+					<router-link :to="{path : '/hospital/hospital_detailsPage',query : {patientId : item.itemId,}}">
 						<div class="style">
 							<div class="contentTitle">
 								<img :src="item.img" alt="">
@@ -44,7 +44,8 @@ export default {
 			yesNum: 0,
 			clinicId:'',
 			items:[],
-      test:''
+      test:'',
+	  query:''
 		}
 	},
 	computed:{
@@ -59,12 +60,21 @@ export default {
 	},
    mounted() {
 	  debugger
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 		
 
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
 	},
 	methods:{
 		submitFn(_item,_button){

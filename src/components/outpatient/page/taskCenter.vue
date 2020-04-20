@@ -7,7 +7,7 @@
 			<div class="centerTitle">
 				<!-- <h3>任务管理</h3> -->
 			</div>
-			<router-link :to="{name: 'outpatient_integralExchange',query:{time:new Date().getTime()}}">
+			<router-link :to="{name: 'outpatient_integralExchange',query:{}}">
 				<div class="right">
 					<span>我要兑换</span>
 				</div>

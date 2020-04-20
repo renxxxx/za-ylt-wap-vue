@@ -13,7 +13,7 @@
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <ul :style="{'padding-top':$store.state.paddingTop}">
         <li v-for="(item,inx) in promotersList" :key="inx">
-          <router-link :to="{path : '/hospital/hospital_promotersDetails',query:{hospitalUserId: item.hospitalUserId,time:new Date().getTime()}}">
+          <router-link :to="{path : '/hospital/hospital_promotersDetails',query:{hospitalUserId: item.hospitalUserId,}}">
             <div class="list">
               <img src="../../../assets/image/ren@2x.png" alt="">
               <h4>{{item.name}}</h4>
@@ -42,6 +42,7 @@ export default {
       loading: false,
       finished: false,
       page: 0,
+	  query:''
 		}
 	},
 	computed:{
@@ -59,6 +60,18 @@ export default {
  
 	mounted () {
 		// this.getData()
+		console.log('mounted')
+	},
+	activated() {
+		console.log('这是activad')
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.onLoad()
+		}
 	},
 	methods: {
 		goBackFn(){

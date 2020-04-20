@@ -23,13 +23,13 @@
 			<li>
 				<span>单个积分</span>
 				<p>
-					<input type="text" v-model="exchangeAdd.payExchangepoint"> 分
+					<input type="number" onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))" v-model="exchangeAdd.payExchangepoint"> 分
 				</p>
 			</li>
 			<li>
 				<span>总数量</span>
 				<p>
-					<input type="text" oninput="value=value.replace(/[^\d]/g,'')"  v-model="exchangeAdd.stock"> 个
+					<input type="number"  onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"  v-model="exchangeAdd.stock"> 个
 				</p>
 			</li>
 			<li>
@@ -59,6 +59,7 @@ export default {
 				cover : '',
 				show : true,
 			},
+			query:''
 		}
 	},
 	computed:{
@@ -74,9 +75,18 @@ export default {
 		//
 	},
    mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
 		}
 	},
 	methods: {
@@ -98,7 +108,7 @@ export default {
 				if(this.exchangeAdd.payExchangepoint != ''){
 					if(this.exchangeAdd.stock != ''){
 						if(this.exchangeAdd.intro != ''){
-							this.$router.push({ path : '/hospital/hospital_exchangeManagementImg',query : {exchangeAdd : JSON.stringify(this.exchangeAdd),time:new Date().getTime()}});
+							this.$router.push({ path : '/hospital/hospital_exchangeManagementImg',query : {exchangeAdd : JSON.stringify(this.exchangeAdd),}});
 						}else{
 							Toast.fail('请填写简介');
 						}

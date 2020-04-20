@@ -1,48 +1,53 @@
 <template>
-	<div class="active">
-		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
-			<div class="leftImg" @click="goBackFn"  id="navback">
-				<img src="../../../assets/image/shape@3x.png" alt="">
+<topSolt>
+	<div class="active" slot="returnTopSolt">
+		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+			<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+				<div class="leftImg" @click="goBackFn"  id="navback">
+					<img src="../../../assets/image/shape@3x.png" alt="">
+				</div>
+				<div class="centerTitle">
+					<h3>发布精准活动</h3>
+				</div>
+				<div class="right"></div>
 			</div>
-			<div class="centerTitle">
-				<h3>发布精准活动</h3>
-			</div>
-			<div class="right"></div>
-		</div>
-		<div class="zhangwei"></div>
-		<router-link :to="{name:'hospital_addActivity'}">
-			<div class="addActive" :style="{'padding-top':$store.state.paddingTop}">
-				<span>+</span>
-				<span>新建活动</span>
-			</div>
-		</router-link>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <van-swipe-cell v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
-        <van-cell :border="false" >
-          <router-link :to="{path : '/hospital/hospital_activityDetails',query:{itemId:item.itemId,time:new Date().getTime()}}">
-            <div class="activeList">
-              <img v-lazy="item.cover" alt="">
-              <div class="activeTitle">
-                <h4>{{item.title}}</h4>
-                <span>{{moment(item.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
-              </div>
-            </div>
-          </router-link>
-        </van-cell>
-        <template slot="right">
-          <button class="deleteStyle" @click="deleteActiviteFn(item)">
-            <img src="../../../assets/image/activiteDelete.png" alt="">
-          </button>
-        </template>
-      </van-swipe-cell>
-    </van-list>
+			<div class="zhangwei"></div>
+			<router-link :to="{name:'hospital_addActivity'}">
+				<div class="addActive" :style="{'padding-top':$store.state.paddingTop}">
+					<span>+</span>
+					<span>新建活动</span>
+				</div>
+			</router-link>
+		<van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+		<van-swipe-cell v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
+			<van-cell :border="false" >
+			<router-link :to="{path : '/hospital/hospital_activityDetails',query:{itemId:item.itemId,}}">
+				<div class="activeList">
+				<img v-lazy="item.cover" alt="">
+				<div class="activeTitle">
+					<h4>{{item.title}}</h4>
+					<span>{{moment(item.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
+				</div>
+				</div>
+			</router-link>
+			</van-cell>
+			<template slot="right">
+			<button class="deleteStyle" @click="deleteActiviteFn(item)">
+				<img src="../../../assets/image/activiteDelete.png" alt="">
+			</button>
+			</template>
+		</van-swipe-cell>
+		</van-list>
+	</van-pull-refresh>
 	</div>
+	</topSolt>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'case',
 	data () {
@@ -51,16 +56,27 @@ export default {
       loading: false,
       finished: false,
       page: 0,
+	  query:'',
+	  pullingDown:false,
 		}
 	},
 	computed:{
 	  ...mapGetters(['account','isLogin']),
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
 	},
   mounted() {
 		if(window.plus){
@@ -70,6 +86,23 @@ export default {
 		// this.getdata()
 	},
 	methods: {
+		afterPullDown() {
+			//下拉刷新
+		  setTimeout(() => {
+			this.pullingDown = false;
+			 this.initData();
+		  }, 500);
+		},
+		initData() {
+			let thisVue = this
+			if(this.$route.meta.auth && !this.$store.state.hospital.login)
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+			}})
+
+		  Object.assign(this.$data, this.$options.data());
+		  this.onLoad();
+		},
 		//回退方法
 		goBackFn(){
 			// this.$router.push({name:'hospital_clinic'})

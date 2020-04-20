@@ -133,6 +133,8 @@ export default {
     }
   },
   activated(){
+	  // this.initData();
+	  this.getNextPage();
   },
   deactivated(){
     debugger
@@ -226,14 +228,14 @@ export default {
     initData() {
       let thisVue = this;
 	  console.log(this.$store.state.operating.login)
-      if(this.$route.meta.auth && !this.$store.state.operating.login)
-      this.$toast({message:'请登录',onClose:function(){
-		  debugger
-        thisVue.$router.push({path:"/operating/operatingLogin",query:{time:new Date().getTime()}})
-      }})
-
+      if(this.$route.meta.auth && !this.$store.state.operating.login){
+		  this.$toast('请登录')
+		  let exit = setTimeout(()=>{
+			  thisVue.$router.replace({path:"/operating/operatingLogin",query:{}})
+			  clearTimeout(exit)
+		  },1500)
+	  }
       Object.assign(this.$data, this.$options.data());
-      
       this.getNextPage();
     },
 	getAllData(_data) {

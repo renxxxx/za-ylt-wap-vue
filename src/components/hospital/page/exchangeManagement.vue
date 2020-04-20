@@ -1,55 +1,59 @@
 <template>
-	<div class="exchange">
-		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
-			<div class="leftImg" @click="goBackFn"  id="navback">
-				<img src="../../../assets/image/shape@3x.png" alt="">
-			</div>
-			<div class="centerTitle">
-				<h3>兑换管理</h3>
-			</div>
-			<router-link :to="{path : '/hospital/hospital_exchangeManagementList',query : {time:new Date().getTime()}}">
-				<div class="right">
-					<img src="../../../assets/image/liebiao@3x.png" alt="">
+<topSolt>
+	<div class="exchange" slot="returnTopSolt">
+		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+			<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+				<div class="leftImg" @click="goBackFn"  id="navback">
+					<img src="../../../assets/image/shape@3x.png" alt="">
 				</div>
-			</router-link>
-		</div>
-		<div class="zhangwei"></div>
-		<div class="exchangeTitle" :style="{'padding-top':$store.state.paddingTop}">
-			<h3>已有商品</h3>
-			<router-link :to="{path : '/hospital/hospital_exchangeManagementAdd'}">
-				<div class="add">
-					<span>新增</span>
-					<img src="../../../assets/image/xinzeng@2x.png" alt="">
+				<div class="centerTitle">
+					<h3>兑换管理</h3>
 				</div>
-			</router-link>
-		</div>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <ul class="exchangeLists">
-        <van-swipe-cell v-for="(item,inx) in commodity" :key="inx"  :right-width= 65 >
-          <li>
-            <router-link :to="{path : '/hospital/hospital_exchangeEditor' ,query : {itemId : item.itemId,time:new Date().getTime()}}">
-              <div class="list">
-                <div class="listsImg">
-                  <img v-if="item.cover"  v-lazy="item.cover" alt="">
-                </div>
-                <div class="listContent">
-                  <h4>{{item.name}}</h4>
-                  <p><span>{{item.payExchangepoint}}</span>积分</p>
-                  <span>数量</span>
-                </div>
-                <span>{{item.stock}}</span>
-              </div>
-            </router-link>
-          </li>
-          <template slot="right">
-            <button class="deleteStyle" @click="deleteActiviteFn(item)">
-              <img src="../../../assets/image/activiteDelete.png" alt="">
-            </button>
-          </template>
-        </van-swipe-cell>
-      </ul>
-    </van-list>
+				<router-link :to="{path : '/hospital/hospital_exchangeManagementList',query : {}}">
+					<div class="right">
+						<img src="../../../assets/image/liebiao@3x.png" alt="">
+					</div>
+				</router-link>
+			</div>
+			<div class="zhangwei"></div>
+			<div class="exchangeTitle" :style="{'padding-top':$store.state.paddingTop}">
+				<h3>已有商品</h3>
+				<router-link :to="{path : '/hospital/hospital_exchangeManagementAdd'}">
+					<div class="add">
+						<span>新增</span>
+						<img src="../../../assets/image/xinzeng@2x.png" alt="">
+					</div>
+				</router-link>
+			</div>
+		<van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+		<ul class="exchangeLists">
+			<van-swipe-cell v-for="(item,inx) in commodity" :key="inx"  :right-width= 65 >
+			<li>
+				<router-link :to="{path : '/hospital/hospital_exchangeEditor' ,query : {itemId : item.itemId,}}">
+				<div class="list">
+					<div class="listsImg">
+					<img v-if="item.cover"  v-lazy="item.cover" alt="">
+					</div>
+					<div class="listContent">
+					<h4>{{item.name}}</h4>
+					<p><span>{{item.payExchangepoint}}</span>积分</p>
+					<span>数量</span>
+					</div>
+					<span>{{item.stock}}</span>
+				</div>
+				</router-link>
+			</li>
+			<template slot="right">
+				<button class="deleteStyle" @click="deleteActiviteFn(item)">
+				<img src="../../../assets/image/activiteDelete.png" alt="">
+				</button>
+			</template>
+			</van-swipe-cell>
+		</ul>
+		</van-list>
+	</van-pull-refresh>
 	</div>
+	</topSolt>
 </template>
 
 <script>
@@ -57,6 +61,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import {Dialog} from 'vant'
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'exchangeManagement',
 	data () {
@@ -65,6 +70,8 @@ export default {
       loading: false,
       finished: false,
       page: 1,
+	  query:'',
+	  pullingDown:false,
 		}
 	},
 	computed:{
@@ -80,7 +87,7 @@ export default {
     },
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 
@@ -90,9 +97,37 @@ export default {
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
 		}
-		this.getdata();
+		// this.getdata();
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getdata();
+		}
 	},
 	methods: {
+		afterPullDown() {
+			//下拉刷新
+		  setTimeout(() => {
+			this.pullingDown = false;
+			 this.initData();
+		  }, 500);
+		},
+		initData() {
+			let thisVue = this
+			if(this.$route.meta.auth && !this.$store.state.hospital.login)
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+			}})
+
+		  Object.assign(this.$data, this.$options.data());
+		  this.page = 0;
+		  this.onLoad();
+		},
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)

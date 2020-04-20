@@ -7,13 +7,13 @@
 				<div class="indexReturn" @click="goBackFn"  id="navback">
 					<img src="../../../assets/image/back-white@2x.png" alt="">
 				</div>
-				<router-link :to="{path:'/operating/operating_pathogenicSearch',query:{hospitalId: this.$route.query.hospitalId,focus : true,time:new Date().getTime()}}">
+				<router-link :to="{path:'/operating/operating_pathogenicSearch',query:{hospitalId: this.$route.query.hospitalId,focus : true,}}">
           <div class="indexSearch ">
               <input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
               <img src="../../../assets/image/sousuo@2x.png" alt="">
           </div>
 				</router-link>
-        <router-link :to="{path:'/operating/operating_pathogenicSearchoperating_pathogenicSearch',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime()}}">
+        <router-link :to="{path:'/operating/operating_pathogenicSearchoperating_pathogenicSearch',query:{hospitalId: this.$route.query.hospitalId,}}">
           <div class="clinic_buttton">
             <button>搜索</button>
           </div>
@@ -159,7 +159,7 @@ export default {
 	//显示筛选弹窗
 	showPopup() {
 	  this.show = true;
-		this.$router.push({path:'/operating/operating_pathogenicSearch',query:{hospitalId: this.$route.query.hospitalId,time:new Date().getTime(),show:false}})
+		this.$router.push({path:'/operating/operating_pathogenicSearch',query:{hospitalId: this.$route.query.hospitalId,show:false}})
 
 	},
 	getNum(){

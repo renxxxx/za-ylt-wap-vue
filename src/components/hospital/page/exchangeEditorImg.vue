@@ -35,7 +35,8 @@ export default {
 		return {
 			commodity : [],
 			imgUrl : 0,
-			exchangeAdd:{}
+			exchangeAdd:{},
+			query:''
 		}
 	},
 	computed:{
@@ -51,8 +52,18 @@ export default {
 		//
 	},
    mounted() {
-		this.exchangeAdd = JSON.parse(this.$route.query.exchangeEditor)
+		// this.exchangeAdd = JSON.parse(this.$route.query.exchangeEditor)
 		
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.exchangeAdd = JSON.parse(this.$route.query.exchangeEditor)
+		}
 	},
 	methods: {
 		//回退方法

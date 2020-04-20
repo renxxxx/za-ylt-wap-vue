@@ -25,7 +25,7 @@
 						</li>
 						<!-- <li>
 							<span>推广人</span>
-							<router-link :to="{name:'hospital_list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item,time:new Date().getTime()}}">
+							<router-link :to="{name:'hospital_list',query:{name:'选择推广人',nowValue:addClinic.promoter,path:this.$router.apps[0]._route.name,item:this.$route.query.item,}}">
 								<span>{{addClinic.promoter}}</span>
 							</router-link>
 						</li> -->

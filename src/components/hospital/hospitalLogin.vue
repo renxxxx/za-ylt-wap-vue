@@ -31,7 +31,7 @@
       	</div>
       	<button class="submitClass" type="submit" value="医院登录" @click="submit()">登录</button>
       	<div class="passwordReset">
-      		<router-link  :to="{path : '/hospital/hospital_retrievePassword',query:{time:new Date().getTime()}}">
+      		<router-link  :to="{path : '/hospital/hospital_retrievePassword',query:{}}">
       			<div class="forget">
       				<span>忘记密码</span>
       				<img src="../../assets/image/wenhao@2x.png" alt="">
@@ -97,10 +97,14 @@ export default {
                   type:'get',
                   async:false,
                   success:function(res){
+					if(res.codeMsg){
+						console.log('s')
+						thisVue.$toast(res.codeMsg)
+					}
                     if(res.code == 0){
                       thisVue.$store.state.hospital.login=res.data
                       thisVue.$toast({"message":'已登录',onClose(){
-                              thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
+                              thisVue.$router.replace({ name : 'hospital_index',query:{}});
                         }})
                     }
                   }
@@ -109,13 +113,13 @@ export default {
     
 		// let lastRoute = JSON.parse(localStorage.getItem('lastRoute'))
 		//  if(this.$store.state.isLogin == 100){
-		// 	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}})
+		// 	this.$router.replace({ name : 'hospital_index',query:{}})
 		// 	this.$router.push(lastRoute)
 		// }else  if(this.$store.state.isLogin == 200){
-		// 	this.$router.replace({ name : 'outpatient_index',query:{time:new Date().getTime()}})
+		// 	this.$router.replace({ name : 'outpatient_index',query:{}})
 		// 	this.$router.push(lastRoute)
 		// }else  if(this.$store.state.isLogin == 300){
-		// 	this.$router.replace({ name : 'chooseTheType',query:{time:new Date().getTime()}})
+		// 	this.$router.replace({ name : 'chooseTheType',query:{}})
 		// 	this.$router.push(lastRoute)
 		// }
   },
@@ -149,7 +153,7 @@ export default {
     chooseEntrance(){
       localStorage.removeItem('entrance');
 	  debugger
-      this.$router.push({path:'/',query:{time:new Date().getTime()}})
+      this.$router.push({path:'/',query:{}})
     },
     emptyAccountFn(value){
       if(value == 'name'){
@@ -189,11 +193,14 @@ export default {
                   type:'get',
                   async:false,
                   success:function(res){
+					if(res.codeMsg){
+						console.log('s')
+						thisVue.$toast(res.codeMsg)
+					}
                     if(res.code == 0){
                       thisVue.$store.state.hospital.login=res.data
                        thisVue.$toast({"message":'登录成功',onClose(){
-                             thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
-
+                             thisVue.$router.replace({ name : 'hospital_index',query:{}});
                         }})
                     }
                   }
@@ -207,9 +214,9 @@ export default {
               //       this.isLogin = 100;
               //       localStorage.setItem("isLogin",this.isLogin);
               //       if(res.data.data.type == 1){
-              //       	this.$router.replace({ name : 'promoters',query:{time:new Date().getTime()}});
+              //       	this.$router.replace({ name : 'promoters',query:{}});
               //       }else{
-              //       	this.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
+              //       	this.$router.replace({ name : 'hospital_index',query:{}});
               //       }
               //       this.$store.state.hospital.login.hospital.hospitalId= res.data.data.hospital.hospitalId;
               //       // 

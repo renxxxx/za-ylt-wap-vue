@@ -1,5 +1,7 @@
 <template>
-	<div class="exchangeList">
+<topSolt>
+	<div class="exchangeList" slot="returnTopSolt">
+		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
@@ -32,8 +34,9 @@
 					</li>
 				</van-list>
 			</ul>
-		<!-- </van-pull-refresh> -->
+		</van-pull-refresh>
 	</div>
+	</topSolt>
 </template>
 
 <script>
@@ -41,24 +44,27 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'exchangeList',
 	data () {
 		return {
 			exchangeList:[],
-			page : 2,
+			page : 0,
 			loading: false,
 			// 加载状态结束
 			finished: false,
 			//显示下拉加载
 			isLoading: false,
+			query:{},
+			pullingDown:false,
 		}
 	},
 	computed:{
 		...mapGetters(['account']),
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
@@ -67,14 +73,41 @@ export default {
 		//
 	},
   mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 
-		this.getdata()
+		// this.getdata()
+	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.onLoad()
+		}
 	},
 	methods: {
+		afterPullDown() {
+			//下拉刷新
+		  setTimeout(() => {
+			this.pullingDown = false;
+			 this.initData();
+		  }, 500);
+		},
+		initData() {
+			let thisVue = this
+			if(this.$route.meta.auth && !this.$store.state.hospital.login)
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+			}})
+
+		  Object.assign(this.$data, this.$options.data());
+		  this.onLoad();
+		},
 		goBackFn(){
 			this.$router.back(-1)
 		},
@@ -122,7 +155,6 @@ export default {
 				ps : 10,
 			}))
 			.then(_d => {
-				this.page++;
 				if(_d.data.data.items.length != 0){
 					for (let nums in _d.data.data.items) {
 						this.exchangeList.push( _d.data.data.items[nums] );
@@ -146,6 +178,7 @@ export default {
 			})
 		},
 		onLoad(){
+			++this.page;
 			this.nextdata()
 		},
 		refresh(){
@@ -257,6 +290,6 @@ export default {
     overflow: hidden;
     -webkit-user-select: none;
     user-select: none;
-	padding-top: .5rem;
+	/* padding-top: .5rem; */
 }
 </style>

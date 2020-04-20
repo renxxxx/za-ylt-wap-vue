@@ -2,14 +2,14 @@
 	<div class="productsExchange">
 		<div class="title" v-show="show? true : false">
 			<h3>热门兑换</h3>
-			<router-link :to="{path : '/outpatient/outpatient_ExchangeList',query:{time:new Date().getTime()}}">
+			<router-link :to="{path : '/outpatient/outpatient_ExchangeList',query:{}}">
 				<h3>更多</h3>
 			</router-link>
 		</div>
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <ul>
         <li v-for="(item,inx) in list" :key='inx'>
-          <router-link :to="{path : '/outpatient/outpatient_integralShop',query : {commodityId : item.commodityId,time:new Date().getTime()}}">
+          <router-link :to="{path : '/outpatient/outpatient_integralShop',query : {commodityId : item.commodityId,}}">
             <div class="productsImg">
               <img :src="item.cover" alt="">
             </div>

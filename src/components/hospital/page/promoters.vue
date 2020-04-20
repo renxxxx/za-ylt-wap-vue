@@ -1,45 +1,50 @@
 <template>
-	<div class="promoters" ref='promotersRef'>
-		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
-			<div class="leftImg" @click="goBackFn"  id="navback">
-				<img src="../../../assets/image/shape@3x.png" alt="">
+<topSolt>
+	<div class="promoters" ref='promotersRef' slot="returnTopSolt">
+		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+			<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+				<div class="leftImg" @click="goBackFn"  id="navback">
+					<img src="../../../assets/image/shape@3x.png" alt="">
+				</div>
+				<div class="centerTitle">
+					<h3>人员列表</h3>
+				</div>
+				<div class="right">
+					<router-link :to="{name:'hospital_promotersSearch',query:{}}">
+						<img src="../../../assets/image/sousuo@2x.png" alt="">
+					</router-link>
+					<router-link :to="{name:'hospital_addPromoters',query:{}}">
+						<img src="../../../assets/image/tianjia@2x.png" alt="">
+					</router-link>
+				</div>
 			</div>
-			<div class="centerTitle">
-				<h3>人员列表</h3>
-			</div>
-			<div class="right">
-				<router-link :to="{name:'hospital_promotersSearch',query:{time:new Date().getTime()}}">
-					<img src="../../../assets/image/sousuo@2x.png" alt="">
-				</router-link>
-				<router-link :to="{name:'hospital_addPromoters',query:{time:new Date().getTime()}}">
-					<img src="../../../assets/image/tianjia@2x.png" alt="">
-				</router-link>
-			</div>
-		</div>
-		<div class="zhangwei"></div>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <ul :style="{'padding-top':$store.state.paddingTop}">
-        <li v-for="(item,inx) in promotersList" :key="inx">
-          <router-link :to="{path : '/hospital/hospital_promotersDetails',query:{hospitalUserId: item.hospitalUserId}}">
-            <div class="list">
-              <img src="../../../assets/image/ren@2x.png" alt="">
-              <h4>{{item.name}}</h4>
-              <div class="listRight">
-                <span>门诊数：{{item.clinicCount}}</span>
-                <img src="../../../assets/image/right@2x.png" alt="">
-              </div>
-            </div>
-          </router-link>
-        </li>
-      </ul>
-    </van-list>
+			<div class="zhangwei"></div>
+		<van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+		<ul :style="{'padding-top':$store.state.paddingTop}">
+			<li v-for="(item,inx) in promotersList" :key="inx">
+			<router-link :to="{path : '/hospital/hospital_promotersDetails',query:{hospitalUserId: item.hospitalUserId}}">
+				<div class="list">
+				<img src="../../../assets/image/ren@2x.png" alt="">
+				<h4>{{item.name}}</h4>
+				<div class="listRight">
+					<span>门诊数：{{item.clinicCount}}</span>
+					<img src="../../../assets/image/right@2x.png" alt="">
+				</div>
+				</div>
+			</router-link>
+			</li>
+		</ul>
+		</van-list>
+	</van-pull-refresh>
 	</div>
+	</topSolt>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'promoters',
 	data () {
@@ -48,13 +53,15 @@ export default {
       loading: false,
       finished: false,
       page: 0,
+	  query:'',
+	   pullingDown:false,
 		}
 	},
 	computed:{
 
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 		
@@ -62,7 +69,33 @@ export default {
   
 	mounted(){
 	},
+	activated() {
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
+	},
 	methods: {
+		afterPullDown() {
+			//下拉刷新
+		  setTimeout(() => {
+			this.pullingDown = false;
+			 this.initData();
+		  }, 500);
+		},
+		initData() {
+			let thisVue = this
+			if(this.$route.meta.auth && !this.$store.state.hospital.login)
+			this.$toast({message:'请登录',onClose:function(){
+				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+			}})
+
+		  Object.assign(this.$data, this.$options.data());
+		  this.onLoad();
+		},
 		goBackFn(){
 			this.$router.back(-1)
 		},

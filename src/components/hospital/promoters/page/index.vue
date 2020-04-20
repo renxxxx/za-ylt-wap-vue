@@ -1,14 +1,14 @@
 <template>
-	<div class="index">
+	<div class="index" id="promotersIndex">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
-			<h3>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</h3>
+			<h3>—&nbsp;&nbsp;推广人端&nbsp;&nbsp;—</h3>
 		</div>
 		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
 		<div class="typeNav">
-			<router-link :to="{path : '/promoters/promoters_clinicSearch',query:{time:new Date().getTime()}}">
+			<router-link :to="{path : '/promoters/promoters_clinicSearch',query:{}}">
 				<img src="../../../../assets/image/qudaomenzhen@2.png" alt="">
 			</router-link>
-			<router-link :to="{path : '/promoters/promoters_sourceManagement',query:{time:new Date().getTime()}}">
+			<router-link :to="{path : '/promoters/promoters_sourceManagement',query:{}}">
 				<img src="../../../../assets/image/bingyuanguanli@2.png" alt="">
 			</router-link>
 		</div>
@@ -28,7 +28,7 @@
 		  <ul>
 		      <li v-for="(items,inx) in article" :key="inx">
 		        <router-link
-		          :to="{path : '/promoters/promoters_caseDetails' ,query : {itemId : items.itemId,data: 1,time:new Date().getTime()}}"
+		          :to="{path : '/promoters/promoters_caseDetails' ,query : {itemId : items.itemId,data: 1,}}"
 		        >
 		          <div class="article_left">
 		            <p>{{items.content}}</p>
@@ -56,7 +56,7 @@
 			</div>
 		  </div>
 		  <div class="activeList">
-        <router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:qualityCase[0].itemId,time:new Date().getTime()}}">
+        <router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:qualityCase[0].itemId,}}">
           <img :src="qualityCase[0].img" alt="">
           <div class="activeTitle">
             <h4>{{qualityCase[0].content}}</h4>
@@ -66,7 +66,7 @@
 		  </div>
 		  <ul style="">
 		      <li v-for="(items,num) in qualityCase" :key="num">
-		        <router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:items.itemId,time:new Date().getTime()}}">
+		        <router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:items.itemId,}}">
 		          <div class="article_left">
 		            <p>{{items.content}}</p>
 		            <div class="article_leftTime">
@@ -107,7 +107,6 @@ export default {
 	created(){
 
 	},
-
 	destroyed(){
 		// 
 	},

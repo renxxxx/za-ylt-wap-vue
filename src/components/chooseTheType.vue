@@ -64,11 +64,11 @@ export default {
   mounted () {
     let thisVue = this;
     if(thisVue.$store.state.hospital.login)
-          this.$router.replace({ path : '/hospital',query:{time:new Date().getTime()}});
+          this.$router.replace({ path : '/hospital',query:{}});
     else if(thisVue.$store.state.outpatient.login)
-          this.$router.replace({ path : '/outpatient',query:{time:new Date().getTime()}});
+          this.$router.replace({ path : '/outpatient',query:{}});
     else if(thisVue.$store.state.operating.login)
-        this.$router.replace({ path : '/operating',query:{time:new Date().getTime()}});
+        this.$router.replace({ path : '/operating',query:{}});
   },
   methods: {
     choseFn(stata){
@@ -79,15 +79,15 @@ export default {
         localStorage.setItem('entrance',this.stata)
         switch(this.stata){
           case '1':
-          this.$router.replace({ path : '/hospital',query:{time:new Date().getTime()}});
+          this.$router.replace({ path : '/hospital',query:{}});
           // this.submitFn('/hospital/login-refresh',100)
           break;
           case '2':
-          this.$router.replace({ path : '/outpatient',query:{time:new Date().getTime()}});
+          this.$router.replace({ path : '/outpatient',query:{}});
           // this.submitFn('/clinic/login-refresh',200);
           break;
           case '3':
-            this.$router.replace({ path : '/operating',query:{time:new Date().getTime()}})
+            this.$router.replace({ path : '/operating',query:{}})
           // this.submitFn('/manager/login-refresh',300)
           break;
         }
