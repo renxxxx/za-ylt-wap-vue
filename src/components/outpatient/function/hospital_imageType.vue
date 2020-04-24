@@ -20,7 +20,8 @@ export default {
   name: 'hospital_About',
   data () {
     return {
-		type:[]
+		type:[],
+		keepAlive:false
     }
   },
   computed:{
@@ -30,31 +31,46 @@ export default {
 		
   },
   mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		if(!this.keepAlive){
+			this.getData();
 		}
-		
-	this.$axios.post('/c2/office/items',qs.stringify({
-			hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
-	}))
-	.then(_d => {
-		for(let i in _d.data.data.items){
-			this.type.push({
-				name: _d.data.data.items[i].name,
-				url : _d.data.data.items[i].cover,
-				itemId : _d.data.data.items[i].itemId,
-			})
-		}
-	})
-	.catch((err)=>{
-		
-		//Dialog({ message: err});;
-	})
   },
-  
+  activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			if(this.keepAlive){
+				this.getData();
+			}
+			
+		}
+    },
   methods: {
-	
+	getData(){
+		this.$axios.post('/c2/office/items',qs.stringify({
+			hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
+		}))
+		.then(_d => {
+			for(let i in _d.data.data.items){
+				this.type.push({
+					name: _d.data.data.items[i].name,
+					url : _d.data.data.items[i].cover,
+					itemId : _d.data.data.items[i].itemId,
+				})
+			}
+		})
+		.catch((err)=>{
+			
+			//Dialog({ message: err});;
+		})	
+	}
   },
 }
 </script>

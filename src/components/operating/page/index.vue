@@ -1,6 +1,7 @@
 <template>
 	<div class="index" >
-		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
+		<topSolt>
+		<van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="topNav_search">
 				<img src="../../../assets/image/sousuo@2x.png" alt="">
@@ -73,6 +74,7 @@
 		</div>
 		<div style="height: .55rem;"></div>
 		</van-pull-refresh>
+		</topSolt>
 	</div>
 </template>
 
@@ -81,6 +83,7 @@ import axios from "axios";
 import { mapActions, mapGetters } from "vuex";
 import qs from "qs";
 import { Dialog } from "vant";
+import topSolt from "../function/topSolt.vue";
 export default {
   name: "gene",
   data() {
@@ -102,7 +105,7 @@ export default {
     };
   },
   components: {
-    // bottomNav
+    topSolt
   },
   computed: {
     // ...mapGetters(["account", "isLogin"])
@@ -119,23 +122,35 @@ export default {
     
   },
   mounted() {
-    debugger
-    let thisVue = this;
-    if (window.plus) {
-      //plus.navigator.setStatusBarBackground("#ffffff");
-      plus.navigator.setStatusBarStyle("dark");
-    }
-    if(this.$route.meta.auth && !this.$store.state.operating.login){
-    	this.$toast({message:'请登录',onClose:function(){
-			debugger
-    		thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
-    	}})
-    }
+    // debugger
+    // let thisVue = this;
+    // if (window.plus) {
+    //   //plus.navigator.setStatusBarBackground("#ffffff");
+    //   plus.navigator.setStatusBarStyle("dark");
+    // }
+    // if(this.$route.meta.auth && !this.$store.state.operating.login){
+    // 	this.$toast({message:'请登录',onClose:function(){
+	// 		debugger
+    // 		thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
+    // 	}})
+    // }
   },
   activated(){
-	  // this.initData();
-	  this.getNextPage();
-  },
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			// if(this.$route.meta.auth && !this.$store.state.operating.login){
+			// 	this.$toast({message:'请登录',onClose:function(){
+			// 		debugger
+			// 		thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
+			// 	}})
+			// }
+			this.initData();
+		}
+  	},
   deactivated(){
     debugger
     },
@@ -228,7 +243,7 @@ export default {
     initData() {
       let thisVue = this;
 	  console.log(this.$store.state.operating.login)
-      if(this.$route.meta.auth && !this.$store.state.operating.login){
+      if(!this.$store.state.operating.login){
 		  this.$toast('请登录')
 		  let exit = setTimeout(()=>{
 			  thisVue.$router.replace({path:"/operating/operatingLogin",query:{}})

@@ -10,14 +10,16 @@
 			<div class="right"></div>
 		</div>
     <div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
-   <div style="margin-top: .2rem;">
-      <div v-for="(item,inx) in operatingManualList" :key="inx" @click="nextPageFn(item)">
+   <div style="margin-top: .2rem;height:calc(100% - .67rem)">
+     <topSolt>
+      <div v-for="(item,inx) in operatingManualList" slot="returnTopSolt" :key="inx" @click="nextPageFn(item)">
           <van-cell is-link>
             <template>
               <span class="custom-title">{{item.name}}</span>
             </template>
           </van-cell>
       </div>
+      </topSolt>
     </div>
     <!-- <van-collapse v-model="activeNames">
        <van-collapse-item :title="this.$route.query.name" name="1">
@@ -44,6 +46,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import topSolt from "../function/topSolt.vue";
 export default {
   name: 'operatingManualList',
   data () {
@@ -55,6 +58,9 @@ export default {
 	  query:{}
     }
   },
+  components: {
+    topSolt
+  },
   computed:{
   },
   // beforeRouteUpdate(to,from,next){
@@ -63,55 +69,26 @@ export default {
   //   this.getData()
   //   next();
   // },
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-  let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-  		}
-            this.$destroy();
-  	}
-  next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-      next(vm => {
-      document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
-    });
-  },
   created () {
   },
   mounted () {
-    if(window.plus){
-    	//plus.navigator.setStatusBarBackground("#ffffff");
-    	plus.navigator.setStatusBarStyle("dark")
-    }
-	this.query = qs.parse(this.$route.query)
-    this.getData()
+  //   if(window.plus){
+  //   	//plus.navigator.setStatusBarBackground("#ffffff");
+  //   	plus.navigator.setStatusBarStyle("dark")
+  //   }
+	// this.query = qs.parse(this.$route.query)
+  //   this.getData()
+  },
+   activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.query = qs.parse(this.$route.query)
+      this.getData()
+		}
   },
   methods: {
     //回退方法
@@ -123,9 +100,9 @@ this.scrollTop = scrollTop?scrollTop :0;
       if(item.lowerCount){
         console.dir(item.operatingManualSectionId)
 
-        this.$router.push({path:'/operating/operating_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,}})
+        this.$router.push({path:'/operating/operating_operatingManualListTwo',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId}})
       }else{
-        this.$router.push({path:'/operating/operating_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId,}})
+        this.$router.push({path:'/operating/operating_operatingManualListDetails',query:{name:item.name,operatingManualId:this.$route.query.operatingManualId,operatingManualSectionId : item.operatingManualSectionId}})
       }
     },
     getData(){

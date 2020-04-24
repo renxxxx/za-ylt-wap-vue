@@ -1,6 +1,7 @@
 <template>
 	<div class="hospital" :style="{'padding-top':$store.state.paddingTop}">
-		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+		<topSolt>
+		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" slot="returnTopSolt">
 			<div class="navWarp">
 				<div class="topNav"  :style="{'padding-top':$store.state.paddingTop}">
 					<div class="hospital_search">
@@ -24,6 +25,7 @@
 			<div class="content">
 				<ul>
 					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
+						<!-- content	 -->
 						<li v-for="(items,inx) in content" :key="inx">
 							<router-link :to="{path : '/promoters/promoters_source' ,query :  {clinicId : items.hospitalClinicId,clinicName:items.name,clinicTime:items.alterTime,}}">
 								<div class="contentLi">
@@ -37,6 +39,7 @@
 				</ul>
 			</div>
 		</van-pull-refresh>
+		</topSolt>
 		<div style="height: .5rem;"></div>
 	</div>
 </template>
@@ -46,6 +49,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import topSolt from "../../function/topSolt.vue";
 // import clinicContent from './functionPage/clinic_content.vue'
 export default {
 	name: 'clinic',
@@ -58,13 +62,14 @@ export default {
 			loading: false,
 			finished: false,
 			content : [],
-			page:0
+			page:1
 		}
 	},
 	computed:{
 	  ...mapGetters(['account'])
 	},
 	components:{
+		topSolt
 	},
 	created(){
 		debugger
@@ -79,15 +84,26 @@ export default {
 	  
   },
   mounted() {
-	  debugger
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+	//   debugger
+	// 	if(window.plus){
+	// 		//plus.navigator.setStatusBarBackground("#ffffff");
+	// 		plus.navigator.setStatusBarStyle("dark")
+	// 	}
 
 		// this.getdata(0);
-		this.initData()
+		// this.initData()
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			// 加载dom节点后,获取推广人列表请求
+			this.getdata();
+		}
+    },
 	methods: {
 		 afterPullDown() {
 			//下拉刷新

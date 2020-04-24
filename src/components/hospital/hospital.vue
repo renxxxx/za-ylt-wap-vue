@@ -114,7 +114,7 @@ export default {
     topSolt
   },
   mounted(){
-    window.addEventListener("scroll", this.handleScroll, true);
+    // window.addEventListener("scroll", this.handleScroll, true);
   },
   watch:{
 

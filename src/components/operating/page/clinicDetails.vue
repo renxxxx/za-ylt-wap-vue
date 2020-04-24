@@ -21,25 +21,27 @@
 		</div>
 		<div style="width: 100%;height: 1.05rem;" :style="{'padding-top':$store.state.paddingTop}"></div>
 		<div class="hospitalContent" v-show="typeData">
-			<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
-				<div class="clinicMssageList" v-for="(item,inx) in content" :key="inx">
-					<div class="hospitalList">
-						<div class="hospitalContent_title">
-							<!-- <img :src="item.cover" alt=""> -->
-							<h5>{{item.realname}}</h5>
-							<div class="zhuangtai">
-								<img :src="item.img" alt="">
-								<span :class="[item.status== 1? 'color':'']">{{item.span}}</span>
+			<topSolt style="box-sizing: border-box;padding: 0px .12rem;">
+				<van-list  slot="returnTopSolt" v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
+					<div class="clinicMssageList" v-for="(item,inx) in content" :key="inx">
+						<div class="hospitalList">
+							<div class="hospitalContent_title">
+								<!-- <img :src="item.cover" alt=""> -->
+								<h5>{{item.realname}}</h5>
+								<div class="zhuangtai">
+									<img :src="item.img" alt="">
+									<span :class="[item.status== 1? 'color':'']">{{item.span}}</span>
+								</div>
+							</div>
+							<div class="hospitalContent_message">
+								<p>推送时间：{{moment(item.pushTime).format('YYYY-MM-DD HH-MM')}}</p>
+								<p>电话：{{item.tel}}</p>
+								<p>所属：{{item.clinicName}}</p>
 							</div>
 						</div>
-						<div class="hospitalContent_message">
-							<p>推送时间：{{moment(item.pushTime).format('YYYY-MM-DD HH-MM')}}</p>
-							<p>电话：{{item.tel}}</p>
-							<p>所属：{{item.clinicName}}</p>
-						</div>
 					</div>
-				</div>
-		</van-list>
+			</van-list>
+		</topSolt>
 		</div>
 		<div class="message" v-show="!typeData">
 			<div class="newAddTitle">
@@ -89,135 +91,143 @@ import { mapActions, mapGetters } from "vuex";
 import qs from "qs";
 import { Dialog } from "vant";
 import clinicContent from '../function/clinic_content.vue'
-// import bottomNav from "./functionPage/bottomNav.vue";
-// import moment from 'moment'
+import topSolt from "../function/topSolt.vue";
 export default {
-  name: "gene",
-  data() {
-    return {
-      page: 0,
-	  show:false,
-	  sorts:'',
-	  orders:'',
-	  loading: false,
-	  finished: false,
-	  content : [],
-	  test:'',
-	  message:'',
-	  typeData:true,
-    };
-  },
-  components: {
-    clinicContent
-  },
-  computed: {
-  },
-
-  beforeCreate(){
-    
-  },
-  created() {
-
-  },
-  beforeMount(){
-    
-  },
-  mounted() {
-    let thisVue = this;
-    if (window.plus) {
-      //plus.navigator.setStatusBarBackground("#ffffff");
-      plus.navigator.setStatusBarStyle("dark");
-    }
-	this.getMessages()
-  },
-  activated(){
-  },
-  deactivated(){
-    },
-  methods: {
-	backFn(){
-		this.$router.back()
+	name: "gene",
+	data() {
+		return {
+		page: 0,
+		show:false,
+		sorts:'',
+		orders:'',
+		loading: false,
+		finished: false,
+		content : [],
+		test:'',
+		message:'',
+		typeData:true,
+		};
 	},
-	typeClickFn(value){
-		if(value){
-			this.typeData = true
-		}else{
-			this.typeData = false
+	components: {
+		clinicContent,topSolt
+	},
+	computed: {
+	},
+
+	beforeCreate(){
+		
+	},
+	created() {
+
+	},
+	beforeMount(){
+		
+	},
+	mounted() {
+		// let thisVue = this;
+		// if (window.plus) {
+		// //plus.navigator.setStatusBarBackground("#ffffff");
+		// plus.navigator.setStatusBarStyle("dark");
+		// }
+		// this.getMessages()
+	},
+  	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getMessages()
 		}
-	},
-	getMessages(){
-		this.$axios.post('/c2/clinic/item?',qs.stringify({
-			itemId: this.$route.query.clinicId,
-		}))
-		.then(res=>{
-			if(res.data.codeMsg){
-				this.$toast(res.data.codeMsg)
-			}
-			this.message = res.data.data
-		})
-	},
-	getdata(){
-		this.$axios.post('/c2/patient/items?',qs.stringify({
-			pn:this.page,
-			clinicId: this.$route.query.clinicId,
-			ps:10,
-			sorts:this.sorts,
-			orders:this.orders,
-		}))
-		.then(res => {
-			if(res.data.data.items.length != 0){
-				for(let i in res.data.data.items){
-					if(res.data.data.items[i].status == 1){
-						this.content.push({
-							clinicName : res.data.data.items[i].clinicName,
-							itemId : res.data.data.items[i].itemId,
-							pushTime : res.data.data.items[i].pushTime,
-							realname : res.data.data.items[i].realname,
-							status : res.data.data.items[i].status,
-							img : require("../../../assets/image/weijiuzhen@2x.png"),
-							tel : res.data.data.items[i].tel,
-							span : "未就诊"
-						});
-					}else if(res.data.data.items[i].status == 4){
-						this.content.push({
-							clinicName : res.data.data.items[i].clinicName,
-							itemId : res.data.data.items[i].itemId,
-							pushTime : res.data.data.items[i].pushTime,
-							realname : res.data.data.items[i].realname,
-							status : res.data.data.items[i].status,
-							img :require( "../../../assets/image/yes@2x.png"),
-							tel : res.data.data.items[i].tel,
-							buttonColor : "buttonColor",
-							span : "已就诊"
-						});
-					}
-					this.clinicNum = res.data.data.sum.totalCount
-					// 
-				}
-			// 加载状态结束
-			this.loading = false;
-			}else{
-				this.loading = false;
-			this.test='没有更多了'
-				this.finished = true;
-			}
-	
-			if(this.content.length == 0){
-			  this.test='无数据'
-			}
-			// this.clinic.num = res.data.data.sum.totalCount;
-		})
-		.catch((err)=>{
-			
-		})
-	
-	},
-	getNextPage(){
-		this.page++
-		this.getdata()
-	},
+  	},
 
-  }
+  	deactivated(){
+    },
+	methods: {
+		backFn(){
+			this.$router.back()
+		},
+		typeClickFn(value){
+			if(value){
+				this.typeData = true
+			}else{
+				this.typeData = false
+			}
+		},
+		getMessages(){
+			this.$axios.post('/c2/clinic/item?',qs.stringify({
+				itemId: this.$route.query.clinicId,
+			}))
+			.then(res=>{
+				if(res.data.codeMsg){
+					this.$toast(res.data.codeMsg)
+				}
+				this.message = res.data.data
+			})
+		},
+		getdata(){
+			this.$axios.post('/c2/patient/items?',qs.stringify({
+				pn:this.page,
+				clinicId: this.$route.query.clinicId,
+				ps:10,
+				sorts:this.sorts,
+				orders:this.orders,
+			}))
+			.then(res => {
+				if(res.data.data.items.length != 0){
+					for(let i in res.data.data.items){
+						if(res.data.data.items[i].status == 1){
+							this.content.push({
+								clinicName : res.data.data.items[i].clinicName,
+								itemId : res.data.data.items[i].itemId,
+								pushTime : res.data.data.items[i].pushTime,
+								realname : res.data.data.items[i].realname,
+								status : res.data.data.items[i].status,
+								img : require("../../../assets/image/weijiuzhen@2x.png"),
+								tel : res.data.data.items[i].tel,
+								span : "未就诊"
+							});
+						}else if(res.data.data.items[i].status == 4){
+							this.content.push({
+								clinicName : res.data.data.items[i].clinicName,
+								itemId : res.data.data.items[i].itemId,
+								pushTime : res.data.data.items[i].pushTime,
+								realname : res.data.data.items[i].realname,
+								status : res.data.data.items[i].status,
+								img :require( "../../../assets/image/yes@2x.png"),
+								tel : res.data.data.items[i].tel,
+								buttonColor : "buttonColor",
+								span : "已就诊"
+							});
+						}
+						this.clinicNum = res.data.data.sum.totalCount
+						// 
+					}
+				// 加载状态结束
+				this.loading = false;
+				}else{
+					this.loading = false;
+				this.test='没有更多了'
+					this.finished = true;
+				}
+		
+				if(this.content.length == 0){
+				this.test='无数据'
+				}
+				// this.clinic.num = res.data.data.sum.totalCount;
+			})
+			.catch((err)=>{
+				
+			})
+		
+		},
+		getNextPage(){
+			this.page++
+			this.getdata()
+		},
+
+	}
 };
 </script>
 
@@ -270,9 +280,10 @@ export default {
 	float: left;
 }
 .hospitalContent{
-	box-sizing: border-box;
-	padding: 0px .12rem;
+	/* box-sizing: border-box; */
+	/* padding: 0px .12rem; */
 	margin-top: .12rem;
+	height: calc(100% - 1.05rem);
 }
 .hospitalList{
 	background-color: #FFFFFF;

@@ -1,5 +1,6 @@
 <template>
-	<div class="integralDetails">
+<topSolt>
+	<div slot="returnTopSolt" class="integralDetails">
     <div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
     	<div class="leftImg" @click="goBackFn"  id="navback">
     		<img src="../../../assets/image/shape@3x.png" alt="">
@@ -24,6 +25,7 @@
       </ul>
     </van-list>
   </div>
+</topSolt>
 </template>
 
 <script>
@@ -31,6 +33,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import topSolt from "../function/topSolt.vue";
 export default {
   name: 'integralDetails',
   data () {
@@ -45,18 +48,24 @@ export default {
 	...mapGetters(['account']),
   },
   created(){
-  	var heightRexg = /^[0-9]*/g
-  	//var topHeight = this.topHeight.match(heightRexg)
-  	//this.height = parseInt(topHeight.join())
-  	//
   },
+  components:{
+		topSolt
+	},
   mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+  },
+  activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
 		}
-
-
   },
   methods: {
     goBackFn(){

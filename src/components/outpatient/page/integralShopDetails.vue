@@ -67,15 +67,25 @@ export default {
 	created () {
 		
 	},
-  mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+ 	mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 		
 		
-		this.getdata();
+		// this.getdata();
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getdata();
+		}
+  	},
 	methods: {
 		goBackFn(){
 			this.$router.back(-1);

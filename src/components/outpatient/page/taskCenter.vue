@@ -84,39 +84,52 @@ export default {
 		//this.height = parseInt(topHeight.join()) 
 		//
 	},
- mounted(){
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+ 	mounted(){
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		// this.getData()
 		
-		this.$axios.post('/clientend2/clinicend/taskcenter/tasks',qs.stringify({
-			clinicId : this.$store.state.outpatient.login.clinicId,
-		}))
-		.then(res => {
-			if(res.data.codeMsg == '' || res.data.codeMsg == null || res.data.codeMsg == undefined){
-				for(let i in res.data.data.rows){
-					if(res.data.data.rows[i].oneTimeIs == 1){
-						this.task.once.push(res.data.data.rows[i]);
-						// 
-					}else{
-						this.task.daily.push(res.data.data.rows[i])
-					}
-				}
-			}else{
-				this.$toast(res.data.codeMsg)
-			}
-		})
-		.catch((err)=>{
-			//Dialog({ message: err});;
-		})
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getData()
+		}
+  	},
 	methods: {
 		goBackFn(){
 			this.$router.back(-1)
 		},
 		showExplainFn(){
 			this.showExplain = true
+		},
+		getData(){
+			this.$axios.post('/clientend2/clinicend/taskcenter/tasks',qs.stringify({
+				clinicId : this.$store.state.outpatient.login.clinicId,
+			}))
+			.then(res => {
+				if(res.data.codeMsg == '' || res.data.codeMsg == null || res.data.codeMsg == undefined){
+					for(let i in res.data.data.rows){
+						if(res.data.data.rows[i].oneTimeIs == 1){
+							this.task.once.push(res.data.data.rows[i]);
+							// 
+						}else{
+							this.task.daily.push(res.data.data.rows[i])
+						}
+					}
+				}else{
+					this.$toast(res.data.codeMsg)
+				}
+			})
+			.catch((err)=>{
+				//Dialog({ message: err});;
+			})
 		}
 	},
 }

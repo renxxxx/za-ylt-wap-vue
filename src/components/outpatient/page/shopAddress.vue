@@ -61,22 +61,39 @@ export default {
 		
 	},
   mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 		
-		let querAddress = JSON.parse(this.$route.query.address)
+		// let querAddress = JSON.parse(this.$route.query.address)
 		
-		this.address = {
-			name : querAddress.name,
-			tel : querAddress.tel,
-			city : querAddress.area,
-			detailedAddress : querAddress.address,
-			receiverId : querAddress.receiverId
-		}
+		// this.address = {
+		// 	name : querAddress.name,
+		// 	tel : querAddress.tel,
+		// 	city : querAddress.area,
+		// 	detailedAddress : querAddress.address,
+		// 	receiverId : querAddress.receiverId
+		// }
 		
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			let querAddress = JSON.parse(this.$route.query.address)
+			this.address = {
+				name : querAddress.name,
+				tel : querAddress.tel,
+				city : querAddress.area,
+				detailedAddress : querAddress.address,
+				receiverId : querAddress.receiverId
+			}
+		}
+  	},
 	methods: {
 		goBackFn(){
 			this.$router.back(-1);

@@ -113,10 +113,21 @@ export default {
 		//this.height = parseInt(topHeight.join())
 		//
 	},
-  mounted() {
+ 	mounted() {
 		// 加载dom节点后,获取推广人列表请求
-		this.getdata()
+		// this.getdata()
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			// 加载dom节点后,获取推广人列表请求
+			this.getdata();
+		}
+    },
 	methods: {
     getdata(){
       this.$axios.get('/hospital/operator/hospital-clinic/'+this.$route.query.clinicId)

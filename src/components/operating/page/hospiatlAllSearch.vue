@@ -1,4 +1,5 @@
 <template>
+
 	<div class="hospiatlAllSearch">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="returnNav" @click="backFn">
@@ -11,10 +12,12 @@
 			<button @click="searcFn">搜索</button>
 		</div>
 		<div style="width: 100%;height: .6rem;" :style="{'padding-top':$store.state.paddingTop}"></div>
-		<div class="hospitalContent">
-			<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
-				<!-- <router-link :to="{path :'/hospital/hospital_index'}"> -->
-					<div class="hospitalList" v-for="(item,inx) in hospitalList" :key="inx">
+		<div class="hospitalContent" style="height:100%">
+			<topSolt style="height: calc(100% - .6rem);">
+			<van-list  slot="returnTopSolt" v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
+				<!-- hospitalList -->
+				<router-link :to="{path :'/operating/operating_indexDetails',query:{hospitalId:item.hospitalId}}"  v-for="(item,inx) in hospitalList" :key="inx">
+					<div class="hospitalList">
 						<div class="hospitalContent_title">
 							<img :src="item.cover" alt="">
 							<h5>{{item.hospitalName}}</h5>
@@ -26,10 +29,12 @@
 							<p>病源数：{{item.patientCount}}</p>
 						</div>
 					</div>
-				<!-- </router-link> -->
+				</router-link>
 			</van-list>
+			</topSolt>
 		</div>
 	</div>
+
 </template>
 
 <script>
@@ -37,6 +42,7 @@ import axios from "axios";
 import { mapActions, mapGetters } from "vuex";
 import qs from "qs";
 import { Dialog } from "vant";
+import topSolt from "../function/topSolt.vue";
 export default {
   name: "gene",
   data() {
@@ -51,6 +57,7 @@ export default {
     };
   },
   components: {
+	  topSolt
   },
   computed: {
   },
@@ -66,12 +73,23 @@ export default {
     
   },
   mounted() {
-    let thisVue = this;
-    if (window.plus) {
-      //plus.navigator.setStatusBarBackground("#ffffff");
-      plus.navigator.setStatusBarStyle("dark");
-    }
+    // let thisVue = this;
+    // if (window.plus) {
+    //   //plus.navigator.setStatusBarBackground("#ffffff");
+    //   plus.navigator.setStatusBarStyle("dark");
+	// }
+	this.getNextPage()
   },
+  activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getNextPage()
+		}
+  	},
   activated(){
   },
   deactivated(){
@@ -206,10 +224,15 @@ export default {
 	bottom: 0rem;
 	margin: auto 0rem;
 }
-.hospitalContent{
+.hospittalConten{
+	box-sizing: border-box;
+	/* padding: 0px .12rem; */
+	/* margin-top: .15rem; */
+}
+.hospitalContent a{
+	display: block;
 	box-sizing: border-box;
 	padding: 0px .12rem;
-	/* margin-top: .15rem; */
 }
 .hospitalList{
 	background-color: #FFFFFF;

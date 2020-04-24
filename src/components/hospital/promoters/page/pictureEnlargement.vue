@@ -41,17 +41,34 @@ export default {
 		this.enlarge = this.$route.query.data;
 		// 
 	},
-
-	mounted () {
+	activated(){
 		let _this = this
-		ImagePreview({
-			images: this.imgUrl,
-			asyncClose: false,
-			startPosition: this.$route.query.inx? this.$route.query.inx : 0,
-			onClose(){
-				_this.$router.back()
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
 			}
-		});
+			ImagePreview({
+				images: this.imgUrl,
+				asyncClose: false,
+				startPosition: this.$route.query.inx? this.$route.query.inx : 0,
+				onClose(){
+					_this.$router.back()
+				}
+			});
+		}
+    },
+	mounted () {
+		// let _this = this
+		// ImagePreview({
+		// 	images: this.imgUrl,
+		// 	asyncClose: false,
+		// 	startPosition: this.$route.query.inx? this.$route.query.inx : 0,
+		// 	onClose(){
+		// 		_this.$router.back()
+		// 	}
+		// });
 	},
 	methods: {
 		// backFn(){

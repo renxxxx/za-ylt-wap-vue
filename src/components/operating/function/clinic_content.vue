@@ -44,20 +44,37 @@ export default {
 	created () {
 
 	},
- mounted() {
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+			.then(res => {
+				this.clinicNum = res.data.data.rowCount;
+			})
+			.catch((err)=>{
+				
+			})
+			// this.getNextPage()
+		}
+  	},
+ 	mounted() {
 
 	  
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-		 this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
-		  .then(res => {
-		  	this.clinicNum = res.data.data.rowCount;
-		  })
-		  .catch((err)=>{
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		//  this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+		//   .then(res => {
+		//   	this.clinicNum = res.data.data.rowCount;
+		//   })
+		//   .catch((err)=>{
 		  	
-		  })
+		//   })
 	},
 	methods: {
 		initData() {

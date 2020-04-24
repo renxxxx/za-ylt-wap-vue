@@ -1,5 +1,6 @@
 <template>
-	<div class="hospital">
+<topSolt>
+	<div class="hospital" slot="returnTopSolt">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
      <div class="leftImg" @click="goBackFn">
      	<img src="../../../assets/image/shape@3x.png" alt="">
@@ -33,12 +34,14 @@
 			</ul>
 		</div>
 	</div>
+</topSolt>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../function/topSolt.vue"
 export default {
   name: 'hospital',
   data () {
@@ -48,29 +51,43 @@ export default {
 		loading: false,
 		finished: false,
 		page:1,
-    kw: ''
+    	kw: ''
     }
   },
   computed:{
 	  ...mapGetters(['account']),
   },
   components:{
-
+	  topSolt
   },
   created () {
 
   },
   mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-    this.getdata({
-    	hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
-    	pn : this.page,
-    	ps : 10
-    })
+	// 	if(window.plus){
+	// 		//plus.navigator.setStatusBarBackground("#ffffff");
+	// 		plus.navigator.setStatusBarStyle("dark")
+	// 	}
+    // this.getdata({
+    // 	hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
+    // 	pn : this.page,
+    // 	ps : 10
+    // })
   },
+  	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getdata({
+				hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
+				pn : this.page,
+				ps : 10
+			})
+		}
+    },
   methods: {
     goBackFn(){
       this.$router.back()

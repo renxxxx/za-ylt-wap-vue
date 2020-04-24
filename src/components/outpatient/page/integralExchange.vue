@@ -1,5 +1,6 @@
 <template>
-	<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+<topSolt>
+<van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown">
 	<div class="integralExchange">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
@@ -36,6 +37,7 @@
 		<integralExchangeList :show = 'show' :style="{'padding-top':$store.state.paddingTop}"></integralExchangeList>
 	</div>
 	</van-pull-refresh>
+	</topSolt>
 </template>
 
 <script>
@@ -43,6 +45,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import integralExchangeList from '../function/integralExchangeList.vue'
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'integralExchange',
 	data () {
@@ -65,7 +68,7 @@ export default {
 	    },
 	},
 	components:{
-		integralExchangeList
+		integralExchangeList,topSolt
 	},
 	destroyed() {
 
@@ -87,13 +90,23 @@ export default {
 	destroyed() {
 		window.clearInterval(this.flowHeading)
 	},
- mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-		this.getData();
+	mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		// this.getData();
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getData();
+		}
+  	},
 	methods: {
 		goBackFn(){
 			this.$router.back(-1);

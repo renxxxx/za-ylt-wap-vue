@@ -3,6 +3,7 @@
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh"> -->
 			<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 			<ul class="clinicList">
+				<!-- items -->
 				<li v-for="(item,inx) in items" :key="inx">
 					<router-link :to="{path : '/outpatient/outpatient_detailsPage' ,query : {patientId : item.itemId,}}">
 						<div class="content_left">
@@ -52,15 +53,22 @@ export default {
 	created () {
 		debugger
 	},
- mounted() {
-	  debugger
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-		
-
+ 	mounted() {
+	//   debugger
+	// 	if(window.plus){
+	// 		//plus.navigator.setStatusBarBackground("#ffffff");
+	// 		plus.navigator.setStatusBarStyle("dark")
+	// 	}
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
+    },
 	methods:{
 		submitFn(_item,_button){
 			this.$axios.post('/c2/patient/confirmjiuzhen',qs.stringify({

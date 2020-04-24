@@ -123,9 +123,15 @@ export default {
 		// 	this.$router.push(lastRoute)
 		// }
   },
-  activated(){
-    debugger
-  },
+  //  activated(){
+  //     if(this.query != JSON.stringify(this.$route.query)){
+  //       this.query = JSON.stringify(this.$route.query);
+  //       if(window.plus){
+  //         //plus.navigator.setStatusBarBackground("#ffffff");
+  //         plus.navigator.setStatusBarStyle("dark")
+  //       }
+  //     }
+  // 	},
   computed:{
     account:{
     	get: function() {

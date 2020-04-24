@@ -52,51 +52,54 @@ export default {
   	//
   },
    mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-		
-	
-
-	// 
-	this.$router.currentRoute.query.components? this.backFN(): this.componentName = 'hospital_imageAbout'
-	this.$axios.post('/c2/hospital/item',qs.stringify({
-		itemId : this.$store.state.outpatient.login.hospitalId,
-	}))
-	.then(_d => {
-		this.hospitalImage = {
-			address : _d.data.data.address,
-			cover : _d.data.data.cover,
-			headmanName :_d.data.data.headmanName,
-			intro : _d.data.data.intro,
-			name : _d.data.data.name,
-			tel : _d.data.data.tel,
-		};
-		let imgUrl = '';
-		this.hospitalImage.cover? imgUrl = this.hospitalImage.cover : imgUrl = ''
-		// imgUrl = this.hospitalImage.cover;
-		// 
-		if(imgUrl != ''){
-			this.$refs.img.style['background-image']='url('+imgUrl+')';
-		}
-		// 
-	})
-	.catch((err)=>{
-		
-		//Dialog({ message: '加载失败!'});
-	})
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		// this.getData();
   },
-
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getData()
+		}
+    },
   methods: {
-	  //回退方法
+	getData(){
+		this.$router.currentRoute.query.components? this.backFN(): this.componentName = 'hospital_imageAbout'
+		this.$axios.post('/c2/hospital/item',qs.stringify({
+			itemId : this.$store.state.outpatient.login.hospitalId,
+		}))
+		.then(_d => {
+			this.hospitalImage = {
+				address : _d.data.data.address,
+				cover : _d.data.data.cover,
+				headmanName :_d.data.data.headmanName,
+				intro : _d.data.data.intro,
+				name : _d.data.data.name,
+				tel : _d.data.data.tel,
+			};
+			let imgUrl = '';
+			this.hospitalImage.cover? imgUrl = this.hospitalImage.cover : imgUrl = ''
+			// imgUrl = this.hospitalImage.cover;
+			// 
+			if(imgUrl != ''){
+				this.$refs.img.style['background-image']='url('+imgUrl+')';
+			}
+			// 
+		})
+		.catch((err)=>{
+			
+			//Dialog({ message: '加载失败!'});
+		})	
+	},
+	//回退方法
 	goBackFn(){
 		this.$router.back(-1)
-    // if(this.isLogin == 100){
-    //   this.$router.push({ name : 'hospital_clinic',query:{}});
-    // }else{
-    //   this.$router.push({ name : 'outpatient_hospital',query:{}});
-    // }
 	},
 	  // 组件切换
 	switchFn(data){

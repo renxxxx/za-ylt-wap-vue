@@ -139,17 +139,29 @@ export default {
 		//this.height = parseInt(topHeight.join())
 		//
 	},
-destroyed(){
-	  debugger
+	destroyed(){
 	  
-  }
-  , mounted() {
-		if(window.plus){
+	},
+	mounted() {
+		// if(window.plus){
+		// 		//plus.navigator.setStatusBarBackground("#ffffff");
+		// 		plus.navigator.setStatusBarStyle("dark")
+		// 	}
+		// this.getData();
+	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
 				plus.navigator.setStatusBarStyle("dark")
 			}
-
-		this.$axios.post('/c2/patient/item',qs.stringify({
+			this.getData();
+		}
+    },
+	methods: {
+		getData(){
+			this.$axios.post('/c2/patient/item',qs.stringify({
 			patientId : this.$route.query.patientId,
 		})).then(res =>{
 			this.detail = {
@@ -196,9 +208,7 @@ destroyed(){
 		}).catch(err =>{
 			
 		})
-	},
-	methods: {
-
+		},
 		enlargeFn(_value){
 			this.photoNum = _value;
 			

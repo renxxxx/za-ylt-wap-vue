@@ -1,5 +1,6 @@
 <template>
 	<div class="active">
+		<van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
@@ -16,8 +17,9 @@
 				<span>新建活动</span>
 			</div>
 		</router-link>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <van-swipe-cell v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" style="height:100%">
+	<topSolt style="height:calc(100% - .96rem)">
+      <van-swipe-cell slot="returnTopSolt" v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
         <van-cell :border="false" >
           <router-link :to="{path : '/operating/operating_activityDetails',query:{itemId:item.itemId,}}">
             <div class="activeList">
@@ -35,7 +37,9 @@
           </button>
         </template>
       </van-swipe-cell>
+	</topSolt>
     </van-list>
+	</van-pull-refresh>
 	</div>
 </template>
 
@@ -43,46 +47,76 @@
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'case',
 	data () {
 		return {
 			active:[],
-      loading: false,
-      finished: false,
-      page: 0,
+			loading: false,
+			finished: false,
+			page: 0,
+			pullingDown: false,
 		}
 	},
 	computed:{
 	  ...mapGetters(['account','isLogin']),
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 
 	},
  mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 		// this.getdata()
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData()
+		}
+  	},
 	methods: {
+		afterPullDown(){
+			setTimeout(() => {
+				this.pullingDown = false;
+				this.initData();
+			}, 500);
+		},
+		initData(){
+			 let thisVue = this;
+			console.log(this.$store.state.operating.login)
+			if(!this.$store.state.operating.login){
+				this.$toast('请登录')
+				let exit = setTimeout(()=>{
+					thisVue.$router.replace({path:"/operating/operatingLogin",query:{}})
+					clearTimeout(exit)
+				},1500)
+			}
+			Object.assign(this.$data, this.$options.data());
+			this.onLoad();
+		},
 		//回退方法
 		goBackFn(){
 			// this.$router.push({name:'hospital_clinic'})
 			this.$router.back(-1)
 		},
 		deleteActiviteFn(_item){
-      for(let i=0;i<this.active.length;i++){
-        if(this.active[i].itemId ==_item.itemId){
-          this.active.splice(i,1)
-          i--;
-        }
-      }
-      
+			for(let i=0;i<this.active.length;i++){
+				if(this.active[i].itemId ==_item.itemId){
+				this.active.splice(i,1)
+				i--;
+				}
+			}
 			this.$axios.post('/c2/activity/itemdel',qs.stringify({
 				itemId : _item.itemId,
 			}))
@@ -94,11 +128,11 @@ export default {
 				//Dialog({ message: '加载失败!'});
 			})
 		},
-    onLoad(){
-      ++this.page;
-      // 
-      this.getdata();
-    },
+		onLoad(){
+			++this.page;
+			// 
+			this.getdata();
+		},
 		getdata(){
 			this.$axios.post('/c2/activity/items',qs.stringify({
 				hospitalId: this.$route.query.hospitalId,

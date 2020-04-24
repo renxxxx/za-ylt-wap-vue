@@ -53,22 +53,39 @@ export default {
     this.caseInfo.alterTime = myDate.toLocaleDateString()
 		// 
 	},
- mounted(){
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-		// 
-		let postUrl = '';
-		if(this.$route.query.data ==1){
-			let postUrl ='/c2/article/item';
-			this.getData(postUrl)
-		}else{
-			let postUrl ='/c2/project/item'
-			this.getData(postUrl)
-		}
+ 	mounted(){
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		// // 
+		// let postUrl = '';
+		// if(this.$route.query.data ==1){
+		// 	let postUrl ='/c2/article/item';
+		// 	this.getData(postUrl)
+		// }else{
+		// 	let postUrl ='/c2/project/item'
+		// 	this.getData(postUrl)
+		// }
 		// 
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			let postUrl = '';
+			if(this.$route.query.data ==1){
+				let postUrl ='/c2/article/item';
+				this.getData(postUrl)
+			}else{
+				let postUrl ='/c2/project/item'
+				this.getData(postUrl)
+			}	
+		}
+  	},
 	methods: {
 		share(){
 		 let shareUrl= location.href.replace('/hospital/hospital_caseDetails',"/sharePage")
