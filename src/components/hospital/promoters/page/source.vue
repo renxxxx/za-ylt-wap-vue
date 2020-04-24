@@ -1,5 +1,7 @@
 <template>
-	<div class="sourceManagement">
+	<div>
+	<topSolt>
+	<div class="sourceManagement" slot="returnTopSolt">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../../assets/image/shape@3x.png" alt="">
@@ -34,6 +36,7 @@
 					</div>
 					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="nextPageFn">
 						<ul class="list">
+							<!-- items -->
 							<li v-for="(item,inx) in  items" :key="inx">
 								<router-link :to="{path : '/promoters/promoters_detailsPage' ,query : {patientId : item.itemId,}}">
 									<div class="style">
@@ -111,12 +114,15 @@
 			</van-tabs>
 		</div>
 	</div>
+	</topSolt>
+</div>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../../function/topSolt.vue";
 export default {
 	name: '',
 	data () {
@@ -137,7 +143,7 @@ export default {
 	  ...mapGetters(['account'])
 	},
 	components:{
-
+		topSolt
 	},
 	created () {
 
@@ -145,18 +151,24 @@ export default {
 	mounted () {
 
 	},
-  activated(){
-    this.items = [];
-    this.yesItems = [];
-    this.noItems = [];
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			// this.initData();
+		}
+    },
+	activated(){
+		this.items = [];
+		this.yesItems = [];
+		this.noItems = [];
 
-    this.getAllNum();
-    // this.page++;
-    // this.getData('',this.page);
-    // this.getData(4,this.page);
-    // this.getData(1,this.page);
-    this.getData()
-  },
+		this.getAllNum();
+		this.getData()
+	},
 	methods: {
 		getAllNum() {
 			debugger

@@ -1,5 +1,6 @@
 <template>
-      <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
+    <topSolt>
+      <van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
           <div class="navWarp" :style="{'padding-top': $store.state.paddingTop}">
             <div class="navTitle">
               <!-- <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span> -->
@@ -50,7 +51,7 @@
                 </router-link>
               </li>
               <li @click="noLinkFn">
-                <router-link :to="{path : '/operating/',query:{hospitalId: this.$route.query.hospitalId,}}">
+                <router-link :to="{path : '',query:{hospitalId: this.$route.query.hospitalId,}}">
                   <img src="../../../assets/image/jiyinjiance@2x.png" alt />
                   <span>基因检测</span>
                 </router-link>
@@ -104,6 +105,7 @@
           </div>
           <div style="height: .55rem;"></div>
       </van-pull-refresh>
+    </topSolt>
       <!-- <bottomNav></bottomNav> -->
 </template>
 
@@ -112,8 +114,7 @@ import axios from "axios";
 import { mapActions, mapGetters } from "vuex";
 import qs from "qs";
 import { Dialog } from "vant";
-// import bottomNav from "./functionPage/bottomNav.vue";
-// import moment from 'moment'
+import topSolt from "../function/topSolt.vue";
 export default {
   name: "gene",
   data() {
@@ -127,7 +128,7 @@ export default {
     };
   },
   components: {
-    // bottomNav
+    topSolt
   },
   computed: {
     // ...mapGetters(["account", "isLogin"])
@@ -144,13 +145,23 @@ export default {
     
   },
   mounted() {
-    debugger
-    let thisVue = this;
-    if (window.plus) {
-      //plus.navigator.setStatusBarBackground("#ffffff");
-      plus.navigator.setStatusBarStyle("dark");
-    }
-    this.initData();
+    // debugger
+    // let thisVue = this;
+    // if (window.plus) {
+    //   //plus.navigator.setStatusBarBackground("#ffffff");
+    //   plus.navigator.setStatusBarStyle("dark");
+    // }
+    // this.initData();
+  },
+  activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData();
+		}
   },
   activated(){
   },

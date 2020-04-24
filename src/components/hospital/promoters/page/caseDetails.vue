@@ -1,22 +1,26 @@
 <template>
 	<div class="caseDetails" >
-		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
-			<img src="../../../../assets/image/shape@3x.png" alt="" @click="goBackFn"  id="navback">
-			<img src="../../../../assets/image/share@3x.png" @click="share" alt="">
-		</div>
-		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
-		<div class="banner" v-show="!!caseInfo.cover">
-			<img v-lazy="caseInfo.cover"  alt="">
-		</div>
-		<div class="content" >
-			<h3>{{caseInfo.name}}</h3>
-			<div class="headPortrait">
-				<img src="../../../../assets/image/logo@2x.png" alt="">
-				<span>{{caseInfo.hosptialName}}</span>
-				<span>{{moment(caseInfo.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
-			</div>
-			<p v-html="caseInfo.content"></p>
-		</div>
+		<topSolt>
+			<div slot="returnTopSolt">
+				<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+					<img src="../../../../assets/image/shape@3x.png" alt="" @click="goBackFn"  id="navback">
+					<img src="../../../../assets/image/share@3x.png" @click="share" alt="">
+				</div>
+				<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
+				<div class="banner" v-show="!!caseInfo.cover">
+					<img v-lazy="caseInfo.cover"  alt="">
+				</div>
+				<div class="content" >
+					<h3>{{caseInfo.name}}</h3>
+					<div class="headPortrait">
+						<img src="../../../../assets/image/logo@2x.png" alt="">
+						<span>{{caseInfo.hosptialName}}</span>
+						<span>{{moment(caseInfo.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
+					</div>
+					<p v-html="caseInfo.content"></p>
+				</div>
+			</div>								
+		</topSolt>
 	</div>
 </template>
 
@@ -25,6 +29,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import Dialog from 'vant';
+import topSolt from "../../function/topSolt.vue";
 export default {
 	name: 'caseDetails',
 	data () {
@@ -43,7 +48,7 @@ export default {
 		...mapGetters(['account']),
 	},
 	components:{
-
+		topSolt
 	},
 	beforeCreate(){
 
@@ -55,21 +60,38 @@ export default {
 		//
 	},
  mounted(){
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-		// 
-		let postUrl = '';
-		if(this.$route.query.data ==1){
-			let postUrl ='/c2/article/item';
-			this.getData(postUrl)
-		}else{
-			let postUrl ='/c2/project/item'
-			this.getData(postUrl)
-		}
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		// // 
+		// let postUrl = '';
+		// if(this.$route.query.data ==1){
+		// 	let postUrl ='/c2/article/item';
+		// 	this.getData(postUrl)
+		// }else{
+		// 	let postUrl ='/c2/project/item'
+		// 	this.getData(postUrl)
+		// }
 		// 
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			let postUrl = '';
+			if(this.$route.query.data ==1){
+				let postUrl ='/c2/article/item';
+				this.getData(postUrl)
+			}else{
+				let postUrl ='/c2/project/item'
+				this.getData(postUrl)
+			}
+		}
+    },
 	methods: {
 		share(){
 		 let shareUrl= location.href.replace('/promoters/promoters_caseDetails',"/sharePage")

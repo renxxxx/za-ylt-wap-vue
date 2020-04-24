@@ -2,7 +2,7 @@
     <div id="topSlot" ref="SlotNav">
         <slot name="returnTopSolt">
         </slot>
-        <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="hospitalReturnTopPage">
+        <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="outpatientReturnTopPage">
             <img src="../../../assets/image/returnTop.png" alt />
             <span>顶部</span>
         </div>
@@ -40,13 +40,13 @@ export default {
 		}
     },
     computed:{
-        hospitalReturnTopPage: {
+        outpatientReturnTopPage: {
             get: function() {
                 // 
-                return this.$store.state.hospitalReturnTopPage;
+                return this.$store.state.outpatientReturnTopPage;
             },
             set: function(newValue) {
-                this.$store.state.hospitalReturnTopPage = newValue;
+                this.$store.state.outpatientReturnTopPage = newValue;
            } 
         },
     },
@@ -54,7 +54,7 @@ export default {
     methods:{
         // 滑动一定距离出现返回顶部按钮
         handleScroll() {
-            console.log(document.getElementById("topSlot").getBoundingClientRect().height)
+            // console.log(document.getElementById("topSlot").getBoundingClientRect().height)
             // if(!this.$refs.SlotNav)
             //     return
             let scrollTop =
@@ -70,17 +70,17 @@ export default {
                 ((scrollTop + windowHeight) / this.$refs.SlotNav.scrollHeight) * 100
                 ) / 100;
             // 
-            // console.log(this.$refs.SlotNav.scrollTop);
-            // console.log(scrollTop)
+            console.log(this.$refs.SlotNav.scrollTop);
+            console.log(scrollTop)
             if (data && scrollTop > 800) {
-                this.hospitalReturnTopPage = true;
+                this.outpatientReturnTopPage = true;
                 this.$refs.returnTopRef.style.opacity = 1;
                 document.getElementById("returnHomePageId").style.bottom = '1.5rem';
             } else {
                 debugger
                 this.$refs.returnTopRef.style.opacity = 0;
                 document.getElementById("returnHomePageId").style.bottom = '1rem';
-                this.hospitalReturnTopPage = false;
+                this.outpatientReturnTopPage = false;
             }
         },
         returnTopFn() {
@@ -100,7 +100,7 @@ export default {
             }
             document.getElementById("returnHomePageId").style.bottom = '.6rem';
             this.$refs.returnTopRef.style.opacity = 0;
-            this.hospitalReturnTopPage = false;
+            this.outpatientReturnTopPage = false;
         },
 
     },

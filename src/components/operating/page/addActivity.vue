@@ -1,5 +1,6 @@
 <template>
-	<div class="addAcivity" >
+<topSolt>
+	<div class="addAcivity" slot="returnTopSolt">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="left" @click="goBackFn"  id="navback">
 				<span>取消</span>
@@ -46,12 +47,14 @@
 			/>
 		</van-popup>
 	</div>
+</topSolt>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'addAcivity',
 	data () {
@@ -82,7 +85,7 @@ export default {
 		},
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
@@ -90,11 +93,20 @@ export default {
 		// this.height = parseInt(topHeight.join())
 		// 
 	},
-  mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
 		}
+  	},
+  	mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 	},
 	methods: {
 		//回退方法

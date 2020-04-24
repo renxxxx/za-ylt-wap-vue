@@ -79,7 +79,7 @@ export default {
 				//plus.navigator.setStatusBarBackground("#ffffff");
 				plus.navigator.setStatusBarStyle("dark")
 			}
-			this.getdata()
+			this.getData()
 		}
 	},
   methods: {

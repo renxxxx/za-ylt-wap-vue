@@ -3,14 +3,14 @@
      <keep-alive>
     <router-view  class="appView"></router-view>
   </keep-alive>
-    <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-show="outpatientReturnHomePage">
+    <div class="returnHomePage" @click="returnHomePageFn" id="returnHomePageId"  ref="returnHomePageRef" v-show="outpatientReturnHomePage">
       <img src="../../assets/image/returnHome.png" alt />
       <span>首页</span>
     </div>
-    <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="outpatientReturnTopPage">
+    <!-- <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="outpatientReturnTopPage">
       <img src="../../assets/image/returnTop.png" alt />
       <span>顶部</span>
-    </div>
+    </div> -->
     <van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.paddingBottom}" v-if="bottomShow">
       <!-- <router-link :to="{path : '/outpatient/hospital_sourceManagement'}"> -->
     	<van-tabbar-item replace :to="{path : '/outpatient/outpatient_index',query:{transition:'def'}}">
@@ -18,7 +18,7 @@
     	    <img
     			slot="icon"
     			slot-scope="props"
-    			:src="props.active ? index.inactive : index.active "
+    			:src="props.active ? index.inactive : index.active "  
     	    />
     	</van-tabbar-item>
     	<van-tabbar-item replace :to="{path : '/outpatient/outpatient_hospital',query:{transition:'def'}}">
@@ -105,18 +105,18 @@ export default {
     // }
   // },
   mounted(){
-    window.addEventListener("scroll", this.handleScroll, true);
+    // window.addEventListener("scroll", this.handleScroll, true);
   },
   computed:{
-    outpatientReturnTopPage: {
-      get: function() {
-        // 
-        return this.$store.state.outpatientReturnTopPage;
-      },
-      set: function(newValue) {
-        this.$store.state.outpatientReturnTopPage = newValue;
-      }
-    },
+    // outpatientReturnTopPage: {
+    //   get: function() {
+    //     // 
+    //     return this.$store.state.outpatientReturnTopPage;
+    //   },
+    //   set: function(newValue) {
+    //     this.$store.state.outpatientReturnTopPage = newValue;
+    //   }
+    // },
     ...mapGetters(['bottomShow','outpatientReturnHomePage'])
   },
   methods:{
@@ -132,54 +132,54 @@ export default {
 			}
 		},
     // 滑动一定距离出现返回顶部按钮
-    handleScroll() {
-if(!this.$refs.outpatientRef)
-        return
-      let scrollTop =
-        this.$refs.outpatientRef.scrollTop ||
-        this.$refs.outpatientRef.pageYOffset;
-      let windowHeight =
-        document.documentElement.clientHeight || this.$refs.outpatientRef.clientHeight;
-      let data =
-        this.$refs.outpatientRef.scrollHeight >
-        (window.innerHeight || document.documentElement.clientHeight);
-      // 
-      let opacityValue =
-        Math.round(
-          ((scrollTop + windowHeight) / this.$refs.outpatientRef.scrollHeight) * 100
-        ) / 100;
-      // 
-      if (data && scrollTop > 800) {
-        this.outpatientReturnTopPage = true;
-        this.$refs.returnTopRef.style.opacity = 1;
-        this.$refs.returnHomePageRef.style.bottom = '1.5rem';
-      } else {
-        debugger
-        this.$refs.returnTopRef.style.opacity = 0;
-        this.$refs.returnHomePageRef.style.bottom = '1rem';
-        this.outpatientReturnTopPage = false;
-      }
-    },
+//     handleScroll() {
+// if(!this.$refs.outpatientRef)
+//         return
+//       let scrollTop =
+//         this.$refs.outpatientRef.scrollTop ||
+//         this.$refs.outpatientRef.pageYOffset;
+//       let windowHeight =
+//         document.documentElement.clientHeight || this.$refs.outpatientRef.clientHeight;
+//       let data =
+//         this.$refs.outpatientRef.scrollHeight >
+//         (window.innerHeight || document.documentElement.clientHeight);
+//       // 
+//       let opacityValue =
+//         Math.round(
+//           ((scrollTop + windowHeight) / this.$refs.outpatientRef.scrollHeight) * 100
+//         ) / 100;
+//       // 
+//       if (data && scrollTop > 800) {
+//         this.outpatientReturnTopPage = true;
+//         this.$refs.returnTopRef.style.opacity = 1;
+//         this.$refs.returnHomePageRef.style.bottom = '1.5rem';
+//       } else {
+//         debugger
+//         this.$refs.returnTopRef.style.opacity = 0;
+//         this.$refs.returnHomePageRef.style.bottom = '1rem';
+//         this.outpatientReturnTopPage = false;
+//       }
+//     },
     // 返回列表顶部按钮
-    returnTopFn() {
-      var scrollTop =
-        this.$refs.outpatientRef.scrollTop ||
-        this.$refs.outpatientRef.scrollTop ||
-        this.$refs.outpatientRef.pageYOffset;
-      let windowHeight =
-        document.documentElement.clientHeight || this.$refs.outpatientRef.clientHeight;
-      for (let i = 0; i < (scrollTop + windowHeight); i++) {
-        var clearReturn = setTimeout(() => {
-          this.$refs.outpatientRef.scrollTop--;
-          window.pageYOffset--;
-          this.$refs.outpatientRef.scroll--;
-          document.documentElement.scrollTop--;
-        }, 5);
-      }
-      this.$refs.returnHomePageRef.style.bottom = '.6rem';
-      this.$refs.returnTopRef.style.opacity = 0;
-      this.outpatientReturnTopPage = false;
-    },
+    // returnTopFn() {
+    //   var scrollTop =
+    //     this.$refs.outpatientRef.scrollTop ||
+    //     this.$refs.outpatientRef.scrollTop ||
+    //     this.$refs.outpatientRef.pageYOffset;
+    //   let windowHeight =
+    //     document.documentElement.clientHeight || this.$refs.outpatientRef.clientHeight;
+    //   for (let i = 0; i < (scrollTop + windowHeight); i++) {
+    //     var clearReturn = setTimeout(() => {
+    //       this.$refs.outpatientRef.scrollTop--;
+    //       window.pageYOffset--;
+    //       this.$refs.outpatientRef.scroll--;
+    //       document.documentElement.scrollTop--;
+    //     }, 5);
+    //   }
+    //   this.$refs.returnHomePageRef.style.bottom = '.6rem';
+    //   this.$refs.returnTopRef.style.opacity = 0;
+    //   this.outpatientReturnTopPage = false;
+    // },
     // 返回首页按钮触发事件
     returnHomePageFn(){
       this.$router.replace({name:'outpatient_index',query:{transition:'def'}});

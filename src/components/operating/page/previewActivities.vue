@@ -43,7 +43,7 @@ export default {
 	created () {
 		
 	},
- mounted() {
+ 	mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
@@ -51,6 +51,16 @@ export default {
 		this.activity = JSON.parse(this.$route.query.activity)
 		
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.activity = JSON.parse(this.$route.query.activity)
+		}
+ 	},
 	methods: {
 		//回退方法
 		goBackFn(){
@@ -72,10 +82,24 @@ export default {
 				endTime : this.activity.endTime? this.activity.endTime+(24*60*60*1000):this.activity.endTime,
 			}))
 			.then(res => {
-				res.data.codeMsg? this.$toast(res.data.codeMsg):this.$toast.success('操作成功')
-				
-				//window.location.href='#/hospital_activityReleased';
-				this.$router.go(-2)
+				if(res.data.codeMsg){
+					this.$toast(res.data.codeMsg)
+				}
+				if(res.data.code == 0){
+					this.$toast.success('操作成功')
+					console.log(this.$vnode.parent.componentInstance.cache)
+					let inx = []
+					for(let i  in  this.$vnode.parent.componentInstance.cache){
+						let a =/addAcivity/g.test(this.$vnode.parent.componentInstance.cache[i].tag)
+						if(a){inx.push(i)}
+					}
+					let  historyCache = this.$vnode.parent.componentInstance.cache;
+					for(let a=0;a<inx.length;a++){
+						console.log(inx[a])
+						delete historyCache[inx[a]]
+					}
+					this.$router.go(-2)
+				}
 			})
 			.catch((err)=>{
 				

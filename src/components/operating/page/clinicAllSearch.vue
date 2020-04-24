@@ -1,6 +1,7 @@
 <template>
 	<div class="index">
-		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
+		<topSolt>
+		<van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="topNav_search">
 				<div class="topNav_searchBack" @click="backFn">
@@ -21,7 +22,7 @@
 		</div>
 		<div style="width: 100%;height: 1rem;" :style="{'padding-top':$store.state.paddingTop}"></div>
 		<div class="content">
-			<ul>
+			<ul >
 				<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 					<li v-for="(items,inx) in content" :key="inx">
 						<router-link :to="{path : '/operating/operating_clinicDetails' ,query :  {clinicId : items.itemId,clinicName:items.name,}}">
@@ -69,6 +70,7 @@
 			</div>
 		</van-popup>
 		</van-pull-refresh>
+		</topSolt>
 	</div>
 </template>
 
@@ -77,8 +79,7 @@ import axios from "axios";
 import { mapActions, mapGetters } from "vuex";
 import qs from "qs";
 import { Dialog } from "vant";
-import clinicContent from '../function/clinic_content.vue'
-// import bottomNav from "./functionPage/bottomNav.vue";
+import topSolt from "../function/topSolt.vue";
 // import moment from 'moment'
 export default {
   name: "gene",
@@ -100,7 +101,7 @@ export default {
     };
   },
   components: {
-    clinicContent
+    topSolt
   },
   computed: {
     // ...mapGetters(["account", "isLogin"])
@@ -112,85 +113,40 @@ export default {
   created() {
 
   },
-  beforeRouteLeave(to, from, next) {
-	
-  let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-	
-	
-	if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-  
-		 
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-			}
-            this.$destroy();
-		}
-	next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-	  debugger;
-     next(vm => {
-       debugger
-	 document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
-  });
-  
-         let fromRoute =  JSON.stringify({path:from.path,name:from.name,query:from.query})
-         let lastRoute = localStorage.getItem('lastRoute')
-         
-         
-         if(fromRoute == lastRoute){
-          localStorage.removeItem('lastRoute')
-         }
-   
-
-  },
   beforeMount(){
     debugger
-    
+	this.getNextPage()
   },
-  mounted() {
-    debugger
-    let thisVue = this;
-    if (window.plus) {
-      //plus.navigator.setStatusBarBackground("#ffffff");
-      plus.navigator.setStatusBarStyle("dark");
-    }
-    
-    let lastRoute = localStorage.getItem('lastRoute')
-        if(lastRoute){
-          this.$router.push(JSON.parse(lastRoute));
-          return
-        }
-    this.initData();
-  },
-  activated(){
-  },
-  deactivated(){
-    debugger
+	mounted() {
+		// debugger
+		// let thisVue = this;
+		// if (window.plus) {
+		// //plus.navigator.setStatusBarBackground("#ffffff");
+		// plus.navigator.setStatusBarStyle("dark");
+		// }
+		
+		// let lastRoute = localStorage.getItem('lastRoute')
+		// 	if(lastRoute){
+		// 	this.$router.push(JSON.parse(lastRoute));
+		// 	return
+		// 	}
+		// this.initData();
+
+	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData();
+		}
+  	},
+	activated(){
+	},
+	deactivated(){
+		debugger
     },
   methods: {
 	backFn(){
@@ -323,7 +279,7 @@ this.scrollTop = scrollTop?scrollTop :0;
     initData() {
       let thisVue = this;
 	  console.log(this.$store.state.operating.login)
-      if(this.$route.meta.auth && !this.$store.state.operating.login)
+      if(!this.$store.state.operating.login)
       this.$toast({message:'请登录',onClose:function(){
         thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
       }})
@@ -440,7 +396,7 @@ position: relative;
 	width: 100%;
 	/* position: fixed; */
 	/* height: calc(100% - 2.5rem); */
-	height: 100%;
+	height: calc(100% - 1.03rem);
 	/* overflow: scroll; */
 }
 .content>span{

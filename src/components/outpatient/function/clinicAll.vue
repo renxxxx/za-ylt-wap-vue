@@ -53,14 +53,23 @@ export default {
 		debugger
 	},
   mounted() {
-	  debugger
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+	//   debugger
+	// 	if(window.plus){
+	// 		//plus.navigator.setStatusBarBackground("#ffffff");
+	// 		plus.navigator.setStatusBarStyle("dark")
+	// 	}
 		
 
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
+    },
 	methods:{
 		submitFn(_item,_button){
 			this.$axios.post('/c2/patient/confirmjiuzhen',qs.stringify({

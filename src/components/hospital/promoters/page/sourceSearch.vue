@@ -1,6 +1,8 @@
 <template>
-  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
-    <div class="_search" >
+<div>
+<topSolt>
+  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" slot="returnTopSolt">
+    <div class="_search"  >
       <div class="top_search" :style="{'padding-top':$store.state.paddingTop}">
         <div class="search_return">
           <a @click="goBackFn"  id="navback">
@@ -65,6 +67,7 @@
       </div>
 	  <van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="nextPageFn">
 	  	<ul class="list" :style="{'padding-top':$store.state.paddingTop}">
+			  <!--  -->
 	  		<li v-for="(item,inx) in  items" :key="inx">
 	  			<router-link :to="{path : '/promoters/details' ,query : {patientId : item.itemId,}}">
 	  				<div class="style">
@@ -86,7 +89,10 @@
 	  </van-list>
       <!-- <clinicAll ref="all" :list="list" :style="{'padding-top':$store.state.paddingTop}"></clinicAll> -->
     </div>
+	
   </van-pull-refresh>
+  </topSolt>
+</div>
 </template>
 
 <script>
@@ -95,7 +101,8 @@ import { mapActions, mapGetters } from "vuex";
 import qs from "qs";
 import { Dialog } from "vant";
 import moment from 'moment'
-import Vue from 'vue'
+import Vue from 'vue';
+import topSolt from "../../function/topSolt.vue";
 export default {
   name: "index_search",
   data() {
@@ -145,8 +152,7 @@ export default {
     },
   },
   components: {
-    // timeChoose,
-    // clinicAll
+    topSolt
   },
   created() {
     var heightRexg = /^[0-9]*/g;
@@ -155,13 +161,23 @@ export default {
   },
 
   mounted() {
-    if (window.plus) {
-      //plus.navigator.setStatusBarBackground("#ffffff");
-      plus.navigator.setStatusBarStyle("dark");
-    }
+    // if (window.plus) {
+    //   //plus.navigator.setStatusBarBackground("#ffffff");
+    //   plus.navigator.setStatusBarStyle("dark");
+    // }
 	// 
-    this.initData();
+    // this.initData();
   },
+  activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData();
+		}
+    },
   methods: {
     afterPullDown() {
       //下拉刷新

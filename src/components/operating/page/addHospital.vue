@@ -136,10 +136,19 @@ export default {
 		//
 	},
  
-  activated(){
-  },
-  mounted() {
+	activated(){
 	},
+	mounted() {
+	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
+  	},
 	methods: {
 		// 返回键
 		goBackFn(){
@@ -199,18 +208,19 @@ export default {
 			}))
 			.then(res => {
 				// 
-				res.data.codeMsg? Toast.fail(res.data.codeMsg) : this.successFn();
-
+				if(res.data.codeMsg)
+					Toast.fail(res.data.codeMsg)
+				if(res.data.code == 0){
+					Toast.success('操作成功');
+					Object.assign(this.$data, this.$options.data());
+					this.$router.back()
+				}
 			})
 			.catch((err)=>{
 				
 				//Dialog({ message: '加载失败!'});
 			})
 		},
-		successFn(){
-			Toast.success('操作成功');
-			this.$router.back(-1)
-		}
 	}
 }
 </script>

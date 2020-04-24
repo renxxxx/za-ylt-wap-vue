@@ -2,7 +2,7 @@
     <div id="topSlot" ref="SlotNav">
         <slot name="returnTopSolt">
         </slot>
-        <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="hospitalReturnTopPage">
+        <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="operatingReturnTopPage">
             <img src="../../../assets/image/returnTop.png" alt />
             <span>顶部</span>
         </div>
@@ -40,13 +40,13 @@ export default {
 		}
     },
     computed:{
-        hospitalReturnTopPage: {
+        operatingReturnTopPage: {
             get: function() {
                 // 
-                return this.$store.state.hospitalReturnTopPage;
+                return this.$store.state.operatingReturnTopPage;
             },
             set: function(newValue) {
-                this.$store.state.hospitalReturnTopPage = newValue;
+                this.$store.state.operatingReturnTopPage = newValue;
            } 
         },
     },
@@ -70,17 +70,18 @@ export default {
                 ((scrollTop + windowHeight) / this.$refs.SlotNav.scrollHeight) * 100
                 ) / 100;
             // 
-            // console.log(this.$refs.SlotNav.scrollTop);
-            // console.log(scrollTop)
+            console.log(this.$refs.SlotNav.scrollTop);
+            console.log(scrollTop)
             if (data && scrollTop > 800) {
-                this.hospitalReturnTopPage = true;
+                this.operatingReturnTopPage = true;
+                console.log(this.operatingReturnTopPage)
                 this.$refs.returnTopRef.style.opacity = 1;
                 document.getElementById("returnHomePageId").style.bottom = '1.5rem';
             } else {
                 debugger
                 this.$refs.returnTopRef.style.opacity = 0;
                 document.getElementById("returnHomePageId").style.bottom = '1rem';
-                this.hospitalReturnTopPage = false;
+                this.operatingReturnTopPage = false;
             }
         },
         returnTopFn() {

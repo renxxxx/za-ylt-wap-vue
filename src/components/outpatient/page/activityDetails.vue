@@ -76,38 +76,25 @@ export default {
 		//this.height = parseInt(topHeight.join())
 		//
 	},
+	
   mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-
-		this.$axios.post('/c2/activity/item',qs.stringify({
-			itemId : this.$route.query.itemId,
-		}))
-		.then(_d => {
-			this.active = _d.data.data
-			if(_d.data.data.startTime != '' && _d.data.data.endTime){
-				var moment = require('moment');
-				this.active.time = moment(_d.data.data.startTime).format('YYYY-MM-DD HH:mm') + ' - ' +moment(_d.data.data.endTime).format('YYYY-MM-DD HH:mm')
-				// 
-			}
-			this.$axios.get('/other/bigtxt/'+_d.data.data.contentBtId+'/'+_d.data.data.contentBtId)
-			.then(_d => {
-        _d.data = _d.data.replace(/(\r\n|\n|\r)/gm, "\n");
-				this.$set(this.active,'content',_d.data)
-				// 
-			})
-			.catch((err)=>{
-				
-				//Dialog({ message: err});;
-			})
-		})
-		.catch((err)=>{
-			
-			//Dialog({ message: err});;
-		})
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		// this.getData()
+		
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getData()
+		}
+    },
 	methods: {
 		share(){
 
@@ -121,7 +108,33 @@ export default {
 		goBackFn(){
 			this.$router.back(-1)
 		},
-
+		getData(){
+			this.$axios.post('/c2/activity/item',qs.stringify({
+				itemId : this.$route.query.itemId,
+			}))
+			.then(_d => {
+				this.active = _d.data.data
+				if(_d.data.data.startTime != '' && _d.data.data.endTime){
+					var moment = require('moment');
+					this.active.time = moment(_d.data.data.startTime).format('YYYY-MM-DD HH:mm') + ' - ' +moment(_d.data.data.endTime).format('YYYY-MM-DD HH:mm')
+					// 
+				}
+				this.$axios.get('/other/bigtxt/'+_d.data.data.contentBtId+'/'+_d.data.data.contentBtId)
+				.then(_d => {
+			_d.data = _d.data.replace(/(\r\n|\n|\r)/gm, "\n");
+					this.$set(this.active,'content',_d.data)
+					// 
+				})
+				.catch((err)=>{
+					
+					//Dialog({ message: err});;
+				})
+			})
+			.catch((err)=>{
+				
+				//Dialog({ message: err});;
+			})
+		}
 	},
 }
 </script>

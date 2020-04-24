@@ -47,10 +47,19 @@ export default {
 
   },
   mounted () {
-    if(window.plus){
-    	//plus.navigator.setStatusBarBackground("#ffffff");
-    	plus.navigator.setStatusBarStyle("dark")
-    }
+    // if(window.plus){
+    // 	//plus.navigator.setStatusBarBackground("#ffffff");
+    // 	plus.navigator.setStatusBarStyle("dark")
+    // }
+  },
+  activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
   },
   methods: {
     //回退方法

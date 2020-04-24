@@ -1,5 +1,5 @@
 <template>
-  <div :class="[childBottomShow? 'hospitalBottom':'']" ref="promotersRef">
+  <div :class="[childBottomShow? 'hospitalBottom':'']" ref="promotersRef" id=“promotersViews>
     <keep-alive>
       <router-view class="appView" id="promoters" />
     </keep-alive>
@@ -61,8 +61,7 @@ export default {
   }
   },
   props:['name'],
-  
-   created(){
+  created(){
   	var heightRexg = /^[0-9]*/g
   	var bottomHeight = this.$store.state.paddingBottom.match(heightRexg)
   	this.height = parseInt(bottomHeight.join())
@@ -77,7 +76,7 @@ export default {
 </script>
 
 <style>
-#hospital {
+#promotersViews {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -93,6 +92,7 @@ export default {
 .appView {
      /* position: absolute; */
      width: 100%;
+     height: 100%;
      /* background: #fff; */
      min-height: 100vh;
      transition: transform 0.24s ease-out;

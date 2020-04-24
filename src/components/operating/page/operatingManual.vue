@@ -1,5 +1,6 @@
 <template>
-	<div class="operatingManual">
+
+	<div class="operatingManual" >
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="" id="navback" >
@@ -8,14 +9,15 @@
 				<h3>运营成功手册架构</h3>
 			</div>
 			<div class="right">
-				<router-link :to="{name:'hospital_operatingDate'}">
+				<router-link :to="{path:'/operating/operating_operatingDate'}">
 				  <img src="../../../assets/image/jilu@2x.png" alt="" :style="{'padding-top':$store.state.paddingTop}">
 				</router-link>
 			</div>
 		</div>
     <div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
-    <div style="margin-top: .2rem;">
-      <div v-for="(item,inx) in operatingManual" :key="inx">
+    <div style="margin-top: .2rem; height:calc(100% - .67rem">
+      <topSolt>
+      <div v-for="(item,inx) in operatingManual" :key="inx" slot="returnTopSolt">
         <router-link :to="{path : '/operating/operating_operatingManualList',query:{name:item.name,operatingManualId:item.operatingManualId,}}">
           <van-cell is-link>
             <!-- 使用 title 插槽来自定义标题 -->
@@ -25,7 +27,7 @@
           </van-cell>
         </router-link>
       </div>
-
+      </topSolt>
     </div>
 
     <!-- <van-collapse v-model="activeNames"> -->
@@ -46,6 +48,7 @@
        </van-collapse-item> -->
     <!-- </van-collapse> -->
   </div>
+
 </template>
 
 <script>
@@ -53,6 +56,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import { Dialog } from 'vant'
+import topSolt from "../function/topSolt.vue";
 export default {
   name: 'operatingManual',
   data () {
@@ -66,56 +70,28 @@ export default {
   computed:{
 
   },
-  beforeRouteLeave(to, from, next) {
-    //debugger;
-  let scrollTop = this.scrollTop =document.getElementById('operating').scrollTop;
-this.scrollTop = scrollTop?scrollTop :0;
-
-  if(!to.query.time || !from.query.time || to.query.time < from.query.time){
-  	 debugger
-            if (this.$vnode && this.$vnode.data.keepAlive)
-            {
-                if (this.$vnode.parent && this.$vnode.parent.componentInstance && this.$vnode.parent.componentInstance.cache)
-                {
-                    if (this.$vnode.componentOptions)
-                    {
-                        var key = this.$vnode.key == null
-                                    ? this.$vnode.componentOptions.Ctor.cid + (this.$vnode.componentOptions.tag ? `::${this.$vnode.componentOptions.tag}` : '')
-                                    : this.$vnode.key;
-                        var cache = this.$vnode.parent.componentInstance.cache;
-                        var keys  = this.$vnode.parent.componentInstance.keys;
-                        if (cache[key])
-                        {
-                            if (keys.length) {
-                                var index = keys.indexOf(key);
-                                if (index > -1) {
-                                    keys.splice(index, 1);
-                                }
-                            }
-                            delete cache[key];
-                        }
-                    }
-                }
-  		}
-            this.$destroy();
-  	}
-  next();
-  },
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter(to, from, next) {
-      next(vm => {
-      document.getElementById('operating').scrollTop=document.getElementById('operating').pageYOffset=vm.scrollTop;
-    });
+  components: {
+    topSolt
   },
   created () {
 
   },
   mounted () {
-    if(window.plus){
-    	//plus.navigator.setStatusBarBackground("#ffffff");
-    	plus.navigator.setStatusBarStyle("dark")
-    }
-    this.getdata()
+    // if(window.plus){
+    // 	//plus.navigator.setStatusBarBackground("#ffffff");
+    // 	plus.navigator.setStatusBarStyle("dark")
+    // }
+    // this.getdata()
+  },
+  activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getdata();
+		}
   },
   methods: {
     //回退方法

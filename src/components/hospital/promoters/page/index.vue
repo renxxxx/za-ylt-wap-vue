@@ -1,108 +1,115 @@
 <template>
 	<div class="index" id="promotersIndex">
-		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
-			<h3>—&nbsp;&nbsp;推广人端&nbsp;&nbsp;—</h3>
-		</div>
-		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
-		<div class="typeNav">
-			<router-link :to="{path : '/promoters/promoters_clinicSearch',query:{}}">
-				<img src="../../../../assets/image/qudaomenzhen@2.png" alt="">
-			</router-link>
-			<router-link :to="{path : '/promoters/promoters_sourceManagement',query:{}}">
-				<img src="../../../../assets/image/bingyuanguanli@2.png" alt="">
-			</router-link>
-		</div>
-		<div class="article" v-if="article.length">
-		  <div class="articleTitle">
-		    <img src="../../../../assets/image/Combined Shape@2x.png" alt />
-		    <h3>运营文章</h3>
-			<div class="articleDetails">
-				<router-link
-				  :to="{path : '/promoters/promoters_case'}"
-				>
-				<span>查看更多</span>
-				<img src="../../../../assets/image/Chevron Copy 2@2x.png" alt="">
+		<topSolt>
+			<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" slot="returnTopSolt">
+				<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+					<h3>—&nbsp;&nbsp;推广人端&nbsp;&nbsp;—</h3>
+				</div>
+				<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
+				<div class="typeNav">
+					<router-link :to="{path : '/promoters/promoters_clinicSearch',query:{}}">
+						<img src="../../../../assets/image/qudaomenzhen@2.png" alt="">
+					</router-link>
+					<router-link :to="{path : '/promoters/promoters_sourceManagement',query:{}}">
+						<img src="../../../../assets/image/bingyuanguanli@2.png" alt="">
+					</router-link>
+				</div>
+				<div class="article" v-if="article.length">
+				<div class="articleTitle">
+					<img src="../../../../assets/image/Combined Shape@2x.png" alt />
+					<h3>运营文章</h3>
+					<div class="articleDetails">
+						<router-link
+						:to="{path : '/promoters/promoters_case'}"
+						>
+						<span>查看更多</span>
+						<img src="../../../../assets/image/Chevron Copy 2@2x.png" alt="">
+						</router-link>
+					</div>
+				</div>
+				<ul>
+					<li v-for="(items,inx) in article" :key="inx">
+						<router-link
+						:to="{path : '/promoters/promoters_caseDetails' ,query : {itemId : items.itemId,data: 1,}}"
+						>
+						<div class="article_left">
+							<p>{{items.content}}</p>
+							<div class="article_leftTime">
+							<img src="../../../../assets/image/time@2x.png" alt />
+							<span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
+							</div>
+						</div>
+						<div class="article_right">
+							<img :src="items.img" alt />
+						</div>
+						</router-link>
+					</li>
+				</ul>
+				</div>
+				<div class="article" v-if="qualityCase.length">
+				<div class="articleTitle">
+					<img src="../../../../assets/image/huodong@2x.png" alt />
+					<h3>推广活动</h3>
+					<div class="articleDetails">
+						<router-link :to="{path : '/promoters/promoters_activityReleased'}">
+						<span>查看更多</span>
+						<img src="../../../../assets/image/Chevron Copy 2@2x.png" alt="">
+						</router-link>
+					</div>
+				</div>
+				<div class="activeList">
+				<router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:qualityCase[0].itemId,}}">
+				<img :src="qualityCase[0].img" alt="">
+				<div class="activeTitle">
+					<h4>{{qualityCase[0].content}}</h4>
+					<span>{{moment(qualityCase[0].time).format('YYYY-MM-DD HH:mm')}}</span>
+				</div>
 				</router-link>
-			</div>
-		  </div>
-		  <ul>
-		      <li v-for="(items,inx) in article" :key="inx">
-		        <router-link
-		          :to="{path : '/promoters/promoters_caseDetails' ,query : {itemId : items.itemId,data: 1,}}"
-		        >
-		          <div class="article_left">
-		            <p>{{items.content}}</p>
-		            <div class="article_leftTime">
-		              <img src="../../../../assets/image/time@2x.png" alt />
-		              <span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
-		            </div>
-		          </div>
-		          <div class="article_right">
-		            <img :src="items.img" alt />
-		          </div>
-		        </router-link>
-		      </li>
-		  </ul>
-		</div>
-		<div class="article" v-if="qualityCase.length">
-		  <div class="articleTitle">
-		    <img src="../../../../assets/image/huodong@2x.png" alt />
-		    <h3>推广活动</h3>
-			<div class="articleDetails">
-				<router-link :to="{path : '/promoters/promoters_activityReleased'}">
-				<span>查看更多</span>
-				<img src="../../../../assets/image/Chevron Copy 2@2x.png" alt="">
-				</router-link>
-			</div>
-		  </div>
-		  <div class="activeList">
-        <router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:qualityCase[0].itemId,}}">
-          <img :src="qualityCase[0].img" alt="">
-          <div class="activeTitle">
-            <h4>{{qualityCase[0].content}}</h4>
-            <span>{{moment(qualityCase[0].time).format('YYYY-MM-DD HH:mm')}}</span>
-          </div>
-        </router-link>
-		  </div>
-		  <ul style="">
-		      <li v-for="(items,num) in qualityCase" :key="num">
-		        <router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:items.itemId,}}">
-		          <div class="article_left">
-		            <p>{{items.content}}</p>
-		            <div class="article_leftTime">
-		              <img src="../../../../assets/image/time@2x.png" alt />
-		              <span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
-		            </div>
-		          </div>
-		          <div class="article_right">
-		            <img :src="items.img" alt />
-		          </div>
-		        </router-link>
-		      </li>
-		  </ul>
-		</div>
-		<div style="height: .5rem;"></div>
+				</div>
+				<ul style="">
+					<li v-for="(items,num) in qualityCase" :key="num">
+						<router-link :to="{path : '/promoters/promoters_activityDetails',query:{itemId:items.itemId,}}">
+						<div class="article_left">
+							<p>{{items.content}}</p>
+							<div class="article_leftTime">
+							<img src="../../../../assets/image/time@2x.png" alt />
+							<span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
+							</div>
+						</div>
+						<div class="article_right">
+							<img :src="items.img" alt />
+						</div>
+						</router-link>
+					</li>
+				</ul>
+				</div>
+				<div style="height: .5rem;"></div>
+			</van-pull-refresh>
+		</topSolt>
 	</div>
+
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../../function/topSolt.vue";
 
 export default {
 	name: 'index',
 	data () {
 		return {
 			article: [],
-			qualityCase : []
+			qualityCase : [],
+			pullingDown: false,
 		}
 	},
 	computed:{
 	  ...mapGetters(["account"])
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 
@@ -111,12 +118,27 @@ export default {
 		// 
 	},
 	mounted () {
-		
-		
-		this.initData();
-
+		// this.initData();
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData();
+		}
+    },
 	methods: {
+		afterPullDown() {
+			//下拉刷新
+			setTimeout(() => {
+				this.pullingDown = false;
+				this.initData();
+				
+			}, 500);
+		},
 		initData(_data) {
 			let thisVue=this;
 			if(this.$route.meta.auth && !this.$store.state.hospital.login)

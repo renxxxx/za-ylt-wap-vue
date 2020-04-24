@@ -1,5 +1,6 @@
 <template>
-	<div class="gene" :style="{'padding-top':$store.state.paddingTop}">
+<topSolt>
+	<div slot="returnTopSolt" class="gene" :style="{'padding-top':$store.state.paddingTop}">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="nav_left">
 				<img src="../../../assets/image/scanning@2x.png" alt="">
@@ -76,13 +77,16 @@
 				</li>
 			</ul>
 		</div>
+		<div style="height:.6rem"></div>
 	</div>
+</topSolt>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'gene',
 	data () {
@@ -97,6 +101,7 @@ export default {
 		}
 	},
 	components:{
+		topSolt
 	},
 	computed:{
 
@@ -107,14 +112,23 @@ export default {
 		//this.height = parseInt(topHeight.join())
 		//
 	},
- mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-
-	this.initData()
+	mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		// this.initData()
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData()
+		}
+    },
 	methods: {
 		initData(){
 				let thisVue = this

@@ -1,53 +1,57 @@
 <template>
 	<div class="search_clinic">
-		<div class="navWarp" :style="{'padding-top':$store.state.paddingTop}">
-			<div class="topNav">
-				<div class="clinic_information" @click="goBackFn"  id="navback">
-					<img src="../../../../assets/image/shape@3x.png" alt="">
+		<topSolt>
+			<van-pull-refresh v-model="pullingDown" slot="returnTopSolt" @refresh="afterPullDown">
+				<div class="navWarp" :style="{'padding-top':$store.state.paddingTop}">
+					<div class="topNav">
+						<div class="clinic_information" @click="goBackFn"  id="navback">
+							<img src="../../../../assets/image/shape@3x.png" alt="">
+						</div>
+						<div class="clinic_search">
+							<input type="search" placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
+							<img src="../../../../assets/image/sousuo@2x.png" alt="">
+						</div>
+						<div class="clinic_buttton" @click="inputNow">
+							<button>搜索</button>
+						</div>
+					</div>
+					<div class="listTitle">
+						<div class="titleleft">
+							<h3>合作门诊 {{clinic.num}}</h3>
+						</div>
+						<div class="titleRight">
+							<router-link :to="{path : '/promoters/promoters_addClinic',query:{}}">
+								<span>新增</span>
+								<img src="../../../../assets/image/xinzeng@2x.png" alt="">
+							</router-link>
+						</div>
+					</div>
 				</div>
-				<div class="clinic_search">
-					<input type="search" placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
-					<img src="../../../../assets/image/sousuo@2x.png" alt="">
+				<div style="height: .98rem"  :style="{'padding-top':$store.state.paddingTop}"></div>
+				<div class="content">
+					<ul>
+						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
+							<li v-for="(items,inx) in content" :key="inx">
+								<router-link :to="{path : '/promoters/promoters_source' ,query :  {clinicId : items.hospitalClinicId,clinicName:items.name,clinicTime:items.alterTime}}">
+									<div class="contentLi">
+										<h4>{{items.name}}</h4>
+										<span>推广人: {{items.hospitalUserName}}</span>
+										<input type="text" v-model="items.patientCount" readonly="readonly">
+									</div>	
+								</router-link>
+							</li>
+						</van-list>
+					</ul>
 				</div>
-				<div class="clinic_buttton" @click="inputNow">
-					<button>搜索</button>
-				</div>
-			</div>
-			<div class="listTitle">
-				<div class="titleleft">
-					<h3>合作门诊 {{clinic.num}}</h3>
-				</div>
-				<div class="titleRight">
-					<router-link :to="{path : '/promoters/promoters_addClinic',query:{}}">
-						<span>新增</span>
-						<img src="../../../../assets/image/xinzeng@2x.png" alt="">
-					</router-link>
-				</div>
-			</div>
-		</div>
-    <div style="height: .98rem"  :style="{'padding-top':$store.state.paddingTop}"></div>
-		<div class="content">
-			<ul>
-				<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
-					<li v-for="(items,inx) in content" :key="inx">
-						<router-link :to="{path : '/promoters/promoters_source' ,query :  {clinicId : items.hospitalClinicId,clinicName:items.name,clinicTime:items.alterTime}}">
-							<div class="contentLi">
-								<h4>{{items.name}}</h4>
-								<span>推广人: {{items.hospitalUserName}}</span>
-								<input type="text" v-model="items.patientCount" readonly="readonly">
-							</div>
-						</router-link>
-					</li>
-				</van-list>
-			</ul>
-		</div>
-
+			</van-pull-refresh>
+		</topSolt>
 	</div>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
+import topSolt from "../../function/topSolt.vue";
 import qs from 'qs';
 export default {
 	name: 'search',
@@ -60,13 +64,15 @@ export default {
 			},
 			loading: false,
 			finished: false,
-			page:0
+			page:0,
+			pullingDown: false,
 		}
 	},
 	computed:{
 		...mapGetters(['account'])
 	},
 	components:{
+		topSolt
 	},
 	created(){
 		var heightRexg = /^[0-9]*/g
@@ -74,14 +80,31 @@ export default {
 		//this.height = parseInt(topHeight.join())
 		//
 	},
- mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		};
-		this.initData()
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData();
+		}
+    },
+ 	mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// };
+		// this.initData()
 	},
 	methods: {
+		afterPullDown() {
+			//下拉刷新
+			setTimeout(() => {
+				this.pullingDown = false;
+				this.initData();
+			}, 500);
+		},
 		goBackFn(){
 			this.$router.back(-1)
 		},
@@ -89,23 +112,24 @@ export default {
 			debugger
 		  Object.assign(this.$data, this.$options.data());
 		  // this.$refs.clinic.initData();
-		  this.$axios.get('/hospital/operator/hospital-clinics-sum?')
-		  .then(res => {
-		  	this.clinic.num = res.data.data.rowCount;
-		  })
-		  .catch((err)=>{
-		  	
-		  })
-		  this.getNextPage();
+		 	this.getSum();
+		 	this.getNextPage();
 		},
 		getNextPage(){
 			this.page++
 			this.getdata();
 		},
+		getSum(){
+			this.$axios.get('/hospital/operator/hospital-clinics-sum?')
+			.then(res => {
+				this.clinic.num = res.data.data.rowCount;
+			})
+			.catch((err)=>{
+				
+			})
+		},
 		//获取数据
 		getdata(){
-			// 
-			debugger
 			this.$axios.get('/hospital/operator/hospital-clinics?'+qs.stringify({kw:this.keywords})+'&'+qs.stringify({pn:this.page})+'&'+qs.stringify({ps:10}))
 			.then(res => {
 				if(res.data.data.rows.length != 0){
@@ -241,7 +265,7 @@ export default {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin-top: .98rem!important;
+    /* margin-top: .98rem!important; */
 }
 .content{
     width: 100%;

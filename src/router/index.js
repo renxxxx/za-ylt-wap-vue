@@ -151,6 +151,9 @@ import operating_operatingManual from '@/components/operating/page/operatingManu
 import operating_operatingManualList from '@/components/operating/page/operatingManualList.vue'
 import operating_operatingManualListDetails from '@/components/operating/page/operatingManualListDetails.vue'
 import operating_operatingManualListTwo from '@/components/operating/page/operatingManualListTwo.vue'
+import operating_operatingDate from '@/components/operating/page/operatingDate.vue'
+
+
 import operating_clinicAllSearch from '@/components/operating/page/clinicAllSearch.vue'
 
 Vue.use(Router)
@@ -934,11 +937,11 @@ const router = new Router({
 			  meta: {auth:true},
 			},
 			{
-			  path: 'operating_operatingManualListTwo',
-			  name: 'operating_operatingManualListTwo',
-			  component: operating_operatingManualListTwo,
+			  path: 'operating_operatingDate',
+			  name: 'operating_operatingDate',
+			  component: operating_operatingDate,
 			  meta: {auth:true},
-			},
+      },
 			{
 			  path: 'operating_clinicAllSearch',
 			  name: 'operating_clinicAllSearch',
@@ -971,7 +974,7 @@ router.afterEach((to,from) => {
   // console.log('---------')
   // console.log(to.name)
 	// console.dir(to.query)
-  // debugger
+  debugger
   Store.state.bottomShow = !!to.meta.tabbar;
   Store.state.childBottomShow = !!to.meta.bottom;
   Store.state.hospitalReturnHomePage = !to.meta.indexHide

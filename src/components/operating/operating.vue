@@ -3,14 +3,14 @@
     <keep-alive>
     <router-view  class="appView"></router-view>
   </keep-alive>
-  <div class="returnHomePage" @click="returnHomePageFn" ref="returnHomePageRef" v-show="operatingReturnHomePage">
+  <div class="returnHomePage" @click="returnHomePageFn" id="returnHomePageId" ref="returnHomePageRef" v-show="operatingReturnHomePage">
     <img src="../../assets/image/returnHome.png" alt />
     <span>首页</span>
   </div>
-  <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="operatingReturnTopPage">
+  <!-- <div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="operatingReturnTopPage">
     <img src="../../assets/image/returnTop.png" alt />
     <span>顶部</span>
-  </div>
+  </div> -->
   <van-tabbar v-model="active" route :style="{'padding-bottom':$store.state.paddingBottom}" v-if="bottomShow">
   	<van-tabbar-item replace :to="{path : '/operating/operating_index',query:{transition:'def'}}">
   	    <span>医院</span>
@@ -68,15 +68,15 @@ export default {
   props:['name'],
  
   computed:{
-    operatingReturnTopPage: {
-      get: function() {
-        // 
-        return this.$store.state.operatingReturnTopPage;
-      },
-      set: function(newValue) {
-        this.$store.state.operatingReturnTopPage = newValue;
-      }
-    },
+    // operatingReturnTopPage: {
+    //   get: function() {
+    //     // 
+    //     return this.$store.state.operatingReturnTopPage;
+    //   },
+    //   set: function(newValue) {
+    //     this.$store.state.operatingReturnTopPage = newValue;
+    //   }
+    // },
     ...mapGetters(['bottomShow','operatingReturnHomePage'])
   },
   created(){
@@ -114,55 +114,55 @@ export default {
 			}
 		},
     // 滑动一定距离出现返回顶部按钮
-    handleScroll() {
-      if(!this.$refs.operatingRef)
-        return
-      let scrollTop =
-        this.$refs.operatingRef.scrollTop ||
-        this.$refs.operatingRef.pageYOffset;
-      let windowHeight =
-        document.documentElement.clientHeight || this.$refs.operatingRef.clientHeight;
-      let data =
-        this.$refs.operatingRef.scrollHeight >
-        (window.innerHeight || document.documentElement.clientHeight);
-      // 
-      let opacityValue =
-        Math.round(
-          ((scrollTop + windowHeight) / this.$refs.operatingRef.scrollHeight) * 100
-        ) / 100;
-      // 
-      if (data && scrollTop > 800) {
-        this.operatingReturnTopPage = true;
-        this.$refs.returnTopRef.style.opacity = 1;
-        this.$refs.returnHomePageRef.style.bottom = '1.5rem';
-      } else {
-        debugger
-        this.$refs.returnTopRef.style.opacity = 0;
-        this.$refs.returnHomePageRef.style.bottom = '1rem';
-        this.operatingReturnTopPage = false;
-      }
-    },
+    // handleScroll() {
+    //   if(!this.$refs.operatingRef)
+    //     return
+    //   let scrollTop =
+    //     this.$refs.operatingRef.scrollTop ||
+    //     this.$refs.operatingRef.pageYOffset;
+    //   let windowHeight =
+    //     document.documentElement.clientHeight || this.$refs.operatingRef.clientHeight;
+    //   let data =
+    //     this.$refs.operatingRef.scrollHeight >
+    //     (window.innerHeight || document.documentElement.clientHeight);
+    //   // 
+    //   let opacityValue =
+    //     Math.round(
+    //       ((scrollTop + windowHeight) / this.$refs.operatingRef.scrollHeight) * 100
+    //     ) / 100;
+    //   // 
+    //   if (data && scrollTop > 800) {
+    //     this.operatingReturnTopPage = true;
+    //     this.$refs.returnTopRef.style.opacity = 1;
+    //     this.$refs.returnHomePageRef.style.bottom = '1.5rem';
+    //   } else {
+    //     debugger
+    //     this.$refs.returnTopRef.style.opacity = 0;
+    //     this.$refs.returnHomePageRef.style.bottom = '1rem';
+    //     this.operatingReturnTopPage = false;
+    //   }
+    // },
     // 返回列表顶部按钮
-    returnTopFn() {
-		debugger
-      var scrollTop =
-        this.$refs.operatingRef.scrollTop ||
-        this.$refs.operatingRef.scrollTop ||
-        this.$refs.operatingRef.pageYOffset;
-      let windowHeight =
-        document.documentElement.clientHeight || this.$refs.operatingRef.clientHeight;
-      for (let i = 0; i < (scrollTop + windowHeight); i++) {
-        var clearReturn = setTimeout(() => {
-          this.$refs.operatingRef.scrollTop--;
-          window.pageYOffset--;
-          this.$refs.operatingRef.scroll--;
-          document.documentElement.scrollTop--;
-        }, 5);
-      }
-      this.$refs.returnHomePageRef.style.bottom = '.6rem';
-      this.$refs.returnTopRef.style.opacity = 0;
-      this.operatingReturnTopPage = false;
-    },
+    // returnTopFn() {
+		// debugger
+    //   var scrollTop =
+    //     this.$refs.operatingRef.scrollTop ||
+    //     this.$refs.operatingRef.scrollTop ||
+    //     this.$refs.operatingRef.pageYOffset;
+    //   let windowHeight =
+    //     document.documentElement.clientHeight || this.$refs.operatingRef.clientHeight;
+    //   for (let i = 0; i < (scrollTop + windowHeight); i++) {
+    //     var clearReturn = setTimeout(() => {
+    //       this.$refs.operatingRef.scrollTop--;
+    //       window.pageYOffset--;
+    //       this.$refs.operatingRef.scroll--;
+    //       document.documentElement.scrollTop--;
+    //     }, 5);
+    //   }
+    //   this.$refs.returnHomePageRef.style.bottom = '.6rem';
+    //   this.$refs.returnTopRef.style.opacity = 0;
+    //   this.operatingReturnTopPage = false;
+    // },
     // 返回首页按钮触发事件
     returnHomePageFn(){
       this.$router.replace({path:'/operating/operating_index',query:{transition:'def'}});
@@ -176,10 +176,11 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100%;overflow-y: scroll;
-	touch-action: pan-y;
-	-webkit-overflow-scrolling: touch;
-  overflow: scroll;
+  height: 100%;
+  /* overflow-y: scroll; */
+	/* touch-action: pan-y; */
+	/* -webkit-overflow-scrolling: touch; */
+  overflow: hidden;
 
 }
 
@@ -187,6 +188,8 @@ export default {
      /* position: absolute; */
      width: 100%;
      background: #fff;
+     height: 100%;
+     max-height: 100vh;
      min-height: 100vh;
      transition: transform 0.24s ease-out;
  }

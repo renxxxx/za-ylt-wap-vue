@@ -123,11 +123,20 @@ export default {
 		//
 	},
  mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
+    },
 	methods: {
 		// 返回键
 		goBackFn(){
@@ -165,7 +174,6 @@ export default {
 		},
 		// 保存方法
 		saveFn(){
-			
 			this.$axios.post('/hospital/operator/hospital-clinic-add',qs.stringify({
 				hospitalClinicId : this.$store.state.hospital.login.hospital.hospitalId,
 				name :  this.addClinic.name,        //医院名称
@@ -182,10 +190,14 @@ export default {
 			}))
 			.then(res => {
 				if(res.data.codeMsg){
-					this.$toast(res.data.codeMsg)
-				}else{
-					this.$toast.success('操作成功');
-					this.$router.back(-1)
+					this.$toast.success(res.data.codeMsg)
+				}
+		 		if(res.data.code == 0){
+					let _this = this;
+					this.$toast({"message":'操作成功',onClose(){
+						Object.assign(_this.$data, _this.$options.data());
+						_this.$router.back()
+                    }})
 				}
 			})
 			.catch((err)=>{
@@ -246,7 +258,7 @@ export default {
 .rightNav img{
 	width: .14rem;
 	height: .15rem;
-	margin: 0rem .16rem 0rem .05rem;
+	margin: auto  .1rem auto .03rem;
 }
 .newAddTitle{
 	width: 91.4%;

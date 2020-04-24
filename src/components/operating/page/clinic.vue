@@ -1,71 +1,75 @@
 <template>
 	<div class="index">
-		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" ref="refersh" >
-		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
-			<div class="topNav_search">
-				<router-link :to="{path:'/operating/operating_clinicAllSearch'}">
-					<img src="../../../assets/image/sousuo@2x.png" alt="">
-					<input type="search">
-				</router-link>
-				<div class="shaixuan" @click="shaixuanFn">
-					<span>筛选</span>
-					<img src="../../../assets/image/shaixuan.svg" alt="">
-				</div>
-			</div>
-			<div class="topNav_Title">
-				<h4>合作门诊<span>{{clinicNum}}</span></h4>
-			</div>
-		</div>
-		<div style="width: 100%;height: 1rem;" :style="{'padding-top':$store.state.paddingTop}"></div>
-		<div class="content">
-			<ul>
-				<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
-					<li v-for="(items,inx) in content" :key="inx">
-						<router-link :to="{path : '/operating/operating_clinicDetails' ,query :  {clinicId : items.itemId,clinicName:items.name,}}">
-							<div class="contentLi">
-								<h4>{{items.name}}</h4>
-								<span>推广人: {{items.clinicPromoterName}}</span>
-								<input type="text" v-model="items.pushCount" readonly="readonly">
-							</div>
-						</router-link>
-					</li>
-				</van-list>
-			</ul>
-		</div>
-		<div style="height: .55rem;"></div>
-		<van-popup v-model="show" @close="closeTimeFn" position="right" :style="{ height: '100%',width:'78.7%'}">
-			<div id="indexLabel">
-				<!-- <div class="labelLabel xiaxian" >
-					<strong>显示</strong>
-					<button @click="clickFn('0')" :class="listStyleData[0]? 'clickColor':''">全部医院</button>
-					<button @click="clickFn('1')" :class="listStyleData[1]? 'clickColor':''">我的医院</button>
-				</div> -->
-				<div style="margin-top: .1rem;">
-					<div class="labelLabel" >
-						<strong>排序</strong>	
-						<button @click="clickFn('2')" :class="listStyleData[2]? 'clickColor':''">
-							门诊数量最多
-						</button>
-						<button @click="clickFn('3')" :class="listStyleData[3]? 'clickColor':''">
-							病源数量最多
-						</button>
-					</div>
-					<div class="labelLabel">
-						<button @click="clickFn('4')" :class="listStyleData[4]? 'clickColor':''">
-							创建时间最近
-						</button>
-						<button @click="clickFn('5')" :class="listStyleData[5]? 'clickColor':''">
-							医院名称A-Z
-						</button>
+		<topSolt>
+		<van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown" ref="refersh">
+			<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+				<div class="topNav_search">
+					<router-link :to="{path:'/operating/operating_clinicAllSearch'}">
+						<img src="../../../assets/image/sousuo@2x.png" alt="">
+						<input type="search">
+					</router-link>
+					<div class="shaixuan" @click="shaixuanFn">
+						<span>筛选</span>
+						<img src="../../../assets/image/shaixuan.svg" alt="">
 					</div>
 				</div>
-				<div class="LabelResult">
-					<button @click="screeningResult">重选</button>
-					<button @click="screeningSubmit">确定</button>
+				<div class="topNav_Title">
+					<h4>合作门诊<span>{{clinicNum}}</span></h4>
 				</div>
 			</div>
-		</van-popup>
+			<div style="width: 100%;height: 1rem;" :style="{'padding-top':$store.state.paddingTop}"></div>
+			<div class="content">
+				<!-- <topSolt style="height:calc(100% - 1rem)"> -->
+					<van-list v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
+						<ul >
+							<li v-for="(items,inx) in content" :key="inx">
+								<router-link :to="{path : '/operating/operating_clinicDetails' ,query :  {clinicId : items.itemId,clinicName:items.name,}}">
+									<div class="contentLi">
+										<h4>{{items.name}}</h4>
+										<span>推广人: {{items.clinicPromoterName}}</span>
+										<input type="text" v-model="items.pushCount" readonly="readonly">
+									</div>
+								</router-link>
+							</li>
+						</ul>
+					</van-list>
+				<!-- </topSolt> -->
+			</div>
+			<div style="height: .55rem;"></div>
+			<van-popup v-model="show" @close="closeTimeFn" position="right" :style="{ height: '100%',width:'78.7%'}">
+				<div id="indexLabel">
+					<!-- <div class="labelLabel xiaxian" >
+						<strong>显示</strong>
+						<button @click="clickFn('0')" :class="listStyleData[0]? 'clickColor':''">全部医院</button>
+						<button @click="clickFn('1')" :class="listStyleData[1]? 'clickColor':''">我的医院</button>
+					</div> -->
+					<div style="margin-top: .1rem;">
+						<div class="labelLabel" >
+							<strong>排序</strong>	
+							<button @click="clickFn('2')" :class="listStyleData[2]? 'clickColor':''">
+								门诊数量最多
+							</button>
+							<button @click="clickFn('3')" :class="listStyleData[3]? 'clickColor':''">
+								病源数量最多
+							</button>
+						</div>
+						<div class="labelLabel">
+							<button @click="clickFn('4')" :class="listStyleData[4]? 'clickColor':''">
+								创建时间最近
+							</button>
+							<button @click="clickFn('5')" :class="listStyleData[5]? 'clickColor':''">
+								医院名称A-Z
+							</button>
+						</div>
+					</div>
+					<div class="LabelResult">
+						<button @click="screeningResult">重选</button>
+						<button @click="screeningSubmit">确定</button>
+					</div>
+				</div>
+			</van-popup>
 		</van-pull-refresh>
+		</topSolt>
 	</div>
 </template>
 
@@ -74,8 +78,7 @@ import axios from "axios";
 import { mapActions, mapGetters } from "vuex";
 import qs from "qs";
 import { Dialog } from "vant";
-import clinicContent from '../function/clinic_content.vue'
-// import bottomNav from "./functionPage/bottomNav.vue";
+import topSolt from "../function/topSolt.vue";
 // import moment from 'moment'
 export default {
   name: "gene",
@@ -96,7 +99,7 @@ export default {
     };
   },
   components: {
-    clinicContent
+    topSolt
   },
   computed: {
     // ...mapGetters(["account", "isLogin"])
@@ -113,16 +116,26 @@ export default {
     
   },
   mounted() {
-    debugger
-    let thisVue = this;
-    if (window.plus) {
-      //plus.navigator.setStatusBarBackground("#ffffff");
-      plus.navigator.setStatusBarStyle("dark");
-    }
+    // debugger
+    // let thisVue = this;
+    // if (window.plus) {
+    //   //plus.navigator.setStatusBarBackground("#ffffff");
+    //   plus.navigator.setStatusBarStyle("dark");
+    // }
     
  
-    this.initData();
+    // this.getNextPage();
   },
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData();
+		}
+  	},
   activated(){
   },
   deactivated(){
@@ -266,6 +279,7 @@ export default {
 .index{
 	width: 100%;	
 	background-color: #F5F5F5;
+	height: 100%;
 }
 .topNav{
 	width: 100%;
@@ -482,5 +496,8 @@ export default {
 .clickColor{
 	color: #333333!important;
 	background-color: #FFE1BE!important;
+}
+>>>.van-pull-refresh__track{
+	/* height: 100%; */
 }
 </style>

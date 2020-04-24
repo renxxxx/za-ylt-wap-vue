@@ -1,5 +1,6 @@
 <template>
-	<div class="active">
+<topSolt>
+	<div class="active" slot="returnTopSolt">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
@@ -10,13 +11,14 @@
 			<div class="right"></div>
 		</div>
 		<div class="zhangwei"></div>
-		<router-link :to="{name:'outpatient_addActivity'}" v-show="isLogin== 100? true : false" >
+		<router-link :to="{name:'outpatient_addActivity'}">
 			<div class="addActive" :style="{'padding-top':$store.state.paddingTop}">
 				<span>+</span>
 				<span>新建活动</span>
 			</div>
 		</router-link>
 		<van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+			
 			<van-swipe-cell v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
 				<van-cell :border="false" >
 					<router-link :to="{path : '/outpatient/outpatient_activityDetails',query:{itemId:item.itemId,}}">
@@ -37,12 +39,14 @@
 			</van-swipe-cell>
 		</van-list>
 	</div>
+</topSolt>
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'case',
 	data () {
@@ -57,17 +61,26 @@ export default {
 	  ...mapGetters(['account','isLogin']),
 	},
 	components:{
-
+		topSolt
 	},
 	created(){
 
 	},
   mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
+    },
 	methods: {
 		//回退方法
 		goBackFn(){

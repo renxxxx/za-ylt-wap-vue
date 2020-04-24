@@ -67,43 +67,50 @@ export default {
   created () {
 		
   },
- mounted() {
-if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-	document.addEventListener('scroll',this.scrollToTop)
-	// window.addEventListener('scroll', 
-	this.$axios.post('/c/procurement/entpg')
-	.then(_d => {
-		for(let _i in  _d.data.data.ads){
-			this.images.push( _d.data.data.ads[_i].cover)
-			// 
-		}
-	})
-	.catch((err)=>{
+	mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		// document.addEventListener('scroll',this.scrollToTop)
+		// // window.addEventListener('scroll', 
+		// this.getData();
 		
-		//Dialog({ message: '加载失败!'});
-	})
-	
-	// this.navTopFn();
-  },
-  
+		// this.navTopFn();
+	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getData()
+		}
+  	},
   methods: {
 	//回退方法
 	goBackFn(){
 			 this.$router.back(-1)
 	},
 	scrollToTop (e) {
-		
- 
-	        // let _this = this
-	        // let read = _this.$el.querySelector('#topNav')
-	        
-			this.$refs.Box.scrollTop = 0 ;
-
-		  
-	  }
+	    // let _this = this
+	    // let read = _this.$el.querySelector('#topNav')
+		this.$refs.Box.scrollTop = 0 ;		  
+	},
+	getData(){
+		this.$axios.post('/c/procurement/entpg')
+		.then(_d => {
+			for(let _i in  _d.data.data.ads){
+				this.images.push( _d.data.data.ads[_i].cover)
+				// 
+			}
+		})
+		.catch((err)=>{
+			
+			//Dialog({ message: '加载失败!'});
+		})
+	}
   },
 }
 </script>

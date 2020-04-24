@@ -1,79 +1,81 @@
 <template>
-	<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
-		<div class="index">
-			<div class="navWarp">
-				<!-- 搜索及其筛选 -->
-				<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.paddingTop}">
-				<router-link :to="{name:'outpatient_pathogenicSearch',query:{focus : true,}}">
-					<div class="indexSearch clinicSearchStyle">
-						<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
-						<img src="../../../assets/image/sousuo@2x.png" alt="">
+	<div class="index">
+		<topSolt>
+			<van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown" >
+				<div class="navWarp">
+					<!-- 搜索及其筛选 -->
+					<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.paddingTop}">
+					<router-link :to="{name:'outpatient_pathogenicSearch',query:{focus : true,}}">
+						<div class="indexSearch clinicSearchStyle">
+							<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
+							<img src="../../../assets/image/sousuo@2x.png" alt="">
+						</div>
+					</router-link>
+					<router-link :to="{name:'outpatient_pathogenicSearch',query:{}}">
+					<div class="clinic_buttton">
+						<button>搜索</button>
 					</div>
-				</router-link>
-				<router-link :to="{name:'outpatient_pathogenicSearch',query:{}}">
-				  <div class="clinic_buttton">
-					<button>搜索</button>
-				  </div>
-				</router-link>
-				<router-link :to="{name:'outpatient_pathogenicSearch',query:{}}">
-				  <div class="indexScreening" @click="showPopup">
-					<span>筛选</span>
-					<img src="../../../assets/image/screen@2x.png" alt="加载中" >
-				  </div>
-				</router-link>
-				</div>
-				<!-- 就诊情况 -->
-				<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+32)+'px'}">
-					<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
-						<van-tab title="新增病员">
-							<div class="newAdd">
-								<div class="newAddTitle">
-									<img src="../../../assets/image/bitian@2x.png" alt="">
-									<h3>必填项</h3>
-									<ul class="Fill">
-										<li>
-											<span>病患姓名</span>
-											<input type="text" v-model="account.realname"  placeholder="请填写" >
-										</li>
-										<li>
-											<span>联系电话</span>
-											<input type="text" v-model="account.tel" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
-										</li>
-										<li>
-											<span>身份证号</span>
-											<input type="text" v-model="account.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')" placeholder="请填写">
-										</li>
-									</ul>
+					</router-link>
+					<router-link :to="{name:'outpatient_pathogenicSearch',query:{}}">
+					<div class="indexScreening" @click="showPopup">
+						<span>筛选</span>
+						<img src="../../../assets/image/screen@2x.png" alt="加载中" >
+					</div>
+					</router-link>
+					</div>
+					<!-- 就诊情况 -->
+					<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+32)+'px'}">
+						<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
+							<van-tab title="新增病员">
+								<div class="newAdd">
+									<div class="newAddTitle">
+										<img src="../../../assets/image/bitian@2x.png" alt="">
+										<h3>必填项</h3>
+										<ul class="Fill">
+											<li>
+												<span>病患姓名</span>
+												<input type="text" v-model="account.realname"  placeholder="请填写" >
+											</li>
+											<li>
+												<span>联系电话</span>
+												<input type="text" v-model="account.tel" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
+											</li>
+											<li>
+												<span>身份证号</span>
+												<input type="text" v-model="account.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')" placeholder="请填写">
+											</li>
+										</ul>
+									</div>
+									<div class="newAddTitle bottom">
+										<img src="../../../assets/image/bitian@2x.png" alt="">
+										<h3>选填项</h3>
+										<ul class="Fill">
+											<li>
+												<span>备注</span>
+												<input type="text" v-model="account.remark"  placeholder="请填写" >
+											</li>
+										</ul>
+									</div>
+									<button class="submitClass" @click="hospitalSubmit">提交</button>
 								</div>
-								<div class="newAddTitle bottom">
-									<img src="../../../assets/image/bitian@2x.png" alt="">
-									<h3>选填项</h3>
-									<ul class="Fill">
-										<li>
-											<span>备注</span>
-											<input type="text" v-model="account.remark"  placeholder="请填写" >
-										</li>
-									</ul>
-								</div>
-								<button class="submitClass" @click="hospitalSubmit">提交</button>
-							</div>
-						</van-tab>
-						<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
-							<keep-alive>
-								<clinicNo ref='no' :list = 'list'></clinicNo>
-							</keep-alive>
-						</van-tab>
-						<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
-							<keep-alive>
-								<clinicYes ref='yes' :list = 'list'></clinicYes>
-							</keep-alive>
-						</van-tab>
-					</van-tabs>
+							</van-tab>
+							<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
+								<keep-alive>
+									<clinicNo ref='no' :list = 'list'></clinicNo>
+								</keep-alive>
+							</van-tab>
+							<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
+								<keep-alive>
+									<clinicYes ref='yes' :list = 'list'></clinicYes>
+								</keep-alive>
+							</van-tab>
+						</van-tabs>
+					</div>
 				</div>
-			</div>
-			<!-- <router v-if="isLogin == 200? true:false"></router> -->
-		</div>
-	</van-pull-refresh>
+				<!-- <router v-if="isLogin == 200? true:false"></router> -->
+			</van-pull-refresh>
+		</topSolt>
+	</div>
 </template>
 <script>
 import axios from 'axios'
@@ -83,6 +85,7 @@ import { Dialog } from 'vant'
 import clinicAll from '../function/clinicAll.vue'
 import clinicYes from '../function/clinicYes.vue'
 import clinicNo from '../function/clinicNo.vue'
+import topSolt from "../function/topSolt.vue";
 // import router from '../../outpatient/functionPage/router.vue'
 export default {
   name: 'index',
@@ -121,19 +124,24 @@ export default {
  
   destroyed(){
   },
-  mounted(){
-	let thisVue =this
-    if(window.plus){
-    	//plus.navigator.setStatusBarBackground("#2B77EF");
-    	plus.navigator.setStatusBarStyle("dark")
-    }
-
-	
-	this.initData();
-  },
-  activated(){
-	  
-  },
+ 	 mounted(){
+	// let thisVue =this
+    // if(window.plus){
+    // 	//plus.navigator.setStatusBarBackground("#2B77EF");
+    // 	plus.navigator.setStatusBarStyle("dark")
+    // }
+	// this.initData();
+ 	 },
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData()
+		}
+    },
   computed:{
 		show: {
 			get: function() {
@@ -157,7 +165,7 @@ export default {
   },
   //注册组件
   components:{
-	  clinicAll,clinicYes,clinicNo
+	  clinicAll,clinicYes,clinicNo,topSolt
   },
   methods:{
 	 afterPullDown() {

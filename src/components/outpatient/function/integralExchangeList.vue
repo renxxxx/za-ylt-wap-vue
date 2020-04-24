@@ -1,4 +1,5 @@
 <template>
+<!-- <topSolt>  -->
 	<div class="productsExchange">
 		<div class="title" v-show="show? true : false">
 			<h3>热门兑换</h3>
@@ -6,27 +7,31 @@
 				<h3>更多</h3>
 			</router-link>
 		</div>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <ul>
-        <li v-for="(item,inx) in list" :key='inx'>
-          <router-link :to="{path : '/outpatient/outpatient_integralShop',query : {commodityId : item.commodityId,}}">
-            <div class="productsImg">
-              <img :src="item.cover" alt="">
-            </div>
-            <h4>{{item.name}}</h4>
-            <p><span>{{item.payExchangepoint}}</span> 积分</p>
-            <button>立即兑换</button>
-          </router-link>
-        </li>
-      </ul>
-    </van-list>
+	
+		<van-list  v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+		<ul>
+			<li v-for="(item,inx) in list" :key='inx'>
+			<router-link :to="{path : '/outpatient/outpatient_integralShop',query : {commodityId : item.commodityId,}}">
+				<div class="productsImg">
+				<img :src="item.cover" alt="">
+				</div>
+				<h4>{{item.name}}</h4>
+				<p><span>{{item.payExchangepoint}}</span> 积分</p>
+				<button>立即兑换</button>
+			</router-link>
+			</li>
+		</ul>
+		</van-list>
+
 	</div>
+<!-- </topSolt> -->
 </template>
 
 <script>
 import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
+import topSolt from "./topSolt.vue";
 export default {
 	name: 'integralExchangeList',
 	data () {
@@ -41,20 +46,29 @@ export default {
 		...mapGetters(['account'])
 	},
 	components:{
-
+		topSolt
 	},
 	created () {
 
 	},
 	props:['show'],
-  mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
+  	mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 
 
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
+    },
 	methods: {
     onLoad(){
       ++this.page;
@@ -95,6 +109,7 @@ export default {
 	width: 90.4%;
 	background-color: #FFFFFF;
 	padding: .12rem 4.8%;
+	height: calc(100% - 2.28rem);
 }
 .title h3{
 	color: #333333;

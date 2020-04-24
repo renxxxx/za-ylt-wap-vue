@@ -143,62 +143,77 @@ export default {
   destroyed(){
 	  
   },
-   mounted() {
-		if(window.plus){
+  activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
 				plus.navigator.setStatusBarStyle("dark")
 			}
+			this.getData();
+		}
+    },
+   mounted() {
+		// if(window.plus){
+		// 		//plus.navigator.setStatusBarBackground("#ffffff");
+		// 		plus.navigator.setStatusBarStyle("dark")
+		// 	}
 
-		this.$axios.post('/c2/patient/item',qs.stringify({
-			patientId : this.$route.query.patientId,
-		})).then(res =>{
-			this.detail = {
-				realname : res.data.data.realname,			//病人姓名
-				clinicId : res.data.data.clinicId,		//门诊id
-				clinicName : res.data.data.clinicName,		//门诊名称
-				// hospitalConfirmTime : res.data.data.hospitalConfirmTime,//医院确诊时间
-				hospitalId	: res.data.data.hospitalId,	//医院id
-				hospitalName : res.data.data.hospitalName,	//医院名称
-				idcardNo : res.data.data.idcardNo,		//身份证号
-				invoices : res.data.data.invoices,		//发票
-				patientId :res.data.data.patientId,		//患者id
-				// pushTime : res.data.data.pushTime,		//推送时间
-				remark : res.data.data.remark,			//备注
-				tel : res.data.data.tel,			//电话号码
-				sickness: res.data.data.sickness	//病例
-			};
-			// 如果信息中有发票图片,就显示
-			// 
-			if(res.data.data.invoices){
-				res.data.data.invoices = res.data.data.invoices.split(",");
-				for (let i in res.data.data.invoices){
-					this.imgUrl.push( res.data.data.invoices[i]);
-				}
-				this.modify.data = true;
-				this.modify.value = '编辑';
-				this.modify.img = require('../../../../assets/image/editor.png');
-		  this.show = false;
-			}else{
-				this.modify.data = false;
-				this.imgUrl = [];
-		  this.show = false;
-			}
-			//判断时间是否为空
-			// 
-			if(res.data.data.hospitalConfirmTime){
-				// 
-				this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('YYYY-MM-DD HH:mm');
-			}
-			if(res.data.data.pushTime){
-		  // 
-				this.detail.pushTime = moment(res.data.data.pushTime).format('YYYY-MM-DD HH:mm');
-			}
-		}).catch(err =>{
-			
-		})
+		
 	},
 	methods: {
-
+		getData(){
+			this.$axios.post('/c2/patient/item',qs.stringify({
+				patientId : this.$route.query.patientId,
+			})).then(res =>{
+				this.detail = {
+					realname : res.data.data.realname,			//病人姓名
+					clinicId : res.data.data.clinicId,		//门诊id
+					clinicName : res.data.data.clinicName,		//门诊名称
+					// hospitalConfirmTime : res.data.data.hospitalConfirmTime,//医院确诊时间
+					hospitalId	: res.data.data.hospitalId,	//医院id
+					hospitalName : res.data.data.hospitalName,	//医院名称
+					idcardNo : res.data.data.idcardNo,		//身份证号
+					invoices : res.data.data.invoices,		//发票
+					patientId :res.data.data.patientId,		//患者id
+					// pushTime : res.data.data.pushTime,		//推送时间
+					remark : res.data.data.remark,			//备注
+					tel : res.data.data.tel,			//电话号码
+					sickness: res.data.data.sickness	//病例
+				};
+				// 如果信息中有发票图片,就显示
+				// 
+				if(res.data.data.invoices){
+					res.data.data.invoices = res.data.data.invoices.split(",");
+					for (let i in res.data.data.invoices){
+						this.imgUrl.push( res.data.data.invoices[i]);
+					}
+					this.modify.data = true;
+					this.modify.value = '编辑';
+					this.modify.img = require('../../../../assets/image/editor.png');
+			this.show = false;
+				}else{
+					this.modify.data = false;
+					this.imgUrl = [];
+			this.show = false;
+				}
+				//判断时间是否为空
+				// 
+				if(res.data.data.hospitalConfirmTime){
+					// 
+					this.detail.hospitalConfirmTime = moment(res.data.data.hospitalConfirmTime).format('YYYY-MM-DD HH:mm');
+				}
+				if(res.data.data.pushTime){
+			// 
+					this.detail.pushTime = moment(res.data.data.pushTime).format('YYYY-MM-DD HH:mm');
+				}
+			}).catch(err =>{
+				
+			})
+		},
+		initData(){
+			Object.assign(this.$data, this.$options.data());
+		},
 		enlargeFn(_value){
 			this.photoNum = _value;
 			

@@ -90,14 +90,22 @@ export default {
 
   },
   mounted() {
-	  if(window.plus){
-		//plus.navigator.setStatusBarBackground("#ffffff");
-		plus.navigator.setStatusBarStyle("dark")
-	  }
-
-
-		this.initData()
+	//   if(window.plus){
+	// 	//plus.navigator.setStatusBarBackground("#ffffff");
+	// 	plus.navigator.setStatusBarStyle("dark")
+	//   }
+	// this.initData()
   },
+  activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData()
+		}
+  	},
   methods: {
 	  initData(){
 		let thisVue = this
@@ -147,7 +155,8 @@ export default {
 			// localStorage.clear()
 			thisVue.$toast("操作成功")
 			setTimeout(()=>{
-				thisVue.$router.push({path:"/outpatientLogin",query:{}})
+				// thisVue.$router.push({path:"/outpatientLogin",query:{}})
+				location.href=location.pathname
 			},1500)
 		})
 	}

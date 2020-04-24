@@ -1,5 +1,6 @@
 <template>
-  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+<topSolt>
+  <van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown" >
     <div class="_search" >
       <div class="top_search" :style="{'padding-top':$store.state.paddingTop}">
         <div class="search_return">
@@ -87,6 +88,7 @@
       <!-- <clinicAll ref="all" :list="list" :style="{'padding-top':$store.state.paddingTop}"></clinicAll> -->
     </div>
   </van-pull-refresh>
+</topSolt>
 </template>
 
 <script>
@@ -95,7 +97,8 @@ import { mapActions, mapGetters } from "vuex";
 import qs from "qs";
 import { Dialog } from "vant";
 import moment from 'moment'
-import Vue from 'vue'
+import Vue from 'vue';
+import topSolt from "../function/topSolt.vue";
 export default {
   name: "index_search",
   data() {
@@ -166,19 +169,32 @@ export default {
 
   },
   components: {
-
+    topSolt
   },
   created() {
 
   },
   mounted() {
-    if (window.plus) {
-      plus.navigator.setStatusBarStyle("dark");
-    }
-    this.initData();
-    if(this.$route.query.show == 'false'){
-      this.hospitalReturnHomePage = false;
-    }
+    // if (window.plus) {
+    //   plus.navigator.setStatusBarStyle("dark");
+    // }
+    // this.initData();
+    // if(this.$route.query.show == 'false'){
+    //   this.hospitalReturnHomePage = false;
+    // }
+  },
+  activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData();
+      if(this.$route.query.show == 'false'){
+        this.hospitalReturnHomePage = false;
+      }
+		}
   },
   methods: {
     afterPullDown() {

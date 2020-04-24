@@ -79,14 +79,23 @@ export default {
 		//
 	},
 
-   mounted() {
+  	 mounted() {
 		// 加载dom节点后,获取推广人列表请求
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			// this.initData();
+		}
+    },
 	methods: {
 		submitFn(){
-			// 
-		this.$axios.post('/c2/patient/itemadd',qs.stringify({
-				hospitalId : this.$store.state.hospital.login.data.data.hospital.hospitalId,
+			this.$axios.post('/c2/patient/itemadd',qs.stringify({
+				hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
 				clinicId: this.$route.query.clinicId,
 		 		realname : this.source.name,
 		 		tel	:  this.source.tel,
@@ -94,12 +103,18 @@ export default {
 		 		remark : this.source.remark,
 		 	}))
 		 	.then( res =>{
-		 		if(!res.data.code){
-					this.$toast.success('操作成功')
-				}else{
-					if(res.data.codeMsg){
-						this.$toast(res.data.codeMsg)
-					}
+				if(res.data.codeMsg){
+					this.$toast.success(res.data.codeMsg)
+				}
+		 		if(res.data.code == 0){
+					let _this = this;
+					this.$toast({"message":'操作成功',onClose(){
+						Object.assign(_this.$data, _this.$options.data());
+						_this.$router.back()
+                    }})
+					// this.$toast.success('操作成功')
+					// Object.assign(this.$data, this.$options.data());
+					
 				}
 		 	})
 		 	.catch((err)=>{

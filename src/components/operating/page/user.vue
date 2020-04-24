@@ -66,18 +66,32 @@ export default {
 	},
 	created(){
 	},
-  mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-		if(this.$store.state.operating.login){
-			this.coverImg = this.$store.state.operating.login.cover
-			// this.images.push(this.$store.state.operating.login.hospital.license)
-		}
-		// 
-		this.initData();
+ 	mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		// if(this.$store.state.operating.login){
+		// 	this.coverImg = this.$store.state.operating.login.cover
+		// 	// this.images.push(this.$store.state.operating.login.hospital.license)
+		// }
+		// // 
+		// this.initData();
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			if(this.$store.state.operating.login){
+				this.coverImg = this.$store.state.operating.login.cover
+				// this.images.push(this.$store.state.operating.login.hospital.license)
+			}
+			this.initData();
+		}
+ 	},
 	methods: {
 		initData(){
 			let thisVue = this

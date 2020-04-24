@@ -28,28 +28,34 @@ import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs'
 import { Dialog } from 'vant'
 export default {
-  name: 'hospital_About',
-  data () {
-    return {
-    }
-  },
-  computed:{
+  	name: 'hospital_About',
+  	data () {
+   		return {
+   		}
+ 	},
+ 	computed:{
 	 // ...mapGetters([]),
 	
-  },
-  props:['hospitalImage'],
-  created () {
-		
-  },
-  mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
+ 	},
+ 	props:['hospitalImage'],
+ 	 created () {
+		  
+  	},
+  	mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+ 	 },
+  	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
 		}
-		
-
-  },
-  
+    },
   methods: {
 	  
   },

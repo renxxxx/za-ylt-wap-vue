@@ -1,5 +1,6 @@
 <template>
-<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+<topSolt>
+<van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown" >
   <div class="index">
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
@@ -49,6 +50,7 @@
 		<!-- <router v-if="isLogin == 200? true:false"></router> -->
   </div>
   </van-pull-refresh>
+  </topSolt>
 </template>
 <script>
 import axios from 'axios'
@@ -58,6 +60,7 @@ import { Dialog } from 'vant'
 import clinicAll from '../function/clinicAll.vue'
 import clinicYes from '../function/clinicYes.vue'
 import clinicNo from '../function/clinicNo.vue'
+import topSolt from "../function/topSolt.vue";
 // import router from '../../outpatient/functionPage/router.vue'
 export default {
   name: 'index',
@@ -93,14 +96,24 @@ export default {
 	  
   },
   mounted(){
-	  console.dir(this.$route.query)
-	  debugger
-    if(window.plus){
-    	//plus.navigator.setStatusBarBackground("#2B77EF");
-    	plus.navigator.setStatusBarStyle("dark")
-    }
-	this.getNum();
+	//   console.dir(this.$route.query)
+	//   debugger
+    // if(window.plus){
+    // 	//plus.navigator.setStatusBarBackground("#2B77EF");
+    // 	plus.navigator.setStatusBarStyle("dark")
+    // }
+	// this.getNum();
   },
+  activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.getNum();
+		}
+ 	},
   computed:{
 		show: {
 			get: function() {
@@ -134,7 +147,7 @@ export default {
   },
   //注册组件
   components:{
-	  clinicAll,clinicYes,clinicNo
+	  clinicAll,clinicYes,clinicNo,topSolt
   },
   methods:{
 	 afterPullDown() {

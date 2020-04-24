@@ -1,5 +1,6 @@
 <template>
-	<div class="ExchangeList">
+<topSolt>
+	<div slot="returnTopSolt" class="ExchangeList">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
@@ -11,6 +12,7 @@
 		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
 		<integralExchangeList></integralExchangeList>
 	</div>
+</topSolt>
 </template>
 
 <script>
@@ -18,6 +20,7 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import integralExchangeList from '../function/integralExchangeList.vue'
+import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'ExchangeList',
 	data () {
@@ -29,19 +32,26 @@ export default {
 
 	},
 	components:{
-		integralExchangeList
+		integralExchangeList,topSolt
 	},
 	created(){
 
 	},
-  mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-
-
+ 	mounted() {
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+		}
+    },
 	methods: {
 		goBackFn(){
 			this.$router.back(-1);

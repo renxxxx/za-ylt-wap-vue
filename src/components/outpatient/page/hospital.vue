@@ -100,13 +100,23 @@ export default {
   created () {
 
   },
- mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
+ 	mounted() {
+	// 	if(window.plus){
+	// 		//plus.navigator.setStatusBarBackground("#ffffff");
+	// 		plus.navigator.setStatusBarStyle("dark")
+	// 	}
+	// this.initData()
+ 	 },
+  activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.initData()
 		}
-	this.initData()
-  },
+    },
   methods: {
 	  initData(_data){
 		 	let thisVue = this

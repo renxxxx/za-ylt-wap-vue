@@ -161,7 +161,6 @@ if (window.plus) {
 } else {
 	document.addEventListener('plusready', plusReady, false);
 }
-
 Vue.directive('focus', {
 	// 当被绑定的元素插入到 DOM 中时……
 	inserted: function(el, attr) {

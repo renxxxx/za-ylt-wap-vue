@@ -44,13 +44,23 @@ export default {
 		
 	},
   	mounted() {
-		if(window.plus){
-			//plus.navigator.setStatusBarBackground("#ffffff");
-			plus.navigator.setStatusBarStyle("dark")
-		}
-		this.activity = JSON.parse(this.$route.query.activity)
+		// if(window.plus){
+		// 	//plus.navigator.setStatusBarBackground("#ffffff");
+		// 	plus.navigator.setStatusBarStyle("dark")
+		// }
+		// this.activity = JSON.parse(this.$route.query.activity)
 		
 	},
+	activated(){
+		if(this.query != JSON.stringify(this.$route.query)){
+			this.query = JSON.stringify(this.$route.query);
+			if(window.plus){
+				//plus.navigator.setStatusBarBackground("#ffffff");
+				plus.navigator.setStatusBarStyle("dark")
+			}
+			this.activity = JSON.parse(this.$route.query.activity)
+		}
+  	},
 	methods: {
 		//回退方法
 		goBackFn(){
