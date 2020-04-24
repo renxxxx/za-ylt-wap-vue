@@ -207,6 +207,7 @@ export default {
     },
     initData() {
       Object.assign(this.$data, this.$options.data());
+      this.nextPageFn()
     },
     //显示筛选弹窗
     showPopup() {

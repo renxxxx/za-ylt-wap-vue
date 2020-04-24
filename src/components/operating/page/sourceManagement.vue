@@ -112,6 +112,7 @@ export default {
 				plus.navigator.setStatusBarStyle("dark")
 			}
 			this.getNum();
+			this.initData();
 		}
  	},
   computed:{
