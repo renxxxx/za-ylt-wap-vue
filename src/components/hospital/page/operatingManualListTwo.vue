@@ -75,7 +75,8 @@ export default {
 			if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
 				plus.navigator.setStatusBarStyle("dark")
-			}
+      }
+      Object.assign(this.$data, this.$options.data());
 			this.getData()
 		}
 	},

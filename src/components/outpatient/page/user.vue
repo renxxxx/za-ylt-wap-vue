@@ -197,7 +197,7 @@ export default {
 	width: 24%;
 	float:left;
 	height: .8rem;
-	margin:.23rem .29rem .15rem .28rem;
+	margin:.23rem 7.7% .15rem 7.4%;
 }
 .top_left img{
 	width: .75rem;
@@ -247,7 +247,7 @@ export default {
 .top_right{
 	/* width: 13%; */
 	float:left;
-	margin: .53rem .25rem .44rem 0rem;
+	margin: .53rem 0rem .44rem 0rem;
 	color: #999999;
 	position: relative;
 }

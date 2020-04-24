@@ -626,6 +626,7 @@ export default {
 	height: 100%;
 	width: 100%;
 	position: relative;
+	overflow: hidden;
 }
 .modify h4{
 	font-size: .15rem;
@@ -666,11 +667,11 @@ export default {
 	border: none;
 	border-radius: .2rem;
 	background-color: #2B77EF;
-	position: absolute;
-	bottom: 7%;
-	left: 0;
-	right: 0;
-	margin: 0rem auto;
+	/* position: absolute; */
+	/* bottom: 7%; */
+	/* left: 0; */
+	/* right: 0; */
+	margin: .3rem 9.165% .25rem;
 	font-size: .14rem;
 }
 .van-dialog__content>h4{

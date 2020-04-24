@@ -942,6 +942,13 @@ const router = new Router({
 			  component: operating_operatingDate,
 			  meta: {auth:true},
       },
+      {
+			  path: 'operating_operatingManualListTwo',
+			  name: 'operating_operatingManualListTwo',
+			  component: operating_operatingManualListTwo,
+			  meta: {auth:true},
+      },
+      
 			{
 			  path: 'operating_clinicAllSearch',
 			  name: 'operating_clinicAllSearch',

@@ -195,7 +195,7 @@ export default {
 	width: 24%;
 	float:left;
 	height: .8rem;
-	margin:.23rem .29rem .15rem .28rem;
+	margin:.23rem 7.7% .15rem 7.4%;
 }
 .top_left img{
 	width: .75rem;
@@ -239,7 +239,7 @@ export default {
 	font-size: .13rem;
 }
 .top_right{
-	width: 19%;
+	/* width: 19%; */
 	float:left;
 	margin: .53rem 0rem .44rem 0rem;
 	color: #999999;
@@ -256,6 +256,7 @@ export default {
   margin: auto 0rem;
 }
 .top_right span{
+	font-size: .15rem;
   margin-right: .1rem;
 }
 .user_center{

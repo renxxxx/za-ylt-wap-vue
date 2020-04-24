@@ -21,27 +21,27 @@
 		</div>
 		<div class="tabel">
 			<ul>
-				<li>
+				<li v-if="active.title">
 					<span>标题</span>
 					<input type="text" v-model='active.title' readonly="readonly">
 				</li>
-				<li>
+				<li v-if="active.brief">
 					<span>副标题</span>
 					<input type="text" v-model='active.brief' readonly="readonly">
 				</li>
-				<li>
+				<li v-if="active.tel">
 					<span>联系电话</span>
 					<input type="text" v-model='active.tel' readonly="readonly">
 				</li>
-				<li>
+				<li v-if="active.time">
 					<span>活动起止时间</span>
 					<input type="text" v-model="active.time" readonly="readonly">
 				</li>
-				<li>
+				<li v-if="active.address">
 					<span>活动地址</span>
 					<input type="text" v-model='active.address' readonly="readonly">
 				</li>
-				<li>
+				<li v-if="active.content">
 					<span>活动说明</span>
 					<!-- <input type="text" v-model='active.content' readonly="readonly"> -->
 					<div class="tabelContent">

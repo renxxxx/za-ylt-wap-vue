@@ -109,8 +109,14 @@ export default {
 				})
 			}))
 			.then(res => {
-				
-				res.data.codeMsg? this.$toast(res.data.codeMsg):this.$toast.success('操作成功')
+				if(res.data.codeMsg){
+					this.$toast(res.data.codeMsg)
+				}
+				if(res.data.code == 0){
+					this.$toast.success('操作成功');
+					this.$router.go(-2)
+				}
+				// res.data.codeMsg? this.$toast(res.data.codeMsg):this.$toast.success('操作成功')
 			})
 			.catch((err)=>{
 				//Dialog({ message: err});;
@@ -122,7 +128,10 @@ export default {
 				commodityId : this.$route.query.commodityId,
 			}))
 			.then(res => {
-				if(!res.data.codeMsg){
+				if(res.data.codeMsg){
+					this.$toast(res.data.codeMsg)
+				}
+				if(res.data.code == 0){
 					this.shopDetails = {
 						name : res.data.data.name,
 						payExchangepoint : res.data.data.payExchangepoint,
@@ -132,8 +141,6 @@ export default {
 						requestId : this.$route.query.commodityId,
 					};
 					this.shopDetails.cover = res.data.data.cover.split(',')
-				}else{
-					this.$toast(res.data.codeMsg)
 				}
 			})
 			.catch((err)=>{

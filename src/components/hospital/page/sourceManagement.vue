@@ -27,8 +27,7 @@
         <!-- </router-link> -->
 			</div>
 			<!-- 就诊情况 -->
-<<<<<<< HEAD
-			
+			 
 				<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+39)+'px'}">
 					<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
 						<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'>
@@ -49,27 +48,6 @@
 					</van-tabs>
 				</div>
 			
-=======
-			<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+39)+'px'}">
-				<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
-					<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'>
-						<keep-alive>
-							<clinicAll ref='all' :list = 'list'></clinicAll>
-						</keep-alive>
-					</van-tab>
-					<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
-						<keep-alive>
-							<clinicNo ref='no' :list = 'list'></clinicNo>
-						</keep-alive>
-					</van-tab>
-					<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
-						<keep-alive>
-							<clinicYes ref='yes' :list = 'list'></clinicYes>
-						</keep-alive>
-					</van-tab>
-				</van-tabs>
-			</div>
->>>>>>> e25dc06... s
 		</div>
 		<!-- <router v-if="isLogin == 200? true:false"></router> -->
   </div>

@@ -605,6 +605,7 @@ export default {
 	border: none;
 	float:right;
 	text-align: right;
+	background: transparent
 	/* background-color: #F5F5F5; */
 }
 .bottom{
