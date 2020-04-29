@@ -38,8 +38,9 @@
                   <span>病员管理</span>
                 </router-link>
               </li>
-              <li>
-                <router-link :to="{path : '/operating/operating_collect',query:{hospitalId: this.$route.query.hospitalId,}}">
+              <li @click="upgradeFn">
+                <!-- /operating/operating_collect -->
+                <router-link :to="{path : '',query:{hospitalId: this.$route.query.hospitalId,}}">
                   <img src="../../../assets/image/qixiejicai@2x.png" alt />
                   <span>器械集采</span>
                 </router-link>
@@ -169,6 +170,10 @@ export default {
     debugger
     },
   methods: {
+    upgradeFn(){
+      this.$toast.setDefaultOptions({ duration: 1000 });
+      this.$toast("升级中");
+    },
 	backFn(){
 		this.$router.back()
 	},

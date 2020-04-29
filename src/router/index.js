@@ -1,160 +1,158 @@
-import Vue from 'vue'
 import Store from '../store'
 import Router from 'vue-router'
+import Vue from 'vue'
 
-import chooseTheType from '@/components/chooseTheType.vue'
-import sharePage from '@/components/sharePage.vue'
-import Page404 from '@/components/404Page.vue'
-import tihuan from '@/components/tihuan.vue'
+
+const chooseTheType = ()=>import( '@/components/chooseTheType.vue')
+const sharePage = ()=>import( '@/components/sharePage.vue')
+const Page404 = ()=>import( '@/components/404Page.vue')
+const tihuan = ()=>import( '@/components/tihuan.vue')
 
 //医院端
-import hospital from '@/components/hospital/hospital.vue'
-import hospital_urlPage from '@/components/hospital/urlPage.vue'
-import hospital_retrievePassword from '@/components/hospital/retrievePassword.vue'
-import hospitalLogin from '@/components/hospital/hospitalLogin.vue'
+const hospital = ()=>import( '@/components/hospital/hospital.vue')
+const hospital_urlPage = ()=>import( '@/components/hospital/urlPage.vue')
+const hospital_retrievePassword = ()=>import( '@/components/hospital/retrievePassword.vue')
+const hospitalLogin = ()=>import( '@/components/hospital/hospitalLogin.vue')
 //医院端主页
-import hospital_index from '@/components/hospital/page/index.vue'
-import hospital_clinic from '@/components/hospital/page/clinic.vue'
-import hospital_gene from '@/components/hospital/page/gene.vue'
-import hospital_user from '@/components/hospital/page/user.vue'
+const hospital_index = ()=>import( '@/components/hospital/page/index.vue')
+const hospital_clinic = ()=>import( '@/components/hospital/page/clinic.vue')
+const hospital_gene = ()=>import( '@/components/hospital/page/gene.vue')
+const hospital_user = ()=>import( '@/components/hospital/page/user.vue')
 
 //医院端页面
-import hospital_clinicSearch from '@/components/hospital/page/clinicSearch.vue'
-import hospital_addCLinic from '@/components/hospital/page/addCLinic.vue'
-import hospital_clinicDetails from '@/components/hospital/page/clinicDetails.vue'
-import hospital_clinicInfo from '@/components/hospital/page/clinicInfo.vue'
-import hospital_detailsPage from '@/components/hospital/page/detailsPage.vue'
-import hospital_sourceManagement from '@/components/hospital/page/sourceManagement.vue'
-import hospital_pathogenicSearch from '@/components/hospital/page/pathogenicSearch.vue'
-import hospital_collect from '@/components/hospital/page/collect.vue'
-import hospital_operating from '@/components/hospital/page/operating.vue'
-import hospital_pushTheManagement from '@/components/hospital/page/pushTheManagement.vue'
-import hospital_operatingManual from '@/components/hospital/page/operatingManual.vue'
-import  hospital_operatingDate from '@/components/hospital/page/operatingDate.vue'
-import hospital_operatingManualList from '@/components/hospital/page/operatingManualList.vue'
-import hospital_operatingManualListTwo from '@/components/hospital/page/operatingManualListTwo.vue'
-import  hospital_operatingManualListThree from '@/components/hospital/page/operatingManualListThree.vue'
-import  hospital_operatingManualListFour from '@/components/hospital/page/operatingManualListFour.vue'
-import  hospital_operatingManualListFive from '@/components/hospital/page/operatingManualListFive.vue'
-import  hospital_operatingManualListSix from '@/components/hospital/page/operatingManualListSix.vue'
-import  hospital_operatingManualListSeven from '@/components/hospital/page/operatingManualListSeven.vue'
-import  hospital_operatingManualListDetails from '@/components/hospital/page/operatingManualListDetails.vue'
-import  hospital_activityReleased from '@/components/hospital/page/activityReleased.vue'
-import  hospital_addActivity from '@/components/hospital/page/addActivity.vue'
-import  hospital_activityDetails from '@/components/hospital/page/activityDetails.vue'
-import  hospital_previewActivities from '@/components/hospital/page/previewActivities.vue'
-import  hospital_case from '@/components/hospital/page/case.vue'
-import  hospital_caseDetails from '@/components/hospital/page/caseDetails.vue'
-import  hospital_hospitalImage from '@/components/hospital/page/hospitalImage.vue'
-import  hospital_typeDetails from '@/components/hospital/page/typeDetails.vue'
-import  hospital_expertsIntroduction from '@/components/hospital/page/expertsIntroduction.vue'
-import  hospital_clinicMessage from '@/components/hospital/page/clinicMessage.vue'
-import  hospital_taskManagement from '@/components/hospital/page/taskManagement.vue'
-import  hospital_taskManagementDetails from '@/components/hospital/page/taskManagementDetails.vue'
-import  hospital_exchangeManagement from '@/components/hospital/page/exchangeManagement.vue'
-import  hospital_exchangeDetails from '@/components/hospital/page/exchangeDetails.vue'
-import  hospital_exchangeManagementList from '@/components/hospital/page/exchangeManagementList.vue'
-import  hospital_exchangeManagementAdd from '@/components/hospital/page/exchangeManagementAdd.vue'
-import  hospital_exchangeManagementImg from '@/components/hospital/page/exchangeManagementImg.vue'
-import  hospital_exchangeEditor from '@/components/hospital/page/exchangeEditor.vue'
-import  hospital_exchangeEditorImg from '@/components/hospital/page/exchangeEditorImg.vue'
-import  hospital_promoters from '@/components/hospital/page/promoters.vue'
-import  hospital_promotersDetails from '@/components/hospital/page/promotersDetails.vue'
-import  hospital_promotersSearch from '@/components/hospital/page/promotersSearch.vue'
-import  hospital_addPromoters from '@/components/hospital/page/addPromoters.vue'
-import  hospital_list from '@/components/hospital/page/list.vue'
-import  hospital_pictureEnlargement from '@/components/hospital/page/pictureEnlargement.vue'
+const hospital_clinicSearch = ()=>import( '@/components/hospital/page/clinicSearch.vue')
+const hospital_addCLinic = ()=>import( '@/components/hospital/page/addCLinic.vue')
+const hospital_clinicDetails = ()=>import( '@/components/hospital/page/clinicDetails.vue')
+const hospital_clinicInfo = ()=>import( '@/components/hospital/page/clinicInfo.vue')
+const hospital_detailsPage = ()=>import( '@/components/hospital/page/detailsPage.vue')
+const hospital_sourceManagement = ()=>import( '@/components/hospital/page/sourceManagement.vue')
+const hospital_pathogenicSearch = ()=>import( '@/components/hospital/page/pathogenicSearch.vue')
+const hospital_collect = ()=>import( '@/components/hospital/page/collect.vue')
+const hospital_operating = ()=>import( '@/components/hospital/page/operating.vue')
+const hospital_pushTheManagement = ()=>import( '@/components/hospital/page/pushTheManagement.vue')
+const hospital_operatingManual = ()=>import( '@/components/hospital/page/operatingManual.vue')
+const hospital_operatingDate = ()=>import( '@/components/hospital/page/operatingDate.vue')
+const hospital_operatingManualList = ()=>import( '@/components/hospital/page/operatingManualList.vue')
+const hospital_operatingManualListTwo = ()=>import( '@/components/hospital/page/operatingManualListTwo.vue')
+const hospital_operatingManualListThree = ()=>import( '@/components/hospital/page/operatingManualListThree.vue')
+const hospital_operatingManualListFour = ()=>import( '@/components/hospital/page/operatingManualListFour.vue')
+const hospital_operatingManualListFive = ()=>import( '@/components/hospital/page/operatingManualListFive.vue')
+const hospital_operatingManualListSix = ()=>import( '@/components/hospital/page/operatingManualListSix.vue')
+const hospital_operatingManualListSeven = ()=>import( '@/components/hospital/page/operatingManualListSeven.vue')
+const hospital_operatingManualListDetails = ()=>import( '@/components/hospital/page/operatingManualListDetails.vue')
+const hospital_activityReleased = ()=>import( '@/components/hospital/page/activityReleased.vue')
+const hospital_addActivity = ()=>import( '@/components/hospital/page/addActivity.vue')
+const hospital_activityDetails = ()=>import( '@/components/hospital/page/activityDetails.vue')
+const hospital_previewActivities = ()=>import( '@/components/hospital/page/previewActivities.vue')
+const hospital_case = ()=>import( '@/components/hospital/page/case.vue')
+const hospital_caseDetails = ()=>import( '@/components/hospital/page/caseDetails.vue')
+const hospital_hospitalImage = ()=>import( '@/components/hospital/page/hospitalImage.vue')
+const hospital_typeDetails = ()=>import( '@/components/hospital/page/typeDetails.vue')
+const hospital_expertsIntroduction = ()=>import( '@/components/hospital/page/expertsIntroduction.vue')
+const hospital_clinicMessage = ()=>import( '@/components/hospital/page/clinicMessage.vue')
+const hospital_taskManagement = ()=>import( '@/components/hospital/page/taskManagement.vue')
+const hospital_taskManagementDetails = ()=>import( '@/components/hospital/page/taskManagementDetails.vue')
+const hospital_exchangeManagement = ()=>import( '@/components/hospital/page/exchangeManagement.vue')
+const hospital_exchangeDetails = ()=>import( '@/components/hospital/page/exchangeDetails.vue')
+const hospital_exchangeManagementList = ()=>import( '@/components/hospital/page/exchangeManagementList.vue')
+const hospital_exchangeManagementAdd = ()=>import( '@/components/hospital/page/exchangeManagementAdd.vue')
+const hospital_exchangeManagementImg = ()=>import( '@/components/hospital/page/exchangeManagementImg.vue')
+const hospital_exchangeEditor = ()=>import( '@/components/hospital/page/exchangeEditor.vue')
+const hospital_exchangeEditorImg = ()=>import( '@/components/hospital/page/exchangeEditorImg.vue')
+const hospital_promoters = ()=>import( '@/components/hospital/page/promoters.vue')
+const hospital_promotersDetails = ()=>import( '@/components/hospital/page/promotersDetails.vue')
+const hospital_promotersSearch = ()=>import( '@/components/hospital/page/promotersSearch.vue')
+const hospital_addPromoters = ()=>import( '@/components/hospital/page/addPromoters.vue')
+const hospital_list = ()=>import( '@/components/hospital/page/list.vue')
+const hospital_pictureEnlargement = ()=>import( '@/components/hospital/page/pictureEnlargement.vue')
 
 //医院端下的门诊推广人端
-import promoters from '@/components/hospital/promoters/promoters.vue'
+const promoters = ()=>import( '@/components/hospital/promoters/promoters.vue')
 //医院端下的门诊推广人端主页
-import promoters_index from '@/components/hospital/promoters/page/index.vue'
-import promoters_cilnic from '@/components/hospital/promoters/page/cilnic.vue'
-import promoters_user from '@/components/hospital/promoters/page/user.vue'
+const promoters_index = ()=>import( '@/components/hospital/promoters/page/index.vue')
+const promoters_cilnic = ()=>import( '@/components/hospital/promoters/page/cilnic.vue')
+const promoters_user = ()=>import( '@/components/hospital/promoters/page/user.vue')
 //医院端下面的推广人端页面
-import promoters_clinicSearch from '@/components/hospital/promoters/page/clinicSearch.vue'
-import promoters_addClinic from '@/components/hospital/promoters/page/addClinic.vue'
-import promoters_source from '@/components/hospital/promoters/page/source.vue'
-import promoters_addSource from '@/components/hospital/promoters/page/addSource.vue'
-import promoters_clinicInfo from '@/components/hospital/promoters/page/clinicInfo.vue'
-import promoters_detailsPage from '@/components/hospital/promoters/page/detailsPage.vue'
-import promoters_pictureEnlargement from '@/components/hospital/promoters/page/pictureEnlargement.vue'
-import promoters_sourceManagement from '@/components/hospital/promoters/page/sourceManagement.vue'
-import promoters_sourceSearch from '@/components/hospital/promoters/page/sourceSearch.vue'
-import promoters_case from '@/components/hospital/promoters/page/case.vue'
-import promoters_caseDetails from '@/components/hospital/promoters/page/caseDetails.vue'
-import promoters_activityReleased from '@/components/hospital/promoters/page/activityReleased.vue'
-import promoters_activityDetails from '@/components/hospital/promoters/page/activityDetails.vue'
+const promoters_clinicSearch = ()=>import( '@/components/hospital/promoters/page/clinicSearch.vue')
+const promoters_addClinic = ()=>import( '@/components/hospital/promoters/page/addClinic.vue')
+const promoters_source = ()=>import( '@/components/hospital/promoters/page/source.vue')
+const promoters_addSource = ()=>import( '@/components/hospital/promoters/page/addSource.vue')
+const promoters_clinicInfo = ()=>import( '@/components/hospital/promoters/page/clinicInfo.vue')
+const promoters_detailsPage = ()=>import( '@/components/hospital/promoters/page/detailsPage.vue')
+const promoters_pictureEnlargement = ()=>import( '@/components/hospital/promoters/page/pictureEnlargement.vue')
+const promoters_sourceManagement = ()=>import( '@/components/hospital/promoters/page/sourceManagement.vue')
+const promoters_sourceSearch = ()=>import( '@/components/hospital/promoters/page/sourceSearch.vue')
+const promoters_case = ()=>import( '@/components/hospital/promoters/page/case.vue')
+const promoters_caseDetails = ()=>import( '@/components/hospital/promoters/page/caseDetails.vue')
+const promoters_activityReleased = ()=>import( '@/components/hospital/promoters/page/activityReleased.vue')
+const promoters_activityDetails = ()=>import( '@/components/hospital/promoters/page/activityDetails.vue')
 
 //门诊端
-import outpatient from '@/components/outpatient/outpatient.vue'
-import outpatientLogin from '@/components/outpatient/outpatientLogin.vue'
-import outpatient_retrievePassword from '@/components/outpatient/retrievePassword.vue'
-import outpatient_urlPage from '@/components/outpatient/urlPage.vue'
-
+const outpatient = ()=>import( '@/components/outpatient/outpatient.vue')
+const outpatientLogin = ()=>import( '@/components/outpatient/outpatientLogin.vue')
+const outpatient_retrievePassword = ()=>import( '@/components/outpatient/retrievePassword.vue')
+const outpatient_urlPage = ()=>import( '@/components/outpatient/urlPage.vue')
 //门诊端主页
-import outpatient_index from '@/components/outpatient/page/index.vue'
-import outpatient_hospital from '@/components/outpatient/page/hospital.vue'
-import outpatient_gene from '@/components/outpatient/page/gene.vue'
-import outpatient_user from '@/components/outpatient/page/user.vue'
+const outpatient_index = ()=>import( '@/components/outpatient/page/index.vue')
+const outpatient_hospital = ()=>import( '@/components/outpatient/page/hospital.vue')
+const outpatient_gene = ()=>import( '@/components/outpatient/page/gene.vue')
+const outpatient_user = ()=>import( '@/components/outpatient/page/user.vue')
 //门诊端页面
-import outpatient_pathogenicSearch from '@/components/outpatient/page/pathogenicSearch.vue'
-import outpatient_detailsPage from '@/components/outpatient/page/detailsPage.vue'
-import outpatient_hospitalImage from '@/components/outpatient/page/hospitalImage.vue'
-import outpatient_typeDetails from '@/components/outpatient/page/typeDetails.vue'
-import outpatient_case from '@/components/outpatient/page/case.vue'
-import outpatient_caseDetails from '@/components/outpatient/page/caseDetails.vue'
-import outpatient_expertsIntroduction from '@/components/outpatient/page/expertsIntroduction.vue'
-import outpatient_activityReleased from '@/components/outpatient/page/activityReleased.vue'
-import outpatient_addActivity from '@/components/outpatient/page/addActivity.vue'
-import outpatient_previewActivities from '@/components/outpatient/page/previewActivities.vue'
-import outpatient_activityDetails from '@/components/outpatient/page/activityDetails.vue'
-import outpatient_clinicMessage from '@/components/outpatient/page/clinicMessage.vue'
-import outpatient_taskCenter from '@/components/outpatient/page/taskCenter.vue'
-import outpatient_integralExchange from '@/components/outpatient/page/integralExchange.vue'
-import outpatient_integralDetails from '@/components/outpatient/page/integralDetails.vue'
-import outpatient_integralHistory from '@/components/outpatient/page/integralHistory.vue'
-import outpatient_ExchangeList from '@/components/outpatient/page/ExchangeList.vue'
-import outpatient_integralShop from '@/components/outpatient/page/integralShop.vue'
-import outpatient_integralShopDetails from '@/components/outpatient/page/integralShopDetails.vue'
-import outpatient_shopAddress from '@/components/outpatient/page/shopAddress.vue'
-import outpatient_shopAddressAdd from '@/components/outpatient/page/shopAddressAdd.vue'
-import outpatient_pictureEnlargement from '@/components/outpatient/page/pictureEnlargement.vue'
-import outpatient_articleSearch from '@/components/outpatient/page/articleSearch.vue'
+const outpatient_pathogenicSearch = ()=>import( '@/components/outpatient/page/pathogenicSearch.vue')
+const outpatient_detailsPage = ()=>import( '@/components/outpatient/page/detailsPage.vue')
+const outpatient_hospitalImage = ()=>import( '@/components/outpatient/page/hospitalImage.vue')
+const outpatient_typeDetails = ()=>import( '@/components/outpatient/page/typeDetails.vue')
+const outpatient_case = ()=>import( '@/components/outpatient/page/case.vue')
+const outpatient_caseDetails = ()=>import( '@/components/outpatient/page/caseDetails.vue')
+const outpatient_expertsIntroduction = ()=>import( '@/components/outpatient/page/expertsIntroduction.vue')
+const outpatient_activityReleased = ()=>import( '@/components/outpatient/page/activityReleased.vue')
+const outpatient_addActivity = ()=>import( '@/components/outpatient/page/addActivity.vue')
+const outpatient_previewActivities = ()=>import( '@/components/outpatient/page/previewActivities.vue')
+const outpatient_activityDetails = ()=>import( '@/components/outpatient/page/activityDetails.vue')
+const outpatient_clinicMessage = ()=>import( '@/components/outpatient/page/clinicMessage.vue')
+const outpatient_taskCenter = ()=>import( '@/components/outpatient/page/taskCenter.vue')
+const outpatient_integralExchange = ()=>import( '@/components/outpatient/page/integralExchange.vue')
+const outpatient_integralDetails = ()=>import( '@/components/outpatient/page/integralDetails.vue')
+const outpatient_integralHistory = ()=>import( '@/components/outpatient/page/integralHistory.vue')
+const outpatient_ExchangeList = ()=>import( '@/components/outpatient/page/ExchangeList.vue')
+const outpatient_integralShop = ()=>import( '@/components/outpatient/page/integralShop.vue')
+const outpatient_integralShopDetails = ()=>import( '@/components/outpatient/page/integralShopDetails.vue')
+const outpatient_shopAddress = ()=>import( '@/components/outpatient/page/shopAddress.vue')
+const outpatient_shopAddressAdd = ()=>import( '@/components/outpatient/page/shopAddressAdd.vue')
+const outpatient_pictureEnlargement = ()=>import( '@/components/outpatient/page/pictureEnlargement.vue')
+const outpatient_articleSearch = ()=>import( '@/components/outpatient/page/articleSearch.vue')
 
 //运营端
-import operating from '@/components/operating/operating.vue'
-import operatingLogin from '@/components/operating/operatingLogin.vue'
-import operating_urlPage from '@/components/operating/urlPage.vue'
-import operating_retrievePassword from '@/components/operating/retrievePassword.vue'
+const operating = ()=>import( '@/components/operating/operating.vue')
+const operatingLogin = ()=>import( '@/components/operating/operatingLogin.vue')
+const operating_urlPage = ()=>import( '@/components/operating/urlPage.vue')
+const operating_retrievePassword = ()=>import( '@/components/operating/retrievePassword.vue')
 
 //运营端主页
-import operating_index from '@/components/operating/page/index.vue'
-import operating_user from '@/components/operating/page/user.vue'
-import operating_clinic from '@/components/operating/page/clinic.vue'
+const operating_index = ()=>import( '@/components/operating/page/index.vue')
+const operating_user = ()=>import( '@/components/operating/page/user.vue')
+const operating_clinic = ()=>import( '@/components/operating/page/clinic.vue')
 //运营端页面
-import operating_addHospital from '@/components/operating/page/addHospital.vue'
-import operating_indexDetails from '@/components/operating/page/indexDetails.vue'
-import operating_hospiatlAllSearch from '@/components/operating/page/hospiatlAllSearch.vue'
-import operating_clinicSearch from '@/components/operating/page/clinicSearch.vue'
-import operating_sourceManagement from '@/components/operating/page/sourceManagement.vue'
-import operating_pathogenicSearch from '@/components/operating/page/pathogenicSearch.vue'
-import operating_activityDetails from '@/components/operating/page/activityDetails.vue'
-import operating_activityReleased from '@/components/operating/page/activityReleased.vue'
-import operating_addActivity from '@/components/operating/page/addActivity.vue'
-import operating_previewActivities from '@/components/operating/page/previewActivities.vue'
-import operating_caseDetails from '@/components/operating/page/caseDetails.vue'
-import operating_collect from '@/components/operating/page/collect.vue'
-import operating_clinicDetails from '@/components/operating/page/clinicDetails.vue'
-import operating_operating from '@/components/operating/page/operating.vue'
-import operating_operatingManual from '@/components/operating/page/operatingManual.vue'
-import operating_operatingManualList from '@/components/operating/page/operatingManualList.vue'
-import operating_operatingManualListDetails from '@/components/operating/page/operatingManualListDetails.vue'
-import operating_operatingManualListTwo from '@/components/operating/page/operatingManualListTwo.vue'
-import operating_operatingDate from '@/components/operating/page/operatingDate.vue'
-
-
-import operating_clinicAllSearch from '@/components/operating/page/clinicAllSearch.vue'
+const operating_addHospital = ()=>import( '@/components/operating/page/addHospital.vue')
+const operating_indexDetails = ()=>import( '@/components/operating/page/indexDetails.vue')
+const operating_hospiatlAllSearch = ()=>import( '@/components/operating/page/hospiatlAllSearch.vue')
+const operating_clinicSearch = ()=>import( '@/components/operating/page/clinicSearch.vue')
+const operating_sourceManagement = ()=>import( '@/components/operating/page/sourceManagement.vue')
+const operating_pathogenicSearch = ()=>import( '@/components/operating/page/pathogenicSearch.vue')
+const operating_activityDetails = ()=>import( '@/components/operating/page/activityDetails.vue')
+const operating_activityReleased = ()=>import( '@/components/operating/page/activityReleased.vue')
+const operating_addActivity = ()=>import( '@/components/operating/page/addActivity.vue')
+const operating_previewActivities = ()=>import( '@/components/operating/page/previewActivities.vue')
+const operating_caseDetails = ()=>import( '@/components/operating/page/caseDetails.vue')
+const operating_collect = ()=>import( '@/components/operating/page/collect.vue')
+const operating_clinicDetails = ()=>import( '@/components/operating/page/clinicDetails.vue')
+const operating_operating = ()=>import( '@/components/operating/page/operating.vue')
+const operating_operatingManual = ()=>import( '@/components/operating/page/operatingManual.vue')
+const operating_operatingManualList = ()=>import( '@/components/operating/page/operatingManualList.vue')
+const operating_operatingManualListDetails = ()=>import( '@/components/operating/page/operatingManualListDetails.vue')
+const operating_operatingManualListTwo = ()=>import( '@/components/operating/page/operatingManualListTwo.vue')
+const operating_operatingDate = ()=>import( '@/components/operating/page/operatingDate.vue')
+const operating_clinicAllSearch = ()=>import( '@/components/operating/page/clinicAllSearch.vue')
 
 Vue.use(Router)
 

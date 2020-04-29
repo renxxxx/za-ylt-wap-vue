@@ -366,6 +366,8 @@ export default {
 			if(this.clinicNum){
 				this.modifyPromotersAllShow = true;
      			this.hospitalReturnHomePage = false;
+			}else{
+				this.$toast('没有可转移的门诊')
 			}
 		},
     //关闭推广人选择弹窗触发弹窗

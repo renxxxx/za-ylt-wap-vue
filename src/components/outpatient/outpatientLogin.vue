@@ -94,7 +94,7 @@ export default {
         });
     }
 
-     thisVue.$jquery.ajax({
+     $.ajax({
                   url:'/clinic/login-refresh',
                   type:'get',
                   async:false,
@@ -180,7 +180,7 @@ export default {
         	}))
         	.then( res =>{
             if(res.data.code == 0){
-                  thisVue.$jquery.ajax({
+                  $.ajax({
                   url:'/clinic/login-refresh',
                   type:'get',
                   async:false,

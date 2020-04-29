@@ -30,8 +30,9 @@
                     <span>病员管理</span>
                   </router-link>
                 </li>
-                <li>
-                  <router-link :to="{path : '/hospital/hospital_collect',query:{}}">
+                <li @click="upgradeFn">
+                  <!-- /hospital/hospital_collect -->
+                  <router-link :to="{path : '',query:{}}">
                     <img src="../../../assets/image/qixiejicai@2x.png" alt />
                     <span>器械集采</span>
                   </router-link>
@@ -105,7 +106,7 @@
 import axios from "axios";
 import { mapActions, mapGetters } from "vuex";
 import qs from "qs";
-import { Dialog } from "vant";
+import { Dialog,Toast } from "vant";
 import topSolt from "../function/topSolt.vue";
 // import moment from 'moment'
 export default {
@@ -206,7 +207,7 @@ export default {
     initData() {
       let thisVue = this
       if(this.$route.meta.auth && !this.$store.state.hospital.login){
-			this.$toast({message:'请登录',onClose:function(){
+			Toast({message:'请登录',onClose:function(){
 				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
 			}})
 		}
@@ -327,6 +328,10 @@ export default {
     noLinkFn() {
       this.$toast.setDefaultOptions({ duration: 1000 });
       this.$toast("暂未开通");
+    },
+    upgradeFn(){
+      this.$toast.setDefaultOptions({ duration: 1000 });
+      this.$toast("升级中");
     }
   }
 };

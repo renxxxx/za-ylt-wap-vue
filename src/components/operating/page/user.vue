@@ -115,7 +115,8 @@ export default {
 				// localStorage.clear()
 				thisVue.$toast("操作成功")
 				setTimeout(()=>{
-					thisVue.$router.push({path:"/operating/operatingLogin",query:{}})
+					// thisVue.$router.push({path:"/operating/operatingLogin",query:{}})
+					location.href=location.pathname
 				},1500)
 			})
 			// if(window.plus){

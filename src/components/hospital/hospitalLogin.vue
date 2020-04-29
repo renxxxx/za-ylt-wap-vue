@@ -92,7 +92,7 @@ export default {
         });
     }
 
-     thisVue.$jquery.ajax({
+     $.ajax({
                   url:'/hospital/login-refresh',
                   type:'get',
                   async:false,
@@ -194,7 +194,7 @@ export default {
             // 
             if(res.data.code == 0){
         debugger;
-         thisVue.$jquery.ajax({
+         $.ajax({
                   url:'/hospital/login-refresh',
                   type:'get',
                   async:false,

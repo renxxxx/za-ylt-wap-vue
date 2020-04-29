@@ -1,9 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import qs from "qs";
 Vue.use(Vuex)
-
-
 
 const state={
   hospital:{login:null},

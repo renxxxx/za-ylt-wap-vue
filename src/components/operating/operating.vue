@@ -81,7 +81,7 @@ export default {
   },
   created(){
       let thisVue = this
-        this.$jquery.ajax({
+        $.ajax({
 			  url:'/manager/login-refresh',
 			  type:'post',
 			  async:false,

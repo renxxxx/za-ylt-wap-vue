@@ -7,9 +7,9 @@ import router from './router'
 import 'vant/lib/index.css'
 import axios from 'axios'
 import store from './store'
-import jquery from 'jquery'
+// import jquery from 'jquery'
 import cookies from 'js-cookie'
-import moment from 'moment'
+// import moment from 'moment'
 moment.locale('zh-cn');
 import qs from 'qs';
 import h5p from '../build/h5p.js'
@@ -21,7 +21,7 @@ Vue.prototype.moment = moment;
 Vue.prototype.$store = store
 Vue.prototype.$h5p = h5p
 Vue.prototype.qs = qs
-Vue.prototype.$jquery = jquery
+// Vue.prototype.$jquery = jquery
 Vue.prototype.$cookies = cookies
 import {
 	Image,
@@ -77,12 +77,13 @@ Vue.use(Image).use(Row).use(Col).use(Search).use(Tabbar).use(TabbarItem).use(Tab
 		attempt:1,
 		preload:1.3,
 	  }).use(ActionSheet).use(Grid).use(Step).use(Steps).use(Field)
-	.use(GridItem).use(SwipeCell).use(Circle).use(Toast).use(ImagePreview).use(Progress).use(Picker).use(Collapse).use(CollapseItem);
+	.use(GridItem).use(SwipeCell).use(Circle).use(Toast,{
+		duration: 1500,
+		forbidClick: true
+	}).use(ImagePreview).use(Progress).use(Picker).use(Collapse).use(CollapseItem);
 //配置全局时间
-Toast.setDefaultOptions({
-	duration: 1500,
-	forbidClick: true
-});
+Vue.prototype.$toast  = Toast
+
 
 Vue.prototype.cookieOn=function() {
 	debugger

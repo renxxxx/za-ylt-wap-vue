@@ -92,7 +92,7 @@ export default {
         });
     }
 
-     thisVue.$jquery.ajax({
+     $.ajax({
                   url:'/manager/login-refresh',
                   type:'post',
                   async:false,
@@ -187,7 +187,7 @@ export default {
         	.then( res =>{
             // 
             if(res.data.code == 0){
-         thisVue.$jquery.ajax({
+         $.ajax({
                   url:'/manager/login-refresh',
                   type:'post',
                   async:false,
@@ -199,7 +199,7 @@ export default {
                     if(res.code == 0){
                       thisVue.$store.state.operating.login=res.data
                        thisVue.$toast({"message":'登录成功',onClose(){
-                           thisVue.$router.replace({ path : '/operating/operating_index',query:{}});
+                           thisVue.$router.replace({ path : '/operating/operating_index',query:{time:new Date().getTime()}});
                         }})
                     }
                   }

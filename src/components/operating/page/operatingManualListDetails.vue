@@ -253,7 +253,13 @@ export default {
     },
     // 上传文字
     addContent(){
-      this.saveFn('','',this.text)
+      // console.log(this.text)
+      if(this.text){
+        this.saveFn('','',this.text)
+      }else{
+        this.$toast('请输入信息')
+      }
+      
     },
     //保存方法
     saveFn(_img,_video,_content){

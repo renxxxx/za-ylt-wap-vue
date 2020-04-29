@@ -32,7 +32,8 @@
   	    >
   	    <span>门诊</span>
   	</van-tabbar-item>
-  	<van-tabbar-item replace :to="{path:'/hospital/hospital_gene',query:{transition:'def'}}">
+    <!-- /hospital/hospital_gene -->
+  	<van-tabbar-item replace @click="upgradeFn" :to="{path:'',query:{transition:'def'}}">
   	    <span>基因</span>
   	    <img
   			slot="icon"
@@ -99,7 +100,7 @@ export default {
   },
   created(){
       let thisVue = this
-        this.$jquery.ajax({
+        $.ajax({
 			  url:'/hospital/login-refresh',
 			  type:'get',
 			  async:false,
@@ -120,6 +121,10 @@ export default {
 
   },
   methods:{
+    upgradeFn(){
+      this.$toast.setDefaultOptions({ duration: 1000 });
+      this.$toast("升级中");
+    },
 	touchStartFn(_value){
 		this.startLengthY = _value.changedTouches[0].screenY;
 		this.startLength = _value.changedTouches[0].screenX
