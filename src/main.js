@@ -101,13 +101,14 @@ if(navigator.userAgent.toLowerCase().indexOf('html5plus') > -1)
 	store.state.paddingTop = "24px"
 else
 	store.state.paddingTop = "0px"
-
+axios.defaults.headers.common['debugger.paddingTop']=store.state.paddingTop
 
 const paddingBottom = () => {
 	debugger
 	let a = /iphone/gi.test(navigator.userAgent) && window.screen && (window.screen.height >= 812 && window.screen.width >= 375)
-
-	return a?"34px":"0px";
+	let paddingBottom = a?"34px":"0px";
+	axios.defaults.headers.common['debugger.paddingBottom']=paddingBottom
+	return paddingBottom;
 };
 
 store.state.paddingBottom = paddingBottom()
