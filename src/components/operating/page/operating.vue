@@ -67,7 +67,7 @@ export default {
     	this.$router.back(-1)
     },
 	data(){
-		this.$toast("暂未开通");
+		this.$toast("升级中");
 	}
   },
 }
