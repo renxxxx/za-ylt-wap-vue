@@ -95,6 +95,9 @@ export default {
   mounted(){
     window.addEventListener("scroll", this.handleScroll, true);
   },
+   activated(){
+    localStorage.setItem("entrance",3)
+  },
   watch:{
     $route(to,from){
       // 

@@ -108,6 +108,9 @@ export default {
   mounted(){
     // window.addEventListener("scroll", this.handleScroll, true);
   },
+   activated(){
+    localStorage.setItem("entrance",2)
+  },
   computed:{
     // outpatientReturnTopPage: {
     //   get: function() {

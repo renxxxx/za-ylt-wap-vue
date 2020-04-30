@@ -97,6 +97,7 @@ export default {
                   type:'get',
                   async:false,
                   success:function(res){
+                    debugger
 					if(res.codeMsg){
 						console.log('s')
 						thisVue.$toast(res.codeMsg)
@@ -199,12 +200,13 @@ export default {
                   type:'get',
                   async:false,
                   success:function(res){
+                    debugger
 					if(res.codeMsg){
 						console.log('s')
 						thisVue.$toast(res.codeMsg)
 					}
                     if(res.code == 0){
-                      thisVue.$store.state.hospital.login=res.data
+                       thisVue.$store.state.hospital.login=res.data
                        thisVue.$toast({"message":'登录成功',onClose(){
                             // thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
                         if(thisVue.$route.query.redirect)
