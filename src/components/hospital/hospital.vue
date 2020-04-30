@@ -33,8 +33,8 @@
   	    <span>门诊</span>
   	</van-tabbar-item>
     <!-- /hospital/hospital_gene -->
-  	<van-tabbar-item replace @click="upgradeFn" :to="{path:'',query:{transition:'def'}}">
-  	    <span>基因</span>
+  	<van-tabbar-item replace :to="{path:'/hospital/hospital_source',query:{transition:'def'}}">
+  	    <span>病员</span>
   	    <img
   			slot="icon"
   			slot-scope="props"

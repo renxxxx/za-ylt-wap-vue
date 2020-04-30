@@ -18,6 +18,8 @@ const hospital_index = ()=>import( '@/components/hospital/page/index.vue')
 const hospital_clinic = ()=>import( '@/components/hospital/page/clinic.vue')
 const hospital_gene = ()=>import( '@/components/hospital/page/gene.vue')
 const hospital_user = ()=>import( '@/components/hospital/page/user.vue')
+const hospital_source = ()=>import( '@/components/hospital/page/source.vue')
+
 
 //医院端页面
 const hospital_clinicSearch = ()=>import( '@/components/hospital/page/clinicSearch.vue')
@@ -65,6 +67,7 @@ const hospital_promotersSearch = ()=>import( '@/components/hospital/page/promote
 const hospital_addPromoters = ()=>import( '@/components/hospital/page/addPromoters.vue')
 const hospital_list = ()=>import( '@/components/hospital/page/list.vue')
 const hospital_pictureEnlargement = ()=>import( '@/components/hospital/page/pictureEnlargement.vue')
+
 
 //医院端下的门诊推广人端
 const promoters = ()=>import( '@/components/hospital/promoters/promoters.vue')
@@ -223,6 +226,12 @@ const router = new Router({
           path: 'hospital_gene',
           name: 'hospital_gene',
           component: hospital_gene,
+          meta: {auth:true,tabbar:true},
+        },
+        {
+          path: 'hospital_source',
+          name: 'hospital_source',
+          component: hospital_source,
           meta: {auth:true,tabbar:true},
         },
         {
@@ -501,6 +510,8 @@ const router = new Router({
           component: hospital_pictureEnlargement,
           meta: {auth:true},
         },
+       
+        
         {
           path: '/promoters',
           name: 'promoters',
