@@ -58,11 +58,14 @@ export default {
       },
     },
   },
+  beforeCreated(){
+    
+  },
   created () {
-
+      debugger
+   
   },
   activated(){
-    debugger
      let thisVue = this;
      let entrance=localStorage.getItem('entrance');
     if(1==entrance)
@@ -73,7 +76,7 @@ export default {
         this.$router.replace({ path : '/operating',query:{}});
   },
   mounted () {
-   
+    
   },
   methods: {
     choseFn(stata){

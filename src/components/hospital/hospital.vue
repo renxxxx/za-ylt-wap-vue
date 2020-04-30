@@ -99,7 +99,7 @@ export default {
     ...mapGetters(['bottomShow','hospitalReturnHomePage','account','isLogin'])
   },
   created(){
-      let thisVue = this
+        let thisVue = this
         $.ajax({
 			  url:'/hospital/login-refresh',
 			  type:'get',
@@ -115,10 +115,13 @@ export default {
     topSolt
   },
   mounted(){
+   
     // window.addEventListener("scroll", this.handleScroll, true);
   },
   activated(){
     localStorage.setItem("entrance",1)
+   
+    
   },
   watch:{
 
