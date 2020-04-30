@@ -111,7 +111,7 @@ export default {
 		exitFn(){
 			let thisVue=this
 			this.$axios.post('/manager/logout').then(function(){
-				// localStorage.removeItem('lastRoute')
+				localStorage.removeItem('entrance')
 				// localStorage.clear()
 				thisVue.$toast("操作成功")
 				setTimeout(()=>{
@@ -128,7 +128,7 @@ export default {
 		},
 		noLinkFn(){
 			this.$toast.setDefaultOptions({ duration: 1000 });
-			this.$toast('暂未开通');
+			this.$toast('升级中');
 		}
 	},
 }

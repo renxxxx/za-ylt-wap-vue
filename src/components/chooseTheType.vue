@@ -58,21 +58,25 @@ export default {
       },
     },
   },
+  beforeCreated(){
+    
+  },
   created () {
-
+      debugger
+   
   },
   activated(){
-
      let thisVue = this;
-    if(thisVue.$store.state.hospital.login)
+     let entrance=localStorage.getItem('entrance');
+    if(1==entrance)
           this.$router.replace({ path : '/hospital',query:{}});
-    else if(thisVue.$store.state.outpatient.login)
+    else if(2==entrance)
           this.$router.replace({ path : '/outpatient',query:{}});
-    else if(thisVue.$store.state.operating.login)
+    else if(3==entrance)
         this.$router.replace({ path : '/operating',query:{}});
   },
   mounted () {
-   
+    
   },
   methods: {
     choseFn(stata){
@@ -80,7 +84,7 @@ export default {
     },
     submit(){
       if(this.stata){
-        localStorage.setItem('entrance',this.stata)
+       
         switch(this.stata){
           case '1':
           this.$router.replace({ path : '/hospital',query:{}});
