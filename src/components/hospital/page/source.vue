@@ -1,81 +1,58 @@
 <template>
-	<div class="index">
-		<topSolt>
-			<van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown" >
-				<div class="navWarp">
-					<!-- 搜索及其筛选 -->
-					<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.paddingTop}">
-					<router-link :to="{name:'outpatient_pathogenicSearch',query:{focus : true,}}">
-						<div class="indexSearch clinicSearchStyle">
-							<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
-							<img src="../../../assets/image/sousuo@2x.png" alt="">
-						</div>
-					</router-link>
-					<router-link :to="{name:'outpatient_pathogenicSearch',query:{}}">
-					<div class="clinic_buttton">
-						<button>搜索</button>
-					</div>
-					</router-link>
-					<router-link :to="{name:'outpatient_pathogenicSearch',query:{}}">
-					<div class="indexScreening" @click="showPopup">
-						<span>筛选</span>
-						<img src="../../../assets/image/screen@2x.png" alt="加载中" >
-					</div>
-					</router-link>
-					</div>
-					<!-- 就诊情况 -->
-					<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+32)+'px'}">
-						<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
-							<van-tab title="新增病员">
-								<div class="newAdd">
-									<div class="newAddTitle">
-										<img src="../../../assets/image/bitian@2x.png" alt="">
-										<h3>必填项</h3>
-										<ul class="Fill">
-											<li>
-												<span>病患姓名</span>
-												<input type="text" v-model="account.realname"  placeholder="请填写" >
-											</li>
-											<li>
-												<span>联系电话</span>
-												<input type="text" v-model="account.tel" maxlength="11"  oninput="value=value.replace(/[^\d]/g,'')" placeholder="请填写">
-											</li>
-											<li>
-												<span>身份证号</span>
-												<input type="text" v-model="account.idcardNo" maxlength="18"  oninput="value=value.replace(/[^\d|xX]/g,'')" placeholder="请填写">
-											</li>
-										</ul>
-									</div>
-									<div class="newAddTitle bottom">
-										<img src="../../../assets/image/bitian@2x.png" alt="">
-										<h3>选填项</h3>
-										<ul class="Fill">
-											<li>
-												<span>备注</span>
-												<input type="text" v-model="account.remark"  placeholder="请填写" >
-											</li>
-										</ul>
-									</div>
-									<button class="submitClass" @click="hospitalSubmit">提交</button>
-								</div>
-							</van-tab>
-							<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
-								<keep-alive>
-									<clinicNo ref='no' :list = 'list'></clinicNo>
-								</keep-alive>
-							</van-tab>
-							<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
-								<keep-alive>
-									<clinicYes ref='yes' :list = 'list'></clinicYes>
-								</keep-alive>
-							</van-tab>
-						</van-tabs>
-					</div>
+<topSolt>
+	<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" slot="returnTopSolt" >
+  	<div class="index">
+		<div class="navWarp">
+			<!-- 搜索及其筛选 -->
+			<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.paddingTop}">
+				<!-- <div class="indexReturn" @click="goBackFn"  id="navback">
+					<img src="../../../assets/image/back-white@2x.png" alt="">
+				</div> -->
+			<router-link :to="{name:'hospital_pathogenicSearch',query:{focus : true,}}">
+				<div class="indexSearch ">
+					<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
+					<img src="../../../assets/image/sousuo@2x.png" alt="">
 				</div>
-				<!-- <router v-if="isLogin == 200? true:false"></router> -->
-			</van-pull-refresh>
-		</topSolt>
-	</div>
+			</router-link>
+        <router-link :to="{name:'hospital_pathogenicSearch',query:{}}">
+          <div class="clinic_buttton">
+            <button>搜索</button>
+          </div>
+        </router-link>
+        <!-- <router-link }}"> -->
+          <div class="indexScreening" @click="showPopup">
+            <span>筛选</span>
+            <img src="../../../assets/image/screen@2x.png" alt="加载中" >
+          </div>
+        <!-- </router-link> -->
+			</div>
+			<!-- 就诊情况 -->
+			 
+				<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+39)+'px'}">
+					<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
+						<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'>
+							<keep-alive>
+								<clinicAll ref='all' :list = 'list'></clinicAll>
+							</keep-alive>
+						</van-tab>
+						<van-tab :title='list.noNum==0? list.noTitle:list.noTitle+list.noNum'>
+							<keep-alive>
+								<clinicNo ref='no' :list = 'list'></clinicNo>
+							</keep-alive>
+						</van-tab>
+						<van-tab :title='list.yesNum==0? list.yesTitle:list.yesTitle+list.yesNum'>
+							<keep-alive>
+								<clinicYes ref='yes' :list = 'list'></clinicYes>
+							</keep-alive>
+						</van-tab>
+					</van-tabs>
+				</div>
+			
+		</div>
+		<!-- <router v-if="isLogin == 200? true:false"></router> -->
+  </div>
+  </van-pull-refresh>
+  </topSolt>
 </template>
 <script>
 import axios from 'axios'
@@ -93,12 +70,6 @@ export default {
     return {
 		name: 'index',
 		selectValue : [],
-		account:{
-			realname:'',
-			tel:'',
-			idcardNo:'',
-			remark:''
-		},
 		//导航栏切换标题
 		list:{
 			keywords : '',			//搜索框的关键字value
@@ -117,31 +88,39 @@ export default {
 		},
 		height : undefined,
 		pullingDown: false,
+		query:""
     }
   },
   created(){
+	  debugger
+	var heightRexg = /^[0-9]*/g
+	//var topHeight = this.topHeight.match(heightRexg)
+	//this.height = parseInt(topHeight.join())
+	// //
   },
- 
+  
   destroyed(){
+	  debugger
+	  
   },
- 	 mounted(){
-	// let thisVue =this
-    // if(window.plus){
-    // 	//plus.navigator.setStatusBarBackground("#2B77EF");
-    // 	plus.navigator.setStatusBarStyle("dark")
-    // }
-	// this.initData();
- 	 },
-	activated(){
-		if(this.query != JSON.stringify(this.$route.query)){
-			this.query = JSON.stringify(this.$route.query);
-			if(window.plus){
-				//plus.navigator.setStatusBarBackground("#ffffff");
-				plus.navigator.setStatusBarStyle("dark")
-			}
-			this.initData()
-		}
-    },
+  mounted(){
+	//   debugger
+ //    if(window.plus){
+ //    	//plus.navigator.setStatusBarBackground("#2B77EF");
+ //    	plus.navigator.setStatusBarStyle("dark")
+ //    }
+	// this.getNum();
+  },
+  activated() {
+  	if(this.query != JSON.stringify(this.$route.query)){
+  		this.query = JSON.stringify(this.$route.query);
+  		if(window.plus){
+  			//plus.navigator.setStatusBarBackground("#ffffff");
+  			plus.navigator.setStatusBarStyle("dark")
+  		}
+		this.getNum();
+  	}
+  },
   computed:{
 		show: {
 			get: function() {
@@ -161,7 +140,17 @@ export default {
 			this.$store.state.showTime = newValue;
 			},
 		},
-		...mapGetters(['Time']),
+    hospitalReturnHomePage: {
+    	get: function() {
+    	// 
+    		return this.$store.state.hospitalReturnHomePage
+    	},
+    	set: function (newValue) {
+    	this.$store.state.hospitalReturnHomePage = newValue;
+    	},
+    },
+
+		...mapGetters(['Time','account','isLogin']),
   },
   //注册组件
   components:{
@@ -176,16 +165,9 @@ export default {
 		}, 500);
     },
     initData() {
-		debugger
-		let thisVue = this
-			if(this.$route.meta.auth && !this.$store.state.outpatient.login)
-			this.$toast({message:'请登录',onClose:function(){
-				thisVue.$router.replace({ path : '/outpatientLogin',query:{time:1}});
-			}})
-			
       Object.assign(this.$data, this.$options.data());
 	  this.getNum();
-    //    this.$refs.all.initData();
+       this.$refs.all.initData();
 	   this.$refs.no.initData();
 	   this.$refs.yes.initData();
 
@@ -196,17 +178,19 @@ export default {
 	},
 	//显示筛选弹窗
 	showPopup() {
-	   this.show = true;
-	   // 
+	  this.show = true;
+    this.$router.push({name:'hospital_pathogenicSearch',query:{show:false}})
+
 	},
 	getNum(){
+		debugger
 		let clinicId = '';
-		// this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.$store.state.outpatient.login.clinicId;
-		this.$route.name == 'outpatient_index'?	clinicId='':'',
+		// this.list.clinicId? clinicId = this.list.clinicId : clinicId = this.$store.state.hospital.login.clinicId;
+		// this.$route.name == 'hospital_sourceManagement'&&this.isLogin == 100?	clinicId='':'',
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
-			hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
-			clinicId : this.$store.state.outpatient.login.clinic.clinicId,
+			hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
+			clinicId : clinicId,
 			status :1,
 			pn : 1,
 			ps : 10
@@ -217,11 +201,12 @@ export default {
 		})
 		.catch((err)=>{
 			
+			// //Dialog({ message: err});;
 		})
 		this.$axios.post('/c2/patient/items',qs.stringify({
 			kw : this.list.keywords,
-			hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
-			clinicId : this.$store.state.outpatient.login.clinic.clinicId,
+			hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
+			clinicId : clinicId,
 			status :4,
 			pn : 1,
 			ps : 10
@@ -237,41 +222,7 @@ export default {
 
 		// 
 	},
- 	hospitalSubmit(){
-    this.$axios.post('/c2/patient/itemadd',qs.stringify({
-			clinicId : this.$store.state.outpatient.login.clinic.clinicId,
-			hospitalId : this.$store.state.outpatient.login.hospital.hospitalId,
-    		password : this.account.password,
-    		realname : this.account.realname,
-    		tel	:   this.account.tel,
-    		remark :  this.account.remark,
-    		idcardNo :  this.account.idcardNo
-    	}))
-    	.then( res =>{
-    		
-    		
-    		// 
-    		if(res.data.codeMsg){
-    			Dialog({ message: res.data.codeMsg  });
-    		}else if(res.data.code == 0){
-    			//成功
-				Dialog({ message: '提交成功' });
-				this.account = {
-					realname:'',
-					tel:'',
-					idcardNo:'',
-					remark:''
-				}
-    		}else{
-    			//失败
-    		}
-    	})
-    	.catch((err)=>{
-    		
-    		//Dialog({ message: '加载失败!'});
-    	})
-  }
-	// ...mapActions(['labelLabelFn','dateConfirm','closeFn','screeningSubmit','screeningResult','confirm','cancel','hospitalSubmit'])
+	...mapActions(['labelLabelFn','dateConfirm','closeFn','screeningSubmit','screeningResult','confirm','cancel','hospitalSubmit'])
   },
 }
 </script>
@@ -280,6 +231,7 @@ export default {
 	width: 100%;
   height: 100%;
 	background-color: #F5F5F5;
+	/* position: fixed; */
 }
 .navWarp{
 	/* background-color: #FFFFFF; */
@@ -287,7 +239,7 @@ export default {
 	height: 100%;
 }
 .topNav{
-	height: .8rem;
+	height: .85rem;
 	line-height:.335rem;
 	width: 100%;
 	padding-top: 0.1rem;
@@ -314,7 +266,7 @@ export default {
 .indexSearch{
 	display: inline-block;
 	/* width: .43rem; */
-	width: 63%;
+	width: 70%;
 	float: left;
 	/* text-align: center; */
 	z-index: 999;
@@ -322,11 +274,14 @@ export default {
 	line-height: .36rem;
 	position: relative;
 	padding-top: 6px;
+	padding-left: .1rem;
+	/* padding-right: .1rem; */
+	/* box-sizing: border-box; */
 }
 .indexSearch img{
 	position: absolute;
 	z-index: 9;
-	left: .11rem;
+	left: .21rem;
 	/* top: .15rem; */
 	top: 0rem;
 	bottom: 0rem;
@@ -339,7 +294,7 @@ export default {
 	height: .335rem;width: 2.4rem;
 	line-height: .3rem;
 	/* padding: 0; */
-	width: 80%;
+	width: 84%;
 	padding-left: 12%;
 	/* margin:0 5%; */
 	background: #F5F5F5;
@@ -568,14 +523,6 @@ export default {
 	color: #FFFFFF;
 	font-size: 	.14rem;
 }
-.newAdd{
-	position: fixed;
-	height: calc(100% - 1.3rem);
-	width: 91.4%;
-	left: 0;
-	right: 0;
-	margin: 0rem auto;
-}
 .newAddTitle{
 	width: 91.4%;
 	margin-top: 2.9%;
@@ -611,8 +558,7 @@ export default {
 	border: none;
 	float:right;
 	text-align: right;
-	background: transparent
-	/* background-color: #F5F5F5; */
+	background-color: #F5F5F5;
 }
 .bottom{
 	margin-top: .2rem;

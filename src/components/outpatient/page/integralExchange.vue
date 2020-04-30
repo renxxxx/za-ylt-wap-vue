@@ -2,7 +2,7 @@
 <topSolt>
 <van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown">
 	<div class="integralExchange">
-		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
+		<div class="topNav" :style="{'padding-top':(parseInt($store.state.paddingTop.replace('px',''))-0)+'px'}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@2x.png" alt="">
 			</div>
@@ -165,14 +165,15 @@ export default {
 }
 .topNav{
 	width: 100%;
-	height: 1.76rem;
-	background: url('../../../assets/image/blue-BJ@2x.png')  center no-repeat,linear-gradient(#FDFDFD, #FBFBFB) ;
+	height: 2.1rem;
+	background: url('../../../assets/image/blue-BJ@2x.png')  top no-repeat,linear-gradient(#FDFDFD, #FBFBFB) ;
 	background-size: 100%;
 	color: #FFFFFF;
 	text-align: center;
 	position: fixed;
 	top:0;
-	z-index: 9999;
+	z-index: 99;
+	box-sizing: border-box
 }
 .zhangwei{
 	width: 100%;
