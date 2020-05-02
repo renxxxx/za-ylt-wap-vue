@@ -112,6 +112,7 @@ import topSolt from "../function/topSolt.vue";
 export default {
   name: "gene",
   data() {
+    debugger
     return {
       images: [],
       article: [],
@@ -119,7 +120,7 @@ export default {
       finished: false,
       page: 1,
       pullingDown: false,
-		query:''
+		  query:''
     };
   },
   components: {
@@ -142,24 +143,26 @@ export default {
     
   },
   created() {
-
+    debugger
   },
   
   beforeMount(){
-    
+    debugger
     
   },
-  activated(){
-   
+  mounted(){
+    debugger
   },
 	activated() {
+    debugger
     // window.addEventListener("scroll", this.handleScroll, true);
 		if(this.query != JSON.stringify(this.$route.query)){
+        Object.assign(this.$data, this.$options.data());
 			this.query = JSON.stringify(this.$route.query);
 			if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
 				plus.navigator.setStatusBarStyle("dark")
-			}
+      }
 			this.initData();
 		}
 	},
@@ -197,6 +200,7 @@ export default {
     //   }
     // },
     afterPullDown() {
+      debugger
       //下拉刷新
       setTimeout(() => {
         this.pullingDown = false;
@@ -205,6 +209,7 @@ export default {
       }, 500);
     },
     initData() {
+      debugger
       let thisVue = this
       if(this.$route.meta.auth && !this.$store.state.hospital.login){
 			Toast({message:'请登录',onClose:function(){
@@ -216,7 +221,7 @@ export default {
 				thisVue.$router.replace({ name : 'promoters',query:{}});
 			}
 		}
-      Object.assign(this.$data, this.$options.data());
+    
       //轮播图图片路径请求
       this.$axios
         .get("/hospital/hospital-ads")

@@ -1,6 +1,5 @@
 <template>
-
-	<div class="hospital" :style="{'padding-top':$store.state.paddingTop}">
+	<div id="hospitalClinic" :style="{'padding-top':$store.state.paddingTop}">
 		<topSolt>
 		<van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown" >
 			<div class="navWarp">
@@ -97,6 +96,7 @@ export default {
 	},
 	activated() {
 		if(this.query != JSON.stringify(this.$route.query)){
+			Object.assign(this.$data, this.$options.data());
 			this.query = JSON.stringify(this.$route.query);
 			if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
@@ -105,6 +105,8 @@ export default {
 			this.initData()
 		}
 	},
+		deactivated(){}
+,
   destroyed(){
   },
   mounted() {
@@ -129,19 +131,16 @@ export default {
 				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
 			}})
 
-		  Object.assign(this.$data, this.$options.data());
+		  
 		  this.$refs.clinic.initData();
 		}
 	},
-	activated(){
-	},
-	deactivated(){}
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.hospital{
+#hospitalClinic{
 	width: 100%;
 	height: 100%;
 	background-color: #FFFFFF;

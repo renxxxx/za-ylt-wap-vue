@@ -104,7 +104,7 @@ export default {
 	  
   },
   mounted(){
-	//   debugger
+	   debugger
  //    if(window.plus){
  //    	//plus.navigator.setStatusBarBackground("#2B77EF");
  //    	plus.navigator.setStatusBarStyle("dark")
@@ -112,6 +112,7 @@ export default {
 	// this.getNum();
   },
   activated() {
+	  debugger
   	if(this.query != JSON.stringify(this.$route.query)){
   		this.query = JSON.stringify(this.$route.query);
   		if(window.plus){
@@ -165,6 +166,7 @@ export default {
 		}, 500);
     },
     initData() {
+		debugger
       Object.assign(this.$data, this.$options.data());
 	  this.getNum();
        this.$refs.all.initData();
