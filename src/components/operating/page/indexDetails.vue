@@ -156,12 +156,12 @@ export default {
   },
   activated(){
 		if(this.query != JSON.stringify(this.$route.query)){
+      this.initData();
 			this.query = JSON.stringify(this.$route.query);
 			if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
 				plus.navigator.setStatusBarStyle("dark")
 			}
-			this.initData();
 		}
   },
   activated(){

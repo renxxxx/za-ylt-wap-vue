@@ -1,5 +1,5 @@
 <template>
-	<div class="collect"  id='read' ref="Box"  @scroll="scrollToTop" >
+	<div class="collect"  id='read' ref="Box">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="return" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">

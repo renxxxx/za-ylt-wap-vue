@@ -1,7 +1,6 @@
 <template>
-	<div id="hospitalClinic" :style="{'padding-top':$store.state.paddingTop}">
-		<topSolt>
-		<van-pull-refresh slot="returnTopSolt" v-model="pullingDown" @refresh="afterPullDown" >
+	<div class="hospitalClinic" :style="{'padding-top':$store.state.paddingTop}">
+		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 			<div class="navWarp">
 				<div class="topNav"  :style="{'padding-top':$store.state.paddingTop}">
 					<div class="hospital_search">
@@ -59,9 +58,7 @@
 			</div>
 			<div style="height:2rem"></div>
 			<clinicContent  ref="clinic" :show = 'show'></clinicContent>
-			<!-- <div style="height: .55rem;"></div> -->
 		</van-pull-refresh>
-		</topSolt>
 	</div>
 </template>
 
@@ -70,7 +67,6 @@ import axios from 'axios'
 import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
 import clinicContent from '../function/clinic_content.vue'
-import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'clinic',
 	data() {
@@ -80,13 +76,13 @@ export default {
 			},
 			show : true,
 			pullingDown:false,
-			query:''
+			query:'',
 		}
 	},
 	computed:{
 	},
 	components:{
-		clinicContent,topSolt
+		clinicContent
 	},
 	beforeCreate(){
 		
@@ -130,8 +126,6 @@ export default {
 			this.$toast({message:'请登录',onClose:function(){
 				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
 			}})
-
-		  
 		  this.$refs.clinic.initData();
 		}
 	},
@@ -140,10 +134,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#hospitalClinic{
+.hospitalClinic{
 	width: 100%;
 	height: 100%;
 	background-color: #FFFFFF;
+	/* touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+ 	overflow: scroll;
+ 	overflow-x: hidden; */
 }
 .navWarp{
 	width: 100%;
@@ -258,5 +256,11 @@ export default {
 	/* margin: .04rem 0rem; */
 	margin-left: .05rem;
 	margin-top: -.03rem;
+}
+.content{
+	height: calc(100% - 2rem)!important;
+}
+>>>.van-pull-refresh{
+	height: 100%;
 }
 </style>

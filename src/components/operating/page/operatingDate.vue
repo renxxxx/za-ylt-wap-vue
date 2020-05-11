@@ -6,25 +6,25 @@
     </div>
     <div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
     <van-swipe :show-indicators='false' ref="Swipe" @change="changeFn" :initial-swipe='indedxOf'>
-      <div v-for="year in data">
+      <div v-for="(year,inx) in data" :key="inx">
         <van-swipe-item>
-          <div class='mounth' v-for="(item,inx) in year.minMounth" @click="mouthFn(year.year,item.num)" ref='minMounth' :key="inx" @touchstart="startFn" @touchend="endFn">
+          <div class='mounth' v-for="(item,inx) in year.minMounth" @click="mouthFn(nowYear,item.num)" ref='minMounth' :key="inx" @touchstart="startFn" @touchend="endFn">
             <span :class='item.color'>{{item.num}}月</span>
           </div>
         </van-swipe-item>
         <van-swipe-item>
-          <div class='mounth' v-for="(_item,num) in year.maxMounth" @click="mouthFn(year.year,_item.num)" ref='maxMounth' :key="num" @touchstart="startFn" @touchend="endFn">
+          <div class='mounth' v-for="(_item,num) in year.maxMounth" @click="mouthFn(nowYear,_item.num)" ref='maxMounth' :key="num" @touchstart="startFn" @touchend="endFn">
             <span :class='_item.color'>{{_item.num}}月</span>
           </div>
         </van-swipe-item>
       </div>
     </van-swipe>
     <div class="center">
-      <div class="title" v-for="data in dataValue">
-        <span>{{moment(data.time[0]).format('MM-DD')}}</span>
+      <div class="title" v-for="(data,index) in dataValue" :key="index">
+        <span>{{moment(data.time[0]).format('YYYY-MM-DD')}}</span>
         <!-- <span>{{data.value[0].content}}</span> -->
         <van-steps direction="vertical" :active="-9999">
-          <van-step v-for="riqi in data.value" key="riqi">
+          <van-step v-for="(riqi,num) in data.value" :key="num">
             <span class="addTime">{{moment(riqi.addTime).format('hh:mm')}}</span>
             <p class="riqiP">{{riqi.hospitalUserName}} 上传了 <span>{{riqi.operatingManualSectionName}}</span> </p>
           </van-step>
@@ -62,7 +62,7 @@ export default {
       end:0,
       data:[],
       dataValue:[],
-      indedxOf:undefined,
+      indedxOf:0,
 			query:''
     }
   },
@@ -106,7 +106,6 @@ export default {
           })
           for(let num = 1;num<7;num++){
             if(this.nowMonth == num){
-              // 
               if(this.nowMonth>6){
                 this.data[this.nowYear-1950].maxMounth.push({
                   num: num+6,
@@ -127,7 +126,6 @@ export default {
                 })
               }
             }else{
-              
               this.data[this.nowYear-1950].minMounth.push({
                 num: num,
                 color:'noColor'
@@ -159,29 +157,6 @@ export default {
 
       }
       console.dir(this.data)
-      // for(let num = 1;num<(this.nowYear-1950);num++){
-      //   this.$refs.Swipe.next();
-      // }
-      // if(this.nowMonth>6){
-      //   this.$refs.Swipe.next();
-      //   
-      //   this.data[this.nowYear-1950].maxMounth[this.nowMonth-7].color = 'color'
-      //   // this.maxMounth[this.nowMonth-7].color = 'color'
-      // }else{
-      //   
-      //   this.data[this.nowYear-1950].minMounth[this.nowMonth-1].color = 'color'
-      //   // this.minMounth[this.nowMonth-1].color = 'color'
-      // }
-      // for(let i = 1;i<7;i++){
-      //   this.minMounth.push({
-      //     num: i,
-      //     color:'noColor'
-      //   })
-      //   this.maxMounth.push({
-      //     num: i+6,
-      //     color:'noColor'
-      //   })
-      // }
       this.getData(this.nowYear,this.nowMonth)
     },
     changeFn(index) {
@@ -214,7 +189,6 @@ export default {
 
     },
     mouthFn(year,mounth){
-      
       this.data=[];
       for(let i = 1950;i<=2100;i++){
         this.data.push({
@@ -234,6 +208,7 @@ export default {
         }
       }
       this.dataValue = []
+
       this.getData(year,mounth)
     },
     getData(year,mounth){
@@ -304,6 +279,7 @@ export default {
         _time = year.toString()+mounth.toString()+'01'
       }
       _time = moment(_time).format('YYYY-MM-DD HH:mm:ss')
+      // console.log(_time)
       let data = new Date(_time).getTime();
       return data;
     }
@@ -407,5 +383,17 @@ export default {
 .riqiP>span{
 
   color: #2B77EF;
+}
+.color{
+  background-color: #FFFFFF;
+  color: #2B77EF;
+}
+.noColor{
+  color: #FFFFFF;
+  background-color: transparent
+}
+>>>.van-swipe-item{
+  float: left;
+  height: auto;
 }
 </style>

@@ -70,6 +70,7 @@ export default {
   //   this.getData()
   },
 	activated() {
+    debugger
 		if(this.query != JSON.stringify(this.$route.query)){
 			this.query = JSON.stringify(this.$route.query);
 			if(window.plus){

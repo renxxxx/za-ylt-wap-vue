@@ -4,7 +4,6 @@
       <h3>您有以下端口</h3>
       <p>请选择进入</p>
     </div>
-
 		<div class="options" @click="choseFn('1')">
       <img src="../assets/image/yy.png" alt="">
       <h3>Hospital</h3>
@@ -67,8 +66,8 @@ export default {
    
   },
   activated(){
-     let thisVue = this;
-     let entrance=localStorage.getItem('entrance');
+    debugger
+    let entrance=localStorage.getItem('entrance');
     if(1==entrance)
           this.$router.replace({ path : '/hospital',query:{}});
     else if(2==entrance)

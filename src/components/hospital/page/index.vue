@@ -1,14 +1,13 @@
 <template>
-  <div ref="refersh" id="hospitalIndex">
-    <topSolt>
-      <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" slot="returnTopSolt" style="ovflow:hidden">
+  <div ref="refersh" id="hospitalIndex" @scroll="handleScroll" >
+      <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" style="ovflow:hidden">
             <div class="navWarp" :style="{'padding-top': $store.state.paddingTop}">
               <div class="navTitle">
                 <span>—&nbsp;&nbsp;医院端&nbsp;&nbsp;—</span>
               </div>
               <div class="slider">
                 <van-swipe>
-                  <van-swipe-item v-for="(image, index) in images" :key="index">
+                  <van-swipe-item v-for="(image, index) in 99" :key="index">
                     <router-link :to="{name : image.url}">
                       <img  v-lazy="image.cover" class="silder_img" />
                     </router-link>
@@ -93,22 +92,16 @@
                   </li>
                 </van-list>
               </ul>
-            </div>
-            <!-- <div style="height: .55rem;"></div> -->
-            
+            </div>            
         </van-pull-refresh>
-      </topSolt>
+      <div class="returnTop" @click="$refs.refersh.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
+        <img src="../../../assets/image/returnTop.png" alt />
+        <span>顶部</span>
+      </div>
   </div>
-      <!-- <bottomNav></bottomNav> -->
 </template>
 
 <script>
-import axios from "axios";
-import { mapActions, mapGetters } from "vuex";
-import qs from "qs";
-import { Dialog,Toast } from "vant";
-import topSolt from "../function/topSolt.vue";
-// import moment from 'moment'
 export default {
   name: "gene",
   data() {
@@ -120,25 +113,14 @@ export default {
       finished: false,
       page: 1,
       pullingDown: false,
-		  query:''
+      query:'',
+      scrollTop:0,
+      hospitalReturnTopPage:false,
     };
   },
   components: {
-    topSolt
+    
   },
-  computed: {
-    hospitalReturnTopPage: {
-      get: function() {
-        // 
-        return this.$store.state.hospitalReturnTopPage;
-      },
-      set: function(newValue) {
-        this.$store.state.hospitalReturnTopPage = newValue;
-      }
-    },
-    // ...mapGetters(["account", "isLogin"])
-  },
-
   beforeCreate(){
     
   },
@@ -153,9 +135,13 @@ export default {
   mounted(){
     debugger
   },
+  watch:{
+    $route(to,from){
+      debugger
+    }
+  },
 	activated() {
     debugger
-    // window.addEventListener("scroll", this.handleScroll, true);
 		if(this.query != JSON.stringify(this.$route.query)){
         Object.assign(this.$data, this.$options.data());
 			this.query = JSON.stringify(this.$route.query);
@@ -164,55 +150,37 @@ export default {
 				plus.navigator.setStatusBarStyle("dark")
       }
 			this.initData();
-		}
+    }
+     if(this.scrollTop != 0){
+      this.$refs.refersh.scrollTop = this.scrollTop;
+    }
 	},
   deactivated(){
     debugger
     },
   methods: {
     // 滑动一定距离出现返回顶部按钮
-    // handleScroll() {
-    //   if(!this.$refs.refersh)
-    //     return
-    //   let scrollTop =
-    //     this.$refs.refersh.scrollTop ||
-    //     this.$refs.refersh.pageYOffset;
-    //   let windowHeight =
-    //     document.documentElement.clientHeight || this.$refs.refersh.clientHeight;
-    //   let data =
-    //     this.$refs.refersh.scrollHeight >
-    //     (window.innerHeight || document.documentElement.clientHeight);
-    //   // 
-    //   let opacityValue =
-    //     Math.round(
-    //       ((scrollTop + windowHeight) / this.$refs.refersh.scrollHeight) * 100
-    //     ) / 100;
-    //   // 
-    //   if (data && scrollTop > 0) {
-    //     this.hospitalReturnTopPage = true;
-    //     this.$refs.returnTopRef.style.opacity = 1;
-    //     document.getElementById("returnHomePageId").style.bottom = '1.5rem';
-    //   } else {
-    //     debugger
-    //     this.$refs.returnTopRef.style.opacity = 0;
-    //     document.getElementById("returnHomePageId").style.bottom = '1rem';
-    //     this.hospitalReturnTopPage = false;
-    //   }
-    // },
+    handleScroll() {
+      debugger
+      this.scrollTop = this.$refs.refersh.scrollTop || this.$refs.refersh.pageYOffset
+      if (this.scrollTop > 800) {
+        this.hospitalReturnTopPage = true;
+      } else {
+        this.hospitalReturnTopPage = false;
+      }
+    },
     afterPullDown() {
       debugger
-      //下拉刷新
       setTimeout(() => {
         this.pullingDown = false;
         this.initData();
-		
       }, 500);
     },
     initData() {
       debugger
       let thisVue = this
       if(this.$route.meta.auth && !this.$store.state.hospital.login){
-			Toast({message:'请登录',onClose:function(){
+			this.$toast({message:'请登录',onClose:function(){
 				thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
 			}})
 		}
@@ -290,13 +258,12 @@ export default {
         })
         .catch(err => {
           // 
-          // Dialog({ message: '加载失败!' });
         });
       //文章请求
       this.getdata();
     },
     getdata(_data) {
-      this.$axios.post("/c2/article/items",qs.stringify({
+      this.$axios.post("/c2/article/items",this.qs.stringify({
             hospitalId: this.$store.state.hospital.login.hospital.hospitalId,
             pn: this.page,
             ps: 10
@@ -327,7 +294,6 @@ export default {
     },
     onLoad() {
       ++this.page;
-      
       this.getdata();
     },
     noLinkFn() {
@@ -344,13 +310,13 @@ export default {
 
 <style scoped>
 #hospitalIndex {
-  height: calc(100% - .5rem);
+  /* height: calc(100% - .5rem); */
   width: 100%;
+  height: 100%;
   touch-action: pan-y;
 	-webkit-overflow-scrolling: touch;
-  /* overflow: scroll; */
-  /* position: fixed; */
-  overflow: hidden;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 .navWarp {
   height: 2.26rem;

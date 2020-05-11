@@ -1,35 +1,32 @@
 <template>
-<topSolt>
-	<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" slot="returnTopSolt" >
-  	<div class="index">
-		<div class="navWarp">
-			<!-- 搜索及其筛选 -->
-			<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.paddingTop}">
-				<div class="indexReturn" @click="goBackFn"  id="navback">
-					<img src="../../../assets/image/back-white@2x.png" alt="">
+	<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" class="refresh">
+		<div class="index">
+			<div class="navWarp">
+				<!-- 搜索及其筛选 -->
+				<div class="topNav" ref="topNav" :style="{'padding-top':$store.state.paddingTop}">
+					<div class="indexReturn" @click="goBackFn"  id="navback">
+						<img src="../../../assets/image/back-white@2x.png" alt="">
+					</div>
+					<router-link :to="{name:'hospital_pathogenicSearch',query:{focus : true,}}">
+						<div class="indexSearch ">
+							<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
+							<img src="../../../assets/image/sousuo@2x.png" alt="">
+						</div>
+					</router-link>
+					<router-link :to="{name:'hospital_pathogenicSearch',query:{}}">
+						<div class="clinic_buttton">
+							<button>搜索</button>
+						</div>
+					</router-link>
+					<div class="indexScreening" @click="showPopup">
+						<span>筛选</span>
+						<img src="../../../assets/image/screen@2x.png" alt="加载中" >
+					</div>
 				</div>
-				<router-link :to="{name:'hospital_pathogenicSearch',query:{focus : true,}}">
-          <div class="indexSearch ">
-              <input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
-              <img src="../../../assets/image/sousuo@2x.png" alt="">
-          </div>
-				</router-link>
-        <router-link :to="{name:'hospital_pathogenicSearch',query:{}}">
-          <div class="clinic_buttton">
-            <button>搜索</button>
-          </div>
-        </router-link>
-        <!-- <router-link }}"> -->
-          <div class="indexScreening" @click="showPopup">
-            <span>筛选</span>
-            <img src="../../../assets/image/screen@2x.png" alt="加载中" >
-          </div>
-        <!-- </router-link> -->
-			</div>
-			<!-- 就诊情况 -->
-			 
+				<!-- 就诊情况 -->
+				
 				<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+39)+'px'}">
-					<van-tabs background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
+					<van-tabs @click="tabsFn" background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
 						<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'>
 							<keep-alive>
 								<clinicAll ref='all' :list = 'list'></clinicAll>
@@ -47,23 +44,16 @@
 						</van-tab>
 					</van-tabs>
 				</div>
-			
+			</div>
 		</div>
-		<!-- <router v-if="isLogin == 200? true:false"></router> -->
-  </div>
-  </van-pull-refresh>
-  </topSolt>
+  	</van-pull-refresh>
 </template>
+
 <script>
-import axios from 'axios'
-import {mapActions,mapGetters,mapState} from 'vuex'
 import qs from 'qs';
-import { Dialog } from 'vant'
 import clinicAll from '../function/clinicAll.vue'
 import clinicYes from '../function/clinicYes.vue'
 import clinicNo from '../function/clinicNo.vue'
-import topSolt from "../function/topSolt.vue";
-// import router from '../../outpatient/functionPage/router.vue'
 export default {
   name: 'index',
   data () {
@@ -91,14 +81,6 @@ export default {
 		query:""
     }
   },
-  created(){
-	  debugger
-	var heightRexg = /^[0-9]*/g
-	//var topHeight = this.topHeight.match(heightRexg)
-	//this.height = parseInt(topHeight.join())
-	// //
-  },
-  
   destroyed(){
 	  debugger
 	  
@@ -112,7 +94,6 @@ export default {
 	// this.getNum();
   },
   activated() {
-	  debugger
   	if(this.query != JSON.stringify(this.$route.query)){
   		this.query = JSON.stringify(this.$route.query);
   		if(window.plus){
@@ -120,6 +101,7 @@ export default {
   			plus.navigator.setStatusBarStyle("dark")
   		}
 		this.getNum();
+		// window.addEventListener("scroll", this.$refs.all.handleScrollAll, true);
   	}
   },
   computed:{
@@ -141,23 +123,32 @@ export default {
 			this.$store.state.showTime = newValue;
 			},
 		},
-    hospitalReturnHomePage: {
-    	get: function() {
-    	// 
-    		return this.$store.state.hospitalReturnHomePage
-    	},
-    	set: function (newValue) {
-    	this.$store.state.hospitalReturnHomePage = newValue;
-    	},
-    },
 
-		...mapGetters(['Time','account','isLogin']),
   },
   //注册组件
   components:{
-	  clinicAll,clinicYes,clinicNo,topSolt
+	  clinicAll,clinicYes,clinicNo
   },
   methods:{
+	
+		tabsFn(_value){
+			debugger
+			// console.log(_value)
+			switch(_value){
+				case 0 :
+					this.$refs.all.show()
+				break;
+				case 1 :
+					this.$refs.no.show()
+				break;
+				case 2 :
+					this.$refs.yes.show()
+				break;
+			}
+		//   console.log(this.$refs.all.lineHeightAll);
+		//   console.log(this.$refs.no.lineHeightNo);
+		//   console.log(this.$refs.yes.lineHeightYes);
+	  },
 	 afterPullDown() {
       //下拉刷新
 		setTimeout(() => {
@@ -166,10 +157,9 @@ export default {
 		}, 500);
     },
     initData() {
-		debugger
       Object.assign(this.$data, this.$options.data());
 	  this.getNum();
-       this.$refs.all.initData();
+	   this.$refs.all.initData();
 	   this.$refs.no.initData();
 	   this.$refs.yes.initData();
 
@@ -180,8 +170,8 @@ export default {
 	},
 	//显示筛选弹窗
 	showPopup() {
-	  this.show = true;
-    this.$router.push({name:'hospital_pathogenicSearch',query:{show:false}})
+	  	this.show = true;
+   		this.$router.push({name:'hospital_pathogenicSearch',query:{show:false}})
 
 	},
 	getNum(){
@@ -224,16 +214,20 @@ export default {
 
 		// 
 	},
-	...mapActions(['labelLabelFn','dateConfirm','closeFn','screeningSubmit','screeningResult','confirm','cancel','hospitalSubmit'])
   },
 }
 </script>
 <style scoped>
+.all{
+	height: calc(100vh - .85rem);
+}
+.refresh{
+	overflow: hidden;
+}
 .index{
 	width: 100%;
-  height: 100%;
+ 	height: 100%;
 	background-color: #F5F5F5;
-	/* position: fixed; */
 }
 .navWarp{
 	/* background-color: #FFFFFF; */

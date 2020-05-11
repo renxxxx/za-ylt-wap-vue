@@ -1,5 +1,5 @@
 <template>
-	<div class="all">
+	<div id="no" class="all" @scroll="handleScroll" ref="no">
 		<!-- <van-pull-refresh v-model="isLoading" @refresh="refresh"> -->
 			<van-list  v-model="loading" :finished="finished" :finished-text="test"  @load="getNextPage">
 			<ul>
@@ -21,15 +21,17 @@
 						</div>
 				</li>
 			</ul>
-      </van-list>
+     	</van-list>
+	 	<div class="returnTop" @click="$refs.no.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
+			<img src="../../../assets/image/returnTop.png" alt />
+			<span>顶部</span>
+		</div>
 		<!-- </van-pull-refresh> -->
 	</div>
 </template>
 <script>
 import axios from 'axios'
-import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import { Dialog } from 'vant'
 export default {
 	name: 'clinicAll',
 	data () {
@@ -44,12 +46,13 @@ export default {
 			yesNum: 0,
 			clinicId:'',
 			items:[],
-      test:'',
-	  query:''
+			test:'',
+			query:'',
+			hospitalReturnTopPage:false,
+			scrollTop:0,
 		}
 	},
 	computed:{
-	  ...mapGetters(['account','isLogin']),
 	},
 	 props:['list'],
 	components:{
@@ -58,7 +61,12 @@ export default {
 	created () {
 		debugger
 	},
- mounted() {
+	watch:{
+		$route(to,from){			
+			// window.removeEventListener("scroll", this.handleScrollNo, true);
+		}
+	},
+	mounted() {
 	 //  debugger
 		// if(window.plus){
 		// 	//plus.navigator.setStatusBarBackground("#ffffff");
@@ -68,15 +76,30 @@ export default {
 
 	},
 	activated() {
-		if(this.query != JSON.stringify(this.$route.query)){
-			this.query = JSON.stringify(this.$route.query);
-			if(window.plus){
-				//plus.navigator.setStatusBarBackground("#ffffff");
-				plus.navigator.setStatusBarStyle("dark")
-			}
-		}
+		
+		this.show()
 	},
 	methods:{
+		show(){
+			if(this.query != JSON.stringify(this.$route.query)){
+				this.query = JSON.stringify(this.$route.query);
+				if(window.plus){
+					plus.navigator.setStatusBarStyle("dark")
+				}
+			}
+			if(this.scrollTop != 0){
+				this.$refs.no.scrollTop = this.scrollTop
+			}
+		},
+		// 滑动一定距离出现返回顶部按钮
+		handleScroll() {
+			this.scrollTop = this.$refs.no.scrollTop || this.$refs.no.pageYOffset
+			if (this.scrollTop > 800) {
+				this.hospitalReturnTopPage = true;
+			} else {
+				this.hospitalReturnTopPage = false;
+			}
+		},
 		submitFn(_item,_button){
 			this.$axios.post('/c2/patient/confirmjiuzhen',qs.stringify({
 				patientId : _item.itemId
@@ -147,8 +170,6 @@ export default {
         }
 			})
 			.catch((err)=>{
-				
-				//Dialog({ message: err});;
 			});
 
 		},
@@ -168,9 +189,11 @@ export default {
 <style scoped>
 .all{
 	width: 100%;
-	/* position: fixed; */
-	/* height: calc(100% - .7rem); */
-	/* overflow: scroll; */
+	/* height: calc(100vh - .85rem); */
+	touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 .all li{
 	height:.84rem;
