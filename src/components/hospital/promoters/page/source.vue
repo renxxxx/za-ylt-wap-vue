@@ -1,7 +1,5 @@
 <template>
-	<div>
-	<topSolt>
-	<div class="sourceManagement" slot="returnTopSolt">
+	<div class="sourceManagement">
 		<div class="topNav">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../../assets/image/shape@3x.png" alt="">
@@ -15,11 +13,10 @@
 				</router-link>
 			</div>
 			<div class="navZhanwei"></div>
-			<div class="navTime">`
+			<div class="navTime">
 				<span>{{moment(this.$route.query.clinicTime).format('YYYY-MM-DD HH:mm')}}</span>
 			</div>
 		</div>
-
 		<div style="height: .575rem;width: 100%;"></div>
 		<router-link :to="{name:'promoters_addSource',query:{clinicId:this.$route.query.clinicId}}">
 			<div class="addEtiology">
@@ -34,95 +31,100 @@
 					      <span>全部病源</span>
 						  <span>{{itemsNum}}</span>
 					</div>
-					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="nextPageFn">
-						<ul class="list">
-							<!-- items -->
-							<li v-for="(item,inx) in  items" :key="inx">
-								<router-link :to="{path : '/promoters/promoters_detailsPage' ,query : {patientId : item.itemId,}}">
-									<div class="style">
-										<div class="contentTitle">
-											<img :src="item.img" alt="">
-											<span>{{item.realname}}</span>
+					<div class="list" @scroll="handleScroll" ref="listAll">
+						<van-list  v-model="loading" :finished="finishedAll" finished-text="没有更多了"  @load="nextPageFn">
+							<ul>
+								<!-- items -->
+								<li v-for="(item,inx) in  items" :key="inx">
+									<router-link :to="{path : '/promoters/promoters_detailsPage' ,query : {patientId : item.itemId,}}">
+										<div class="style">
+											<div class="contentTitle">
+												<img :src="item.img" alt="">
+												<span>{{item.realname}}</span>
+											</div>
+											<div class="contnet_left">
+												<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
+												<span>状态：{{item.span}}</span>
+											</div>
 										</div>
-										<div class="contnet_left">
-											<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
-											<span>状态：{{item.span}}</span>
-										</div>
+									</router-link>
+									<div class="content_right">
+										<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
 									</div>
-								</router-link>
-								<div class="content_right">
-									<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
-								</div>
-							</li>
-						</ul>
-					</van-list>
+								</li>
+							</ul>
+						</van-list>
+					</div>
 				</van-tab>
 				<van-tab>
 					<div slot="title" class="tabTitle">
 					      <span>已就诊</span>
 						  <span>{{yesItemsNum}}</span>
 					</div>
-					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="yesNextPageFn">
-						<ul class="list">
-							<li v-for="(item,inx) in  yesItems" :key="inx">
-								<router-link :to="{path : '/promoters/promoters_detailsPage' ,query : {patientId : item.itemId,}}">
-									<div class="style">
-										<div class="contentTitle">
-											<img :src="item.img" alt="">
-											<span>{{item.realname}}</span>
+					<div class="list" @scroll="handleScroll" ref="listYes">
+						<van-list  v-model="loading" :finished="finishedYes" finished-text="没有更多了"  @load="yesNextPageFn">
+							<ul>
+								<li v-for="(item,inx) in  yesItems" :key="inx">
+									<router-link :to="{path : '/promoters/promoters_detailsPage' ,query : {patientId : item.itemId,}}">
+										<div class="style">
+											<div class="contentTitle">
+												<img :src="item.img" alt="">
+												<span>{{item.realname}}</span>
+											</div>
+											<div class="contnet_left">
+												<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
+												<span>状态：{{item.span}}</span>
+											</div>
 										</div>
-										<div class="contnet_left">
-											<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
-											<span>状态：{{item.span}}</span>
-										</div>
+									</router-link>
+									<div class="content_right">
+										<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
 									</div>
-								</router-link>
-								<div class="content_right">
-									<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
-								</div>
-							</li>
-						</ul>
-					</van-list>
+								</li>
+							</ul>
+						</van-list>
+					</div>
 				</van-tab>
 				<van-tab>
 					<div slot="title" class="tabTitle">
 					      <span>未就诊</span>
 						  <span>{{noItemsNum}}</span>
 					</div>
-					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="noNextPageFn">
-						<ul class="list">
-							<li v-for="(item,inx) in  noItems" :key="inx">
-								<router-link :to="{path : '/promoters/promoters_detailsPage' ,query : {patientId : item.itemId,}}">
-									<div class="style">
-										<div class="contentTitle">
-											<img :src="item.img" alt="">
-											<span>{{item.realname}}</span>
+					<div class="list" @scroll="handleScroll" ref="listNo">
+						<van-list  v-model="loading" :finished="finishedNo" finished-text="没有更多了"  @load="noNextPageFn">
+							<ul>
+								<li v-for="(item,inx) in  noItems" :key="inx">
+									<router-link :to="{path : '/promoters/promoters_detailsPage' ,query : {patientId : item.itemId,}}">
+										<div class="style">
+											<div class="contentTitle">
+												<img :src="item.img" alt="">
+												<span>{{item.realname}}</span>
+											</div>
+											<div class="contnet_left">
+												<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
+												<span>状态：{{item.span}}</span>
+											</div>
 										</div>
-										<div class="contnet_left">
-											<span>推送：{{moment(item.pushTime).format('YYYY-MM-DD')}}</span>
-											<span>状态：{{item.span}}</span>
-										</div>
+									</router-link>
+									<div class="content_right">
+										<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
 									</div>
-								</router-link>
-								<div class="content_right">
-									<button :class="item.buttonColor" @click="submitFn(item,$event)">{{item.button}}</button>
-								</div>
-							</li>
-						</ul>
-					</van-list>
+								</li>
+							</ul>
+						</van-list>
+					</div>
 				</van-tab>
 			</van-tabs>
 		</div>
+		<div class="returnTop" @click="returnTopFn" ref="returnTopRef" v-show="hospitalReturnTopPage">
+			<img src="../../../../assets/image/returnTop.png" alt />
+			<span>顶部</span>
+		</div>
 	</div>
-	</topSolt>
-</div>
 </template>
 
 <script>
-import axios from 'axios'
-import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import topSolt from "../../function/topSolt.vue";
 export default {
 	name: '',
 	data () {
@@ -135,15 +137,23 @@ export default {
 			noItemsNum:'',
 			loading: false,
 			// 加载状态结束
-			finished: false,
-			page:0,
+			finishedAll: false,
+			finishedYes: false,
+			finishedNo:false,
+			pageAll:0,
+			pageYes:0,
+			pageNo:0,
+			clickData:0,
+			scrollTopAll:0,
+			scrollTopYes:0,
+			scrollTopNo:0,
+     		hospitalReturnTopPage:false,
 		}
 	},
 	computed:{
-	  ...mapGetters(['account'])
 	},
 	components:{
-		topSolt
+		
 	},
 	created () {
 
@@ -153,23 +163,71 @@ export default {
 	},
 	activated(){
 		if(this.query != JSON.stringify(this.$route.query)){
+			Object.assign(this.$data, this.$options.data());
 			this.query = JSON.stringify(this.$route.query);
 			if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
 				plus.navigator.setStatusBarStyle("dark")
 			}
-			// this.initData();
+			this.getAllNum();
+		}
+		if(this.scrollTopAll != 0){
+			this.$refs.listAll.scrollTop = this.scrollTopAll;
+		}
+		if(this.scrollTopYes != 0){
+			this.$refs.listYes.scrollTop = this.scrollTopYes;
+		}
+		if(this.scrollTopNo != 0){
+			this.$refs.listNo.scrollTop = this.scrollTopNo;
 		}
     },
-	activated(){
-		this.items = [];
-		this.yesItems = [];
-		this.noItems = [];
 
-		this.getAllNum();
-		this.getData()
-	},
 	methods: {
+		// 滑动一定距离出现返回顶部按钮
+		handleScroll() {
+			switch(this.clickData){
+				case 0:
+				this.scrollTopAll = this.$refs.listAll.scrollTop || this.$refs.listAll.pageYOffset
+				if (this.scrollTopAll > 0) {
+					this.hospitalReturnTopPage = true;
+				} else {
+					this.hospitalReturnTopPage = false;
+				}
+				break;
+				case 1:
+				this.scrollTopYes = this.$refs.listYes.scrollTop || this.$refs.listYes.pageYOffset
+				if (this.scrollTopYes > 0) {
+					this.hospitalReturnTopPage = true;
+				} else {
+					this.hospitalReturnTopPage = false;
+				}
+				break;
+				case 2:
+				this.scrollTopNo = this.$refs.listNo.scrollTop || this.$refs.listNo.pageYOffset
+				if (this.scrollTopNo > 0) {
+					this.hospitalReturnTopPage = true;
+				} else {
+					this.hospitalReturnTopPage = false;
+				}
+				break;
+			}
+			
+		},
+		returnTopFn(){
+			switch(this.clickData){
+				case 0:
+				this.$refs.listAll.scrollTop = 0;
+				break;
+				case 1:
+				this.$refs.listYes.scrollTop = 0;
+				break;
+				case 2:
+				this.$refs.listNo.scrollTop = 0;
+				break;
+			}
+			// this.$refs.indexList.scrollTop=0;
+			this.hospitalReturnTopPage = false;
+		},
 		getAllNum() {
 			debugger
 			var num = '';
@@ -190,80 +248,106 @@ export default {
 			this.$router.back(-1)
 		},
 		// 获取下一页的方法
-		getData(data,page){
+		getDataAll(){
 			this.$axios.post('/c2/patient/items',qs.stringify({
-					clinicId : this.$route.query.clinicId,
-					status: data,
-					pn : page,
-					ps : 10,
-				}))
-				.then(res => {
-					if(res.data.data.items.length != 0){
-						for (let nums in res.data.data.items) {
-							if(res.data.data.items[nums].status == 1){
-								this.items.push({
-									clinicName : res.data.data.items[nums].clinicName,
-									itemId : res.data.data.items[nums].itemId,
-									pushTime : res.data.data.items[nums].pushTime,
-									realname : res.data.data.items[nums].realname,
-									status : res.data.data.items[nums].status,
-									img : require("../../../../assets/image/orange@2x.png"),
-									button : "确认就诊",
-									span : "未就诊"
-								});
-								if(data){
-									this.noItems.push({
-										clinicName : res.data.data.items[nums].clinicName,
-										itemId : res.data.data.items[nums].itemId,
-										pushTime : res.data.data.items[nums].pushTime,
-										realname : res.data.data.items[nums].realname,
-										status : res.data.data.items[nums].status,
-										img : require("../../../../assets/image/orange@2x.png"),
-										button : "确认就诊",
-										span : "未就诊"
-									});
-								}
-							}else if(res.data.data.items[nums].status == 4){
-								this.items.push({
-									clinicName : res.data.data.items[nums].clinicName,
-									itemId : res.data.data.items[nums].itemId,
-									pushTime : res.data.data.items[nums].pushTime,
-									realname : res.data.data.items[nums].realname,
-									status : res.data.data.items[nums].status,
-									img :require( "../../../../assets/image/blue@2x.png"),
-									button : "已就诊",
-									buttonColor : "buttonColor",
-									span : "已就诊"
-								});
-								if(data){
-									this.yesItems.push({
-										clinicName : res.data.data.items[nums].clinicName,
-										itemId : res.data.data.items[nums].itemId,
-										pushTime : res.data.data.items[nums].pushTime,
-										realname : res.data.data.items[nums].realname,
-										status : res.data.data.items[nums].status,
-										img :require( "../../../../assets/image/blue@2x.png"),
-										button : "已就诊",
-										buttonColor : "buttonColor",
-										span : "已就诊"
-									});
-								}
-							}
-						}
-						// 加载状态结束
-						this.loading = false;
-					}else{
-						this.loading = false;
-						this.finished = true;
+				clinicId : this.$route.query.clinicId,
+				pn : this.pageAll,
+				ps : 10,
+			}))
+			.then(res => {
+				if(res.data.data.items.length != 0){
+					for (let nums in res.data.data.items) {
+						this.items.push({
+							clinicName : res.data.data.items[nums].clinicName,
+							itemId : res.data.data.items[nums].itemId,
+							pushTime : res.data.data.items[nums].pushTime,
+							realname : res.data.data.items[nums].realname,
+							status : res.data.data.items[nums].status,
+							img : require("../../../../assets/image/orange@2x.png"),
+							button : "确认就诊",
+							span : "未就诊"
+						});
 					}
-				})
-				.catch((err)=>{
-					
-					//Dialog({ message: err});;
-				});
+					// 加载状态结束
+					this.loading = false;
+				}else{
+					this.loading = false;
+					this.finishedAll = true;
+				}
+			})
+			.catch((err)=>{
+				//Dialog({ message: err});;
+			});
 		},
-
 		// 获取下一页的方法
+		getDataNo(){
+			this.$axios.post('/c2/patient/items',qs.stringify({
+				clinicId : this.$route.query.clinicId,
+				status: 1,
+				pn : this.pageNo,
+				ps : 10,
+			}))
+			.then(res => {
+				if(res.data.data.items.length != 0){
+					for (let nums in res.data.data.items) {
+						this.noItems.push({
+							clinicName : res.data.data.items[nums].clinicName,
+							itemId : res.data.data.items[nums].itemId,
+							pushTime : res.data.data.items[nums].pushTime,
+							realname : res.data.data.items[nums].realname,
+							status : res.data.data.items[nums].status,
+							img : require("../../../../assets/image/orange@2x.png"),
+							button : "确认就诊",
+							span : "未就诊"
+						});
+					}
+						// 加载状态结束
+					this.loading = false;
+				}else{
+					this.loading = false;
+					this.finishedNo = true;
+				}
+			})
+			.catch((err)=>{
+					
+			});
+		},
+		// 获取下一页的方法
+		getDataYse(){
+			this.$axios.post('/c2/patient/items',qs.stringify({
+				clinicId : this.$route.query.clinicId,
+				status: 4,
+				pn : this.pageYes,
+				ps : 10,
+			}))
+			.then(res => {
+				if(res.data.data.items.length != 0){
+					for (let nums in res.data.data.items) {
+						this.yesItems.push({
+							clinicName : res.data.data.items[nums].clinicName,
+							itemId : res.data.data.items[nums].itemId,
+							pushTime : res.data.data.items[nums].pushTime,
+							realname : res.data.data.items[nums].realname,
+							status : res.data.data.items[nums].status,
+							img :require( "../../../../assets/image/blue@2x.png"),
+							button : "已就诊",
+							buttonColor : "buttonColor",
+							span : "已就诊"
+						});
+					}
+					// 加载状态结束
+					this.loading = false;
+				}else{
+					this.loading = false;
+					this.finishedYes = true;
+				}
+			})
+			.catch((err)=>{
+				
+				//Dialog({ message: err});;
+			});
+		},
+		// 获取数量的方法
 		async getNum(data){
 			debugger;
 			var num ='';
@@ -286,41 +370,52 @@ export default {
 		// 全部病原列表的下一页
 		nextPageFn(){
 			debugger;
-			this.page++;
-			this.getData('',this.page);
+			this.pageAll++;
+			this.getDataAll();
 		},
 		// 已就诊病原列表的下一页
 		yesNextPageFn(){
-			this.page++;
-			this.getData(4,this.page);
+			this.pageYes++;
+			this.getDataYse();
 		},
 		// 未就诊病原列表的下一页
 		noNextPageFn(){
-			this.page++;
-			this.getData(1,this.page);
+			this.pageNo++;
+			this.getDataNo();
 		},
 		// 菜单切换的清空值
 		tabFn(_value){
-			
-			switch(_value){
+			this.clickData = _value;
+			switch(this.clickData){
 				case 0:
-				debugger
-				if(!this.items.length){
-					this.page = 0;
-					this.finished = false;
+				if (this.scrollTopAll > 800) {
+					this.hospitalReturnTopPage = true;
+				} else {
+					this.hospitalReturnTopPage = false;
 				}
+				this.$nextTick(()=>{
+					this.$refs.listAll.scrollTop = this.scrollTopAll
+				})
 				break;
 				case 1:
-				if(!this.yesItems.length){
-					this.page = 0;
-					this.finished = false;
+				if (this.scrollTopYes > 800) {
+					this.hospitalReturnTopPage = true;
+				} else {
+					this.hospitalReturnTopPage = false;
 				}
+				this.$nextTick(()=>{
+					this.$refs.listYes.scrollTop = this.scrollTopYes
+				})
 				break;
 				case 2:
-				if(!this.noItems.length){
-					this.page = 0;
-					this.finished = false;
+				if (this.scrollTopNo > 800) {
+					this.hospitalReturnTopPage = true;
+				} else {
+					this.hospitalReturnTopPage = false;
 				}
+				this.$nextTick(()=>{
+					this.$refs.listNo.scrollTop = this.scrollTopNo
+				})
 				break;
 			}
 		},
@@ -351,6 +446,8 @@ export default {
 <style scoped>
 .sourceManagement{
 	width: 100%;
+	height: 100%;
+	overflow: hidden;
 }
 .topNav{
 	width: 100%;
@@ -422,10 +519,20 @@ export default {
 	color: #2B77EF;
 }
 .stateNav{
+	width: 100%;
+	
+}	
+>>>.van-tabs__wrap{
 	width: 91.47%;
 	margin: .15rem auto 0rem;
 	border-radius: .3rem;
+	background-color: transparent;
 	box-shadow: 0px 0px 26px 3px hsla(0, 0%, 0%, 10%);
+}
+>>>.van-tabs__content{
+	/* width: 91.47%!important; */
+	/* margin: .15rem auto 0rem; */
+	margin-top: .15rem;
 }
 >>>.van-tabs__line{
 	background-color: #FF932E;
@@ -441,21 +548,27 @@ export default {
 >>>.van-tab{
 	line-height: .21rem;
 }
->>>.van-tabs__content{
-	margin-top: .15rem;
-}
 >>>.van-tab>span{
 	font-size: .145rem;
 	font-weight: bold;
 }
 .list{
 	width: 100%;
+	height: calc(100vh - 1.575rem);
+	touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+  	overflow: scroll;
+  	overflow-x: visible;
+}
+.list ul{
+	height: auto;
 }
 .list li{
-	width: 100%;
+	width: 91.47%;
 	height: .845rem;
 	box-shadow: 0px 0px 26px 3px hsla(0, 0%, 0%, 10%);
 	margin-bottom: .1rem;
+	margin: .15rem auto;
 	position: relative;
 	border-radius: .03rem;
 }
@@ -510,5 +623,8 @@ export default {
 }
 .tabTitle span{
 	display: block;
+}
+>>>.van-list__finished-text{
+	height: 1rem;
 }
 </style>

@@ -7,7 +7,7 @@
 					<div class="indexReturn" @click="goBackFn"  id="navback">
 						<img src="../../../assets/image/back-white@2x.png" alt="">
 					</div>
-					<router-link :to="{name:'hospital_pathogenicSearch',query:{focus : true,}}">
+					<router-link :to="{name:'hospital_pathogenicSearch',query:{focus : '1'}}">
 						<div class="indexSearch ">
 							<input type="text" placeholder="搜索病员" v-model="list.keywords" readonly="readonly">
 							<img src="../../../assets/image/sousuo@2x.png" alt="">
@@ -26,7 +26,7 @@
 				<!-- 就诊情况 -->
 				
 				<div class="typeNav" :style="{'padding-top': (parseInt($store.state.paddingTop.replace('px',''))+39)+'px'}">
-					<van-tabs @click="tabsFn" background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
+					<van-tabs @change="tabsFn" background='none' line-width=.6rem title-inactive-color='#FFFFFF' title-active-color='#FFFFFF' v-model='list.titleData'>
 						<van-tab :title='list.noNum!=0||list.yesNum!=0? list.allTitle+(list.noNum+list.yesNum):list.allTitle'>
 							<keep-alive>
 								<clinicAll ref='all' :list = 'list'></clinicAll>
@@ -137,12 +137,21 @@ export default {
 			switch(_value){
 				case 0 :
 					this.$refs.all.show()
+					// this.$nextTick(()=>{
+					// 	this.$refs.all.scrollTop = this.$refs.all.scrollTopAll
+					// })
 				break;
 				case 1 :
 					this.$refs.no.show()
+					// this.$nextTick(()=>{
+					// 	this.$refs.all.scrollTop = this.$refs.all.scrollTopAll
+					// })
 				break;
 				case 2 :
 					this.$refs.yes.show()
+					// this.$nextTick(()=>{
+					// 	this.$refs.all.scrollTop = this.$refs.all.scrollTopAll
+					// })
 				break;
 			}
 		//   console.log(this.$refs.all.lineHeightAll);

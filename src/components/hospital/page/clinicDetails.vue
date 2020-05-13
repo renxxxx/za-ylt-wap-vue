@@ -162,15 +162,18 @@ export default {
 			switch(this.value){
 				case 0:
 				this.componentName = 'clinicAll';
-				this.$refs.clinicAll.initData()
+				this.$refs.clinicAll.show()
+				// this.$refs.clinicAll.initData()
 				break;
 				case 1:
 				this.componentName = 'clinicNo';
-				this.$refs.clinicAll.initData()
+				this.$refs.clinicAll.show()
+				// this.$refs.clinicAll.initData()
 				break;
 				case 2:
 				this.componentName = 'clinicYes';
-				this.$refs.clinicAll.initData()
+				this.$refs.clinicAll.show()
+				// this.$refs.clinicAll.initData()
 				break;
 			}
 		},

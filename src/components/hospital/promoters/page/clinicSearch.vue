@@ -1,57 +1,57 @@
 <template>
 	<div class="search_clinic">
-		<topSolt>
-			<van-pull-refresh v-model="pullingDown" slot="returnTopSolt" @refresh="afterPullDown">
-				<div class="navWarp" :style="{'padding-top':$store.state.paddingTop}">
-					<div class="topNav">
-						<div class="clinic_information" @click="goBackFn"  id="navback">
-							<img src="../../../../assets/image/shape@3x.png" alt="">
-						</div>
-						<div class="clinic_search">
-							<input type="search" placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
-							<img src="../../../../assets/image/sousuo@2x.png" alt="">
-						</div>
-						<div class="clinic_buttton" @click="inputNow">
-							<button>搜索</button>
-						</div>
+		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown">
+			<div class="navWarp" :style="{'padding-top':$store.state.paddingTop}">
+				<div class="topNav">
+					<div class="clinic_information" @click="goBackFn"  id="navback">
+						<img src="../../../../assets/image/shape@3x.png" alt="">
 					</div>
-					<div class="listTitle">
-						<div class="titleleft">
-							<h3>合作门诊 {{clinic.num}}</h3>
-						</div>
+					<div class="clinic_search">
+						<input type="search" placeholder="搜索门诊"  v-model="keywords" @keyup.enter="inputNow">
+						<img src="../../../../assets/image/sousuo@2x.png" alt="">
+					</div>
+					<div class="clinic_buttton" @click="inputNow">
+						<button>搜索</button>
+					</div>
+				</div>
+				<div class="listTitle">
+					<div class="titleleft">
+						<h3>合作门诊 {{clinic.num}}</h3>
+					</div>
 						<div class="titleRight">
-							<router-link :to="{path : '/promoters/promoters_addClinic',query:{}}">
-								<span>新增</span>
-								<img src="../../../../assets/image/xinzeng@2x.png" alt="">
-							</router-link>
-						</div>
+						<router-link :to="{path : '/promoters/promoters_addClinic',query:{}}">
+							<span>新增</span>
+							<img src="../../../../assets/image/xinzeng@2x.png" alt="">
+						</router-link>
 					</div>
 				</div>
-				<div style="height: .98rem"  :style="{'padding-top':$store.state.paddingTop}"></div>
-				<div class="content">
-					<ul>
-						<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
-							<li v-for="(items,inx) in content" :key="inx">
-								<router-link :to="{path : '/promoters/promoters_source' ,query :  {clinicId : items.hospitalClinicId,clinicName:items.name,clinicTime:items.alterTime}}">
-									<div class="contentLi">
-										<h4>{{items.name}}</h4>
-										<span>推广人: {{items.hospitalUserName}}</span>
-										<input type="text" v-model="items.patientCount" readonly="readonly">
-									</div>	
-								</router-link>
-							</li>
-						</van-list>
-					</ul>
-				</div>
-			</van-pull-refresh>
-		</topSolt>
+			</div>
+			<div style="height: .98rem"  :style="{'padding-top':$store.state.paddingTop}"></div>
+			<div class="content" ref="content" @scroll="handleScroll">
+				<ul>
+					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
+						<!-- content -->
+						<li v-for="(items,inx) in content" :key="inx">
+							<router-link :to="{path : '/promoters/promoters_source' ,query :  {clinicId : items.hospitalClinicId,clinicName:items.name,clinicTime:items.alterTime}}">
+								<div class="contentLi">
+									<h4>{{items.name}}</h4>
+									<span>推广人: {{items.hospitalUserName}}</span>
+									<input type="text" v-model="items.patientCount" readonly="readonly">
+								</div>	
+							</router-link>
+						</li>
+					</van-list>
+				</ul>
+			</div>
+		</van-pull-refresh>
+		<div class="returnTop" @click="$refs.content.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
+			<img src="../../../../assets/image/returnTop.png" alt />
+			<span>顶部</span>
+		</div>
 	</div>
 </template>
 
 <script>
-import axios from 'axios'
-import {mapActions,mapGetters} from 'vuex'
-import topSolt from "../../function/topSolt.vue";
 import qs from 'qs';
 export default {
 	name: 'search',
@@ -66,19 +66,11 @@ export default {
 			finished: false,
 			page:0,
 			pullingDown: false,
+			scrollTop:0,
+     		hospitalReturnTopPage:false,
 		}
 	},
-	computed:{
-		...mapGetters(['account'])
-	},
-	components:{
-		topSolt
-	},
 	created(){
-		var heightRexg = /^[0-9]*/g
-		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join())
-		//
 	},
 	activated(){
 		if(this.query != JSON.stringify(this.$route.query)){
@@ -89,15 +81,22 @@ export default {
 				plus.navigator.setStatusBarStyle("dark")
 			}
 		}
+		if(this.scrollTop != 0){
+			this.$refs.content.scrollTop = this.scrollTop;
+		}
     },
  	mounted() {
-		// if(window.plus){
-		// 	//plus.navigator.setStatusBarBackground("#ffffff");
-		// 	plus.navigator.setStatusBarStyle("dark")
-		// };
-		// this.initData()
 	},
 	methods: {
+		// 滑动一定距离出现返回顶部按钮
+		handleScroll() {
+			this.scrollTop = this.$refs.content.scrollTop || this.$refs.content.pageYOffset
+			if (this.scrollTop > 800) {
+				this.hospitalReturnTopPage = true;
+			} else {
+				this.hospitalReturnTopPage = false;
+			}
+		},
 		afterPullDown() {
 			//下拉刷新
 			setTimeout(() => {
@@ -259,27 +258,24 @@ export default {
     margin-top: 0rem;
 
 }
->>>.van-pull-refresh {
-    overflow: visible;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    /* margin-top: .98rem!important; */
+>>>.van-pull-refresh{
+	height: 100%;
 }
 .content{
     width: 100%;
-    height: 100%;
+	height: calc(100% - .98rem);
+	touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+  	overflow: scroll;
+  	overflow-x: hidden;
 }
-.content{
+/* .content{
 	width: 100%;
 	height: 100%;
-	/* margin-top: 2.1rem; */
-}
+} */
 .content ul{
 	width: 94.6%;
 	margin: 0 auto;
-	/* text-align: center; */
 }
 .content ul li{
 	width: 48.6%;
@@ -289,15 +285,7 @@ export default {
 	background-color: #FFFFFF;
 	text-align: center;
 }
-/* .content ul li:first-child {
-    margin-top: 2.1rem;
-} */
->>>.van-pull-refresh {
-    overflow: visible;
-    -webkit-user-select: none;
-    user-select: none;
-    /* margin-top: 2rem; */
-}
+
 .content ul li:nth-child(1),.content ul li:nth-child(2){
 	margin-top: 0rem;
 }

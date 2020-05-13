@@ -180,26 +180,11 @@ export default {
   },
  
   mounted() {
-    console.log('mounted')
- //    if (window.plus) {
- //      //plus.navigator.setStatusBarBackground("#ffffff");
- //      plus.navigator.setStatusBarStyle("dark");
- //    }
-	// // 
- //    this.initData();
- //    if(this.$route.query.show == 'false'){
- //      this.hospitalReturnHomePage = false;
-       
- //    }else{
- //      // this.hospitalReturnHomePage = this.$route.query.show
- //    }
- //    // console.dir(this.$route.query.show)
- //    // 
- //    // 
- //    // this.$route.query.show? '':this.hospitalReturnHomePage = this.$route.query.show
+
   },
 	activated() {
 		if(this.query != JSON.stringify(this.$route.query)){
+      debugger
       this.initData();
       this.query = JSON.stringify(this.$route.query);
 			if(window.plus){
@@ -359,7 +344,6 @@ export default {
     },
     //关闭半遮罩
     closeFn(){
-    	// 
     	this.showTime = false;
     },
     // 确定选择的日期

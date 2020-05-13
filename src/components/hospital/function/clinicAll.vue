@@ -77,9 +77,11 @@ export default {
 					plus.navigator.setStatusBarStyle("dark")
 				}
 			}
-			if(this.scrollTop != 0){
-				this.$refs.all.scrollTop = this.scrollTop
-			}
+			this.$nextTick(()=>{
+				if(this.scrollTop != 0){
+					this.$refs.all.scrollTop = this.scrollTop
+				}
+			})
 		},
 		// 滑动一定距离出现返回顶部按钮
 		handleScroll() {

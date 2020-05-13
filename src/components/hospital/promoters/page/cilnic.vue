@@ -1,7 +1,6 @@
 <template>
 	<div class="hospital" :style="{'padding-top':$store.state.paddingTop}">
-		<topSolt>
-		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" slot="returnTopSolt">
+		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown">
 			<div class="navWarp">
 				<div class="topNav"  :style="{'padding-top':$store.state.paddingTop}">
 					<div class="hospital_search">
@@ -22,7 +21,7 @@
 				</div>
 			</div>
 			<div class="zhangwei" ></div>
-			<div class="content">
+			<div class="content" ref="content" @scroll="handleScroll">
 				<ul>
 					<van-list  v-model="loading" :finished="finished" finished-text="没有更多了"  @load="getNextPage">
 						<!-- content	 -->
@@ -39,17 +38,16 @@
 				</ul>
 			</div>
 		</van-pull-refresh>
-		</topSolt>
+		<div class="returnTop" @click="$refs.content.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
+			<img src="../../../../assets/image/returnTop.png" alt />
+			<span>顶部</span>
+		</div>
 		<div style="height: .5rem;"></div>
 	</div>
 </template>
 
 <script>
-import axios from 'axios'
-import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import { Dialog } from 'vant'
-import topSolt from "../../function/topSolt.vue";
 // import clinicContent from './functionPage/clinic_content.vue'
 export default {
 	name: 'clinic',
@@ -62,28 +60,24 @@ export default {
 			loading: false,
 			finished: false,
 			content : [],
-			page:1
+			page:1,
+			hospitalReturnTopPage:false,
+		 	show:false,
 		}
 	},
 	computed:{
-	  ...mapGetters(['account'])
 	},
 	components:{
-		topSolt
+		
 	},
 	created(){
-		debugger
-		var heightRexg = /^[0-9]*/g
-		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join())
-		//
 	},
 
-  destroyed(){
+  	destroyed(){
 	  debugger
 	  
-  },
-  mounted() {
+ 	},
+	mounted() {
 	//   debugger
 	// 	if(window.plus){
 	// 		//plus.navigator.setStatusBarBackground("#ffffff");
@@ -103,9 +97,21 @@ export default {
 			// 加载dom节点后,获取推广人列表请求
 			this.getdata();
 		}
+		if(this.scrollTop != 0){
+			this.$refs.content.scrollTop = this.scrollTop;
+		}
     },
 	methods: {
-		 afterPullDown() {
+		// 滑动一定距离出现返回顶部按钮
+		handleScroll() {
+			this.scrollTop = this.$refs.content.scrollTop || this.$refs.content.pageYOffset
+			if (this.scrollTop > 800) {
+				this.hospitalReturnTopPage = true;
+			} else {
+				this.hospitalReturnTopPage = false;
+			}
+		},
+		afterPullDown() {
 			//下拉刷新
 		  setTimeout(() => {
 			this.pullingDown = false;
@@ -118,9 +124,9 @@ export default {
 
 			let thisVue=this;
 			if(this.$route.meta.auth && !this.$store.state.hospital.login)
-		this.$toast({message:'请登录',onClose:function(){
-		  thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
-		}})
+				this.$toast({message:'请登录',onClose:function(){
+					thisVue.$router.replace({ path : '/hospital/hospitalLogin',query:{time:1}});
+				}})
 
 
 		  Object.assign(this.$data, this.$options.data());
@@ -171,6 +177,7 @@ export default {
 .hospital{
 	width: 100%;
 	height: 100%;
+	overflow: hidden;
 	background-color: #FFFFFF;
 }
 .navWarp{
@@ -244,7 +251,11 @@ export default {
 
 .content{
 	width: 100%;
-	height: 100%;
+	height: calc(100vh - 1.53rem);
+	touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+  	overflow: scroll;
+  	overflow-x: visible;
 	/* margin-top: 2.1rem; */
 }
 .content ul{

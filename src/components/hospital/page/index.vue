@@ -43,13 +43,13 @@
                   </router-link>
                 </li>
                 <li @click="noLinkFn">
-                  <router-link :to="{path : '/hospital/',query:{}}">
+                  <router-link :to="{path : '',query:{}}">
                     <img src="../../../assets/image/jiyinjiance@2x.png" alt />
                     <span>基因检测</span>
                   </router-link>
                 </li>
                 <li @click="noLinkFn">
-                  <router-link :to="{path : '/hospital/',query:{}}">
+                  <router-link :to="{path : '',query:{}}">
                     <img src="../../../assets/image/yiliaoziyuan@2x.png" alt />
                     <span>医疗资源</span>
                   </router-link>
@@ -61,7 +61,7 @@
                   </router-link>
                 </li>
                 <li @click="noLinkFn">
-                  <router-link :to="{path : '/hospital/',query:{}}">
+                  <router-link :to="{path : '',query:{}}">
                     <img src="../../../assets/image/qita@2x.png" alt />
                     <span>其他项目</span>
                   </router-link>
@@ -151,7 +151,7 @@ export default {
       }
 			this.initData();
     }
-     if(this.scrollTop != 0){
+    if(this.scrollTop != 0){
       this.$refs.refersh.scrollTop = this.scrollTop;
     }
 	},
