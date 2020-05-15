@@ -13,7 +13,7 @@ import cookies from 'js-cookie'
 moment.locale('zh-cn');
 import qs from 'qs';
 import h5p from '../build/h5p.js'
-Vue.prototype.$version = '2004301606'
+Vue.prototype.$version = '20.0515.1159'
 Vue.prototype.$versionBrief = '修复了已知BUG, 优化了用户体验.'
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
