@@ -57,9 +57,7 @@ export default {
 		}
 	
   },
-  activated() {
-	  console.log('z这是activated')
-	 
+  activated() {	 
   	if(this.query != JSON.stringify(this.$route.query)){
   		this.query = JSON.stringify(this.$route.query);
   		if(window.plus){

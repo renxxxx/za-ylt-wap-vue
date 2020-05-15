@@ -306,6 +306,7 @@ export default {
 .task{
 	width: 100%;
 	height: 100%;
+	overflow: hidden;
 	/* background-color: #F5F5F5; */
 	background-color: #FFFFFF;
 }
@@ -354,6 +355,11 @@ export default {
 }
 .taskList{
 	width: 100%;
+	height: calc(100% - 1.76rem);
+	touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+	overflow: scroll;
+	/* overflow-x: hidden; */
 }
 .taskList h3{
 	color: #999999;
@@ -422,5 +428,7 @@ export default {
   top: 0;
   left: 0rem;
 }
-
+>>>.van-pull-refresh{
+	height: 100%;
+}
 </style>

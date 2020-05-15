@@ -5,28 +5,24 @@
 			<h3>{{name}}</h3>
 		</div>
 		<div class="zhangwei" :style="{'padding-top':$store.state.paddingTop}"></div>
-    <van-search v-model="keywords" placeholder="请输入搜索关键词" @search="searchFn"/>
-    <span>当前: {{nowPromoter}}</span>
-    <ul>
-        <li v-for="(item,inx) in list" :ref="'ref'+inx" :id="'list_'+inx ":key='inx' @click="subimtFn(item)">
-        	<span>{{item.name}}</span>
-        </li>
-    </ul>
-    <!-- <van-radio-group v-model="radio">
-      <van-cell-group>
-        <van-cell :title="item" clickable @click="radioFn(inx)" v-for="(item,inx) in list" :key='inx'>
-          <van-radio slot="right-icon" :name="inx" />
-        </van-cell>
-      </van-cell-group>
-    </van-radio-group> -->
+    <div class="_list" ref="_list" @scroll="handleScroll">
+      <van-search v-model="keywords" placeholder="请输入搜索关键词" @search="searchFn"/>
+      <span>当前: {{nowPromoter}}</span>
+      <ul>
+          <li v-for="(item,inx) in list" :ref="'ref'+inx" :id="'list_'+inx ":key='inx' @click="subimtFn(item)">
+            <span>{{item.name}}</span>
+          </li>
+      </ul>
+    </div>
+    <div class="returnTop" @click="$refs._list.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
+			<img src="../../../assets/image/returnTop.png" alt />
+			<span>顶部</span>
+		</div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import { Dialog } from 'vant'
 export default {
   name: 'list',
   data () {
@@ -36,7 +32,9 @@ export default {
       radio:'1',
       keywords: '',
       nowPromoter : '',
-	  query:''
+      query:'',
+      scrollTop:0,
+    	hospitalReturnTopPage:false,
     }
   },
   computed:{
@@ -63,19 +61,30 @@ export default {
   		}
   		this.name = this.$route.query.name;
   		this.nowPromoter = this.$route.query.nowValue
-  	}
+    }
+    if(this.scrollTop != 0){
+			this.$refs._list.scrollTop = this.scrollTop;
+		}
   },
   methods: {
+    // 滑动一定距离出现返回顶部按钮
+		handleScroll() {
+			this.scrollTop = this.$refs._list.scrollTop || this.$refs._list.pageYOffset
+			if (this.scrollTop > 800) {
+				this.hospitalReturnTopPage = true;
+			} else {
+				this.hospitalReturnTopPage = false;
+			}
+		},
     // 返回上一级
     goBackFn(){
     	this.$router.back()
     },
     subimtFn(_promoter){
-      
       this.nowPromoter = _promoter.name;
-      this.$router.back();
-      localStorage.setItem('list_promoterValue',_promoter.name);
       localStorage.setItem('list_promoterId',_promoter.hospitalUserId)
+      localStorage.setItem('list_promoterValue',_promoter.name);
+      this.$router.back();
       // this.$router.replace({name:this.$route.query.path,query:{promoterValue:_promoter.name,item:this.$route.query.item,promoterId:_promoter.hospitalUserId}})
     },
     searchFn(_kw){
@@ -95,8 +104,9 @@ export default {
             if(this.list.length){
               debugger
               let num = this.list.findIndex((n)=>n.name == this.$route.query.nowValue);
-              document.getElementById('list_'+num).style.backgroundColor = '#F0EDED'
-
+              if(num){
+                document.getElementById('list_'+num).style.backgroundColor = '#F0EDED'
+              }
             }
           })
       		// 
@@ -115,6 +125,8 @@ export default {
 .list{
   width: 100%;
   background-color: #F5F5F5;
+  height: 100%;
+  overflow: hidden;
 }
 .topNav{
 	width: 100%;
@@ -141,21 +153,18 @@ export default {
 	font-size: .16rem;
 	font-weight: bold;
 }
-.list{
-	width: 100%;
-}
-.list>ul{
+._list>ul{
 	width: 100%;
 	/* margin: .15rem auto; */
 	background-color: #FFFFFF;
 	/* margin-bottom: .18rem; */
   margin: .12rem auto;
 }
-.list>span{
+._list>span{
   display: block;
   margin-left: .12rem;
 }
-.list>ul li{
+._list>ul li{
 	width: 100%;
 	height: .49rem;
 	color: #000000;
@@ -164,17 +173,25 @@ export default {
 	margin: 0rem auto;
 	border-bottom: 1px solid #DDDDDD;
 }
-.list>ul li:last-child{
+._list>ul li:last-child{
   border: none;
 }
-.list>ul li:hover{
+._list>ul li:hover{
   background-color: #F0EDED;
 }
-.list>ul li>span{
+.lis_listt>ul li>span{
   display: block;
   margin-left: .12rem
 }
 >>>.van-search{
   margin: .12rem auto;
+}
+._list{
+  width: 100%;
+	height: calc(100% - .47rem);
+  touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+	overflow: scroll;
+	overflow-x: hidden;
 }
 </style>

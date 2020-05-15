@@ -82,12 +82,12 @@ export default {
 	},
 	activated() {
 		if(this.query != JSON.stringify(this.$route.query)){
+			Object.assign(this.$data, this.$options.data());
 			this.query = JSON.stringify(this.$route.query);
 			if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
 				plus.navigator.setStatusBarStyle("dark")
 			}
-			Object.assign(this.$data, this.$options.data());
 			this.show = this.$route.query.show;
 			this.taskSubmitValue = JSON.parse(this.$route.query.item)
 		}

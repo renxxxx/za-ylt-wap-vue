@@ -212,7 +212,7 @@ export default {
                         if(thisVue.$route.query.redirect)
                                  thisVue.$router.replace(thisVue.$route.query.redirect)
                         else
-                          thisVue.$router.replace({ name : 'hospital_index',query:{}});
+                          thisVue.$router.replace({ name : 'hospital_index',query:{time:new Date().getTime()}});
                         }})
                     }
                   }
