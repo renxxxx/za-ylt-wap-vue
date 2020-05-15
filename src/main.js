@@ -151,9 +151,45 @@ function plusReady() {
 		history.back()
 	});
 
-	launchVue();
+	updateW2a()
+
+	startVue();
 }
-// var NjsHello = plus.navigator.setStatusBarStyle("dark")
+
+function updateW2a(){
+	if(window.plus){
+	var paramUrl = "/oss/alive/param.json";
+	var userAgent = navigator.userAgent.toLowerCase();
+
+	alert("plus.runtime.version "+plus.runtime.version)
+	
+	if (userAgent.indexOf('android') > -1) {
+		$.get(paramUrl, function(rsp) {
+			alert("rsp.androidApkUrl "+rsp.androidApkUrl)
+			if (rsp.androidApkUrl && rsp.androidApkUrl.replace(/-/g, '.').indexOf(plus.runtime.version) == -1) {
+				plus.nativeUI.confirm(rsp.androidApkIntro || '-修复BUG\n-优化体验', function(event) {
+					if (0 == event.index) { //用户点击了“立即更新”按钮  
+						plus.runtime.openURL(rsp.androidApkUrl);
+					}
+				}, "发现新版本", ["立即更新", "取　　消"]);
+			}
+		});
+	}
+
+	if (userAgent.indexOf('iphone') > -1) {
+		$.get(paramUrl, function(rsp) {
+			alert("rsp.androidApkUrl "+rsp.androidApkUrl)
+			if (rsp.iosIpkUrl && rsp.iosIpkUrl.replace(/-/g, '.').indexOf(plus.runtime.version) == -1) {
+				plus.nativeUI.confirm(rsp.iosIpkIntro || '-修复BUG\n-优化体验', function(event) {
+					if (0 == event.index) { //用户点击了“立即更新”按钮  
+						plus.runtime.openURL("https://apps.apple.com/cn/app/共享医连体/id1408557567");
+					}
+				}, "发现新版本", ["立即更新", "取　　消"]);
+			}
+		});
+	}
+}
+}
 
 if (window.plus) {
 	plusReady();
@@ -174,11 +210,11 @@ Vue.directive('focus', {
 
 debugger
 if(navigator.userAgent.toLowerCase().indexOf('html5plus') == -1){
-	launchVue();
+	startVue();
 }
 
 
-function launchVue(){
+function startVue(){
 	debugger
 	new Vue({
 		el: '#app',
