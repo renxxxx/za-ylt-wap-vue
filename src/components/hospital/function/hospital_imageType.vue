@@ -2,10 +2,10 @@
 	<div class="imageType">
 		<ul>
 			<li v-for="(item,inx) in type" :key='inx'>
-				<router-link :to="{path : '/hospital/hospital_typeDetails' ,query : {item : item.itemId,time:new Date().getTime()}}">
+				<div @click="$router.push({path : '/hospital/hospital_typeDetails' ,query : {item : item.itemId,time:new Date().getTime()}})" >
 					<img :src="item.url" alt="">
 					<span>{{item.name}}</span>
-				</router-link>
+				</div>
 			</li>
 		</ul>
 	</div>
