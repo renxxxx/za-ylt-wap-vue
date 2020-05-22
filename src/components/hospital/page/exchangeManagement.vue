@@ -1,6 +1,6 @@
 <template>
 	<div class="exchange">
-		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+		<!-- <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" > -->
 			<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 				<div class="leftImg" @click="goBackFn"  id="navback">
 					<img src="../../../assets/image/shape@3x.png" alt="">
@@ -8,7 +8,7 @@
 				<div class="centerTitle">
 					<h3>兑换管理</h3>
 				</div>
-				<router-link :to="{path : '/hospital/hospital_exchangeManagementList',query : {}}">
+				<router-link :to="{path : '/hospital/hospital_exchangeManagementList',query : {time:new Date().getTime()}}">
 					<div class="right">
 						<img src="../../../assets/image/liebiao@3x.png" alt="">
 					</div>
@@ -53,7 +53,7 @@
 			</van-list>
 		</div>
 		
-	</van-pull-refresh>
+	<!-- </van-pull-refresh> -->
 	<div class="returnTop" @click="$refs.exchangeLists_content.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
 		<img src="../../../assets/image/returnTop.png" alt />
 		<span>顶部</span>

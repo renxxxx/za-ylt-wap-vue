@@ -1,6 +1,6 @@
 <template>
 	<div class="search_clinic" >
-		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+		<!-- <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" > -->
 			<div class="navWarp" :style="{'padding-top':$store.state.paddingTop}">
 				<div class="topNav">
 					<div class="clinic_information" @click="goBackFn"  id="navback">
@@ -28,7 +28,7 @@
 			</div>
 			<div style="height:1.1rem"></div>
 			<clinicContent ref='content' :clinic = 'false' :style="{'padding-top':$store.state.paddingTop}"></clinicContent>
-		</van-pull-refresh>
+		<!-- </van-pull-refresh> -->
 	</div>
 </template>
 

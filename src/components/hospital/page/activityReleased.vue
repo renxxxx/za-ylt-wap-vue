@@ -1,6 +1,6 @@
 <template>
 	<div class="active">
-		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+		<!-- <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" > -->
 			<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 				<div class="leftImg" @click="goBackFn"  id="navback">
 					<img src="../../../assets/image/shape@3x.png" alt="">
@@ -40,7 +40,7 @@
 					</van-swipe-cell>
 				</van-list>
 			</div>
-		</van-pull-refresh>
+		<!-- </van-pull-refresh> -->
 		<div class="returnTop" @click="$refs.center.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
 			<img src="../../../assets/image/returnTop.png" alt />
 			<span>顶部</span>

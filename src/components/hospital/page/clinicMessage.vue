@@ -1,6 +1,6 @@
 <template>
-<topSolt>
-	<div class="message" slot="returnTopSolt">
+<!-- <topSolt> -->
+	<div class="message">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<div class="leftImg" @click="goBackFn"  id="navback">
 				<img src="../../../assets/image/shape@3x.png" alt="">
@@ -34,7 +34,7 @@
       </van-list>
 		</div>
 	</div>
-	</topSolt>
+	<!-- </topSolt> -->
 </template>
 
 <script>

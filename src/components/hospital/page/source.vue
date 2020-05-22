@@ -1,5 +1,5 @@
 <template>
-	<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown">
+	<!-- <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown"> -->
   	<div class="index">
 		<div class="navWarp">
 			<!-- 搜索及其筛选 -->
@@ -49,7 +49,7 @@
 		</div>
 		<!-- <router v-if="isLogin == 200? true:false"></router> -->
   </div>
-  </van-pull-refresh>
+  <!-- </van-pull-refresh> -->
 </template>
 
 <script>

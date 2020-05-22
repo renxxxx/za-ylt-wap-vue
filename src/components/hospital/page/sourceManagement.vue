@@ -1,5 +1,5 @@
 <template>
-	<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" class="refresh">
+	<!-- <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" class="refresh"> -->
 		<div class="index">
 			<div class="navWarp">
 				<!-- 搜索及其筛选 -->
@@ -46,7 +46,7 @@
 				</div>
 			</div>
 		</div>
-  	</van-pull-refresh>
+  	<!-- </van-pull-refresh> -->
 </template>
 
 <script>

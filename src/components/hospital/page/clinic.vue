@@ -1,6 +1,6 @@
 <template>
 	<div class="hospitalClinic" :style="{'padding-top':$store.state.paddingTop}">
-		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+		<!-- <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" > -->
 			<div class="navWarp">
 				<div class="topNav"  :style="{'padding-top':$store.state.paddingTop}">
 					<div class="hospital_search">
@@ -58,7 +58,7 @@
 			</div>
 			<div style="height:2rem"></div>
 			<clinicContent  ref="clinic" :show = 'show'></clinicContent>
-		</van-pull-refresh>
+		<!-- </van-pull-refresh> -->
 	</div>
 </template>
 
