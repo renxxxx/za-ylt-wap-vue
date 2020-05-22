@@ -66,7 +66,7 @@
 									<span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
 								</div>
 							</div>
-							<div class="article_right">
+							<div class="article_right" v-if="items.img? true:false">
 								<img :src=items.img alt="">
 							</div>
 						</router-link>

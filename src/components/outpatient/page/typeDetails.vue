@@ -39,7 +39,12 @@
 		<div class="typeContent" v-show="this.about.shiYingZheng? true:false">
 			<h4 class="xia">适应症状</h4>
 			<ul>
-				<li v-for='(item,inx) in this.about.shiYingZheng' :key='inx' style="white-space: pre-line; word-break: break-all; word-wrap: break-word;text-indent:2em;text-align: left;">
+				<li v-for='(item,inx) in this.about.shiYingZheng' :key='inx' style="
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+  word-wrap: break-word;">
 					{{item}}
 				</li>
 			</ul>
@@ -282,9 +287,9 @@ export default {
 	margin-left: .18rem;
 }
 .typeContent ul li{
-	width: 100%;
+	/* width: 100%; */
 	padding:.07rem .15rem;
-	/* height: .22rem; */
+	height: .22rem;
 	line-height: .24rem;
 	border-radius: .15rem;
 	text-align: center;
