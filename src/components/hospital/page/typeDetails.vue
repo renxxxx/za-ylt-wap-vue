@@ -39,13 +39,7 @@
 				<h4 class="xia">适应症状</h4>
 				<ul>
 					<li v-for='(item,inx) in this.about.shiYingZheng' :key='inx'>
-						<div style="
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  word-break: break-all;
-  word-wrap: break-word;">{{item}}</div>
-						
+						<div style="-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;word-break: break-all;word-wrap: break-word;">{{item}}</div>
 					</li>
 				</ul>
 			</div>
