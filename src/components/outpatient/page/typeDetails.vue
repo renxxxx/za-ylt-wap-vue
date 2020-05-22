@@ -32,14 +32,14 @@
 		<div class="typeContent" v-show="this.about.content? true:false">
 			<h4 class="xia">科室简介</h4>
 			<div class="contentP">
-				<p>{{this.about.content}}</p>
+				<div style="white-space: pre-line; word-break: break-all; word-wrap: break-word;text-indent:2em">{{this.about.content}}</div>
 				<img :src="img" v-for='(img,inx) in about.image' :key='inx' alt="">
 			</div>
 		</div>
 		<div class="typeContent" v-show="this.about.shiYingZheng? true:false">
 			<h4 class="xia">适应症状</h4>
 			<ul>
-				<li v-for='(item,inx) in this.about.shiYingZheng' :key='inx'>
+				<li v-for='(item,inx) in this.about.shiYingZheng' :key='inx' style="white-space: pre-line; word-break: break-all; word-wrap: break-word;text-indent:2em;text-align: left;">
 					{{item}}
 				</li>
 			</ul>
@@ -47,19 +47,19 @@
 		<div class="typeContent" v-show="this.about.zhenLiaoJiShu? true:false">
 			<h4 class="xia">诊疗技术</h4>
 			<div class="contentP">
-				<p>{{this.about.zhenLiaoJiShu}}</p>
+				<div style="white-space: pre-line; word-break: break-all; word-wrap: break-word;text-indent:2em">{{this.about.zhenLiaoJiShu}}</div>
 			</div>
 		</div>
 		<div class="typeContent" v-show="this.about.teSe? true:false">
 			<h4 class="xia">诊疗特色</h4>
 			<div class="contentP">
-				<p>{{this.about.teSe}}</p>
+				<div style="white-space: pre-line; word-break: break-all; word-wrap: break-word;text-indent:2em">{{this.about.teSe}}</div>
 			</div>
 		</div>
 		<div class="typeContent" v-show="this.about.youShi? true:false">
 			<h4 class="xia">科室优势</h4>
 			<div class="contentP">
-				<p>{{this.about.youShi}}</p>
+				<div style="white-space: pre-line; word-break: break-all; word-wrap: break-word;text-indent:2em">{{this.about.youShi}}</div>
 			</div>
 		</div>
 	</div>
@@ -282,10 +282,10 @@ export default {
 	margin-left: .18rem;
 }
 .typeContent ul li{
-	/* width: .9rem; */
+	width: 100%;
 	padding:.07rem .15rem;
-	height: .25rem;
-	line-height: .25rem;
+	/* height: .22rem; */
+	line-height: .24rem;
 	border-radius: .15rem;
 	text-align: center;
 	color: #FF951B;

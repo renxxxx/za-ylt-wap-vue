@@ -137,6 +137,7 @@ export default {
   },
   activated(){
 		if(this.query != JSON.stringify(this.$route.query)){
+			this.initData();
 			this.query = JSON.stringify(this.$route.query);
 			if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
@@ -148,7 +149,6 @@ export default {
 			// 		thisVue.$router.replace({ path : '/operating/operatingLogin',query:{time:1}});
 			// 	}})
 			// }
-			this.initData();
 		}
   	},
   deactivated(){

@@ -2,7 +2,7 @@
 	<div class="imageType">
 		<ul>
 			<li v-for="(item,inx) in type" :key='inx'>
-				<router-link :to="{path : '/hospital/hospital_typeDetails' ,query : {item : item.itemId,}}">
+				<router-link :to="{path : '/hospital/hospital_typeDetails' ,query : {item : item.itemId,time:new Date().getTime()}}">
 					<img :src="item.url" alt="">
 					<span>{{item.name}}</span>
 				</router-link>
@@ -57,9 +57,7 @@ export default {
 		}
 	
   },
-  activated() {
-	  console.log('z这是activated')
-	 
+  activated() {	 
   	if(this.query != JSON.stringify(this.$route.query)){
   		this.query = JSON.stringify(this.$route.query);
   		if(window.plus){
@@ -67,7 +65,13 @@ export default {
   			plus.navigator.setStatusBarStyle("dark")
   		}
   		if(this.keepAlive){
-  			this.$axios.post('/c2/office/items',qs.stringify({
+  			this.getData()
+  		}
+  	}
+  },
+  methods: {
+	getData(){
+		this.$axios.post('/c2/office/items',qs.stringify({
   					hospitalId : this.$store.state.hospital.login.hospital.hospitalId,
   			}))
   			.then(_d => {
@@ -84,11 +88,7 @@ export default {
   				
   				//Dialog({ message: err});;
   			})
-  		}
-  	}
-  },
-  methods: {
-	
+	}
   },
 }
 </script>

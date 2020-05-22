@@ -1,6 +1,5 @@
 <template>
-<topSolt>
-	<div class="exchange" slot="returnTopSolt">
+	<div class="exchange">
 		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 			<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 				<div class="leftImg" @click="goBackFn"  id="navback">
@@ -25,57 +24,60 @@
 					</div>
 				</router-link>
 			</div>
-		<van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-		<ul class="exchangeLists">
-			<van-swipe-cell v-for="(item,inx) in commodity" :key="inx"  :right-width= 65 >
-			<li>
-				<router-link :to="{path : '/hospital/hospital_exchangeEditor' ,query : {itemId : item.itemId,}}">
-				<div class="list">
-					<div class="listsImg">
-					<img v-if="item.cover"  v-lazy="item.cover" alt="">
+		<div class="exchangeLists_content" @scroll="handleScroll" ref="exchangeLists_content">
+			<van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+			<ul class="exchangeLists">
+				<van-swipe-cell v-for="(item,inx) in commodity" :key="inx"  :right-width= 65 >
+				<li>
+					<router-link :to="{path : '/hospital/hospital_exchangeEditor' ,query : {itemId : item.itemId,}}">
+					<div class="list">
+						<div class="listsImg">
+						<img v-if="item.cover"  v-lazy="item.cover" alt="">
+						</div>
+						<div class="listContent">
+						<h4>{{item.name}}</h4>
+						<p><span>{{item.payExchangepoint}}</span>积分</p>
+						<span>数量</span>
+						</div>
+						<span>{{item.stock}}</span>
 					</div>
-					<div class="listContent">
-					<h4>{{item.name}}</h4>
-					<p><span>{{item.payExchangepoint}}</span>积分</p>
-					<span>数量</span>
-					</div>
-					<span>{{item.stock}}</span>
-				</div>
-				</router-link>
-			</li>
-			<template slot="right">
-				<button class="deleteStyle" @click="deleteActiviteFn(item)">
-				<img src="../../../assets/image/activiteDelete.png" alt="">
-				</button>
-			</template>
-			</van-swipe-cell>
-		</ul>
-		</van-list>
+					</router-link>
+				</li>
+				<template slot="right">
+					<button class="deleteStyle" @click="deleteActiviteFn(item)">
+					<img src="../../../assets/image/activiteDelete.png" alt="">
+					</button>
+				</template>
+				</van-swipe-cell>
+			</ul>
+			</van-list>
+		</div>
+		
 	</van-pull-refresh>
+	<div class="returnTop" @click="$refs.exchangeLists_content.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
+		<img src="../../../assets/image/returnTop.png" alt />
+		<span>顶部</span>
 	</div>
-	</topSolt>
+	</div>
 </template>
 
 <script>
-import axios from 'axios'
-import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import {Dialog} from 'vant'
-import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'exchangeManagement',
 	data () {
 		return {
 			commodity : [],
-      loading: false,
-      finished: false,
-      page: 1,
-	  query:'',
-	  pullingDown:false,
+			loading: false,
+			finished: false,
+			page: 1,
+			query:'',
+			pullingDown:false,
+			scrollTop:0,
+    		hospitalReturnTopPage:false,
 		}
 	},
 	computed:{
-		...mapGetters(['account']),
     exchangeAdd: {
         get: function() {
     		// 
@@ -87,12 +89,12 @@ export default {
     },
 	},
 	components:{
-		topSolt
+		
 	},
 	created(){
 
 	},
- mounted() {
+ 	mounted() {
 		if(window.plus){
 			//plus.navigator.setStatusBarBackground("#ffffff");
 			plus.navigator.setStatusBarStyle("dark")
@@ -108,8 +110,20 @@ export default {
 			}
 			this.getdata();
 		}
+		if(this.scrollTop != 0){
+			this.$refs.exchangeLists_content.scrollTop = this.scrollTop;
+		}
 	},
 	methods: {
+		// 滑动一定距离出现返回顶部按钮
+		handleScroll() {
+			this.scrollTop = this.$refs.exchangeLists_content.scrollTop || this.$refs.exchangeLists_content.pageYOffset
+			if (this.scrollTop > 800) {
+				this.hospitalReturnTopPage = true;
+			} else {
+				this.hospitalReturnTopPage = false;
+			}
+		},
 		afterPullDown() {
 			//下拉刷新
 		  setTimeout(() => {
@@ -192,6 +206,8 @@ export default {
 	width: 100%;
 	/* height: 100%; */
 	background-color: #F5F5F5;
+	height: 100%;
+	overflow: hidden;
 }
 .topNav{
 	width: 100%;
@@ -263,6 +279,14 @@ export default {
 	margin-left: .05rem;
 }
 .exchangeLists{
+	width: 100%;
+}
+.exchangeLists_content{
+	height: calc(100% - .73rem);
+	touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+	overflow: scroll;
+	overflow-x: hidden;
 	width: 100%;
 }
 .exchangeLists li{
@@ -342,5 +366,7 @@ export default {
 	width: 91.46%;
 	margin: 0rem auto;
 }
-
+>>>.van-pull-refresh{
+	height: 100%;
+}
 </style>

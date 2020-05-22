@@ -1,7 +1,6 @@
 <template>
-<topSolt>
-  <van-pull-refresh v-model="pullingDown" slot="returnTopSolt" @refresh="afterPullDown" >
-    <div class="_search" >
+  <van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
+    <div class="_search" ref="_search" @scroll="handleScroll">
       <div class="top_search" :style="{'padding-top':$store.state.paddingTop}">
         <div class="search_return">
           <a @click="goBackFn"  id="navback">
@@ -87,8 +86,11 @@
 	  </van-list>
       <!-- <clinicAll ref="all" :list="list" :style="{'padding-top':$store.state.paddingTop}"></clinicAll> -->
     </div>
+    <div class="returnTop" @click="$refs._search.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
+      <img src="../../../assets/image/returnTop.png" alt />
+      <span>顶部</span>
+    </div>
   </van-pull-refresh>
-  </topSolt>
 </template>
 
 <script>
@@ -98,39 +100,40 @@ import qs from "qs";
 import { Dialog } from "vant";
 import moment from 'moment'
 import Vue from 'vue'
-import topSolt from "../function/topSolt.vue";
 export default {
   name: "index_search",
   data() {
     return {
       timer: undefined,
-	  items:[],
+      items:[],
       keywords: "", //搜索框的关键字value
       pullingDown: false,
-	  // lable的dom节点
-	  labelDocument:['labelDocument','labelDocument2','labelDocument3','labelDocument4','labelDocument5','labelDocument6'],
-	  //筛选数据
-	  Time:{
-	  	look:'',
-	  	noLook:'',
-	  	confirmStart : undefined,
-	  	confirmOver : undefined,
-	  	pushStart : undefined,
-	  	pushOver : undefined,
-	  	postState : undefined,
-	  },
-	  dateStata : '',
-	  loading: false,
-	  // 加载状态结束
-	  finished: false,
-	  page:0,
-	  noItems:[],
-     test:'',
-		 query:''
+      // lable的dom节点
+      labelDocument:['labelDocument','labelDocument2','labelDocument3','labelDocument4','labelDocument5','labelDocument6'],
+      //筛选数据
+      Time:{
+        look:'',
+        noLook:'',
+        confirmStart : undefined,
+        confirmOver : undefined,
+        pushStart : undefined,
+        pushOver : undefined,
+        postState : undefined,
+      },
+      dateStata : '',
+      loading: false,
+      // 加载状态结束
+      finished: false,
+      page:0,
+      noItems:[],
+      test:'',
+      query:'',
+      scrollTop:0,
+      hospitalReturnTopPage:false,
     };
   },
   computed: {
-    ...mapGetters(["showTime", "detail", "account",'isLogin']),
+    ...mapGetters(["showTime"]),
     show: {
       get: function() {
         // 
@@ -170,48 +173,64 @@ export default {
 
   },
   components: {
-    topSolt
+    
   },
   created() {
 
   },
  
   mounted() {
-    console.log('mounted')
- //    if (window.plus) {
- //      //plus.navigator.setStatusBarBackground("#ffffff");
- //      plus.navigator.setStatusBarStyle("dark");
- //    }
-	// // 
- //    this.initData();
- //    if(this.$route.query.show == 'false'){
- //      this.hospitalReturnHomePage = false;
-       
- //    }else{
- //      // this.hospitalReturnHomePage = this.$route.query.show
- //    }
- //    // console.dir(this.$route.query.show)
- //    // 
- //    // 
- //    // this.$route.query.show? '':this.hospitalReturnHomePage = this.$route.query.show
+
   },
 	activated() {
 		if(this.query != JSON.stringify(this.$route.query)){
+      debugger
+      this.initData();
       this.query = JSON.stringify(this.$route.query);
-          console.log('activated')
-
 			if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
 				plus.navigator.setStatusBarStyle("dark")
 			}
-			this.initData();
 			if(this.$route.query.show == 'false'){
 			  this.hospitalReturnHomePage = false;
       }
       this.nextPageFn();
+    }
+    if(this.scrollTop != 0){
+			this.$refs._search.scrollTop = this.scrollTop
 		}
 	},
   methods: {
+    // 滑动一定距离出现返回顶部按钮
+    handleScroll() {
+      debugger
+      this.scrollTop = this.$refs._search.scrollTop || this.$refs._search.pageYOffset
+      if (this.scrollTop > 800) {
+        this.hospitalReturnTopPage = true;
+      } else {
+        this.hospitalReturnTopPage = false;
+      }
+    },
+    submitFn(_item,_button){
+			this.$axios.post('/c2/patient/confirmjiuzhen',this.qs.stringify({
+				patientId : _item.itemId
+			}))
+			.then(res =>{
+				if(res.data.codeMsg){
+					this.$toast({duration: 1000,message: res.data.codeMsg})
+				}
+				if(res.data.code == 0 ){
+					this.$toast.success({duration: 1000,message: '操作成功'})
+					if(_item.status == 1){
+						
+						_button.target.style.cssText="color:#333333; background-color:#EEEEEE;"
+						_button.target.innerHTML = '已就诊';
+					}
+				}
+			})
+			.catch((err)=>{
+			})
+		},
     afterPullDown() {
       //下拉刷新
       setTimeout(() => {
@@ -325,7 +344,6 @@ export default {
     },
     //关闭半遮罩
     closeFn(){
-    	// 
     	this.showTime = false;
     },
     // 确定选择的日期
@@ -445,6 +463,11 @@ export default {
   width: 100%;
   padding-top: 0.52rem;
   background-color: #ffffff;
+  height: calc(100% - .5rem);
+  touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 .top_search {
   height: 0.5rem;

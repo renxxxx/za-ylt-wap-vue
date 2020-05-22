@@ -80,6 +80,7 @@ export default {
 	},
 	activated(){
 		if(this.query != JSON.stringify(this.$route.query)){
+			this.initData();
 			this.query = JSON.stringify(this.$route.query);
 			if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
@@ -89,7 +90,6 @@ export default {
 				this.coverImg = this.$store.state.operating.login.cover
 				// this.images.push(this.$store.state.operating.login.hospital.license)
 			}
-			this.initData();
 		}
  	},
 	methods: {

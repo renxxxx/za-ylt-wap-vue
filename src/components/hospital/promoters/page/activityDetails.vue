@@ -12,43 +12,49 @@
 			</div>
 		</div> 
 		<div class="zhangwei"></div>
-		<div class="activeList" :model='active' :style="{'padding-top':$store.state.paddingTop}">
-			<img v-lazy="active.cover" alt="">
-			<div class="activeTitle">
-				<h4>{{active.title}}</h4>
-				<span>{{moment(active.startTime).format('YYYY-MM-DD HH:mm')}} - {{moment(active.endTime).format('YYYY-MM-DD HH:mm')}}</span>
+		<div class="activityDetailsList" ref="activityDetailsList" @scroll="handleScroll">
+			<div class="activeList" :model='active' :style="{'padding-top':$store.state.paddingTop}">
+				<img v-lazy="active.cover" alt="">
+				<div class="activeTitle">
+					<h4>{{active.title}}</h4>
+					<span>{{moment(active.startTime).format('YYYY-MM-DD HH:mm')}} - {{moment(active.endTime).format('YYYY-MM-DD HH:mm')}}</span>
+				</div>
+			</div>
+			<div class="tabel">
+				<ul>
+					<li v-if="active.title">
+						<span>标题</span>
+						<input type="text" v-model='active.title' readonly="readonly">
+					</li>
+					<li v-if="active.brief">
+						<span>副标题</span>
+						<input type="text" v-model='active.brief' readonly="readonly">
+					</li>
+					<li v-if="active.tel">
+						<span>联系电话</span>
+						<input type="text" v-model='active.tel' readonly="readonly">
+					</li>
+					<li v-if="active.time">
+						<span>活动起止时间</span>
+						<input type="text" v-model="active.time" readonly="readonly">
+					</li>
+					<li v-if="active.address">
+						<span>活动地址</span>
+						<input type="text" v-model='active.address' readonly="readonly">
+					</li>
+					<li v-if="active.content">
+						<span>活动说明</span>
+						<!-- <input type="text" v-model='active.content' readonly="readonly"> -->
+						<div class="tabelContent">
+							<p style="white-space:pre-line;">{{active.content}}</p>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
-		<div class="tabel">
-			<ul>
-				<li v-if="active.title">
-					<span>标题</span>
-					<input type="text" v-model='active.title' readonly="readonly">
-				</li>
-				<li v-if="active.brief">
-					<span>副标题</span>
-					<input type="text" v-model='active.brief' readonly="readonly">
-				</li>
-				<li v-if="active.tel">
-					<span>联系电话</span>
-					<input type="text" v-model='active.tel' readonly="readonly">
-				</li>
-				<li v-if="active.time">
-					<span>活动起止时间</span>
-					<input type="text" v-model="active.time" readonly="readonly">
-				</li>
-				<li v-if="active.address">
-					<span>活动地址</span>
-					<input type="text" v-model='active.address' readonly="readonly">
-				</li>
-				<li v-if="active.content">
-					<span>活动说明</span>
-					<!-- <input type="text" v-model='active.content' readonly="readonly"> -->
-					<div class="tabelContent">
-						<p style="white-space:pre-line;">{{active.content}}</p>
-					</div>
-				</li>
-			</ul>
+		<div class="returnTop" @click="$refs.activityDetailsList.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
+			<img src="../../../../assets/image/returnTop.png" alt />
+			<span>顶部</span>
 		</div>
 	</div>
 </template>
@@ -62,6 +68,8 @@ export default {
 	data () {
 		return {
 			active : {},
+			scrollTop:0,
+     		hospitalReturnTopPage:false,
 		}
 	},
 	computed:{
@@ -71,10 +79,6 @@ export default {
 		
 	},
 	created(){
-		var heightRexg = /^[0-9]*/g
-		//var topHeight = this.topHeight.match(heightRexg)
-		//this.height = parseInt(topHeight.join()) 
-		//
 	},
    mounted() {
 		// if(window.plus){
@@ -84,6 +88,7 @@ export default {
 	},
 	activated(){
 		if(this.query != JSON.stringify(this.$route.query)){
+			Object.assign(this.$data, this.$options.data());
 			this.query = JSON.stringify(this.$route.query);
 			if(window.plus){
 				//plus.navigator.setStatusBarBackground("#ffffff");
@@ -91,8 +96,20 @@ export default {
 			}
 			this.getdata();
 		}
+		if(this.scrollTop != 0){
+			this.$refs.activityDetailsList.scrollTop = this.scrollTop;
+		}
     },
 	methods: {
+		// 滑动一定距离出现返回顶部按钮
+		handleScroll() {
+			this.scrollTop = this.$refs.activityDetailsList.scrollTop || this.$refs.activityDetailsList.pageYOffset
+			if (this.scrollTop > 800) {
+				this.hospitalReturnTopPage = true;
+			} else {
+				this.hospitalReturnTopPage = false;
+			}
+		},
 		getdata(){
 			this.$axios.post('/c2/activity/item',qs.stringify({
 				itemId : this.$route.query.itemId,
@@ -136,8 +153,18 @@ export default {
 </script>
 
 <style scoped>
+.activityDetailsList{
+	width: 100%;
+	height: calc(100% - .98rem);
+  	touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+  	overflow: scroll;
+  	overflow-x: hidden;
+}
 .activityDetails{
 	width: 100%;
+	height: 100%;
+	overflow:hidden;
 }
 .topNav{
 	width: 100%;

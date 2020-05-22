@@ -11,7 +11,7 @@
 				<h3 @click="switchFn('about')" ref='about' class="xiahuaxian">医院介绍</h3>
 				<h3 @click="switchFn('type')" ref='type'>特色科室</h3>
 			</div>
-			<component v-bind:is="componentName" v-bind:hospitalImage='hospitalImage'></component>
+			<component v-bind:is="componentName" v-bind:hospitalImage='hospitalImage' ref="hospitalImageRef"></component>
 		</div>
 	</div>
 </template>
@@ -143,6 +143,7 @@ export default {
 			this.$refs.about.classList.remove('xiahuaxian');
 			this.$refs.type.classList.add('xiahuaxian');
 			this.componentName = 'hospital_imageType';
+			this.$refs.hospitalImageRef.getData()
 		}
 	},
 	backFN(){
