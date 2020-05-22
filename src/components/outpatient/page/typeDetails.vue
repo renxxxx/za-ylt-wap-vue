@@ -32,7 +32,7 @@
 		<div class="typeContent" v-show="this.about.content? true:false">
 			<h4 class="xia">科室简介</h4>
 			<div class="contentP">
-				<p>{{this.about.content}}</p>
+				<div style="text-indent:2em;word-break: break-all;word-wrap: break-word;white-space: pre-line;"	>{{this.about.content}}</div>
 				<img :src="img" v-for='(img,inx) in about.image' :key='inx' alt="">
 			</div>
 		</div>
@@ -40,26 +40,34 @@
 			<h4 class="xia">适应症状</h4>
 			<ul>
 				<li v-for='(item,inx) in this.about.shiYingZheng' :key='inx'>
-					{{item}}
+					<div style="display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+  word-wrap: break-word;">
+						{{item}}
+					</div>
+					
 				</li>
 			</ul>
 		</div>
 		<div class="typeContent" v-show="this.about.zhenLiaoJiShu? true:false">
 			<h4 class="xia">诊疗技术</h4>
 			<div class="contentP">
-				<p>{{this.about.zhenLiaoJiShu}}</p>
+				<div style="text-indent:2em;word-break: break-all;word-wrap: break-word;white-space: pre-line;">{{this.about.zhenLiaoJiShu}}</div>
 			</div>
 		</div>
 		<div class="typeContent" v-show="this.about.teSe? true:false">
 			<h4 class="xia">诊疗特色</h4>
 			<div class="contentP">
-				<p>{{this.about.teSe}}</p>
+				<div style="text-indent:2em;word-break: break-all;word-wrap: break-word;white-space: pre-line;">{{this.about.teSe}}</div>
 			</div>
 		</div>
 		<div class="typeContent" v-show="this.about.youShi? true:false">
 			<h4 class="xia">科室优势</h4>
 			<div class="contentP">
-				<p>{{this.about.youShi}}</p>
+				<div style="text-indent:2em;word-break: break-all;word-wrap: break-word;white-space: pre-line;"	>{{this.about.youShi}}</div>
 			</div>
 		</div>
 	</div>

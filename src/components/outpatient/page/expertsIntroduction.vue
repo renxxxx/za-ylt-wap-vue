@@ -87,7 +87,7 @@ export default {
 			// 
 			this.clickNum++;
 			if(this.clickNum % 2 == 0){
-				this.$refs.showP[inx].style.webkitLineClamp = '9'
+				this.$refs.showP[inx].style.webkitLineClamp = '9999'
 				this.$refs.showimg[inx].src=require('../../../assets/image/up-1@2x.png')
 			}else{
 				this.$refs.showP[inx].style.webkitLineClamp = '2'
@@ -223,8 +223,14 @@ export default {
 	font-size: .12rem;
 }
 .xia{
-	margin-left: .1rem;
+	/* margin-left: .1rem; */
+	display: -webkit-box;
 	position: relative;
+	-webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 .xia:before{
 	content: "";
