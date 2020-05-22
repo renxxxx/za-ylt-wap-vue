@@ -16,7 +16,7 @@
 				<span>{{caseInfo.hosptialName}}</span>
 				<span>{{moment(caseInfo.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 			</div>
-			<p v-html="caseInfo.content"></p>
+			<div style="white-space: pre-line; word-break: break-all; word-wrap: break-word;text-indent:2em" v-html="caseInfo.content"></div>
 		</div>
 	</div>
 </topSolt>

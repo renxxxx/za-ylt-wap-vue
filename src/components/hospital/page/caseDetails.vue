@@ -13,9 +13,9 @@
 			<div class="headPortrait">
 				<img src="../../../assets/image/logo@2x.png" alt="">
 				<span>{{caseInfo.hosptialName}}</span>
-				<span>{{moment(caseInfo.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
+				<span>{{moment(caseInfo.alterTime).format('YYYY-MM-DD HH:mm')}}</span>	
 			</div>
-			<p v-html="caseInfo.content"></p>
+			<div style="white-space: pre-line; word-break: break-all; word-wrap: break-word;text-indent:2em" v-html="caseInfo.content"></div>
 		</div>
 		<div class="returnTop" @click="$refs.caseDetails.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
 			<img src="../../../assets/image/returnTop.png" alt />

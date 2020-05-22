@@ -11,7 +11,7 @@
 				<h3 @click="switchFn('about')" ref='about' class="xiahuaxian">医院介绍</h3>
 				<h3 @click="switchFn('type')" ref='type'>特色科室</h3>
 			</div>
-			<component v-bind:is="componentName" v-bind:hospitalImage='hospitalImage'></component>
+			<component v-bind:is="componentName" v-bind:hospitalImage='hospitalImage' ref="hospitalImageRef"></component>
 		</div>
 	</div>
 </template>
@@ -72,7 +72,7 @@ export default {
 	getData(){
 		this.$router.currentRoute.query.components? this.backFN(): this.componentName = 'hospital_imageAbout'
 		this.$axios.post('/c2/hospital/item',qs.stringify({
-			itemId : this.$store.state.outpatient.login.hospitalId,
+			itemId : this.$store.state.outpatient.login.hospital.hospitalId,
 		}))
 		.then(_d => {
 			this.hospitalImage = {
@@ -116,6 +116,7 @@ export default {
 			this.$refs.about.classList.remove('xiahuaxian');
 			this.$refs.type.classList.add('xiahuaxian');
 			this.componentName = 'hospital_imageType';
+			this.$refs.hospitalImageRef.getData()
 		}
 	},
 	backFN(){

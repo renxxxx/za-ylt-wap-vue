@@ -16,7 +16,7 @@
 					<span>{{caseInfo.hosptialName}}</span>
 					<span>{{moment(caseInfo.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
 				</div>
-				<p v-html="caseInfo.content"></p>
+				<div v-html="caseInfo.content" style="white-space: pre-line; word-break: break-all; word-wrap: break-word;text-indent:2em"></div>
 			</div>
 		</div>	
 		<div class="returnTop" @click="$refs.caseDetailsList.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
