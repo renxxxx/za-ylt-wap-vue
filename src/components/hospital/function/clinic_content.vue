@@ -69,14 +69,8 @@ export default {
 				//plus.navigator.setStatusBarBackground("#ffffff");
 				plus.navigator.setStatusBarStyle("dark")
 			}
-			this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
-			 .then(res => {
-			 	this.clinicNum = res.data.data.rowCount;
-			 })
-			 .catch((err)=>{
-			 	
-			 })
-		}
+			this.getNum();
+		}	
 		if(this.scrollTop != 0){
 			this.$refs.content.scrollTop = this.scrollTop
 		}
@@ -91,16 +85,25 @@ export default {
 				this.hospitalReturnTopPage = false;
 			}
 		},
-		initData() {
+		async initData() {
 			Object.assign(this.$data, this.$options.data());
 			this.getNextPage();
-    		this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
-			.then(res => {
-				this.clinicNum = res.data.data.rowCount;
-			})
-			.catch((err)=>{
-				
-			})
+    		this.getNum();
+			// nextClick
+			// debugger
+			// await console.log(this.clinicNum)
+		},
+		getNum(){
+			this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+			 .then(res => {
+				nextTick(()=>{
+					this.clinicNum = res.data.data.rowCount;
+				 })
+			 	
+			 })
+			 .catch((err)=>{
+			 	
+			 })
 		},
 		getdata(){
 			this.$axios.get('/hospital/super-admin/hospital-clinics?'+qs.stringify({pn:this.page})+'&'+qs.stringify({ps:10}))

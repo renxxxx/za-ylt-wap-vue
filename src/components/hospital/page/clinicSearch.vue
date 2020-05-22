@@ -98,6 +98,13 @@ export default {
 		  setTimeout(() => {
 			this.pullingDown = false;
 			 this.initData();
+			 this.$axios.get('/hospital/super-admin/hospital-clinics-sum?')
+				.then(res => {
+					this.clinic.num = res.data.data.rowCount;
+				})
+				.catch((err)=>{
+					
+				})
 		  }, 500);
 		},
 		initData() {
@@ -108,6 +115,7 @@ export default {
 			}})
 		  Object.assign(this.$data, this.$options.data());
 		  this.$refs.content.initData();
+		  console.log(this.$refs.content.clinicNum)
 		},
 		goBackFn(){
 			this.$router.back(-1)

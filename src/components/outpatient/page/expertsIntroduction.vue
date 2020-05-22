@@ -87,7 +87,7 @@ export default {
 			// 
 			this.clickNum++;
 			if(this.clickNum % 2 == 0){
-				this.$refs.showP[inx].style.webkitLineClamp = '9'
+				this.$refs.showP[inx].style.webkitLineClamp = '999'
 				this.$refs.showimg[inx].src=require('../../../assets/image/up-1@2x.png')
 			}else{
 				this.$refs.showP[inx].style.webkitLineClamp = '2'
