@@ -87,7 +87,7 @@ export default {
 
 }
 .hospitalBottom{
-  margin-bottom: .55rem;
+  /* margin-bottom: .55rem; */
 }
 .appView {
      /* position: absolute; */

@@ -290,10 +290,10 @@ export default {
 	margin-left: .18rem;
 }
 .typeContent ul li{
-	/* width: .9rem; */
+	width: 100%;
 	padding:.07rem .15rem;
-	height: .25rem;
-	line-height: .25rem;
+	/* height: .22rem; */
+	line-height: .24rem;
 	border-radius: .15rem;
 	text-align: center;
 	color: #FF951B;

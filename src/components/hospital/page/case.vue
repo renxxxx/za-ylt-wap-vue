@@ -1,56 +1,56 @@
 <template>
-<topSolt>
-	<div class="case" slot="returnTopSolt">
+	<div class="case">
 		<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 			<img src="../../../assets/image/shape@3x.png" alt=""  @click="goBackFn"  id="navback" :style="{'padding-top':$store.state.paddingTop}">
 			<h3>优质案例</h3>
 		</div>
 		<div class="zhangwei"></div>
-		<div class="article" :style="{'padding-top':$store.state.paddingTop}">
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <ul>
-          <li v-for="(items,inx) in article" :key="inx">
-            <router-link :to="{path : '/hospital/hospital_caseDetails' ,query : {itemId : items.itemId,data: 4,}}">
-              <div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
-                <p>{{items.content}}</p>
-                <div class="article_leftTime">
-                  <img src="../../../assets/image/time@2x.png" alt="">
-                  <span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
-                </div>
-              </div>
-              <div v-if="items.img"  class="article_right">
-                <img :src=items.img alt="">
-              </div>
-            </router-link>
-          </li>
-        </ul>
-      </van-list>
+		<div class="article" :style="{'padding-top':$store.state.paddingTop}" @scroll="handleScroll" ref="article">
+			<van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+				<ul>
+				<li v-for="(items,inx) in article" :key="inx">
+					<router-link :to="{path : '/hospital/hospital_caseDetails' ,query : {itemId : items.itemId,data: 4,}}">
+					<div class="article_left" :style="{width:items.img?'60.1%':'100%'}">
+						<p>{{items.content}}</p>
+						<div class="article_leftTime">
+						<img src="../../../assets/image/time@2x.png" alt="">
+						<span>{{moment(items.time).format('YYYY-MM-DD HH:mm')}}</span>
+						</div>
+					</div>
+					<div v-if="items.img"  class="article_right">
+						<img :src=items.img alt="">
+					</div>
+					</router-link>
+				</li>
+				</ul>
+			</van-list>
+		</div>
+		<div class="returnTop" @click="$refs.article.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
+			<img src="../../../assets/image/returnTop.png" alt />
+			<span>顶部</span>
 		</div>
 	</div>
-	</topSolt>
 </template>
 
 <script>
-import axios from 'axios'
-import {mapActions,mapGetters} from 'vuex'
-import topSolt from "../function/topSolt.vue";
 import qs from 'qs';
 export default {
 	name: 'case',
 	data () {
 		return {
 			article:[],
-      loading: false,
-      finished: false,
-      page: 0,
-	  query:''
+			loading: false,
+			finished: false,
+			page: 0,
+			query:'',
+			scrollTop:0,
+    		hospitalReturnTopPage:false,
 		}
 	},
 	computed:{
-	  ...mapGetters(['account']),
 	},
 	components:{
-		topSolt
+		
 	},
 	created(){
 		// var heightRexg = /^[0-9]*/g
@@ -72,8 +72,20 @@ export default {
 				plus.navigator.setStatusBarStyle("dark")
 			}
 		}
+		if(this.scrollTop != 0){
+			this.$refs.article.scrollTop = this.scrollTop;
+		}
 	},
 	methods: {
+		// 滑动一定距离出现返回顶部按钮
+		handleScroll() {
+			this.scrollTop = this.$refs.article.scrollTop || this.$refs.article.pageYOffset
+			if (this.scrollTop > 800) {
+				this.hospitalReturnTopPage = true;
+			} else {
+				this.hospitalReturnTopPage = false;
+			}
+		},
 		//回退方法
 		goBackFn(){
 			this.$router.back(-1)
@@ -120,6 +132,8 @@ export default {
 <style scoped>
 .case{
 	width: 100%;
+	height: 100%;
+	overflow: hidden;
 }
 .topNav{
 	width: 100%;
@@ -147,12 +161,17 @@ export default {
 	font-weight: bold;
 }
 .article{
-	width: 91.5%;
-	margin: 0rem auto;
+	width: 100%;
+	height: calc(100% - .47rem);
+	touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+	overflow: scroll;
+	overflow-x: hidden;
 }
 .article ul{
 	margin-top: .2rem;
-	width: 100%;
+	margin: 0rem auto;
+	width: 91.5%;
 }
 .article ul li {
 	width: 100%;

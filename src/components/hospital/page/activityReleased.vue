@@ -1,6 +1,5 @@
 <template>
-<topSolt>
-	<div class="active" slot="returnTopSolt">
+	<div class="active">
 		<van-pull-refresh v-model="pullingDown" @refresh="afterPullDown" >
 			<div class="topNav" :style="{'padding-top':$store.state.paddingTop}">
 				<div class="leftImg" @click="goBackFn"  id="navback">
@@ -12,59 +11,64 @@
 				<div class="right"></div>
 			</div>
 			<div class="zhangwei"></div>
-			<router-link :to="{name:'hospital_addActivity'}">
-				<div class="addActive" :style="{'padding-top':$store.state.paddingTop}">
-					<span>+</span>
-					<span>新建活动</span>
-				</div>
-			</router-link>
-		<van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-		<van-swipe-cell v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
-			<van-cell :border="false" >
-			<router-link :to="{path : '/hospital/hospital_activityDetails',query:{itemId:item.itemId,}}">
-				<div class="activeList">
-				<img v-lazy="item.cover" alt="">
-				<div class="activeTitle">
-					<h4>{{item.title}}</h4>
-					<span>{{moment(item.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
-				</div>
-				</div>
-			</router-link>
-			</van-cell>
-			<template slot="right">
-			<button class="deleteStyle" @click="deleteActiviteFn(item)">
-				<img src="../../../assets/image/activiteDelete.png" alt="">
-			</button>
-			</template>
-		</van-swipe-cell>
-		</van-list>
-	</van-pull-refresh>
+			<div class="center" @scroll="handleScroll" ref="center">
+				<router-link :to="{name:'hospital_addActivity'}">
+					<div class="addActive" :style="{'padding-top':$store.state.paddingTop}">
+						<span>+</span>
+						<span>新建活动</span>
+					</div>
+				</router-link>
+				<van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+					<!-- active -->
+					<van-swipe-cell v-for="(item,inx) in active" :key="inx"  :right-width= 65 >
+						<van-cell :border="false" >
+						<router-link :to="{path : '/hospital/hospital_activityDetails',query:{itemId:item.itemId,}}">
+							<div class="activeList">
+							<img v-lazy="item.cover" alt="">
+							<div class="activeTitle">
+								<h4>{{item.title}}</h4>
+								<span>{{moment(item.alterTime).format('YYYY-MM-DD HH:mm')}}</span>
+							</div>
+							</div>
+						</router-link>
+						</van-cell>
+						<template slot="right">
+						<button class="deleteStyle" @click="deleteActiviteFn(item)">
+							<img src="../../../assets/image/activiteDelete.png" alt="">
+						</button>
+						</template>
+					</van-swipe-cell>
+				</van-list>
+			</div>
+		</van-pull-refresh>
+		<div class="returnTop" @click="$refs.center.scrollTop=0;hospitalReturnTopPage = false;" ref="returnTopRef" v-show="hospitalReturnTopPage">
+			<img src="../../../assets/image/returnTop.png" alt />
+			<span>顶部</span>
+		</div>
 	</div>
-	</topSolt>
 </template>
 
 <script>
 import axios from 'axios'
-import {mapActions,mapGetters} from 'vuex'
 import qs from 'qs';
-import topSolt from "../function/topSolt.vue";
 export default {
 	name: 'case',
 	data () {
 		return {
 			active:[],
-      loading: false,
-      finished: false,
-      page: 0,
-	  query:'',
-	  pullingDown:false,
+			loading: false,
+			finished: false,
+			page: 0,
+			query:'',
+			pullingDown:false,
+			scrollTop:0,
+    		hospitalReturnTopPage:false,
 		}
 	},
 	computed:{
-	  ...mapGetters(['account','isLogin']),
 	},
 	components:{
-		topSolt
+		
 	},
 	created(){
 
@@ -77,6 +81,9 @@ export default {
 				plus.navigator.setStatusBarStyle("dark")
 			}
 		}
+		if(this.scrollTop != 0){
+			this.$refs.center.scrollTop = this.scrollTop;
+		}
 	},
   mounted() {
 		if(window.plus){
@@ -86,6 +93,16 @@ export default {
 		// this.getdata()
 	},
 	methods: {
+		// 滑动一定距离出现返回顶部按钮
+		handleScroll() {
+			this.scrollTop = this.$refs.center.scrollTop || this.$refs.center.pageYOffset
+			// console.log(this.scrollTop)
+			if (this.scrollTop > 800) {
+				this.hospitalReturnTopPage = true;
+			} else {
+				this.hospitalReturnTopPage = false;
+			}
+		},
 		afterPullDown() {
 			//下拉刷新
 		  setTimeout(() => {
@@ -109,13 +126,12 @@ export default {
 			this.$router.back(-1)
 		},
 		deleteActiviteFn(_item){
-      for(let i=0;i<this.active.length;i++){
-        if(this.active[i].itemId ==_item.itemId){
-          this.active.splice(i,1)
-          i--;
-        }
-      }
-      
+			for(let i=0;i<this.active.length;i++){
+				if(this.active[i].itemId ==_item.itemId){
+				this.active.splice(i,1)
+				i--;
+				}
+			}
 			this.$axios.post('/c2/activity/itemdel',qs.stringify({
 				itemId : _item.itemId,
 			}))
@@ -163,7 +179,8 @@ export default {
 <style scoped>
 .active{
 	width: 100%;
-	/* height: 100%; */
+	height: 100%;
+	overflow: hidden;
 	background-color: #FFFFFF;
 }
 .topNav{
@@ -287,5 +304,15 @@ export default {
     position: relative;
     overflow: hidden;
     width: 93.6%;
+}
+.center{
+	height: calc(100% - .47rem);
+	touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+>>>.van-pull-refresh{
+	height: 100%;
 }
 </style>
