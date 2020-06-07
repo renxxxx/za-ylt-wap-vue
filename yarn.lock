@@ -5257,6 +5257,11 @@ js-beautify@^1.6.12, js-beautify@^1.6.14:
     mkdirp "~0.5.1"
     nopt "~4.0.1"
 
+js-cookie@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
+  integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
+
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
@@ -9260,10 +9265,10 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-vant@^2.5.3:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/vant/-/vant-2.5.3.tgz#1c34ea853a2db62c6c6dcc45b4673ab27696c82e"
-  integrity sha512-qnZX1sIxQA4qAFJsm01s9cHnT5yecFxoJ69nnaO5jCEzrZGiDOU2iBcUl1bnp/SeaNjWARl/6XpQdn71ecyChA==
+vant@^2.7.0:
+  version "2.8.5"
+  resolved "https://registry.yarnpkg.com/vant/-/vant-2.8.5.tgz#6828fadb501cae9dee31de8ca6cb6fe4a526536a"
+  integrity sha512-rVzBbKwDuDISYelVehAfnzrgRL5/OxSo8T+U/YNvXXMeXqLTnnNtt00IpYoKaYWzohV7iDFbiZMWJb0SbMa38g==
   dependencies:
     "@babel/runtime" "7.x"
     "@vant/icons" "1.2.1"
@@ -9545,9 +9550,9 @@ websocket-driver@>=0.5.1:
     websocket-extensions ">=0.1.1"
 
 websocket-extensions@>=0.1.1:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
-  integrity sha512-nqHUnMXmBzT0w570r2JpJxfiSD1IzoI+HGVdd3aZ0yNi3ngvQ4jv1dtHt5VGxfI2yj5yqImPhOK4vmIh2xMbGg==
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
+  integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
 
 whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   version "1.0.5"
