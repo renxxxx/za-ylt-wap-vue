@@ -125,10 +125,10 @@
   resolved "https://registry.yarnpkg.com/@types/strip-json-comments/-/strip-json-comments-0.0.30.tgz#9aa30c04db212a9a0649d6ae6fd50accc40748a1"
   integrity sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==
 
-"@vant/icons@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@vant/icons/-/icons-1.2.1.tgz#309fecb97a4989866f045ce676b545c454701c8f"
-  integrity sha512-5ivsKQR4ySbdBW5UPoQDVqO6rdc1um3rvq/0VL+ZSA7Y3MdBQ3E4/NL0hoAY5/sZZeYfIDKEP21gpjUzdeEDQQ==
+"@vant/icons@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@vant/icons/-/icons-1.2.3.tgz#c46b7ddd32363f790944c3af974b73bda80df7a1"
+  integrity sha512-LMu1JGGgZqLYXVFRcuNRDCOWE7AX0vt/gFBkd9xMI7H9uMdNx2oO3YujgNVvVrrF8iufHwfwUv41HiwYMvU3zQ==
 
 "@vue/babel-helper-vue-jsx-merge-props@^1.0.0":
   version "1.0.0"
@@ -5257,6 +5257,11 @@ js-beautify@^1.6.12, js-beautify@^1.6.14:
     mkdirp "~0.5.1"
     nopt "~4.0.1"
 
+js-cookie@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
+  integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
+
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
@@ -5702,9 +5707,9 @@ lodash.uniq@^4.5.0:
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
 lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 log-symbols@^2.1.0:
   version "2.2.0"
@@ -9260,13 +9265,13 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-vant@^2.5.3:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/vant/-/vant-2.5.3.tgz#1c34ea853a2db62c6c6dcc45b4673ab27696c82e"
-  integrity sha512-qnZX1sIxQA4qAFJsm01s9cHnT5yecFxoJ69nnaO5jCEzrZGiDOU2iBcUl1bnp/SeaNjWARl/6XpQdn71ecyChA==
+vant@^2.7.0:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/vant/-/vant-2.9.2.tgz#df7b9d6d3d8274c407659ec88feb5fa1a3a3a3f0"
+  integrity sha512-mPI0WGXFgDiF+gqoePz3cYt2ra2dIglIECU29vunUKsQxhEVkKLBEviAV3J+q+1A6NizLvp4xrdWdq67/maTiA==
   dependencies:
     "@babel/runtime" "7.x"
-    "@vant/icons" "1.2.1"
+    "@vant/icons" "1.2.3"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
     vue-lazyload "1.2.3"
 
